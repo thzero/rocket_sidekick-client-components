@@ -1,4 +1,4 @@
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import { useBaseControlEditProps } from '@thzero/library_client_vue3/components/baseControlEditProps';
 

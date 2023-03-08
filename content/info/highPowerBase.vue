@@ -1,7 +1,7 @@
 <script>
 import { computed, onMounted, ref } from 'vue';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
@@ -28,7 +28,7 @@ export function useHighPowerBaseComponent(props, context, options) {
 		handleAttribution,
 		hasAttribution
 	} = useInfoBaseComponent(props, context, options);
-	
+
 	const contentChartDesc = ref(null);
 	const contentMarkup2 = ref(null);
 	const contentTitle = ref(LibraryClientUtility.$trans.t('titles.content.info.highPower') + ' ' + LibraryClientUtility.$trans.t('titles.content.info.title'));

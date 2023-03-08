@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
@@ -55,7 +55,7 @@ export function useFoamBaseComponent(props, context) {
 		id: 'foam',
 		title: LibraryClientUtility.$trans.t('titles.content.tools.foam')
 	});
-	
+
 	const {
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
@@ -116,7 +116,7 @@ export function useFoamBaseComponent(props, context) {
 			calculationResultsI.value = responseCalcInstance.results;
 			calculationResultsI.value.calculated = false;
 			calculationResultsI.value.foams = [];
-			
+
 			let responseCalcFoam;
 			let responseCalcFoamInstance;
 			for (const foam of responseFoams.results) {

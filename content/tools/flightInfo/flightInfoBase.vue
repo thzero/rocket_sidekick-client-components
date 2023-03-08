@@ -6,7 +6,7 @@ import useVuelidate from '@vuelidate/core';
 import Papa from 'papaparse';
 import html2canvas from 'html2canvas';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -103,7 +103,7 @@ export function useFlightInfoBaseComponent(props, context) {
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.flightInfo')
 	});
-	
+
 	const {
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
@@ -157,7 +157,7 @@ export function useFlightInfoBaseComponent(props, context) {
 	const flightInfoStyleVelocityColor = ref(null);
 	const flightInfoStyleVelocityFColor = ref(null);
 	const resolution = ref(AppConstants.FlightInfo.Resolution);
-	
+
 	const checkFlightInfoDataTypeUse = () => {
 		flightInfoDataTypeUseDisabled.value = true;
 		if (flightInfoDataTypeActual.value  && flightInfoDataTypeFiltered.value )
@@ -377,7 +377,7 @@ export function useFlightInfoBaseComponent(props, context) {
 						accelerationtId: flightMeasurementUnitsAccelerationId.value,
 						distanceOutputId: flightMeasurementUnitsDistanceOutputId.value,
 						velocityOutputId: flightMeasurementUnitsVelocityOutputId.value,
-					}, 
+					},
 					flightInfoDataTypes);
 				AppUtility.debug2('flightInfoResults', flightInfoResults);
 				if (flightInfoResults.errors && data.errors.length > 0) {

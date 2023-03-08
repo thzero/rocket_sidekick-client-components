@@ -1,4 +1,4 @@
-import AppConstants from "@/constants";
+import AppConstants from "@/utility/constants";
 
 export const useRocketInfoBaseProps = {
 		type: {

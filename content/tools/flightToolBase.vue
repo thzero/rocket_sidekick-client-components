@@ -1,7 +1,7 @@
 <script>
 import { computed, onMounted, ref, watch } from 'vue';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -53,7 +53,7 @@ export function useFlightToolsBaseComponent(props, context, options) {
 		setNotify,
 		toFixed
 	} = useToolsBaseComponent(props, context, options);
-	
+
 	const {
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
@@ -212,7 +212,7 @@ export function useFlightToolsBaseComponent(props, context, options) {
 			initialized.value = true;
 		}, 50);
 	});
-		
+
 	watch(() => flightMeasurementUnitsId.value,
 		(value) => {
 			if (!initialized.value)
