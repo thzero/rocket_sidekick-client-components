@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import useVuelidate from '@vuelidate/core';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 

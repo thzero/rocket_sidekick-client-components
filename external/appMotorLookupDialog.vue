@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
-import Constants from '@/constants';
+import Constants from '@/utility/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';

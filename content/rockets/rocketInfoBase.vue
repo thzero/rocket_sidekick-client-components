@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router';
 import { computed, onMounted, ref} from 'vue';
 
-import Constants from '@/constants';
+import Constants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 

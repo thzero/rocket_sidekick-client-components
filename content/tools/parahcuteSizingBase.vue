@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
@@ -51,11 +51,11 @@ export function useParachuteSizingBaseComponent(props, context) {
 		setErrorTimer,
 		setNotify,
 		toFixed
-	} = useToolsBaseComponent(props, context, { 
+	} = useToolsBaseComponent(props, context, {
 		id: 'parachuteSizing',
 		title: LibraryClientUtility.$trans.t('titles.content.tools.parachuteSizing')
 	});
-	
+
 	const {
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,

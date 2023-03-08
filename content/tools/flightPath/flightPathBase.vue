@@ -5,7 +5,7 @@ import useVuelidate from '@vuelidate/core';
 
 import Papa from 'papaparse';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -98,7 +98,7 @@ export function useFlightPathBaseComponent(props, context) {
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.flightPath')
 	});
-	
+
 	const {
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
@@ -247,7 +247,7 @@ export function useFlightPathBaseComponent(props, context) {
 			const year = currentDate.getFullYear();
 
 			const name = 'flight-path-' + day + '-' + month + '-' + year + '.kml';
-			
+
 			serviceDownload.download(correlationIdI, flightPathData.value,
 				name,
 				() => {
@@ -281,7 +281,7 @@ export function useFlightPathBaseComponent(props, context) {
 
 		try {
 			if (String.isNullOrEmpty(flightPathInput.value)) {
-				setError(correlationIdI, LibraryClientUtility.$trans.t('errors.process.noInput'));	
+				setError(correlationIdI, LibraryClientUtility.$trans.t('errors.process.noInput'));
 				processing.value = false;
 				return;
 			}
@@ -327,7 +327,7 @@ export function useFlightPathBaseComponent(props, context) {
 				title: flightDataTitle.value
 			};
 
-			const flightPathResponse = serviceFlightPath.process(correlationIdI, data, flightProcessor.value, 
+			const flightPathResponse = serviceFlightPath.process(correlationIdI, data, flightProcessor.value,
 				flightPath,
 				{
 					measurementUnitsId: flightMeasurementUnitsId.value,
@@ -385,7 +385,7 @@ export function useFlightPathBaseComponent(props, context) {
 
 		setNotify(correlationIdI, 'messages.reset');
 	}
-	
+
 	watch(() => flightProcessor.value,
 		(value) => {
 			if (!value)

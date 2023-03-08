@@ -1,7 +1,7 @@
 <script>
 import { computed, onMounted, ref } from 'vue';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
@@ -31,7 +31,7 @@ export function use3DPrintingBaseComponent(props, context, options) {
 
 	const contentChartDesc = ref(null);
 	const contentTitle = ref(LibraryClientUtility.$trans.t('titles.content.info.3dprinting') + ' ' + LibraryClientUtility.$trans.t('titles.content.info.title'));
-	
+
 	const data = computed(() => {
 		if (!content.value || !content.value.supplemental || !content.value.supplemental.data)
 			return [];

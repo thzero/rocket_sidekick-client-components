@@ -1,7 +1,7 @@
 <script>
 import { onMounted, ref} from 'vue';
 
-import AppConstants from "@/constants";
+import AppConstants from "@/utility/constants";
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
@@ -38,7 +38,7 @@ export function useRocketsBaseComponent(props, context, options) {
 			response = await serviceStore.dispatcher.requestRockets(correlationId(), params.value);
 		else if (props.type === AppConstants.RocketTypes.Yours)
 			response = await serviceStore.dispatcher.requestRocketsUser(correlationId(), params.value);
-		
+
 		if (hasFailed(response))
 			return [];
 		return response.results;

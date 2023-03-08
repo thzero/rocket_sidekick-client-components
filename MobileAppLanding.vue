@@ -41,7 +41,7 @@
 <script>
 import { computed, ref } from 'vue';
 
-import AppConstants from '@/constants';
+import AppConstants from '@/utility/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
