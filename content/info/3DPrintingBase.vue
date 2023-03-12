@@ -74,7 +74,7 @@ export function use3DPrintingBaseComponent(props, context, options) {
 	});
 
 	const slideUrl = (url) => {
-		return AppConstants.External.imnages + url;
+		return AppConstants.External.images + url;
 	};
 	const temperature = (tempF, tempC) => {
 		if (String.isNullOrEmpty(tempC))

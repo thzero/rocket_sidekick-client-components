@@ -41,23 +41,24 @@ export function useHomeBaseComponent(props, context, options) {
 	};
 
 	const hasContent = computed(() => {
-		return serviceStore.getters.getContent() !== null;
+		const content = serviceStore.getters.getContent();
+		return content && content.length > 0;
+	});
+	const hasContentInfo = computed(() => {
+		const content = serviceStore.getters.getContentInfo();
+		return content && content.length > 0;
+	});
+	const hasContentTools = computed(() => {
+		const content = serviceStore.getters.getContentTools();
+		return content && content.length > 0;
 	});
 	const info = computed(() => {
-		let temp = serviceStore.getters.getContent();
-		if (!temp)
-			return [];
-		if (!temp.info)
-			return [];
-		return temp.info.sort((a, b) => a.order >= b.order);
+		let info = serviceStore.getters.getContentInfo();
+		return info.sort((a, b) => a.order >= b.order);
 	});
 	const tools = computed(() => {
-		let temp = serviceStore.getters.getContent();
-		if (!temp)
-			return [];
-		if (!temp.tools)
-			return [];
-		return temp.tools.sort((a, b) => a.order >= b.order);
+		let tools = serviceStore.getters.getContentTools();
+		return tools.sort((a, b) => a.order >= b.order);
 	});
 	const isLoggedIn = computed(() => {
 		return serviceStore.user && serviceStore.userAuthIsLoggedIn;
@@ -110,6 +111,8 @@ export function useHomeBaseComponent(props, context, options) {
 		contentLink,
 		contentTitle,
 		hasContent,
+		hasContentInfo,
+		hasContentTools,
 		info,
 		initializeCompleted,
 		isLoggedIn,

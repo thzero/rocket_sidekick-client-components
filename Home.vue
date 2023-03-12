@@ -65,14 +65,13 @@
 								</p>
 							</v-col>
 							<v-col
-								v-if="hasContent"
+								v-if="hasContentTools"
 								cols="12"
 								class="text-center"
 							>
 								<hr />
 							</v-col>
 							<v-col
-								v-if="hasContent"
 								v-for="item in tools"
 								:key="item.name"
 								cols="12"
@@ -94,7 +93,7 @@
 								</v-card>
 							</v-col>
 							<v-col
-								v-if="hasContent"
+								v-if="hasContentInfo"
 								cols="12"
 								class="text-center"
 							>
@@ -221,6 +220,8 @@ export default {
 			contentLink,
 			contentTitle,
 			hasContent,
+			hasContentInfo,
+			hasContentTools,
 			info,
 			initializeCompleted,
 			isLoggedIn,
@@ -246,6 +247,8 @@ export default {
 			contentLink,
 			contentTitle,
 			hasContent,
+			hasContentInfo,
+			hasContentTools,
 			info,
 			initializeCompleted,
 			isLoggedIn,
