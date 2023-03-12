@@ -112,7 +112,7 @@ export function useHighPowerBaseComponent(props, context, options) {
 	});
 
 	const slideUrl = (url) => {
-		return AppConstants.External.imnages + url;
+		return AppConstants.External.images + url;
 	};
 
 	onMounted(async () => {
