@@ -59,18 +59,18 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		return rocket.value.videos.length > 0;
 	});
 	const rocketsUrl = computed((item) => {
-		if (props.type === AppCommonConstants.Rocketry.RocketTypes.Site)
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			return '/rockets';
-		if (props.type === AppCommonConstants.Rocketry.RocketTypes.Yours)
-			return '/)yours/rockets';
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
+			return '/user/rockets';
 		return null;
 	});
 
 	const fetch = async () => {
 		let response;
-		if (props.type === AppCommonConstants.Rocketry.RocketTypes.Site)
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			response = await serviceStore.dispatcher.requestRocketsById(correlationId(), rocketId.value);
-		else if (props.type === AppCommonConstants.Rocketry.RocketTypes.Yours)
+		else if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
 			response = await serviceStore.dispatcher.requestRocketsByIdUser(correlationId(), rocketId.value);
 		if (hasFailed(response))
 			return [];
