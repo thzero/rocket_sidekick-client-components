@@ -1,14 +1,9 @@
 <script>
 import { computed, onMounted, ref } from 'vue';
 
-import AppSharedConstants from '@/utility/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
-
-import { useBaseMainLayout } from '@thzero/library_client_vue3/layouts/baseMainLayout';
-
-import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 

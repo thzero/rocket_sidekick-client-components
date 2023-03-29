@@ -1,8 +1,8 @@
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-export const useRocketsBaseProps = {
+export const useChecklistsBaseProps = {
 		type: {
 			type: String,
-			default: AppCommonConstants.Rocketry.DisplayTypes.Site
+			default: AppCommonConstants.Checklists.DisplayTypes.User
 		}
 };
