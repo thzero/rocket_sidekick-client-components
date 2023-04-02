@@ -1,74 +1,118 @@
 <template>
 	<Header v-model="title" />
-	<v-row>
+	<v-row dense>
 		<v-col cols="12">
 			<v-card class="mb-4">
 				<v-card-text>
 					filters go here
 				</v-card-text>
 			</v-card>
-			<v-row dense>
-				<v-col cols="12"
-					v-for="item in checklists"
-					:key="item.name"
-				>
-					<v-card>
-						<v-card-title>
-							{{ item.name }}
-							<!-- <v-chip
-								v-if="isDefault"
-								style="float: right;"
-							>
-								{{  $t('strings.checklists.isdefault') }}
-							</v-chip> -->
-						</v-card-title>
-						<v-card-text>
-							{{ item.description }}
-						</v-card-text>
-						<v-card-actions>
-							<v-chip
-								v-if="isDefault"
-							>
-								{{  $t('strings.checklists.isdefault') }}
-							</v-chip>
-							<v-spacer></v-spacer>
-							<v-btn
-								v-if="canCopy(item)"
-								size="large"
-								color="blue"
-								variant="flat"
-								@click="dialogCopyOpen(item)"
-							>
-								{{ $t('buttons.copy') }}
-							</v-btn>
-							<v-btn
-								v-if="canDelete(item)"
-								size="large"
-								color="red"
-								variant="flat"
-							>
-								{{ $t('buttons.delete') }}
-							</v-btn>
-							<v-btn
-								v-if="canStart(item)"
-								size="large"
-								color="green"
-								variant="flat"
-							>
-								{{ $t('buttons.start') }}
-							</v-btn>
-						</v-card-actions>
-					</v-card>
-				</v-col>
-			</v-row>
+		</v-col>
+		<v-col cols="12">
+			<v-snackbar
+				ref="notifyRef"
+				v-model="notifySignal"
+				:color="notifyColor"
+				:timeout="notifyTimeout"
+			>
+				{{ notifyMessage }}
+			</v-snackbar>
+		</v-col>
+		<v-col cols="12" lg="4"
+			v-for="item in checklists"
+			:key="item.name"
+		>
+			<v-card>
+				<v-card-title>
+					{{ item.name }}
+					<!-- <v-chip
+						v-if="isDefault"
+						style="float: right;"
+					>
+						{{  $t('strings.checklists.isdefault') }}
+					</v-chip> -->
+				</v-card-title>
+				<v-card-text>
+					{{ item.description }}
+				</v-card-text>
+				<v-card-actions>
+					<v-chip
+						v-if="isDefault"
+					>
+						{{  $t('strings.checklists.isdefault') }}
+					</v-chip>
+					<v-spacer></v-spacer>
+					<v-btn
+						v-if="canCopy(item)"
+						color="blue"
+						variant="flat"
+						@click="dialogCopyOpen(item)"
+					>
+						{{ $t('buttons.copy') }}
+					</v-btn>
+					<v-btn
+						v-if="canDelete(item)"
+						color="red"
+						variant="flat"
+						@click="dialogDeleteOpen(item)"
+					>
+						{{ $t('buttons.delete') }}
+					</v-btn>
+					<v-btn
+						v-if="canEdit(item)"
+						color="green"
+						variant="flat"
+						@click="handleEdit(item)"
+					>
+						{{ $t('buttons.edit') }}
+					</v-btn>
+					<v-btn
+						v-if="canStart(item)"
+						color="green"
+						variant="flat"
+						@click="dialogStartOpen(item)"
+					>
+						{{ $t('buttons.start') }}
+					</v-btn>
+					<v-btn
+						v-if="canView(item)"
+						color="green"
+						variant="flat"
+						@click="handleView(item)"
+					>
+						{{ $t('buttons.view') }}
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-col>
+		<v-col
+			v-if="$vuetify.display.lgAndUp"
+			lg="8"
+		>
+			<ChecklistControl>
+			</ChecklistControl>
 		</v-col>
 	</v-row>
 	<ChecklistCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
-		:signal="dialogCopy.signal"
+		:signal="dialogCopyManager.signal"
 		@close="dialogCopyClose"
 		@ok="dialogCopyOk"
+	/>
+	<VConfirmationDialog
+		:message="dialogDeleteMessage"
+		:messageRaw=true
+		:signal="dialogDeleteManager.signal"
+		@cancel="dialogDeleteClose"
+		@ok="dialogDeleteOk"
+	/>
+	<VConfirmationDialog
+		:message="dialogStartMessage"
+		:messageRaw=true
+		:signal="dialogStartManager.signal"
+		@cancel="dialogStartClose"
+		@ok="dialogStartOk"
 	/>
 </template>
 
@@ -76,15 +120,19 @@
 import { useChecklistsBaseComponent } from '@/components/checklists/checklistsBase';
 import { useChecklistsBaseProps } from '@/components/checklists/checklistsBaseProps';
 
-import ChecklistCopyDialog from '@/components/checklists/ChecklistCopyDialog';
+import ChecklistControl from '@/components/checklists/checklist/ChecklistControl';
+import ChecklistCopyDialog from '@/components/checklists/dialogs/ChecklistCopyDialog';
 import Header from '@/components/content/Header';
+import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 
 export default {
 	name: 'Checklists',
 	components: {
+		ChecklistControl,
 		ChecklistCopyDialog,
 		Header,
+		VConfirmationDialog,
 		VMarkdown
 	},
 	props: {
@@ -106,21 +154,43 @@ export default {
 			target,
 			checklistTypeIcon,
 			checklistTypeIconDetermine,
+			notifyColor,
+			notifyMessage,
+			notifySignal,
+			notifyTimeout,
+			setNotify,
 			checklists,
-			dialogCopy,
+			dialogCopyManager,
 			dialogCopyRef,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogStartManager,
+			dialogStartMessage,
 			title,
 			canCopy,
 			canDelete,
+			canEdit,
 			canStart,
+			canView,
 			checklistUrl,
 			dialogCopyClose,
 			dialogCopyParams,
 			dialogCopyOk,
 			dialogCopyOpen,
+			dialogDeleteClose,
+			dialogDeleteParams,
+			dialogDeleteOk,
+			dialogDeleteOpen,
+			dialogStartClose,
+			dialogStartParams,
+			dialogStartOk,
+			dialogStartOpen,
+			handleEdit,
+			handleView,
 			isCompleted,
 			isDefault,
-			isInProgress
+			isInProgress,
+			isShared
 		} = useChecklistsBaseComponent(props, context);
 
 		return {
@@ -138,21 +208,43 @@ export default {
 			target,
 			checklistTypeIcon,
 			checklistTypeIconDetermine,
+			notifyColor,
+			notifyMessage,
+			notifySignal,
+			notifyTimeout,
+			setNotify,
 			checklists,
-			dialogCopy,
+			dialogCopyManager,
 			dialogCopyRef,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogStartManager,
+			dialogStartMessage,
 			title,
 			canCopy,
 			canDelete,
+			canEdit,
 			canStart,
+			canView,
 			checklistUrl,
 			dialogCopyClose,
 			dialogCopyParams,
 			dialogCopyOk,
 			dialogCopyOpen,
+			dialogDeleteClose,
+			dialogDeleteParams,
+			dialogDeleteOk,
+			dialogDeleteOpen,
+			dialogStartClose,
+			dialogStartParams,
+			dialogStartOk,
+			dialogStartOpen,
+			handleEdit,
+			handleView,
 			isCompleted,
 			isDefault,
-			isInProgress
+			isInProgress,
+			isShared
 		};
 	}
 };

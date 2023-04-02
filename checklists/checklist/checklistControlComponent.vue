@@ -10,7 +10,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
-export function useChecklistDialogComponent(props, context, options) {
+export function useChecklistControlComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -27,16 +27,13 @@ export function useChecklistDialogComponent(props, context, options) {
 
 	const name = ref(null);
 
-	const close = () => {
-		context.emit('close');
-	};
 	const ok = () => {
 		context.emit('ok');
 	};
 	const preCompleteOk = async (correlationId) => {
 		const name2 = String.trim(name.value);
-		// const response = await GlobalUtility.$store.dispatcher.copyChecklist(correlationId, { id: props.params.id, name: name });
-		const response = success(correlationId, { id: 9999 });
+		// const response = await serviceStore.dispatcher.copyChecklist(correlationId, { id: props.params.id, name: name2 });
+		const response = success(correlationId, { id: props.params.id }); // TODO
 		logger.debug('ChecklistCopyDialog', 'preCompleteOk', 'response', response, correlationId);
 		if (hasSucceeded(response)) {
 			LibraryClientUtility.$navRouter.push(LibraryCommonUtility.formatUrl({ url: '/user/checklists', params: [ response.results.id ]}));
@@ -46,7 +43,7 @@ export function useChecklistDialogComponent(props, context, options) {
 		return success(correlationId);
 	};
 	// eslint-disable-next-line
-	const resetDialog = async (correlationId, options) => {
+	const resetForm = async (correlationId, options) => {
 		name.value = props.params ? props.params.name : null;
 	};
 
@@ -61,12 +58,11 @@ export function useChecklistDialogComponent(props, context, options) {
 		notImplementedError,
 		success,
 		name,
-		close,
 		ok,
 		preCompleteOk,
-		resetDialog,
-		scope: 'ChecklistCopyDialog',
-		validation: useVuelidate({ $scope: 'ChecklistCopyDialog' })
+		resetForm,
+		scope: 'ChecklistControl',
+		validation: useVuelidate({ $scope: 'ChecklistControl' })
 	};
 };
 </script>
