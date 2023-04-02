@@ -180,7 +180,7 @@
 <script>
 import { helpers, minLength, requiredUnless } from '@vuelidate/validators';
 
-import { useAppMobileLookupDialogComponent } from '@/components/external/appMotorLookupDialog';
+import { useMobileLookupDialogComponent } from '@/components/external/motorLookupDialogComponent';
 
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormListingDialog';
@@ -248,9 +248,10 @@ export default {
 			singleUse,
 			scope,
 			validation
-		} = useAppMobileLookupDialogComponent(props, context);
+		} = useMobileLookupDialogComponent(props, context);
 
-		return {correlationId,
+		return {
+			correlationId,
 			error,
 			hasFailed,
 			hasSucceeded,

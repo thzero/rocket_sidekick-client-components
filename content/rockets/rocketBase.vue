@@ -20,7 +20,7 @@ export function useRocketBaseComponent(props, context, options) {
 	} = useContentBaseComponent(props, context, options);
 
 	const fetch = async () => {
-		const response = await serviceStore.dispatcher.requestRocketsById(correlationId(), rocketId.value);
+		const response = await serviceStore.dispatcher.requestRocketById(correlationId(), rocketId.value);
 		if (hasFailed(response))
 			return [];
 		return response.results;
