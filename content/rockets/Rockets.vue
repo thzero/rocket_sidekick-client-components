@@ -2,8 +2,8 @@
 	<Header v-model="title" />
 	<v-row>
 		<v-col cols="12">
-			<v-card>
-				<v-card-text>
+			<!-- <v-card>
+				<v-card-text> -->
 					<v-row dense>
 						<v-col cols="6"
 							v-for="item in rockets"
@@ -41,8 +41,8 @@
 							</v-card>
 						</v-col>
 					</v-row>
-				</v-card-text>
-			</v-card>
+				<!-- </v-card-text>
+			</v-card> -->
 		</v-col>
 	</v-row>
 </template>

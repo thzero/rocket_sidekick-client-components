@@ -25,11 +25,6 @@ export function useChecklistBaseComponent(props, context, options) {
 			return [];
 		return response.results;
 	};
-	const hasCoverUrl = (item) => {
-		if (!item)
-			return null;
-		return !String.isNullOrEmpty(item.coverUrl);
-	};
 	const checklistTypeIcon = (item) => {
 		const icon = checklistTypeIconDetermine(item);
 		if (!icon)
@@ -65,7 +60,6 @@ export function useChecklistBaseComponent(props, context, options) {
 		serviceStore,
 		sort,
 		target,
-		hasCoverUrl,
 		checklistTypeIcon,
 		checklistTypeIconDetermine
 	};
