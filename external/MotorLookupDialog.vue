@@ -181,6 +181,7 @@
 import { helpers, minLength, requiredUnless } from '@vuelidate/validators';
 
 import { useMobileLookupDialogComponent } from '@/components/external/motorLookupDialogComponent';
+import { useMobileLookupDialogProps } from '@/components/external/motorLookupDialogProps';
 
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormListingDialog';
@@ -196,14 +197,7 @@ export default {
 		VTextFieldWithValidation
 	},
 	props: {
-		selectable: {
-			type: Boolean,
-			default: true
-		},
-		signal: {
-			type: Boolean,
-			default: false
-		}
+		...useMobileLookupDialogProps
 	},
 	emits: ['close', 'ok'],
 	setup (props, context) {

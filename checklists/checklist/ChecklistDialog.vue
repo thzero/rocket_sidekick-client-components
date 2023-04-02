@@ -15,24 +15,22 @@
 			vid="name"
 			:label="$t('forms.name')"
 			:counter="30"
+			:validation="validation"
 		/>
 	</VFormDialog>
 </template>
 
 <script>
-// import { helpers, minLength, requiredUnless } from '@vuelidate/validators';
+import { maxLength, minLength, required } from '@vuelidate/validators';
 
-// import GlobalUtility from '@thzero/library_client/utility/global';
-// import LibraryUtility from '@thzero/library_common/utility';
-
-import { useChecklistDialogComponent } from '@/components/checklists/checklistCopyDialogComponent';
-import { useChecklistDialogProps } from '@/components/checklists/checklistCopyDialogProps';
+import { useChecklistComponent } from '@/components/checklists/checklist/checklistComponent';
+import { useChecklistDialogProps } from '@/components/checklists/checklist/checklistDialogProps';
 
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'ChecklistNewDialog',
+	name: 'ChecklistDialog',
 	components: {
 		VFormDialog,
 		VTextFieldWithValidation
@@ -59,7 +57,7 @@ export default {
 			resetDialog,
 			scope,
 			validation
-		} = useChecklistDialogComponent(props, context);
+		} = useChecklistComponent(props, context);
 
 		return {
 			correlationId,
@@ -78,6 +76,16 @@ export default {
 			resetDialog,
 			scope,
 			validation
+		};
+	},
+	validations () {
+		return {
+			name: {
+				required,
+				minLength: minLength(3),
+				maxLength: maxLength(50),
+				$autoDirty: true
+			}
 		};
 	}
 };
