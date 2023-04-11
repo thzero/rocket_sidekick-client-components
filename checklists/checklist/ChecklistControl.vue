@@ -1,50 +1,119 @@
 <template>
+	[[ invalid {{ invalid }} ]]
+	[[ dirty {{ dirty }} ]]
+	[[ isEditable {{ isEditable }} ]]
+	[[ isNew {{ isNew }} ]]
+	[[ canAdd {{ canAdd }} ]]
+	[[ isDefault {{ isDefault }} ]]
+	[[ isInProgress {{ isInProgress }} ]]
+	[[ isShared {{ isShared }} ]]
+	[[ detailItem {{ JSON.stringify(detailItem) }}]]
 	<VFormControl
-		ref="checklistRef"
+		ref="formControlRef"
 		:validation="validation"
+		:dirtyCallback="dirtyCallback"
+		:invalidCallback="invalidCallback"
 		:resetForm="resetForm"
+		:buttonCancel="true"
 		buttonClearName="buttons.reset"
-		buttonOkName="buttons.calculate"
-		notifyMessageSaved="messages.calculated"
-		@ok="ok"
+		:buttonDelete="canDelete"
+		:readonly="!isEditable"
+		:preCompleteOk="preCompleteOk"
+		@cancel="handleCancel"
+		@ok="handleOk"
 	>
-		<VTextFieldWithValidation
-			ref="nameRef"
-			v-model="name"
-			vid="name"
-			:label="$t('forms.name')"
+		<!-- <ChecklistFields
+			:validation="validation"
+			:readonly="readonly"
+		/> -->
+		<v-row dense>
+			<v-col>
+				<VTextFieldWithValidation
+					ref="nameRef"
+					v-model="innerItemName"
+					vid="innerItemName"
+					:label="$t('forms.name')"
+					:counter="30"
+					:validation="validation"
+					:readonly="!isEditable"
+				/>
+			</v-col>
+			<v-col cols="3">
+				<VSwitch
+					ref="isDefaultRef"
+					v-if="!isEditable"
+					v-model="innerItemIsDefault"
+					:label="$t('forms.description')"
+					:readonly="true"
+				/>
+			</v-col>
+		</v-row>
+		<VTextAreaWithValidation
+			ref="descriptionRef"
+			v-model="innerItemDescription"
+			vid="innerItemDescription"
+			:label="$t('forms.description')"
 			:counter="30"
 			:validation="validation"
+			:readonly="!isEditable"
+			:clearable="isEditable"
+			:rows="detailTextRows"
 		/>
 
-		<div src="./checklistFieldsTemplate.html"></div>
+		<template v-slot:buttons_pre>
+			<v-btn
+				v-if="canAdd"
+				class="mr-2"
+				color="primary"
+				@click="handleAdd"
+			>
+				{{ $t('buttons.add') }} {{ $t('checklists.step') }}
+			</v-btn>
+			<span
+				v-if="canAdd"
+				class="mr-2"
+			>|</span>
+		</template>
+		<template v-slot:buttons_post>
+			<v-btn
+				v-if="!isEditable"
+				class="ml-2"
+				color="primary"
+				@click="handleClose"
+			>
+				{{ $t('buttons.close') }}
+			</v-btn>
+		</template>
 	</VFormControl>
 </template>
 
 <script>
-import { useChecklistControlComponent } from '@/components/checklists/checklist/checklistControlComponent';
-import { useChecklistFieldsComponents } from '@/components/checklists/checklist/checklistFieldsComponents';
+import { useChecklistComponent } from '@/components/checklists/checklist/checklistComponent';
+// import { useChecklistFieldsComponent } from '@/components/checklists/checklist/checklistFieldsComponents';
 import { useChecklistFieldsValidation } from '@/components/checklists/checklist/checklistFieldsValidation';
-import { useChecklistFieldsProps } from '@/components/checklists/checklist/checklistFieldsProps';
+import { useChecklistComponentProps } from '@/components/checklists/checklist/checklistComponentProps';
 
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-// import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+// import ChecklistFields from './ChecklistFields';
+import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
+import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
 	name: 'ChecklistControl',
-	// components: {
-	// 	VFormControl,
-	// 	VTextFieldWithValidation
-	// },
 	components: Object.assign({
-			VFormControl
+			// ChecklistFields,
+			VFormControl,
+			VSwitchWithValidation,
+			VTextAreaWithValidation,
+			VTextFieldWithValidation
 		},
-		useChecklistFieldsComponents
+		// useChecklistFieldsComponent
 	),
 	props: {
-		...useChecklistFieldsProps
+		...useChecklistComponentProps
 	},
-	emits: ['close', 'ok'],
+	emits: ['cancel', 'close', 'ok'],
 	setup (props, context) {
 		const {
 			correlationId,
@@ -56,13 +125,38 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			name,
-			ok,
-			preCompleteOk,
+			successResponse,
+			isSaving,
+			serverErrors,
+			setErrors,
+			serviceStore,
+			formControlRef,
+			dirty,
+			innerItem,
+			innerItemOrig,
+			invalid,
+			canDelete,
+			detailTextRows,
+			isEditable,
+			isNew,
+			dirtyCallback,
+			invalidCallback,
+			handleCancel,
+			handleClose,
+			handleOk,
 			resetForm,
+			innerItemDescription,
+			innerItemIsDefault,
+			innerItemName,
+			canAdd,
+			isDefault,
+			isInProgress,
+			isShared,
+			handleAdd,
+			preCompleteOk,
 			scope,
 			validation
-		} = useChecklistControlComponent(props, context);
+		} = useChecklistComponent(props, context);
 
 		return {
 			correlationId,
@@ -74,10 +168,35 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			name,
-			ok,
-			preCompleteOk,
+			successResponse,
+			isSaving,
+			serverErrors,
+			setErrors,
+			serviceStore,
+			formControlRef,
+			dirty,
+			innerItem,
+			innerItemOrig,
+			invalid,
+			canDelete,
+			detailTextRows,
+			isEditable,
+			isNew,
+			dirtyCallback,
+			invalidCallback,
+			handleCancel,
+			handleClose,
+			handleOk,
 			resetForm,
+			innerItemDescription,
+			innerItemIsDefault,
+			innerItemName,
+			canAdd,
+			isDefault,
+			isInProgress,
+			isShared,
+			handleAdd,
+			preCompleteOk,
 			scope,
 			validation
 		};

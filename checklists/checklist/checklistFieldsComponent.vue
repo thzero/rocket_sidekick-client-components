@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
@@ -21,6 +21,10 @@ export function useChecklistFieldsComponent(props, context, options) {
 	const name = ref(null);
 	const nameRef = ref(null);
 
+	const displayRows = computed(() => {
+		return props.readonly ?  1 : 5;
+	});
+
 	return {
 		correlationId,
 		error,
@@ -33,6 +37,7 @@ export function useChecklistFieldsComponent(props, context, options) {
 		success,
 		name,
 		nameRef,
+		displayRows,
 		scope: 'ChecklistCopyDialog',
 		validation: useVuelidate({ $scope: 'ChecklistCopyDialog' })
 	};
