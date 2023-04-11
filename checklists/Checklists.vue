@@ -5,7 +5,19 @@
 			<v-card class="mb-4">
 				<v-card-text>
 					filters go here
+					{{ dialogDeleteMessage }}
 				</v-card-text>
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn
+						v-if="!hasDetailItem"
+						color="blue"
+						variant="flat"
+						@click="handleAdd(item)"
+					>
+						{{ $t('buttons.add') }}
+					</v-btn>
+				</v-card-actions>
 			</v-card>
 		</v-col>
 		<v-col cols="12">
@@ -17,79 +29,96 @@
 			>
 				{{ notifyMessage }}
 			</v-snackbar>
-		</v-col>
-		<v-col cols="12" lg="4"
-			v-for="item in checklists"
-			:key="item.name"
-		>
-			<v-card>
-				<v-card-title>
-					{{ item.name }}
-					<!-- <v-chip
-						v-if="isDefault"
-						style="float: right;"
-					>
-						{{  $t('strings.checklists.isdefault') }}
-					</v-chip> -->
-				</v-card-title>
-				<v-card-text>
-					{{ item.description }}
-				</v-card-text>
-				<v-card-actions>
-					<v-chip
-						v-if="isDefault"
-					>
-						{{  $t('strings.checklists.isdefault') }}
-					</v-chip>
-					<v-spacer></v-spacer>
-					<v-btn
-						v-if="canCopy(item)"
-						color="blue"
-						variant="flat"
-						@click="dialogCopyOpen(item)"
-					>
-						{{ $t('buttons.copy') }}
-					</v-btn>
-					<v-btn
-						v-if="canDelete(item)"
-						color="red"
-						variant="flat"
-						@click="dialogDeleteOpen(item)"
-					>
-						{{ $t('buttons.delete') }}
-					</v-btn>
-					<v-btn
-						v-if="canEdit(item)"
-						color="green"
-						variant="flat"
-						@click="handleEdit(item)"
-					>
-						{{ $t('buttons.edit') }}
-					</v-btn>
-					<v-btn
-						v-if="canStart(item)"
-						color="green"
-						variant="flat"
-						@click="dialogStartOpen(item)"
-					>
-						{{ $t('buttons.start') }}
-					</v-btn>
-					<v-btn
-						v-if="canView(item)"
-						color="green"
-						variant="flat"
-						@click="handleView(item)"
-					>
-						{{ $t('buttons.view') }}
-					</v-btn>
-				</v-card-actions>
-			</v-card>
+			[[ colsSearchResults {{ colsSearchResults }}]]
+			[[ colsEditPanel {{ colsEditPanel }}]]
+			[[ hasDetailItem {{ hasDetailItem }}]]
+			[[ detailitem {{ JSON.stringify(detailItem) }}]]
 		</v-col>
 		<v-col
-			v-if="$vuetify.display.lgAndUp"
-			lg="8"
+			v-show="colsSearchResults"
+			:cols="colsSearchResults"
 		>
-			<ChecklistControl>
+			<v-row dense>
+				<v-col
+					cols="12"
+					v-for="item in checklists"
+					:key="item.name"
+				>
+					<v-card>
+						<v-card-title>
+							{{ item.name }}
+							<!-- <v-chip
+								v-if="isDefault"
+								style="float: right;"
+							>
+								{{  $t('strings.checklists.isdefault') }}
+							</v-chip> -->
+						</v-card-title>
+						<v-card-text>
+							{{ item.description }}
+						</v-card-text>
+						<v-card-actions>
+							<v-chip
+								v-if="isDefault(item)"
+							>
+								{{  $t('strings.checklists.isdefault') }}
+							</v-chip>
+							<v-spacer></v-spacer>
+							<v-btn
+								v-if="canCopy(item)"
+								color="blue"
+								variant="flat"
+								@click="dialogCopyOpen(item)"
+							>
+								{{ $t('buttons.copy') }}
+							</v-btn>
+							<v-btn
+								v-if="canDelete(item)"
+								color="red"
+								variant="flat"
+								@click="dialogDeleteOpen(item)"
+							>
+								{{ $t('buttons.delete') }}
+							</v-btn>
+							<v-btn
+								v-if="canEdit(item)"
+								color="blue"
+								variant="flat"
+								@click="handleEdit(item)"
+							>
+								{{ $t('buttons.edit') }}
+							</v-btn>
+							<v-btn
+								v-if="canStart(item)"
+								color="green"
+								variant="flat"
+								@click="dialogStartOpen(item)"
+							>
+								{{ $t('buttons.start') }}
+							</v-btn>
+							<v-btn
+								v-if="canView(item)"
+								color="green"
+								variant="flat"
+								@click="handleView(item)"
+							>
+								{{ $t('buttons.view') }}
+							</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-col>
+			</v-row>
+		</v-col>
+		<v-col
+			v-show="colsEditPanel"
+			:cols="colsEditPanel"
+		>
+			<ChecklistControl
+				:detail-item="detailItem"
+				@cancel="detailClose"
+				@close="detailClose"
+				@ok="detailOk"
+			>
 			</ChecklistControl>
 		</v-col>
 	</v-row>
@@ -152,8 +181,6 @@ export default {
 			serviceStore,
 			sort,
 			target,
-			checklistTypeIcon,
-			checklistTypeIconDetermine,
 			notifyColor,
 			notifyMessage,
 			notifySignal,
@@ -166,13 +193,23 @@ export default {
 			dialogDeleteMessage,
 			dialogStartManager,
 			dialogStartMessage,
+			detailItem,
 			title,
+			colsEditPanel,
+			colsSearchResults,
+			displayEditPanel,
+			displaySearchResults,
+			hasDetailItem,
 			canCopy,
 			canDelete,
 			canEdit,
 			canStart,
 			canView,
+			checklistTypeIcon,
+			checklistTypeIconDetermine,
 			checklistUrl,
+			detailClose,
+			detailOk,
 			dialogCopyClose,
 			dialogCopyParams,
 			dialogCopyOk,
@@ -185,8 +222,13 @@ export default {
 			dialogStartParams,
 			dialogStartOk,
 			dialogStartOpen,
+			params,
+			handleAdd,
 			handleEdit,
 			handleView,
+			initEdit,
+			initNew,
+			initView,
 			isCompleted,
 			isDefault,
 			isInProgress,
@@ -206,8 +248,6 @@ export default {
 			serviceStore,
 			sort,
 			target,
-			checklistTypeIcon,
-			checklistTypeIconDetermine,
 			notifyColor,
 			notifyMessage,
 			notifySignal,
@@ -220,13 +260,23 @@ export default {
 			dialogDeleteMessage,
 			dialogStartManager,
 			dialogStartMessage,
+			detailItem,
 			title,
+			colsEditPanel,
+			colsSearchResults,
+			displayEditPanel,
+			displaySearchResults,
+			hasDetailItem,
 			canCopy,
 			canDelete,
 			canEdit,
 			canStart,
 			canView,
+			checklistTypeIcon,
+			checklistTypeIconDetermine,
 			checklistUrl,
+			detailClose,
+			detailOk,
 			dialogCopyClose,
 			dialogCopyParams,
 			dialogCopyOk,
@@ -239,8 +289,13 @@ export default {
 			dialogStartParams,
 			dialogStartOk,
 			dialogStartOpen,
+			params,
+			handleAdd,
 			handleEdit,
 			handleView,
+			initEdit,
+			initNew,
+			initView,
 			isCompleted,
 			isDefault,
 			isInProgress,

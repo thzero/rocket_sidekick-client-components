@@ -1,14 +1,18 @@
 <script>
-import { onMounted, ref} from 'vue';
+import { computed, onMounted, ref} from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
-import { useChecklistBaseComponent } from '@/components/checklists/checklistBase';
+import { useContentBaseComponent } from '@/components/content/contentBase';
+import { useDisplayComponent } from '@thzero/library_client_vue3_vuetify3/components/display';
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
+
+import ChecklistData from 'rocket_sidekick_common/data/checklists/index';
 
 export function useChecklistsBaseComponent(props, context, options) {
 	const {
@@ -24,9 +28,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		serviceStore,
 		sort,
 		target,
-		checklistTypeIcon,
-		checklistTypeIconDetermine
-	} = useChecklistBaseComponent(props, context, options);
+	} = useContentBaseComponent(props, context, options);
 
 	const {
 		notifyColor,
@@ -35,6 +37,8 @@ export function useChecklistsBaseComponent(props, context, options) {
 		notifyTimeout,
 		setNotify
 	} = useNotify(props, context, options);
+
+	const display = useDisplayComponent();
 
 	const checklists = ref([]);
 	const dialogCopyManager = ref(new DialogSupport());
@@ -46,10 +50,38 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const dialogStartManager = ref(new DialogSupport());
 	const dialogStartMessage = ref(LibraryClientUtility.$trans.t('messages.checklists.start_confirm'));
 	const dialogStartParams = ref(null);
+	const detailItem = ref(null);
 	const params = ref({});
 	const title = ref(
 		(props.type === AppCommonConstants.Checklists.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.checklists.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.checklists.title')
 	);
+
+	dialogDeleteMessage.value = serviceStore.state.mobileOnly;
+
+	const colsEditPanel = computed(() => {
+		if (display.mdAndDown.value)
+			return hasDetailItem.value ? 12 : 0;
+
+		return hasDetailItem.value ? 8 : 0;
+	});
+	const colsSearchResults = computed(() => {
+		if (display.mdAndDown.value)
+			return hasDetailItem.value ? 0 : 12;
+
+		return hasDetailItem.value ? 4 : 12;
+	});
+	const displayEditPanel = computed(() => {
+		return hasDetailItem.value;
+	});
+	const displaySearchResults = computed(() => {
+		if (display.mdAndDown.value)
+			return hasDetailItem.value;
+
+		return true;
+	});
+	const hasDetailItem = computed(() => {
+		return LibraryCommonUtility.isNotNull(detailItem.value);
+	});
 
 	const canCopy = (item) => {
 		return item && isDefault(item) || isShared(item) || !isInProgress(item);
@@ -66,6 +98,27 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const canView = (item) => {
 		return item && isDefault(item) || isShared(item);
 	};
+	const checklistTypeIcon = (item) => {
+		const icon = checklistTypeIconDetermine(item);
+		if (!icon)
+			return null;
+		return '/icons/' + icon;
+	};
+	const checklistTypeIconDetermine = (item) => {
+		if (!item)
+			return null;
+		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.highone)
+			return 'rocket_level1.png';
+		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.hightwo)
+			return 'rocket_level2.png';
+		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.highthree)
+			return 'rocket_level3.png';
+		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.low)
+			return 'rocket_low.png';
+		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.mid)
+			return 'rocket_mid.png';
+		return null;
+	};
 	const checklistUrl = (item) => {
 		if (!item)
 			return null;
@@ -74,6 +127,11 @@ export function useChecklistsBaseComponent(props, context, options) {
 		if (props.type === AppCommonConstants.Checklists.DisplayTypes.Personal)
 			return '/user/checklist/' + item.id;
 		return null;
+	};
+	const detailClose = async () => {
+		detailItem.value = null;
+	};
+	const detailOk = async () => {
 	};
 	const dialogCopyClose = async (item) => {
 		dialogCopyManager.value.cancel();
@@ -144,21 +202,44 @@ export function useChecklistsBaseComponent(props, context, options) {
 			return [];
 		return response.results;
 	};
-	const handleEdit = (item) => {
+	const handleAdd = () => {
+		detailItem.value = initNew();
 	};
-	const handleView = (item) => {
+	const handleEdit = (item) => {
+		detailItem.value = initEdit(item);
+	};
+	const handleView = async (item) => {
+		const correlationId = correlationId();
+		detailItem.value = null;
+		const response = await serviceStore.dispatcher.requestChecklistByIdUser(correlationId, item.id);
+		if (hasFailed(response)) {
+			setNotify(correlationId, 'messages.saved_failed');
+			detailItem.value = initView(response.results);
+			return;
+		}
+	};
+	const initEdit = (data) => {
+		return { data: LibraryCommonUtility.cloneDeep(data), isNew: false, isEditable: true }
+	};
+	const initNew = () => {
+		const data = new ChecklistData();
+		data.typeId = AppCommonConstants.Checklists.ChecklistTypes.launch;
+		return { data: data, isNew: true, isEditable: true  }
+	};
+	const initView = (data) => {
+		return { data: data, isNew: true, isEditable: false  }
 	};
 	const isCompleted = (item) => {
-		return item && item.completed;
+		return item ? item.completed  ?? false : false;
 	};
 	const isDefault = (item) => {
-		return item && item.isDefault;
+		return item ? item.isDefault ?? false : false;
 	};
 	const isInProgress = (item) => {
-		return item && item.type === AppCommonConstants.Checklists.ChecklistStatus.inProgress;
+		return item ? item.type === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
 	};
 	const isShared = (item) => {
-		return item && item.isShared;
+		return item ? item.isShared ?? false : false;
 	};
 
 	onMounted(async () => {
@@ -178,8 +259,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		serviceStore,
 		sort,
 		target,
-		checklistTypeIcon,
-		checklistTypeIconDetermine,
 		notifyColor,
 		notifyMessage,
 		notifySignal,
@@ -192,13 +271,23 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogDeleteMessage,
 		dialogStartManager,
 		dialogStartMessage,
+		detailItem,
 		title,
+		colsEditPanel,
+		colsSearchResults,
+		displayEditPanel,
+		displaySearchResults,
+		hasDetailItem,
 		canCopy,
 		canDelete,
 		canEdit,
 		canStart,
 		canView,
+		checklistTypeIcon,
+		checklistTypeIconDetermine,
 		checklistUrl,
+		detailClose,
+		detailOk,
 		dialogCopyClose,
 		dialogCopyParams,
 		dialogCopyOk,
@@ -211,8 +300,13 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogStartParams,
 		dialogStartOk,
 		dialogStartOpen,
+		params,
+		handleAdd,
 		handleEdit,
 		handleView,
+		initEdit,
+		initNew,
+		initView,
 		isCompleted,
 		isDefault,
 		isInProgress,

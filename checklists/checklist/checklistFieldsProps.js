@@ -1,6 +1,7 @@
 export const useChecklistFieldsProps = {
-	params: {
-		type: Object
+	readonly: {
+		type: Boolean,
+		value: false
 	},
 	validation: {
 		type: Object

@@ -27,7 +27,7 @@
 						buttonClearName="buttons.reset"
 						buttonOkName="buttons.save"
 						:pre-complete-ok="preCompleteOk"
-						:dirtyCheck="dirtyCheck"
+						:dirtyCallback="dirtyCallback"
 					>
 						<v-row dense>
 							<v-col
@@ -254,7 +254,7 @@ export default {
 			setErrors,
 			beforeUnload,
 			dirty,
-			dirtyCheck,
+			dirtyCallback,
 			leaveCheck,
 			cancel,
 			close,
@@ -311,7 +311,7 @@ export default {
 			setErrors,
 			beforeUnload,
 			dirty,
-			dirtyCheck,
+			dirtyCallback,
 			leaveCheck,
 			cancel,
 			close,
