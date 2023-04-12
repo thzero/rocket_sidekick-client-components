@@ -22,43 +22,43 @@ export function useContentAttributionBaseComponent(props, context, options) {
 	} = useContentBaseComponent(props, context, options);
 
 	const author = computed(() => {
-		if (!props.modelValue || !props.modelValue.author)
+		if (!props.value || !props.value.author)
 			return '';
-		return props.modelValue.author.name;
+		return props.value.author.name;
 	});
 	const authorEmail = computed(() => {
-		if (!props.modelValue || !props.modelValue.author)
+		if (!props.value || !props.value.author)
 			return '';
-		return props.modelValue.author.email;
+		return props.value.author.email;
 	});
 	const authorEmailHref = computed(() => {
-		if (!props.modelValue || !props.modelValue.author)
+		if (!props.value || !props.value.author)
 			return '';
-		return 'mailto:' + props.modelValue.author.email;
+		return 'mailto:' + props.value.author.email;
 	});
 	const authorUrl = computed(() => {
-		if (!props.modelValue || !props.modelValue.author)
+		if (!props.value || !props.value.author)
 			return '';
-		return props.modelValue.author.url;
+		return props.value.author.url;
 	});
 	const hasAuthor = computed(() => {
-		if (!props.modelValue || !props.modelValue.author)
+		if (!props.value || !props.value.author)
 			return false;
-		const valid = !String.isNullOrEmpty(props.modelValue.author.name);
+		const valid = !String.isNullOrEmpty(props.value.author.name);
 		return valid;
 	});
 	const hasAuthorEmail = computed(() => {
-		if (!props.modelValue || !props.modelValue.author)
+		if (!props.value || !props.value.author)
 			return false;
-		return !String.isNullOrEmpty(props.modelValue.author.email);
+		return !String.isNullOrEmpty(props.value.author.email);
 	});
 	const hasAuthorUrl = computed(() => {
-		if (!props.modelValue || !props.modelValue.author)
+		if (!props.value || !props.value.author)
 			return false;
-		return !String.isNullOrEmpty(props.modelValue.author.url);
+		return !String.isNullOrEmpty(props.value.author.url);
 	});
 	const hasLicense = computed(() => {
-		return !props.modelValue || !String.isNullOrEmpty(props.modelValue.license);
+		return !props.value || !String.isNullOrEmpty(props.value.license);
 	});
 	const hasLicenseImage = computed(() => {
 		return !String.isNullOrEmpty(licenseImage.value);
@@ -67,9 +67,9 @@ export function useContentAttributionBaseComponent(props, context, options) {
 		return !String.isNullOrEmpty(licenseUrl.value);
 	});
 	const license = computed(() => {
-		if (!props.modelValue || !props.modelValue.license)
+		if (!props.value || !props.value.license)
 			return null;
-		const license = props.modelValue.license.toLowerCase();
+		const license = props.value.license.toLowerCase();
 		let item = Object.entries(AppCommonConstants.Licenses.Free).find(l => (l[0].toLowerCase() === license) || (l[1].id.toLowerCase() === license));
 		if (!item)
 			item = Object.entries(AppCommonConstants.Licenses.Public).find(l => (l[0].toLowerCase() === license) || (l[1].id.toLowerCase() === license));
@@ -99,7 +99,7 @@ export function useContentAttributionBaseComponent(props, context, options) {
 		return license.value.url;
 	});
 
-	watch(() => props.modelValue,
+	watch(() => props.value,
 		(value) => {
 			const hasAttribution = (hasAuthor.value && hasLicense.value);
 			context.emit('hasAttribution', hasAttribution);

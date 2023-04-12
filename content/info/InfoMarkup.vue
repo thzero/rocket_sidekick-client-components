@@ -1,16 +1,52 @@
 <template>
 	<div>
-		<ContentHeader v-model="contentTitle" />
-		<v-row dense>
-			<v-col cols="12" class="pb-2">
-				<v-card>
-					<v-card-text>
-<VMarkdown v-model="contentMarkup" :use-github=false />
-<Attribution v-model="content" @has-attribution="handleAttribution" />
-					</v-card-text>
-				</v-card>
-			</v-col>
-		</v-row>
+		<ContentHeader :value="contentTitle" />
+		<div
+			v-if="hasContentMarkupToc"
+			class="pt-2"
+		>
+			<v-row dense>
+				<v-col cols="12" class="pb-2">
+					<v-card>
+						<v-card-text>
+			<v-row dense>
+				<v-col
+					v-for="(item, index) in contentMarkupToc"
+					:key="index"
+				>
+					<a :href="('#' + item.tag)"><span class="nobreak"><h3>{{ item.title }}</h3></span></a>
+				</v-col>
+			</v-row>
+						</v-card-text>
+					</v-card>
+				</v-col>
+			</v-row>
+		</div>
+		<div
+			v-for="(item, index) in contentMarkup"
+			:key="index"
+			:class="(!hasContentMarkupToc ? 'pt-2' : '')"
+		>
+			<v-row dense>
+				<a :name="(item.tag)"></a>
+				<v-col cols="12" class="pb-2">
+					<v-card>
+						<v-card-text>
+<VMarkdown v-model="item.markup" :use-github=false />
+						</v-card-text>
+					</v-card>
+				</v-col>
+			</v-row>
+			<v-row dense>
+				<v-col cols="12" class="pb-2">
+					<v-card>
+						<v-card-text>
+<Attribution :value="item" @has-attribution="handleAttribution" />
+						</v-card-text>
+					</v-card>
+				</v-col>
+			</v-row>
+		</div>
 	</div>
 </template>
 
@@ -44,12 +80,12 @@ export default {
 			target,
 			content,
 			contentDesc,
-			contentDefinition,
-			contentMarkup,
 			handleAttribution,
-			hasAttribution,
 			contentId,
-			contentTitle
+			contentMarkup,
+			contentMarkupToc,
+			contentTitle,
+			hasContentMarkupToc
 		} = useInfoMarkupBaseComponent(props, context);
 
 		return {
@@ -67,16 +103,20 @@ export default {
 			target,
 			content,
 			contentDesc,
-			contentDefinition,
-			contentMarkup,
 			handleAttribution,
-			hasAttribution,
 			contentId,
-			contentTitle
+			contentMarkup,
+			contentMarkupToc,
+			contentTitle,
+			hasContentMarkupToc
 		};
 	}
 };
 </script>
 
 <style scoped>
+.nobreak
+{
+  white-space: pre;
+}
 </style>
