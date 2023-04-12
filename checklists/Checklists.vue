@@ -1,5 +1,5 @@
 <template>
-	<Header v-model="title" />
+	<ContentHeader :value="title" />
 	<v-row dense>
 		<v-col cols="12">
 			<v-card class="mb-4">
@@ -151,7 +151,7 @@ import { useChecklistsBaseProps } from '@/components/checklists/checklistsBasePr
 
 import ChecklistControl from '@/components/checklists/checklist/ChecklistControl';
 import ChecklistCopyDialog from '@/components/checklists/dialogs/ChecklistCopyDialog';
-import Header from '@/components/content/Header';
+import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 
@@ -160,7 +160,7 @@ export default {
 	components: {
 		ChecklistControl,
 		ChecklistCopyDialog,
-		Header,
+		ContentHeader,
 		VConfirmationDialog,
 		VMarkdown
 	},

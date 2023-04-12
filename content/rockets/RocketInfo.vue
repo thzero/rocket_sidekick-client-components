@@ -1,5 +1,5 @@
 <template>
-	<Header v-model="rocket.name">
+	<ContentHeader :value="rocket.name">
 		<!-- <template v-slot:after>
 			<v-btn
 				class="mr-2"
@@ -8,7 +8,7 @@
 				{{ $t('buttons.back') }}
 			</v-btn>
 		</template> -->
-	</Header>
+	</ContentHeader>
 	<v-row dense>
 		<v-col cols="12">
 			<v-card

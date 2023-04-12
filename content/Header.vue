@@ -10,7 +10,7 @@
 <slot name="after" />
 					</div> -->
 <div class="text-h4 text-center">
-	{{ modelValue }}
+	{{ value }}
 	<span
 		v-if="hasHelp"
 		style="float: right;"

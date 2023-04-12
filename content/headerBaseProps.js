@@ -1,5 +1,5 @@
 export const useContentHeaderBaseProps = {
-		modelValue: {
+		value: {
 			type: String,
 			default: null
 		},
