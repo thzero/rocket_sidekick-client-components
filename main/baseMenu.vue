@@ -28,8 +28,11 @@ export function useBaseMenuComponent(props, context, options) {
 		let info = serviceStore.getters.getContentInfo();
 		return info.sort((a, b) => a.order >= b.order);
 	});
+	const isLoggedIn = computed(() => {
+		return serviceStore.user != null ? serviceStore.userAuthIsLoggedIn : false;
+	});
 	const tools = computed(() => {
-		let tools = serviceStore.getters.getContentTools();
+		const tools = serviceStore.getters.getContentTools();
 		return tools.sort((a, b) => a.order >= b.order);
 	});
 
@@ -56,6 +59,7 @@ export function useBaseMenuComponent(props, context, options) {
 		features,
 		info,
 		tools,
+		isLoggedIn,
 		contentLink,
 		contentTitle
 	};
