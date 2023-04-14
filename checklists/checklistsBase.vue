@@ -6,13 +6,13 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
-
 import { useContentBaseComponent } from '@/components/content/contentBase';
 import { useDisplayComponent } from '@thzero/library_client_vue3_vuetify3/components/display';
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
 
 import ChecklistData from 'rocket_sidekick_common/data/checklists/index';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 export function useChecklistsBaseComponent(props, context, options) {
 	const {
