@@ -20,9 +20,14 @@ export function useBaseMenuComponent(props, context, options) {
 		success
 	} = useBaseComponent(props, context, options);
 
+	const serviceFeatures = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_FEATURES);
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
-	const features = ref(options ? options.features ? options.features : {} : {});
+	let featuresTemp = (serviceFeatures ? serviceFeatures.features() : null);
+	featuresTemp = (featuresTemp ? featuresTemp : (options ? options.features : null));
+	featuresTemp = (featuresTemp ? featuresTemp : {});
+
+	const features = ref(featuresTemp);
 
 	const info = computed(() => {
 		let info = serviceStore.getters.getContentInfo();
