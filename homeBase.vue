@@ -93,7 +93,7 @@ export function useHomeBaseComponent(props, context, options) {
 		// 	iframe.style.height = (Number(iframe.style.width.replace('%')) * 0.75) + 'px';
 		// 	// iframe.style.width = iframe.contentWindow.body.scrollWidth + 'px';
 		// });
-		iframe.src = 'https://docs.google.com/presentation/d/e/2PACX-1vRrKdGwne8BdKJMwMtVG1NZxVtmVOQ_ps5FBnFY85xeRX50vCJGkJQ74Pn7D46f4tqPXk287QhHwype/embed?start=true&loop=false&delayms=3000';
+		iframe.src = 'https://docs.google.com/presentation/d/e/2PACX-1vQdHTQzjsz9rYx3DUY7sXjoPOxGJ7emhlGBJ-jMbuntHD9i9JbktdR_WuWXxe72VaJa_Q1y2jYIFAc0/embed?start=true&loop=true&delayms=3000';
 	});
 
 	return {
