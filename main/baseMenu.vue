@@ -41,6 +41,12 @@ export function useBaseMenuComponent(props, context, options) {
 		return tools.sort((a, b) => a.order >= b.order);
 	});
 
+	const clickSignIn = (item,) => {
+		context.emit('clickSignIn');
+	};
+	const clickSignOut = (item,) => {
+		context.emit('clickSignOut');
+	};
 	const contentLink = (item,) => {
 		if (item.markup)
 			return `/content/info/${item.id}`;
@@ -65,6 +71,8 @@ export function useBaseMenuComponent(props, context, options) {
 		info,
 		tools,
 		isLoggedIn,
+		clickSignIn,
+		clickSignOut,
 		contentLink,
 		contentTitle
 	};
