@@ -68,3 +68,12 @@ export function useAppComponent(props, context, options) {
 	};
 };
 </script>
+
+<style>
+	.flex-form-wrapper {
+		display: flex; flex-direction: column;
+	}
+	.flex-form {
+		display: block; height: calc(100vh - 200px); overflow-y: auto; overflow-x: hidden;
+	}
+</style>

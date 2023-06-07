@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<ContentHeader
-			v-model="contentTitle"
+			:value="contentTitle"
 		/>
 		<ContentDescription id="strings.content.tools.parachuteSizing" />
 		<v-row dense>
