@@ -6,7 +6,7 @@
 			:text="warningOffline"
 		></v-alert>
 		<ContentHeader
-			v-model="contentTitle"
+			:value="contentTitle"
 		/>
 		<ContentDescription id="strings.content.tools.thrust2Weight" />
 		<v-row dense>
