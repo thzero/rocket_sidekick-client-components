@@ -19,12 +19,20 @@ export function useHomeBaseComponent(props, context, options) {
 		logger,
 		noBreakingSpaces,
 		notImplementedError,
-		success,
+		success
 	} = useBaseComponent(props, context, options);
 
+	const serviceFeatures = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_FEATURES);
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
 	const externalGithub = ref(AppSharedConstants.External.github);
+
+	let featuresTemp = (serviceFeatures ? serviceFeatures.features() : null);
+	featuresTemp = (featuresTemp ? featuresTemp : (options ? options.features : null));
+	featuresTemp = (featuresTemp ? featuresTemp : {});
+
+	const features = ref(featuresTemp);
+
 	const initializeCompleted = ref(false);
 
 	const contentDescription = (item,) => {
@@ -56,10 +64,6 @@ export function useHomeBaseComponent(props, context, options) {
 		let info = serviceStore.getters.getContentInfo();
 		return info.sort((a, b) => a.order >= b.order);
 	});
-	const tools = computed(() => {
-		let tools = serviceStore.getters.getContentTools();
-		return tools.sort((a, b) => a.order >= b.order);
-	});
 	const isLoggedIn = computed(() => {
 		return serviceStore.user && serviceStore.userAuthIsLoggedIn;
 	});
@@ -69,6 +73,10 @@ export function useHomeBaseComponent(props, context, options) {
 
 		const news = serviceStore.news.latest.slice(0);
 		return news.length;
+	});
+	const tools = computed(() => {
+		let tools = serviceStore.getters.getContentTools();
+		return tools.sort((a, b) => a.order >= b.order);
 	});
 	const user = computed(() => {
 		return serviceStore.user;
@@ -106,7 +114,10 @@ export function useHomeBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		serviceStore,
 		externalGithub,
+		features,
+		initializeCompleted,
 		contentDescription,
 		contentLink,
 		contentTitle,
@@ -114,10 +125,8 @@ export function useHomeBaseComponent(props, context, options) {
 		hasContentInfo,
 		hasContentTools,
 		info,
-		initializeCompleted,
 		isLoggedIn,
 		newsCount,
-		serviceStore,
 		tools,
 		user,
 		userDisplayName

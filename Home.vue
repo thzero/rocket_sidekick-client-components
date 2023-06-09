@@ -121,12 +121,14 @@
 								</v-card>
 							</v-col>
 							<v-col
+								v-if="features.Home.slideshow"
 								cols="12"
 								class="text-center"
 							>
 								<hr />
 							</v-col>
 							<v-col
+								v-if="features.Home.slideshow"
 								cols="12"
 								class="mt-4 mb-4"
 							>
@@ -135,6 +137,7 @@
 								</p>
 							</v-col>
 							<v-col
+								v-if="features.Home.slideshow"
 								cols="12"
 							>
 								<div class="slideshow">
@@ -215,7 +218,10 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			serviceStore,
 			externalGithub,
+			features,
+			initializeCompleted,
 			contentDescription,
 			contentLink,
 			contentTitle,
@@ -223,10 +229,8 @@ export default {
 			hasContentInfo,
 			hasContentTools,
 			info,
-			initializeCompleted,
 			isLoggedIn,
 			newsCount,
-			serviceStore,
 			tools,
 			user,
 			userDisplayName
@@ -242,7 +246,10 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			serviceStore,
 			externalGithub,
+			features,
+			initializeCompleted,
 			contentDescription,
 			contentLink,
 			contentTitle,
@@ -250,10 +257,8 @@ export default {
 			hasContentInfo,
 			hasContentTools,
 			info,
-			initializeCompleted,
 			isLoggedIn,
 			newsCount,
-			serviceStore,
 			tools,
 			user,
 			userDisplayName
