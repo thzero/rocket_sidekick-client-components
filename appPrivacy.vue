@@ -18,8 +18,6 @@ export function useAppPrivacyComponent(props, context, options) {
 			success
 		} = useBasePrivacyComponent(props, context, options);
 
-	const privacyMarkup = ref(LibraryClientUtility.$trans.t('strings.privacy.text1'));
-
 	return {
 		correlationId,
 		error,
