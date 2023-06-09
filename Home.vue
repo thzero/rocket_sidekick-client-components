@@ -55,14 +55,18 @@
 							<v-col
 								cols="12"
 							>
-								<p>
-									{{ $t('strings.content.welcome') }}<br><br>
-								</p>
-								<p
-									v-if="hasContent"
-								>
-									{{ $t('strings.content.welcomeTools') }}
-								</p>
+								<p v-html="webSiteInject($t('strings.content.home.welcome'))"></p>
+							</v-col>
+							<v-col
+								cols="12"
+							>
+								<p v-html="webSiteInject($t('strings.content.home.tools.description'))"></p>
+							</v-col>
+							<v-col
+								v-if="features.Home.additional"
+								cols="12"
+							>
+								<p v-html="webSiteInject($t(features.Home.additionalId))"></p>
 							</v-col>
 							<v-col
 								v-if="hasContentTools"
@@ -121,7 +125,6 @@
 								</v-card>
 							</v-col>
 							<v-col
-								v-if="features.Home.slideshow"
 								cols="12"
 								class="text-center"
 							>
@@ -133,7 +136,7 @@
 								class="mt-4 mb-4"
 							>
 								<p>
-									{{ $t('strings.content.welcome3') }}
+									{{ $t('strings.content.slideshow.description') }}
 								</p>
 							</v-col>
 							<v-col
@@ -155,9 +158,9 @@
 								cols="12"
 							>
 								<p>
-									{{ $t('strings.content.welcome1a') }}
+									{{ $t('strings.content.home.tools.additional1a') }}
 									<a :href="externalGithub" target="_blank">{{ externalGithub }}</a>
-									{{ $t('strings.content.welcome1b') }}
+									{{ $t('strings.content.home.tools.additional1b') }}
 								</p>
 							</v-col>
 							-->
@@ -233,7 +236,8 @@ export default {
 			newsCount,
 			tools,
 			user,
-			userDisplayName
+			userDisplayName,
+			webSiteInject
 		} = useHomeBaseComponent(props, context);
 
 		return {
@@ -261,7 +265,8 @@ export default {
 			newsCount,
 			tools,
 			user,
-			userDisplayName
+			userDisplayName,
+			webSiteInject
 		};
 	},
 	// eslint-disable-next-line

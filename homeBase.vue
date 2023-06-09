@@ -35,6 +35,9 @@ export function useHomeBaseComponent(props, context, options) {
 
 	const initializeCompleted = ref(false);
 
+	const appTitle = LibraryClientUtility.$trans.t('titles.application');
+	const websiteUrl = `<a href="" target="_blank">${appTitle}</a>`;
+
 	const contentDescription = (item,) => {
 		return (item.markup ? item.description : LibraryClientUtility.$trans.t(item.description));
 	};
@@ -84,6 +87,9 @@ export function useHomeBaseComponent(props, context, options) {
 	const userDisplayName = computed(() => {
 		return AppUtility.userDisplayName(correlationId(), serviceStore.user);
 	});
+	const webSiteInject = (value) => {
+		return value ? value.replace('[url]', websiteUrl) : '';
+	};
 
 	LibraryClientUtility.$EventBus.on('initialize-completed', (value) => {
 		initializeCompleted.value = value;
@@ -129,7 +135,8 @@ export function useHomeBaseComponent(props, context, options) {
 		newsCount,
 		tools,
 		user,
-		userDisplayName
+		userDisplayName,
+		webSiteInject
 	};
 };
 </script>
