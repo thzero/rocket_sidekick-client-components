@@ -55,7 +55,7 @@
 							<v-col
 								cols="12"
 							>
-								<p v-html="webSiteInject($t('strings.content.home.welcome'))"></p>
+								<p v-html="webSiteInject($t('strings.content.home.description'))"></p>
 							</v-col>
 							<v-col
 								cols="12"
@@ -136,7 +136,7 @@
 								class="mt-4 mb-4"
 							>
 								<p>
-									{{ $t('strings.content.slideshow.description') }}
+									{{ $t('strings.content.home.slideshow.description') }}
 								</p>
 							</v-col>
 							<v-col
