@@ -1,8 +1,4 @@
 <script>
-import { ref } from 'vue';
-
-import LibraryClientUtility from '@thzero/library_client/utility/index';
-
 import { useBasePrivacyComponent } from '@thzero/library_client_vue3/components/basePrivacy';
 
 export function useAppPrivacyComponent(props, context, options) {
@@ -15,7 +11,8 @@ export function useAppPrivacyComponent(props, context, options) {
 			logger,
 			noBreakingSpaces,
 			notImplementedError,
-			success
+			success,
+			privacyMarkup
 		} = useBasePrivacyComponent(props, context, options);
 
 	return {
