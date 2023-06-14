@@ -95,8 +95,27 @@ export function useHomeBaseComponent(props, context, options) {
 		initializeCompleted.value = value;
 	});
 
+	let timeout = null;
+
 	onMounted(async () => {
-		await serviceStore.dispatcher.requestContent(correlationId());
+		initializeCompleted.value = false;
+		try {
+			const correlationIdI = correlationId();
+
+			timeout = setTimeout(function () {
+				initializeCompleted.value = true;
+				clearTimeout(timeout);
+			}, 10000);
+
+			await Promise.all([
+				LibraryClientUtility.$store.dispatcher.news.getLatest(correlationIdI),
+				serviceStore.dispatcher.requestContent(correlationIdI)
+			]);
+		}
+		finally {
+			initializeCompleted.value = true;
+			clearTimeout(timeout);
+		}
 
 		// // Selecting the iframe element
 		const iframe = document.getElementById('slideshow');
