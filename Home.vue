@@ -14,6 +14,7 @@
 			>
 				<v-card
 					class="mb-2"
+					height="100%"
 				>
 					<v-card-item>
 						<v-badge :content="newsCount" inline>
@@ -22,8 +23,20 @@
 							</p>
 						</v-badge>
 					</v-card-item>
+					<News />
+					<v-overlay
+						:model-value="!initializeCompleted"
+						contained
+						class="align-center justify-center"
+					>
+						<v-progress-circular
+							:size="70"
+							:width="7"
+							color="purple"
+							indeterminate
+						></v-progress-circular>
+					</v-overlay>
 				</v-card>
-				<News />
 			</v-col>
 			<v-col
 				col="12"
@@ -124,29 +137,6 @@
 									</v-card-text>
 								</v-card>
 							</v-col>
-							<v-col
-								cols="12"
-								class="text-center"
-							>
-								<hr />
-							</v-col>
-							<v-col
-								v-if="features.Home.slideshow"
-								cols="12"
-								class="mt-4 mb-4"
-							>
-								<p>
-									{{ $t('strings.content.home.slideshow.description') }}
-								</p>
-							</v-col>
-							<v-col
-								v-if="features.Home.slideshow"
-								cols="12"
-							>
-								<div class="slideshow">
-									<iframe id="slideshow" frameborder="0" class="slideshowFrame"></iframe>
-								</div>
-							</v-col>
 							<!--
 							<v-col
 								cols="12"
@@ -164,6 +154,43 @@
 								</p>
 							</v-col>
 							-->
+						</v-row>
+					</v-card-item>
+					<v-overlay
+						:model-value="!initializeCompleted"
+						contained
+						class="align-center justify-center"
+					>
+						<v-progress-circular
+							:size="70"
+							:width="7"
+							color="purple"
+							indeterminate
+						></v-progress-circular>
+					</v-overlay>
+				</v-card>
+				<v-card
+					class="mb-2"
+				>
+					<v-card-item>
+						<v-row dense>
+							<v-col
+								v-if="features.Home.slideshow"
+								cols="12"
+								class="mt-4 mb-4"
+							>
+								<p>
+									{{ $t('strings.content.home.slideshow.description') }}
+								</p>
+							</v-col>
+							<v-col
+								v-if="features.Home.slideshow"
+								cols="12"
+							>
+								<div class="slideshow">
+									<iframe id="slideshow" frameborder="0" class="slideshowFrame"></iframe>
+								</div>
+							</v-col>
 						</v-row>
 					</v-card-item>
 				</v-card>
@@ -184,25 +211,30 @@
 							</p>
 						</v-badge>
 					</v-card-text>
+					<News />
+					<v-overlay
+						:model-value="!initializeCompleted"
+						contained
+						class="align-center justify-center"
+					>
+						<v-progress-circular
+							:size="70"
+							:width="7"
+							color="purple"
+							indeterminate
+						></v-progress-circular>
+					</v-overlay>
 				</v-card>
-				<News />
 			</v-col>
 		</v-row>
-		<VLoadingOverlay
-			:signal="initializeCompleted"
-		/>
 	</div>
 </template>
 
 <script>
-import LibraryClientUtility from '@thzero/library_client/utility/index';
-
 import { useHomeBaseComponent } from '@/components/homeBase';
 
 import News from '@/components/News';
 import VLoadingOverlay from '@thzero/library_client_vue3_vuetify3/components/VLoadingOverlay';
-
-const DelayMs = 0; // 250
 
 export default {
 	name: 'AppHome',
@@ -270,36 +302,36 @@ export default {
 		};
 	},
 	// eslint-disable-next-line
-	async beforeRouteUpdate (to, from, next) {
-		// called when the route that renders this component has changed,
-		// but this component is reused in the new route.
-		// For example, for a route with dynamic params `/foo/:id`, when we
-		// navigate between `/foo/1` and `/foo/2`, the same `Foo` component instance
-		// will be reused, and this hook will be called when that happens.
-		// has access to `this` component instance.
-		(async () => {
-			const self = this;
-			try {
-				this.initializeCompleted = false;
+	// async beforeRouteUpdate (to, from, next) {
+	// 	// called when the route that renders this component has changed,
+	// 	// but this component is reused in the new route.
+	// 	// For example, for a route with dynamic params `/foo/:id`, when we
+	// 	// navigate between `/foo/1` and `/foo/2`, the same `Foo` component instance
+	// 	// will be reused, and this hook will be called when that happens.
+	// 	// has access to `this` component instance.
+	// 	(async () => {
+	// 		const self = this;
+	// 		try {
+	// 			this.initializeCompleted = false;
 
-				const correlationId = this.correlationId();
+	// 			const correlationId = this.correlationId();
 
-				await Promise.all([
-					LibraryClientUtility.$store.dispatcher.news.getLatest(correlationId)
-				]);
-			}
-			finally {
-				const timeout = setTimeout(function () {
-					self.initializeCompleted = true;
-					clearTimeout(timeout);
-				}, DelayMs);
-			}
-		})().catch(err => {
-			// eslint-disable-next-line
-			console.error(err);
-		});
-		next();
-	}
+	// 			await Promise.all([
+	// 				LibraryClientUtility.$store.dispatcher.news.getLatest(correlationId)
+	// 			]);
+	// 		}
+	// 		finally {
+	// 			const timeout = setTimeout(function () {
+	// 				self.initializeCompleted = true;
+	// 				clearTimeout(timeout);
+	// 			}, DelayMs);
+	// 		}
+	// 	})().catch(err => {
+	// 		// eslint-disable-next-line
+	// 		console.error(err);
+	// 	});
+	// 	next();
+	// }
 };
 </script>
 
