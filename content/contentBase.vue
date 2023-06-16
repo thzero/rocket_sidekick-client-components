@@ -1,4 +1,7 @@
 <script>
+import { ref } from 'vue';
+
+import AppSharedConstants from '@/utility/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -18,7 +21,25 @@ export function useContentBaseComponent(props, context, options) {
 		success
 	} = useBaseComponent(props, context, options);
 
+	const contentLoadSignal = ref(true);
+
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
+	
+	let timeout = null;
+
+	const contentLoadStart = () => {
+		contentLoadSignal.value = true;
+		
+		timeout = setTimeout(function () {
+				contentLoadSignal.value = false;
+				clearTimeout(timeout);
+			}, AppSharedConstants.Overlay.Timeout);
+	};
+	
+	const contentLoadStop = () => {
+		contentLoadSignal.value = false;
+		clearTimeout(timeout);
+	};
 
 	const sortByOrder = (links) => {
 		links.sort((a, b) => a.order >= b.order);

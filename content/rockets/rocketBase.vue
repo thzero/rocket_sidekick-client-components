@@ -14,8 +14,11 @@ export function useRocketBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
-		sort,
+		contentLoadStart,
+		contentLoadStop,
+		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
 
@@ -62,8 +65,11 @@ export function useRocketBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
-		sort,
+		contentLoadStart,
+		contentLoadStop,
+		sortByOrder,
 		target,
 		hasCoverUrl,
 		rocketTypeIcon,
