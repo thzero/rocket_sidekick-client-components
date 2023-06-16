@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router';
 import { computed, onMounted, ref } from 'vue';
 
-import { useContentSignalComponent } from '@/components/content/contentSignal';
+import { useContentLoadSignalComponent } from '@/components/content/contentLoadSignal';
 import { useInfoBaseComponent } from '@/components/content/info/infoBase';
 
 export function useInfoMarkupBaseComponent(props, context, options) {
@@ -32,7 +32,7 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 		contentLoadSignal,
 		contentLoadStart,
 		contentLoadStop,
-	} = useContentSignalComponent(props, context, options);
+	} = useContentLoadSignalComponent(props, context, options);
 
 	const contentId = computed(() => {
 		return `info.${routes.params.id}`;
