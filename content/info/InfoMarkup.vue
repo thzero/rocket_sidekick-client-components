@@ -34,6 +34,9 @@
 						<v-card-text>
 <VMarkdown v-model="item.markup" :use-github=false />
 						</v-card-text>
+						<LoadingOverlay
+							:signal="contentLoadSignal"
+						/>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -43,6 +46,10 @@
 						<v-card-text>
 <Attribution :value="item" @has-attribution="handleAttribution" />
 						</v-card-text>
+						<LoadingOverlay
+							:signal="contentLoadSignal"
+							:progress="false"
+						/>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -55,6 +62,7 @@ import { useInfoMarkupBaseComponent } from '@/components/content/info/infoMarkup
 
 import Attribution from '@/components/content/Attribution';
 import ContentHeader from '@/components/content/Header';
+import LoadingOverlay from '@/components/LoadingOverlay';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 
 export default {
@@ -62,6 +70,7 @@ export default {
 	components: {
 		Attribution,
 		ContentHeader,
+		LoadingOverlay,
 		VMarkdown
 	},
 	setup(props, context) {
@@ -81,6 +90,7 @@ export default {
 			content,
 			contentDesc,
 			handleAttribution,
+			contentLoadSignal,
 			contentId,
 			contentMarkup,
 			contentMarkupToc,
@@ -104,6 +114,7 @@ export default {
 			content,
 			contentDesc,
 			handleAttribution,
+			contentLoadSignal,
 			contentId,
 			contentMarkup,
 			contentMarkupToc,

@@ -24,7 +24,7 @@
 						</v-badge>
 					</v-card-item>
 					<News />
-					<v-overlay
+					<!-- <v-overlay
 						:model-value="!initializeCompleted"
 						contained
 						class="align-center justify-center"
@@ -35,7 +35,10 @@
 							color="purple"
 							indeterminate
 						></v-progress-circular>
-					</v-overlay>
+					</v-overlay> -->
+					<LoadingOverlay
+						:signal="!initializeCompleted"
+					/>
 				</v-card>
 			</v-col>
 			<v-col
@@ -156,7 +159,7 @@
 							-->
 						</v-row>
 					</v-card-item>
-					<v-overlay
+					<!-- <v-overlay
 						:model-value="!initializeCompleted"
 						contained
 						class="align-center justify-center"
@@ -167,7 +170,10 @@
 							color="purple"
 							indeterminate
 						></v-progress-circular>
-					</v-overlay>
+					</v-overlay> -->
+					<LoadingOverlay
+						:signal="!initializeCompleted"
+					/>
 				</v-card>
 				<v-card
 					class="mb-2"
@@ -212,7 +218,7 @@
 						</v-badge>
 					</v-card-text>
 					<News />
-					<v-overlay
+					<!-- <v-overlay
 						:model-value="!initializeCompleted"
 						contained
 						class="align-center justify-center"
@@ -223,7 +229,10 @@
 							color="purple"
 							indeterminate
 						></v-progress-circular>
-					</v-overlay>
+					</v-overlay> -->
+					<LoadingOverlay
+						:signal="!initializeCompleted"
+					/>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -234,11 +243,13 @@
 import { useHomeBaseComponent } from '@/components/homeBase';
 
 import News from '@/components/News';
+import LoadingOverlay from '@/components/LoadingOverlay';
 import VLoadingOverlay from '@thzero/library_client_vue3_vuetify3/components/VLoadingOverlay';
 
 export default {
 	name: 'AppHome',
 	components: {
+		LoadingOverlay,
 		News,
 		VLoadingOverlay
 	},

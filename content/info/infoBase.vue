@@ -16,7 +16,7 @@ export function useInfoBaseComponent(props, context, options) {
 		success,
 		serviceStore,
 		sortByOrder,
-		target,
+		target
 	} = useContentBaseComponent(props, context, options);
 
 	const content = ref(null);

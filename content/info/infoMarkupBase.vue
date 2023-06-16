@@ -1,7 +1,8 @@
 <script>
 import { useRoute } from 'vue-router';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
+import { useContentSignalComponent } from '@/components/content/contentSignal';
 import { useInfoBaseComponent } from '@/components/content/info/infoBase';
 
 export function useInfoMarkupBaseComponent(props, context, options) {
@@ -26,6 +27,12 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 		// contentTitle,
 		handleAttribution
 	} = useInfoBaseComponent(props, context, options);
+	
+	const {
+		contentLoadSignal,
+		contentLoadStart,
+		contentLoadStop,
+	} = useContentSignalComponent(props, context, options);
 
 	const contentId = computed(() => {
 		return `info.${routes.params.id}`;
@@ -38,7 +45,7 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 		if (Array.isArray(content.value.markup))
 			return content.value.markup;
 
-		return [ { title: null, markup: content.value.markup, author: author, license: license } ];
+		return [ { title: null, markup: content.value.markup, author: content.value.author, license: content.value.license } ];
 	});
 	const contentMarkupToc = computed(() => {
 		if (!contentMarkup.value)
@@ -62,10 +69,20 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 	});
 
 	onMounted(async () => {
-		const response = await serviceStore.dispatcher.requestContentMarkup(correlationId(), contentId.value);
-		if (hasFailed(response))
-			return;
-		content.value = response.results;
+		contentLoadStart();
+
+		try {
+			const correlationIdI = correlationId();
+
+			const response = await serviceStore.dispatcher.requestContentMarkup(correlationIdI, contentId.value);
+			if (hasFailed(response))
+				return;
+
+			content.value = response.results;
+		}
+		finally {
+			contentLoadStop();
+		}
 	});
 
 	return {
@@ -84,6 +101,7 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 		content,
 		contentDesc,
 		handleAttribution,
+		contentLoadSignal,
 		contentId,
 		contentMarkup,
 		contentMarkupToc,

@@ -18,7 +18,10 @@ export function useToolsBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
@@ -155,7 +158,10 @@ export function useToolsBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target,
 		calculationOutput,

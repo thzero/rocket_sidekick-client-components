@@ -105,7 +105,7 @@ export function useHomeBaseComponent(props, context, options) {
 			timeout = setTimeout(function () {
 				initializeCompleted.value = true;
 				clearTimeout(timeout);
-			}, 10000);
+			}, AppSharedConstants.Overlay.Timeout);
 
 			await Promise.all([
 				LibraryClientUtility.$store.dispatcher.news.getLatest(correlationIdI),

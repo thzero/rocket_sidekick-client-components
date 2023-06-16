@@ -15,7 +15,7 @@ export function useLinksBaseComponent(props, context, options) {
 		notImplementedError,
 		success,
 		serviceStore,
-		sort,
+		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
 
@@ -89,7 +89,7 @@ export function useLinksBaseComponent(props, context, options) {
 		notImplementedError,
 		success,
 		serviceStore,
-		sort,
+		sortByOrder,
 		target,
 		links,
 		linksBooks,
