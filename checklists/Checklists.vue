@@ -232,7 +232,8 @@ export default {
 			isCompleted,
 			isDefault,
 			isInProgress,
-			isShared
+			isShared,
+		display
 		} = useChecklistsBaseComponent(props, context);
 
 		return {
@@ -299,7 +300,8 @@ export default {
 			isCompleted,
 			isDefault,
 			isInProgress,
-			isShared
+			isShared,
+		display
 		};
 	}
 };

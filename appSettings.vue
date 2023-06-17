@@ -37,7 +37,6 @@ export function useAppSettingsComponent(props, context, formRef) {
 		preComplete,
 		preCompleteI,
 		requestReset,
-		reset,
 		serviceStore,
 		serviceUsers,
 		user
@@ -182,12 +181,12 @@ export function useAppSettingsComponent(props, context, formRef) {
 			measurementUnitWeightId.value = AppCommonConstants.MeasurementUnits[units].weight[keyword];
 		}
 	);
-	watch(() => user.value,
-		(value, newValue) => {
-			if (value !== newValue)
-				resetForm(correlationId);
-		}
-	);
+	// watch(() => user.value,
+	// 	(value, newValue) => {
+	// 		if (value !== newValue)
+	// 			resetForm(correlationId);
+	// 	}
+	// );
 
 	return {
 		correlationId,
@@ -217,7 +216,6 @@ export function useAppSettingsComponent(props, context, formRef) {
 		preComplete,
 		preCompleteI,
 		requestReset,
-		reset,
 		serviceStore,
 		serviceUsers,
 		user,

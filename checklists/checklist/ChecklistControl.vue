@@ -43,22 +43,26 @@
 					ref="isDefaultRef"
 					v-if="!isEditable"
 					v-model="innerItemIsDefault"
-					:label="$t('forms.description')"
+					:label="$t('forms.checklists.default')"
 					:readonly="true"
 				/>
 			</v-col>
 		</v-row>
-		<VTextAreaWithValidation
-			ref="descriptionRef"
-			v-model="innerItemDescription"
-			vid="innerItemDescription"
-			:label="$t('forms.description')"
-			:counter="30"
-			:validation="validation"
-			:readonly="!isEditable"
-			:clearable="isEditable"
-			:rows="detailTextRows"
-		/>
+		<v-row dense>
+			<v-col>
+				<VTextAreaWithValidation
+					ref="descriptionRef"
+					v-model="innerItemDescription"
+					vid="innerItemDescription"
+					:label="$t('forms.description')"
+					:counter="30"
+					:validation="validation"
+					:readonly="!isEditable"
+					:clearable="isEditable"
+					:rows="detailTextRows"
+				/>
+			</v-col>
+		</v-row>
 
 		<template v-slot:buttons_pre>
 			<v-btn
