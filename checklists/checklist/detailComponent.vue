@@ -90,6 +90,8 @@ export function useDetailComponent(props, context, options) {
 		innerItem.value.isNew = innerItemOrig.value ? innerItemOrig.value.isNew : false;
 		if (options.resetForm && innerItemOrig.value)
 			await options.resetForm(correlationId, options);
+
+		// await formControlRef.value.reset(correlationId, false);
 	};
 
 	watch(() => props.detailItem,
@@ -99,11 +101,12 @@ export function useDetailComponent(props, context, options) {
 			console.log('watch.detailItem', value);
 			console.log('watch.detailItem', value);
 			console.log('watch.detailItem', value);
-			await formControlRef.value.reset(correlationId, false);
 
 			innerItem.value = value;
 			options.init(innerItem.value);
 			innerItemOrig.value = LibraryCommonUtility.cloneDeep(value);
+
+			await formControlRef.value.reset(correlationId, false);
 		}
 	);
 

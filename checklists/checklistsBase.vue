@@ -60,13 +60,13 @@ export function useChecklistsBaseComponent(props, context, options) {
 	dialogDeleteMessage.value = serviceStore.state.mobileOnly;
 
 	const colsEditPanel = computed(() => {
-		if (display.mdAndDown.value)
+		if (display.lgAndDown.value)
 			return hasDetailItem.value ? 12 : 0;
 
 		return hasDetailItem.value ? 8 : 0;
 	});
 	const colsSearchResults = computed(() => {
-		if (display.mdAndDown.value)
+		if (display.lgAndDown.value)
 			return hasDetailItem.value ? 0 : 12;
 
 		return hasDetailItem.value ? 4 : 12;
@@ -210,11 +210,11 @@ export function useChecklistsBaseComponent(props, context, options) {
 		detailItem.value = initEdit(item);
 	};
 	const handleView = async (item) => {
-		const correlationId = correlationId();
+		const correlationIdI = correlationId();
 		detailItem.value = null;
-		const response = await serviceStore.dispatcher.requestChecklistByIdUser(correlationId, item.id);
+		const response = await serviceStore.dispatcher.requestChecklistByIdUser(correlationIdI, item.id);
 		if (hasFailed(response)) {
-			setNotify(correlationId, 'messages.saved_failed');
+			setNotify(correlationIdI, 'messages.saved_failed');
 			detailItem.value = initView(response.results);
 			return;
 		}
@@ -312,7 +312,8 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isCompleted,
 		isDefault,
 		isInProgress,
-		isShared
+		isShared,
+		display
 	};
 };
 </script>
