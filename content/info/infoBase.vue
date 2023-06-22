@@ -1,6 +1,8 @@
 <script>
 import { ref } from 'vue';
 
+import AppSharedConstants from '@/utility/constants';
+
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
 export function useInfoBaseComponent(props, context, options) {
@@ -29,6 +31,9 @@ export function useInfoBaseComponent(props, context, options) {
 	const handleAttribution = (e) => {
 		hasAttribution.value = e;
 	};
+	const slideUrl = (url) => {
+		return AppSharedConstants.External.images + url;
+	};
 
 	return {
 		correlationId,
@@ -49,7 +54,8 @@ export function useInfoBaseComponent(props, context, options) {
 		contentMarkup,
 		contentTitle,
 		handleAttribution,
-		hasAttribution
+		hasAttribution,
+		slideUrl
 	};
 };
 </script>
