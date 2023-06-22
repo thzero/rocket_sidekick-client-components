@@ -2,7 +2,10 @@
 	<ContentHeader :value="title" />
 	<v-row dense>
 		<v-col cols="12">
-			<v-card class="mb-4">
+			<v-card
+				v-if="!hasDetailItem || hasList"
+				class="mb-4"
+			>
 				<v-card-text>
 					filters go here
 					{{ dialogDeleteMessage }}
@@ -31,6 +34,7 @@
 			</v-snackbar>
 			[[ colsSearchResults {{ colsSearchResults }}]]
 			[[ colsEditPanel {{ colsEditPanel }}]]
+			[[ hasList {{ hasList }}]]
 			[[ hasDetailItem {{ hasDetailItem }}]]
 			[[ detailitem {{ JSON.stringify(detailItem) }}]]
 		</v-col>
@@ -200,6 +204,7 @@ export default {
 			displayEditPanel,
 			displaySearchResults,
 			hasDetailItem,
+			hasList,
 			canCopy,
 			canDelete,
 			canEdit,
@@ -268,6 +273,7 @@ export default {
 			displayEditPanel,
 			displaySearchResults,
 			hasDetailItem,
+			hasList,
 			canCopy,
 			canDelete,
 			canEdit,

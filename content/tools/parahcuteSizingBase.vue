@@ -53,6 +53,14 @@ export function useParachuteSizingBaseComponent(props, context) {
 		toFixed
 	} = useToolsBaseComponent(props, context, {
 		id: 'parachuteSizing',
+		resetForm: (correlationId) => {
+			calculationResults.value.foams = [];
+
+			airDensity.value = null;
+			coeffDrag.value = null;
+			desiredVelocity.value = null;
+			mass.value = null;
+		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.parachuteSizing')
 	});
 
@@ -131,16 +139,6 @@ export function useParachuteSizingBaseComponent(props, context) {
 	};
 	const reset = async (correlationId) => {
 		await parachuteSizingFormRef.value.reset(correlationId, false);
-	};
-	const resetForm = (correlationId) => {
-		resetFormI(correlationId, calculationResults, (correlationId) => {
-			calculationResults.value.foams = [];
-
-			airDensity.value = null;
-			coeffDrag.value = null;
-			desiredVelocity.value = null;
-			mass.value = null;
-		});
 	};
 
 	onMounted(async () => {
@@ -221,8 +219,6 @@ export function useParachuteSizingBaseComponent(props, context) {
 		contentMarkup,
 		calculationOk,
 		initCalculationData,
-		reset,
-		resetForm,
 		scope: 'Foam',
 		validation: useVuelidate({ $scope: 'Foam' })
 	};

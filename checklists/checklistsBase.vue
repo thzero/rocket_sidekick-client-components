@@ -57,8 +57,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		(props.type === AppCommonConstants.Checklists.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.checklists.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.checklists.title')
 	);
 
-	dialogDeleteMessage.value = serviceStore.state.mobileOnly;
-
 	const colsEditPanel = computed(() => {
 		if (display.lgAndDown.value)
 			return hasDetailItem.value ? 12 : 0;
@@ -82,6 +80,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 	});
 	const hasDetailItem = computed(() => {
 		return LibraryCommonUtility.isNotNull(detailItem.value);
+	});
+	const hasList = computed(() => {
+		return !display.lgAndDown.value;
 	});
 
 	const canCopy = (item) => {
@@ -280,6 +281,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		displayEditPanel,
 		displaySearchResults,
 		hasDetailItem,
+		hasList,
 		canCopy,
 		canDelete,
 		canEdit,

@@ -24,11 +24,11 @@
 						<VFormControl
 							ref="formSettingsRef"
 							:validation="validation"
-							:resetForm="resetForm"
-							buttonClearName="buttons.reset"
-							buttonOkName="buttons.save"
+							button-clear-name="buttons.reset"
+							button-ok-name="buttons.save"
 							:pre-complete-ok="preCompleteOk"
-							:dirtyCallback="dirtyCallback"
+							:reset-additional="resetFormI"
+							:dirty-callback="dirtyCallback"
 						>
 							<div :class="$vuetify.display.xs ? 'flex-form' : ''">
 								<v-row dense>
@@ -293,7 +293,7 @@ export default {
 			measurementUnitsVolume,
 			measurementUnitsWeight,
 			preCompleteOk,
-			resetForm,
+			resetFormI,
 			resetFormIdCheck,
 			scope,
 			validation
@@ -349,7 +349,7 @@ export default {
 			measurementUnitsVolume,
 			measurementUnitsWeight,
 			preCompleteOk,
-			resetForm,
+			resetFormI,
 			resetFormIdCheck,
 			scope,
 			validation,

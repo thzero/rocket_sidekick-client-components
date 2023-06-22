@@ -30,9 +30,9 @@ export function useMobileLookupDialogComponent(props, context, options) {
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 	const serviceExternalMotorSearch = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_EXTERNAL_MOTOR_SEARCH);
 
-	const dialogResetMessage = ref(null);
 	const dialogMotorLookup = ref(null);
 	const dialogResetManager = ref(new DialogSupport());
+	const dialogResetMessage = ref(null);
 	const diameter = ref(null);
 	const impulseClass = ref(null);
 	const manufacturer = ref(null);
@@ -43,7 +43,7 @@ export function useMobileLookupDialogComponent(props, context, options) {
 	const singleUse = ref(false);
 	const ttl = ref(0);
 
-	const clickMotorSearchResetDisabled = computed(() => {
+	const buttonMotorSearchResetDisabled = computed(() => {
 		// const ttl = .serviceStore.state.motorSearchResults ? serviceStore.state.motorSearchResults.ttl : 0;
 		const now = LibraryCommonUtility.getTimestamp();
 		return (ttl.value < now);
@@ -61,10 +61,9 @@ export function useMobileLookupDialogComponent(props, context, options) {
 		return serviceExternalMotorSearch.urlHuman();
 	});
 
-	const close = () => {
-		context.emit('close');
+	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
+		return invalid;
 	};
-
 	const clickMotorSearch = async () => {
 		await dialogMotorLookup.value.submit(correlationId());
 		// const correlationId = this.correlationId();
@@ -136,6 +135,9 @@ export function useMobileLookupDialogComponent(props, context, options) {
 		context.emit('ok', item);
 		return true;
 	};
+	const close = () => {
+		context.emit('close');
+	};
 	const dialogResetOk = async () => {
 		dialogResetManager.value.ok();
 		const correlationIdI = correlationId();
@@ -179,7 +181,7 @@ export function useMobileLookupDialogComponent(props, context, options) {
 		return success(correlationId);
 	};
 	// eslint-disable-next-line
-	const resetDialog = async (correlationId, ignoreSettings) => {
+	const resetAdditional = async (correlationId, ignoreSettings) => {
 		impulseClass.value = null;
 		manufacturer.value = null;
 		motor.value = null;
@@ -207,16 +209,13 @@ export function useMobileLookupDialogComponent(props, context, options) {
 		// })();
 		await preCompleteOk(correlationId);
 	};
-	const reset = async (correlationId) => {
-		await dialogMotorLookup.value.reset(correlationId, false);
-	};
 
 	onMounted(async () => {
-		if (manufacturers.value !== null)
+		if (manufacturers.value === null)
 			return;
 
 		const response = await serviceStore.dispatcher.requestManufacturers();
-		if (hasFailed(response))
+		if (response === null)
 			return;
 
 		const temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.motor));
@@ -233,35 +232,35 @@ export function useMobileLookupDialogComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		clickMotorSearch,
-		clickMotorSearchClear,
-		clickMotorSearchReset,
-		clickMotorSearchResetDisabled,
-		clickMotorSelect,
-		close,
-		dialogResetManager,
-		dialogResetOk,
-		diameter,
-		diameters,
-		dialogResetMessage,
+		serviceExternalMotorSearch,
+		serviceStore,
 		dialogMotorLookup,
+		dialogResetMessage,
+		dialogResetManager,
+		diameter,
 		impulseClass,
-		impulseClasses,
 		manufacturer,
 		manufacturers,
 		motor,
+		results,
+		sparky,
+		singleUse,
+		buttonMotorSearchResetDisabled,
+		diameters,
+		impulseClasses,
+		searchLocaleName,
+		searchUrl,
+		buttonOkDisabledOverride,
+		clickMotorSearch,
+		clickMotorSearchClear,
+		clickMotorSearchReset,
+		clickMotorSelect,
+		close,
+		dialogResetOk,
 		motorCaseInfo,
 		motorUrl,
 		preCompleteOk,
-		reset,
-		resetDialog,
-		results,
-		sparky,
-		searchLocaleName,
-		searchUrl,
-		serviceExternalMotorSearch,
-		serviceStore,
-		singleUse,
+		resetAdditional,
 		scope: 'MotorLookupDialog',
 		validation: useVuelidate({ $scope: 'MotorLookupDialog' })
 	};

@@ -12,7 +12,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 
-export function useThrust2WeightBaseComponent(props, context) {
+export function useThrust2WeightBaseComponent(props, context, formRef) {
 	const {
 		correlationId,
 		error,
@@ -54,7 +54,24 @@ export function useThrust2WeightBaseComponent(props, context) {
 		setNotify,
 		toFixed
 	} = useToolsBaseComponent(props, context, {
+		formRef: formRef,
 		id: 'thrust2Weight',
+		resetForm: (correlationId) => {
+			mass.value = null;
+
+			motorLookupSelection.value = null;
+			for (let item of motorRef) {
+				item.motorLookup.value = null;
+				if (item.key !== 1)
+					item.motorSelected.value = false;
+				item.motorLookupUrl.value = null;
+				item.thrustAverage.value = null;
+				item.thrustInitial.value = null;
+				item.thrustPeak.value = null;
+			}
+
+			maxLaunchRodTime.value = maxLaunchRodTimeDefault.value;
+		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.thrust2Weight')
 	 });
 
@@ -84,7 +101,6 @@ export function useThrust2WeightBaseComponent(props, context) {
 	const calculationResults = initCalculationResults(correlationId(), ref({}));
 	const dialogMotorSearchRef = ref(null);
 	const dialogMotorSearchManager = ref(new DialogSupport());
-	const formThrust2WeightRef = ref(null);
 	const mass = ref(null);
 	const massMeasurementUnitId = ref(null);
 	const massMeasurementUnitsId = ref(null);
@@ -191,7 +207,6 @@ export function useThrust2WeightBaseComponent(props, context) {
 	};
 	const clickMotorSearch = async (selection) => {
 		motorLookupSelection.value = selection;
-		await dialogMotorSearchRef.value.reset(correlationId());
 		dialogMotorSearchManager.value.open();
 	};
 	const executeCalculation = async (correlationId, calculationData, key) => {
@@ -215,27 +230,27 @@ export function useThrust2WeightBaseComponent(props, context) {
 			item.calculationData.thrustPeak = item.thrustPeak.value;
 		}
 	};
-	const reset = async (correlationId) => {
-		await formThrust2WeightRef.value.reset(correlationId, false);
-	};
-	const resetForm = (correlationId) => {
-		resetFormI(correlationId, calculationResults, (correlationId) => {
-			mass.value = null;
+	// const reset = async (correlationId) => {
+	// 	await options.formRef.value.reset(correlationId, false);
+	// };
+	// const resetForm = (correlationId) => {
+	// 	resetFormI(correlationId, calculationResults, (correlationId) => {
+	// 		mass.value = null;
 
-			motorLookupSelection.value = null;
-			for (let item of motorRef) {
-				item.motorLookup.value = null;
-				if (item.key !== 1)
-					item.motorSelected.value = false;
-				item.motorLookupUrl.value = null;
-				item.thrustAverage.value = null;
-				item.thrustInitial.value = null;
-				item.thrustPeak.value = null;
-			}
+	// 		motorLookupSelection.value = null;
+	// 		for (let item of motorRef) {
+	// 			item.motorLookup.value = null;
+	// 			if (item.key !== 1)
+	// 				item.motorSelected.value = false;
+	// 			item.motorLookupUrl.value = null;
+	// 			item.thrustAverage.value = null;
+	// 			item.thrustInitial.value = null;
+	// 			item.thrustPeak.value = null;
+	// 		}
 
-			maxLaunchRodTime.value = maxLaunchRodTimeDefault.value;
-		});
-	};
+	// 		maxLaunchRodTime.value = maxLaunchRodTimeDefault.value;
+	// 	});
+	// };
 	const selectMotor = async (item) => {
 		const correlationIdI = correlationId();
 		if (!motorLookupSelection.value)
@@ -249,12 +264,12 @@ export function useThrust2WeightBaseComponent(props, context) {
 
 			const response2 = await serviceToolsThrust2Weight.update(correlationIdI, response.results, reference.calculationData);
 			if (hasSucceeded(response2)) {
-				reference.motor.value = item.designation;
+				reference.motorLookup.value = item.designation;
 
 				reference.calculationData = response2.results;
-				reference.thrustAverage.value = calculationData.thrustAverage;
-				reference.thrustInitial.value = calculationData.thrustInitial;
-				reference.thrustPeak.value = calculationData.thrustPeak;
+				reference.thrustAverage.value = reference.calculationData.thrustAverage;
+				reference.thrustInitial.value = reference.calculationData.thrustInitial;
+				reference.thrustPeak.value = reference.calculationData.thrustPeak;
 
 				setNotify(correlationId, 'messages.thrust2Weight.motor.selected');
 				dialogMotorSearchManager.value.ok();
@@ -271,8 +286,6 @@ export function useThrust2WeightBaseComponent(props, context) {
 	}
 
 	onMounted(async () => {
-		reset(false);
-
 		massMeasurementUnitId.value = measurementUnitsWeightDefaultId.value;
 		massMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 	});
@@ -359,7 +372,6 @@ export function useThrust2WeightBaseComponent(props, context) {
 		calculationResults,
 		dialogMotorSearchRef,
 		dialogMotorSearchManager,
-		formThrust2WeightRef,
 		mass,
 		massMeasurementUnitId,
 		massMeasurementUnitsId,
@@ -394,8 +406,6 @@ export function useThrust2WeightBaseComponent(props, context) {
 		calculationOk,
 		clickMotorSearch,
 		hasResults,
-		reset,
-		resetForm,
 		selectMotor,
 		scope: 'Thrust2Weight',
 		validation: useVuelidate({ $scope: 'Thrust2Weight' })

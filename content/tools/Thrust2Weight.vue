@@ -14,10 +14,10 @@
 				<VFormControl
 					ref="formThrust2WeightRef"
 					:validation="validation"
-					:resetForm="resetForm"
-					buttonClearName="buttons.reset"
-					buttonOkName="buttons.calculate"
-					notifyMessageSaved="messages.calculated"
+					:reset-additional="resetFormI"
+					button-clear-name="buttons.reset"
+					button-ok-name="buttons.calculate"
+					notify-message-saved="messages.calculated"
 					@ok="calculationOk"
 				>
 					<template v-slot:default>
@@ -488,6 +488,7 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import { between, decimal, helpers, required } from '@vuelidate/validators';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -524,6 +525,8 @@ export default {
 		VTextField
 	},
 	setup (props, context) {
+		const formThrust2WeightRef = ref(null);
+
 		const {
 			correlationId,
 			error,
@@ -569,7 +572,6 @@ export default {
 			calculationResults,
 			dialogMotorSearchRef,
 			dialogMotorSearchManager,
-			formThrust2WeightRef,
 			mass,
 			massMeasurementUnitId,
 			massMeasurementUnitsId,
@@ -604,12 +606,10 @@ export default {
 			calculationOk,
 			clickMotorSearch,
 			hasResults,
-			reset,
-			resetForm,
 			selectMotor,
 			scope,
 			validation
-		} = useThrust2WeightBaseComponent(props, context);
+		} = useThrust2WeightBaseComponent(props, context, formThrust2WeightRef);
 
 		return {
 			correlationId,
@@ -656,7 +656,6 @@ export default {
 			calculationResults,
 			dialogMotorSearchRef,
 			dialogMotorSearchManager,
-			formThrust2WeightRef,
 			mass,
 			massMeasurementUnitId,
 			massMeasurementUnitsId,
@@ -691,11 +690,10 @@ export default {
 			calculationOk,
 			clickMotorSearch,
 			hasResults,
-			reset,
-			resetForm,
 			selectMotor,
 			scope,
-			validation
+			validation,
+			formThrust2WeightRef
 		};
 	},
 	validations () {

@@ -3,7 +3,7 @@
 		:label="$t('titles.new') + ' ' + $t('characters.name')"
 		:signal="signal"
 		:pre-complete-ok="preCompleteOk"
-		:resetDialog="resetDialog"
+		:reset-dialog-additional="resetDialog"
 		:validation="validation"
 		max-width="70vh"
 		@close="close"
