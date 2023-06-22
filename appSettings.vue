@@ -122,7 +122,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		}
 	};
 	// eslint-disable-next-line
-	const resetForm = (correlationId) => {
+	const resetFormI = (correlationId) => {
 		const settings = serviceStore.getters.user.getUserSettings();
 		if (!settings.measurementUnits)
 			settings.measurementUnits = {};
@@ -184,7 +184,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 	// watch(() => user.value,
 	// 	(value, newValue) => {
 	// 		if (value !== newValue)
-	// 			resetForm(correlationId);
+	// 			resetFormI(correlationId);
 	// 	}
 	// );
 
@@ -238,7 +238,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitsVolume,
 		measurementUnitsWeight,
 		preCompleteOk,
-		resetForm,
+		resetFormI,
 		resetFormIdCheck,
 		scope: 'AppSettings',
 		validation: useVuelidate({ $scope: 'AppSettings' })

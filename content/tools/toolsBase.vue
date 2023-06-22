@@ -90,12 +90,12 @@ export function useToolsBaseComponent(props, context, options) {
 		results.value.calculated = false;
 		return results;
 	};
-	const resetFormI = (correlationId, calculationResults, func) => {
+	const resetFormI = (correlationId, calculationResults) => {
 		initCalculationOutput(correlationId);
 		initCalculationResults(correlationId, calculationResults);
 
-		if (func)
-			func(correlationId);
+		if (options.resetForm)
+			options.resetForm(correlationId);
 	};
 	const setErrorMessage = (error) => {
 		errorMessage.value = error;
@@ -146,6 +146,10 @@ export function useToolsBaseComponent(props, context, options) {
 				return;
 			content.value = results;
 		}
+
+		if (options && LibraryCommonUtility.isObject(options) && options.formRef && options.formRef.value)
+			// await options.formRef.value.resetForm(correlationId, false);
+			await options.formRef.value.reset(correlationId, false);
 	});
 
 	return {

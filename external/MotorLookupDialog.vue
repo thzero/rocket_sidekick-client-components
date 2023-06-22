@@ -3,13 +3,15 @@
 		ref="dialogMotorLookup"
 		:label="$t('titles.external.motorSearch')"
 		:signal="signal"
-		:preCompleteOk="preCompleteOk"
-		:resetDialog="resetDialog"
+		:button-ok-disabled-override="buttonOkDisabledOverride"
+		:pre-complete-ok="preCompleteOk"
+		:reset-additional="resetAdditional"
+		:reset-on-submit="false"
 		:validation="validation"
 		max-width="70vh"
 		@close="close"
 	>
-		<template #default="{ buttonOkDisabled, loading }">
+		<template #default="{ buttonOkDisabled, isLoading }">
 			<v-row dense>
 				<v-col cols="12">
 					<v-card>
@@ -88,24 +90,24 @@
 						<v-card-actions>
 							<v-spacer />
 							<v-btn
-								:disabled="clickMotorSearchResetDisabled"
-								:loading="loading"
 								variant="flat"
 								color="primary"
 								:label="$t('buttons.reset')"
+								:disabled="buttonMotorSearchResetDisabled"
+								:loading="isLoading"
 								@click="clickMotorSearchReset"
 							>{{ $t('buttons.reset') }}</v-btn>
 							<v-btn
-								:loading="loading"
 								variant="flat"
 								color="primary"
+								:loading="isLoading"
 								@click="clickMotorSearchClear"
 							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
-								:disabled="buttonOkDisabled"
-								:loading="loading"
 								variant="flat"
 								color="green"
+								:disabled="buttonOkDisabled"
+								:loading="isLoading"
 								@click="clickMotorSearch"
 							>{{ $t('buttons.search') }}</v-btn>
 						</v-card-actions>
@@ -149,7 +151,7 @@
 							<td class="text-h7 text-bold">{{ $t('motorSearch.motor_thrust_max') }}</td><td>{{ item.maxThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
 						</tr>
 						<tr>
-							<td colspan="2" class="text-right"><a :href="motorUrl(item)" target="_blank">{{ motorUrl(item) }}</a></td>
+							<td colspan="2" class="text-left"><a :href="motorUrl(item)" target="_blank">{{ motorUrl(item) }}</a></td>
 						</tr>
 						<tr
 							v-if="selectable"
@@ -211,35 +213,35 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			clickMotorSearch,
-			clickMotorSearchClear,
-			clickMotorSearchReset,
-			clickMotorSearchResetDisabled,
-			clickMotorSelect,
-			close,
-			dialogResetManager,
-			dialogResetOk,
-			diameter,
-			diameters,
-			dialogResetMessage,
+			serviceExternalMotorSearch,
+			serviceStore,
 			dialogMotorLookup,
+			dialogResetMessage,
+			dialogResetManager,
+			diameter,
 			impulseClass,
-			impulseClasses,
 			manufacturer,
 			manufacturers,
 			motor,
+			results,
+			sparky,
+			singleUse,
+			buttonMotorSearchResetDisabled,
+			diameters,
+			impulseClasses,
+			searchLocaleName,
+			searchUrl,
+			buttonOkDisabledOverride,
+			clickMotorSearch,
+			clickMotorSearchClear,
+			clickMotorSearchReset,
+			clickMotorSelect,
+			close,
+			dialogResetOk,
 			motorCaseInfo,
 			motorUrl,
 			preCompleteOk,
-			reset,
-			resetDialog,
-			results,
-			sparky,
-			searchLocaleName,
-			searchUrl,
-			serviceExternalMotorSearch,
-			serviceStore,
-			singleUse,
+			resetAdditional,
 			scope,
 			validation
 		} = useMobileLookupDialogComponent(props, context);
@@ -254,35 +256,35 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			clickMotorSearch,
-			clickMotorSearchClear,
-			clickMotorSearchReset,
-			clickMotorSearchResetDisabled,
-			clickMotorSelect,
-			close,
-			dialogResetManager,
-			dialogResetOk,
-			diameter,
-			diameters,
-			dialogResetMessage,
+			serviceExternalMotorSearch,
+			serviceStore,
 			dialogMotorLookup,
+			dialogResetMessage,
+			dialogResetManager,
+			diameter,
 			impulseClass,
-			impulseClasses,
 			manufacturer,
 			manufacturers,
 			motor,
+			results,
+			sparky,
+			singleUse,
+			buttonMotorSearchResetDisabled,
+			diameters,
+			impulseClasses,
+			searchLocaleName,
+			searchUrl,
+			buttonOkDisabledOverride,
+			clickMotorSearch,
+			clickMotorSearchClear,
+			clickMotorSearchReset,
+			clickMotorSelect,
+			close,
+			dialogResetOk,
 			motorCaseInfo,
 			motorUrl,
 			preCompleteOk,
-			reset,
-			resetDialog,
-			results,
-			sparky,
-			searchLocaleName,
-			searchUrl,
-			serviceExternalMotorSearch,
-			serviceStore,
-			singleUse,
+			resetAdditional,
 			scope,
 			validation
 		};

@@ -53,6 +53,12 @@ export function useWeathercockingBaseComponent(props, context) {
 		toFixed
 	} = useToolsBaseComponent(props, context, {
 		id: 'weathercocking',
+		resetForm: (correlationId) => {
+			calculationResults.value.foams = [];
+
+			windVelocity.value = null;
+			exitVelocity.value = null;
+		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.weathercocking')
 	 });
 
@@ -119,14 +125,6 @@ export function useWeathercockingBaseComponent(props, context) {
 	const reset = async (correlationId) => {
 		await weathercockingFormRef.value.reset(correlationId, false);
 	};
-	const resetForm = (correlationId) => {
-		resetFormI(correlationId, calculationResults, (correlationId) => {
-			calculationResults.value.foams = [];
-
-			windVelocity.value = null;
-			exitVelocity.value = null;
-		});
-	};
 
 	onMounted(async () => {
 		reset(false);
@@ -191,8 +189,6 @@ export function useWeathercockingBaseComponent(props, context) {
 		windVelocityMeasurementUnitId,
 		calculationOk,
 		initCalculationData,
-		reset,
-		resetForm,
 		scope: 'Foam',
 		validation: useVuelidate({ $scope: 'Foam' })
 	};

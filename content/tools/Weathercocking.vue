@@ -9,10 +9,10 @@
 				<VFormControl
 					ref="weathercockingFormRef"
 					:validation="validation"
-					:resetForm="resetForm"
-					buttonClearName="buttons.reset"
-					buttonOkName="buttons.calculate"
-					notifyMessageSaved="messages.calculated"
+					:reset-additional="resetFormI"
+					button-clear-name="buttons.reset"
+					button-ok-name="buttons.calculate"
+					notify-message-saved="messages.calculated"
 					@ok="calculationOk"
 				>
 					<template v-slot:default>
@@ -227,8 +227,6 @@ export default {
 			windVelocityMeasurementUnitId,
 			calculationOk,
 			initCalculationData,
-			reset,
-			resetForm,
 			scope,
 			validation,
 		} = useWeathercockingBaseComponent(props, context);
@@ -286,8 +284,6 @@ export default {
 			windVelocityMeasurementUnitId,
 			calculationOk,
 			initCalculationData,
-			reset,
-			resetForm,
 			scope,
 			validation
 		};

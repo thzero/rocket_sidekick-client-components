@@ -9,10 +9,10 @@
 				<VFormControl
 					ref="parachuteSizingFormRef"
 					:validation="validation"
-					:resetForm="resetForm"
-					buttonClearName="buttons.reset"
-					buttonOkName="buttons.calculate"
-					notifyMessageSaved="messages.calculated"
+					:reset-additional="resetFormI"
+					button-clear-name="buttons.reset"
+					button-ok-name="buttons.calculate"
+					notify-message-saved="messages.calculated"
 					@ok="calculationOk"
 				>
 					<template v-slot:default>
@@ -309,8 +309,6 @@ export default {
 			contentMarkup,
 			calculationOk,
 			initCalculationData,
-			reset,
-			resetForm,
 			scope,
 			validation,
 		} = useParachuteSizingBaseComponent(props, context);
@@ -378,8 +376,6 @@ export default {
 			contentMarkup,
 			calculationOk,
 			initCalculationData,
-			reset,
-			resetForm,
 			scope,
 			validation
 		};
