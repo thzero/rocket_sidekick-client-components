@@ -27,23 +27,19 @@ export function useChecklistCopyDialogComponent(props, context, options) {
 
 	const name = ref(null);
 
+	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
+		return invalid;
+	};
 	const close = () => {
 		context.emit('close');
 	};
-	const ok = () => {
-		context.emit('ok');
+	const ok = (response) => {
+		context.emit('ok', response);
 	};
 	const preCompleteOk = async (correlationId) => {
 		const name2 = String.trim(name.value);
-		// const response = await serviceStore.dispatcher.copyChecklist(correlationId, { id: props.params.id, name: name2 });
-		const response = success(correlationId, { id: props.params.id }); // TODO
-		logger.debug('ChecklistCopyDialog', 'preCompleteOk', 'response', response, correlationId);
-		if (hasSucceeded(response)) {
-			LibraryClientUtility.$navRouter.push(LibraryCommonUtility.formatUrl({ url: '/user/checklists', params: [ response.results.id ]}));
-			return response;
-		}
-
-		return success(correlationId);
+		const response = await serviceStore.dispatcher.copyChecklistById(correlationId, { id: props.params.id, name: name2 });
+		return response;
 	};
 	// eslint-disable-next-line
 	const resetDialog = async (correlationId, options) => {
@@ -61,6 +57,7 @@ export function useChecklistCopyDialogComponent(props, context, options) {
 		notImplementedError,
 		success,
 		name,
+		buttonOkDisabledOverride,
 		close,
 		ok,
 		preCompleteOk,

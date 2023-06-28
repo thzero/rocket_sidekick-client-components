@@ -36,7 +36,7 @@
 			[[ colsEditPanel {{ colsEditPanel }}]]
 			[[ hasList {{ hasList }}]]
 			[[ hasDetailItem {{ hasDetailItem }}]]
-			[[ detailitem {{ JSON.stringify(detailItem) }}]]
+			<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
 		</v-col>
 		<v-col
 			v-show="colsSearchResults"
@@ -72,6 +72,7 @@
 								v-if="canCopy(item)"
 								color="blue"
 								variant="flat"
+								:disabled="isCopying(item)"
 								@click="dialogCopyOpen(item)"
 							>
 								{{ $t('buttons.copy') }}
@@ -80,6 +81,7 @@
 								v-if="canDelete(item)"
 								color="red"
 								variant="flat"
+								:disabled="isDeleting(item)"
 								@click="dialogDeleteOpen(item)"
 							>
 								{{ $t('buttons.delete') }}
@@ -96,6 +98,7 @@
 								v-if="canStart(item)"
 								color="green"
 								variant="flat"
+								:disabled="isStarting(item)"
 								@click="dialogStartOpen(item)"
 							>
 								{{ $t('buttons.start') }}
@@ -117,43 +120,43 @@
 			v-show="colsEditPanel"
 			:cols="colsEditPanel"
 		>
-			<ChecklistControl
-				:detail-item="detailItem"
+			<Checklist
+				:model-value="detailItem"
 				@cancel="detailClose"
 				@close="detailClose"
 				@ok="detailOk"
 			>
-			</ChecklistControl>
+			</Checklist>
 		</v-col>
 	</v-row>
 	<ChecklistCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
 		:signal="dialogCopyManager.signal"
-		@close="dialogCopyClose"
+		@close="dialogCopyCancel"
 		@ok="dialogCopyOk"
 	/>
 	<VConfirmationDialog
 		:message="dialogDeleteMessage"
 		:messageRaw=true
 		:signal="dialogDeleteManager.signal"
-		@cancel="dialogDeleteClose"
+		@cancel="dialogDeleteCancel"
 		@ok="dialogDeleteOk"
 	/>
 	<VConfirmationDialog
 		:message="dialogStartMessage"
 		:messageRaw=true
 		:signal="dialogStartManager.signal"
-		@cancel="dialogStartClose"
+		@cancel="dialogStartCancel"
 		@ok="dialogStartOk"
 	/>
 </template>
 
 <script>
-import { useChecklistsBaseComponent } from '@/components/checklists/checklistsBase';
-import { useChecklistsBaseProps } from '@/components/checklists/checklistsBaseProps';
+import { useChecklistsBaseComponent } from '@/components/checklists/checklistsComponent';
+import { useChecklistsBaseProps } from '@/components/checklists/checklistsComponentProps';
 
-import ChecklistControl from '@/components/checklists/checklist/ChecklistControl';
+import Checklist from '@/components/checklists/checklist/Checklist';
 import ChecklistCopyDialog from '@/components/checklists/dialogs/ChecklistCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
@@ -162,7 +165,7 @@ import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VM
 export default {
 	name: 'Checklists',
 	components: {
-		ChecklistControl,
+		Checklist,
 		ChecklistCopyDialog,
 		ContentHeader,
 		VConfirmationDialog,
@@ -215,15 +218,15 @@ export default {
 			checklistUrl,
 			detailClose,
 			detailOk,
-			dialogCopyClose,
+			dialogCopyCancel,
 			dialogCopyParams,
 			dialogCopyOk,
 			dialogCopyOpen,
-			dialogDeleteClose,
+			dialogDeleteCancel,
 			dialogDeleteParams,
 			dialogDeleteOk,
 			dialogDeleteOpen,
-			dialogStartClose,
+			dialogStartCancel,
 			dialogStartParams,
 			dialogStartOk,
 			dialogStartOpen,
@@ -235,10 +238,13 @@ export default {
 			initNew,
 			initView,
 			isCompleted,
+			isCopying,
 			isDefault,
+			isDeleting,
 			isInProgress,
 			isShared,
-		display
+			isStarting,
+			display
 		} = useChecklistsBaseComponent(props, context);
 
 		return {
@@ -284,15 +290,15 @@ export default {
 			checklistUrl,
 			detailClose,
 			detailOk,
-			dialogCopyClose,
+			dialogCopyCancel,
 			dialogCopyParams,
 			dialogCopyOk,
 			dialogCopyOpen,
-			dialogDeleteClose,
+			dialogDeleteCancel,
 			dialogDeleteParams,
 			dialogDeleteOk,
 			dialogDeleteOpen,
-			dialogStartClose,
+			dialogStartCancel,
 			dialogStartParams,
 			dialogStartOk,
 			dialogStartOpen,
@@ -304,10 +310,13 @@ export default {
 			initNew,
 			initView,
 			isCompleted,
+			isCopying,
 			isDefault,
+			isDeleting,
 			isInProgress,
 			isShared,
-		display
+			isStarting,
+			display
 		};
 	}
 };

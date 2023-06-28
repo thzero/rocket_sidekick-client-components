@@ -29,21 +29,24 @@ export function useDetailComponent(props, context, options) {
 
 	const formControlRef = ref(null);
 	const dirty = ref(false);
-	const innerItem = ref(null);
-	const innerItemOrig = ref(null);
+	const detailItem = ref(null);
 	const invalid = ref(false);
+	const detailItemOrig = ref(null);
 
 	const canDelete = computed(() => {
 		return !isNew.value && !dirty.value;
 	});
-	const detailTextRows = computed(() => {
+	const detailItemData = computed(() => {
+		return detailItem.value ? detailItem.value.data : null;
+	});
+	const detailItemTextRows = computed(() => {
 		return isEditable.value ? 5 : 1;
 	});
 	const isEditable = computed(() => {
-		return innerItem.value ? innerItem.value.isEditable ?? false : false;
+		return props.modelValue ? props.modelValue.isEditable ?? false : false;
 	});
 	const isNew = computed(() => {
-		return innerItem.value ? innerItem.value.isNew ?? false : false;
+		return props.modelValue ? props.modelValue.isNew ?? false : false;
 	});
 
 	const dirtyCallback = (correlationId, value) => {
@@ -59,7 +62,7 @@ export function useDetailComponent(props, context, options) {
 				return;
 		}
 
-		innerItem.value = null;
+		detailItem.value = null;
 		context.emit('cancel');
 	};
 	const handleClose = async () => {
@@ -69,7 +72,7 @@ export function useDetailComponent(props, context, options) {
 				return;
 		}
 
-		innerItem.value = null;
+		detailItem.value = null;
 		context.emit('close');
 	};
 	const handleOk = async () => {
@@ -79,34 +82,28 @@ export function useDetailComponent(props, context, options) {
 				return;
 		}
 
-		innerItem.value.isNew = false
+		props.modelValue.isNew = false
 		context.emit('ok');
 	};
 	// eslint-disable-next-line
 	const resetForm = async (correlationId, optionsReset) => {
-		if (!innerItem.value)
+		if (!detailItem.value)
 			return;
 
-		innerItem.value.isNew = innerItemOrig.value ? innerItemOrig.value.isNew : false;
-		if (options.resetForm && innerItemOrig.value)
-			await options.resetForm(correlationId, options);
-
-		// await formControlRef.value.reset(correlationId, false);
+		detailItem.value.isNew = detailItemOrig.value ? detailItemOrig.value.isNew : false;
+		if (options.resetForm && detailItemOrig.value)
+			await options.resetForm(correlationId, detailItemOrig.value.data ? detailItemOrig.value.data : null);
 	};
 
-	watch(() => props.detailItem,
+	watch(() => props.modelValue,
 		async (value) => {
-			console.log('watch.detailItem', value);
-			console.log('watch.detailItem', value);
-			console.log('watch.detailItem', value);
-			console.log('watch.detailItem', value);
-			console.log('watch.detailItem', value);
+			console.log('watch.modelValue', value);
 
-			innerItem.value = value;
-			options.init(innerItem.value);
-			innerItemOrig.value = LibraryCommonUtility.cloneDeep(value);
-
-			await formControlRef.value.reset(correlationId, false);
+			detailItem.value = value;
+			if (detailItem.value) {
+				options.init(detailItem.value.data);
+				detailItemOrig.value = LibraryCommonUtility.cloneDeep(value);
+			}
 		}
 	);
 
@@ -127,11 +124,11 @@ export function useDetailComponent(props, context, options) {
 		serviceStore,
 		formControlRef,
 		dirty,
-		innerItem,
-		innerItemOrig,
+		detailItem,
 		invalid,
 		canDelete,
-		detailTextRows,
+		detailItemData,
+		detailItemTextRows,
 		isEditable,
 		isNew,
 		dirtyCallback,

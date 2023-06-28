@@ -1,5 +1,5 @@
 export const useChecklistComponentProps = {
-	detailItem: {
+	modelValue: {
 		type: Object,
 		default: { }
 	},
