@@ -2,8 +2,9 @@
 	<VFormDialog
 		:label="$t('titles.copy') + ' ' + $t('checklists.name')"
 		:signal="signal"
+		:button-ok-disabled-override="buttonOkDisabledOverride"
 		:pre-complete-ok="preCompleteOk"
-		:reset-dialog-additional="resetDialog"
+		:reset-additional="resetDialog"
 		:validation="validation"
 		max-width="70vh"
 		@close="close"
@@ -52,6 +53,7 @@ export default {
 			notImplementedError,
 			success,
 			name,
+			buttonOkDisabledOverride,
 			close,
 			ok,
 			preCompleteOk,
@@ -71,6 +73,7 @@ export default {
 			notImplementedError,
 			success,
 			name,
+			buttonOkDisabledOverride,
 			close,
 			ok,
 			preCompleteOk,

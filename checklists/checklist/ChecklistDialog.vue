@@ -2,8 +2,9 @@
 	<VFormDialog
 		:label="$t('titles.new') + ' ' + $t('characters.name')"
 		:signal="signal"
+		:button-ok-disabled-override="buttonOkDisabledOverride"
 		:pre-complete-ok="preCompleteOk"
-		:reset-dialog-additional="resetDialog"
+		:reset-additional="resetDialog"
 		:validation="validation"
 		max-width="70vh"
 		@close="close"
@@ -59,6 +60,10 @@ export default {
 			validation
 		} = useChecklistComponent(props, context);
 
+		const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
+			return invalid;
+		};
+
 		return {
 			correlationId,
 			error,
@@ -75,7 +80,8 @@ export default {
 			preCompleteOk,
 			resetDialog,
 			scope,
-			validation
+			validation,
+			buttonOkDisabledOverride
 		};
 	},
 	validations () {
