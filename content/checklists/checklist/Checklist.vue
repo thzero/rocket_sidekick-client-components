@@ -64,6 +64,17 @@
 				/>
 			</v-col>
 		</v-row>
+		<div
+			v-show="false"
+		>
+			<VSwitch
+				ref="reorderRef"
+				v-model="detailItemReorder"
+				vid="detailItemReorder"
+				:validation="validation"
+				:readonly="!isEditable"
+			/>
+		</div>
 		<template v-slot:buttons_pre>
 			<template
 				v-if="$vuetify.display.lgAndUp"
@@ -125,10 +136,10 @@
 <script>
 import { maxLength, minLength, required } from '@vuelidate/validators';
 
-import { useChecklistComponent } from '@/components/checklists/checklist/checklistComponent';
-import { useChecklistComponentProps } from '@/components/checklists/checklist/checklistComponentProps';
+import { useChecklistComponent } from '@/components/content/checklists/checklist/checklistComponent';
+import { useChecklistComponentProps } from '@/components/content/checklists/checklist/checklistComponentProps';
 
-import ChecklistSteps from '@/components/checklists/checklist/ChecklistSteps';
+import ChecklistSteps from '@/components/content/checklists/checklist/ChecklistSteps';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
@@ -181,6 +192,7 @@ export default {
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,
+			detailItemReorder,
 			canAdd,
 			isDefault,
 			isInProgress,
@@ -226,6 +238,7 @@ export default {
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,
+			detailItemReorder,
 			canAdd,
 			isDefault,
 			isInProgress,
@@ -247,6 +260,7 @@ export default {
 				$autoDirty: true
 			},
 			detailItemDescription: { $autoDirty: true },
+			detailItemReorder: { $autoDirty: true }
 		}
 	}
 };

@@ -8,7 +8,7 @@
 					color="info"
 					rounded
 				>
-					<div class="pl-4 pr-4 pb-4 pt-4">
+					<div class="pl-2 pr-4 pb-4 pt-2">
 						<slot name="draghandle">
 							<span class="column-drag-handle mr-2">&#x2630;</span>
 						</slot>
@@ -45,7 +45,7 @@
 						</slot>
 					</v-card-text>
 					<v-card-actions>
-						<v-spacer></v-spacer>detailItem.value = value.data;
+						<v-spacer></v-spacer>
 						<v-btn 
 							v-if="!readonly"
 							class="ml-2 mr-2">asdfasdf</v-btn>
@@ -65,8 +65,8 @@
 </template>
 
 <script>
-import { useChecklistStepPanelComponent } from '@/components/checklists/checklist/checklistStepPanelComponent';
-import { useChecklistStepsPanelComponentProps } from '@/components/checklists/checklist/checklistStepPanelComponentProps';
+import { useChecklistStepPanelComponent } from '@/components/content/checklists/checklist/checklistStepPanelComponent';
+import { useChecklistStepsPanelComponentProps } from '@/components/content/checklists/checklist/checklistStepPanelComponentProps';
 
 export default {
 	name: 'ChecklistPanel',

@@ -24,8 +24,8 @@
 <script>
 import { maxLength, minLength, required } from '@vuelidate/validators';
 
-import { useChecklistComponent } from '@/components/checklists/checklist/checklistComponent';
-import { useChecklistDialogProps } from '@/components/checklists/checklist/checklistDialogProps';
+import { useChecklistComponent } from '@/components/content/checklists/checklist/checklistComponent';
+import { useChecklistDialogProps } from '@/components/content/checklists/checklist/checklistDialogProps';
 
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';

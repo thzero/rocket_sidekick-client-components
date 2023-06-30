@@ -145,9 +145,8 @@ export function useChecklistsBaseComponent(props, context, options) {
 	};
 	const dialogCopyOk = async (response) => {
 		try {
-			dialogCopyManager.value.ok();
 			if (hasFailed(response)) {
-				alert(response.results);
+				setNotify(correlationIdI, 'messages.error');
 				return;
 			}
 
@@ -156,6 +155,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		}
 		finally {
 			dialogCopyParams.value = null;
+			dialogCopyManager.value.ok();
 		}
 	};
 	const dialogCopyOpen = (item) => {
@@ -177,16 +177,19 @@ export function useChecklistsBaseComponent(props, context, options) {
 	};
 	const dialogDeleteOk = async (item) => {
 		try {
-			dialogDeleteManager.value.ok();
-
 			if (!dialogDeleteParams.value || !dialogDeleteParams.value.id)
 				return;
 
-			await serviceStore.dispatcher.deleteChecklistByIdUser(correlationId(), dialogDeleteParams.value.id);
+			const response = await serviceStore.dispatcher.deleteChecklistByIdUser(correlationId(), dialogDeleteParams.value.id);
+			if (hasFailed(response)) {
+				setNotify(correlationIdI, 'messages.error');
+				return;
+			}
 			checklists.value = await fetch();
 		}
 		finally {
 			dialogDeleteParams.value = null;
+			dialogDeleteManager.value.ok();
 		}
 	};
 	const dialogDeleteOpen = (item) => {
@@ -208,17 +211,20 @@ export function useChecklistsBaseComponent(props, context, options) {
 	};
 	const dialogStartOk = async (item) => {
 		try {
-			dialogStartManager.value.ok();
-
 			if (!dialogStartParams.value || !dialogStartParams.value.id)
 				return;
 
-			// const response = await serviceStore.dispatcher.startChecklist(correlationId(), dialogDeleteParams.value.id);
 			// TODO
+			// const response = await serviceStore.dispatcher.startChecklist(correlationId(), dialogDeleteParams.value.id);
+			// if (hasFailed(response)) {
+			// 	setNotify(correlationIdI, 'messages.error');
+			// 	return;
+			// }
 			alert('start');
 		}
 		finally {
 			dialogStartParams.value = null;
+			dialogStartManager.value.ok();
 		}
 	};
 	const dialogStartOpen = (item) => {
@@ -244,15 +250,23 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const handleAdd = () => {
 		detailItem.value = initNew();
 	};
-	const handleEdit = (item) => {
-		detailItem.value = initEdit(item);
+	const handleEdit = async (item) => {
+		const correlationIdI = correlationId();
+		detailItem.value = null;
+		const response = await serviceStore.dispatcher.requestChecklistByIdUser(correlationIdI, item.id);
+		if (hasFailed(response)) {
+			setNotify(correlationIdI, 'messages.error');
+			return;
+		}
+		
+		detailItem.value = initEdit(response.results);
 	};
 	const handleView = async (item) => {
 		const correlationIdI = correlationId();
 		detailItem.value = null;
 		const response = await serviceStore.dispatcher.requestChecklistByIdUser(correlationIdI, item.id);
 		if (hasFailed(response)) {
-			setNotify(correlationIdI, 'messages.saved_failed');
+			setNotify(correlationIdI, 'messages.error');
 			return;
 		}
 		

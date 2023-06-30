@@ -37,8 +37,8 @@
 <script>
 import { maxLength, minLength, required } from '@vuelidate/validators';
 
-import { useChecklistFieldsComponent } from '@/components/checklists/checklist/checklistFieldsComponent';
-import { useChecklistFieldsProps } from '@/components/checklists/checklist/checklistFieldsProps';
+import { useChecklistFieldsComponent } from '@/components/content/checklists/checklist/checklistFieldsComponent';
+import { useChecklistFieldsProps } from '@/components/content/checklists/checklist/checklistFieldsProps';
 
 import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
