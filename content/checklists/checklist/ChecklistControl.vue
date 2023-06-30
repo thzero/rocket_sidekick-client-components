@@ -92,10 +92,10 @@
 </template>
 
 <script>
-import { useChecklistComponent } from '@/components/checklists/checklist/checklistComponent';
-// import { useChecklistFieldsComponent } from '@/components/checklists/checklist/checklistFieldsComponents';
-import { useChecklistFieldsValidation } from '@/components/checklists/checklist/checklistFieldsValidation';
-import { useChecklistComponentProps } from '@/components/checklists/checklist/checklistComponentProps';
+import { useChecklistComponent } from '@/components/content/checklists/checklist/checklistComponent';
+// import { useChecklistFieldsComponent } from '@/components/content/checklists/checklist/checklistFieldsComponents';
+import { useChecklistFieldsValidation } from '@/components/content/checklists/checklist/checklistFieldsValidation';
+import { useChecklistComponentProps } from '@/components/content/checklists/checklist/checklistComponentProps';
 
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 // import ChecklistFields from './ChecklistFields';

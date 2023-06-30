@@ -153,11 +153,11 @@
 </template>
 
 <script>
-import { useChecklistsBaseComponent } from '@/components/checklists/checklistsComponent';
-import { useChecklistsBaseProps } from '@/components/checklists/checklistsComponentProps';
+import { useChecklistsBaseComponent } from '@/components/content/checklists/checklistsComponent';
+import { useChecklistsBaseProps } from '@/components/content/checklists/checklistsComponentProps';
 
-import Checklist from '@/components/checklists/checklist/Checklist';
-import ChecklistCopyDialog from '@/components/checklists/dialogs/ChecklistCopyDialog';
+import Checklist from '@/components/content/checklists/checklist/Checklist';
+import ChecklistCopyDialog from '@/components/content/checklists/dialogs/ChecklistCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';

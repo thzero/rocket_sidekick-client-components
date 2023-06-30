@@ -55,6 +55,7 @@ export function useChecklistComponent(props, context, options) {
 	const detailItemDescription = ref(null);
 	const detailItemIsDefault = ref(null);
 	const detailItemName = ref(null);
+	const detailItemReorder = ref(false);
 
 	const canAdd = computed(() => {
 		return !isNew.value && !dirty.value;
@@ -77,7 +78,7 @@ export function useChecklistComponent(props, context, options) {
 	const preCompleteOk = async (correlationId) => {
 		detailItem.value.data.description = String.trim(detailItemDescription.value);
 		detailItem.value.data.name = String.trim(detailItemName.value);
-		delete detailItemData.value.data.isDefault;
+		delete detailItem.value.data.isDefault;
 		const response = await serviceStore.dispatcher.saveChecklistUser(correlationId, detailItemData.value);
 		logger.debug('checklistComponent', 'preCompleteOk', 'response', response, correlationId);
 		return response;
@@ -108,6 +109,8 @@ export function useChecklistComponent(props, context, options) {
 				item.steps.splice(addedIndex, 0, itemToAdd);
 		}
 		console.log('updateDataModel', detailItemData.value);
+
+		detailItemReorder.value = !detailItemReorder.value;
 	};
 	watch(() => props.modelValue,
 		async (value) => {
@@ -628,6 +631,7 @@ export function useChecklistComponent(props, context, options) {
 		detailItemDescription,
 		detailItemIsDefault,
 		detailItemName,
+		detailItemReorder,
 		canAdd,
 		isDefault,
 		isInProgress,
