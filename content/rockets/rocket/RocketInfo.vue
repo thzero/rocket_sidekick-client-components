@@ -89,7 +89,7 @@
 				>
 					<v-card>
 						<v-card-title>
-		<p class="text-h6 text-center">{{ $t('titles.rockets.albums') }}</p>
+			<p class="text-h6 text-center">{{ $t('titles.rockets.albums') }}</p>
 						</v-card-title>
 						<v-card-text>
 			<v-list density="compact">

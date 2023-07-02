@@ -1,64 +1,40 @@
 <template>
 	<ContentHeader :value="title" />
-	<v-row>
+	<v-row dense>
 		<v-col cols="12">
-			<!-- <v-card>
-				<v-card-text> -->
-					<v-row dense>
-						<v-col cols="6"
-							v-for="item in rockets"
-							:key="item.name"
-						>
-							<v-card
-								v-for="item in rockets"
-								:key="item.name"
-								class="mx-auto"
-								max-width="400"
-								color="secondary"
-							>
-								<v-img
-									v-if="hasCoverUrl(item)"
-									:src="item.coverUrl"
-									cover
-								></v-img>
-
-								<v-card-title>
-									<v-row dense>
-										<v-col>
-											<v-btn
-												:to="rocketUrl(item)"
-												size="large"
-												variant="text"
-											>
-												{{ item.name }}
-											</v-btn>
-										</v-col>
-										<v-col>
-											<img :src="rocketTypeIcon(item)" style="height: 48px; float: right;" />
-										</v-col>
-									</v-row>
-								</v-card-title>
-							</v-card>
-						</v-col>
-					</v-row>
-				<!-- </v-card-text>
-			</v-card> -->
+			<v-row dense>
+				<v-col cols="6"
+					v-for="item in rockets"
+					:key="item.name"
+				>
+					<div
+						v-for="item in rockets"
+						:key="item.id"
+					>
+						<RocketPanel
+							:item="item" 
+						/>
+					</div>
+				</v-col>
+			</v-row>
 		</v-col>
 	</v-row>
 </template>
 
 <script>
+import AppCommonConstants from 'rocket_sidekick_common/constants';
+
 import { useRocketsBaseComponent } from '@/components/content/rockets/rocketsBase';
 import { useRocketsBaseProps } from '@/components/content/rockets/rocketsBaseProps';
+import RocketPanel from '@/components/content/rockets/RocketPanel';
 
 import ContentHeader from '@/components/content/Header';
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 
 export default {
-	name: 'Rockets',
+	name: 'RocketsGallery',
 	components: {
 		ContentHeader,
-		VMarkdown
+		RocketPanel
 	},
 	props: {
 		...useRocketsBaseProps
@@ -81,9 +57,12 @@ export default {
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			rockets,
-			title,
+			title, 
+			type,
 			rocketUrl
-		} = useRocketsBaseComponent(props, context);
+		} = useRocketsBaseComponent(props, context, {
+			type: AppCommonConstants.Rocketry.DisplayTypes.Site
+		});
 
 		return {
 			correlationId,
@@ -103,6 +82,7 @@ export default {
 			rocketTypeIconDetermine,
 			rockets,
 			title,
+			type,
 			rocketUrl
 		};
 	}

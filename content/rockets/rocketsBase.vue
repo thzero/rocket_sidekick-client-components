@@ -26,17 +26,18 @@ export function useRocketsBaseComponent(props, context, options) {
 		rocketTypeIconDetermine
 	} = useRocketBaseComponent(props, context, options);
 
+	const type = ref(options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);
 	const params = ref({});
 	const rockets = ref([]);
 	const title = ref(
-		(props.type === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.rockets.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.rockets.title')
+		(type.value === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.rockets.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.rockets.title')
 	);
 
 	const fetch = async () => {
 		let response;
-		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
+		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			response = await serviceStore.dispatcher.requestRockets(correlationId(), params.value);
-		else if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
+		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User)
 			response = await serviceStore.dispatcher.requestRocketsUser(correlationId(), params.value);
 
 		if (hasFailed(response))
@@ -47,10 +48,10 @@ export function useRocketsBaseComponent(props, context, options) {
 	const rocketUrl = (item) => {
 		if (!item)
 			return null;
-		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
+		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			return '/rocket/' + item.id;
-		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Personal)
-			return '/user/rocket/' + item.id;
+		// if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User)
+		// 	return '/user/rocket/' + item.id;
 		return null;
 	};
 
@@ -76,6 +77,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		rocketTypeIconDetermine,
 		rockets,
 		title,
+		type,
 		rocketUrl
 	};
 };

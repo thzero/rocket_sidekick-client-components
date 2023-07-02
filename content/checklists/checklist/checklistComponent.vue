@@ -5,7 +5,7 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants.js';
 
-import { useDetailComponent } from './detailComponent';
+import { useDetailComponent } from '@/components/content/detailComponent';
 
 export function useChecklistComponent(props, context, options) {
 	const {
