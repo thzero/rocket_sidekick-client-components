@@ -12,7 +12,8 @@
 						:key="item.id"
 					>
 						<RocketPanel
-							:item="item" 
+							:item="item"
+							:type="type"
 						/>
 					</div>
 				</v-col>

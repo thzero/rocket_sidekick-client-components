@@ -1,4 +1,4 @@
-<template>
+<template>rteert
 	<RocketInfo
 		:type="type"
 	/>

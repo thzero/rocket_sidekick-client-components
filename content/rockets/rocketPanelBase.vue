@@ -1,9 +1,5 @@
 <script>
-import { onMounted, ref} from 'vue';
-
 import AppCommonConstants from 'rocket_sidekick_common/constants';
-
-import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useRocketBaseComponent } from '@/components/content/rockets/rocketBase';
 

@@ -69,9 +69,9 @@ export function useRocketInfoBaseComponent(props, context, options) {
 	const fetch = async () => {
 		let response;
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
-			response = await serviceStore.dispatcher.requestRocketById(correlationId(), rocketId.value);
+			response = await serviceStore.dispatcher.requestRocketByIdGallery(correlationId(), rocketId.value);
 		else if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
-			response = await serviceStore.dispatcher.requestRocketByIdUser(correlationId(), rocketId.value);
+			response = await serviceStore.dispatcher.requestRocketById(correlationId(), rocketId.value);
 		if (hasFailed(response))
 			return [];
 		return response.results;

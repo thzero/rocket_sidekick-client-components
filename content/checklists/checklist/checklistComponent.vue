@@ -79,7 +79,7 @@ export function useChecklistComponent(props, context, options) {
 		detailItem.value.data.description = String.trim(detailItemDescription.value);
 		detailItem.value.data.name = String.trim(detailItemName.value);
 		delete detailItem.value.data.isDefault;
-		const response = await serviceStore.dispatcher.saveChecklistUser(correlationId, detailItemData.value);
+		const response = await serviceStore.dispatcher.saveChecklist(correlationId, detailItemData.value);
 		logger.debug('checklistComponent', 'preCompleteOk', 'response', response, correlationId);
 		return response;
 	};
