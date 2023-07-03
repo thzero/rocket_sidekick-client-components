@@ -1,14 +1,11 @@
 <script>
-import { computed, onMounted, ref} from 'vue';
+import { ref} from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
-import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useContentBaseComponent } from '@/components/content/contentBase';
-import { useDisplayComponent } from '@thzero/library_client_vue3_vuetify3/components/display';
-import { useNotify } from '@thzero/library_client_vue3/components/notify';
+import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 
 import ChecklistData from 'rocket_sidekick_common/data/checklists/index';
 
@@ -29,75 +26,79 @@ export function useChecklistsBaseComponent(props, context, options) {
 		serviceStore,
 		sort,
 		target,
-	} = useContentBaseComponent(props, context, options);
-
-	const {
 		notifyColor,
 		notifyMessage,
 		notifySignal,
 		notifyTimeout,
-		setNotify
-	} = useNotify(props, context, options);
+		setNotify,
+		dialogCopyManager,
+		dialogCopyRef,
+		dialogDeleteManager,
+		dialogDeleteMessage,
+		detailItem,
+		items,
+		colsEditPanel,
+		colsSearchResults,
+		displayEditPanel,
+		displaySearchResults,
+		hasDetailItem,
+		hasList,
+		canCopy,
+		canDelete,
+		canEdit,
+		canView,
+		detailClose,
+		detailOk,
+		dialogCopyCancel,
+		dialogCopyParams,
+		dialogCopyOk,
+		dialogCopyOpen,
+		dialogDeleteCancel,
+		dialogDeleteParams,
+		dialogDeleteOk,
+		dialogDeleteOpen,
+		handleAdd,
+		handleEdit,
+		handleView,
+		initEdit,
+		initNew,
+		initView,
+		isCopying,
+		isDeleting,
+		display
+	} = useMasterDetailComponent(props, context, Object.assign(options ? options : {}, {
+			dialogDeleteMessage : 'checklists',
+			canCopy: (correlationId, item) => { return canCopyI(correlationId, item); },
+			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
+			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
+			canView: (correlationId, item) => { return canViewI(correlationId, item); },
+			fetch: async (correlationId) => { return await fetchI(correlationId); },
+			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
+			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
+		})
+	);
 
-	const display = useDisplayComponent();
-
-	const checklists = ref([]);
-	const dialogCopyManager = ref(new DialogSupport());
-	const dialogCopyParams = ref(null);
-	const dialogCopyRef = ref(null);
-	const dialogDeleteManager = ref(new DialogSupport());
-	const dialogDeleteMessage = ref(LibraryClientUtility.$trans.t('messages.checklists.delete_confirm'));
-	const dialogDeleteParams = ref(null);
 	const dialogStartManager = ref(new DialogSupport());
 	const dialogStartMessage = ref(LibraryClientUtility.$trans.t('messages.checklists.start_confirm'));
 	const dialogStartParams = ref(null);
-	const detailItem = ref(null);
 	const params = ref({});
 	const title = ref(
 		(props.type === AppCommonConstants.Checklists.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.checklists.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.checklists.title')
 	);
 
-	const colsEditPanel = computed(() => {
-		if (display.lgAndDown.value)
-			return hasDetailItem.value ? 12 : 0;
-
-		return hasDetailItem.value ? 8 : 0;
-	});
-	const colsSearchResults = computed(() => {
-		if (display.lgAndDown.value)
-			return hasDetailItem.value ? 0 : 12;
-
-		return hasDetailItem.value ? 4 : 12;
-	});
-	const displayEditPanel = computed(() => {
-		return hasDetailItem.value;
-	});
-	const displaySearchResults = computed(() => {
-		if (display.mdAndDown.value)
-			return hasDetailItem.value;
-
-		return true;
-	});
-	const hasDetailItem = computed(() => {
-		return LibraryCommonUtility.isNotNull(detailItem.value);
-	});
-	const hasList = computed(() => {
-		return !display.lgAndDown.value;
-	});
-
-	const canCopy = (item) => {
+	const canCopyI = (correlationId, item) => {
 		return item && isDefault(item) || isShared(item) || !isInProgress(item);
 	};
-	const canDelete = (item) => {
+	const canDeleteI = (correlationId, item) => {
 		return item && !isDefault(item) && !isShared(item) && !isInProgress(item);
 	};
-	const canEdit = (item) => {
+	const canEditI = (correlationId, item) => {
 		return item && !isDefault(item) && !isShared(item) && !isInProgress(item) && !isCompleted(item);
 	};
 	const canStart = (item) => {
 		return item && !isDefault(item) && !isShared(item) && !isInProgress(item) && !isCompleted(item);
 	};
-	const canView = (item) => {
+	const canViewI = (correlationId, item) => {
 		return item && isDefault(item) || isShared(item);
 	};
 	const checklistTypeIcon = (item) => {
@@ -120,86 +121,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.mid)
 			return 'rocket_mid.png';
 		return null;
-	};
-	const checklistUrl = (item) => {
-		if (!item)
-			return null;
-		if (props.type === AppCommonConstants.Checklists.DisplayTypes.Site)
-			return '/checklist/' + item.id;
-		if (props.type === AppCommonConstants.Checklists.DisplayTypes.Personal)
-			return '/user/checklist/' + item.id;
-		return null;
-	};
-	const detailClose = async () => {
-		detailItem.value = null;
-	};
-	const detailOk = async () => {
-	};
-	const dialogCopyCancel = async (item) => {
-		try {
-			dialogCopyManager.value.cancel();
-		}
-		finally {
-			dialogCopyParams.value = null;
-		}
-	};
-	const dialogCopyOk = async (response) => {
-		try {
-			if (hasFailed(response)) {
-				setNotify(correlationIdI, 'messages.error');
-				return;
-			}
-
-			detailItem.value = initNew(response.results);
-			checklists.value = await fetch();
-		}
-		finally {
-			dialogCopyParams.value = null;
-			dialogCopyManager.value.ok();
-		}
-	};
-	const dialogCopyOpen = (item) => {
-		if (!item)
-			return;
-		// if (!canCopy(item))
-		// 	return;
-
-		dialogCopyParams.value = { id: item.id, name: item.name };
-		dialogCopyManager.value.open();
-	};
-	const dialogDeleteCancel = async (item) => {
-		try {
-			dialogDeleteManager.value.cancel();
-		}
-		finally {
-			dialogDeleteParams.value = null;
-		}
-	};
-	const dialogDeleteOk = async (item) => {
-		try {
-			if (!dialogDeleteParams.value || !dialogDeleteParams.value.id)
-				return;
-
-			const response = await serviceStore.dispatcher.deleteChecklistByIdUser(correlationId(), dialogDeleteParams.value.id);
-			if (hasFailed(response)) {
-				setNotify(correlationIdI, 'messages.error');
-				return;
-			}
-			checklists.value = await fetch();
-		}
-		finally {
-			dialogDeleteParams.value = null;
-			dialogDeleteManager.value.ok();
-		}
-	};
-	const dialogDeleteOpen = (item) => {
-		if (!item)
-			return;
-		if (!canDelete(item))
-			return;
-
-		dialogDeleteParams.value = { id: item.id };
-		dialogDeleteManager.value.open();
 	};
 	const dialogStartCancel = async (item) => {
 		try {
@@ -236,70 +157,22 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogStartParams.value = { id: item.id };
 		dialogStartManager.value.open();
 	};
-	const fetch = async () => {
-		let response;
-		if (props.type === AppCommonConstants.Checklists.DisplayTypes.Site)
-			response = await serviceStore.dispatcher.requestChecklists(correlationId(), params.value);
-		else if (props.type === AppCommonConstants.Checklists.DisplayTypes.User)
-			response = await serviceStore.dispatcher.requestChecklistsUser(correlationId(), params.value);
-
-		if (hasFailed(response))
-			return [];
-		return response.results;
+	const fetchI = async (correlationId) => {
+		return await serviceStore.dispatcher.requestChecklists(correlationId, params.value);
 	};
-	const handleAdd = () => {
-		detailItem.value = initNew();
+	const fetchItemI = async (correlationId, id) => {
+		return await serviceStore.dispatcher.requestChecklistById(correlationId, id);
 	};
-	const handleEdit = async (item) => {
-		const correlationIdI = correlationId();
-		detailItem.value = null;
-		const response = await serviceStore.dispatcher.requestChecklistByIdUser(correlationIdI, item.id);
-		if (hasFailed(response)) {
-			setNotify(correlationIdI, 'messages.error');
-			return;
-		}
-		
-		detailItem.value = initEdit(response.results);
-	};
-	const handleView = async (item) => {
-		const correlationIdI = correlationId();
-		detailItem.value = null;
-		const response = await serviceStore.dispatcher.requestChecklistByIdUser(correlationIdI, item.id);
-		if (hasFailed(response)) {
-			setNotify(correlationIdI, 'messages.error');
-			return;
-		}
-		
-		detailItem.value = initView(response.results);
-	};
-	const initEdit = (data) => {
-		return { data: LibraryCommonUtility.cloneDeep(data), isNew: false, isEditable: true }
-	};
-	const initNew = (defData) => {
-		const data = defData ? defData : new ChecklistData();
+	const initNewI = (correlationId, data) => {
+		data = data ? data : new ChecklistData();
 		data.typeId = AppCommonConstants.Checklists.ChecklistTypes.launch;
-		return { data: data, isNew: true, isEditable: true  }
-	};
-	const initView = (data) => {
-		return { data: data, isNew: true, isEditable: false  }
+		return data;
 	};
 	const isCompleted = (item) => {
 		return item ? item.completed  ?? false : false;
 	};
-	const isCopying = (item) => {
-		if (!dialogCopyParams.value || !dialogCopyParams.value.id || !item)
-			return false;
-
-		return item.id === dialogCopyParams.value.id;
-	};
 	const isDefault = (item) => {
 		return item ? item.isDefault ?? false : false;
-	};
-	const isDeleting = (item) => {
-		if (!dialogDeleteParams.value || !dialogDeleteParams.value.id || !item)
-			return false;
-
-		return item.id === dialogDeleteParams.value.id;
 	};
 	const isInProgress = (item) => {
 		return item ? item.type === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
@@ -313,10 +186,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 
 		return item.id === dialogStartParams.value.id;
 	};
-
-	onMounted(async () => {
-		checklists.value = await fetch();
-	});
 
 	return {
 		correlationId,
@@ -337,15 +206,12 @@ export function useChecklistsBaseComponent(props, context, options) {
 		notifySignal,
 		notifyTimeout,
 		setNotify,
-		checklists,
 		dialogCopyManager,
 		dialogCopyRef,
 		dialogDeleteManager,
 		dialogDeleteMessage,
-		dialogStartManager,
-		dialogStartMessage,
 		detailItem,
-		title,
+		items,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,
@@ -355,11 +221,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		canCopy,
 		canDelete,
 		canEdit,
-		canStart,
 		canView,
-		checklistTypeIcon,
-		checklistTypeIconDetermine,
-		checklistUrl,
 		detailClose,
 		detailOk,
 		dialogCopyCancel,
@@ -370,25 +232,31 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		dialogDeleteOk,
 		dialogDeleteOpen,
-		dialogStartCancel,
-		dialogStartParams,
-		dialogStartOk,
-		dialogStartOpen,
-		params,
 		handleAdd,
 		handleEdit,
 		handleView,
 		initEdit,
 		initNew,
 		initView,
-		isCompleted,
 		isCopying,
-		isDefault,
 		isDeleting,
+		display,
+		dialogStartManager,
+		dialogStartMessage,
+		title,
+		canStart,
+		checklistTypeIcon,
+		checklistTypeIconDetermine,
+		dialogStartCancel,
+		dialogStartParams,
+		dialogStartOk,
+		dialogStartOpen,
+		params,
+		isCompleted,
+		isDefault,
 		isInProgress,
 		isShared,
-		isStarting,
-		display
+		isStarting
 	};
 };
 </script>

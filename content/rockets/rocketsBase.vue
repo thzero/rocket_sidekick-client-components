@@ -36,9 +36,9 @@ export function useRocketsBaseComponent(props, context, options) {
 	const fetch = async () => {
 		let response;
 		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
-			response = await serviceStore.dispatcher.requestRockets(correlationId(), params.value);
+			response = await serviceStore.dispatcher.requestRocketsGallery(correlationId(), params.value);
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User)
-			response = await serviceStore.dispatcher.requestRocketsUser(correlationId(), params.value);
+			response = await serviceStore.dispatcher.requestRockets(correlationId(), params.value);
 
 		if (hasFailed(response))
 			return [];

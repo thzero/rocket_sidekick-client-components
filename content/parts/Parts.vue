@@ -55,7 +55,7 @@
 								v-if="isDefault"
 								style="float: right;"
 							>
-								{{  $t('strings.checklists.isdefault') }}
+								{{  $t('strings.parts.isdefault') }}
 							</v-chip> -->
 						</v-card-title>
 						<v-card-text>
@@ -65,7 +65,7 @@
 							<v-chip
 								v-if="isDefault(item)"
 							>
-								{{  $t('strings.checklists.isdefault') }}
+								{{  $t('strings.parts.isdefault') }}
 							</v-chip>
 							<v-spacer></v-spacer>
 							<v-btn
@@ -95,15 +95,6 @@
 								{{ $t('buttons.edit') }}
 							</v-btn>
 							<v-btn
-								v-if="canStart(item)"
-								color="green"
-								variant="flat"
-								:disabled="isStarting(item)"
-								@click="dialogStartOpen(item)"
-							>
-								{{ $t('buttons.start') }}
-							</v-btn>
-							<v-btn
 								v-if="canView(item)"
 								color="green"
 								variant="flat"
@@ -120,16 +111,16 @@
 			v-show="colsEditPanel"
 			:cols="colsEditPanel"
 		>
-			<Checklist
+			<Part
 				:model-value="detailItem"
 				@cancel="detailClose"
 				@close="detailClose"
 				@ok="detailOk"
 			>
-			</Checklist>
+			</Part>
 		</v-col>
 	</v-row>
-	<ChecklistCopyDialog
+	<PartCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
 		:signal="dialogCopyManager.signal"
@@ -144,37 +135,29 @@
 		@cancel="dialogDeleteCancel"
 		@ok="dialogDeleteOk"
 	/>
-	<VConfirmationDialog
-		ref="dialoStartRef"
-		:message="dialogStartMessage"
-		:messageRaw=true
-		:signal="dialogStartManager.signal"
-		@cancel="dialogStartCancel"
-		@ok="dialogStartOk"
-	/>
 </template>
 
 <script>
-import { useChecklistsBaseComponent } from '@/components/content/checklists/checklistsComponent';
-import { useChecklistsBaseProps } from '@/components/content/checklists/checklistsComponentProps';
+import { usePartsBaseComponent } from '@/components/content/parts/partsComponent';
+import { usePartsBaseProps } from '@/components/content/parts/partsComponentProps';
 
-import Checklist from '@/components/content/checklists/checklist/Checklist';
-import ChecklistCopyDialog from '@/components/content/checklists/dialogs/ChecklistCopyDialog';
+import Part from '@/components/content/parts/part/Part';
+import PartCopyDialog from '@/components/content/parts/dialogs/PartCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 
 export default {
-	name: 'Checklists',
+	name: 'Parts',
 	components: {
-		Checklist,
-		ChecklistCopyDialog,
+		Part,
+		PartCopyDialog,
 		ContentHeader,
 		VConfirmationDialog,
 		VMarkdown
 	},
 	props: {
-		...useChecklistsBaseProps
+		...usePartsBaseProps
 	},
 	setup(props, context) {
 		const {
@@ -234,20 +217,9 @@ export default {
 			dialogStartManager,
 			dialogStartMessage,
 			title,
-			canStart,
-			checklistTypeIcon,
-			checklistTypeIconDetermine,
-			dialogStartCancel,
-			dialogStartParams,
-			dialogStartOk,
-			dialogStartOpen,
 			params,
-			isCompleted,
-			isDefault,
-			isInProgress,
-			isShared,
-			isStarting
-		} = useChecklistsBaseComponent(props, context);
+			isPublic
+		} = usePartsBaseComponent(props, context);
 
 		return {
 			correlationId,
@@ -306,19 +278,8 @@ export default {
 			dialogStartManager,
 			dialogStartMessage,
 			title,
-			canStart,
-			checklistTypeIcon,
-			checklistTypeIconDetermine,
-			dialogStartCancel,
-			dialogStartParams,
-			dialogStartOk,
-			dialogStartOpen,
 			params,
-			isCompleted,
-			isDefault,
-			isInProgress,
-			isShared,
-			isStarting
+			isPublic
 		};
 	}
 };

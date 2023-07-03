@@ -150,13 +150,13 @@
 import { useRocketInfoBaseComponent } from '@/components/content/rockets/rocket/rocketInfoBase';
 import { useRocketInfoBaseProps } from '@/components/content/rockets/rocket/rocketInfoBaseProps';
 
-import Header from '@/components/content/Header';
+import ContentHeader from '@/components/content/Header';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 
 export default {
 	name: 'RocketInfo',
 	components: {
-		Header,
+		ContentHeader,
 		VMarkdown
 	},
 	props: {
