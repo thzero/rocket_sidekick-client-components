@@ -40,10 +40,7 @@ export function useWeathercockingBaseComponent(props, context) {
 		notifySignal,
 		notifyTimeout,
 		settings,
-		dateFormat,
-		dateFormatMask,
 		calculateI,
-		formatNumber,
 		handleListener,
 		handleAttribution,
 		initCalculationOutput,
@@ -51,8 +48,7 @@ export function useWeathercockingBaseComponent(props, context) {
 		resetFormI,
 		setErrorMessage,
 		setErrorTimer,
-		setNotify,
-		toFixed
+		setNotify
 	} = useToolsBaseComponent(props, context, {
 		id: 'weathercocking',
 		resetForm: (correlationId) => {
@@ -171,10 +167,7 @@ export function useWeathercockingBaseComponent(props, context) {
 		notifySignal,
 		notifyTimeout,
 		settings,
-		dateFormat,
-		dateFormatMask,
 		calculateI,
-		formatNumber,
 		handleListener,
 		handleAttribution,
 		initCalculationOutput,
@@ -183,7 +176,6 @@ export function useWeathercockingBaseComponent(props, context) {
 		setErrorMessage,
 		setErrorTimer,
 		setNotify,
-		toFixed,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsVelocityType,
