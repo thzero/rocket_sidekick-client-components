@@ -30,7 +30,7 @@ export function useRocketsBaseComponent(props, context, options) {
 	const params = ref({});
 	const rockets = ref([]);
 	const title = ref(
-		(type.value === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.rockets.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.rockets.title')
+		(type.value === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.rockets.title')
 	);
 
 	const fetch = async () => {

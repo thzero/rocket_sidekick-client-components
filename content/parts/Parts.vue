@@ -55,7 +55,7 @@
 								v-if="isDefault"
 								style="float: right;"
 							>
-								{{  $t('strings.parts.isdefault') }}
+								{{  $t('strings.content.parts.isPublic') }}
 							</v-chip> -->
 						</v-card-title>
 						<v-card-text>
@@ -63,9 +63,9 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-chip
-								v-if="isDefault(item)"
+								v-if="isPublic(item)"
 							>
-								{{  $t('strings.parts.isdefault') }}
+								{{  $t('strings.content.parts.isPublic') }}
 							</v-chip>
 							<v-spacer></v-spacer>
 							<v-btn
@@ -111,13 +111,7 @@
 			v-show="colsEditPanel"
 			:cols="colsEditPanel"
 		>
-			<Part
-				:model-value="detailItem"
-				@cancel="detailClose"
-				@close="detailClose"
-				@ok="detailOk"
-			>
-			</Part>
+			<slot :detailItem="detailItem" :detailClose="detailClose" :detailOk="detailOk" />
 		</v-col>
 	</v-row>
 	<PartCopyDialog
@@ -145,7 +139,6 @@ import Part from '@/components/content/parts/part/Part';
 import PartCopyDialog from '@/components/content/parts/dialogs/PartCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 
 export default {
 	name: 'Parts',
@@ -153,8 +146,7 @@ export default {
 		Part,
 		PartCopyDialog,
 		ContentHeader,
-		VConfirmationDialog,
-		VMarkdown
+		VConfirmationDialog
 	},
 	props: {
 		...usePartsBaseProps
@@ -214,8 +206,6 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
-			dialogStartManager,
-			dialogStartMessage,
 			title,
 			params,
 			isPublic
@@ -275,8 +265,6 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
-			dialogStartManager,
-			dialogStartMessage,
 			title,
 			params,
 			isPublic

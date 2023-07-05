@@ -83,7 +83,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const dialogStartParams = ref(null);
 	const params = ref({});
 	const title = ref(
-		(props.type === AppCommonConstants.Checklists.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.checklists.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.checklists.title')
+		(props.type === AppCommonConstants.Checklists.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.checklists.title')
 	);
 
 	const canCopyI = (correlationId, item) => {

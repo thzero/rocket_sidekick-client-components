@@ -211,11 +211,11 @@ export function useMobileLookupDialogComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		if (manufacturers.value === null)
+		if (manufacturers.value)
 			return;
 
-		const response = await serviceStore.dispatcher.requestManufacturers();
-		if (response === null)
+		const response = await serviceStore.dispatcher.requestManufacturers(correlationId());
+		if (hasFailed(response))
 			return;
 
 		const temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.motor));

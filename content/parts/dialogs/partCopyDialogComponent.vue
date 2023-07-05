@@ -9,7 +9,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
-export function useChecklistCopyDialogComponent(props, context, options) {
+export function usePartCopyDialogComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -37,7 +37,7 @@ export function useChecklistCopyDialogComponent(props, context, options) {
 	};
 	const preCompleteOk = async (correlationId) => {
 		const name2 = String.trim(name.value);
-		const response = await serviceStore.dispatcher.copyChecklistById(correlationId, { id: props.params.id, name: name2 });
+		const response = await serviceStore.dispatcher.copyPartById(correlationId, { id: props.params.id, name: name2 });
 		return response;
 	};
 	// eslint-disable-next-line
@@ -61,8 +61,8 @@ export function useChecklistCopyDialogComponent(props, context, options) {
 		ok,
 		preCompleteOk,
 		resetDialog,
-		scope: 'ChecklistCopyDialog',
-		validation: useVuelidate({ $scope: 'ChecklistCopyDialog' })
+		scope: 'PartCopyDialog',
+		validation: useVuelidate({ $scope: 'PartCopyDialog' })
 	};
 };
 </script>

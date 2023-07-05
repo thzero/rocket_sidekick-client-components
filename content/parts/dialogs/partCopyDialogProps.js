@@ -1,4 +1,4 @@
-export const useChecklistDialogProps = {
+export const usePartCopyDialogProps = {
 	params: {
 		type: Object
 	},

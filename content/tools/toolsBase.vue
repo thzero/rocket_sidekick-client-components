@@ -35,8 +35,6 @@ export function useToolsBaseComponent(props, context, options) {
 	const errorMessage = ref(null);
 	const errorTimer = ref(null);
 	const hasAttribution = ref(false);
-	const measurementUnitsIdOutput = ref(null);
-	const measurementUnitsIdSettings = ref(null);
 	const notifyColor = ref(null);
 	const notifyMessage = ref(null);
 	const notifySignal = ref(false);
@@ -136,8 +134,6 @@ export function useToolsBaseComponent(props, context, options) {
 
 	onMounted(async () => {
 		settings.value = serviceStore.getters.user.getUserSettings();
-		measurementUnitsIdOutput.value = AppUtility.measurementUnitsId(correlationId, settings.value);
-		measurementUnitsIdSettings.value = AppUtility.measurementUnitsId(correlationId, settings.value);
 
 		if (!String.isNullOrEmpty(contentId)) {
 			const tools = serviceStore.getters.getContentTools();
@@ -175,8 +171,6 @@ export function useToolsBaseComponent(props, context, options) {
 		errorMessage,
 		errorTimer,
 		hasAttribution,
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
 		notifyColor,
 		notifyMessage,
 		notifySignal,

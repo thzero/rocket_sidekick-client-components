@@ -22,8 +22,6 @@
 </template>
 
 <script>
-// import { maxLength, minLength, required } from '@vuelidate/validators';
-
 import { useChecklistCopyDialogComponent } from '@/components/content/checklists/dialogs/checklistCopyDialogComponent';
 import { useChecklistCopyDialogProps } from '@/components/content/checklists/dialogs/checklistCopyDialogProps';
 import { useChecklistCopyDialogValidation } from '@/components/content/checklists/dialogs/checklistCopyDialogValidation';
@@ -85,16 +83,6 @@ export default {
 	validations () {
 		return useChecklistCopyDialogValidation;
 	}
-	// validations () {
-	// 	return {
-	// 		name: {
-	// 			required,
-	// 			minLength: minLength(3),
-	// 			maxLength: maxLength(50),
-	// 			$autoDirty: true
-	// 		}
-	// 	};
-	// }
 };
 </script>
 
