@@ -1,7 +1,6 @@
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
@@ -41,13 +40,6 @@ export function useToolsBaseComponent(props, context, options) {
 	const notifyTimeout = ref(3000);
 	const settings = ref(null);
 
-	const dateFormat = computed(() => {
-		return LibraryClientUtility.dateFormat();
-	});
-	const dateFormatMask = computed(() => {
-		return LibraryClientUtility.dateFormat().replace(/[a-zA-Z0-9]/g, '#');
-	});
-
 	const calculateI = async (correlationId, calculationResults, func) => {
 		try {
 			initCalculationOutput(correlationId);
@@ -63,9 +55,6 @@ export function useToolsBaseComponent(props, context, options) {
 		catch(err) {
 			logger.exception('useToolsBaseComponent', 'calculateI', err, correlationId);
 		}
-	};
-	const formatNumber = (value) => {
-		return value?.toLocaleString();
 	};
 	const handleListener = (correlationId, type, name, value, setName, symbols) => {
 		const prefix = !String.isNullOrEmpty(setName) ? `${setName}: ` : '';
@@ -122,15 +111,6 @@ export function useToolsBaseComponent(props, context, options) {
 		notifyMessage.value = (!transformed ? LibraryClientUtility.$trans.t(message) : message);
 		notifySignal.value = true;
 	};
-	const toFixed = (value) => {
-		if (!value)
-			return '';
-
-		if (LibraryCommonUtility.isString(value))
-			return value.toFixed(2);
-		
-		return value;
-	};
 
 	onMounted(async () => {
 		settings.value = serviceStore.getters.user.getUserSettings();
@@ -176,10 +156,7 @@ export function useToolsBaseComponent(props, context, options) {
 		notifySignal,
 		notifyTimeout,
 		settings,
-		dateFormat,
-		dateFormatMask,
 		calculateI,
-		formatNumber,
 		handleListener,
 		handleAttribution,
 		initCalculationOutput,
@@ -187,8 +164,7 @@ export function useToolsBaseComponent(props, context, options) {
 		resetFormI,
 		setErrorMessage,
 		setErrorTimer,
-		setNotify,
-		toFixed
+		setNotify
 	};
 };
 </script>

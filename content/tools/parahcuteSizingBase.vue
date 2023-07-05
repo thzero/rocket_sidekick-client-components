@@ -40,10 +40,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 		notifySignal,
 		notifyTimeout,
 		settings,
-		dateFormat,
-		dateFormatMask,
 		calculateI,
-		formatNumber,
 		handleListener,
 		handleAttribution,
 		initCalculationOutput,
@@ -51,8 +48,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 		resetFormI,
 		setErrorMessage,
 		setErrorTimer,
-		setNotify,
-		toFixed
+		setNotify
 	} = useToolsBaseComponent(props, context, {
 		id: 'parachuteSizing',
 		resetForm: (correlationId) => {
@@ -191,10 +187,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 		notifySignal,
 		notifyTimeout,
 		settings,
-		dateFormat,
-		dateFormatMask,
 		calculateI,
-		formatNumber,
 		handleListener,
 		handleAttribution,
 		initCalculationOutput,
@@ -203,7 +196,6 @@ export function useParachuteSizingBaseComponent(props, context) {
 		setErrorMessage,
 		setErrorTimer,
 		setNotify,
-		toFixed,
 		measurementUnitsDensityType,
 		measurementUnitslengthType,
 		measurementUnitsVelocityType,
