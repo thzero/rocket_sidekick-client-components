@@ -9,6 +9,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useWeathercockingBaseComponent(props, context) {
 	const {
@@ -21,18 +22,19 @@ export function useWeathercockingBaseComponent(props, context) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target,
-		content,
 		calculationOutput,
+		content,
 		contentTitle,
 		errors,
 		errorMessage,
 		errorTimer,
 		hasAttribution,
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
 		notifyColor,
 		notifyMessage,
 		notifySignal,
@@ -61,6 +63,11 @@ export function useWeathercockingBaseComponent(props, context) {
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.weathercocking')
 	 });
+
+	const {
+		measurementUnitsIdOutput,
+		measurementUnitsIdSettings
+	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
 		measurementUnitsAccelerationDefaultId,
@@ -146,7 +153,10 @@ export function useWeathercockingBaseComponent(props, context) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target,
 		calculationOutput,
@@ -156,8 +166,6 @@ export function useWeathercockingBaseComponent(props, context) {
 		errorMessage,
 		errorTimer,
 		hasAttribution,
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
 		notifyColor,
 		notifyMessage,
 		notifySignal,
@@ -176,6 +184,8 @@ export function useWeathercockingBaseComponent(props, context) {
 		setErrorTimer,
 		setNotify,
 		toFixed,
+		measurementUnitsIdOutput,
+		measurementUnitsIdSettings,
 		measurementUnitsVelocityType,
 		serviceToolsWeathercocking,
 		calculationData,

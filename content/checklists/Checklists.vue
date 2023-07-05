@@ -55,7 +55,7 @@
 								v-if="isDefault"
 								style="float: right;"
 							>
-								{{  $t('strings.checklists.isdefault') }}
+								{{  $t('strings.content.checklists.isDefault') }}
 							</v-chip> -->
 						</v-card-title>
 						<v-card-text>
@@ -65,7 +65,7 @@
 							<v-chip
 								v-if="isDefault(item)"
 							>
-								{{  $t('strings.checklists.isdefault') }}
+								{{  $t('strings.content.checklists.isDefault') }}
 							</v-chip>
 							<v-spacer></v-spacer>
 							<v-btn
@@ -162,7 +162,6 @@ import Checklist from '@/components/content/checklists/checklist/Checklist';
 import ChecklistCopyDialog from '@/components/content/checklists/dialogs/ChecklistCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 
 export default {
 	name: 'Checklists',
@@ -170,8 +169,7 @@ export default {
 		Checklist,
 		ChecklistCopyDialog,
 		ContentHeader,
-		VConfirmationDialog,
-		VMarkdown
+		VConfirmationDialog
 	},
 	props: {
 		...useChecklistsBaseProps

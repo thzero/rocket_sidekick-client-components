@@ -1,6 +1,6 @@
 <template>
 	<VFormDialog
-		:label="$t('titles.new') + ' ' + $t('characters.name')"
+		:label="$t('titles.copy') + ' ' + $t('parts.name')"
 		:signal="signal"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
 		:pre-complete-ok="preCompleteOk"
@@ -22,22 +22,23 @@
 </template>
 
 <script>
-import { maxLength, minLength, required } from '@vuelidate/validators';
+// import { maxLength, minLength, required } from '@vuelidate/validators';
 
-import { useChecklistComponent } from '@/components/content/checklists/checklist/checklistComponent';
-import { useChecklistDialogProps } from '@/components/content/checklists/checklist/checklistDialogProps';
+import { usePartCopyDialogComponent } from '@/components/content/parts/dialogs/partCopyDialogComponent';
+import { usePartCopyDialogProps } from '@/components/content/parts/dialogs/partCopyDialogProps';
+import { usePartCopyDialogValidation } from '@/components/content/parts/dialogs/partCopyDialogValidation';
 
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'ChecklistDialog',
+	name: 'PartCopyDialog',
 	components: {
 		VFormDialog,
 		VTextFieldWithValidation
 	},
 	props: {
-		...useChecklistDialogProps
+		...usePartCopyDialogProps
 	},
 	emits: ['close', 'ok'],
 	setup (props, context) {
@@ -52,17 +53,14 @@ export default {
 			notImplementedError,
 			success,
 			name,
+			buttonOkDisabledOverride,
 			close,
 			ok,
 			preCompleteOk,
 			resetDialog,
 			scope,
 			validation
-		} = useChecklistComponent(props, context);
-
-		const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
-			return invalid;
-		};
+		} = usePartCopyDialogComponent(props, context);
 
 		return {
 			correlationId,
@@ -75,24 +73,17 @@ export default {
 			notImplementedError,
 			success,
 			name,
+			buttonOkDisabledOverride,
 			close,
 			ok,
 			preCompleteOk,
 			resetDialog,
 			scope,
-			validation,
-			buttonOkDisabledOverride
+			validation
 		};
 	},
 	validations () {
-		return {
-			name: {
-				required,
-				minLength: minLength(3),
-				maxLength: maxLength(50),
-				$autoDirty: true
-			}
-		};
+		return usePartCopyDialogValidation;
 	}
 };
 </script>

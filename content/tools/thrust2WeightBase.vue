@@ -11,6 +11,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 
 import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useThrust2WeightBaseComponent(props, context, formRef) {
 	const {
@@ -23,7 +24,10 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target,
 		calculationOutput,
@@ -33,8 +37,6 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		errorMessage,
 		errorTimer,
 		hasAttribution,
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
 		notifyColor,
 		notifyMessage,
 		notifySignal,
@@ -74,6 +76,11 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.thrust2Weight')
 	 });
+
+	const {
+		measurementUnitsIdOutput,
+		measurementUnitsIdSettings
+	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
 		measurementUnitsAccelerationDefaultId,
@@ -337,7 +344,10 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target,
 		calculationOutput,
@@ -347,8 +357,6 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		errorMessage,
 		errorTimer,
 		hasAttribution,
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
 		notifyColor,
 		notifyMessage,
 		notifySignal,
@@ -367,6 +375,8 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		setErrorTimer,
 		setNotify,
 		toFixed,
+		measurementUnitsIdOutput,
+		measurementUnitsIdSettings,
 		measurementUnitsWeightType,
 		serviceToolsThrust2Weight,
 		calculationResults,

@@ -195,7 +195,7 @@ export function useMasterDetailComponent(props, context, options) {
 	};
 	const initNew = (data) => {
 		if (options.initNew)
-			options.initNew(correlationId(), data);
+			data = options.initNew(correlationId(), data);
 		if (!data)
 			throw Error('Invalid data...');
 		return { data: data, isNew: true, isEditable: true  }

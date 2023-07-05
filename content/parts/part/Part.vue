@@ -7,31 +7,32 @@
 	[[ isDefault {{ isDefault }} ]]
 	[[ isInProgress {{ isInProgress }} ]]
 	[[ isShared {{ isShared }} ]]
-	[[ detailItem {{ JSON.stringify(detailItem) }}]]
+	 <!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
+	<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
+	<!-- [[ detailItemData {{ JSON.stringify(detailItemData) }}]]  -->
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
 		:button-cancel="true"
+		button-cancel-name="buttons.close"
+		:button-clear="isEditable"
 		button-clear-name="buttons.reset"
-		:button-delete="canDelete"
+		:button-delete="false"
+		:button-ok="isEditable"
 		:dirty-callback="dirtyCallback"
 		:invalid-callback="invalidCallback"
 		:reset-additional="resetForm"
 		:pre-complete-ok="preCompleteOk"
-		:readonly="!isEditable"
 		@cancel="handleCancel"
 		@ok="handleOk"
 	>
-		<!-- <ChecklistFields
-			:validation="validation"
-			:readonly="readonly"
-		/> -->
+		<!-- :readonly="!isEditable" -->
 		<v-row dense>
 			<v-col>
 				<VTextFieldWithValidation
 					ref="nameRef"
-					v-model="innerItemName"
-					vid="innerItemName"
+					v-model="detailItemName"
+					vid="detailItemName"
 					:label="$t('forms.name')"
 					:counter="30"
 					:validation="validation"
@@ -42,8 +43,8 @@
 				<VSwitch
 					ref="isDefaultRef"
 					v-if="!isEditable"
-					v-model="innerItemIsDefault"
-					:label="$t('forms.checklists.default')"
+					v-model="detailItemIsDefault"
+					:label="$t('forms.parts.default')"
 					:readonly="true"
 				/>
 			</v-col>
@@ -52,70 +53,92 @@
 			<v-col>
 				<VTextAreaWithValidation
 					ref="descriptionRef"
-					v-model="innerItemDescription"
-					vid="innerItemDescription"
+					v-model="detailItemDescription"
+					vid="detailItemDescription"
 					:label="$t('forms.description')"
 					:counter="30"
 					:validation="validation"
 					:readonly="!isEditable"
 					:clearable="isEditable"
-					:rows="detailTextRows"
+					:rows="detailItemTextRows"
 				/>
 			</v-col>
 		</v-row>
-
+		<div
+			v-show="false"
+		>
+			<VSwitch
+				ref="reorderRef"
+				v-model="detailItemReorder"
+				vid="detailItemReorder"
+				:validation="validation"
+				:readonly="!isEditable"
+			/>
+		</div>
 		<template v-slot:buttons_pre>
-			<v-btn
-				v-if="canAdd"
-				class="mr-2"
-				color="primary"
-				@click="handleAdd"
+			<template
+				v-if="$vuetify.display.lgAndUp"
 			>
-				{{ $t('buttons.add') }} {{ $t('checklists.step') }}
-			</v-btn>
-			<span
-				v-if="canAdd"
-				class="mr-2"
-			>|</span>
+				<v-btn
+					v-if="canAdd"
+					class="mr-2"
+					color="primary"
+					@click="handleAdd"
+				>
+					{{ $t('buttons.add') }} {{ $t('buttons.parts.step') }}
+				</v-btn>
+				<span
+					v-if="canAdd"
+					class="mr-2"
+				>|</span>
+			</template>
 		</template>
 		<template v-slot:buttons_post>
-			<v-btn
+			<!-- <v-btn
 				v-if="!isEditable"
 				class="ml-2"
 				color="primary"
 				@click="handleClose"
 			>
 				{{ $t('buttons.close') }}
-			</v-btn>
+			</v-btn> -->
+			<div 
+				v-if="$vuetify.display.mdAndDown"
+				class="mt-2"
+			>
+				<v-btn
+					v-if="canAdd"
+					color="primary"
+					@click="handleAdd"
+				>
+					{{ $t('buttons.add') }} {{ $t('buttons.parts.step') }}
+				</v-btn>
+			</div>
 		</template>
 	</VFormControl>
 </template>
 
 <script>
-import { useChecklistComponent } from '@/components/content/checklists/checklist/checklistComponent';
-// import { useChecklistFieldsComponent } from '@/components/content/checklists/checklist/checklistFieldsComponents';
-import { useChecklistFieldsValidation } from '@/components/content/checklists/checklist/checklistFieldsValidation';
-import { useChecklistComponentProps } from '@/components/content/checklists/checklist/checklistComponentProps';
+import { maxLength, minLength, required } from '@vuelidate/validators';
+
+import { usePartComponent } from '@/components/content/parts/part/partComponent';
+import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-// import ChecklistFields from './ChecklistFields';
 import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'ChecklistControl',
-	components: Object.assign({
-			// ChecklistFields,
-			VFormControl,
-			VSwitchWithValidation,
-			VTextAreaWithValidation,
-			VTextFieldWithValidation
-		},
-		// useChecklistFieldsComponent
-	),
+	name: 'PartControl',
+	components: {
+		VFormControl,
+		VSwitchWithValidation,
+		VTextAreaWithValidation,
+		VTextFieldWithValidation
+	},
 	props: {
-		...useChecklistComponentProps
+		...usePartComponentProps
 	},
 	emits: ['cancel', 'close', 'ok'],
 	setup (props, context) {
@@ -136,11 +159,11 @@ export default {
 			serviceStore,
 			formControlRef,
 			dirty,
-			innerItem,
-			innerItemOrig,
+			detailItem,
 			invalid,
 			canDelete,
-			detailTextRows,
+			detailItemData,
+			detailItemTextRows,
 			isEditable,
 			isNew,
 			dirtyCallback,
@@ -149,18 +172,18 @@ export default {
 			handleClose,
 			handleOk,
 			resetForm,
-			innerItemDescription,
-			innerItemIsDefault,
-			innerItemName,
+			detailItemDescription,
+			detailItemIsDefault,
+			detailItemName,
+			detailItemReorder,
 			canAdd,
-			isDefault,
-			isInProgress,
-			isShared,
+			isPublic,
 			handleAdd,
 			preCompleteOk,
+			updateDataModel,
 			scope,
 			validation
-		} = useChecklistComponent(props, context);
+		} = usePartComponent(props, context);
 
 		return {
 			correlationId,
@@ -179,11 +202,11 @@ export default {
 			serviceStore,
 			formControlRef,
 			dirty,
-			innerItem,
-			innerItemOrig,
+			detailItem,
 			invalid,
 			canDelete,
-			detailTextRows,
+			detailItemData,
+			detailItemTextRows,
 			isEditable,
 			isNew,
 			dirtyCallback,
@@ -192,21 +215,30 @@ export default {
 			handleClose,
 			handleOk,
 			resetForm,
-			innerItemDescription,
-			innerItemIsDefault,
-			innerItemName,
+			detailItemDescription,
+			detailItemIsDefault,
+			detailItemName,
+			detailItemReorder,
 			canAdd,
-			isDefault,
-			isInProgress,
-			isShared,
+			isPublic,
 			handleAdd,
 			preCompleteOk,
+			updateDataModel,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return useChecklistFieldsValidation;
+		return {
+			detailItemName: {
+				required,
+				minLength: minLength(3),
+				maxLength: maxLength(50),
+				$autoDirty: true
+			},
+			detailItemDescription: { $autoDirty: true },
+			detailItemReorder: { $autoDirty: true }
+		}
 	}
 };
 </script>

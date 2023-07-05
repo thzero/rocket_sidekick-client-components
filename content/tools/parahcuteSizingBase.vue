@@ -9,6 +9,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useParachuteSizingBaseComponent(props, context) {
 	const {
@@ -21,7 +22,10 @@ export function useParachuteSizingBaseComponent(props, context) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target,
 		calculationOutput,
@@ -31,8 +35,6 @@ export function useParachuteSizingBaseComponent(props, context) {
 		errorMessage,
 		errorTimer,
 		hasAttribution,
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
 		notifyColor,
 		notifyMessage,
 		notifySignal,
@@ -63,6 +65,11 @@ export function useParachuteSizingBaseComponent(props, context) {
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.parachuteSizing')
 	});
+
+	const {
+		measurementUnitsIdOutput,
+		measurementUnitsIdSettings
+	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
 		measurementUnitsAccelerationDefaultId,
@@ -166,7 +173,10 @@ export function useParachuteSizingBaseComponent(props, context) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target,
 		calculationOutput,
@@ -176,8 +186,6 @@ export function useParachuteSizingBaseComponent(props, context) {
 		errorMessage,
 		errorTimer,
 		hasAttribution,
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
 		notifyColor,
 		notifyMessage,
 		notifySignal,

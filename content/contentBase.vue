@@ -22,7 +22,6 @@ export function useContentBaseComponent(props, context, options) {
 	} = useBaseComponent(props, context, options);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
-	
 
 	const sortByOrder = (links) => {
 		links.sort((a, b) => a.order >= b.order);

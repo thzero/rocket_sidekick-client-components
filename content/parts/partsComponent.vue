@@ -1,8 +1,6 @@
 <script>
 import { ref} from 'vue';
 
-import AppCommonConstants from 'rocket_sidekick_common/constants';
-
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
@@ -64,37 +62,44 @@ export function usePartsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		display
-	} = useMasterDetailComponent(props, context, Object.assign(options ? options : {}, {
+	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'checklists',
 			canCopy: (item) => { return canCopyI(item); },
 			canDelete: (item) => { return canDeleteI(item); },
 			canEdit: (item) => { return canEditI(item); },
 			canView: (item) => { return canViewI(item); },
 			fetch: async (item) => { return await fetchI(); },
-			initNew: (item) => { return initNewI(data); }
-		})
+			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
+			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
+		}
 	);
 
-	const params = ref({});
+	const params = ref({
+		type: null
+	});
 	const title = ref(
-		(props.type === AppCommonConstants.Parts.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.parts.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.parts.title')
+		 LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.parts.${props.title}.title`)
 	);
-	const canCopyI = (item) => {
+	const canCopyI = (correlationId, item) => {
 		return item && isPublic(item);
 	};
 	const canDeleteI = (item) => {
 		return item && !!isPublic(item);
 	};
-	const canEditI = (item) => {
+	const canEditI = (correlationId, item) => {
 		return item && !isPublic(item);
 	};
-	const canViewI = (item) => {
+	const canViewI = (correlationId, item) => {
 		return item && isPublic(item);
 	};
 	const fetchI = async (correlationId) => {
+		params.value = props.type;
 		return await serviceStore.dispatcher.requestParts(correlationId, params.value);
 	};
-	const initNewI = (data) => {
+	const fetchItemI = async (correlationId, id) => {
+		return await serviceStore.dispatcher.requestPartById(correlationId, id);
+	};
+	const initNewI = (correlationId, data) => {
 		data = data ? data : new PartData();
 		return data;
 	};
@@ -156,8 +161,6 @@ export function usePartsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		display,
-		dialogStartManager,
-		dialogStartMessage,
 		title,
 		params,
 		isPublic
