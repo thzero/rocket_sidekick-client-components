@@ -3,7 +3,7 @@
 	<v-row dense>
 		<v-col cols="12">
 			<v-card
-				v-if="!hasDetailItem || hasList"
+				v-if="!showDetailItem || showList"
 				class="mb-4"
 			>
 				<v-card-text>
@@ -13,7 +13,7 @@
 				<v-card-actions>
 					<v-spacer></v-spacer>
 					<v-btn
-						v-if="!hasDetailItem"
+						v-if="!showDetailItem"
 						color="blue"
 						variant="flat"
 						@click="handleAdd(item)"
@@ -34,8 +34,8 @@
 			</v-snackbar>
 			[[ colsSearchResults {{ colsSearchResults }}]]
 			[[ colsEditPanel {{ colsEditPanel }}]]
-			[[ hasList {{ hasList }}]]
-			[[ hasDetailItem {{ hasDetailItem }}]]
+			[[ showList {{ showList }}]]
+			[[ showDetailItem {{ showDetailItem }}]]
 			<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
 		</v-col>
 		<v-col
@@ -204,8 +204,8 @@ export default {
 			colsSearchResults,
 			displayEditPanel,
 			displaySearchResults,
-			hasDetailItem,
-			hasList,
+			showDetailItem,
+			showList,
 			canCopy,
 			canDelete,
 			canEdit,
@@ -276,8 +276,8 @@ export default {
 			colsSearchResults,
 			displayEditPanel,
 			displaySearchResults,
-			hasDetailItem,
-			hasList,
+			showDetailItem,
+			showList,
 			canCopy,
 			canDelete,
 			canEdit,

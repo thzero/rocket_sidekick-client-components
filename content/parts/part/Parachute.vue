@@ -41,10 +41,10 @@
 			<v-col cols="3">
 				<VSwitch
 					ref="isPublicRef"
-					v-if="!isEditable"
+					v-if="!isEditable || hasAdmin"
 					v-model="detailItemIsPublic"
-					:label="$t('forms.parts.public')"
-					:readonly="true"
+					:label="$t('forms.content.parts.public')"
+					:readonly="!hasAdmin"
 				/>
 			</v-col>
 		</v-row>
@@ -66,9 +66,9 @@
 		<v-row dense>
 			<v-col cols="4" lg="6">
 				<VNumberFieldWithValidation
-					ref="diameterRef"
-					vid="diameter"
-					v-model="diameter"
+					ref="detailItemDiameterRef"
+					vid="detailItemDiameter"
+					v-model="detailItemDiameter"
 					:validation="validation"
 					:label="$t('forms.content.parts.parachute.diameter')"
 				/>
@@ -78,19 +78,19 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="diameterLengthMeasurementUnitsIdRef"
-								vid="diameterLengthMeasurementUnitsId"
-								v-model="diameterLengthMeasurementUnitsId"
+								ref="diameterMeasurementUnitsIdRef"
+								vid="diameterMeasurementUnitsId"
+								v-model="diameterMeasurementUnitsId"
 								:validation="validation"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="diameterLengthMeasurementUnitIdRef"
-								vid="diameterLengthMeasurementUnitId"
-								v-model="diameterLengthMeasurementUnitId"
-								:measurementUnitsId="diameterLengthMeasurementUnitsId"
+								ref="diameterMeasurementUnitIdRef"
+								vid="diameterMeasurementUnitId"
+								v-model="diameterMeasurementUnitId"
+								:measurementUnitsId="diameterMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitslengthType"
 								:validation="validation"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -104,12 +104,22 @@
 			<v-col cols="12" lg="6">
 				<VSelectWithValidation
 					ref="manufacturerRef"
-					v-model="manufacturer"
-					vid="manufacturer"
+					v-model="detailItemManufacturer"
+					vid="detailItemManufacturer"
 					:items="manufacturers"
 					:validation="validation"
 					:label="$t('forms.external.motorSearch.manufacturer')"
 					:hint="$t('forms.external.motorSearch.manufacturer_hint')"
+				/>
+			</v-col>
+			<v-col cols="12" lg="6">
+				<VSwitchWithValidation
+					class="ml-2 mr-2"
+					ref="detailItemThinMillRef"
+					v-model="detailItemThinMill"
+					vid="detailItemThinMill"
+					:validation="validation"
+					:label="$t('forms.content.parts.parachute.thinMill')"
 				/>
 			</v-col>
 		</v-row>
@@ -159,7 +169,7 @@
 <script>
 import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
 
-import { usePartParachuteComponent } from '@/components/content/parts/part/partParachuteComponent';
+import { useParachutePartComponent } from '@/components/content/parts/part/parachutePartComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 
 import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
@@ -226,20 +236,22 @@ export default {
 			measurementUnitsWeightType,
 			detailItemDescription,
 			detailItemIsPublic,
+			detailItemManufacturer,
 			detailItemName,
-			manufacturer,
 			manufacturers,
 			canAdd,
+			hasAdmin,
 			isPublic,
 			handleAdd,
 			preCompleteOk,
 			requestManufacturers,
-			diameter,
-			diameterLengthMeasurementUnitId,
-			diameterLengthMeasurementUnitsId,
+			detailItemDiameter,
+			detailItemThinMill,
+			diameterMeasurementUnitId,
+			diameterMeasurementUnitsId,
 			scope,
 			validation
-		} = usePartParachuteComponent(props, context, options);
+		} = useParachutePartComponent(props, context, options);
 
 		return {
 			correlationId,
@@ -279,17 +291,19 @@ export default {
 			measurementUnitsWeightType,
 			detailItemDescription,
 			detailItemIsPublic,
+			detailItemManufacturer,
 			detailItemName,
-			manufacturer,
 			manufacturers,
 			canAdd,
+			hasAdmin,
 			isPublic,
 			handleAdd,
 			preCompleteOk,
 			requestManufacturers,
-			diameter,
-			diameterLengthMeasurementUnitId,
-			diameterLengthMeasurementUnitsId,
+			detailItemDiameter,
+			detailItemThinMill,
+			diameterMeasurementUnitId,
+			diameterMeasurementUnitsId,
 			scope,
 			validation
 		};
@@ -304,9 +318,10 @@ export default {
 			},
 			detailItemDescription: { $autoDirty: true },
 			detailItemReorder: { $autoDirty: true },
-			diameter: { required, $autoDirty: true },
-			diameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
-			manufacturer: { required, $autoDirty: true }
+			detailItemIsPublic: { $autoDirty: true },
+			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
+			detailItemManufacturer: { required, $autoDirty: true },
+			detailItemThinMill: { $autoDirty: true }
 		}
 	}
 };

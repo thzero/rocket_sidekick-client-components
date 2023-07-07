@@ -4,7 +4,7 @@ import { computed, onMounted, ref} from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import LibraryClientUtility from '@thzero/library_client/utility/index';
+import AppUtility from '@/utility/app';
 
 import { useRocketBaseComponent } from '@/components/content/rockets/rocketBase';
 
@@ -76,16 +76,11 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return [];
 		return response.results;
 	};
-	const measurementUnitTranslate = (measurementUnitId, measurementUnit, measurementUnitType) => {
-		if (String.isNullOrEmpty(measurementUnitId) || String.isNullOrEmpty(measurementUnit))
-			return '';
-		return LibraryClientUtility.$trans.t('measurementUnits.' + measurementUnitId + '.' + measurementUnitType + '.' + measurementUnit + 'Abbr');
-	};
 	const measurementUnitTranslateLength = (measurementUnitId, measurementUnit) => {
-		return measurementUnitTranslate(measurementUnitId, measurementUnit, AppCommonConstants.MeasurementUnits.length.id);
+		return AppUtility.measurementUnitTranslateLength(correlationId(), measurementUnitId, measurementUnit);
 	};
 	const measurementUnitTranslateWeight = (measurementUnitId, measurementUnit) => {
-		return measurementUnitTranslate(measurementUnitId, measurementUnit, AppCommonConstants.MeasurementUnits.weight.id);
+		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitId, measurementUnit);
 	};
 	const videos = computed(() => {
 		if (!rocket.value || !rocket.value.videos)
@@ -120,7 +115,6 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		rocketTypeIconDetermine,
 		rocket,
 		rocketId,
-		measurementUnitTranslate,
 		measurementUnitTranslateLength,
 		measurementUnitTranslateWeight,
 		videos,

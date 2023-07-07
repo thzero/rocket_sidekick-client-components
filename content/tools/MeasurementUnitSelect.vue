@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form//VSelectWithValidation';
+import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
 
 import { useMeasurementUnitSelectBaseComponent } from '@/components/content/tools/measurementUnitSelectBase';
 import { useMeasurementUnitSelectBaseProps } from '@/components/content/tools/measurementUnitSelectBaseProps';

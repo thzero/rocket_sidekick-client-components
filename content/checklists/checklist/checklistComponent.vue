@@ -39,7 +39,7 @@ export function useChecklistComponent(props, context, options) {
 		handleOk,
 		resetForm
 	} = useDetailComponent(props, context, {
-		init: (value) => {
+		init: (correlationId, value) => {
 			detailItemDescription.value = value ? value.description : null;
 			detailItemIsDefault.value = value ? value.isDefault : null;
 			detailItemName.value = value ? value.name : null;

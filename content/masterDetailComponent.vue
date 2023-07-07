@@ -49,29 +49,29 @@ export function useMasterDetailComponent(props, context, options) {
 
 	const colsEditPanel = computed(() => {
 		if (display.lgAndDown.value)
-			return hasDetailItem.value ? 12 : 0;
+			return showDetailItem.value ? 12 : 0;
 
-		return hasDetailItem.value ? 8 : 0;
+		return showDetailItem.value ? 8 : 0;
 	});
 	const colsSearchResults = computed(() => {
 		if (display.lgAndDown.value)
-			return hasDetailItem.value ? 0 : 12;
+			return showDetailItem.value ? 0 : 12;
 
-		return hasDetailItem.value ? 4 : 12;
+		return showDetailItem.value ? 4 : 12;
 	});
 	const displayEditPanel = computed(() => {
-		return hasDetailItem.value;
+		return showDetailItem.value;
 	});
 	const displaySearchResults = computed(() => {
 		if (display.mdAndDown.value)
-			return hasDetailItem.value;
+			return showDetailItem.value;
 
 		return true;
 	});
-	const hasDetailItem = computed(() => {
+	const showDetailItem = computed(() => {
 		return LibraryCommonUtility.isNotNull(detailItem.value);
 	});
-	const hasList = computed(() => {
+	const showList = computed(() => {
 		return !display.lgAndDown.value;
 	});
 
@@ -249,8 +249,8 @@ export function useMasterDetailComponent(props, context, options) {
 		colsSearchResults,
 		displayEditPanel,
 		displaySearchResults,
-		hasDetailItem,
-		hasList,
+		showDetailItem,
+		showList,
 		canCopy,
 		canDelete,
 		canEdit,

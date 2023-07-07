@@ -3,7 +3,7 @@
 	<v-row dense>
 		<v-col cols="12">
 			<v-card
-				v-if="!hasDetailItem || hasList"
+				v-if="!showDetailItem || showList"
 				class="mb-4"
 			>
 				<v-card-text>
@@ -13,7 +13,7 @@
 				<v-card-actions>
 					<v-spacer></v-spacer>
 					<v-btn
-						v-if="!hasDetailItem"
+						v-if="!showDetailItem"
 						color="blue"
 						variant="flat"
 						@click="handleAdd(item)"
@@ -34,8 +34,8 @@
 			</v-snackbar>
 			[[ colsSearchResults {{ colsSearchResults }}]]
 			[[ colsEditPanel {{ colsEditPanel }}]]
-			[[ hasList {{ hasList }}]]
-			[[ hasDetailItem {{ hasDetailItem }}]]
+			[[ showList {{ showList }}]]
+			[[ showDetailItem {{ showDetailItem }}]]
 			<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
 		</v-col>
 		<v-col
@@ -50,16 +50,22 @@
 				>
 					<v-card>
 						<v-card-title>
-							{{ item.name }}
-							<!-- <v-chip
-								v-if="isDefault"
-								style="float: right;"
+							<slot name="panelTitle" :item="item">
+								{{ item.name }}
+							</slot>
+							<span
+								v-if="item.weight"
 							>
-								{{  $t('strings.content.parts.isPublic') }}
-							</v-chip> -->
+								({{item.weight}} {{ measurementUnitTranslateWeight(item.weightMeasurementUnitsId, item.weightMeasurementUnitId) }})
+							</span>
+							<div class="float-right">{{ manufacturer(item) }}</div>
 						</v-card-title>
-						<v-card-text>
-							{{ item.description }}
+						<v-card-text
+								v-if="item.description"
+							>
+								<slot name="panelText" :item="item">
+									{{ item.description }}
+								</slot>
 						</v-card-text>
 						<v-card-actions>
 							<v-chip
@@ -181,8 +187,8 @@ export default {
 			colsSearchResults,
 			displayEditPanel,
 			displaySearchResults,
-			hasDetailItem,
-			hasList,
+			showDetailItem,
+			showList,
 			canCopy,
 			canDelete,
 			canEdit,
@@ -206,9 +212,12 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
-			title,
+			manufacturers,
 			params,
-			isPublic
+			title,
+			isPublic,
+			manufacturer,
+			measurementUnitTranslateWeight
 		} = usePartsBaseComponent(props, context);
 
 		return {
@@ -240,8 +249,8 @@ export default {
 			colsSearchResults,
 			displayEditPanel,
 			displaySearchResults,
-			hasDetailItem,
-			hasList,
+			showDetailItem,
+			showList,
 			canCopy,
 			canDelete,
 			canEdit,
@@ -265,9 +274,12 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
-			title,
+			manufacturers,
 			params,
-			isPublic
+			title,
+			isPublic,
+			manufacturer,
+			measurementUnitTranslateWeight
 		};
 	}
 };

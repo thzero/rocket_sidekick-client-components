@@ -1,13 +1,15 @@
 <script>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import LibraryClientUtility from '@thzero/library_client/utility/index';
+
 import { usePartComponent } from '@/components/content/parts/part/partComponent';
 
-export function usePartParachuteComponent(props, context, options) {
+export function useParachutePartComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -46,43 +48,68 @@ export function usePartParachuteComponent(props, context, options) {
 		measurementUnitsWeightType,
 		detailItemDescription,
 		detailItemIsPublic,
+		detailItemManufacturer,
 		detailItemName,
-		manufacturer,
 		manufacturers,
 		canAdd,
+		hasAdmin,
 		isPublic,
+		manufacturer,
 		handleAdd,
 		preCompleteOk,
 		requestManufacturers
 	} = usePartComponent(props, context, {
-		init: (value) => {
-			detailItemDescription.value = value ? value.description : null;
-			detailItemIsPublic.value = value ? value.public : null;
-			detailItemName.value = value ? value.name : null;
+		completeOk: (correlationId, data) => {
+			data.diameter
+			return completeOkI(correlationId, data);
+		},
+		init: (correlationId, value) => {
+			// detailItemDescription.value = value ? value.description : null;
+			// detailItemIsPublic.value = value ? value.public : null;
+			// detailItemManufacturer.value = value ? value.manufacturerId : null;
+			// detailItemName.value = value ? value.name : null;
 
-			requestManufacturers(correlationId());
+			// requestManufacturers(correlationId());
+
+			detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.parachute.name');
+
+			detailItemDiameter.value = value ? value.diameter : null;
+			detailItemThinMill.value = value ? value.thinMill : false;
 			
-			diameterLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-			diameterLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+			diameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
+			diameterMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 		},
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
 		partsType: AppCommonConstants.Rocketry.PartTypes.parachute, 
 		resetForm: (correlationId, orig) => {
 			if (orig) {
-				detailItemDescription.value = orig.description;
-				detailItemName.value = orig.name;
-				detailItemIsPublic.value = orig.public;
+				// detailItemDescription.value = orig.description;
+				// detailItemName.value = orig.name;
+				// detailItemManufacturer.value = orig.manufacturerId;
+				// detailItemIsPublic.value = orig.public;
+
+				detailItemDiameter.value = orig.diameter;
+				detailItemThinMill.value = orig.thinMill;
 			}
 		}
 	});
 	
-	const diameter = ref(null);
-	const diameterLengthMeasurementUnitId = ref(null);
-	const diameterLengthMeasurementUnitsId = ref(null);
+	const detailItemDiameter = ref(null);
+	const detailItemThinMill = ref(false);
+	const diameterMeasurementUnitId = ref(null);
+	const diameterMeasurementUnitsId = ref(null);
+
+	const completeOkI = (correlationId, data) => {
+		data.diameter = detailItemDiameter.value;
+		data.thinMill = detailItemThinMill.value;
+		data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
+		data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
+		return data;
+	};
 
 	// onMounted(async () => {
-	// 	diameterLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-	// 	diameterLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+	// 	diameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
+	// 	diameterMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 	// });
 	
 	return {
@@ -123,17 +150,20 @@ export function usePartParachuteComponent(props, context, options) {
 		measurementUnitsWeightType,
 		detailItemDescription,
 		detailItemIsPublic,
+		detailItemManufacturer,
 		detailItemName,
-		manufacturer,
 		manufacturers,
 		canAdd,
+		hasAdmin,
 		isPublic,
+		manufacturer,
 		handleAdd,
 		preCompleteOk,
 		requestManufacturers,
-		diameter,
-		diameterLengthMeasurementUnitId,
-		diameterLengthMeasurementUnitsId,
+		detailItemDiameter,
+		detailItemThinMill,
+		diameterMeasurementUnitId,
+		diameterMeasurementUnitsId,
 		scope: 'ParchutePartControl',
 		validation: useVuelidate({ $scope: 'ParchutePartControl' })
 	};

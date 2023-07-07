@@ -36,7 +36,30 @@ export function usePartComponent(props, context, options) {
 		handleClose,
 		handleOk,
 		resetForm
-	} = useDetailComponent(props, context, options);
+	} = useDetailComponent(props, context, {
+		init: (correlationId, value) => {
+			detailItemDescription.value = value ? value.description : null;
+			detailItemIsPublic.value = value ? value.public : null;
+			detailItemManufacturer.value = value ? value.manufacturerId : null;
+			detailItemName.value = value ? value.name : null;
+
+			options.init(value);
+
+			requestManufacturers(correlationId);
+		},
+		manufacturerType: options.manufacturerType,
+		partsType: options.partsType,
+		resetForm: (correlationId, orig) => {
+			if (orig) {
+				detailItemDescription.value = orig.description;
+				detailItemName.value = orig.name;
+				detailItemManufacturer.value = orig.manufacturerId;
+				detailItemIsPublic.value = orig.public;
+
+				options.resetForm(correlationId, orig);
+			}
+		}
+	});
 
 	const {
 		measurementUnitsIdOutput,
@@ -66,12 +89,18 @@ export function usePartComponent(props, context, options) {
 
 	const detailItemDescription = ref(null);
 	const detailItemIsPublic = ref(null);
+	const detailItemManufacturer = ref(null);
 	const detailItemName = ref(null);
-	const manufacturer = ref(null);
-	const manufacturers = ref(null);
-
+	const manufacturersI = ref(null);
+	
+	const manufacturers = computed(() => {
+		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
+	});
 	const canAdd = computed(() => {
 		return !isNew.value && !dirty.value;
+	});
+	const hasAdmin = computed(() => {
+		return true;
 	});
 	const isPublic = computed(() => {
 		return detailItemData.value ? detailItemData.value.public ?? false : false;
@@ -83,12 +112,16 @@ export function usePartComponent(props, context, options) {
 		detailItem.value.data.description = String.trim(detailItemDescription.value);
 		detailItem.value.data.name = String.trim(detailItemName.value);
 		delete detailItem.value.data.public;
+		detailItem.value.data.typeId = options.partsType;
+		detailItem.value.data.manufacturerId = detailItemManufacturer.value;
+		if (options.completeOk)
+			detailItem.value.data = options.completeOk(correlationId, detailItem.value.data);
 		const response = await serviceStore.dispatcher.savePart(correlationId, detailItemData.value);
 		logger.debug('partComponent', 'preCompleteOk', 'response', response, correlationId);
 		return response;
 	};
 	const requestManufacturers = async (correlationId) => {
-		if (manufacturers.value)
+		if (manufacturersI.value)
 			return;
 
 		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
@@ -96,8 +129,8 @@ export function usePartComponent(props, context, options) {
 			return;
 
 		let temp2 = response.results.filter(l => l.types.find(j => j === options.manufacturerType));
-		temp2 = temp2.map((item) => { return { id: item.abbrTc, name: item.name }; });
-		manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
+		temp2 = temp2.map((item) => { return { id: item.id, name: item.name }; });
+		manufacturersI.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
 	}
 
 	watch(() => props.modelValue,
@@ -145,10 +178,11 @@ export function usePartComponent(props, context, options) {
 		measurementUnitsWeightType,
 		detailItemDescription,
 		detailItemIsPublic,
+		detailItemManufacturer,
 		detailItemName,
-		manufacturer,
 		manufacturers,
 		canAdd,
+		hasAdmin,
 		isPublic,
 		handleAdd,
 		preCompleteOk,
