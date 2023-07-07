@@ -502,11 +502,11 @@ import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/tools/MeasurementUnitsSelect';
 import MotorLookupDialog from '@/components/external/MotorLookupDialog';
-import VCheckboxWithValidation from '@thzero/library_client_vue3_vuetify3/components/form//VCheckboxWithValidation';
+import VCheckboxWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VCheckboxWithValidation';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form//VSelectWithValidation';
-import VTextField from '@thzero/library_client_vue3_vuetify3/components/form//VTextField';
+import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
 
 export default {
 	name: 'Thrust2Weight',

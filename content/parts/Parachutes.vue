@@ -2,6 +2,7 @@
 	<Parts
 		title="parachutes"
 		:type="type"
+		:fetchParams="fetchParams"
 	>
 		<template #default="{ detailItem, detailClose, detailOk }">
 			[[ {{  detailItem }}]]
@@ -15,23 +16,30 @@
 			>
 			</Parachhute>
 		</template>
+		<template #panelTitle="{ item }">
+			<ParachutePanelTitle
+				:item="item"
+				:manufacturers="manufacturers"
+			>
+			</ParachutePanelTitle>
+		</template> 
 	</Parts>
 </template>
 
 <script>
-import { ref} from 'vue';
-
-import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { usePartsDisplayCompany } from '@/components/content/parts/partsDisplayCompany';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import Parachhute from '@/components/content/parts/part/Parachute';
+import ParachutePanelTitle from '@/components/content/parts/ParachutePanelTitle';
 import Parts from '@/components/content/parts/Parts';
 
 export default {
 	name: 'PartsParachute',
 	components: {
 		Parachhute,
+		ParachutePanelTitle,
 		Parts
 	},
 	setup(props, context, options) {
@@ -44,10 +52,20 @@ export default {
 			logger,
 			noBreakingSpaces,
 			notImplementedError,
-			success
-		} = useBaseComponent(props, context, options);
+			success,
+			contentLoadSignal,
+			serviceStore,
+			sort,
+			target,
+			manufacturers,
+			type
+		} = usePartsDisplayCompany(props, context, { 
+			type: AppCommonConstants.Rocketry.PartTypes.parachute
+		});
 
-		const type = ref(AppCommonConstants.Rocketry.PartTypes.parachute);
+		const fetchParams = async (correlationId, params) => {
+			return params; // TODO: setup params...
+		};
 
 		return {
 			correlationId,
@@ -59,7 +77,13 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			type
+			contentLoadSignal,
+			serviceStore,
+			sort,
+			target,
+			manufacturers,
+			type,
+			fetchParams
 		};
 	}
 };

@@ -228,7 +228,7 @@ import { ref } from 'vue';
 import { minLength, maxLength, required } from '@vuelidate/validators';
 
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form//VSelectWithValidation';
+import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 import { useAppSettingsComponent } from '@/components/appSettings';

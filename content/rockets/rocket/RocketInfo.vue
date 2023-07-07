@@ -61,15 +61,15 @@
 							<table>
 								<tr>
 									<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
-									<td>{{ rocket.diameterMajor }} {{ measurementUnitTranslateLength(rocket.diameterMajorMeasurementUnitId, rocket.diameterMajorMeasurementUnit) }} </td>
+									<td>{{ rocket.diameterMajor }} {{ measurementUnitTranslateLength(rocket.diameterMajorMeasurementUnitsId, rocket.diameterMajorMeasurementUnitId) }} </td>
 								</tr>
 								<tr>
-									<td nowrap class="specifications">{{ $t('strings.rockets.length') }}</td>
-									<td>{{ rocket.length }} {{ measurementUnitTranslateLength(rocket.lengthMeasurementUnitId, rocket.lengthMeasurementUnit) }}</td>
+									<td nowrap class="specifications">{{ $t('strings.measurements.length') }}</td>
+									<td>{{ rocket.length }} {{ measurementUnitTranslateLength(rocket.lengthMeasurementUnitsId, rocket.lengthMeasurementUnitId) }}</td>
 								</tr>
 								<tr>
-									<td nowrap class="specifications">{{ $t('strings.rockets.weight') }}</td>
-									<td>{{ rocket.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitId, rocket.weightMeasurementUnit) }}</td>
+									<td nowrap class="specifications">{{ $t('strings.measurements.weight') }}</td>
+									<td>{{ rocket.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitsId, rocket.weightMeasurementUnitId) }}</td>
 								</tr>
 								<tr>
 									<td nowrap class="specifications">{{ $t('strings.rockets.buildLogUrl') }}</td>
@@ -186,7 +186,6 @@ export default {
 			rocketTypeIconDetermine,
 			rocket,
 			rocketId,
-			measurementUnitTranslate,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
 			videos,
@@ -216,7 +215,6 @@ export default {
 			rocketTypeIconDetermine,
 			rocket,
 			rocketId,
-			measurementUnitTranslate,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
 			videos,

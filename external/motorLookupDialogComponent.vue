@@ -219,7 +219,7 @@ export function useMobileLookupDialogComponent(props, context, options) {
 			return;
 
 		const temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.motor));
-		manufacturers.value = temp2.map((item) => { return { id: item.abbrTc, name: item.name }; });
+		manufacturers.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
 	});
 
 	return {
