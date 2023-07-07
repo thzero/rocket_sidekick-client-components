@@ -79,6 +79,13 @@ export function useAppOpenSourceComponent(props, context, options) {
 			url: 'https://github.com/Teun/thenBy.js',
 			licenseName: 'Apache License 2.0',
 			licenseUrl: 'https://github.com/Teun/thenBy.js/blob/master/LICENSE.TXT'
+		},
+		{
+			category: 'client',
+			name: 'vue-dndrop',
+			url: 'https://github.com/amendx/vue-dndrop',
+			licenseName: 'MIT',
+			licenseUrl: 'https://github.com/amendx/vue-dndrop/blob/master/LICENSE'
 		}
 	]);
 

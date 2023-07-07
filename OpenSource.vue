@@ -15,7 +15,7 @@
 		<v-col cols="12" lg="2" />
 		<v-col cols="12" lg="8">
 			<VOpenSource
-				v-model="openSource"
+				:value="openSource"
 			/>
 		</v-col>
 	</v-row>
