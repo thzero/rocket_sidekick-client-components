@@ -146,7 +146,7 @@
 					:hint="$t('forms.external.motorSearch.manufacturer_hint')"
 				/>
 			</v-col>
-			<v-col cols="6" md="3">
+			<v-col cols="6" md="6">
 				<VSwitchWithValidation
 					class="ml-2 mr-2"
 					ref="detailItemThinMillRef"
@@ -154,16 +154,6 @@
 					vid="detailItemThinMill"
 					:validation="validation"
 					:label="$t('forms.content.parts.parachute.thinMill')"
-				/>
-			</v-col>
-			<v-col cols="6" md="3">
-				<VSwitchWithValidation
-					class="ml-2 mr-2"
-					ref="detailItemBlanketRef"
-					v-model="detailItemBlanket"
-					vid="detailItemBlanket"
-					:validation="validation"
-					:label="$t('forms.content.parts.parachute.blanket')"
 				/>
 			</v-col>
 		</v-row>
@@ -251,7 +241,6 @@ export default {
 			isPublic,
 			handleAdd,
 			requestManufacturers,
-			detailItemBlanket,
 			detailItemDiameter,
 			detailItemThinMill,
 			detailItemWeight,
@@ -310,7 +299,6 @@ export default {
 			isPublic,
 			handleAdd,
 			requestManufacturers,
-			detailItemBlanket,
 			detailItemDiameter,
 			detailItemThinMill,
 			detailItemWeight,
@@ -331,7 +319,6 @@ export default {
 			detailItemDescription: { $autoDirty: true },
 			detailItemReorder: { $autoDirty: true },
 			detailItemIsPublic: { $autoDirty: true },
-			detailItemBlanket: { $autoDirty: true },
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemManufacturer: { required, $autoDirty: true },
 			detailItemThinMill: { $autoDirty: true },
