@@ -5,6 +5,7 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { usePartComponent } from '@/components/content/parts/part/partComponent';
@@ -39,7 +40,8 @@ export function useParachutePartComponent(props, context, options) {
 		handleCancel,
 		handleClose,
 		handleOk,
-		resetForm,
+		preCompleteOk,
+		resetAdditional,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
@@ -50,67 +52,75 @@ export function useParachutePartComponent(props, context, options) {
 		detailItemIsPublic,
 		detailItemManufacturer,
 		detailItemName,
+		detailItemWeight,
 		manufacturers,
+		weightMeasurementUnitId,
+		weightMeasurementUnitsId,
 		canAdd,
 		hasAdmin,
 		isPublic,
-		manufacturer,
 		handleAdd,
-		preCompleteOk,
 		requestManufacturers
 	} = usePartComponent(props, context, {
-		completeOk: (correlationId, data) => {
-			data.diameter
-			return completeOkI(correlationId, data);
-		},
 		init: (correlationId, value) => {
-			// detailItemDescription.value = value ? value.description : null;
-			// detailItemIsPublic.value = value ? value.public : null;
-			// detailItemManufacturer.value = value ? value.manufacturerId : null;
-			// detailItemName.value = value ? value.name : null;
+			// detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.parachute.name');
 
-			// requestManufacturers(correlationId());
-
-			detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.parachute.name');
-
-			detailItemDiameter.value = value ? value.diameter : null;
-			detailItemThinMill.value = value ? value.thinMill : false;
+			// detailItemBlanket.value = value ? value.blanket ?? false : false;
+			// detailItemDiameter.value = value ? value.diameter : null;
+			// detailItemThinMill.value = value ? value.thinMill ?? false : false;
 			
-			diameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-			diameterMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+			// diameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
+			// diameterMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+			resetData(correlationId, value);
 		},
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
 		partsType: AppCommonConstants.Rocketry.PartTypes.parachute, 
-		resetForm: (correlationId, orig) => {
-			if (orig) {
-				// detailItemDescription.value = orig.description;
-				// detailItemName.value = orig.name;
-				// detailItemManufacturer.value = orig.manufacturerId;
-				// detailItemIsPublic.value = orig.public;
+		preCompleteOkPart: (correlationId, data) => {
+			data.blanket = detailItemBlanket.value ?? false;
+			data.diameter = Number(detailItemDiameter.value);
+			data.thinMill = detailItemThinMill.value ?? false;
+			data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
+			data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
 
-				detailItemDiameter.value = orig.diameter;
-				detailItemThinMill.value = orig.thinMill;
-			}
+			const temp = AppUtility.measurementUnitTranslateWeight(correlationId, diameterMeasurementUnitsId.value, diameterMeasurementUnitId.value);
+			data.sortName = data.diameter + temp + (data.thinMill ? 'TM' : '') + data.name;
+		
+			return data;
+		},
+		resetAdditional: (correlationId, orig) => {
+			// detailItemBlanket.value = orig ? orig.blanket : false;
+			// detailItemDiameter.value = orig ? orig.diameter : null;
+			// detailItemThinMill.value = orig ? orig.thinMill ?? false : false;
+		
+			// diameterMeasurementUnitId.value = orig ? orig.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+			// diameterMeasurementUnitsId.value = orig ? orig.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+			resetData(correlationId, orig);
 		}
 	});
 	
+	const detailItemBlanket = ref(false);
 	const detailItemDiameter = ref(null);
 	const detailItemThinMill = ref(false);
 	const diameterMeasurementUnitId = ref(null);
 	const diameterMeasurementUnitsId = ref(null);
 
-	const completeOkI = (correlationId, data) => {
-		data.diameter = detailItemDiameter.value;
-		data.thinMill = detailItemThinMill.value;
-		data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
-		data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
-		return data;
-	};
+	// const completeOkI = (correlationId, data) => {
+	// 	data.diameter = Number(detailItemDiameter.value);
+	// 	data.thinMill = detailItemThinMill.value;
+	// 	data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
+	// 	data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
+	// 	return data;
+	// };
+	const resetData = (correlationId, value) => {
+		detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.parachute.name');
 
-	// onMounted(async () => {
-	// 	diameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-	// 	diameterMeasurementUnitsId.value = measurementUnitsIdSettings.value;
-	// });
+		detailItemBlanket.value = value ? value.blanket ?? false : false;
+		detailItemDiameter.value = value ? value.diameter : null;
+		detailItemThinMill.value = value ? value.thinMill ?? false : false;
+		
+		diameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
+		diameterMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+	};
 	
 	return {
 		correlationId,
@@ -141,7 +151,8 @@ export function useParachutePartComponent(props, context, options) {
 		handleCancel,
 		handleClose,
 		handleOk,
-		resetForm,
+		preCompleteOk,
+		resetAdditional,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
@@ -152,14 +163,16 @@ export function useParachutePartComponent(props, context, options) {
 		detailItemIsPublic,
 		detailItemManufacturer,
 		detailItemName,
+		detailItemWeight,
 		manufacturers,
+		weightMeasurementUnitId,
+		weightMeasurementUnitsId,
 		canAdd,
 		hasAdmin,
 		isPublic,
-		manufacturer,
 		handleAdd,
-		preCompleteOk,
 		requestManufacturers,
+		detailItemBlanket,
 		detailItemDiameter,
 		detailItemThinMill,
 		diameterMeasurementUnitId,

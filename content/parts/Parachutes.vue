@@ -4,14 +4,12 @@
 		:type="type"
 		:fetchParams="fetchParams"
 	>
-		<template #default="{ detailItem, detailClose, detailOk }">
-			[[ {{  detailItem }}]]
-			[[ {{  detailClose }}]]
-			[[ {{  detailOk }}]]
+		<template #default="{ detailItem, detailClose, detailError, detailOk }">
 			<Parachhute
 				:model-value="detailItem"
 				@cancel="detailClose"
 				@close="detailClose"
+				@error="detailError"
 				@ok="detailOk"
 			>
 			</Parachhute>

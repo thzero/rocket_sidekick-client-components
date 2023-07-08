@@ -37,18 +37,29 @@ export function useChecklistComponent(props, context, options) {
 		handleCancel,
 		handleClose,
 		handleOk,
-		resetForm
+		preCompleteOk,
+		resetAdditional
 	} = useDetailComponent(props, context, {
 		init: (correlationId, value) => {
-			detailItemDescription.value = value ? value.description : null;
-			detailItemIsDefault.value = value ? value.isDefault : null;
-			detailItemName.value = value ? value.name : null;
+			// detailItemDescription.value = value ? value.description : null;
+			// detailItemIsDefault.value = value ? value.isDefault : null;
+			// detailItemName.value = value ? value.name : null;
+			resetData(correlationId, value);
 		},
-		resetForm: (correlationId, orig) => {
-			if (orig) {
-				detailItemDescription.value = orig.description;
-				detailItemName.value = orig.name;
-			}
+		preCompleteOk: async (correlationId) => {
+			detailItem.value.data.description = String.trim(detailItemDescription.value);
+			detailItem.value.data.name = String.trim(detailItemName.value);
+			delete detailItem.value.data.isDefault;
+
+			const response = await serviceStore.dispatcher.saveChecklist(correlationId, detailItemData.value);
+			logger.debug('checklistComponent', 'preCompleteOk', 'response', response, correlationId);
+			return response;
+		},
+		resetAdditional: (correlationId, orig) => {
+			// detailItemDescription.value = orig ? orig.description : null;
+			// detailItemIsDefault.value = orig ? orig.isDefault : null;
+			// detailItemName.value = orig ? orig.name : null;
+			resetData(correlationId, orig);
 		}
 	});
 
@@ -75,13 +86,10 @@ export function useChecklistComponent(props, context, options) {
 
 	const handleAdd = () => {
 	};
-	const preCompleteOk = async (correlationId) => {
-		detailItem.value.data.description = String.trim(detailItemDescription.value);
-		detailItem.value.data.name = String.trim(detailItemName.value);
-		delete detailItem.value.data.isDefault;
-		const response = await serviceStore.dispatcher.saveChecklist(correlationId, detailItemData.value);
-		logger.debug('checklistComponent', 'preCompleteOk', 'response', response, correlationId);
-		return response;
+	const resetData = (correlationId, value) => {
+		detailItemDescription.value = value ? value.description : null;
+		detailItemIsDefault.value = value ? value.isDefault : null;
+		detailItemName.value = value ? value.name : null;
 	};
 	const updateDataModel = async (payload, addedIndex, removedIndex) => {
 		console.log('updateDataModel', payload);
@@ -112,6 +120,7 @@ export function useChecklistComponent(props, context, options) {
 
 		detailItemReorder.value = !detailItemReorder.value;
 	};
+
 	watch(() => props.modelValue,
 		async (value) => {
 			if (formControlRef && formControlRef.value)
@@ -627,7 +636,8 @@ export function useChecklistComponent(props, context, options) {
 		handleCancel,
 		handleClose,
 		handleOk,
-		resetForm,
+		preCompleteOk,
+		resetAdditional,
 		detailItemDescription,
 		detailItemIsDefault,
 		detailItemName,
@@ -638,7 +648,6 @@ export function useChecklistComponent(props, context, options) {
 		isShared,
 		steps,
 		handleAdd,
-		preCompleteOk,
 		updateDataModel,
 		scope: 'ChecklistControl',
 		validation: useVuelidate({ $scope: 'ChecklistControl' })

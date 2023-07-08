@@ -77,12 +77,12 @@ export function useToolsBaseComponent(props, context, options) {
 		results.value.calculated = false;
 		return results;
 	};
-	const resetFormI = (correlationId, calculationResults) => {
+	const resetAdditional = (correlationId, value) => {
 		initCalculationOutput(correlationId);
-		initCalculationResults(correlationId, calculationResults);
+		initCalculationResults(correlationId, value);
 
-		if (options.resetForm)
-			options.resetForm(correlationId);
+		if (options.resetAdditional)
+			options.resetAdditional(correlationId);
 	};
 	const setErrorMessage = (error) => {
 		errorMessage.value = error;
@@ -161,7 +161,7 @@ export function useToolsBaseComponent(props, context, options) {
 		handleAttribution,
 		initCalculationOutput,
 		initCalculationResults,
-		resetFormI,
+		resetAdditional,
 		setErrorMessage,
 		setErrorTimer,
 		setNotify

@@ -1,14 +1,15 @@
 <template>
 	<VFormDialog
-		:label="$t('titles.copy') + ' ' + $t('parts.name')"
+		:label="$t('titles.copy') + ' ' + $t('forms.name')"
 		:signal="signal"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
 		:pre-complete-ok="preCompleteOk"
-		:reset-additional="resetDialog"
+		:reset-additional="resetAdditional"
 		:validation="validation"
 		max-width="70vh"
-		@close="close"
-		@ok="ok"
+		@close="dialogClose"
+		@error="dialogError"
+		@ok="dialogOk"
 	>
 		<VTextFieldWithValidation
 			ref="nameRef"
@@ -40,7 +41,7 @@ export default {
 	props: {
 		...usePartCopyDialogProps
 	},
-	emits: ['close', 'ok'],
+	emits: ['close', 'error', 'ok'],
 	setup (props, context) {
 		const {
 			correlationId,
@@ -54,10 +55,11 @@ export default {
 			success,
 			name,
 			buttonOkDisabledOverride,
-			close,
-			ok,
+			dialogClose,
+			dialogError,
+			dialogOk,
 			preCompleteOk,
-			resetDialog,
+			resetAdditional,
 			scope,
 			validation
 		} = usePartCopyDialogComponent(props, context);
@@ -74,10 +76,11 @@ export default {
 			success,
 			name,
 			buttonOkDisabledOverride,
-			close,
-			ok,
+			dialogClose,
+			dialogError,
+			dialogOk,
 			preCompleteOk,
-			resetDialog,
+			resetAdditional,
 			scope,
 			validation
 		};

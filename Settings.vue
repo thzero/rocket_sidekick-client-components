@@ -27,7 +27,7 @@
 							button-clear-name="buttons.reset"
 							button-ok-name="buttons.save"
 							:pre-complete-ok="preCompleteOk"
-							:reset-additional="resetFormI"
+							:reset-additional="resetAdditional"
 							:dirty-callback="dirtyCallback"
 						>
 							<div :class="$vuetify.display.xs ? 'flex-form' : ''">
@@ -293,8 +293,8 @@ export default {
 			measurementUnitsVolume,
 			measurementUnitsWeight,
 			preCompleteOk,
-			resetFormI,
-			resetFormIdCheck,
+			resetAdditional,
+			resetIdCheck,
 			scope,
 			validation
 		} = useAppSettingsComponent(props, context, formSettingsRef);
@@ -349,8 +349,8 @@ export default {
 			measurementUnitsVolume,
 			measurementUnitsWeight,
 			preCompleteOk,
-			resetFormI,
-			resetFormIdCheck,
+			resetAdditional,
+			resetIdCheck,
 			scope,
 			validation,
 			formSettingsRef

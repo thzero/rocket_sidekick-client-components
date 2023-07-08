@@ -45,13 +45,13 @@ export function useWeathercockingBaseComponent(props, context) {
 		handleAttribution,
 		initCalculationOutput,
 		initCalculationResults,
-		resetFormI,
+		resetAdditional,
 		setErrorMessage,
 		setErrorTimer,
 		setNotify
 	} = useToolsBaseComponent(props, context, {
 		id: 'weathercocking',
-		resetForm: (correlationId) => {
+		resetAdditional: (correlationId) => {
 			calculationResults.value.foams = [];
 
 			windVelocity.value = null;
@@ -172,7 +172,7 @@ export function useWeathercockingBaseComponent(props, context) {
 		handleAttribution,
 		initCalculationOutput,
 		initCalculationResults,
-		resetFormI,
+		resetAdditional,
 		setErrorMessage,
 		setErrorTimer,
 		setNotify,

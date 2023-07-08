@@ -21,7 +21,7 @@
 		:button-ok="isEditable"
 		:dirty-callback="dirtyCallback"
 		:invalid-callback="invalidCallback"
-		:reset-additional="resetForm"
+		:reset-additional="resetAdditional"
 		:pre-complete-ok="preCompleteOk"
 		@cancel="handleCancel"
 		@ok="handleOk"
@@ -171,7 +171,7 @@ export default {
 			handleCancel,
 			handleClose,
 			handleOk,
-			resetForm,
+			resetAdditional,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,
@@ -214,7 +214,7 @@ export default {
 			handleCancel,
 			handleClose,
 			handleOk,
-			resetForm,
+			resetAdditional,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,

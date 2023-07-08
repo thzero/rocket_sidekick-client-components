@@ -45,15 +45,18 @@ export function usePartsBaseComponent(props, context, options) {
 		canEdit,
 		canView,
 		detailClose,
+		detailError,
 		detailOk,
 		dialogCopyCancel,
-		dialogCopyParams,
+		dialogCopyError,
 		dialogCopyOk,
 		dialogCopyOpen,
+		dialogCopyParams,
 		dialogDeleteCancel,
-		dialogDeleteParams,
+		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
+		dialogDeleteParams,
 		handleAdd,
 		handleEdit,
 		handleView,
@@ -65,11 +68,11 @@ export function usePartsBaseComponent(props, context, options) {
 		display
 	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'checklists',
-			canCopy: (item) => { return canCopyI(item); },
-			canDelete: (item) => { return canDeleteI(item); },
-			canEdit: (item) => { return canEditI(item); },
-			canView: (item) => { return canViewI(item); },
-			fetch: async (item) => { return await fetchI(); },
+			canCopy: (correlationId, item) => { return canCopyI(correlationId, item); },
+			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
+			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
+			canView: (correlationId, item) => { return canViewI(correlationId, item); },
+			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
 			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
 		}
@@ -84,16 +87,17 @@ export function usePartsBaseComponent(props, context, options) {
 	);
 
 	const canCopyI = (correlationId, item) => {
-		return item && isPublic(item);
+		return true;
 	};
-	const canDeleteI = (item) => {
-		return item && !!isPublic(item);
+	const canDeleteI = (correlationId, item) => {
+		return item && !isPublic(correlationId, item);
 	};
 	const canEditI = (correlationId, item) => {
-		return item && !isPublic(item);
+		//return item && !isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
+		return true;
 	};
 	const canViewI = (correlationId, item) => {
-		return item && isPublic(item);
+		return true;
 	};
 	const fetchI = async (correlationId) => {
 		params.value.type = props.type;
@@ -108,7 +112,7 @@ export function usePartsBaseComponent(props, context, options) {
 		data = data ? data : new PartData();
 		return data;
 	};
-	const isPublic = (item) => {
+	const isPublic = (correlationId, item) => {
 		return item ? item.public ?? false : false;
 	};
 	const manufacturer = (item) => {
@@ -173,15 +177,18 @@ export function usePartsBaseComponent(props, context, options) {
 		canEdit,
 		canView,
 		detailClose,
+		detailError,
 		detailOk,
 		dialogCopyCancel,
-		dialogCopyParams,
+		dialogCopyError,
 		dialogCopyOk,
 		dialogCopyOpen,
+		dialogCopyParams,
 		dialogDeleteCancel,
-		dialogDeleteParams,
+		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
+		dialogDeleteParams,
 		handleAdd,
 		handleEdit,
 		handleView,
