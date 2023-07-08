@@ -122,7 +122,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		}
 	};
 	// eslint-disable-next-line
-	const resetFormI = (correlationId) => {
+	const resetAdditional = (correlationId, previous) => {
 		const settings = serviceStore.getters.user.getUserSettings();
 		if (!settings.measurementUnits)
 			settings.measurementUnits = {};
@@ -139,19 +139,19 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitsId.value = settings.measurementUnits.id ? settings.measurementUnits.id : AppCommonConstants.MeasurementUnits.english.id;
 
 		const measurementUnitAccelerationIdT = settings.measurementUnits.acceleration ? settings.measurementUnits.acceleration : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].acceleration[keyword];
-		measurementUnitAccelerationId.value = resetFormIdCheck(measurementUnitAccelerationIdT, measurementUnitsAcceleration.value);
+		measurementUnitAccelerationId.value = resetIdCheck(measurementUnitAccelerationIdT, measurementUnitsAcceleration.value);
 		const measurementUnitAreaIdT = settings.measurementUnits.area ? settings.measurementUnits.area : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].area[keyword];
-		measurementUnitAreaId.value = resetFormIdCheck(measurementUnitAreaIdT, measurementUnitsArea.value);
+		measurementUnitAreaId.value = resetIdCheck(measurementUnitAreaIdT, measurementUnitsArea.value);
 		const measurementUnitDistanceIdT = settings.measurementUnits.distance ? settings.measurementUnits.distance : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].distance[keyword];
-		measurementUnitDistanceId.value = resetFormIdCheck(measurementUnitDistanceIdT, measurementUnitsDistance.value);
+		measurementUnitDistanceId.value = resetIdCheck(measurementUnitDistanceIdT, measurementUnitsDistance.value);
 		const measurementUnitLengthIdT = settings.measurementUnits.length ? settings.measurementUnits.length : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].length[keyword];
-		measurementUnitLengthId.value = resetFormIdCheck(measurementUnitLengthIdT, measurementUnitsLength.value);
+		measurementUnitLengthId.value = resetIdCheck(measurementUnitLengthIdT, measurementUnitsLength.value);
 		const measurementUnitVelocityIdT = settings.measurementUnits.velocity ? settings.measurementUnits.velocity : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].velocity[keyword];
-		measurementUnitVelocityId.value = resetFormIdCheck(measurementUnitVelocityIdT, measurementUnitsVelocity.value);
+		measurementUnitVelocityId.value = resetIdCheck(measurementUnitVelocityIdT, measurementUnitsVelocity.value);
 		const measurementUnitVolumeIdT = settings.measurementUnits.volume ? settings.measurementUnits.volume : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].volume[keyword];
-		measurementUnitVolumeId.value = resetFormIdCheck(measurementUnitVolumeIdT, measurementUnitsVolume.value);
+		measurementUnitVolumeId.value = resetIdCheck(measurementUnitVolumeIdT, measurementUnitsVolume.value);
 		const measurementUnitWeightIdT = settings.measurementUnits.weight ? settings.measurementUnits.weight : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].weight[keyword];
-		measurementUnitWeightId.value = resetFormIdCheck(measurementUnitWeightIdT, measurementUnitsWeight.value);
+		measurementUnitWeightId.value = resetIdCheck(measurementUnitWeightIdT, measurementUnitsWeight.value);
 
 		measurementUnitAccelerationId.value = settings.measurementUnits.acceleration ? settings.measurementUnits.acceleration : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].acceleration[keyword];
 		measurementUnitAreaId.value = settings.measurementUnits.area ? settings.measurementUnits.area : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].area[keyword];
@@ -161,7 +161,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitVolumeId.value = settings.measurementUnits.volume ? settings.measurementUnits.volume : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].volume[keyword];
 		measurementUnitWeightId.value = settings.measurementUnits.weight ? settings.measurementUnits.weight : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].weight[keyword];
 	};
-	const resetFormIdCheck = (id, values) => {
+	const resetIdCheck = (id, values) => {
 		const temp = values.find(l => l.id === id);
 		return !String.isNullOrEmpty(temp) ? temp.id : null;
 	};
@@ -184,7 +184,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 	// watch(() => user.value,
 	// 	(value, newValue) => {
 	// 		if (value !== newValue)
-	// 			resetFormI(correlationId);
+	// 			resetAdditional(correlationId);
 	// 	}
 	// );
 
@@ -238,8 +238,8 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitsVolume,
 		measurementUnitsWeight,
 		preCompleteOk,
-		resetFormI,
-		resetFormIdCheck,
+		resetAdditional,
+		resetIdCheck,
 		scope: 'AppSettings',
 		validation: useVuelidate({ $scope: 'AppSettings' })
 	};

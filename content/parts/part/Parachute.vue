@@ -3,12 +3,10 @@
 	[[ dirty {{ dirty }} ]]
 	[[ isEditable {{ isEditable }} ]]
 	[[ isNew {{ isNew }} ]]
-	[[ canAdd {{ canAdd }} ]]
 	[[ isPublic {{ isPublic }} ]]
 	 <!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
 	<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
-	<!-- [[ detailItemData {{ JSON.stringify(detailItemData) }}]]  -->
-	[[ {{  manufacturers }}]]
+	<div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div>
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
@@ -20,14 +18,14 @@
 		:button-ok="isEditable"
 		:dirty-callback="dirtyCallback"
 		:invalid-callback="invalidCallback"
-		:reset-additional="resetForm"
+		:reset-additional="resetAdditional"
 		:pre-complete-ok="preCompleteOk"
 		@cancel="handleCancel"
 		@ok="handleOk"
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
-			<v-col>
+			<v-col cols="10">
 				<VTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
@@ -38,11 +36,12 @@
 					:readonly="!isEditable"
 				/>
 			</v-col>
-			<v-col cols="3">
-				<VSwitch
-					ref="isPublicRef"
+			<v-col cols="2">
+				<VSwitchWithValidation
 					v-if="!isEditable || hasAdmin"
+					ref="isPublicRef"
 					v-model="detailItemIsPublic"
+					vid="detailItemIsPublic"
 					:label="$t('forms.content.parts.public')"
 					:readonly="!hasAdmin"
 				/>
@@ -64,7 +63,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="4" lg="6">
+			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemDiameterRef"
 					vid="detailItemDiameter"
@@ -73,7 +72,7 @@
 					:label="$t('forms.content.parts.parachute.diameter')"
 				/>
 			</v-col>
-			<v-col cols="8" lg="6">
+			<v-col cols="7" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
@@ -99,9 +98,44 @@
 					</tr>
 				</table>
 			</v-col>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemWeightRef"
+					vid="detailItemWeight"
+					v-model="detailItemWeight"
+					:validation="validation"
+					:label="$t('forms.content.parts.weight')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="weightMeasurementUnitsIdRef"
+								vid="weightMeasurementUnitsId"
+								v-model="weightMeasurementUnitsId"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="weightMeasurementUnitIdRef"
+								vid="weightMeasurementUnitId"
+								v-model="weightMeasurementUnitId"
+								:measurementUnitsId="weightMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitslengthType"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="12" lg="6">
+			<v-col cols="12" sm="6">
 				<VSelectWithValidation
 					ref="manufacturerRef"
 					v-model="detailItemManufacturer"
@@ -112,7 +146,7 @@
 					:hint="$t('forms.external.motorSearch.manufacturer_hint')"
 				/>
 			</v-col>
-			<v-col cols="12" lg="6">
+			<v-col cols="6" md="3">
 				<VSwitchWithValidation
 					class="ml-2 mr-2"
 					ref="detailItemThinMillRef"
@@ -122,47 +156,17 @@
 					:label="$t('forms.content.parts.parachute.thinMill')"
 				/>
 			</v-col>
+			<v-col cols="6" md="3">
+				<VSwitchWithValidation
+					class="ml-2 mr-2"
+					ref="detailItemBlanketRef"
+					v-model="detailItemBlanket"
+					vid="detailItemBlanket"
+					:validation="validation"
+					:label="$t('forms.content.parts.parachute.blanket')"
+				/>
+			</v-col>
 		</v-row>
-		<template v-slot:buttons_pre>
-			<template
-				v-if="$vuetify.display.lgAndUp"
-			>
-				<v-btn
-					v-if="canAdd"
-					class="mr-2"
-					color="primary"
-					@click="handleAdd"
-				>
-					{{ $t('buttons.add') }} {{ $t('buttons.parts.step') }}
-				</v-btn>
-				<span
-					v-if="canAdd"
-					class="mr-2"
-				>|</span>
-			</template>
-		</template>
-		<template v-slot:buttons_post>
-			<!-- <v-btn
-				v-if="!isEditable"
-				class="ml-2"
-				color="primary"
-				@click="handleClose"
-			>
-				{{ $t('buttons.close') }}
-			</v-btn> -->
-			<div 
-				v-if="$vuetify.display.mdAndDown"
-				class="mt-2"
-			>
-				<v-btn
-					v-if="canAdd"
-					color="primary"
-					@click="handleAdd"
-				>
-					{{ $t('buttons.add') }} {{ $t('buttons.parts.step') }}
-				</v-btn>
-			</div>
-		</template>
 	</VFormControl>
 </template>
 
@@ -196,7 +200,7 @@ export default {
 	props: {
 		...usePartComponentProps
 	},
-	emits: ['cancel', 'close', 'ok'],
+	emits: ['cancel', 'close', 'error', 'ok'],
 	setup (props, context, options) {
 		const {
 			correlationId,
@@ -227,7 +231,8 @@ export default {
 			handleCancel,
 			handleClose,
 			handleOk,
-			resetForm,
+			preCompleteOk,
+			resetAdditional,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
@@ -239,14 +244,17 @@ export default {
 			detailItemManufacturer,
 			detailItemName,
 			manufacturers,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
 			isPublic,
 			handleAdd,
-			preCompleteOk,
 			requestManufacturers,
+			detailItemBlanket,
 			detailItemDiameter,
 			detailItemThinMill,
+			detailItemWeight,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
 			scope,
@@ -282,7 +290,8 @@ export default {
 			handleCancel,
 			handleClose,
 			handleOk,
-			resetForm,
+			preCompleteOk,
+			resetAdditional,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
@@ -294,14 +303,17 @@ export default {
 			detailItemManufacturer,
 			detailItemName,
 			manufacturers,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
 			isPublic,
 			handleAdd,
-			preCompleteOk,
 			requestManufacturers,
+			detailItemBlanket,
 			detailItemDiameter,
 			detailItemThinMill,
+			detailItemWeight,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
 			scope,
@@ -319,9 +331,11 @@ export default {
 			detailItemDescription: { $autoDirty: true },
 			detailItemReorder: { $autoDirty: true },
 			detailItemIsPublic: { $autoDirty: true },
+			detailItemBlanket: { $autoDirty: true },
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemManufacturer: { required, $autoDirty: true },
-			detailItemThinMill: { $autoDirty: true }
+			detailItemThinMill: { $autoDirty: true },
+			detailItemWeight: { required, decimal, between: between(0, 2004), $autoDirty: true },
 		}
 	}
 };

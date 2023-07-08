@@ -29,10 +29,13 @@ export function usePartCopyDialogComponent(props, context, options) {
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
 		return invalid;
 	};
-	const close = () => {
+	const dialogError = (err) => {
+		context.emit('error', err);
+	};
+	const dialogClose = () => {
 		context.emit('close');
 	};
-	const ok = (response) => {
+	const dialogOk = (response) => {
 		context.emit('ok', response);
 	};
 	const preCompleteOk = async (correlationId) => {
@@ -41,7 +44,7 @@ export function usePartCopyDialogComponent(props, context, options) {
 		return response;
 	};
 	// eslint-disable-next-line
-	const resetDialog = async (correlationId, options) => {
+	const resetAdditional = async (correlationId, previous) => {
 		name.value = props.params ? props.params.name : null;
 	};
 
@@ -57,10 +60,11 @@ export function usePartCopyDialogComponent(props, context, options) {
 		success,
 		name,
 		buttonOkDisabledOverride,
-		close,
-		ok,
+		dialogError,
+		dialogClose,
+		dialogOk,
 		preCompleteOk,
-		resetDialog,
+		resetAdditional,
 		scope: 'PartCopyDialog',
 		validation: useVuelidate({ $scope: 'PartCopyDialog' })
 	};

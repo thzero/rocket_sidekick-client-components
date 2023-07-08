@@ -1,5 +1,6 @@
 <script>
 import { computed, ref, onMounted } from 'vue';
+import { firstBy, thenBy } from 'thenby';
 
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
@@ -90,9 +91,20 @@ export function useMasterDetailComponent(props, context, options) {
 	const detailClose = async () => {
 		detailItem.value = null;
 	};
+	const detailError = async () => {
+		detailItem.value = null;
+	};
 	const detailOk = async () => {
 	};
 	const dialogCopyCancel = async (item) => {
+		try {
+			dialogCopyManager.value.cancel();
+		}
+		finally {
+			dialogCopyParams.value = null;
+		}
+	};
+	const dialogCopyError = async (err) => {
 		try {
 			dialogCopyManager.value.cancel();
 		}
@@ -126,6 +138,14 @@ export function useMasterDetailComponent(props, context, options) {
 		dialogCopyManager.value.open();
 	};
 	const dialogDeleteCancel = async (item) => {
+		try {
+			dialogDeleteManager.value.cancel();
+		}
+		finally {
+			dialogDeleteParams.value = null;
+		}
+	};
+	const dialogDeleteError = async (err) => {
 		try {
 			dialogDeleteManager.value.cancel();
 		}
@@ -188,7 +208,7 @@ export function useMasterDetailComponent(props, context, options) {
 			return;
 		}
 		
-		detailItem.value = initView(response.results);
+		detailItem.value = initView(correlationIdI, response.results);
 	};
 	const initEdit = (data) => {
 		return { data: LibraryCommonUtility.cloneDeep(data), isNew: false, isEditable: true }
@@ -200,7 +220,7 @@ export function useMasterDetailComponent(props, context, options) {
 			throw Error('Invalid data...');
 		return { data: data, isNew: true, isEditable: true  }
 	};
-	const initView = (data) => {
+	const initView = (correlationIdI, data) => {
 		return { data: data, isNew: true, isEditable: false  }
 	};
 	const isCopying = (item) => {
@@ -217,7 +237,12 @@ export function useMasterDetailComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		items.value = await fetch(correlationId());
+		const temp = await fetch(correlationId());
+		// temp = temp.sort((a, b) => a.sortName.localeCompare(b.sortName));
+		items.value = temp.sort(
+			firstBy((v1, v2) => { return v1.sortName.localeCompare(v2.sortName); })
+			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
+		);
 	});
 
 	return {
@@ -256,15 +281,18 @@ export function useMasterDetailComponent(props, context, options) {
 		canEdit,
 		canView,
 		detailClose,
+		detailError,
 		detailOk,
 		dialogCopyCancel,
-		dialogCopyParams,
+		dialogCopyError,
 		dialogCopyOk,
 		dialogCopyOpen,
+		dialogCopyParams,
 		dialogDeleteCancel,
-		dialogDeleteParams,
+		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
+		dialogDeleteParams,
 		handleAdd,
 		handleEdit,
 		handleView,

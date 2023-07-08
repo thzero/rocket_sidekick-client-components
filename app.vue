@@ -76,4 +76,8 @@ export function useAppComponent(props, context, options) {
 	.flex-form {
 		display: block; height: calc(100vh - 200px); overflow-y: auto; overflow-x: hidden;
 	}
+
+	.v-card-text {
+		padding-bottom: 2px !important;
+	}
 </style>

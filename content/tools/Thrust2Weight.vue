@@ -14,7 +14,7 @@
 				<VFormControl
 					ref="formThrust2WeightRef"
 					:validation="validation"
-					:reset-additional="resetFormI"
+					:reset-additional="resetAdditional"
 					button-clear-name="buttons.reset"
 					button-ok-name="buttons.calculate"
 					notify-message-saved="messages.calculated"
@@ -560,7 +560,7 @@ export default {
 			handleAttribution,
 			initCalculationOutput,
 			initCalculationResults,
-			resetFormI,
+			resetAdditional,
 			setErrorMessage,
 			setErrorTimer,
 			setNotify,
@@ -643,7 +643,7 @@ export default {
 			handleAttribution,
 			initCalculationOutput,
 			initCalculationResults,
-			resetFormI,
+			resetAdditional,
 			setErrorMessage,
 			setErrorTimer,
 			setNotify,

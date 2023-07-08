@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
@@ -35,29 +35,63 @@ export function usePartComponent(props, context, options) {
 		handleCancel,
 		handleClose,
 		handleOk,
-		resetForm
+		preCompleteOk,
+		resetAdditional
 	} = useDetailComponent(props, context, {
 		init: (correlationId, value) => {
-			detailItemDescription.value = value ? value.description : null;
-			detailItemIsPublic.value = value ? value.public : null;
-			detailItemManufacturer.value = value ? value.manufacturerId : null;
-			detailItemName.value = value ? value.name : null;
+			// detailItemDescription.value = value ? value.description : null;
+			// detailItemIsPublic.value = value ? value.public : null;
+			// detailItemManufacturer.value = value ? value.manufacturerId : null;
+			// detailItemName.value = value ? value.name : null;
+			// detailItemWeight.value = value ? value.weight : null;
+			
+			// weightMeasurementUnitId.value = measurementUnitsWeightDefaultId.value;
+			// weightMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+			resetData(correlationId, value);
 
-			options.init(value);
+			if (options.init)
+				options.init(correlationId, value);
 
 			requestManufacturers(correlationId);
 		},
 		manufacturerType: options.manufacturerType,
 		partsType: options.partsType,
-		resetForm: (correlationId, orig) => {
-			if (orig) {
-				detailItemDescription.value = orig.description;
-				detailItemName.value = orig.name;
-				detailItemManufacturer.value = orig.manufacturerId;
-				detailItemIsPublic.value = orig.public;
+		preCompleteOk : async (correlationId) => {
+			detailItem.value.data.description = String.trim(detailItemDescription.value);
+			detailItem.value.data.name = String.trim(detailItemName.value);
 
-				options.resetForm(correlationId, orig);
-			}
+			detailItem.value.data.typeId = options.partsType;
+			detailItem.value.data.manufacturerId = detailItemManufacturer.value;
+
+			detailItem.value.data.public = detailItemIsPublic.value ?? false;
+			
+			detailItem.value.data.weight = Number(detailItemWeight.value);
+			detailItem.value.data.weightMeasurementUnitId = weightMeasurementUnitId.value;
+			detailItem.value.data.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
+
+			if (options.preCompleteOkPart)
+				detailItem.value.data = options.preCompleteOkPart(correlationId, detailItem.value.data);
+
+			const response = await serviceStore.dispatcher.savePart(correlationId, detailItemData.value);
+			logger.debug('partComponent', 'preCompleteOk', 'response', response, correlationId);
+			return response;
+		},
+		resetAdditional: (correlationId, orig) => {
+			// if (orig) {
+			// 	detailItemDescription.value = orig.description;
+			// 	detailItemName.value = orig.name;
+			// 	detailItemManufacturer.value = orig.manufacturerId;
+			// 	detailItemIsPublic.value = orig.public;
+			// 	detailItemWeight.value = orig.weight;
+			
+			// 	weightMeasurementUnitId.value = orig.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value;
+			// 	weightMeasurementUnitsId.value = orig.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value;
+			// }
+
+			resetData(correlationId, orig);
+
+			if (options.resetAdditional)
+				options.resetAdditional(correlationId, orig);
 		}
 	});
 
@@ -91,7 +125,10 @@ export function usePartComponent(props, context, options) {
 	const detailItemIsPublic = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemName = ref(null);
+	const detailItemWeight = ref(null);
 	const manufacturersI = ref(null);
+	const weightMeasurementUnitId = ref(null);
+	const weightMeasurementUnitsId = ref(null);
 	
 	const manufacturers = computed(() => {
 		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
@@ -108,18 +145,6 @@ export function usePartComponent(props, context, options) {
 
 	const handleAdd = () => {
 	};
-	const preCompleteOk = async (correlationId) => {
-		detailItem.value.data.description = String.trim(detailItemDescription.value);
-		detailItem.value.data.name = String.trim(detailItemName.value);
-		delete detailItem.value.data.public;
-		detailItem.value.data.typeId = options.partsType;
-		detailItem.value.data.manufacturerId = detailItemManufacturer.value;
-		if (options.completeOk)
-			detailItem.value.data = options.completeOk(correlationId, detailItem.value.data);
-		const response = await serviceStore.dispatcher.savePart(correlationId, detailItemData.value);
-		logger.debug('partComponent', 'preCompleteOk', 'response', response, correlationId);
-		return response;
-	};
 	const requestManufacturers = async (correlationId) => {
 		if (manufacturersI.value)
 			return;
@@ -132,6 +157,16 @@ export function usePartComponent(props, context, options) {
 		temp2 = temp2.map((item) => { return { id: item.id, name: item.name }; });
 		manufacturersI.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
 	}
+	const resetData = (correlationId, value) => {
+		detailItemDescription.value = value ? value.description : null;
+		detailItemIsPublic.value = value ? value.public : null;
+		detailItemManufacturer.value = value ? value.manufacturerId : null;
+		detailItemName.value = value ? value.name : null;
+		detailItemWeight.value = value ? value.weight : null;
+
+		weightMeasurementUnitId.value = measurementUnitsWeightDefaultId.value;
+		weightMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+	};
 
 	watch(() => props.modelValue,
 		async (value) => {
@@ -169,7 +204,8 @@ export function usePartComponent(props, context, options) {
 		handleCancel,
 		handleClose,
 		handleOk,
-		resetForm,
+		preCompleteOk,
+		resetAdditional,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
@@ -180,12 +216,14 @@ export function usePartComponent(props, context, options) {
 		detailItemIsPublic,
 		detailItemManufacturer,
 		detailItemName,
+		detailItemWeight,
 		manufacturers,
+		weightMeasurementUnitId,
+		weightMeasurementUnitsId,
 		canAdd,
 		hasAdmin,
 		isPublic,
 		handleAdd,
-		preCompleteOk,
 		requestManufacturers
 	};
 };

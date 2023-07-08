@@ -61,11 +61,16 @@
 							<div class="float-right">{{ manufacturer(item) }}</div>
 						</v-card-title>
 						<v-card-text
-								v-if="item.description"
 							>
+								<!-- v-if="item.description" -->
 								<slot name="panelText" :item="item">
 									{{ item.description }}
 								</slot>
+			canCopy [[ {{ canCopy(item) }}]]
+			canDelete [[ {{ canDelete(item) }}]]
+			canEdit [[ {{ canEdit(item) }}]]
+			canView [[ {{ canView(item) }}]]
+			{{  item }}
 						</v-card-text>
 						<v-card-actions>
 							<v-chip
@@ -117,7 +122,7 @@
 			v-show="colsEditPanel"
 			:cols="colsEditPanel"
 		>
-			<slot :detailItem="detailItem" :detailClose="detailClose" :detailOk="detailOk" />
+			<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" />
 		</v-col>
 	</v-row>
 	<PartCopyDialog
@@ -125,6 +130,7 @@
 		:params="dialogCopyParams"
 		:signal="dialogCopyManager.signal"
 		@close="dialogCopyCancel"
+		@error="dialogCopyError"
 		@ok="dialogCopyOk"
 	/>
 	<VConfirmationDialog
@@ -133,6 +139,7 @@
 		:messageRaw=true
 		:signal="dialogDeleteManager.signal"
 		@cancel="dialogDeleteCancel"
+		@error="dialogDeleteError"
 		@ok="dialogDeleteOk"
 	/>
 </template>
@@ -194,15 +201,18 @@ export default {
 			canEdit,
 			canView,
 			detailClose,
+			detailError,
 			detailOk,
 			dialogCopyCancel,
-			dialogCopyParams,
+			dialogCopyError,
 			dialogCopyOk,
 			dialogCopyOpen,
+			dialogCopyParams,
 			dialogDeleteCancel,
-			dialogDeleteParams,
+			dialogDeleteError,
 			dialogDeleteOk,
 			dialogDeleteOpen,
+			dialogDeleteParams,
 			handleAdd,
 			handleEdit,
 			handleView,
@@ -256,15 +266,18 @@ export default {
 			canEdit,
 			canView,
 			detailClose,
+			detailError,
 			detailOk,
 			dialogCopyCancel,
-			dialogCopyParams,
+			dialogCopyError,
 			dialogCopyOk,
 			dialogCopyOpen,
+			dialogCopyParams,
 			dialogDeleteCancel,
-			dialogDeleteParams,
+			dialogDeleteError,
 			dialogDeleteOk,
 			dialogDeleteOpen,
+			dialogDeleteParams,
 			handleAdd,
 			handleEdit,
 			handleView,

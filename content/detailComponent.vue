@@ -85,14 +85,27 @@ export function useDetailComponent(props, context, options) {
 		props.modelValue.isNew = false
 		context.emit('ok');
 	};
+	const preCompleteOk = async (correlationId) => {
+		if (!options || !options.preCompleteOk)
+			return error('partComponent', 'preCompleteOk', 'Invalid option preCompleteOk check.', null, 99999, correlationId);
+
+		const response = await options.preCompleteOk(correlationId);
+		logger.debug('partComponent', 'preCompleteOk', 'response', response, correlationId);
+		if (hasFailed(response))
+			return response;
+
+		detailItem.value.data = response.results;
+		detailItemOrig.value = LibraryCommonUtility.cloneDeep(detailItem.value);
+		return response;
+	};
 	// eslint-disable-next-line
-	const resetForm = async (correlationId, optionsReset) => {
+	const resetAdditional = async (correlationId, previous) => {
 		if (!detailItem.value)
 			return;
 
-		detailItem.value.isNew = detailItemOrig.value ? detailItemOrig.value.isNew : false;
-		if (options.resetForm && detailItemOrig.value)
-			await options.resetForm(correlationId, detailItemOrig.value.data ? detailItemOrig.value.data : null);
+		detailItem.value.isNew = previous && detailItemOrig.value ? detailItemOrig.value.isNew : false;
+		if (options.resetAdditional && detailItemOrig.value)
+			await options.resetAdditional(correlationId, previous && detailItemOrig.value.data ? detailItemOrig.value.data : null);
 	};
 
 	watch(() => props.modelValue,
@@ -136,7 +149,8 @@ export function useDetailComponent(props, context, options) {
 		handleCancel,
 		handleClose,
 		handleOk,
-		resetForm
+		preCompleteOk,
+		resetAdditional
 	};
 };
 </script>

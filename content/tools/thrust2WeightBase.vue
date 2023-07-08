@@ -47,14 +47,14 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		handleAttribution,
 		initCalculationOutput,
 		initCalculationResults,
-		resetFormI,
+		resetAdditional,
 		setErrorMessage,
 		setErrorTimer,
 		setNotify
 	} = useToolsBaseComponent(props, context, {
 		formRef: formRef,
 		id: 'thrust2Weight',
-		resetForm: (correlationId) => {
+		resetAdditional: (correlationId) => {
 			mass.value = null;
 
 			motorLookupSelection.value = null;
@@ -363,7 +363,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		handleAttribution,
 		initCalculationOutput,
 		initCalculationResults,
-		resetFormI,
+		resetAdditional,
 		setErrorMessage,
 		setErrorTimer,
 		setNotify,

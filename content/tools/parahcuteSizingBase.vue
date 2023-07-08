@@ -45,13 +45,13 @@ export function useParachuteSizingBaseComponent(props, context) {
 		handleAttribution,
 		initCalculationOutput,
 		initCalculationResults,
-		resetFormI,
+		resetAdditional,
 		setErrorMessage,
 		setErrorTimer,
 		setNotify
 	} = useToolsBaseComponent(props, context, {
 		id: 'parachuteSizing',
-		resetForm: (correlationId) => {
+		resetAdditional: (correlationId) => {
 			calculationResults.value.foams = [];
 
 			airDensity.value = null;
@@ -192,7 +192,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 		handleAttribution,
 		initCalculationOutput,
 		initCalculationResults,
-		resetFormI,
+		resetAdditional,
 		setErrorMessage,
 		setErrorTimer,
 		setNotify,

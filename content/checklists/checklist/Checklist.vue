@@ -21,14 +21,14 @@
 		:button-ok="isEditable"
 		:dirty-callback="dirtyCallback"
 		:invalid-callback="invalidCallback"
-		:reset-additional="resetForm"
+		:reset-additional="resetAdditional"
 		:pre-complete-ok="preCompleteOk"
 		@cancel="handleCancel"
 		@ok="handleOk"
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
-			<v-col>
+			<v-col cols="10">
 				<VTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
@@ -39,7 +39,7 @@
 					:readonly="!isEditable"
 				/>
 			</v-col>
-			<v-col cols="3">
+			<v-col cols="2">
 				<VSwitch
 					ref="isDefaultRef"
 					v-if="!isEditable"
@@ -188,7 +188,8 @@ export default {
 			handleCancel,
 			handleClose,
 			handleOk,
-			resetForm,
+			preCompleteOk,
+			resetAdditional,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,
@@ -199,7 +200,6 @@ export default {
 			isShared,
 			steps,
 			handleAdd,
-			preCompleteOk,
 			updateDataModel,
 			scope,
 			validation
@@ -234,7 +234,8 @@ export default {
 			handleCancel,
 			handleClose,
 			handleOk,
-			resetForm,
+			preCompleteOk,
+			resetAdditional,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,
@@ -245,7 +246,6 @@ export default {
 			isShared,
 			steps,
 			handleAdd,
-			preCompleteOk,
 			updateDataModel,
 			scope,
 			validation
