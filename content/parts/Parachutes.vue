@@ -3,14 +3,16 @@
 		title="parachutes"
 		:type="type"
 		:fetchParams="fetchParams"
+		:debug="true"
 	>
-		<template #default="{ detailItem, detailClose, detailError, detailOk }">
+		<template #default="{ detailItem, detailClose, detailError, detailOk, debug }">
 			<Parachhute
 				:model-value="detailItem"
 				@cancel="detailClose"
 				@close="detailClose"
 				@error="detailError"
 				@ok="detailOk"
+				:debug="debug"
 			>
 			</Parachhute>
 		</template>

@@ -1,4 +1,5 @@
 <template>
+	[[ debug {{ debug }}]]
 	<ContentHeader :value="title" />
 	<v-row dense>
 		<v-col cols="12">
@@ -32,11 +33,15 @@
 			>
 				{{ notifyMessage }}
 			</v-snackbar>
-			[[ colsSearchResults {{ colsSearchResults }}]]
-			[[ colsEditPanel {{ colsEditPanel }}]]
-			[[ showList {{ showList }}]]
-			[[ showDetailItem {{ showDetailItem }}]]
-			<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
+			<div
+				v-if="debug"
+			>
+				[[ colsSearchResults {{ colsSearchResults }}]]
+				[[ colsEditPanel {{ colsEditPanel }}]]
+				[[ showList {{ showList }}]]
+				[[ showDetailItem {{ showDetailItem }}]]
+				<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
+			</div>
 		</v-col>
 		<v-col
 			v-show="colsSearchResults"
@@ -66,11 +71,14 @@
 								<slot name="panelText" :item="item">
 									{{ item.description }}
 								</slot>
-			canCopy [[ {{ canCopy(item) }}]]
-			canDelete [[ {{ canDelete(item) }}]]
-			canEdit [[ {{ canEdit(item) }}]]
-			canView [[ {{ canView(item) }}]]
-			{{  item }}
+								<div
+									v-if="debug"
+								>
+									canCopy [[ {{ canCopy(item) }}]]
+									canDelete [[ {{ canDelete(item) }}]]
+									canEdit [[ {{ canEdit(item) }}]]
+									canView [[ {{ canView(item) }}]]
+								</div>
 						</v-card-text>
 						<v-card-actions>
 							<v-chip
@@ -122,7 +130,7 @@
 			v-show="colsEditPanel"
 			:cols="colsEditPanel"
 		>
-			<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" />
+			<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug" />
 		</v-col>
 	</v-row>
 	<PartCopyDialog
@@ -145,8 +153,9 @@
 </template>
 
 <script>
+import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
 import { usePartsBaseComponent } from '@/components/content/parts/partsComponent';
-import { usePartsBaseProps } from '@/components/content/parts/partsComponentProps';
+import { usePartsBaseComponentProps } from '@/components/content/parts/partsComponentProps';
 
 import Part from '@/components/content/parts/part/Part';
 import PartCopyDialog from '@/components/content/parts/dialogs/PartCopyDialog';
@@ -162,7 +171,8 @@ export default {
 		VConfirmationDialog
 	},
 	props: {
-		...usePartsBaseProps
+		...useMasterDetailComponentProps,
+		...usePartsBaseComponentProps
 	},
 	setup(props, context) {
 		const {

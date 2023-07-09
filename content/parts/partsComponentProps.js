@@ -1,4 +1,4 @@
-export const usePartsBaseProps = {
+export const usePartsBaseComponentProps = {
 	fetchParams: {
 		type: Function,
 		default: null
