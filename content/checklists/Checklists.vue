@@ -32,11 +32,15 @@
 			>
 				{{ notifyMessage }}
 			</v-snackbar>
-			[[ colsSearchResults {{ colsSearchResults }}]]
-			[[ colsEditPanel {{ colsEditPanel }}]]
-			[[ showList {{ showList }}]]
-			[[ showDetailItem {{ showDetailItem }}]]
-			<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
+			<div
+				v-if="debug"
+			>
+				[[ colsSearchResults {{ colsSearchResults }}]]
+				[[ colsEditPanel {{ colsEditPanel }}]]
+				[[ showList {{ showList }}]]
+				[[ showDetailItem {{ showDetailItem }}]]
+				<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
+			</div>
 		</v-col>
 		<v-col
 			v-show="colsSearchResults"
@@ -125,6 +129,7 @@
 				@cancel="detailClose"
 				@close="detailClose"
 				@ok="detailOk"
+				:debug="debug"
 			>
 			</Checklist>
 		</v-col>
@@ -231,6 +236,7 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
+			debug,
 			dialogStartManager,
 			dialogStartMessage,
 			title,
@@ -305,6 +311,7 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
+			debug,
 			dialogStartManager,
 			dialogStartMessage,
 			title,

@@ -1,6 +1,11 @@
 <script>
 import { onMounted, ref } from 'vue';
 
+import LibraryClientConstants from '@thzero/library_client/constants.js';
+
+import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
 export function usePartsDisplayCompany(props, context, options) {
@@ -20,8 +25,16 @@ export function usePartsDisplayCompany(props, context, options) {
 		target
 	} = useContentBaseComponent(props, context, options);
 
+	const debug = ref(false);
 	const manufacturers = ref(null);
 	const type = ref(options.type);
+
+	if (LibraryCommonUtility.isDev) {
+		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
+		const config = serviceConfig.get('debug');
+		if (config)
+			debug.value = config['parts'] ?? false;
+	}
 
 	onMounted(async () => {
 		if (manufacturers.value)
@@ -50,6 +63,7 @@ export function usePartsDisplayCompany(props, context, options) {
 		serviceStore,
 		sort,
 		target,
+		debug,
 		manufacturers,
 		type
 	};
