@@ -1,12 +1,17 @@
 <template>
-	[[ invalid {{ invalid }} ]]
-	[[ dirty {{ dirty }} ]]
-	[[ isEditable {{ isEditable }} ]]
-	[[ isNew {{ isNew }} ]]
-	[[ isPublic {{ isPublic }} ]]
-	 <!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
-	<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
-	<div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div>
+	[[ debug {{ debug }}]]
+	<div
+		v-if="debug"
+	>
+		[[ invalid {{ invalid }} ]]
+		[[ dirty {{ dirty }} ]]
+		[[ isEditable {{ isEditable }} ]]
+		[[ isNew {{ isNew }} ]]
+		[[ isPublic {{ isPublic }} ]]
+		<!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
+		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
+		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
+	</div>
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
@@ -163,6 +168,7 @@
 <script>
 import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
 
+import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useParachutePartComponent } from '@/components/content/parts/part/parachutePartComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 
@@ -188,6 +194,7 @@ export default {
 		VTextFieldWithValidation
 	},
 	props: {
+		...useDetailComponentProps,
 		...usePartComponentProps
 	},
 	emits: ['cancel', 'close', 'error', 'ok'],
