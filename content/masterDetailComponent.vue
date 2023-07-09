@@ -240,7 +240,7 @@ export function useMasterDetailComponent(props, context, options) {
 		const temp = await fetch(correlationId());
 		// temp = temp.sort((a, b) => a.sortName.localeCompare(b.sortName));
 		items.value = temp.sort(
-			firstBy((v1, v2) => { return v1.sortName.localeCompare(v2.sortName); })
+			firstBy((v1, v2) => { return v1.sortName && v2.sortName ? v1.sortName.localeCompare(v2.sortName) : true; })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 		);
 	});

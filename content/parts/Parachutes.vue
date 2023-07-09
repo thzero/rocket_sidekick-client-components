@@ -3,7 +3,7 @@
 		title="parachutes"
 		:type="type"
 		:fetchParams="fetchParams"
-		:debug="true"
+		:debug="debug"
 	>
 		<template #default="{ detailItem, detailClose, detailError, detailOk, debug }">
 			<Parachhute
@@ -57,6 +57,7 @@ export default {
 			serviceStore,
 			sort,
 			target,
+			debug,
 			manufacturers,
 			type
 		} = usePartsDisplayCompany(props, context, { 
@@ -81,6 +82,7 @@ export default {
 			serviceStore,
 			sort,
 			target,
+			debug,
 			manufacturers,
 			type,
 			fetchParams

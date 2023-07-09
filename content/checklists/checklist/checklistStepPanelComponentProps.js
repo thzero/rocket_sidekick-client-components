@@ -1,4 +1,8 @@
 export const useChecklistStepsPanelComponentProps = {
+	debug: {
+		type: Boolean,
+		default: false
+	},
 	item: {
 		type: Object,
 		default: { }

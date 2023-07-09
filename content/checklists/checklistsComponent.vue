@@ -2,8 +2,10 @@
 import { ref} from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
+import LibraryClientConstants from '@thzero/library_client/constants.js';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 
@@ -80,6 +82,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		})
 	);
 
+	const debug = ref(false);
 	const dialogStartManager = ref(new DialogSupport());
 	const dialogStartMessage = ref(LibraryClientUtility.$trans.t('messages.checklists.start_confirm'));
 	const dialogStartParams = ref(null);
@@ -87,6 +90,13 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const title = ref(
 		(props.type === AppCommonConstants.Checklists.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.checklists.title')
 	);
+
+	if (LibraryCommonUtility.isDev) {
+		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
+		const config = serviceConfig.get('debug');
+		if (config)
+			debug.value = config['checklists'] ?? false;
+	}
 
 	const canCopyI = (correlationId, item) => {
 		return item && isDefault(item) || isShared(item) || !isInProgress(item);
@@ -245,6 +255,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		display,
+		debug,
 		dialogStartManager,
 		dialogStartMessage,
 		title,

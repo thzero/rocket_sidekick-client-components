@@ -22,6 +22,7 @@
 				:moveUp="false"
 				:parent="item"
 				:readonly="readonly"
+				:debug="debug"
 			>
 				<Container 
 					@drop="onDrop($event)"
@@ -39,6 +40,7 @@
 							:item="item2"
 							:parent="item1"
 							:readonly="readonly"
+							:debug="debug"
 						>
 							<Container 
 								@drop="onDrop($event)"
@@ -56,6 +58,7 @@
 										:item="item3"
 										:parent="item2"
 										:readonly="readonly"
+										:debug="debug"
 									>
 										<Container 
 											@drop="onDrop($event)"
@@ -73,6 +76,7 @@
 													:item="item4"
 													:parent="item3"
 													:readonly="readonly"
+													:debug="debug"
 												>
 													<Container 
 														@drop="onDrop($event)"
@@ -91,6 +95,7 @@
 																:moveDown="false"
 																:parent="item4"
 																:readonly="readonly"
+																:debug="debug"
 															>
 															</ChecklistStepPanel>
 														</Draggable>

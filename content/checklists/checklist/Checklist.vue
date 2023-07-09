@@ -1,15 +1,19 @@
 <template>
-	[[ invalid {{ invalid }} ]]
-	[[ dirty {{ dirty }} ]]
-	[[ isEditable {{ isEditable }} ]]
-	[[ isNew {{ isNew }} ]]
-	[[ canAdd {{ canAdd }} ]]
-	[[ isDefault {{ isDefault }} ]]
-	[[ isInProgress {{ isInProgress }} ]]
-	[[ isShared {{ isShared }} ]]
-	 <!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
-	<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
-	<!-- [[ detailItemData {{ JSON.stringify(detailItemData) }}]]  -->
+	<div
+		v-if="debug"
+	>
+		[[ invalid {{ invalid }} ]]
+		[[ dirty {{ dirty }} ]]
+		[[ isEditable {{ isEditable }} ]]
+		[[ isNew {{ isNew }} ]]
+		[[ canAdd {{ canAdd }} ]]
+		[[ isDefault {{ isDefault }} ]]
+		[[ isInProgress {{ isInProgress }} ]]
+		[[ isShared {{ isShared }} ]]
+		<!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
+		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
+		<!-- [[ detailItemData {{ JSON.stringify(detailItemData) }}]]  -->
+	</div>
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
@@ -77,7 +81,7 @@
 		</div>
 		<template v-slot:buttons_pre>
 			<template
-				v-if="$vuetify.display.lgAndUp"
+				v-if="$vuetify.display.mdAndUp"
 			>
 				<v-btn
 					v-if="canAdd"
@@ -103,7 +107,7 @@
 				{{ $t('buttons.close') }}
 			</v-btn> -->
 			<div 
-				v-if="$vuetify.display.mdAndDown"
+				v-if="$vuetify.display.smAndDown"
 				class="mt-2"
 			>
 				<v-btn
@@ -125,6 +129,7 @@
 					:item="detailItemData"
 					:readonly="!isEditable"
 					:update="updateDataModel"
+					:debug="debug"
 				>
 				</ChecklistSteps>
 			</v-col>
