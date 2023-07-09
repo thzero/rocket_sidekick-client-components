@@ -51,7 +51,7 @@
 				<v-col
 					cols="12"
 					v-for="item in items"
-					:key="item.name"
+					:key="item.id"
 				>
 					<v-card>
 						<v-card-title>

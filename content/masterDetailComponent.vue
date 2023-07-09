@@ -95,6 +95,7 @@ export function useMasterDetailComponent(props, context, options) {
 		detailItem.value = null;
 	};
 	const detailOk = async () => {
+		items.value = await fetch(correlationId());
 	};
 	const dialogCopyCancel = async (item) => {
 		try {
@@ -183,7 +184,13 @@ export function useMasterDetailComponent(props, context, options) {
 		const response = await options.fetch(correlationId);
 		if (hasFailed(response))
 			return [];
-		return response.results;
+		
+		// const results = response.results.sort((a, b) => a.sortName.localeCompare(b.sortName));
+		const results = response.results.sort(
+			firstBy((v1, v2) => { return v1.sortName.localeCompare(v2.sortName); })
+			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
+		);
+		return results;
 	};
 	const handleAdd = () => {
 		detailItem.value = initNew();
@@ -237,12 +244,7 @@ export function useMasterDetailComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		const temp = await fetch(correlationId());
-		// temp = temp.sort((a, b) => a.sortName.localeCompare(b.sortName));
-		items.value = temp.sort(
-			firstBy((v1, v2) => { return v1.sortName && v2.sortName ? v1.sortName.localeCompare(v2.sortName) : true; })
-			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
-		);
+		items.value = await fetch(correlationId());
 	});
 
 	return {

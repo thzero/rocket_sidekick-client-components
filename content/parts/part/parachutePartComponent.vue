@@ -68,13 +68,14 @@ export function useParachutePartComponent(props, context, options) {
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
 		partsType: AppCommonConstants.Rocketry.PartTypes.parachute, 
 		preCompleteOkPart: (correlationId, data) => {
+			data.cd = Number(detailItemCd.value);
 			data.diameter = Number(detailItemDiameter.value);
 			data.thinMill = detailItemThinMill.value ?? false;
 			data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
 			data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
 
-			const temp = AppUtility.measurementUnitTranslateWeight(correlationId, diameterMeasurementUnitsId.value, diameterMeasurementUnitId.value);
-			data.sortName = data.diameter + temp + (data.thinMill ? 'TM' : '') + data.name;
+			const temp = AppUtility.measurementUnitTranslateLength(correlationId, diameterMeasurementUnitsId.value, diameterMeasurementUnitId.value);
+			data.sortName = String(data.diameter ?? '').padStart(4, '0') + temp + (data.thinMill ? 'TM' : '') + data.name;
 		
 			return data;
 		},
@@ -83,6 +84,7 @@ export function useParachutePartComponent(props, context, options) {
 		}
 	});
 	
+	const detailItemCd = ref(null);
 	const detailItemDiameter = ref(null);
 	const detailItemThinMill = ref(false);
 	const diameterMeasurementUnitId = ref(null);
@@ -91,6 +93,7 @@ export function useParachutePartComponent(props, context, options) {
 	const resetData = (correlationId, value) => {
 		detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.parachute.name');
 
+		detailItemCd.value = value ? value.cd : null;
 		detailItemDiameter.value = value ? value.diameter : null;
 		detailItemThinMill.value = value ? value.thinMill ?? false : false;
 		
@@ -148,6 +151,7 @@ export function useParachutePartComponent(props, context, options) {
 		isPublic,
 		handleAdd,
 		requestManufacturers,
+		detailItemCd,
 		detailItemDiameter,
 		detailItemThinMill,
 		diameterMeasurementUnitId,
