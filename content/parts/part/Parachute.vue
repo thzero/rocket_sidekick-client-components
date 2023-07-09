@@ -151,7 +151,16 @@
 					:hint="$t('forms.external.motorSearch.manufacturer_hint')"
 				/>
 			</v-col>
-			<v-col cols="6" md="6">
+			<v-col cols="6" md="3">
+				<VNumberFieldWithValidation
+					ref="detailItemCdRef"
+					vid="detailItemCd"
+					v-model="detailItemCd"
+					:validation="validation"
+					:label="$t('forms.content.parts.parachute.cd')"
+				/>
+			</v-col>
+			<v-col cols="6" md="3">
 				<VSwitchWithValidation
 					class="ml-2 mr-2"
 					ref="detailItemThinMillRef"
@@ -248,6 +257,7 @@ export default {
 			isPublic,
 			handleAdd,
 			requestManufacturers,
+			detailItemCd,
 			detailItemDiameter,
 			detailItemThinMill,
 			detailItemWeight,
@@ -306,6 +316,7 @@ export default {
 			isPublic,
 			handleAdd,
 			requestManufacturers,
+			detailItemCd,
 			detailItemDiameter,
 			detailItemThinMill,
 			detailItemWeight,
@@ -326,6 +337,7 @@ export default {
 			detailItemDescription: { $autoDirty: true },
 			detailItemReorder: { $autoDirty: true },
 			detailItemIsPublic: { $autoDirty: true },
+			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemManufacturer: { required, $autoDirty: true },
 			detailItemThinMill: { $autoDirty: true },
