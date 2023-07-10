@@ -1,27 +1,27 @@
 <template>
 	<Parts
-		title="parachutes"
+		title="chuteProtectors"
 		:type="type"
 		:fetchParams="fetchParams"
 		:debug="debug"
 	>
 		<template #default="{ detailItem, detailClose, detailError, detailOk, debug }">
-			<Parachhute
+			<ChuteProtector
 				:model-value="detailItem"
 				@cancel="detailClose"
 				@close="detailClose"
 				@error="detailError"
 				@ok="detailOk"
 				:debug="debug"
-			>
-			</Parachhute>
+			>s
+			</ChuteProtector>
 		</template>
 		<template #panelTitle="{ item }">
-			<ParachutePanelTitle
+			<chuteProtectorPanelTitle
 				:item="item"
 				:manufacturers="manufacturers"
 			>
-			</ParachutePanelTitle>
+			</ChuteProtectorPanelTitle>
 		</template> 
 	</Parts>
 </template>
@@ -31,15 +31,15 @@ import { usePartsDisplayCompany } from '@/components/content/parts/partsDisplayC
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import Parachhute from '@/components/content/parts/part/Parachute';
-import ParachutePanelTitle from '@/components/content/parts/ParachutePanelTitle';
+import ChuteProtector from '@/components/content/parts/part/chuteProtector/ChuteProtector';
+import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import Parts from '@/components/content/parts/Parts';
 
 export default {
-	name: 'PartsParachute',
+	name: 'PartsChuteProtector',
 	components: {
-		Parachhute,
-		ParachutePanelTitle,
+		ChuteProtector,
+		ChuteProtectorPanelTitle,
 		Parts
 	},
 	setup(props, context, options) {
@@ -61,7 +61,7 @@ export default {
 			manufacturers,
 			type
 		} = usePartsDisplayCompany(props, context, { 
-			type: AppCommonConstants.Rocketry.PartTypes.parachute
+			type: AppCommonConstants.Rocketry.PartTypes.chuteProtector
 		});
 
 		const fetchParams = async (correlationId, params) => {

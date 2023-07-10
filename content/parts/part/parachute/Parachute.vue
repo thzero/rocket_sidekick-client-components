@@ -74,7 +74,7 @@
 					vid="detailItemDiameter"
 					v-model="detailItemDiameter"
 					:validation="validation"
-					:label="$t('forms.content.parts.parachute.diameter')"
+					:label="$t('forms.content.parts.diameter')"
 				/>
 			</v-col>
 			<v-col cols="7" md="4">
@@ -146,7 +146,7 @@
 					vid="detailItemCd"
 					v-model="detailItemCd"
 					:validation="validation"
-					:label="$t('forms.content.parts.parachute.cd')"
+					:label="$t('forms.content.parts.cd')"
 				/>
 			</v-col>
 			<v-col cols="6">
@@ -259,11 +259,12 @@
 </template>
 
 <script>
-import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
+import { between, decimal, required } from '@vuelidate/validators';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
-import { useParachutePartComponent } from '@/components/content/parts/part/parachutePartComponent';
+import { useParachutePartComponent } from '@/components/content/parts/part/parachute/parachutePartComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
+import { usePartValidation } from '@/components/content/parts/part/partValidation';
 
 import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/tools/MeasurementUnitsSelect';
@@ -425,35 +426,15 @@ export default {
 		};
 	},
 	validations () {
-		return {
-			detailItemName: {
-				required,
-				minLength: minLength(3),
-				maxLength: maxLength(50),
-				$autoDirty: true
-			},
-			detailItemDescription: { $autoDirty: true },
-			detailItemReorder: { $autoDirty: true },
-			detailItemIsPublic: { $autoDirty: true },
+		return Object.assign(usePartValidation, {
 			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemManufacturer: { required, $autoDirty: true },
-			detailItemManufacturerStockId: {
-				minLength: minLength(3),
-				maxLength: maxLength(14),
-				$autoDirty: true
-			},
 			detailItemThinMill: { $autoDirty: true },
-			detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true },
-			loadMaxWeightMeasurementUnitId: { $autoDirty: true },
-			loadMaxWeightMeasurementUnitsId: { $autoDirty: true },
-			loadMinWeightMeasurementUnitId: { $autoDirty: true },
-			loadMinWeightMeasurementUnitsId: { $autoDirty: true }
-		}
+			diameterMeasurementUnitsId: { $autoDirty: true }
+		});
 	}
 };
 </script>
