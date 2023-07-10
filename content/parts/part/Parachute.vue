@@ -130,9 +130,9 @@
 								vid="weightMeasurementUnitId"
 								v-model="weightMeasurementUnitId"
 								:measurementUnitsId="weightMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitslengthType"
+								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
-								:label="$t('forms.settings.measurementUnits.length')"
+								:label="$t('forms.settings.measurementUnits.weight')"
 							/>
 						</td>
 					</tr>
@@ -140,18 +140,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="12" sm="6">
-				<VSelectWithValidation
-					ref="manufacturerRef"
-					v-model="detailItemManufacturer"
-					vid="detailItemManufacturer"
-					:items="manufacturers"
-					:validation="validation"
-					:label="$t('forms.external.motorSearch.manufacturer')"
-					:hint="$t('forms.external.motorSearch.manufacturer_hint')"
-				/>
-			</v-col>
-			<v-col cols="6" md="3">
+			<v-col cols="6">
 				<VNumberFieldWithValidation
 					ref="detailItemCdRef"
 					vid="detailItemCd"
@@ -160,7 +149,7 @@
 					:label="$t('forms.content.parts.parachute.cd')"
 				/>
 			</v-col>
-			<v-col cols="6" md="3">
+			<v-col cols="6">
 				<VSwitchWithValidation
 					class="ml-2 mr-2"
 					ref="detailItemThinMillRef"
@@ -243,6 +232,29 @@
 				</table>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="8">
+				<VSelectWithValidation
+					ref="manufacturerRef"
+					v-model="detailItemManufacturer"
+					vid="detailItemManufacturer"
+					:items="manufacturers"
+					:validation="validation"
+					:label="$t('forms.external.motorSearch.manufacturer')"
+					:hint="$t('forms.external.motorSearch.manufacturer_hint')"
+				/>
+			</v-col>
+			<v-col cols="4">
+				<VTextFieldWithValidation
+					ref="detailItemManufacturerStockIdRef"
+					v-model="detailItemManufacturerStockId"
+					vid="detailItemManufacturerStockId"
+					:label="$t('forms.content.parts.manufacturerId')"
+					:counter="30"
+					:validation="validation"
+				/>
+			</v-col>
+		</v-row>
 	</VFormControl>
 </template>
 
@@ -320,6 +332,7 @@ export default {
 			detailItemDescription,
 			detailItemIsPublic,
 			detailItemManufacturer,
+			detailItemManufacturerStockId,
 			detailItemName,
 			manufacturers,
 			weightMeasurementUnitId,
@@ -385,6 +398,7 @@ export default {
 			detailItemDescription,
 			detailItemIsPublic,
 			detailItemManufacturer,
+			detailItemManufacturerStockId,
 			detailItemName,
 			manufacturers,
 			weightMeasurementUnitId,
@@ -426,6 +440,11 @@ export default {
 			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemManufacturer: { required, $autoDirty: true },
+			detailItemManufacturerStockId: {
+				minLength: minLength(3),
+				maxLength: maxLength(14),
+				$autoDirty: true
+			},
 			detailItemThinMill: { $autoDirty: true },
 			detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 			diameterMeasurementUnitId: { $autoDirty: true },
