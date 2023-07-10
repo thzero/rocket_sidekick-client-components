@@ -10,8 +10,8 @@
 		{{ item.description }}
 	</v-card-text> -->
 	{{ item.diameter }} {{ measurementUnitTranslateLength(item.diameterMeasurementUnitsId, item.diameterMeasurementUnitId) }} 
-	{{ item.thinMill ? `(${ $t('forms.content.parts.parachute.thinMill')})` : '' }}
 	{{ item.name }} 
+	{{ item.thinMill ? $t('forms.content.parts.parachute.thinMill') : '' }}
 </template>
 
 <script>

@@ -171,6 +171,78 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemLoadMaxRef"
+					vid="detailItemLoadMax"
+					v-model="detailItemLoadMax"
+					:validation="validation"
+					:label="$t('forms.content.parts.parachute.loadMax')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="loadMaxWeightMeasurementUnitsIdRef"
+								vid="loadMaxWeightMeasurementUnitsId"
+								v-model="loadMaxWeightMeasurementUnitsId"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="loadMaxWeightMeasurementUnitIdRef"
+								vid="loadMaxWeightMeasurementUnitId"
+								v-model="loadMaxWeightMeasurementUnitId"
+								:measurementUnitsId="loadMaxWeightMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.weight')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemLoadMinRef"
+					vid="detailItemLoadMin"
+					v-model="detailItemLoadMin"
+					:validation="validation"
+					:label="$t('forms.content.parts.parachute.loadMin')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="loadMinWeightMeasurementUnitsIdRef"
+								vid="loadMinWeightMeasurementUnitsId"
+								v-model="loadMinWeightMeasurementUnitsId"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="loadMinWeightMeasurementUnitIdRef"
+								vid="loadMinWeightMeasurementUnitId"
+								v-model="loadMinWeightMeasurementUnitId"
+								:measurementUnitsId="loadMinWeightMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.weight')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+		</v-row>
 	</VFormControl>
 </template>
 
@@ -259,10 +331,16 @@ export default {
 			requestManufacturers,
 			detailItemCd,
 			detailItemDiameter,
+			detailItemLoadMax,
+			detailItemLoadMin,
 			detailItemThinMill,
 			detailItemWeight,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			loadMaxWeightMeasurementUnitId,
+			loadMaxWeightMeasurementUnitsId,
+			loadMinWeightMeasurementUnitId,
+			loadMinWeightMeasurementUnitsId,
 			scope,
 			validation
 		} = useParachutePartComponent(props, context, options);
@@ -318,10 +396,16 @@ export default {
 			requestManufacturers,
 			detailItemCd,
 			detailItemDiameter,
+			detailItemLoadMax,
+			detailItemLoadMin,
 			detailItemThinMill,
 			detailItemWeight,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			loadMaxWeightMeasurementUnitId,
+			loadMaxWeightMeasurementUnitsId,
+			loadMinWeightMeasurementUnitId,
+			loadMinWeightMeasurementUnitsId,
 			scope,
 			validation
 		};
@@ -339,9 +423,17 @@ export default {
 			detailItemIsPublic: { $autoDirty: true },
 			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
+			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
+			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemManufacturer: { required, $autoDirty: true },
 			detailItemThinMill: { $autoDirty: true },
-			detailItemWeight: { required, decimal, between: between(0, 2004), $autoDirty: true },
+			detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
+			diameterMeasurementUnitId: { $autoDirty: true },
+			diameterMeasurementUnitsId: { $autoDirty: true },
+			loadMaxWeightMeasurementUnitId: { $autoDirty: true },
+			loadMaxWeightMeasurementUnitsId: { $autoDirty: true },
+			loadMinWeightMeasurementUnitId: { $autoDirty: true },
+			loadMinWeightMeasurementUnitsId: { $autoDirty: true }
 		}
 	}
 };
