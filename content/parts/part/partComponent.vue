@@ -39,14 +39,6 @@ export function usePartComponent(props, context, options) {
 		resetAdditional
 	} = useDetailComponent(props, context, {
 		init: (correlationId, value) => {
-			// detailItemDescription.value = value ? value.description : null;
-			// detailItemIsPublic.value = value ? value.public : null;
-			// detailItemManufacturer.value = value ? value.manufacturerId : null;
-			// detailItemName.value = value ? value.name : null;
-			// detailItemWeight.value = value ? value.weight : null;
-			
-			// weightMeasurementUnitId.value = measurementUnitsWeightDefaultId.value;
-			// weightMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 			resetData(correlationId, value);
 
 			if (options.init)
@@ -62,6 +54,7 @@ export function usePartComponent(props, context, options) {
 
 			detailItem.value.data.typeId = options.partsType;
 			detailItem.value.data.manufacturerId = detailItemManufacturer.value;
+			detailItem.value.data.manufacturerStockId = detailItemManufacturerStockId.value;
 
 			detailItem.value.data.public = detailItemIsPublic.value ?? false;
 			
@@ -77,17 +70,6 @@ export function usePartComponent(props, context, options) {
 			return response;
 		},
 		resetAdditional: (correlationId, orig) => {
-			// if (orig) {
-			// 	detailItemDescription.value = orig.description;
-			// 	detailItemName.value = orig.name;
-			// 	detailItemManufacturer.value = orig.manufacturerId;
-			// 	detailItemIsPublic.value = orig.public;
-			// 	detailItemWeight.value = orig.weight;
-			
-			// 	weightMeasurementUnitId.value = orig.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value;
-			// 	weightMeasurementUnitsId.value = orig.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value;
-			// }
-
 			resetData(correlationId, orig);
 
 			if (options.resetAdditional)
@@ -124,6 +106,7 @@ export function usePartComponent(props, context, options) {
 	const detailItemDescription = ref(null);
 	const detailItemIsPublic = ref(null);
 	const detailItemManufacturer = ref(null);
+	const detailItemManufacturerStockId = ref(null);
 	const detailItemName = ref(null);
 	const detailItemWeight = ref(null);
 	const manufacturersI = ref(null);
@@ -161,11 +144,12 @@ export function usePartComponent(props, context, options) {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemIsPublic.value = value ? value.public : null;
 		detailItemManufacturer.value = value ? value.manufacturerId : null;
+		detailItemManufacturerStockId.value = value? value.manufacturerStockId : null;
 		detailItemName.value = value ? value.name : null;
 		detailItemWeight.value = value ? value.weight : null;
 
-		weightMeasurementUnitId.value = measurementUnitsWeightDefaultId.value;
-		weightMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+		weightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
+		weightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 
 	watch(() => props.modelValue,
@@ -215,6 +199,7 @@ export function usePartComponent(props, context, options) {
 		detailItemDescription,
 		detailItemIsPublic,
 		detailItemManufacturer,
+		detailItemManufacturerStockId,
 		detailItemName,
 		detailItemWeight,
 		manufacturers,
