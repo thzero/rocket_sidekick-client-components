@@ -187,7 +187,7 @@ export function useMasterDetailComponent(props, context, options) {
 		
 		// const results = response.results.sort((a, b) => a.sortName.localeCompare(b.sortName));
 		const results = response.results.sort(
-			firstBy((v1, v2) => { return v1.sortName.localeCompare(v2.sortName); })
+			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 		);
 		return results;

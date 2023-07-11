@@ -13,7 +13,7 @@
 				@error="detailError"
 				@ok="detailOk"
 				:debug="debug"
-			>s
+			>
 			</ChuteProtector>
 		</template>
 		<template #panelTitle="{ item }">
@@ -64,7 +64,7 @@ export default {
 			type: AppCommonConstants.Rocketry.PartTypes.chuteProtector
 		});
 
-		const fetchParams = async (correlationId, params) => {
+		const fetchParams = (correlationId, params) => {
 			return params; // TODO: setup params...
 		};
 

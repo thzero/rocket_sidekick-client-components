@@ -10,7 +10,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { usePartComponent } from '@/components/content/parts/part/partComponent';
 
-export function useChuteProtectorPartComponent(props, context, options) {
+export function useDeploymentBagPartComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -66,8 +66,8 @@ export function useChuteProtectorPartComponent(props, context, options) {
 		init: (correlationId, value) => {
 			resetData(correlationId, value);
 		},
-		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector,
-		partsType: AppCommonConstants.Rocketry.PartTypes.chuteProtector, 
+		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag,
+		partsType: AppCommonConstants.Rocketry.PartTypes.deploymentBag, 
 		preCompleteOkPart: (correlationId, data) => {
 			data.cd = Number(detailItemCd.value);
 			data.diameter = Number(detailItemDiameter.value);
@@ -185,8 +185,8 @@ export function useChuteProtectorPartComponent(props, context, options) {
 		loadMaxWeightMeasurementUnitsId,
 		loadMinWeightMeasurementUnitId,
 		loadMinWeightMeasurementUnitsId,
-		scope: 'ChuteProtectorPartControl',
-		validation: useVuelidate({ $scope: 'ChuteProtectorPartControl' })
+		scope: 'DeploymentBagPartControl',
+		validation: useVuelidate({ $scope: 'DeploymentBagPartControl' })
 	};
 };
 </script>

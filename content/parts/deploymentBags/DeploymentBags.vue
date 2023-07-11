@@ -1,12 +1,12 @@
 <template>
 	<Parts
-		title="parachutes"
+		title="deploymentBags"
 		:type="type"
 		:fetchParams="fetchParams"
 		:debug="debug"
 	>
 		<template #default="{ detailItem, detailClose, detailError, detailOk, debug }">
-			<Parachute
+			<DeploymentBag
 				:model-value="detailItem"
 				@cancel="detailClose"
 				@close="detailClose"
@@ -14,14 +14,14 @@
 				@ok="detailOk"
 				:debug="debug"
 			>
-			</Parachute>
+			</DeploymentBag>
 		</template>
 		<template #panelTitle="{ item }">
-			<ParachutePanelTitle
+			<deploymentBagPanelTitle
 				:item="item"
 				:manufacturers="manufacturers"
 			>
-			</ParachutePanelTitle>
+			</DeploymentBagPanelTitle>
 		</template> 
 	</Parts>
 </template>
@@ -31,15 +31,15 @@ import { usePartsDisplayCompany } from '@/components/content/parts/partsDisplayC
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import Parachute from '@/components/content/parts/part/parachute/Parachute';
-import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
+import DeploymentBag from '@/components/content/parts/part/deploymentBag/DeploymentBag';
+import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import Parts from '@/components/content/parts/Parts';
 
 export default {
-	name: 'PartsParachute',
+	name: 'PartsdeploymentBag',
 	components: {
-		Parachute,
-		ParachutePanelTitle,
+		DeploymentBag,
+		DeploymentBagPanelTitle,
 		Parts
 	},
 	setup(props, context, options) {
@@ -61,7 +61,7 @@ export default {
 			manufacturers,
 			type
 		} = usePartsDisplayCompany(props, context, { 
-			type: AppCommonConstants.Rocketry.PartTypes.parachute
+			type: AppCommonConstants.Rocketry.PartTypes.deploymentBag
 		});
 
 		const fetchParams = (correlationId, params) => {
