@@ -1,14 +1,4 @@
 <template>
-	<!-- <v-card-title>
-		{{ item.diameter }} {{ measurementUnitTranslateLength(item.diameterMeasurementUnitsId, item.diameterMeasurementUnitId) }}
-		{{ item.name }}
-		<div class="float-right">{{ manufacturer(item) }}</div>
-	</v-card-title>
-	<v-card-text
-		v-if="item.description"
-	>
-		{{ item.description }}
-	</v-card-text> -->
 	{{ item.diameter }} {{ measurementUnitTranslateLength(item.diameterMeasurementUnitsId, item.diameterMeasurementUnitId) }} 
 	{{ item.name }} 
 	{{ item.thinMill ? $t('forms.content.parts.parachute.thinMill') : '' }}

@@ -70,41 +70,6 @@
 		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
-					ref="detailItemDiameterRef"
-					vid="detailItemDiameter"
-					v-model="detailItemDiameter"
-					:validation="validation"
-					:label="$t('forms.content.parts.chuteProtector.maxTubeSize')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
-				<table>
-					<tr>
-						<td class="measurementUnits">
-							<MeasurementUnitsSelect
-								ref="diameterMeasurementUnitsIdRef"
-								vid="diameterMeasurementUnitsId"
-								v-model="diameterMeasurementUnitsId"
-								:validation="validation"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnits">
-							<MeasurementUnitSelect
-								ref="diameterMeasurementUnitIdRef"
-								vid="diameterMeasurementUnitId"
-								v-model="diameterMeasurementUnitId"
-								:measurementUnitsId="diameterMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitslengthType"
-								:validation="validation"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td>
-					</tr>
-				</table>
-			</v-col>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
 					ref="detailItemWeightRef"
 					vid="detailItemWeight"
 					v-model="detailItemWeight"
@@ -166,10 +131,8 @@
 </template>
 
 <script>
-import { between, decimal, required } from '@vuelidate/validators';
-
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
-import { useChuteProtectorPartComponent } from '@/components/content/parts/part/chuteProtector/chuteProtectorPartComponent';
+import { useChuteReleasePartComponent } from '@/components/content/parts/part/chuteRelease/chuteReleasePartComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
 
@@ -183,7 +146,7 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'ChuteProtectorPartControl',
+	name: 'ChuteReleasePartControl',
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
@@ -256,7 +219,7 @@ export default {
 			diameterMeasurementUnitsId,
 			scope,
 			validation
-		} = useChuteProtectorPartComponent(props, context, options);
+		} = useChuteReleasePartComponent(props, context, options);
 
 		return {
 			correlationId,
@@ -317,15 +280,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(usePartValidation, {
-			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
-			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemThinMill: { $autoDirty: true },
-			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true }
-		});
+		return Object.assign(usePartValidation, {});
 	}
 };
 </script>

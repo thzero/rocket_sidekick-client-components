@@ -115,7 +115,7 @@ export function useParachutePartComponent(props, context, options) {
 		detailItemThinMill.value = value ? value.thinMill ?? false : false;
 		
 		diameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		diameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? ementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		diameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 		
 		loadMaxWeightMeasurementUnitId.value = value ? value.loadMaxWeightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		loadMaxWeightMeasurementUnitsId.value = value ? value.loadMaxWeightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;

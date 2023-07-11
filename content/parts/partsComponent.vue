@@ -1,5 +1,6 @@
 <script>
 import { onMounted, ref} from 'vue';
+import { firstBy, thenBy } from 'thenby';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -100,10 +101,33 @@ export function usePartsBaseComponent(props, context, options) {
 		return true;
 	};
 	const fetchI = async (correlationId) => {
-		params.value.type = props.type;
+		params.value = { type: props.type };
 		if (props.fetchParams)
-			params.value = props.fetchParams(correlationId, params.value);
-		return await serviceStore.dispatcher.requestParts(correlationId, params.value);
+			params.value = await props.fetchParams(correlationId, params.value);
+			
+		const response = await serviceStore.dispatcher.requestParts(correlationId, params.value);
+		if (hasFailed(response))
+			return response;
+
+		await fetchManufacturers(correlationId);
+
+		let results = response.results.filter(l => l.typeId === props.type);
+		results.forEach((item) => {
+			const temp = manufacturers.value.find(l => l.id === item.manufacturerId);
+			if (temp)
+				item.manufacturerName = temp.name;
+		});
+	 	// results = results.sort(
+		// 	firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
+		// 	.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
+		// 	.thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
+		// );
+		results = results.sort(
+			firstBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
+		);
+
+		response.results = results;
+		return response;
 	};
 	const fetchItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.requestPartById(correlationId, id);
@@ -129,8 +153,7 @@ export function usePartsBaseComponent(props, context, options) {
 	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
 		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
 	};
-
-	onMounted(async () => {
+	const fetchManufacturers = async (correlationId) => {
 		if (manufacturers.value)
 			return;
 
@@ -139,6 +162,10 @@ export function usePartsBaseComponent(props, context, options) {
 			return;
 
 		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
+	};
+
+	onMounted(async () => {
+		// fetchManufacturers(correlationId());
 	});
 
 	return {

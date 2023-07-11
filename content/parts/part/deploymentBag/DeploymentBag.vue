@@ -74,7 +74,7 @@
 					vid="detailItemDiameter"
 					v-model="detailItemDiameter"
 					:validation="validation"
-					:label="$t('forms.content.parts.chuteProtector.maxTubeSize')"
+					:label="$t('forms.content.parts.deploymentBag.maxTubeSize')"
 				/>
 			</v-col>
 			<v-col cols="7" md="4">
@@ -169,7 +169,7 @@
 import { between, decimal, required } from '@vuelidate/validators';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
-import { useChuteProtectorPartComponent } from '@/components/content/parts/part/chuteProtector/chuteProtectorPartComponent';
+import { useDeploymentBagPartComponent } from '@/components/content/parts/part/deploymentBag/deploymentBagPartComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
 
@@ -183,7 +183,7 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'ChuteProtectorPartControl',
+	name: 'DeploymentBagPartControl',
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
@@ -256,7 +256,7 @@ export default {
 			diameterMeasurementUnitsId,
 			scope,
 			validation
-		} = useChuteProtectorPartComponent(props, context, options);
+		} = useDeploymentBagPartComponent(props, context, options);
 
 		return {
 			correlationId,
@@ -318,11 +318,7 @@ export default {
 	},
 	validations () {
 		return Object.assign(usePartValidation, {
-			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemThinMill: { $autoDirty: true },
 			diameterMeasurementUnitId: { $autoDirty: true },
 			diameterMeasurementUnitsId: { $autoDirty: true }
 		});
