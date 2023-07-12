@@ -1,4 +1,6 @@
 <template>
+	{{ item.dimension }} {{ measurementUnitTranslateLength(item.dimensionMeasurementUnitsId, item.dimensionMeasurementUnitId) }} x
+	{{ item.dimension }} {{ measurementUnitTranslateLength(item.dimensionMeasurementUnitsId, item.dimensionMeasurementUnitId) }}
 	{{ item.name }} 
 </template>
 

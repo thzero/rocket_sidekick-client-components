@@ -69,22 +69,33 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag,
 		partsType: AppCommonConstants.Rocketry.PartTypes.deploymentBag, 
 		preCompleteOkPart: (correlationId, data) => {
-			data.cd = Number(detailItemCd.value);
 			data.diameter = Number(detailItemDiameter.value);
-			data.loadMax = Number(detailItemLoadMax.value);
-			data.loadMin = Number(detailItemLoadMin.value);
-			data.thinMill = detailItemThinMill.value ?? false;
+			data.length = Number(detailItemLength.value);
 
 			data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
 			data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
-			
-			data.loadMaxWeightMeasurementUnitId = loadMaxWeightMeasurementUnitId.value;
-			data.loadMaxWeightMeasurementUnitsId = loadMaxWeightMeasurementUnitsId.value;
-			data.loadMinWeightMeasurementUnitId = loadMinWeightMeasurementUnitId.value;
-			data.loadMinWeightMeasurementUnitsId = loadMinWeightMeasurementUnitsId.value;
 
+			data.lengthMeasurementUnitId = lengthMeasurementUnitId.value;
+			data.lengthMeasurementUnitsId = lengthMeasurementUnitsId.value;
+
+			data.pilotChute = detailItemPilotChute.value ?? false;
+			data.pilotChuteCd = Number(detailItemPilotChuteCd.value);
+			data.pilotChuteDiameter = Number(detailItemPilotChuteDiameter.value);
+
+			data.pilotChuteDiameterMeasurementUnitId = pilotChuteDiameterMeasurementUnitId.value;
+			data.pilotChuteDiameterMeasurementUnitsId = pilotChuteDiameterMeasurementUnitsId.value;
+
+			if (!data.pilotChute) {
+				data.pilotChuteCd = null;
+				data.pilotChuteDiameter = null;
+
+				data.pilotChuteDiameterMeasurementUnitId = null;
+				data.pilotChuteDiameterMeasurementUnitsId = null;
+			}
+			
 			const temp = AppUtility.measurementUnitTranslateLength(correlationId, diameterMeasurementUnitsId.value, diameterMeasurementUnitId.value);
-			data.sortName = String(data.diameter ?? '').padStart(4, '0') + temp + (data.thinMill ? 'TM' : '') + data.name;
+			const temp2 = AppUtility.measurementUnitTranslateLength(correlationId, lengthMeasurementUnitId.value, lengthMeasurementUnitsId.value);
+			data.sortName = String(data.diameter ?? '').padStart(4, '0') + temp + String(data.length ?? '').padStart(4, '0') + temp2 + (data.pilotChute ? 'Pilot' : '') + data.name;
 		
 			return data;
 		},
@@ -93,34 +104,35 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		}
 	});
 	
-	const detailItemCd = ref(null);
 	const detailItemDiameter = ref(null);
-	const detailItemLoadMax = ref(null);
-	const detailItemLoadMin = ref(null);
-	const detailItemThinMill = ref(false);
+	const detailItemLength = ref(null);
+	const detailItemPilotChute = ref(false);
+	const detailItemPilotChuteCd = ref(null);
+	const detailItemPilotChuteDiameter = ref(null);
 	const diameterMeasurementUnitId = ref(null);
 	const diameterMeasurementUnitsId = ref(null);
-	const loadMaxWeightMeasurementUnitId = ref(null);
-	const loadMaxWeightMeasurementUnitsId = ref(null);
-	const loadMinWeightMeasurementUnitId = ref(null);
-	const loadMinWeightMeasurementUnitsId = ref(null);
+	const lengthMeasurementUnitId = ref(null);
+	const lengthMeasurementUnitsId = ref(null);
+	const pilotChuteDiameterMeasurementUnitId = ref(null);
+	const pilotChuteDiameterMeasurementUnitsId = ref(null);
 
 	const resetData = (correlationId, value) => {
 		detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.blnaket.name');
 
-		detailItemCd.value = value ? value.cd : null;
 		detailItemDiameter.value = value ? value.diameter : null;
-		detailItemLoadMax.value = value ? value.loadMax : null;
-		detailItemLoadMin.value = value ? value.loadMin : null;
-		detailItemThinMill.value = value ? value.thinMill ?? false : false;
+		detailItemLength.value = value ? value.length : null;
+		detailItemPilotChute.value = value ? value.pilotChute ?? false : false;
+		detailItemPilotChuteCd.value = value ? value.pilotChuteCd : null;
+		detailItemPilotChuteDiameter.value = value ? value.pilotChuteDiameter : null;
 		
 		diameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 		diameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 		
-		loadMaxWeightMeasurementUnitId.value = value ? value.loadMaxWeightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
-		loadMaxWeightMeasurementUnitsId.value = value ? value.loadMaxWeightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		loadMinWeightMeasurementUnitId.value = value ? value.loadMinWeightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
-		loadMinWeightMeasurementUnitsId.value = value ? value.loadMinWeightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		lengthMeasurementUnitId.value = value ? value.lengthMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		lengthMeasurementUnitsId.value = value ? value.lengthMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		
+		pilotChuteDiameterMeasurementUnitId.value = value ? value.pilotChuteDiameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		pilotChuteDiameterMeasurementUnitsId.value = value ? value.pilotChuteDiameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	
 	return {
@@ -174,17 +186,17 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		isPublic,
 		handleAdd,
 		requestManufacturers,
-		detailItemCd,
 		detailItemDiameter,
-		detailItemLoadMax,
-		detailItemLoadMin,
-		detailItemThinMill,
+		detailItemLength,
+		detailItemPilotChute,
+		detailItemPilotChuteCd,
+		detailItemPilotChuteDiameter,
 		diameterMeasurementUnitId,
 		diameterMeasurementUnitsId,
-		loadMaxWeightMeasurementUnitId,
-		loadMaxWeightMeasurementUnitsId,
-		loadMinWeightMeasurementUnitId,
-		loadMinWeightMeasurementUnitsId,
+		lengthMeasurementUnitId,
+		lengthMeasurementUnitsId,
+		pilotChuteDiameterMeasurementUnitId,
+		pilotChuteDiameterMeasurementUnitsId,
 		scope: 'DeploymentBagPartControl',
 		validation: useVuelidate({ $scope: 'DeploymentBagPartControl' })
 	};

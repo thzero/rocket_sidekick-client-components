@@ -182,8 +182,8 @@
 <script>
 import { helpers, minLength, requiredUnless } from '@vuelidate/validators';
 
-import { useMobileLookupDialogComponent } from '@/components/external/motorLookupDialogComponent';
-import { useMobileLookupDialogProps } from '@/components/external/motorLookupDialogProps';
+import { useMotorLookupDialogComponent } from '@/components/external/motorLookupDialogComponent';
+import { useMotorLookupDialogProps } from '@/components/external/motorLookupDialogProps';
 
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormListingDialog';
@@ -199,7 +199,7 @@ export default {
 		VTextFieldWithValidation
 	},
 	props: {
-		...useMobileLookupDialogProps
+		...useMotorLookupDialogProps
 	},
 	emits: ['close', 'ok'],
 	setup (props, context) {
@@ -244,7 +244,7 @@ export default {
 			resetAdditional,
 			scope,
 			validation
-		} = useMobileLookupDialogComponent(props, context);
+		} = useMotorLookupDialogComponent(props, context);
 
 		return {
 			correlationId,

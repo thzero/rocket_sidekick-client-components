@@ -27,6 +27,7 @@
 		:pre-complete-ok="preCompleteOk"
 		@cancel="handleCancel"
 		@ok="handleOk"
+		:debug="debug"
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
@@ -261,6 +262,8 @@
 <script>
 import { between, decimal, required } from '@vuelidate/validators';
 
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useParachutePartComponent } from '@/components/content/parts/part/parachute/parachutePartComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
@@ -426,7 +429,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(usePartValidation, {
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {
 			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
 			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },

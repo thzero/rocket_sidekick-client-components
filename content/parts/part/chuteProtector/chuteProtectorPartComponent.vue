@@ -71,20 +71,16 @@ export function useChuteProtectorPartComponent(props, context, options) {
 		preCompleteOkPart: (correlationId, data) => {
 			data.cd = Number(detailItemCd.value);
 			data.diameter = Number(detailItemDiameter.value);
-			data.loadMax = Number(detailItemLoadMax.value);
-			data.loadMin = Number(detailItemLoadMin.value);
-			data.thinMill = detailItemThinMill.value ?? false;
+			data.dimension = Number(detailItemDimension.value);
 
 			data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
 			data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
 			
-			data.loadMaxWeightMeasurementUnitId = loadMaxWeightMeasurementUnitId.value;
-			data.loadMaxWeightMeasurementUnitsId = loadMaxWeightMeasurementUnitsId.value;
-			data.loadMinWeightMeasurementUnitId = loadMinWeightMeasurementUnitId.value;
-			data.loadMinWeightMeasurementUnitsId = loadMinWeightMeasurementUnitsId.value;
+			data.dimensionMeasurementUnitId = dimensionMeasurementUnitId.value;
+			data.dimensionMeasurementUnitsId = dimensionMeasurementUnitsId.value;
 
-			const temp = AppUtility.measurementUnitTranslateLength(correlationId, diameterMeasurementUnitsId.value, diameterMeasurementUnitId.value);
-			data.sortName = String(data.diameter ?? '').padStart(4, '0') + temp + (data.thinMill ? 'TM' : '') + data.name;
+			const temp = AppUtility.measurementUnitTranslateLength(correlationId, dimensionMeasurementUnitsId.value, dimensionMeasurementUnitId.value);
+			data.sortName = String(data.dimension ?? '').padStart(4, '0') + temp + data.name;
 		
 			return data;
 		},
@@ -95,32 +91,24 @@ export function useChuteProtectorPartComponent(props, context, options) {
 	
 	const detailItemCd = ref(null);
 	const detailItemDiameter = ref(null);
-	const detailItemLoadMax = ref(null);
-	const detailItemLoadMin = ref(null);
-	const detailItemThinMill = ref(false);
+	const detailItemDimension = ref(null);
 	const diameterMeasurementUnitId = ref(null);
 	const diameterMeasurementUnitsId = ref(null);
-	const loadMaxWeightMeasurementUnitId = ref(null);
-	const loadMaxWeightMeasurementUnitsId = ref(null);
-	const loadMinWeightMeasurementUnitId = ref(null);
-	const loadMinWeightMeasurementUnitsId = ref(null);
+	const dimensionMeasurementUnitId = ref(null);
+	const dimensionMeasurementUnitsId = ref(null);
 
 	const resetData = (correlationId, value) => {
 		detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.blnaket.name');
 
 		detailItemCd.value = value ? value.cd : null;
 		detailItemDiameter.value = value ? value.diameter : null;
-		detailItemLoadMax.value = value ? value.loadMax : null;
-		detailItemLoadMin.value = value ? value.loadMin : null;
-		detailItemThinMill.value = value ? value.thinMill ?? false : false;
+		detailItemDimension.value = value ? value.dimension : null;
 		
 		diameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 		diameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		
-		loadMaxWeightMeasurementUnitId.value = value ? value.loadMaxWeightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
-		loadMaxWeightMeasurementUnitsId.value = value ? value.loadMaxWeightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		loadMinWeightMeasurementUnitId.value = value ? value.loadMinWeightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
-		loadMinWeightMeasurementUnitsId.value = value ? value.loadMinWeightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		dimensionMeasurementUnitId.value = value ? value.dimensionMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		dimensionMeasurementUnitsId.value = value ? value.dimensionMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	
 	return {
@@ -176,15 +164,11 @@ export function useChuteProtectorPartComponent(props, context, options) {
 		requestManufacturers,
 		detailItemCd,
 		detailItemDiameter,
-		detailItemLoadMax,
-		detailItemLoadMin,
-		detailItemThinMill,
+		detailItemDimension,
 		diameterMeasurementUnitId,
 		diameterMeasurementUnitsId,
-		loadMaxWeightMeasurementUnitId,
-		loadMaxWeightMeasurementUnitsId,
-		loadMinWeightMeasurementUnitId,
-		loadMinWeightMeasurementUnitsId,
+		dimensionMeasurementUnitId,
+		dimensionMeasurementUnitsId,
 		scope: 'ChuteProtectorPartControl',
 		validation: useVuelidate({ $scope: 'ChuteProtectorPartControl' })
 	};

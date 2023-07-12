@@ -10,5 +10,9 @@ export const usePartsBaseComponentProps = {
 	type: {
 		type: String,
 		default: null
+	},
+	validation: {
+		type: Object,
+		default: null
 	}
 };

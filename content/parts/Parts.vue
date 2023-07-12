@@ -1,6 +1,64 @@
 <template>
 	[[ debug {{ debug }}]]
 	<ContentHeader :value="title" />
+	<!-- <VFormListing
+		ref="dialogPartsLookup"
+		:debug="debug"
+		:visible="!showDetailItem || showList"
+	> -->
+		<!-- 
+		:validation="validation"
+		:button-ok-disabled-override="buttonOkDisabledOverride"
+		:pre-complete-ok="preCompleteOk"
+			:reset-additional="resetAdditional"
+		@close="close" -->
+		<!-- <template #default="{ buttonOkDisabled, isLoading }"> -->
+			<!-- <v-row dense>
+				<v-col cols="12">
+					<v-card>
+						<v-card-text>
+							<slot name="filters"></slot>
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer />
+							<v-btn
+								v-if="!showDetailItem"
+								color="blue"
+								variant="flat"
+								@click="handleAdd(item)"
+							>
+								{{ $t('buttons.add') }}
+							</v-btn>
+							<v-btn
+								variant="flat"
+								color="primary"
+								:label="$t('buttons.reset')"
+								:disabled="buttonMotorSearchResetDisabled"
+								:loading="isLoading"
+								@click="clickMotorSearchReset"
+							>{{ $t('buttons.reset') }}</v-btn>
+							<v-btn
+								variant="flat"
+								color="primary"
+								:loading="isLoading"
+								@click="clickMotorSearchClear"
+							>{{ $t('buttons.clear') }}</v-btn>
+							<v-btn
+								variant="flat"
+								color="green"
+								:disabled="buttonOkDisabled"
+								:loading="isLoading"
+								@click="clickMotorSearch"
+							>{{ $t('buttons.search') }}</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-col>
+			</v-row> -->
+		<!-- </template>
+		<template v-slot:listing>
+			dgfhdfgh
+		</template>
+	</VFormListing> -->
 	<v-row dense>
 		<v-col cols="12">
 			<v-card
@@ -161,6 +219,7 @@ import Part from '@/components/content/parts/part/Part';
 import PartCopyDialog from '@/components/content/parts/dialogs/PartCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
+import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
 
 export default {
 	name: 'Parts',
@@ -168,7 +227,8 @@ export default {
 		Part,
 		PartCopyDialog,
 		ContentHeader,
-		VConfirmationDialog
+		VConfirmationDialog,
+		VFormListing
 	},
 	props: {
 		...useMasterDetailComponentProps,

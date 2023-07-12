@@ -27,6 +27,7 @@
 		:pre-complete-ok="preCompleteOk"
 		@cancel="handleCancel"
 		@ok="handleOk"
+		:debug="debug"
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
@@ -70,6 +71,41 @@
 		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
+					ref="detailItemDimensionRef"
+					vid="detailItemDimension"
+					v-model="detailItemDimension"
+					:validation="validation"
+					:label="$t('forms.content.parts.chuteProtector.dimension')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="dimensionMeasurementUnitsIdRef"
+								vid="dimensionMeasurementUnitsId"
+								v-model="dimensionMeasurementUnitsId"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="dimensionMeasurementUnitIdRef"
+								vid="dimensionMeasurementUnitId"
+								v-model="dimensionMeasurementUnitId"
+								:measurementUnitsId="dimensionMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitslengthType"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
 					ref="detailItemDiameterRef"
 					vid="detailItemDiameter"
 					v-model="detailItemDiameter"
@@ -103,6 +139,8 @@
 					</tr>
 				</table>
 			</v-col>
+		</v-row>
+		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemWeightRef"
@@ -167,6 +205,8 @@
 
 <script>
 import { between, decimal, required } from '@vuelidate/validators';
+
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useChuteProtectorPartComponent } from '@/components/content/parts/part/chuteProtector/chuteProtectorPartComponent';
@@ -242,6 +282,7 @@ export default {
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemWeight,
 			manufacturers,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
@@ -250,10 +291,13 @@ export default {
 			isPublic,
 			handleAdd,
 			requestManufacturers,
+			detailItemCd,
 			detailItemDiameter,
-			detailItemWeight,
+			detailItemDimension,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			dimensionMeasurementUnitId,
+			dimensionMeasurementUnitsId,
 			scope,
 			validation
 		} = useChuteProtectorPartComponent(props, context, options);
@@ -300,6 +344,7 @@ export default {
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemWeight,
 			manufacturers,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
@@ -308,23 +353,26 @@ export default {
 			isPublic,
 			handleAdd,
 			requestManufacturers,
+			detailItemCd,
 			detailItemDiameter,
-			detailItemWeight,
+			detailItemDimension,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			dimensionMeasurementUnitId,
+			dimensionMeasurementUnitsId,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(usePartValidation, {
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {
 			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
-			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemThinMill: { $autoDirty: true },
+			detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
+			detailItemDimension: { required, decimal, between: between(0, 2004), $autoDirty: true },
 			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true }
+			diameterMeasurementUnitsId: { $autoDirty: true },
+			dimensionMeasurementUnitId: { $autoDirty: true },
+			dimensionMeasurementUnitsId: { $autoDirty: true }
 		});
 	}
 };

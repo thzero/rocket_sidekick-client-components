@@ -14,7 +14,7 @@ import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
-export function useMobileLookupDialogComponent(props, context, options) {
+export function useMotorLookupDialogComponent(props, context, options) {
 	const {
 		correlationId,
 		error,

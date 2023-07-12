@@ -27,6 +27,7 @@
 		:pre-complete-ok="preCompleteOk"
 		@cancel="handleCancel"
 		@ok="handleOk"
+		:debug="debug"
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
@@ -74,7 +75,7 @@
 					vid="detailItemDiameter"
 					v-model="detailItemDiameter"
 					:validation="validation"
-					:label="$t('forms.content.parts.deploymentBag.maxTubeSize')"
+					:label="$t('forms.content.parts.diameter')"
 				/>
 			</v-col>
 			<v-col cols="7" md="4">
@@ -103,6 +104,43 @@
 					</tr>
 				</table>
 			</v-col>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemLengthRef"
+					vid="detailItemLength"
+					v-model="detailItemLength"
+					:validation="validation"
+					:label="$t('forms.content.parts.length')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="lengthMeasurementUnitsIdRef"
+								vid="lengthMeasurementUnitsId"
+								v-model="lengthMeasurementUnitsId"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="lengthMeasurementUnitIdRef"
+								vid="lengthMeasurementUnitId"
+								v-model="lengthMeasurementUnitId"
+								:measurementUnitsId="lengthMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemWeightRef"
@@ -162,11 +200,71 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="6">
+				<VSwitchWithValidation
+					class="ml-2 mr-2"
+					ref="detailItemPilotChuteRef"
+					v-model="detailItemPilotChute"
+					vid="detailItemPilotChute"
+					:validation="validation"
+					:label="$t('forms.content.parts.deploymentBag.pilotChute')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemPilotChuteDiameterRef"
+					vid="detailItemPilotChuteDiameter"
+					v-model="detailItemPilotChuteDiameter"
+					:validation="validation"
+					:label="`${$t('forms.content.parts.deploymentBag.pilotChute')} ${$t('forms.content.parts.diameter')}`"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="pilotChuteDiameterMeasurementUnitsIdRef"
+								vid="pilotChuteDiameterMeasurementUnitsId"
+								v-model="pilotChuteDiameterMeasurementUnitsId"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="pilotChuteDiameterMeasurementUnitIdRef"
+								vid="pilotChuteDiameterMeasurementUnitId"
+								v-model="pilotChuteDiameterMeasurementUnitId"
+								:measurementUnitsId="pilotChuteDiameterMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitslengthType"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+			<v-col cols="6">
+				<VNumberFieldWithValidation
+					ref="detailItemPilotChuteCdRef"
+					vid="detailItemPilotChuteCd"
+					v-model="detailItemPilotChuteCd"
+					:validation="validation"
+					:label="`${$t('forms.content.parts.deploymentBag.pilotChute')} ${$t('forms.content.parts.cd')}`"
+				/>
+			</v-col>
+		</v-row>
 	</VFormControl>
 </template>
 
 <script>
 import { between, decimal, required } from '@vuelidate/validators';
+
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useDeploymentBagPartComponent } from '@/components/content/parts/part/deploymentBag/deploymentBagPartComponent';
@@ -242,6 +340,7 @@ export default {
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemWeight,
 			manufacturers,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
@@ -251,9 +350,16 @@ export default {
 			handleAdd,
 			requestManufacturers,
 			detailItemDiameter,
-			detailItemWeight,
+			detailItemLength,
+			detailItemPilotChute,
+			detailItemPilotChuteCd,
+			detailItemPilotChuteDiameter,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			lengthMeasurementUnitId,
+			lengthMeasurementUnitsId,
+			pilotChuteDiameterMeasurementUnitId,
+			pilotChuteDiameterMeasurementUnitsId,
 			scope,
 			validation
 		} = useDeploymentBagPartComponent(props, context, options);
@@ -300,6 +406,7 @@ export default {
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemWeight,
 			manufacturers,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
@@ -309,18 +416,33 @@ export default {
 			handleAdd,
 			requestManufacturers,
 			detailItemDiameter,
-			detailItemWeight,
+			detailItemLength,
+			detailItemPilotChute,
+			detailItemPilotChuteCd,
+			detailItemPilotChuteDiameter,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			lengthMeasurementUnitId,
+			lengthMeasurementUnitsId,
+			pilotChuteDiameterMeasurementUnitId,
+			pilotChuteDiameterMeasurementUnitsId,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(usePartValidation, {
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
+			detailItemLength: { required, decimal, between: between(0, 120), $autoDirty: true },
+			detailItemPilotChute: { $autoDirty: true },
+			detailItemPilotChuteCd: { decimal, between: between(0, 9), $autoDirty: true },
+			detailItemPilotChuteDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
 			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true }
+			diameterMeasurementUnitsId: { $autoDirty: true },
+			lengthMeasurementUnitId: { $autoDirty: true },
+			lengthMeasurementUnitsId: { $autoDirty: true },
+			pilotChuteDiameterMeasurementUnitId: { $autoDirty: true },
+			pilotChuteDiameterMeasurementUnitsId: { $autoDirty: true }
 		});
 	}
 };
