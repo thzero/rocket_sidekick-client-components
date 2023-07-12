@@ -27,6 +27,7 @@
 		:pre-complete-ok="preCompleteOk"
 		@cancel="handleCancel"
 		@ok="handleOk"
+		:debug="debug"
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
@@ -131,6 +132,8 @@
 </template>
 
 <script>
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useChuteReleasePartComponent } from '@/components/content/parts/part/chuteRelease/chuteReleasePartComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
@@ -280,7 +283,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(usePartValidation, {});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {});
 	}
 };
 </script>

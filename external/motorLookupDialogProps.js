@@ -1,4 +1,4 @@
-export const useMobileLookupDialogProps = {
+export const useMotorLookupDialogProps = {
 	selectable: {
 		type: Boolean,
 		default: true

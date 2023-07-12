@@ -1,5 +1,10 @@
 <template>
+	{{ item.diameter }} {{ measurementUnitTranslateLength(item.diameterMeasurementUnitsId, item.diameterMeasurementUnitId) }} x
+	{{ item.length }} {{ measurementUnitTranslateLength(item.lengthMeasurementUnitsId, item.lengthMeasurementUnitId) }} 
 	{{ item.name }} 
+	{{ item.pilotChute ? '(' : '' }}{{ item.pilotChute ? $t('forms.content.parts.deploymentBag.pilotChute') : '' }}
+	{{ item.pilotChute ? item.pilotChuteDiameter ?? '' : '' }}
+	{{ item.pilotChute ? item.pilotChuteDiameter ? (measurementUnitTranslateLength(item.lengthMeasurementUnitsId, item.lengthMeasurementUnitId)) : '' : '' }}{{ item.pilotChute ? ')' : '' }}
 </template>
 
 <script>
