@@ -1,19 +1,15 @@
 <template>
-	[[ debug {{ debug }}]]
+	
 	<ContentHeader :value="title" />
-	<!-- <VFormListing
-		ref="dialogPartsLookup"
+	<VFormListing
+		ref="dialogPartsLookupRef"
+		:reset-additional="resetAdditional"
+		:validation="validation"
 		:debug="debug"
 		:visible="!showDetailItem || showList"
-	> -->
-		<!-- 
-		:validation="validation"
-		:button-ok-disabled-override="buttonOkDisabledOverride"
-		:pre-complete-ok="preCompleteOk"
-			:reset-additional="resetAdditional"
-		@close="close" -->
-		<!-- <template #default="{ buttonOkDisabled, isLoading }"> -->
-			<!-- <v-row dense>
+	>
+		<template #default="{ buttonOkDisabled, isLoading }">
+			<v-row dense>
 				<v-col cols="12">
 					<v-card>
 						<v-card-text>
@@ -32,165 +28,134 @@
 							<v-btn
 								variant="flat"
 								color="primary"
-								:label="$t('buttons.reset')"
-								:disabled="buttonMotorSearchResetDisabled"
 								:loading="isLoading"
-								@click="clickMotorSearchReset"
-							>{{ $t('buttons.reset') }}</v-btn>
-							<v-btn
-								variant="flat"
-								color="primary"
-								:loading="isLoading"
-								@click="clickMotorSearchClear"
+								@click="clickSearchClear"
 							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
 								variant="flat"
 								color="green"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
-								@click="clickMotorSearch"
+								@click="clickSearch"
 							>{{ $t('buttons.search') }}</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-col>
-			</v-row> -->
-		<!-- </template>
-		<template v-slot:listing>
-			dgfhdfgh
+			</v-row>
 		</template>
-	</VFormListing> -->
-	<v-row dense>
-		<v-col cols="12">
-			<v-card
-				v-if="!showDetailItem || showList"
-				class="mb-4"
-			>
-				<v-card-text>
-					filters go here
-					{{ dialogDeleteMessage }}
-				</v-card-text>
-				<v-card-actions>
-					<v-spacer></v-spacer>
-					<v-btn
-						v-if="!showDetailItem"
-						color="blue"
-						variant="flat"
-						@click="handleAdd(item)"
-					>
-						{{ $t('buttons.add') }}
-					</v-btn>
-				</v-card-actions>
-			</v-card>
-		</v-col>
-		<v-col cols="12">
-			<v-snackbar
-				ref="notifyRef"
-				v-model="notifySignal"
-				:color="notifyColor"
-				:timeout="notifyTimeout"
-			>
-				{{ notifyMessage }}
-			</v-snackbar>
-			<div
-				v-if="debug"
-			>
-				[[ colsSearchResults {{ colsSearchResults }}]]
-				[[ colsEditPanel {{ colsEditPanel }}]]
-				[[ showList {{ showList }}]]
-				[[ showDetailItem {{ showDetailItem }}]]
-				<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
-			</div>
-		</v-col>
-		<v-col
-			v-show="colsSearchResults"
-			:cols="colsSearchResults"
-		>
+		<template v-slot:listing>
 			<v-row dense>
+				<v-col cols="12">
+					<v-snackbar
+						ref="notifyRef"
+						v-model="notifySignal"
+						:color="notifyColor"
+						:timeout="notifyTimeout"
+					>
+						{{ notifyMessage }}
+					</v-snackbar>
+					<div
+						v-if="debug"
+					>
+						[[ colsSearchResults {{ colsSearchResults }}]]
+						[[ colsEditPanel {{ colsEditPanel }}]]
+						[[ showList {{ showList }}]]
+						[[ showDetailItem {{ showDetailItem }}]]
+						<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
+					</div>
+				</v-col>
 				<v-col
-					cols="12"
-					v-for="item in items"
-					:key="item.id"
+					v-show="colsSearchResults"
+					:cols="colsSearchResults"
 				>
-					<v-card>
-						<v-card-title>
-							<slot name="panelTitle" :item="item">
-								{{ item.name }}
-							</slot>
-							<span
-								v-if="item.weight"
-							>
-								({{item.weight}} {{ measurementUnitTranslateWeight(item.weightMeasurementUnitsId, item.weightMeasurementUnitId) }})
-							</span>
-							<div class="float-right">{{ manufacturer(item) }}</div>
-						</v-card-title>
-						<v-card-text
-							>
-								<!-- v-if="item.description" -->
-								<slot name="panelText" :item="item">
-									{{ item.description }}
-								</slot>
-								<div
-									v-if="debug"
-								>
-									canCopy [[ {{ canCopy(item) }}]]
-									canDelete [[ {{ canDelete(item) }}]]
-									canEdit [[ {{ canEdit(item) }}]]
-									canView [[ {{ canView(item) }}]]
-								</div>
-						</v-card-text>
-						<v-card-actions>
-							<v-chip
-								v-if="isPublic(item)"
-							>
-								{{  $t('strings.content.parts.isPublic') }}
-							</v-chip>
-							<v-spacer></v-spacer>
-							<v-btn
-								v-if="canCopy(item)"
-								color="blue"
-								variant="flat"
-								:disabled="isCopying(item)"
-								@click="dialogCopyOpen(item)"
-							>
-								{{ $t('buttons.copy') }}
-							</v-btn>
-							<v-btn
-								v-if="canDelete(item)"
-								color="red"
-								variant="flat"
-								:disabled="isDeleting(item)"
-								@click="dialogDeleteOpen(item)"
-							>
-								{{ $t('buttons.delete') }}
-							</v-btn>
-							<v-btn
-								v-if="canEdit(item)"
-								color="blue"
-								variant="flat"
-								@click="handleEdit(item)"
-							>
-								{{ $t('buttons.edit') }}
-							</v-btn>
-							<v-btn
-								v-if="canView(item)"
-								color="green"
-								variant="flat"
-								@click="handleView(item)"
-							>
-								{{ $t('buttons.view') }}
-							</v-btn>
-						</v-card-actions>
-					</v-card>
+					<v-row dense>
+						<v-col
+							cols="12"
+							v-for="item in items"
+							:key="item.id"
+						>
+							<v-card>
+								<v-card-title>
+									<slot name="panelTitle" :item="item">
+										{{ item.name }}
+									</slot>
+									<span
+										v-if="item.weight"
+									>
+										({{item.weight}} {{ measurementUnitTranslateWeight(item.weightMeasurementUnitsId, item.weightMeasurementUnitId) }})
+									</span>
+									<div class="float-right">{{ manufacturer(item) }}</div>
+								</v-card-title>
+								<v-card-text
+									>
+										<!-- v-if="item.description" -->
+										<slot name="panelText" :item="item">
+											{{ item.description }}
+										</slot>
+										<div
+											v-if="debug"
+										>
+											canCopy [[ {{ canCopy(item) }}]]
+											canDelete [[ {{ canDelete(item) }}]]
+											canEdit [[ {{ canEdit(item) }}]]
+											canView [[ {{ canView(item) }}]]
+										</div>
+								</v-card-text>
+								<v-card-actions>
+									<v-chip
+										v-if="isPublic(item)"
+									>
+										{{  $t('strings.content.parts.isPublic') }}
+									</v-chip>
+									<v-spacer></v-spacer>
+									<v-btn
+										v-if="canCopy(item)"
+										color="blue"
+										variant="flat"
+										:disabled="isCopying(item)"
+										@click="dialogCopyOpen(item)"
+									>
+										{{ $t('buttons.copy') }}
+									</v-btn>
+									<v-btn
+										v-if="canDelete(item)"
+										color="red"
+										variant="flat"
+										:disabled="isDeleting(item)"
+										@click="dialogDeleteOpen(item)"
+									>
+										{{ $t('buttons.delete') }}
+									</v-btn>
+									<v-btn
+										v-if="canEdit(item)"
+										color="blue"
+										variant="flat"
+										@click="handleEdit(item)"
+									>
+										{{ $t('buttons.edit') }}
+									</v-btn>
+									<v-btn
+										v-if="canView(item)"
+										color="green"
+										variant="flat"
+										@click="handleView(item)"
+									>
+										{{ $t('buttons.view') }}
+									</v-btn>
+								</v-card-actions>
+							</v-card>
+						</v-col>
+					</v-row>
+				</v-col>
+				<v-col
+					v-show="colsEditPanel"
+					:cols="colsEditPanel"
+				>
+					<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug" />
 				</v-col>
 			</v-row>
-		</v-col>
-		<v-col
-			v-show="colsEditPanel"
-			:cols="colsEditPanel"
-		>
-			<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug" />
-		</v-col>
-	</v-row>
+		</template>
+	</VFormListing>
 	<PartCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
@@ -283,6 +248,7 @@ export default {
 			dialogDeleteOk,
 			dialogDeleteOpen,
 			dialogDeleteParams,
+			fetch,
 			handleAdd,
 			handleEdit,
 			handleView,
@@ -292,12 +258,17 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
+			dialogPartsLookupRef,
 			manufacturers,
 			params,
 			title,
+			buttonSearchResetDisabled,
+			clickSearch,
+			clickSearchClear,
 			isPublic,
 			manufacturer,
-			measurementUnitTranslateWeight
+			measurementUnitTranslateWeight,
+			resetAdditional
 		} = usePartsBaseComponent(props, context);
 
 		return {
@@ -348,6 +319,7 @@ export default {
 			dialogDeleteOk,
 			dialogDeleteOpen,
 			dialogDeleteParams,
+			fetch,
 			handleAdd,
 			handleEdit,
 			handleView,
@@ -357,12 +329,17 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
+			dialogPartsLookupRef,
 			manufacturers,
 			params,
 			title,
+			buttonSearchResetDisabled,
+			clickSearch,
+			clickSearchClear,
 			isPublic,
 			manufacturer,
-			measurementUnitTranslateWeight
+			measurementUnitTranslateWeight,
+			resetAdditional
 		};
 	}
 };

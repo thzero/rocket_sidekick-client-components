@@ -1,5 +1,5 @@
 <script>
-import { onMounted, ref} from 'vue';
+import { computed, onMounted, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
 
 import AppUtility from '@/utility/app';
@@ -58,6 +58,7 @@ export function usePartsBaseComponent(props, context, options) {
 		dialogDeleteOk,
 		dialogDeleteOpen,
 		dialogDeleteParams,
+		fetch,
 		handleAdd,
 		handleEdit,
 		handleView,
@@ -79,6 +80,7 @@ export function usePartsBaseComponent(props, context, options) {
 		}
 	);
 
+	const dialogPartsLookupRef = ref(null);
 	const manufacturers = ref(null);
 	const params = ref({
 		type: null
@@ -86,6 +88,10 @@ export function usePartsBaseComponent(props, context, options) {
 	const title = ref(
 		 LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.parts.${props.title}.title`)
 	);
+
+	const buttonSearchResetDisabled = computed(() => {
+		return false;
+	});
 
 	const canCopyI = (correlationId, item) => {
 		return true;
@@ -100,8 +106,15 @@ export function usePartsBaseComponent(props, context, options) {
 	const canViewI = (correlationId, item) => {
 		return true;
 	};
+	const clickSearch = async (correlationId) => {
+		await fetch(correlationId);
+	};
+	const clickSearchClear = async (correlationId) => {
+		await dialogPartsLookupRef.value.reset(correlationId, true);
+		await fetch(correlationId);
+	};
 	const fetchI = async (correlationId) => {
-		params.value = { type: props.type };
+		params.value = { typeId: props.type };
 		if (props.fetchParams)
 			params.value = await props.fetchParams(correlationId, params.value);
 			
@@ -117,20 +130,30 @@ export function usePartsBaseComponent(props, context, options) {
 			if (temp)
 				item.manufacturerName = temp.name;
 		});
-	 	// results = results.sort(
-		// 	firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-		// 	.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
-		// 	.thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
-		// );
-		results = results.sort(
-			firstBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
+	 	results = results.sort(
+			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
+			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
+			.thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
 		);
+		// results = results.sort(
+		// 	firstBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
+		// );
 
 		response.results = results;
 		return response;
 	};
 	const fetchItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.requestPartById(correlationId, id);
+	};
+	const fetchManufacturers = async (correlationId) => {
+		if (manufacturers.value)
+			return;
+
+		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
+		if (hasFailed(response))
+			return;
+
+		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
 	};
 	const initNewI = (correlationId, data) => {
 		data = data ? data : new PartData();
@@ -153,15 +176,9 @@ export function usePartsBaseComponent(props, context, options) {
 	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
 		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
 	};
-	const fetchManufacturers = async (correlationId) => {
-		if (manufacturers.value)
-			return;
-
-		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
-		if (hasFailed(response))
-			return;
-
-		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
+	const resetAdditional = async (correlationId) => {
+		if (props.resetAdditionalFilter)
+			await props.resetAdditionalFilter(correlationId);
 	};
 
 	onMounted(async () => {
@@ -216,6 +233,7 @@ export function usePartsBaseComponent(props, context, options) {
 		dialogDeleteOk,
 		dialogDeleteOpen,
 		dialogDeleteParams,
+		fetch,
 		handleAdd,
 		handleEdit,
 		handleView,
@@ -225,12 +243,17 @@ export function usePartsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		display,
+		dialogPartsLookupRef,
 		manufacturers,
 		params,
 		title,
+		buttonSearchResetDisabled,
+		clickSearch,
+		clickSearchClear,
 		isPublic,
 		manufacturer,
-		measurementUnitTranslateWeight
+		measurementUnitTranslateWeight,
+		resetAdditional
 	};
 };
 </script>

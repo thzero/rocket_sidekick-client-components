@@ -8,7 +8,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
-export function usePartsDisplayCompany(props, context, options) {
+export function usePartsListingComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -26,6 +26,14 @@ export function usePartsDisplayCompany(props, context, options) {
 	} = useContentBaseComponent(props, context, options);
 
 	const debug = ref(false);
+	const detailItemDescription = ref(null);
+	const detailItemIsPublic = ref(null);
+	const detailItemManufacturers = ref(null);
+	const detailItemManufacturerStockId = ref(null);
+	const detailItemName = ref(null);
+	const detailItemWeight = ref(null);
+	const weightMeasurementUnitId = ref(null);
+	const weightMeasurementUnitsId = ref(null);
 	const manufacturers = ref(null);
 	const type = ref(options.type);
 
@@ -35,6 +43,28 @@ export function usePartsDisplayCompany(props, context, options) {
 		if (config)
 			debug.value = config['parts'] ?? false;
 	}
+	
+	const fetchParams = (correlationId, params) => {
+		if (options.fetchParams)
+			options.fetchParams(correlationId, params);
+
+		params.name = detailItemName.value;
+		params.public = detailItemIsPublic.value === true ? true : detailItemIsPublic.value === false ? false : null;
+		params.weight = detailItemWeight.value;
+		params.manufacturers = detailItemManufacturers.value;
+		params.manufacturerStockId = detailItemManufacturerStockId.value;
+		// params.weightMeasurementUnitId = weightMeasurementUnitId.value;
+		// params.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
+		return params;
+	};
+	const resetAdditionalFilter = (correlationId) => {
+		if (options.resetAdditionalFilter)
+			options.resetAdditionalFilter(correlationId,);
+		detailItemName.value = null;
+		detailItemIsPublic.value = null;
+		detailItemManufacturers.value = null;
+		detailItemWeight.value = null;
+	};
 
 	onMounted(async () => {
 		if (manufacturers.value)
@@ -64,8 +94,18 @@ export function usePartsDisplayCompany(props, context, options) {
 		sort,
 		target,
 		debug,
+		detailItemDescription,
+		detailItemIsPublic,
+		detailItemManufacturers,
+		detailItemManufacturerStockId,
+		detailItemName,
+		detailItemWeight,
+		weightMeasurementUnitId,
+		weightMeasurementUnitsId,
 		manufacturers,
-		type
+		type,
+		fetchParams,
+		resetAdditionalFilter
 	};
 };
 </script>

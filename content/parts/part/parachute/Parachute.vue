@@ -1,5 +1,4 @@
 <template>
-	[[ debug {{ debug }}]]
 	<div
 		v-if="debug"
 	>
@@ -241,8 +240,7 @@
 					vid="detailItemManufacturer"
 					:items="manufacturers"
 					:validation="validation"
-					:label="$t('forms.external.motorSearch.manufacturer')"
-					:hint="$t('forms.external.motorSearch.manufacturer_hint')"
+					:label="$t('forms.content.manufacturer.name')"
 				/>
 			</v-col>
 			<v-col cols="4">
