@@ -3,6 +3,10 @@ export const usePartsBaseComponentProps = {
 		type: Function,
 		default: null
 	},
+	resetAdditionalFilter: {
+		type: Function,
+		default: null
+	},
 	title: {
 		type: String,
 		default: null

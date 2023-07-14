@@ -3,6 +3,7 @@
 		title="deploymentBags"
 		:type="type"
 		:fetchParams="fetchParams"
+		:reset-additional-filter="resetAdditionalFilter"
 		:validation="validation"
 		:debug="debug"
 	>
@@ -24,76 +25,116 @@
 			>
 			</DeploymentBagPanelTitle>
 		</template> 
-		<template #filters="{  }">
+		<template #filters>
 			<v-row dense>
 				<v-col cols="12" sm="6">
-					<!-- <VTextFieldWithValidation
-						ref="motorRef"
-						v-model="motor"
-						vid="motor"
+					<VTextFieldWithValidation
+						ref="detailItemNameRef"
+						v-model="detailItemName"
+						vid="detailItemName"
+						:label="$t('forms.name')"
 						:validation="validation"
-						:label="$t('forms.external.motorSearch.motor')"
-						:hint="$t('forms.external.motorSearch.motor_hint')"
-					/> -->
-					name
+					/>
 				</v-col>
-				<v-col cols="12" sm="6">
-					<!-- <VSelectWithValidation
-						ref="diameterRef"
-						v-model="diameter"
-						vid="diameter"
-						:items="diameters"
-						:validation="validation"
-						:label="$t('forms.external.motorSearch.diameter')"
-					/> -->
-					diameter
-				</v-col>
-			</v-row>
-			<v-row dense>
-				<v-col cols="12" sm="6">
-					<!-- <v-checkbox
-						v-model="singleUse"
+				<v-col cols="6" sm="6">
+					 <!-- <v-checkbox
+						v-model="detailItemIsPublic"
 						density="compact"
-						:label="$t('forms.external.motorSearch.singleUse')"
+						:label="$t('forms.content.parts.public')"
 					/> -->
-					pilot chute
+					<v-radio-group
+						v-model="detailItemIsPublic"
+						inline
+					>
+						<v-radio
+						:label="$t('forms.content.parts.all')"
+							value=""
+						></v-radio>
+						<v-radio
+						:label="$t('forms.content.parts.yours')"
+							:value="false"
+						></v-radio>
+						<v-radio
+							:label="$t('forms.content.parts.public')"
+							:value="true"
+						></v-radio>
+					</v-radio-group>
 				</v-col>
 			</v-row>
 			<v-row dense>
-				<v-col col="12">
-					<!-- <VSelectWithValidation
-						ref="manufacturerRef"
-						v-model="manufacturer"
-						vid="manufacturer"
+				<v-col cols="12" sm="6">
+					<VSelectWithValidation
+						ref="detailItemManufacturersRef"
+						v-model="detailItemManufacturers"
+						vid="detailItemManufacturers"
 						multiple
 						:max-values="2"
 						:items="manufacturers"
 						:validation="validation"
-						:label="$t('forms.external.motorSearch.manufacturer')"
-						:hint="$t('forms.external.motorSearch.manufacturer_hint')"
-					/> -->
-					manufacturers
+						:label="$t('forms.content.manufacturer.plural')"
+						:hint="$t('forms.content.manufacturer.plural_hint')"
+					/>
 				</v-col>
+				<v-col cols="6" sm="6">
+					 <v-checkbox
+						v-model="detailItemPilotChute"
+						density="compact"
+						:label="$t('forms.content.parts.deploymentBag.pilotChute')"
+					/>
+				</v-col>
+				<!-- <v-col cols="12" sm="6">
+					<VTextFieldWithValidation
+						ref="detailItemDiameterRef"
+						v-model="detailItemDiameter"
+						vid="detailItemDiameter"
+						:label="$t('forms.content.parts.diameter')"
+						:validation="validation"
+					/>
+				</v-col> -->
 			</v-row>
 		</template> 
 	</Parts>
 </template>
 
 <script>
-import { usePartsDisplayCompany } from '@/components/content/parts/partsDisplayCompany';
+import { between, decimal } from '@vuelidate/validators';
+
+import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
+
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
+import { useDeploymentBagPartsListingComponent } from '@/components/content/parts/deploymentBags/deploymentBagPartsListingComponent';
+import { usePartsListingFilterValidation } from '@/components/content/parts/partsListingFilterValidation';
 
 import DeploymentBag from '@/components/content/parts/part/deploymentBag/DeploymentBag';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import Parts from '@/components/content/parts/Parts';
 
+import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
+import MeasurementUnitsSelect from '@/components/content/tools/MeasurementUnitsSelect';
+import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
+import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
+import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
+import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+
 export default {
 	name: 'PartsdeploymentBag',
 	components: {
+		MeasurementUnitSelect,
+		MeasurementUnitsSelect,
 		DeploymentBag,
 		DeploymentBagPanelTitle,
-		Parts
+		Parts,
+		VFormControl,
+		VNumberFieldWithValidation,
+		VSelectWithValidation,
+		VSwitchWithValidation,
+		VTextAreaWithValidation,
+		VTextFieldWithValidation
 	},
 	setup(props, context, options) {
 		const {
@@ -111,15 +152,24 @@ export default {
 			sort,
 			target,
 			debug,
+			detailItemDescription,
+			detailItemIsPublic,
+			detailItemManufacturers,
+			detailItemManufacturerStockId,
+			detailItemName,
+			detailItemWeight,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
 			manufacturers,
-			type
-		} = usePartsDisplayCompany(props, context, { 
+			type,
+			fetchParams,
+			resetAdditionalFilter,
+			detailItemDiameter,
+			detailItemLength,
+			detailItemPilotChute
+		} = useDeploymentBagPartsListingComponent(props, context, { 
 			type: AppCommonConstants.Rocketry.PartTypes.deploymentBag
 		});
-
-		const fetchParams = (correlationId, params) => {
-			return params; // TODO: setup params...
-		};
 
 		return {
 			correlationId,
@@ -136,10 +186,35 @@ export default {
 			sort,
 			target,
 			debug,
+			detailItemDescription,
+			detailItemIsPublic,
+			detailItemManufacturers,
+			detailItemManufacturerStockId,
+			detailItemName,
+			detailItemWeight,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
 			manufacturers,
 			type,
-			fetchParams
+			fetchParams,
+			resetAdditionalFilter,
+			detailItemDiameter,
+			detailItemLength,
+			detailItemPilotChute,
+			scope: 'DeploymentBagsFilterControl',
+			validation: useVuelidate({ $scope: 'DeploymentBagsFilterControl' })
 		};
+	},
+	validations () {
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), {
+			detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
+			detailItemLength: { decimal, between: between(0, 2004), $autoDirty: true },
+			detailItemPilotChute: { $autoDirty: true },
+			diameterMeasurementUnitId: { $autoDirty: true },
+			diameterMeasurementUnitsId: { $autoDirty: true },
+			lengthMeasurementUnitId: { $autoDirty: true },
+			lengthMeasurementUnitsId: { $autoDirty: true }
+		});
 	}
 };
 </script>

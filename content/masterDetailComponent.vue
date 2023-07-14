@@ -95,7 +95,7 @@ export function useMasterDetailComponent(props, context, options) {
 		detailItem.value = null;
 	};
 	const detailOk = async () => {
-		items.value = await fetch(correlationId());
+		await fetch(correlationId());
 	};
 	const dialogCopyCancel = async (item) => {
 		try {
@@ -122,7 +122,7 @@ export function useMasterDetailComponent(props, context, options) {
 			}
 
 			detailItem.value = initNew(response.results);
-			items.value = await fetch(correlationIdI);
+			await fetch(correlationIdI);
 		}
 		finally {
 			dialogCopyParams.value = null;
@@ -164,7 +164,7 @@ export function useMasterDetailComponent(props, context, options) {
 				setNotify(correlationIdI, 'messages.error');
 				return;
 			}
-			items.value = await fetch(correlationId());
+			await fetch(correlationId());
 		}
 		finally {
 			dialogDeleteParams.value = null;
@@ -190,6 +190,7 @@ export function useMasterDetailComponent(props, context, options) {
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 		);
+		items.value = results;
 		return results;
 	};
 	const handleAdd = () => {
@@ -244,7 +245,7 @@ export function useMasterDetailComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		items.value = await fetch(correlationId());
+		await fetch(correlationId());
 	});
 
 	return {
@@ -295,6 +296,7 @@ export function useMasterDetailComponent(props, context, options) {
 		dialogDeleteOk,
 		dialogDeleteOpen,
 		dialogDeleteParams,
+		fetch,
 		handleAdd,
 		handleEdit,
 		handleView,
