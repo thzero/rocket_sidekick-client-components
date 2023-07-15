@@ -7,7 +7,7 @@ import { usePartsPanelComponent } from '@/components/content/parts/partPanelComp
 import { usePartPanelComponentProps } from '@/components/content/parts/partPanelComponentProps';
 
 export default {
-	name: 'ChuteReleasePanelTitle',
+	name: 'AltimeterrPanelTitle',
 	props: {
 		...usePartPanelComponentProps
 	},
