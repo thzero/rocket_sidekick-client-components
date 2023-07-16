@@ -6,7 +6,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
 import { useBaseControlEditComponent } from '@thzero/library_client_vue3/components/baseControlEdit';
-import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
+import { useContentBaseComponent } from '@/components/content/contentBase';
 
 export function useMeasurementUnitsSelectBaseComponent(props, context, options) {
 	const {
@@ -24,31 +24,20 @@ export function useMeasurementUnitsSelectBaseComponent(props, context, options) 
 		contentLoadStart,
 		contentLoadStop,
 		sortByOrder,
-		target,
-		calculationOutput,
-		content,
-		contentTitle,
-		errors,
-		errorMessage,
-		errorTimer,
-		hasAttribution,
-		notifyColor,
-		notifyMessage,
-		notifySignal,
-		notifyTimeout,
-		settings,
-		calculateI,
-		handleListener,
-		handleAttribution,
-		initCalculationOutput,
-		initCalculationResults,
-		resetFormI,
-		setErrorMessage,
-		setErrorTimer,
-		setNotify
-	} = useToolsBaseComponent(props, context, options);
+		target
+	} = useContentBaseComponent(props, context, options);
 
 	const {
+		// correlationId,
+		// error,
+		// hasFailed,
+		// hasSucceeded,
+		// initialize,
+		// logger,
+		// noBreakingSpaces,
+		// notImplementedError,
+		// success,
+		successResponse,
 		isSaving,
 		serverErrors,
 		setErrors,
@@ -77,9 +66,13 @@ export function useMeasurementUnitsSelectBaseComponent(props, context, options) 
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		contentLoadSignal,
 		serviceStore,
+		contentLoadStart,
+		contentLoadStop,
 		sortByOrder,
 		target,
+		successResponse,
 		isSaving,
 		serverErrors,
 		setErrors,

@@ -107,8 +107,8 @@ import DeploymentBag from '@/components/content/parts/part/deploymentBag/Deploym
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import Parts from '@/components/content/parts/Parts';
 
-import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
-import MeasurementUnitsSelect from '@/components/content/tools/MeasurementUnitsSelect';
+import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';

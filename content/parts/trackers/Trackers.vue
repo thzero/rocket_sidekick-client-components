@@ -100,8 +100,8 @@ import Parts from '@/components/content/parts/Parts';
 import Tracker from '@/components/content/parts/part/tracker/Tracker';
 import TrackerPanelTitle from '@/components/content/parts/trackers/TrackerPanelTitle';
 
-import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
-import MeasurementUnitsSelect from '@/components/content/tools/MeasurementUnitsSelect';
+import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
