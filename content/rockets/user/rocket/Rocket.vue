@@ -223,8 +223,8 @@ import { useRocketValidation } from '@/components/content/rockets/user/rocket/ro
 import { useRocketComponent } from '@/components/content/rockets/user/rocket/rocketComponent';
 import { useRocketComponentProps } from '@/components/content/rockets/user/rocket/rocketComponentProps';
 
-import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
-import MeasurementUnitsSelect from '@/components/content/tools/MeasurementUnitsSelect';
+import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';

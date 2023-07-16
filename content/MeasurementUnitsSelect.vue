@@ -1,9 +1,9 @@
 <template>
     <VSelectWithValidation
-		ref="measurementUnitIdRef"
-		vid="innerValue"
+        ref="innerValueRef"
+        vid="innerValue"
 		v-model="innerValue"
-		:items="measurementUnits"
+		:items="measurementUnitsOptions"
 		:label="$attrs.label"
         :validation="validation"
 		:readonly="readonly"
@@ -15,16 +15,16 @@
 <script>
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
 
-import { useMeasurementUnitSelectBaseComponent } from '@/components/content/tools/measurementUnitSelectBase';
-import { useMeasurementUnitSelectBaseProps } from '@/components/content/tools/measurementUnitSelectBaseProps';
+import { useMeasurementUnitsSelectBaseComponent } from '@/components/content/measurementUnitsSelectBase';
+import { useMeasurementUnitsSelectBaseProps } from '@/components/content/measurementUnitsSelectBaseProps';
 
 export default {
-	name: 'MeasurementUnitSelect',
+	name: 'MeasurementUnitsSelect',
 	components: {
 		VSelectWithValidation
 	},
     props: {
-		...useMeasurementUnitSelectBaseProps
+		...useMeasurementUnitsSelectBaseProps
     },
 	setup(props, context) {
 		const {
@@ -37,9 +37,13 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			contentLoadSignal,
 			serviceStore,
+			contentLoadStart,
+			contentLoadStop,
 			sortByOrder,
 			target,
+			successResponse,
 			isSaving,
 			serverErrors,
 			setErrors,
@@ -50,9 +54,8 @@ export default {
 			innerValue,
 			innerValueUpdate,
 			initValue,
-			measurementUnits,
-			measurementUnitTrans
-		} = useMeasurementUnitSelectBaseComponent(props, context);
+			measurementUnitsOptions
+		} = useMeasurementUnitsSelectBaseComponent(props, context);
 
 		return {
 			correlationId,
@@ -64,9 +67,13 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			contentLoadSignal,
 			serviceStore,
+			contentLoadStart,
+			contentLoadStop,
 			sortByOrder,
 			target,
+			successResponse,
 			isSaving,
 			serverErrors,
 			setErrors,
@@ -77,8 +84,7 @@ export default {
 			innerValue,
 			innerValueUpdate,
 			initValue,
-			measurementUnits,
-			measurementUnitTrans
+			measurementUnitsOptions
 		};
 	}
 };

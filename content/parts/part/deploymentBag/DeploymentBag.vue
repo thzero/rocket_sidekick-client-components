@@ -286,8 +286,8 @@ import { useDeploymentBagPartComponent } from '@/components/content/parts/part/d
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
 
-import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
-import MeasurementUnitsSelect from '@/components/content/tools/MeasurementUnitsSelect';
+import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
