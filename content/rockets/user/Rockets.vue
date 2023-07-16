@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<VFormListing
-		ref="dialogPartsLookupRef"
+		ref="dialogRocketsLookupRef"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -12,7 +12,9 @@
 				<v-col cols="12">
 					<v-card>
 						<v-card-text>
-							<slot name="filters"></slot>
+							<slot name="filters">
+								
+							</slot>
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer />
@@ -78,11 +80,6 @@
 									<slot name="panelTitle" :item="item">
 										{{ item.name }}
 									</slot>
-									<span
-										v-if="item.weight"
-									>
-										({{item.weight}} {{ measurementUnitTranslateWeight(item.weightMeasurementUnitsId, item.weightMeasurementUnitId) }})
-									</span>
 									<div class="float-right">{{ manufacturer(item) }}</div>
 								</v-card-title>
 								<v-card-text
@@ -104,7 +101,7 @@
 									<v-chip
 										v-if="isPublic(item)"
 									>
-										{{  $t('strings.content.parts.isPublic') }}
+										{{  $t('strings.content.rockets.isPublic') }}
 									</v-chip>
 									<v-spacer></v-spacer>
 									<v-btn
@@ -151,12 +148,22 @@
 					v-show="colsEditPanel"
 					:cols="colsEditPanel"
 				>
-					<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug" />
+					<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug">
+						<Rocket
+							:model-value="detailItem"
+							@cancel="detailClose"
+							@close="detailClose"
+							@error="detailError"
+							@ok="detailOk"
+							:debug="debug"
+						>
+						</Rocket>
+					</slot>
 				</v-col>
 			</v-row>
 		</template>
 	</VFormListing>
-	<PartCopyDialog
+	<RocketCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
 		:signal="dialogCopyManager.signal"
@@ -177,25 +184,27 @@
 
 <script>
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
-import { usePartsBaseComponent } from '@/components/content/parts/partsComponent';
-import { usePartsBaseComponentProps } from '@/components/content/parts/partsComponentProps';
+import { useRocketsBaseComponent } from '@/components/content/rockets/user/rocketsComponent';
+import { useRocketsBaseComponentProps } from '@/components/content/rockets/user/rocketsComponentProps';
 
-import PartCopyDialog from '@/components/content/parts/dialogs/PartCopyDialog';
+import Rocket from '@/components/content/rockets/user/rocket/Rocket';
+import RocketCopyDialog from '@/components/content/rockets/user/dialogs/RocketCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
 
 export default {
-	name: 'Parts',
+	name: 'Rockets',
 	components: {
-		PartCopyDialog,
+		Rocket,
+		RocketCopyDialog,
 		ContentHeader,
 		VConfirmationDialog,
 		VFormListing
 	},
 	props: {
 		...useMasterDetailComponentProps,
-		...usePartsBaseComponentProps
+		...useRocketsBaseComponentProps
 	},
 	setup(props, context) {
 		const {
@@ -256,7 +265,10 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
-			dialogPartsLookupRef,
+			hasCoverUrl,
+			rocketTypeIcon,
+			rocketTypeIconDetermine,
+			dialogRocketsLookupRef,
 			manufacturers,
 			params,
 			title,
@@ -267,7 +279,7 @@ export default {
 			manufacturer,
 			measurementUnitTranslateWeight,
 			resetAdditional
-		} = usePartsBaseComponent(props, context);
+		} = useRocketsBaseComponent(props, context);
 
 		return {
 			correlationId,
@@ -327,7 +339,10 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
-			dialogPartsLookupRef,
+			hasCoverUrl,
+			rocketTypeIcon,
+			rocketTypeIconDetermine,
+			dialogRocketsLookupRef,
 			manufacturers,
 			params,
 			title,

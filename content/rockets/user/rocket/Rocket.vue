@@ -35,21 +35,10 @@
 					ref="nameRef"
 					v-model="detailItemName"
 					vid="detailItemName"
-					:label="$t('forms.name')"
-					:counter="30"
 					:validation="validation"
 					:readonly="!isEditable"
-				/>
-			</v-col>
-			<v-col cols="2">
-				<VSwitchWithValidation
-					v-if="!isEditable || hasAdmin"
-					ref="isPublicRef"
-					v-model="detailItemIsPublic"
-					vid="detailItemIsPublic"
-					:validation="validation"
-					:readonly="!isEditable || !hasAdmin"
-					:label="$t('forms.content.parts.public')"
+					:label="$t('forms.name')"
+					:counter="30"
 				/>
 			</v-col>
 		</v-row>
@@ -73,9 +62,9 @@
 				<VNumberFieldWithValidation
 					ref="detailItemDiameterRef"
 					vid="detailItemDiameter"
-					v-model="detailItemDiameter"
 					:validation="validation"
 					:readonly="!isEditable"
+					v-model="detailItemDiameter"
 					:label="$t('forms.content.parts.diameter')"
 				/>
 			</v-col>
@@ -86,9 +75,9 @@
 							<MeasurementUnitsSelect
 								ref="diameterMeasurementUnitsIdRef"
 								vid="diameterMeasurementUnitsId"
-								v-model="diameterMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
+								v-model="diameterMeasurementUnitsId"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
@@ -107,6 +96,46 @@
 					</tr>
 				</table>
 			</v-col>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemLengthRef"
+					vid="detailItemLength"
+					v-model="detailItemLength"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.parts.length')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="lengthMeasurementUnitsIdRef"
+								vid="lengthMeasurementUnitsId"
+								v-model="lengthMeasurementUnitsId"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="lengthMeasurementUnitIdRef"
+								vid="lengthMeasurementUnitId"
+								v-model="lengthMeasurementUnitId"
+								:measurementUnitsId="lengthMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitslengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemWeightRef"
@@ -145,106 +174,16 @@
 					</tr>
 				</table>
 			</v-col>
-		</v-row>
-		<v-row dense>
 			<v-col cols="6">
-				<VNumberFieldWithValidation
-					ref="detailItemCdRef"
-					vid="detailItemCd"
-					v-model="detailItemCd"
+				<VSelectWithValidation
+					ref="detailItemRocketTypeRef"
+					v-model="detailItemRocketType"
+					vid="detailItemRocketType"
+					:items="rocketTypes"
 					:validation="validation"
 					:readonly="!isEditable"
-					:label="$t('forms.content.parts.cd')"
+					:label="$t('forms.content.rockets.name')"
 				/>
-			</v-col>
-			<v-col cols="6">
-				<VSwitchWithValidation
-					class="ml-2 mr-2"
-					ref="detailItemThinMillRef"
-					v-model="detailItemThinMill"
-					vid="detailItemThinMill"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.parachute.thinMill')"
-				/>
-			</v-col>
-		</v-row>
-		<v-row dense>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemLoadMaxRef"
-					vid="detailItemLoadMax"
-					v-model="detailItemLoadMax"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.parachute.loadMax')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
-				<table>
-					<tr>
-						<td class="measurementUnits">
-							<MeasurementUnitsSelect
-								ref="loadMaxWeightMeasurementUnitsIdRef"
-								vid="loadMaxWeightMeasurementUnitsId"
-								v-model="loadMaxWeightMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnits">
-							<MeasurementUnitSelect
-								ref="loadMaxWeightMeasurementUnitIdRef"
-								vid="loadMaxWeightMeasurementUnitId"
-								v-model="loadMaxWeightMeasurementUnitId"
-								:measurementUnitsId="loadMaxWeightMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td>
-					</tr>
-				</table>
-			</v-col>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemLoadMinRef"
-					vid="detailItemLoadMin"
-					v-model="detailItemLoadMin"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.parachute.loadMin')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
-				<table>
-					<tr>
-						<td class="measurementUnits">
-							<MeasurementUnitsSelect
-								ref="loadMinWeightMeasurementUnitsIdRef"
-								vid="loadMinWeightMeasurementUnitsId"
-								v-model="loadMinWeightMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnits">
-							<MeasurementUnitSelect
-								ref="loadMinWeightMeasurementUnitIdRef"
-								vid="loadMinWeightMeasurementUnitId"
-								v-model="loadMinWeightMeasurementUnitId"
-								:measurementUnitsId="loadMinWeightMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td>
-					</tr>
-				</table>
 			</v-col>
 		</v-row>
 		<v-row dense>
@@ -280,9 +219,9 @@ import { between, decimal, required } from '@vuelidate/validators';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
-import { useParachutePartComponent } from '@/components/content/parts/part/parachute/parachutePartComponent';
-import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
-import { usePartValidation } from '@/components/content/parts/part/partValidation';
+import { useRocketValidation } from '@/components/content/rockets/user/rocket/rocketValidation';
+import { useRocketComponent } from '@/components/content/rockets/user/rocket/rocketComponent';
+import { useRocketComponentProps } from '@/components/content/rockets/user/rocket/rocketComponentProps';
 
 import MeasurementUnitSelect from '@/components/content/tools/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/tools/MeasurementUnitsSelect';
@@ -294,7 +233,7 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'ParchutePartControl',
+	name: 'RocketPartControl',
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
@@ -307,7 +246,7 @@ export default {
 	},
 	props: {
 		...useDetailComponentProps,
-		...usePartComponentProps
+		...useRocketComponentProps
 	},
 	emits: ['cancel', 'close', 'error', 'ok'],
 	setup (props, context, options) {
@@ -348,34 +287,29 @@ export default {
 			measurementUnitslengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			rocketTypes,
 			detailItemDescription,
-			detailItemIsPublic,
+			detailItemDiameter,
+			detailItemLength,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemRocketType,
+			detailItemWeight,
+			diameterMeasurementUnitId,
+			diameterMeasurementUnitsId,
+			lengthMeasurementUnitId,
+			lengthMeasurementUnitsId,
 			manufacturers,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
-			isPublic,
 			handleAdd,
 			requestManufacturers,
-			detailItemCd,
-			detailItemDiameter,
-			detailItemLoadMax,
-			detailItemLoadMin,
-			detailItemThinMill,
-			detailItemWeight,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
-			loadMaxWeightMeasurementUnitId,
-			loadMaxWeightMeasurementUnitsId,
-			loadMinWeightMeasurementUnitId,
-			loadMinWeightMeasurementUnitsId,
 			scope,
 			validation
-		} = useParachutePartComponent(props, context, options);
+		} = useRocketComponent(props, context, options);
 
 		return {
 			correlationId,
@@ -414,44 +348,39 @@ export default {
 			measurementUnitslengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			rocketTypes,
 			detailItemDescription,
-			detailItemIsPublic,
+			detailItemDiameter,
+			detailItemLength,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemRocketType,
+			detailItemWeight,
+			diameterMeasurementUnitId,
+			diameterMeasurementUnitsId,
+			lengthMeasurementUnitId,
+			lengthMeasurementUnitsId,
 			manufacturers,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
-			isPublic,
 			handleAdd,
 			requestManufacturers,
-			detailItemCd,
-			detailItemDiameter,
-			detailItemLoadMax,
-			detailItemLoadMin,
-			detailItemThinMill,
-			detailItemWeight,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
-			loadMaxWeightMeasurementUnitId,
-			loadMaxWeightMeasurementUnitsId,
-			loadMinWeightMeasurementUnitId,
-			loadMinWeightMeasurementUnitsId,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {
-			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketValidation), {
 			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemThinMill: { $autoDirty: true },
+			detailItemLength: { required, decimal, between: between(0, 120), $autoDirty: true },
+			detailItemPilotChuteCd: { decimal, between: between(0, 9), $autoDirty: true },
 			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true }
+			diameterMeasurementUnitsId: { $autoDirty: true },
+			lengthMeasurementUnitId: { $autoDirty: true },
+			lengthMeasurementUnitsId: { $autoDirty: true }
 		});
 	}
 };

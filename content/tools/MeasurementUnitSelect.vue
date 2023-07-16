@@ -6,6 +6,7 @@
 		:items="measurementUnits"
 		:label="$attrs.label"
         :validation="validation"
+		:readonly="readonly"
 		:vidOverride="vid"
 		@update:modelValue="innerValueUpdate"
     />

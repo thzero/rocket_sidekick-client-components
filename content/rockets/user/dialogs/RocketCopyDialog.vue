@@ -1,0 +1,95 @@
+<template>
+	<VFormDialog
+		:label="$t('titles.copy') + ' ' + $t('forms.name')"
+		:signal="signal"
+		:button-ok-disabled-override="buttonOkDisabledOverride"
+		:pre-complete-ok="preCompleteOk"
+		:reset-additional="resetAdditional"
+		:validation="validation"
+		max-width="70vh"
+		@close="dialogClose"
+		@error="dialogError"
+		@ok="dialogOk"
+	>
+		<VTextFieldWithValidation
+			ref="nameRef"
+			v-model="name"
+			vid="name"
+			:label="$t('forms.name')"
+			:counter="30"
+			:validation="validation"
+		/>
+	</VFormDialog>
+</template>
+
+<script>
+// import { maxLength, minLength, required } from '@vuelidate/validators';
+
+import { useRocketCopyDialogComponent } from '@/components/content/rockets/user/dialogs/rocketCopyDialogComponent';
+import { useRocketCopyDialogProps } from '@/components/content/rockets/user/dialogs/rocketCopyDialogProps';
+import { useRocketCopyDialogValidation } from '@/components/content/rockets/user/dialogs/rocketCopyDialogValidation';
+
+import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
+import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+
+export default {
+	name: 'RocketCopyDialog',
+	components: {
+		VFormDialog,
+		VTextFieldWithValidation
+	},
+	props: {
+		...useRocketCopyDialogProps
+	},
+	emits: ['close', 'error', 'ok'],
+	setup (props, context) {
+		const {
+			correlationId,
+			error,
+			hasFailed,
+			hasSucceeded,
+			initialize,
+			logger,
+			noBreakingSpaces,
+			notImplementedError,
+			success,
+			name,
+			buttonOkDisabledOverride,
+			dialogClose,
+			dialogError,
+			dialogOk,
+			preCompleteOk,
+			resetAdditional,
+			scope,
+			validation
+		} = useRocketCopyDialogComponent(props, context);
+
+		return {
+			correlationId,
+			error,
+			hasFailed,
+			hasSucceeded,
+			initialize,
+			logger,
+			noBreakingSpaces,
+			notImplementedError,
+			success,
+			name,
+			buttonOkDisabledOverride,
+			dialogClose,
+			dialogError,
+			dialogOk,
+			preCompleteOk,
+			resetAdditional,
+			scope,
+			validation
+		};
+	},
+	validations () {
+		return useRocketCopyDialogValidation;
+	}
+};
+</script>
+
+<style scoped>
+</style>
