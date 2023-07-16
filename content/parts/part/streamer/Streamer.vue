@@ -35,10 +35,10 @@
 					ref="nameRef"
 					v-model="detailItemName"
 					vid="detailItemName"
-					:label="$t('forms.name')"
-					:counter="30"
 					:validation="validation"
 					:readonly="!isEditable"
+					:label="$t('forms.name')"
+					:counter="30"
 				/>
 			</v-col>
 			<v-col cols="2">
@@ -47,8 +47,9 @@
 					ref="isPublicRef"
 					v-model="detailItemIsPublic"
 					vid="detailItemIsPublic"
+					:validation="validation"
+					:readonly="!isEditable || !hasAdmin"
 					:label="$t('forms.content.parts.public')"
-					:readonly="!hasAdmin"
 				/>
 			</v-col>
 		</v-row>
@@ -58,10 +59,10 @@
 					ref="descriptionRef"
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
-					:label="$t('forms.description')"
-					:counter="30"
 					:validation="validation"
 					:readonly="!isEditable"
+					:label="$t('forms.description')"
+					:counter="30"
 					:clearable="isEditable"
 					:rows="detailItemTextRows"
 				/>
@@ -74,6 +75,7 @@
 					vid="detailItemWeight"
 					v-model="detailItemWeight"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.content.parts.weight')"
 				/>
 			</v-col>
@@ -86,6 +88,7 @@
 								vid="weightMeasurementUnitsId"
 								v-model="weightMeasurementUnitsId"
 								:validation="validation"
+								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
@@ -97,6 +100,7 @@
 								:measurementUnitsId="weightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
+								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.weight')"
 							/>
 						</td>
@@ -112,6 +116,7 @@
 					vid="detailItemManufacturer"
 					:items="manufacturers"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.content.manufacturer.name')"
 				/>
 			</v-col>
@@ -120,9 +125,10 @@
 					ref="detailItemManufacturerStockIdRef"
 					v-model="detailItemManufacturerStockId"
 					vid="detailItemManufacturerStockId"
+					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.content.parts.manufacturerId')"
 					:counter="30"
-					:validation="validation"
 				/>
 			</v-col>
 		</v-row>

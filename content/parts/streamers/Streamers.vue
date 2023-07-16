@@ -37,11 +37,6 @@
 					/>
 				</v-col>
 				<v-col cols="6" sm="6">
-					 <!-- <v-checkbox
-						v-model="detailItemIsPublic"
-						density="compact"
-						:label="$t('forms.content.parts.public')"
-					/> -->
 					<v-radio-group
 						v-model="detailItemIsPublic"
 						inline
