@@ -2,7 +2,7 @@
 	<Parts
 		title="trackers"
 		:type="type"
-		:fetchParams="fetchParams"
+		:fetch-params="fetchParams"
 		:reset-additional-filter="resetAdditionalFilter"
 		:validation="validation"
 		:debug="debug"
@@ -95,6 +95,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDeploymentBagPartsListingComponent } from '@/components/content/parts/deploymentBags/deploymentBagPartsListingComponent';
 import { usePartsListingFilterValidation } from '@/components/content/parts/partsListingFilterValidation';
+import { useTrackerPartsListingFilterValidation } from '@/components/content/parts/trackers/trackerPartsListingFilterValidation';
 
 import Parts from '@/components/content/parts/Parts';
 import Tracker from '@/components/content/parts/part/tracker/Tracker';
@@ -188,8 +189,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), {
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), 
+		LibraryCommonUtility.cloneDeep(useTrackerPartsListingFilterValidation));
 	}
 };
 </script>

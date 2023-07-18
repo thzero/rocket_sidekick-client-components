@@ -2,7 +2,7 @@
 	<Parts
 		title="altimeters"
 		:type="type"
-		:fetchParams="fetchParams"
+		:fetch-params="fetchParams"
 		:reset-additional-filter="resetAdditionalFilter"
 		:validation="validation"
 		:debug="debug"
@@ -85,8 +85,6 @@
 </template>
 
 <script>
-// import { between, decimal } from '@vuelidate/validators';
-
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
@@ -95,6 +93,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDeploymentBagPartsListingComponent } from '@/components/content/parts/deploymentBags/deploymentBagPartsListingComponent';
 import { usePartsListingFilterValidation } from '@/components/content/parts/partsListingFilterValidation';
+import { useAltimeterPartsListingFilterValidation } from '@/components/content/parts/altimeters/altimeterPartsListingFilterValidation';
 
 import Altimeter from '@/components/content/parts/part/altimeter/Altimeter';
 import AltimeterPanelTitle from '@/components/content/parts/altimeters/AltimeterPanelTitle';
@@ -188,8 +187,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), {
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), 
+		LibraryCommonUtility.cloneDeep(useAltimeterPartsListingFilterValidation));
 	}
 };
 </script>

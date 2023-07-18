@@ -6,7 +6,6 @@
 		[[ dirty {{ dirty }} ]]
 		[[ isEditable {{ isEditable }} ]]
 		[[ isNew {{ isNew }} ]]
-		[[ isPublic {{ isPublic }} ]]
 		<!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
@@ -60,12 +59,12 @@
 		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
-					ref="detailItemDiameterRef"
-					vid="detailItemDiameter"
+					ref="detailItemDiameterMajorRef"
+					vid="detailItemDiameterMajor"
 					:validation="validation"
 					:readonly="!isEditable"
-					v-model="detailItemDiameter"
-					:label="$t('forms.content.parts.diameter')"
+					v-model="detailItemDiameterMajor"
+					:label="$t('forms.content.rockets.diameter.major')"
 				/>
 			</v-col>
 			<v-col cols="7" md="4">
@@ -73,21 +72,21 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="diameterMeasurementUnitsIdRef"
-								vid="diameterMeasurementUnitsId"
+								ref="diameterMajorMeasurementUnitsIdRef"
+								vid="diameterMajorMeasurementUnitsId"
+								v-model="diameterMajorMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
-								v-model="diameterMeasurementUnitsId"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="diameterMeasurementUnitIdRef"
-								vid="diameterMeasurementUnitId"
-								v-model="diameterMeasurementUnitId"
-								:measurementUnitsId="diameterMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitslengthType"
+								ref="diameterMajorMeasurementUnitIdRef"
+								vid="diameterMajorMeasurementUnitId"
+								v-model="diameterMajorMeasurementUnitId"
+								:measurementUnitsId="diameterMajorMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -125,7 +124,7 @@
 								vid="lengthMeasurementUnitId"
 								v-model="lengthMeasurementUnitId"
 								:measurementUnitsId="lengthMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitslengthType"
+								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -182,7 +181,7 @@
 					:items="rocketTypes"
 					:validation="validation"
 					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.name')"
+					:label="$t('forms.content.rockets.type')"
 				/>
 			</v-col>
 		</v-row>
@@ -214,8 +213,6 @@
 </template>
 
 <script>
-import { between, decimal, required } from '@vuelidate/validators';
-
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
@@ -233,7 +230,7 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RocketPartControl',
+	name: 'RockeControl',
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
@@ -284,20 +281,31 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			rocketTypes,
+			cgMeasurementUnitId,
+			cgMeasurementUnitsId,
+			cpMeasurementUnitId,
+			cpMeasurementUnitsId,
+			detailItemCg,
+			detailItemCgFrom,
+			detailItemCp,
+			detailItemCpFrom,
 			detailItemDescription,
-			detailItemDiameter,
+			detailItemDiameterMajor,
+			detailItemDiameterMinor,
 			detailItemLength,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemRocketType,
 			detailItemWeight,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
+			diameterMajorMeasurementUnitId,
+			diameterMajorMeasurementUnitsId,
+			diameterMinorMeasurementUnitId,
+			diameterMinorMeasurementUnitsId,
 			lengthMeasurementUnitId,
 			lengthMeasurementUnitsId,
 			manufacturers,
@@ -345,20 +353,31 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			rocketTypes,
+			cgMeasurementUnitId,
+			cgMeasurementUnitsId,
+			cpMeasurementUnitId,
+			cpMeasurementUnitsId,
+			detailItemCg,
+			detailItemCgFrom,
+			detailItemCp,
+			detailItemCpFrom,
 			detailItemDescription,
-			detailItemDiameter,
+			detailItemDiameterMajor,
+			detailItemDiameterMinor,
 			detailItemLength,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemRocketType,
 			detailItemWeight,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
+			diameterMajorMeasurementUnitId,
+			diameterMajorMeasurementUnitsId,
+			diameterMinorMeasurementUnitId,
+			diameterMinorMeasurementUnitsId,
 			lengthMeasurementUnitId,
 			lengthMeasurementUnitsId,
 			manufacturers,
@@ -374,13 +393,6 @@ export default {
 	},
 	validations () {
 		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketValidation), {
-			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLength: { required, decimal, between: between(0, 120), $autoDirty: true },
-			detailItemPilotChuteCd: { decimal, between: between(0, 9), $autoDirty: true },
-			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true },
-			lengthMeasurementUnitId: { $autoDirty: true },
-			lengthMeasurementUnitsId: { $autoDirty: true }
 		});
 	}
 };

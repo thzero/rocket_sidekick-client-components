@@ -140,6 +140,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useChuteReleasePartComponent } from '@/components/content/parts/part/chuteRelease/chuteReleasePartComponent';
+import { useChuteReleaseartValidation } from '@/components/content/parts/part/chuteRelease/chuteReleasePartValidation';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
 
@@ -204,7 +205,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -262,7 +263,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -287,7 +288,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), 
+		LibraryCommonUtility.cloneDeep(useChuteReleaseartValidation));
 	}
 };
 </script>

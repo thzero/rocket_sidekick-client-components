@@ -139,10 +139,9 @@
 </template>
 
 <script>
-import { maxLength, minLength, required } from '@vuelidate/validators';
-
 import { useChecklistComponent } from '@/components/content/checklists/checklist/checklistComponent';
 import { useChecklistComponentProps } from '@/components/content/checklists/checklist/checklistComponentProps';
+import { useChecklistValidation } from '@/components/content/checklists/checklist/checklistValidation';
 
 import ChecklistSteps from '@/components/content/checklists/checklist/ChecklistSteps';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
@@ -257,16 +256,8 @@ export default {
 		};
 	},
 	validations () {
-		return {
-			detailItemName: {
-				required,
-				minLength: minLength(3),
-				maxLength: maxLength(50),
-				$autoDirty: true
-			},
-			detailItemDescription: { $autoDirty: true },
-			detailItemReorder: { $autoDirty: true }
-		}
+		return Object.assign(LibraryCommonUtility.cloneDeep(useChecklistValidation), {
+		});
 	}
 };
 </script>

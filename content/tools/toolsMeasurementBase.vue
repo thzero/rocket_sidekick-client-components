@@ -38,7 +38,7 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 	const measurementUnitsFluidDefaultId = ref(null);
 	const measurementUnitsFluidType = ref(AppCommonConstants.MeasurementUnits.types.fluid);
 	const measurementUnitsLengthDefaultId = ref(null);
-	const measurementUnitslengthType = ref(AppCommonConstants.MeasurementUnits.types.length);
+	const measurementUnitsLengthType = ref(AppCommonConstants.MeasurementUnits.types.length);
 	const measurementUnitsVelocityDefaultId = ref(null);
 	const measurementUnitsVelocityType = ref(AppCommonConstants.MeasurementUnits.types.velocity);
 	const measurementUnitsVolumeDefaultId = ref(null);
@@ -73,7 +73,7 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsFluidDefaultId,
 		measurementUnitsFluidType,
 		measurementUnitsLengthDefaultId,
-		measurementUnitslengthType,
+		measurementUnitsLengthType,
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
 		measurementUnitsVolumeDefaultId,

@@ -98,7 +98,7 @@
 								vid="diameterMeasurementUnitId"
 								v-model="diameterMeasurementUnitId"
 								:measurementUnitsId="diameterMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitslengthType"
+								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -253,7 +253,7 @@
 								vid="pilotChuteDiameterMeasurementUnitId"
 								v-model="pilotChuteDiameterMeasurementUnitId"
 								:measurementUnitsId="pilotChuteDiameterMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitslengthType"
+								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -277,12 +277,11 @@
 </template>
 
 <script>
-import { between, decimal, required } from '@vuelidate/validators';
-
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useDeploymentBagPartComponent } from '@/components/content/parts/part/deploymentBag/deploymentBagPartComponent';
+import { useDeploymentBagPartValidation } from '@/components/content/parts/part/deploymentBag/deploymentBagPartValidation';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
 
@@ -347,7 +346,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -413,7 +412,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -446,19 +445,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {
-			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLength: { required, decimal, between: between(0, 120), $autoDirty: true },
-			detailItemPilotChute: { $autoDirty: true },
-			detailItemPilotChuteCd: { decimal, between: between(0, 9), $autoDirty: true },
-			detailItemPilotChuteDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
-			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true },
-			lengthMeasurementUnitId: { $autoDirty: true },
-			lengthMeasurementUnitsId: { $autoDirty: true },
-			pilotChuteDiameterMeasurementUnitId: { $autoDirty: true },
-			pilotChuteDiameterMeasurementUnitsId: { $autoDirty: true }
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation),
+		LibraryCommonUtility.cloneDeep(useDeploymentBagPartValidation));
 	}
 };
 </script>

@@ -2,7 +2,7 @@
 	<Parts
 		title="chuteReleases"
 		:type="type"
-		:fetchParams="fetchParams"
+		:fetch-params="fetchParams"
 		:reset-additional-filter="resetAdditionalFilter"
 		:validation="validation"
 		:debug="debug"
@@ -95,6 +95,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDeploymentBagPartsListingComponent } from '@/components/content/parts/deploymentBags/deploymentBagPartsListingComponent';
 import { usePartsListingFilterValidation } from '@/components/content/parts/partsListingFilterValidation';
+import { useChuteReleasePartsListingFilterValidation } from '@/components/content/parts/chuteReleases/chuteReleasePartsListingFilterValidation';
 
 import ChuteRelease from '@/components/content/parts/part/chuteRelease/ChuteRelease';
 import ChuteReleasePanelTitle from '@/components/content/parts/chuteReleases/ChuteReleasePanelTitle';
@@ -188,8 +189,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), {
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), 
+		LibraryCommonUtility.cloneDeep(useChuteReleasePartsListingFilterValidation));
 	}
 };
 </script>

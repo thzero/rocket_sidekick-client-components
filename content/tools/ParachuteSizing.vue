@@ -156,7 +156,7 @@
 												vid="diameterLengthMeasurementUnitId"
 												v-model="diameterLengthMeasurementUnitId"
 												:measurementUnitsId="diameterLengthMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitslengthType"
+												:measurementUnitsType="measurementUnitsLengthType"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.length')"
 											/>
@@ -284,7 +284,7 @@ export default {
 			setErrorTimer,
 			setNotify,
 			measurementUnitsDensityType,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsVelocityType,
 			measurementUnitsWeightType,
 			serviceToolsParachuteSizing,
@@ -348,7 +348,7 @@ export default {
 			setErrorTimer,
 			setNotify,
 			measurementUnitsDensityType,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsVelocityType,
 			measurementUnitsWeightType,
 			serviceToolsParachuteSizing,

@@ -69,6 +69,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
+		isOwner,
 		display
 	} = useMasterDetailComponent(props, context, Object.assign(options ? options : {}, {
 			dialogDeleteMessage : 'checklists',
@@ -99,19 +100,19 @@ export function useChecklistsBaseComponent(props, context, options) {
 	}
 
 	const canCopyI = (correlationId, item) => {
-		return item && isDefault(item) || isShared(item) || !isInProgress(item);
+		return isOwner(correlationId, item) && isDefault(item) || isShared(item) || !isInProgress(item); // TODO: SECURITY: Admin can edit a default
 	};
 	const canDeleteI = (correlationId, item) => {
-		return item && !isDefault(item) && !isShared(item) && !isInProgress(item);
+		return isOwner(correlationId, item) && !isDefault(item) && !isShared(item) && !isInProgress(item); // TODO: SECURITY: Admin can edit a default
 	};
 	const canEditI = (correlationId, item) => {
-		return item && !isDefault(item) && !isShared(item) && !isInProgress(item) && !isCompleted(item);
+		return isOwner(correlationId, item) && !isDefault(item) && !isShared(item) && !isInProgress(item) && !isCompleted(item); // TODO: SECURITY: Admin can edit a default
 	};
 	const canStart = (item) => {
-		return item && !isDefault(item) && !isShared(item) && !isInProgress(item) && !isCompleted(item);
+		return isOwner(correlationId, item) && !isDefault(item) && !isShared(item) && !isInProgress(item) && !isCompleted(item);
 	};
 	const canViewI = (correlationId, item) => {
-		return item && isDefault(item) || isShared(item);
+		return isOwner(correlationId, item) && isDefault(item) || isShared(item);
 	};
 	const checklistTypeIcon = (item) => {
 		const icon = checklistTypeIconDetermine(item);
@@ -254,6 +255,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
+		isOwner,
 		display,
 		debug,
 		dialogStartManager,
