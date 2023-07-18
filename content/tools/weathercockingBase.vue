@@ -77,7 +77,7 @@ export function useWeathercockingBaseComponent(props, context) {
 		measurementUnitsFluidDefaultId,
 		measurementUnitsFluidType,
 		measurementUnitsLengthDefaultId,
-		measurementUnitslengthType,
+		measurementUnitsLengthType,
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
 		measurementUnitsVolumeDefaultId,

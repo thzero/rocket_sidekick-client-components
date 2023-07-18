@@ -2,7 +2,7 @@
 	<Parts
 		title="chuteProtectors"
 		:type="type"
-		:fetchParams="fetchParams"
+		:fetch-params="fetchParams"
 		:reset-additional-filter="resetAdditionalFilter"
 		:validation="validation"
 		:debug="debug"
@@ -85,8 +85,6 @@
 </template>
 
 <script>
-import { between, decimal } from '@vuelidate/validators';
-
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
@@ -95,6 +93,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useChuteProtectorPartsListingComponent } from '@/components/content/parts/chuteProtectors/chuteProtectorPartsListingComponent';
 import { usePartsListingFilterValidation } from '@/components/content/parts/partsListingFilterValidation';
+import { useChuteProtectorPartsListingFilterValidation } from '@/components/content/parts/chuteProtectors/chuteProtectorPartsListingFilterValidation';
 
 import ChuteProtector from '@/components/content/parts/part/chuteProtector/ChuteProtector';
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
@@ -192,10 +191,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), {
-			detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemDimension: { decimal, between: between(0, 2004), $autoDirty: true }
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), 
+		LibraryCommonUtility.cloneDeep(useChuteProtectorPartsListingFilterValidation));
 	}
 };
 </script>

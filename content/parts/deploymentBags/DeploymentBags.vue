@@ -2,7 +2,7 @@
 	<Parts
 		title="deploymentBags"
 		:type="type"
-		:fetchParams="fetchParams"
+		:fetch-params="fetchParams"
 		:reset-additional-filter="resetAdditionalFilter"
 		:validation="validation"
 		:debug="debug"
@@ -92,8 +92,6 @@
 </template>
 
 <script>
-import { between, decimal } from '@vuelidate/validators';
-
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
@@ -102,6 +100,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDeploymentBagPartsListingComponent } from '@/components/content/parts/deploymentBags/deploymentBagPartsListingComponent';
 import { usePartsListingFilterValidation } from '@/components/content/parts/partsListingFilterValidation';
+import { useDeploymentBagPartsListingFilterValidation } from '@/components/content/parts/deploymentBags/deploymentBagPartsListingFilterValidation';
 
 import DeploymentBag from '@/components/content/parts/part/deploymentBag/DeploymentBag';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
@@ -201,15 +200,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), {
-			detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLength: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemPilotChute: { $autoDirty: true },
-			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true },
-			lengthMeasurementUnitId: { $autoDirty: true },
-			lengthMeasurementUnitsId: { $autoDirty: true }
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), 
+		LibraryCommonUtility.cloneDeep(useDeploymentBagPartsListingFilterValidation));
 	}
 };
 </script>

@@ -98,11 +98,6 @@
 										</div>
 								</v-card-text>
 								<v-card-actions>
-									<v-chip
-										v-if="isPublic(item)"
-									>
-										{{  $t('strings.content.rockets.isPublic') }}
-									</v-chip>
 									<v-spacer></v-spacer>
 									<v-btn
 										v-if="canCopy(item)"
@@ -183,9 +178,14 @@
 </template>
 
 <script>
+import useVuelidate from '@vuelidate/core';
+
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
 import { useRocketsBaseComponent } from '@/components/content/rockets/user/rocketsComponent';
 import { useRocketsBaseComponentProps } from '@/components/content/rockets/user/rocketsComponentProps';
+import { useRocketsFilterValidation } from '@/components/content/rockets/user/rocketsFilterValidation';
 
 import Rocket from '@/components/content/rockets/user/rocket/Rocket';
 import RocketCopyDialog from '@/components/content/rockets/user/dialogs/RocketCopyDialog';
@@ -265,17 +265,24 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
-			hasCoverUrl,
-			rocketTypeIcon,
-			rocketTypeIconDetermine,
+			debug,
+			detailItemDescription,
+			detailItemDiameter,
+			detailItemManufacturers,
+			detailItemManufacturerStockId,
+			detailItemName,
+			detailItemWeight,
+			diameterMeasurementUnitId,
+			diameterMeasurementUnitsId,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
 			dialogRocketsLookupRef,
 			manufacturers,
-			params,
 			title,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
-			isPublic,
+			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
 			resetAdditional
@@ -339,21 +346,34 @@ export default {
 			isCopying,
 			isDeleting,
 			display,
-			hasCoverUrl,
-			rocketTypeIcon,
-			rocketTypeIconDetermine,
+			debug,
+			detailItemDescription,
+			detailItemDiameter,
+			detailItemManufacturers,
+			detailItemManufacturerStockId,
+			detailItemName,
+			detailItemWeight,
+			diameterMeasurementUnitId,
+			diameterMeasurementUnitsId,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
 			dialogRocketsLookupRef,
 			manufacturers,
-			params,
 			title,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
-			isPublic,
+			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
-			resetAdditional
+			resetAdditional,
+			scope: 'RocketsFilterControl',
+			validation: useVuelidate({ $scope: 'RocketsFilterControl' })
 		};
+	},
+	validations () {
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketsFilterValidation), {
+		});
 	}
 };
 </script>

@@ -98,7 +98,7 @@
 								vid="diameterMeasurementUnitId"
 								v-model="diameterMeasurementUnitId"
 								:measurementUnitsId="diameterMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitslengthType"
+								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -275,14 +275,13 @@
 </template>
 
 <script>
-import { between, decimal, required } from '@vuelidate/validators';
-
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useParachutePartComponent } from '@/components/content/parts/part/parachute/parachutePartComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
+import { useParachutePartValidation } from '@/components/content/parts/part/parachute/parachutePartValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
@@ -345,7 +344,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -411,7 +410,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -444,15 +443,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {
-			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
-			detailItemDiameter: { required, decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemThinMill: { $autoDirty: true },
-			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true }
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), 
+		LibraryCommonUtility.cloneDeep(useParachutePartValidation));
 	}
 };
 </script>

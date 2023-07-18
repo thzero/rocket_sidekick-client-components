@@ -225,7 +225,7 @@
 
 <script>
 import { ref } from 'vue';
-import { minLength, maxLength, required } from '@vuelidate/validators';
+import { maxLength, minLength, required } from '@vuelidate/validators';
 
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';

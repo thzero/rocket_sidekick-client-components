@@ -67,6 +67,7 @@ export function usePartsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
+		isOwner,
 		display
 	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'checklists',
@@ -94,17 +95,16 @@ export function usePartsBaseComponent(props, context, options) {
 	});
 
 	const canCopyI = (correlationId, item) => {
-		return true;
+		return isOwner(correlationId, item) || isPublic(correlationId, item);
 	};
 	const canDeleteI = (correlationId, item) => {
-		return item && !isPublic(correlationId, item);
+		return isOwner(correlationId, item) || !isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
 	};
 	const canEditI = (correlationId, item) => {
-		//return item && !isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
-		return true;
+		return isOwner(correlationId, item); // TODO: SECURITY: Admin can edit a public
 	};
 	const canViewI = (correlationId, item) => {
-		return true;
+		return isOwner(correlationId, item) || isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
 	};
 	const clickSearch = async (correlationId) => {
 		await fetch(correlationId);
@@ -117,6 +117,8 @@ export function usePartsBaseComponent(props, context, options) {
 		params.value = { typeId: props.type };
 		if (props.fetchParams)
 			params.value = await props.fetchParams(correlationId, params.value);
+		if (!params)
+			return error('usePartsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
 			
 		const response = await serviceStore.dispatcher.requestParts(correlationId, params.value);
 		if (hasFailed(response))
@@ -242,6 +244,7 @@ export function usePartsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
+		isOwner,
 		display,
 		dialogPartsLookupRef,
 		manufacturers,

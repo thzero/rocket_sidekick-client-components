@@ -90,7 +90,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		measurementUnitsFluidDefaultId,
 		measurementUnitsFluidType,
 		measurementUnitsLengthDefaultId,
-		measurementUnitslengthType,
+		measurementUnitsLengthType,
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
 		measurementUnitsVolumeDefaultId,

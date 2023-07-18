@@ -2,8 +2,12 @@
 import { computed, onMounted, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
 
+import AppCommonConstants from 'rocket_sidekick_common/constants';
+import LibraryClientConstants from '@thzero/library_client/constants.js';
+
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 import { useRocketsComponent } from '@/components/content/rockets/rocketsComponent';
@@ -68,6 +72,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
+		isOwner,
 		display
 	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'checklists',
@@ -88,27 +93,42 @@ export function useRocketsBaseComponent(props, context, options) {
 		rocketTypeIconDetermine
 	} = useRocketsComponent(props, context, options);
 
+	const debug = ref(false);
+	const detailItemDescription = ref(null);
+	const detailItemDiameter = ref(null);
+	const detailItemManufacturers = ref(null);
+	const detailItemManufacturerStockId = ref(null);
+	const detailItemName = ref(null);
+	const detailItemWeight = ref(null);
+	const diameterMeasurementUnitId = ref(null);
+	const diameterMeasurementUnitsId = ref(null);
+	const weightMeasurementUnitId = ref(null);
+	const weightMeasurementUnitsId = ref(null);
 	const dialogRocketsLookupRef = ref(null);
 	const manufacturers = ref(null);
-	const params = ref({});
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.rockets.title`));
+
+	if (LibraryCommonUtility.isDev) {
+		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
+		const config = serviceConfig.get('debug');
+		if (config)
+			debug.value = config['rockets'] ?? false;
+	}
 
 	const buttonSearchResetDisabled = computed(() => {
 		return false;
 	});
-
 	const canCopyI = (correlationId, item) => {
-		return true;
+		return isOwner(correlationId, item);
 	};
 	const canDeleteI = (correlationId, item) => {
-		return item && !isPublic(correlationId, item);
+		return isOwner(correlationId, item);
 	};
 	const canEditI = (correlationId, item) => {
-		//return item && !isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
-		return true;
+		return isOwner(correlationId, item);
 	};
 	const canViewI = (correlationId, item) => {
-		return true;
+		return isOwner(correlationId, item);
 	};
 	const clickSearch = async (correlationId) => {
 		await fetch(correlationId);
@@ -118,13 +138,15 @@ export function useRocketsBaseComponent(props, context, options) {
 		await fetch(correlationId);
 	};
 	const fetchI = async (correlationId) => {
-		// TODO
+		await fetchManufacturers(correlationId);
+
+		const params = fetchParams(correlationId, {});
+		if (!params)
+			return error('useRocketsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
 			
-		const response = await serviceStore.dispatcher.requestRockets(correlationId, params.value);
+		const response = await serviceStore.dispatcher.requestRockets(correlationId, params);
 		if (hasFailed(response))
 			return response;
-
-		await fetchManufacturers(correlationId);
 
 		let results = response.results;
 		results.forEach((item) => {
@@ -157,12 +179,19 @@ export function useRocketsBaseComponent(props, context, options) {
 
 		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
 	};
+	const fetchParams = (correlationId, params) => {
+		params.name = detailItemName.value;
+		params.diameter = detailItemDiameter.value;
+		params.weight = detailItemWeight.value;
+		params.manufacturers = detailItemManufacturers.value;
+		params.manufacturerStockId = detailItemManufacturerStockId.value;
+		// params.weightMeasurementUnitId = weightMeasurementUnitId.value;
+		// params.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
+		return params;
+	};
 	const initNewI = (correlationId, data) => {
 		data = data ? data : new RocketData();
 		return data;
-	};
-	const isPublic = (correlationId, item) => {
-		return item ? item.public ?? false : false;
 	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
@@ -179,11 +208,23 @@ export function useRocketsBaseComponent(props, context, options) {
 		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
 	};
 	const resetAdditional = async (correlationId) => {
-		// TODO
+		detailItemName.value = null;
+		detailItemDiameter.value = null;
+		detailItemManufacturers.value = null;
+		detailItemWeight.value = null;
 	};
 
 	onMounted(async () => {
-		// fetchManufacturers(correlationId());
+		if (manufacturers.value)
+			return;
+
+		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
+		if (hasFailed(response))
+			return;
+			
+		let temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket));
+		temp2 = temp2.map((item) => { return { id: item.id, name: item.name }; });
+		manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
 	});
 
 	return {
@@ -243,18 +284,26 @@ export function useRocketsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
+		isOwner,
 		display,
-		hasCoverUrl,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
+		debug,
+		detailItemDescription,
+		detailItemDiameter,
+		detailItemManufacturers,
+		detailItemManufacturerStockId,
+		detailItemName,
+		detailItemWeight,
+		diameterMeasurementUnitId,
+		diameterMeasurementUnitsId,
+		weightMeasurementUnitId,
+		weightMeasurementUnitsId,
 		dialogRocketsLookupRef,
 		manufacturers,
-		params,
 		title,
 		buttonSearchResetDisabled,
 		clickSearch,
 		clickSearchClear,
-		isPublic,
+		fetchManufacturers,
 		manufacturer,
 		measurementUnitTranslateWeight,
 		resetAdditional

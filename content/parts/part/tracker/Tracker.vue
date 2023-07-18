@@ -142,6 +142,7 @@ import { useDetailComponentProps } from '@/components/content/detailComponentPro
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
 import { useTrackerPartComponent } from '@/components/content/parts/part/tracker/trackerPartComponent';
+import { useTrackerPartValidation } from '@/components/content/parts/part/tracker/trackerPartValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
@@ -204,7 +205,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -262,7 +263,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -287,7 +288,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), 
+		LibraryCommonUtility.cloneDeep(useTrackerPartValidation));
 	}
 };
 </script>

@@ -2,7 +2,7 @@
 	<Parts
 		title="parachutes"
 		:type="type"
-		:fetchParams="fetchParams"
+		:fetch-params="fetchParams"
 		:reset-additional-filter="resetAdditionalFilter"
 		:validation="validation"
 		:debug="debug"
@@ -92,8 +92,6 @@
 </template>
 
 <script>
-import { between, decimal } from '@vuelidate/validators';
-
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
@@ -102,6 +100,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useParachutesPartsListingComponent } from '@/components/content/parts/parachutes/parachutePartsListingComponent';
 import { usePartsListingFilterValidation } from '@/components/content/parts/partsListingFilterValidation';
+import { useParachutePartsListingFilterValidation } from '@/components/content/parts/parachutes/parachutePartsListingFilterValidation';
 
 import Parachute from '@/components/content/parts/part/parachute/Parachute';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
@@ -199,15 +198,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), {
-			detailItemCd: { decimal, between: between(0, 9), $autoDirty: true },
-			detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMax: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemLoadMin: { decimal, between: between(0, 2004), $autoDirty: true },
-			detailItemThinMill: { $autoDirty: true },
-			diameterMeasurementUnitId: { $autoDirty: true },
-			diameterMeasurementUnitsId: { $autoDirty: true }
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartsListingFilterValidation), 
+		LibraryCommonUtility.cloneDeep(useParachutePartsListingFilterValidation));
 	}
 };
 </script>

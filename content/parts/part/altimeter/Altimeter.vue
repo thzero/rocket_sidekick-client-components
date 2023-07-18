@@ -138,10 +138,11 @@
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
+import { useAltimeterPartComponent } from '@/components/content/parts/part/altimeter/altimeterPartComponent';
+import { useAltimeterPartValidation } from '@/components/content/parts/part/altimeter/altimeterPartValidation';
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
-import { useAltimeterPartComponent } from '@/components/content/parts/part/altimeter/altimeterPartComponent';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
@@ -204,7 +205,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -262,7 +263,7 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
-			measurementUnitslengthType,
+			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
 			detailItemDescription,
@@ -287,7 +288,8 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), {});
+		return Object.assign(LibraryCommonUtility.cloneDeep(usePartValidation), 
+		LibraryCommonUtility.cloneDeep(useAltimeterPartValidation));
 	}
 };
 </script>

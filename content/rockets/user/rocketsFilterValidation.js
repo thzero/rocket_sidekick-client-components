@@ -1,6 +1,6 @@
 import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
 
-export const useRocketsListingFilterValidation = {
+export const useRocketsFilterValidation = {
 	detailItemName: {
 		minLength: minLength(3),
 		maxLength: maxLength(50),

@@ -38,7 +38,7 @@ export function useMasterDetailComponent(props, context, options) {
 	} = useNotify(props, context, options);
 
 	const display = useDisplayComponent();
-	
+
 	const dialogCopyManager = ref(new DialogSupport());
 	const dialogCopyParams = ref(null);
 	const dialogCopyRef = ref(null);
@@ -47,6 +47,7 @@ export function useMasterDetailComponent(props, context, options) {
 	const dialogDeleteParams = ref(null);
 	const detailItem = ref(null);
 	const items = ref([]);
+	const user = ref(null);
 
 	const colsEditPanel = computed(() => {
 		if (display.lgAndDown.value)
@@ -243,8 +244,14 @@ export function useMasterDetailComponent(props, context, options) {
 
 		return item.id === dialogDeleteParams.value.id;
 	};
+	const isOwner = (correlationId, item) => {
+		const ownerId = (user.value ?? {}).id;
+		return item ? item.ownerId == ownerId : false;
+	};
 
 	onMounted(async () => {
+		user.value = await serviceStore.user;
+
 		await fetch(correlationId());
 	});
 
@@ -305,6 +312,7 @@ export function useMasterDetailComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
+		isOwner,
 		display
 	};
 };
