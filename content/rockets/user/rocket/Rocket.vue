@@ -29,7 +29,7 @@
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
-			<v-col cols="10">
+			<v-col cols="12" md="8">
 				<VTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
@@ -38,6 +38,17 @@
 					:readonly="!isEditable"
 					:label="$t('forms.name')"
 					:counter="30"
+				/>
+			</v-col>
+			<v-col cols="12" md="4">
+				<VSelectWithValidation
+					ref="detailItemRocketTypeRef"
+					v-model="detailItemRocketType"
+					vid="detailItemRocketType"
+					:items="rocketTypes"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.type')"
 				/>
 			</v-col>
 		</v-row>
@@ -53,6 +64,30 @@
 					:counter="30"
 					:clearable="isEditable"
 					:rows="detailItemTextRows"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="8">
+				<VSelectWithValidation
+					ref="manufacturerRef"
+					v-model="detailItemManufacturer"
+					vid="detailItemManufacturer"
+					:items="manufacturers"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.manufacturer.name')"
+				/>
+			</v-col>
+			<v-col cols="4">
+				<VTextFieldWithValidation
+					ref="detailItemManufacturerStockIdRef"
+					v-model="detailItemManufacturerStockId"
+					vid="detailItemManufacturerStockId"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.parts.manufacturerId')"
+					:counter="30"
 				/>
 			</v-col>
 		</v-row>
@@ -172,41 +207,6 @@
 						</td>
 					</tr>
 				</table>
-			</v-col>
-			<v-col cols="6">
-				<VSelectWithValidation
-					ref="detailItemRocketTypeRef"
-					v-model="detailItemRocketType"
-					vid="detailItemRocketType"
-					:items="rocketTypes"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.type')"
-				/>
-			</v-col>
-		</v-row>
-		<v-row dense>
-			<v-col cols="8">
-				<VSelectWithValidation
-					ref="manufacturerRef"
-					v-model="detailItemManufacturer"
-					vid="detailItemManufacturer"
-					:items="manufacturers"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.manufacturer.name')"
-				/>
-			</v-col>
-			<v-col cols="4">
-				<VTextFieldWithValidation
-					ref="detailItemManufacturerStockIdRef"
-					v-model="detailItemManufacturerStockId"
-					vid="detailItemManufacturerStockId"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.manufacturerId')"
-					:counter="30"
-				/>
 			</v-col>
 		</v-row>
 	</VFormControl>

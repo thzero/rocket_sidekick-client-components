@@ -114,7 +114,7 @@ export function useDetailComponent(props, context, options) {
 
 			detailItem.value = value;
 			if (detailItem.value) {
-				options.init(correlationId(), detailItem.value.data);
+				await options.init(correlationId(), detailItem.value.data);
 				detailItemOrig.value = LibraryCommonUtility.cloneDeep(value);
 			}
 		}

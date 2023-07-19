@@ -63,7 +63,7 @@ export function useParachutePartComponent(props, context, options) {
 		handleAdd,
 		requestManufacturers
 	} = usePartComponent(props, context, {
-		init: (correlationId, value) => {
+		init: async (correlationId, value) => {
 			resetData(correlationId, value);
 		},
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
