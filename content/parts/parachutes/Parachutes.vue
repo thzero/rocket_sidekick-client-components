@@ -29,39 +29,26 @@
 			<v-row dense>
 				<v-col cols="12" sm="6">
 					<VTextFieldWithValidation
-						ref="detailItemNameRef"
-						v-model="detailItemName"
-						vid="detailItemName"
+						ref="filterItemNameRef"
+						v-model="filterItemName"
+						vid="filterItemName"
 						:label="$t('forms.name')"
 						:validation="validation"
 					/>
 				</v-col>
 				<v-col cols="6" sm="6">
-					<v-radio-group
-						v-model="detailItemIsPublic"
-						inline
+					<PartsPublicComponent
+						v-model="filterItemIsPublic"
 					>
-						<v-radio
-						:label="$t('forms.content.parts.all')"
-							value=""
-						></v-radio>
-						<v-radio
-						:label="$t('forms.content.parts.yours')"
-							:value="false"
-						></v-radio>
-						<v-radio
-							:label="$t('forms.content.parts.public')"
-							:value="true"
-						></v-radio>
-					</v-radio-group>
+					</PartsPublicComponent>
 				</v-col>
 			</v-row>
 			<v-row dense>
 				<v-col cols="12" sm="6">
 					<VSelectWithValidation
-						ref="detailItemManufacturersRef"
-						v-model="detailItemManufacturers"
-						vid="detailItemManufacturers"
+						ref="filterItemManufacturersRef"
+						v-model="filterItemManufacturers"
+						vid="filterItemManufacturers"
 						multiple
 						:max-values="2"
 						:items="manufacturers"
@@ -72,16 +59,16 @@
 				</v-col>
 				<v-col cols="6" sm="3">
 					 <v-checkbox
-						v-model="detailItemThinMill"
+						v-model="filterItemThinMill"
 						density="compact"
 						:label="$t('forms.content.parts.parachute.thinMill')"
 					/>
 				</v-col>
 				<v-col cols="12" sm="6">
 					<VTextFieldWithValidation
-						ref="detailItemManufacturerStockIdRef"
-						v-model="detailItemManufacturerStockId"
-						vid="detailItemManufacturerStockId"
+						ref="filterItemManufacturerStockIdRef"
+						v-model="filterItemManufacturerStockId"
+						vid="filterItemManufacturerStockId"
 						:label="$t('forms.content.parts.manufacturerId')"
 						:validation="validation"
 					/>
@@ -90,9 +77,9 @@
 			<v-row dense>
 				<!-- <v-col cols="12" sm="6">
 					<VTextFieldWithValidation
-						ref="detailItemDiameterRef"
-						v-model="detailItemDiameter"
-						vid="detailItemDiameter"
+						ref="filterItemDiameterRef"
+						v-model="filterItemDiameter"
+						vid="filterItemDiameter"
 						:label="$t('forms.content.parts.diameter')"
 						:validation="validation"
 					/>
@@ -116,6 +103,7 @@ import { useParachutePartsListingFilterValidation } from '@/components/content/p
 import Parachute from '@/components/content/parts/part/parachute/Parachute';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import Parts from '@/components/content/parts/Parts';
+import PartsPublicComponent from '@/components/content/parts/PartsPublicComponent';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
@@ -133,6 +121,7 @@ export default {
 		Parachute,
 		ParachutePanelTitle,
 		Parts,
+		PartsPublicComponent,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
 		VSwitchWithValidation,
@@ -155,20 +144,19 @@ export default {
 			sort,
 			target,
 			debug,
-			detailItemDescription,
-			detailItemIsPublic,
-			detailItemManufacturers,
-			detailItemManufacturerStockId,
-			detailItemName,
-			detailItemWeight,
+			filterItemIsPublic,
+			filterItemManufacturers,
+			filterItemManufacturerStockId,
+			filterItemName,
+			filterItemWeight,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
 			manufacturers,
 			type,
-			detailItemDiameter,
-			detailItemThinMill,
 			fetchParams,
-			resetAdditionalFilter
+			resetAdditionalFilter,
+			filterItemDiameter,
+			filterItemThinMill
 		} = useParachutesPartsListingComponent(props, context, { 
 			type: AppCommonConstants.Rocketry.PartTypes.parachute
 		});
@@ -188,20 +176,19 @@ export default {
 			sort,
 			target,
 			debug,
-			detailItemDescription,
-			detailItemIsPublic,
-			detailItemManufacturers,
-			detailItemManufacturerStockId,
-			detailItemName,
-			detailItemWeight,
+			filterItemIsPublic,
+			filterItemManufacturers,
+			filterItemManufacturerStockId,
+			filterItemName,
+			filterItemWeight,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
 			manufacturers,
 			type,
-			detailItemDiameter,
-			detailItemThinMill,
 			fetchParams,
 			resetAdditionalFilter,
+			filterItemDiameter,
+			filterItemThinMill,
 			scope: 'ParchutesFilterControl',
 			validation: useVuelidate({ $scope: 'ParchutesFilterControl' })
 		};

@@ -12,6 +12,7 @@ import { useMasterDetailComponent } from '@/components/content/masterDetailCompo
 import ChecklistData from 'rocket_sidekick_common/data/checklists/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
+import { filter } from 'mathjs';
 
 export function useChecklistsBaseComponent(props, context, options) {
 	const {
@@ -50,6 +51,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		canEdit,
 		canView,
 		detailClose,
+		detailError,
 		detailOk,
 		dialogCopyCancel,
 		dialogCopyError,
@@ -61,6 +63,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogDeleteOk,
 		dialogDeleteOpen,
 		dialogDeleteParams,
+		fetch,
 		handleAdd,
 		handleEdit,
 		handleView,
@@ -71,7 +74,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isDeleting,
 		isOwner,
 		display
-	} = useMasterDetailComponent(props, context, Object.assign(options ? options : {}, {
+	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'checklists',
 			canCopy: (correlationId, item) => { return canCopyI(correlationId, item); },
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
@@ -79,18 +82,21 @@ export function useChecklistsBaseComponent(props, context, options) {
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
+			init: (correlationId) => { return initI(correlationId); },
 			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
-		})
+		}
 	);
 
 	const debug = ref(false);
+	const dialogChecklistsLookupRef = ref(null);
 	const dialogStartManager = ref(new DialogSupport());
 	const dialogStartMessage = ref(LibraryClientUtility.$trans.t('messages.checklists.start_confirm'));
 	const dialogStartParams = ref(null);
-	const params = ref({});
-	const title = ref(
-		(props.type === AppCommonConstants.Checklists.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.checklists.title')
-	);
+	const filterItemName = ref(null);
+	const filterItemIsDefault = ref(true);
+	const filterItemShared = ref(false);
+	const filterItemYours  = ref(true);
+	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t('titles.content.checklists.title'));
 
 	if (LibraryCommonUtility.isDev) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
@@ -135,6 +141,13 @@ export function useChecklistsBaseComponent(props, context, options) {
 			return 'rocket_mid.png';
 		return null;
 	};
+	const clickSearch = async (correlationId) => {
+		await fetch(correlationId);
+	};
+	const clickSearchClear = async (correlationId) => {
+		await dialogRocketsLookupRef.value.reset(correlationId, true);
+		await fetch(correlationId);
+	};
 	const dialogStartCancel = async (item) => {
 		try {
 			dialogStartManager.value.cancel();
@@ -171,10 +184,28 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogStartManager.value.open();
 	};
 	const fetchI = async (correlationId) => {
-		return await serviceStore.dispatcher.requestChecklists(correlationId, params.value);
+		const params = fetchParams(correlationId, {});
+		if (!params)
+			return error('useRocketsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
+
+		serviceStore.dispatcher.setChecklistsSearchCriteria(correlationId, params);
+			
+		return await serviceStore.dispatcher.requestChecklists(correlationId, params);
 	};
 	const fetchItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.requestChecklistById(correlationId, id);
+	};
+	const fetchParams = (correlationId, params) => {
+		params.name = filterItemName.value;
+		params.yours = filterItemYours.value;
+		params.isDefault = filterItemIsDefault.value;
+		params.shared = filterItemShared.value;
+		return params;
+	};
+	const initI = async (correlationId) => {
+		const params = await serviceStore.getters.getChecklistsSearchCriteria(correlationId);
+		if (params)
+			resetAdditional(correlationId, params);
 	};
 	const initNewI = (correlationId, data) => {
 		data = data ? data : new ChecklistData();
@@ -198,6 +229,17 @@ export function useChecklistsBaseComponent(props, context, options) {
 			return false;
 
 		return item.id === dialogStartParams.value.id;
+	};
+	const resetAdditional = async (correlationId, data) => {
+		filterItemName.value = data ? data.name : null;
+		filterItemYours.value = data ? data.yours : null;
+		filterItemIsDefault.value = data ? data.isDefault : null;
+		filterItemShared.value = data ? data.shared : null;
+
+		if (!filterItemYours.value && !filterItemIsDefault.value && !filterItemShared.value) {
+			filterItemIsDefault.value = true;
+			filterItemYours.value = true;
+		}
 	};
 
 	return {
@@ -236,6 +278,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		canEdit,
 		canView,
 		detailClose,
+		detailError,
 		detailOk,
 		dialogCopyCancel,
 		dialogCopyError,
@@ -247,6 +290,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogDeleteOk,
 		dialogDeleteOpen,
 		dialogDeleteParams,
+		fetch,
 		handleAdd,
 		handleEdit,
 		handleView,
@@ -258,6 +302,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isOwner,
 		display,
 		debug,
+		dialogChecklistsLookupRef,
 		dialogStartManager,
 		dialogStartMessage,
 		title,
@@ -265,15 +310,21 @@ export function useChecklistsBaseComponent(props, context, options) {
 		checklistTypeIcon,
 		checklistTypeIconDetermine,
 		dialogStartCancel,
+		clickSearch,
+		clickSearchClear,
 		dialogStartParams,
+		filterItemName,
+		filterItemIsDefault,
+		filterItemShared,
+		filterItemYours,
 		dialogStartOk,
 		dialogStartOpen,
-		params,
 		isCompleted,
 		isDefault,
 		isInProgress,
 		isShared,
-		isStarting
+		isStarting,
+		resetAdditional
 	};
 };
 </script>

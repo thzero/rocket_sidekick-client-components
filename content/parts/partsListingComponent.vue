@@ -26,12 +26,12 @@ export function usePartsListingComponent(props, context, options) {
 	} = useContentBaseComponent(props, context, options);
 
 	const debug = ref(false);
-	const detailItemDescription = ref(null);
-	const detailItemIsPublic = ref(null);
-	const detailItemManufacturers = ref(null);
-	const detailItemManufacturerStockId = ref(null);
-	const detailItemName = ref(null);
-	const detailItemWeight = ref(null);
+	const filterItemDescription = ref(null);
+	const filterItemIsPublic = ref(null);
+	const filterItemManufacturers = ref(null);
+	const filterItemManufacturerStockId = ref(null);
+	const filterItemName = ref(null);
+	const filterItemWeight = ref(null);
 	const weightMeasurementUnitId = ref(null);
 	const weightMeasurementUnitsId = ref(null);
 	const manufacturers = ref(null);
@@ -48,22 +48,23 @@ export function usePartsListingComponent(props, context, options) {
 		if (options.fetchParams)
 			options.fetchParams(correlationId, params);
 
-		params.name = detailItemName.value;
-		params.public = detailItemIsPublic.value === true ? true : detailItemIsPublic.value === false ? false : null;
-		params.weight = detailItemWeight.value;
-		params.manufacturers = detailItemManufacturers.value;
-		params.manufacturerStockId = detailItemManufacturerStockId.value;
+		params.name = filterItemName.value;
+		params.public = filterItemIsPublic.value === true ? true : filterItemIsPublic.value === false ? false : null;
+		params.weight = filterItemWeight.value;
+		params.manufacturers = filterItemManufacturers.value;
+		params.manufacturerStockId = filterItemManufacturerStockId.value;
 		// params.weightMeasurementUnitId = weightMeasurementUnitId.value;
 		// params.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 		return params;
 	};
-	const resetAdditionalFilter = (correlationId) => {
+	const resetAdditionalFilter = (correlationId, data) => {
 		if (options.resetAdditionalFilter)
-			options.resetAdditionalFilter(correlationId,);
-		detailItemName.value = null;
-		detailItemIsPublic.value = null;
-		detailItemManufacturers.value = null;
-		detailItemWeight.value = null;
+			options.resetAdditionalFilter(correlationId, data);
+		filterItemName.value = data ? data.name : null;
+		filterItemIsPublic.value = data ? data.public : null;
+		filterItemManufacturers.value = data ? data.manufacturers : null;
+		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
+		filterItemWeight.value = data ? data.weight : null;
 	};
 
 	onMounted(async () => {
@@ -94,12 +95,11 @@ export function usePartsListingComponent(props, context, options) {
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,

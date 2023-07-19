@@ -16,9 +16,9 @@
 								<v-row dense>
 									<v-col cols="12" sm="6">
 										<VTextFieldWithValidation
-											ref="detailItemNameRef"
-											v-model="detailItemName"
-											vid="detailItemName"
+											ref="filterItemNameRef"
+											v-model="filterItemName"
+											vid="filterItemName"
 											:label="$t('forms.name')"
 											:validation="validation"
 										/>
@@ -27,9 +27,9 @@
 								<v-row dense>
 									<v-col cols="12" sm="6">
 										<VSelectWithValidation
-											ref="detailItemManufacturersRef"
-											v-model="detailItemManufacturers"
-											vid="detailItemManufacturers"
+											ref="filterItemManufacturersRef"
+											v-model="filterItemManufacturers"
+											vid="filterItemManufacturers"
 											multiple
 											:max-values="2"
 											:items="manufacturers"
@@ -40,18 +40,18 @@
 									</v-col>
 									<v-col cols="12" sm="6">
 										<VTextFieldWithValidation
-											ref="detailItemManufacturerStockIdRef"
-											v-model="detailItemManufacturerStockId"
-											vid="detailItemManufacturerStockId"
+											ref="filterItemManufacturerStockIdRef"
+											v-model="filterItemManufacturerStockId"
+											vid="filterItemManufacturerStockId"
 											:label="$t('forms.content.parts.manufacturerId')"
 											:validation="validation"
 										/>
 									</v-col>
 									<!-- <v-col cols="12" sm="6">
 										<VTextFieldWithValidation
-											ref="detailItemDiameterRef"
-											v-model="detailItemDiameter"
-											vid="detailItemDiameter"
+											ref="filterItemDiameterRef"
+											v-model="filterItemDiameter"
+											vid="filterItemDiameter"
 											:label="$t('forms.content.parts.diameter')"
 											:validation="validation"
 										/>
@@ -322,28 +322,28 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
+			isOwner,
 			display,
 			debug,
-			detailItemDescription,
-			detailItemDiameter,
-			detailItemManufacturers,
-			detailItemManufacturerStockId,
-			detailItemName,
-			detailItemWeight,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			dialogRocketsLookupRef,
+			filterItemDiameter,
+			filterItemManufacturers,
+			filterItemManufacturerStockId,
+			filterItemName,
+			filterItemWeight,
 			manufacturers,
 			title,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
 			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
-			resetAdditional
+			resetAdditional,
 		} = useRocketsBaseComponent(props, context);
 
 		return {
@@ -403,21 +403,21 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
+			isOwner,
 			display,
 			debug,
-			detailItemDescription,
-			detailItemDiameter,
-			detailItemManufacturers,
-			detailItemManufacturerStockId,
-			detailItemName,
-			detailItemWeight,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			dialogRocketsLookupRef,
+			filterItemDiameter,
+			filterItemManufacturers,
+			filterItemManufacturerStockId,
+			filterItemName,
+			filterItemWeight,
 			manufacturers,
 			title,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,

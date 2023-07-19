@@ -17,12 +17,11 @@ export function useChuteReleasePartsListingComponent(props, context, options) {
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,
@@ -33,7 +32,7 @@ export function useChuteReleasePartsListingComponent(props, context, options) {
 		fetchParams: (correlationId, params) => {
 			return params;
 		},
-		resetAdditionalFilter: (correlationId) => {
+		resetAdditionalFilter: (correlationId, data) => {
 		}
 	}));
 
@@ -52,12 +51,11 @@ export function useChuteReleasePartsListingComponent(props, context, options) {
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,

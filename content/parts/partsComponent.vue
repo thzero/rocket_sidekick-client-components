@@ -77,6 +77,7 @@ export function usePartsBaseComponent(props, context, options) {
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
+			init: (correlationId) => { return initI(correlationId); },
 			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
 		}
 	);
@@ -124,6 +125,8 @@ export function usePartsBaseComponent(props, context, options) {
 		if (hasFailed(response))
 			return response;
 
+		serviceStore.dispatcher.setPartsSearchCriteria(correlationId, { params: params.value, type: props.type });
+
 		await fetchManufacturers(correlationId);
 
 		let results = response.results.filter(l => l.typeId === props.type);
@@ -157,6 +160,11 @@ export function usePartsBaseComponent(props, context, options) {
 
 		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
 	};
+	const initI = async (correlationId) => {
+		const params = await serviceStore.getters.getPartsSearchCriteria(correlationId);
+		if (params) 
+			resetAdditional(correlationId, params[props.type]);
+	};
 	const initNewI = (correlationId, data) => {
 		data = data ? data : new PartData();
 		return data;
@@ -178,9 +186,9 @@ export function usePartsBaseComponent(props, context, options) {
 	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
 		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
 	};
-	const resetAdditional = async (correlationId) => {
+	const resetAdditional = async (correlationId, data) => {
 		if (props.resetAdditionalFilter)
-			await props.resetAdditionalFilter(correlationId);
+			await props.resetAdditionalFilter(correlationId, data);
 	};
 
 	onMounted(async () => {

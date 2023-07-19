@@ -82,6 +82,7 @@ export function useRocketsBaseComponent(props, context, options) {
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
+			init: (correlationId) => { return initI(correlationId); },
 			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
 		}
 	);
@@ -94,19 +95,19 @@ export function useRocketsBaseComponent(props, context, options) {
 	} = useRocketsComponent(props, context, options);
 
 	const debug = ref(false);
-	const detailItemDescription = ref(null);
-	const detailItemDiameter = ref(null);
-	const detailItemManufacturers = ref(null);
-	const detailItemManufacturerStockId = ref(null);
-	const detailItemName = ref(null);
-	const detailItemWeight = ref(null);
 	const diameterMeasurementUnitId = ref(null);
 	const diameterMeasurementUnitsId = ref(null);
-	const weightMeasurementUnitId = ref(null);
-	const weightMeasurementUnitsId = ref(null);
 	const dialogRocketsLookupRef = ref(null);
+	const filterItemDiameter = ref(null);
+	const filterItemManufacturers = ref(null);
+	const filterItemManufacturerStockId = ref(null);
+	const filterItemName = ref(null);
+	const filterItemWeight = ref(null);
 	const manufacturers = ref(null);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.rockets.title`));
+	const weightMeasurementUnitId = ref(null);
+	const weightMeasurementUnitsId = ref(null);
+	const params = ref({});
 
 	if (LibraryCommonUtility.isDev) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
@@ -143,6 +144,8 @@ export function useRocketsBaseComponent(props, context, options) {
 		const params = fetchParams(correlationId, {});
 		if (!params)
 			return error('useRocketsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
+
+		serviceStore.dispatcher.setRocketsSearchCriteria(correlationId, params);
 			
 		const response = await serviceStore.dispatcher.requestRockets(correlationId, params);
 		if (hasFailed(response))
@@ -180,14 +183,19 @@ export function useRocketsBaseComponent(props, context, options) {
 		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
 	};
 	const fetchParams = (correlationId, params) => {
-		params.name = detailItemName.value;
-		params.diameter = detailItemDiameter.value;
-		params.weight = detailItemWeight.value;
-		params.manufacturers = detailItemManufacturers.value;
-		params.manufacturerStockId = detailItemManufacturerStockId.value;
+		params.name = filterItemName.value;
+		params.diameter = filterItemDiameter.value;
+		params.weight = filterItemWeight.value;
+		params.manufacturers = filterItemManufacturers.value;
+		params.manufacturerStockId = filterItemManufacturerStockId.value;
 		// params.weightMeasurementUnitId = weightMeasurementUnitId.value;
 		// params.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 		return params;
+	};
+	const initI = async (correlationId) => {
+		const params = await serviceStore.getters.getRocketsSearchCriteria(correlationId);
+		if (params)
+			resetAdditional(correlationId, params);
 	};
 	const initNewI = (correlationId, data) => {
 		data = data ? data : new RocketData();
@@ -207,19 +215,20 @@ export function useRocketsBaseComponent(props, context, options) {
 	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
 		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
 	};
-	const resetAdditional = async (correlationId) => {
-		detailItemName.value = null;
-		detailItemDiameter.value = null;
-		detailItemManufacturers.value = null;
-		detailItemManufacturerStockId.value = null;
-		detailItemWeight.value = null;
+	const resetAdditional = async (correlationId, data) => {
+		filterItemName.value = data ? data.name : null;
+		filterItemDiameter.value = data ? data.diameter : null;
+		filterItemManufacturers.value = data ? data.manufacturers : null;
+		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
+		filterItemWeight.value = data ? data.weight : null;
 	};
 
 	onMounted(async () => {
 		if (manufacturers.value)
 			return;
 
-		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
+		const correlationIdI = correlationId();
+		const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
 		if (hasFailed(response))
 			return;
 			
@@ -288,19 +297,18 @@ export function useRocketsBaseComponent(props, context, options) {
 		isOwner,
 		display,
 		debug,
-		detailItemDescription,
-		detailItemDiameter,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
 		diameterMeasurementUnitId,
 		diameterMeasurementUnitsId,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
 		dialogRocketsLookupRef,
+		filterItemDiameter,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		manufacturers,
 		title,
+		weightMeasurementUnitId,
+		weightMeasurementUnitsId,
 		buttonSearchResetDisabled,
 		clickSearch,
 		clickSearchClear,
