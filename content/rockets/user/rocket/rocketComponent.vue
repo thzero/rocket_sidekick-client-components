@@ -43,16 +43,18 @@ export function useRocketComponent(props, context, options) {
 		preCompleteOk,
 		resetAdditional
 	} = useDetailComponent(props, context, {
-		init: (correlationId, value) => {
+		init: async (correlationId, value) => {
+			await requestManufacturers(correlationId);
+			const temp = manufacturersI.value ? manufacturersI.value.find(l => l.isDefault) : null;
+			manufacturerDefault.value = temp ? temp.id : null;
 			resetData(correlationId, value);
-			requestManufacturers(correlationId);
 		},
 		preCompleteOk : async (correlationId) => {
 			detailItem.value.data.description = String.trim(detailItemDescription.value);
 			detailItem.value.data.name = String.trim(detailItemName.value);
 			detailItem.value.data.typeId = detailItemRocketType.value;
 			
-			detailItem.value.data.manufacturerId = detailItemManufacturer.value;d37HEk5Wjm3mmV4InK90U
+			detailItem.value.data.manufacturerId = detailItemManufacturer.value;
 			detailItem.value.data.manufacturerStockId = detailItemManufacturerStockId.value;
 
 			detailItem.value.data.cg = Number(detailItemCg.value);
@@ -149,6 +151,7 @@ export function useRocketComponent(props, context, options) {
 	const manufacturersI = ref(null);
 	const weightMeasurementUnitId = ref(null);
 	const weightMeasurementUnitsId = ref(null);
+	const manufacturerDefault = ref(null);
 	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
 	
 	const manufacturers = computed(() => {
@@ -172,7 +175,7 @@ export function useRocketComponent(props, context, options) {
 			return;
 
 		let temp2 = response.results.filter(l => l.types.find(j => j === manufacturerType.value));
-		temp2 = temp2.map((item) => { return { id: item.id, name: item.name }; });
+		temp2 = temp2.map((item) => { return { id: item.id, name: item.name, isDefault: item.isDefault }; });
 		manufacturersI.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
 	}
 	const resetData = (correlationId, value) => {
@@ -180,7 +183,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemRocketType.value = value? value.typeId : AppCommonConstants.Rocketry.RocketTypes.highone;	
 		detailItemName.value = value ? value.name : null;
 		
-		detailItemManufacturer.value = value ? value.manufacturerId : null;
+		detailItemManufacturer.value = value && value.manufacturerId ? value.manufacturerId : manufacturerDefault.value; // 'd37HEk5Wjm3mmV4InK90U';
 		detailItemManufacturerStockId.value = value? value.manufacturerStockId : null;
 
 		detailItemCg.value = value ? value.cg : null;
