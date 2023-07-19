@@ -13,7 +13,50 @@
 					<v-card>
 						<v-card-text>
 							<slot name="filters">
-								
+								<v-row dense>
+									<v-col cols="12" sm="6">
+										<VTextFieldWithValidation
+											ref="detailItemNameRef"
+											v-model="detailItemName"
+											vid="detailItemName"
+											:label="$t('forms.name')"
+											:validation="validation"
+										/>
+									</v-col>
+								</v-row>
+								<v-row dense>
+									<v-col cols="12" sm="6">
+										<VSelectWithValidation
+											ref="detailItemManufacturersRef"
+											v-model="detailItemManufacturers"
+											vid="detailItemManufacturers"
+											multiple
+											:max-values="2"
+											:items="manufacturers"
+											:validation="validation"
+											:label="$t('forms.content.manufacturer.plural')"
+											:hint="$t('forms.content.manufacturer.plural_hint')"
+										/>
+									</v-col>
+									<v-col cols="12" sm="6">
+										<VTextFieldWithValidation
+											ref="detailItemManufacturerStockIdRef"
+											v-model="detailItemManufacturerStockId"
+											vid="detailItemManufacturerStockId"
+											:label="$t('forms.content.parts.manufacturerId')"
+											:validation="validation"
+										/>
+									</v-col>
+									<!-- <v-col cols="12" sm="6">
+										<VTextFieldWithValidation
+											ref="detailItemDiameterRef"
+											v-model="detailItemDiameter"
+											vid="detailItemDiameter"
+											:label="$t('forms.content.parts.diameter')"
+											:validation="validation"
+										/>
+									</v-col> -->
+								</v-row>
 							</slot>
 						</v-card-text>
 						<v-card-actions>
@@ -193,14 +236,29 @@ import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
 
+import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
+import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
+import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+
 export default {
-	name: 'Rockets',
+	name: 'RocketsUserControl',
 	components: {
+		ContentHeader,
+		MeasurementUnitSelect,
+		MeasurementUnitsSelect,
 		Rocket,
 		RocketCopyDialog,
-		ContentHeader,
 		VConfirmationDialog,
-		VFormListing
+		VFormListing,
+		VNumberFieldWithValidation,
+		VSelectWithValidation,
+		VSwitchWithValidation,
+		VTextAreaWithValidation,
+		VTextFieldWithValidation
 	},
 	props: {
 		...useMasterDetailComponentProps,

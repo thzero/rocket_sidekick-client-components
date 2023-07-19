@@ -211,6 +211,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		detailItemName.value = null;
 		detailItemDiameter.value = null;
 		detailItemManufacturers.value = null;
+		detailItemManufacturerStockId.value = null;
 		detailItemWeight.value = null;
 	};
 

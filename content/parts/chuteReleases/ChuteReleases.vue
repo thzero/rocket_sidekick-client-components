@@ -70,6 +70,17 @@
 						:hint="$t('forms.content.manufacturer.plural_hint')"
 					/>
 				</v-col>
+				<v-col cols="12" sm="6">
+					<VTextFieldWithValidation
+						ref="detailItemManufacturerStockIdRef"
+						v-model="detailItemManufacturerStockId"
+						vid="detailItemManufacturerStockId"
+						:label="$t('forms.content.parts.manufacturerId')"
+						:validation="validation"
+					/>
+				</v-col>
+			</v-row>
+			<v-row dense>
 				<!-- <v-col cols="12" sm="6">
 					<VTextFieldWithValidation
 						ref="detailItemDiameterRef"
@@ -103,7 +114,6 @@ import Parts from '@/components/content/parts/Parts';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
 import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
@@ -118,7 +128,6 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
 		Parts,
-		VFormControl,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
 		VSwitchWithValidation,
