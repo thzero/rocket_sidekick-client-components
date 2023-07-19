@@ -230,7 +230,7 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RockeControl',
+	name: 'RocketControl',
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
