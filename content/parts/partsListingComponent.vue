@@ -49,7 +49,7 @@ export function usePartsListingComponent(props, context, options) {
 			options.fetchParams(correlationId, params);
 
 		params.name = filterItemName.value;
-		params.public = filterItemIsPublic.value === true ? true : filterItemIsPublic.value === false ? false : null;
+		params.public = filterItemIsPublic.value;
 		params.weight = filterItemWeight.value;
 		params.manufacturers = filterItemManufacturers.value;
 		params.manufacturerStockId = filterItemManufacturerStockId.value;
@@ -61,7 +61,7 @@ export function usePartsListingComponent(props, context, options) {
 		if (options.resetAdditionalFilter)
 			options.resetAdditionalFilter(correlationId, data);
 		filterItemName.value = data ? data.name : null;
-		filterItemIsPublic.value = data ? data.public : null;
+		filterItemIsPublic.value = data ? data.public : 1;
 		filterItemManufacturers.value = data ? data.manufacturers : null;
 		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
 		filterItemWeight.value = data ? data.weight : null;

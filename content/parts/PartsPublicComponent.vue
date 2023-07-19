@@ -7,15 +7,15 @@
         >
             <v-radio
                 :label="$t('forms.content.parts.all')"
-                value=""
+                :value="1"
             ></v-radio>
             <v-radio
                 :label="$t('forms.content.parts.yours')"
-                :value="false"
+                :value="2"
             ></v-radio>
             <v-radio
                 :label="$t('forms.content.parts.public')"
-                :value="true"
+                :value="3"
             ></v-radio>
         </v-radio-group>
     </v-col>
