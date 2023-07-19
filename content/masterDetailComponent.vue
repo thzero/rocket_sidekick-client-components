@@ -252,7 +252,11 @@ export function useMasterDetailComponent(props, context, options) {
 	onMounted(async () => {
 		user.value = await serviceStore.user;
 
-		await fetch(correlationId());
+		const correlationIdI = correlationId();
+		if (options.init)
+			await options.init(correlationIdI);
+
+		await fetch(correlationIdI);
 	});
 
 	return {

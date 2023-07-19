@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import LibraryCommonUtility from '@thzero/library_common/utility';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useChecklistComponent } from '@/components/content/checklists/checklist/checklistComponent';
 import { useChecklistComponentProps } from '@/components/content/checklists/checklist/checklistComponentProps';

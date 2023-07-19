@@ -19,12 +19,11 @@ export function useChuteProtectorPartsListingComponent(props, context, options) 
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,
@@ -33,17 +32,17 @@ export function useChuteProtectorPartsListingComponent(props, context, options) 
 		resetAdditionalFilter
 	} = usePartsListingComponent(props, context, Object.assign(options, {
 		fetchParams: (correlationId, params) => {
-			params.diameter = detailItemDiameter.value;
+			params.diameter = filterItemDiameter.value;
 			// params.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
 			// params.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
-			params.dimension = detailItemDimension.value;
+			params.dimension = filterItemDimension.value;
 			// params.dimensionMeasurementUnitId = dimensionMeasurementUnitId.value;
 			// params.dimensionMeasurementUnistId = dimensionMeasurementUnistId.value;
 			return params;
 		},
-		resetAdditionalFilter: (correlationId) => {
-			detailItemDiameter.value = null;
-			detailItemDimension.value = null;
+		resetAdditionalFilter: (correlationId, data) => {
+			filterItemDiameter.value = data ? data.diameter : null;
+			filterItemDimension.value = data ? data.dimension : null;
 
 			// diameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 			// diameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
@@ -53,8 +52,8 @@ export function useChuteProtectorPartsListingComponent(props, context, options) 
 		}
 	}));
 
-	const detailItemDiameter = ref(null);
-	const detailItemDimension = ref(null);
+	const filterItemDiameter = ref(null);
+	const filterItemDimension = ref(null);
 
 	return {
 		correlationId,
@@ -71,20 +70,19 @@ export function useChuteProtectorPartsListingComponent(props, context, options) 
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,
 		type,
 		fetchParams,
 		resetAdditionalFilter,
-		detailItemDiameter,
-		detailItemDimension
+		filterItemDiameter,
+		filterItemDimension
 	};
 };
 </script>

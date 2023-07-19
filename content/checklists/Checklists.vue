@@ -1,139 +1,157 @@
 <template>
 	<ContentHeader :value="title" />
-	<v-row dense>
-		<v-col cols="12">
-			<v-card
-				v-if="!showDetailItem || showList"
-				class="mb-4"
-			>
-				<v-card-text>
-					filters go here
-					{{ dialogDeleteMessage }}
-				</v-card-text>
-				<v-card-actions>
-					<v-spacer></v-spacer>
-					<v-btn
-						v-if="!showDetailItem"
-						color="blue"
-						variant="flat"
-						@click="handleAdd(item)"
-					>
-						{{ $t('buttons.add') }}
-					</v-btn>
-				</v-card-actions>
-			</v-card>
-		</v-col>
-		<v-col cols="12">
-			<v-snackbar
-				ref="notifyRef"
-				v-model="notifySignal"
-				:color="notifyColor"
-				:timeout="notifyTimeout"
-			>
-				{{ notifyMessage }}
-			</v-snackbar>
-			<div
-				v-if="debug"
-			>
-				[[ colsSearchResults {{ colsSearchResults }}]]
-				[[ colsEditPanel {{ colsEditPanel }}]]
-				[[ showList {{ showList }}]]
-				[[ showDetailItem {{ showDetailItem }}]]
-				<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
-			</div>
-		</v-col>
-		<v-col
-			v-show="colsSearchResults"
-			:cols="colsSearchResults"
-		>
+	<VFormListing
+		ref="dialogChecklistsLookupRef"
+		:reset-additional="resetAdditional"
+		:validation="validation"
+		:debug="debug"
+		:visible="!showDetailItem || showList"
+	>
+		<template #default="{ buttonOkDisabled, isLoading }">
 			<v-row dense>
-				<v-col
-					cols="12"
-					v-for="item in items"
-					:key="item.name"
-				>
+				<v-col cols="12">
 					<v-card>
-						<v-card-title>
-							{{ item.name }}
-							<!-- <v-chip
-								v-if="isDefault"
-								style="float: right;"
-							>
-								{{  $t('strings.content.checklists.isDefault') }}
-							</v-chip> -->
-						</v-card-title>
 						<v-card-text>
-							{{ item.description }}
+							<slot name="filters">
+								<v-row dense>
+									<v-col cols="12" md="6">
+										<VTextFieldWithValidation
+											ref="filterItemNameRef"
+											v-model="filterItemName"
+											vid="filterItemName"
+											:label="$t('forms.name')"
+											:validation="validation"
+										/>
+									</v-col>
+									<v-col cols="4" md="2">
+										<v-checkbox
+											v-model="filterItemYours"
+											density="compact"
+											:label="$t('forms.content.checklist.yours')"
+										/>
+									</v-col>
+									<v-col cols="4" md="2">
+										<v-checkbox
+											v-model="filterItemIsDefault"
+											density="compact"
+											:label="$t('forms.content.checklist.default')"
+										/>
+									</v-col>
+									<v-col cols="4" md="2">
+										<v-checkbox
+											v-model="filterItemShared"
+											density="compact"
+											:label="$t('forms.content.checklist.shared')"
+										/>
+									</v-col>
+								</v-row>
+							</slot>
 						</v-card-text>
 						<v-card-actions>
-							<v-chip
-								v-if="isDefault(item)"
-							>
-								{{  $t('strings.content.checklists.isDefault') }}
-							</v-chip>
-							<v-spacer></v-spacer>
+							<v-spacer />
 							<v-btn
-								v-if="canCopy(item)"
+								v-if="!showDetailItem"
 								color="blue"
 								variant="flat"
-								:disabled="isCopying(item)"
-								@click="dialogCopyOpen(item)"
+								@click="handleAdd(item)"
 							>
-								{{ $t('buttons.copy') }}
+								{{ $t('buttons.add') }}
 							</v-btn>
 							<v-btn
-								v-if="canDelete(item)"
-								color="red"
 								variant="flat"
-								:disabled="isDeleting(item)"
-								@click="dialogDeleteOpen(item)"
-							>
-								{{ $t('buttons.delete') }}
-							</v-btn>
+								color="primary"
+								:loading="isLoading"
+								@click="clickSearchClear"
+							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
-								v-if="canEdit(item)"
-								color="blue"
 								variant="flat"
-								@click="handleEdit(item)"
-							>
-								{{ $t('buttons.edit') }}
-							</v-btn>
-							<v-btn
-								v-if="canStart(item)"
 								color="green"
-								variant="flat"
-								:disabled="isStarting(item)"
-								@click="dialogStartOpen(item)"
-							>
-								{{ $t('buttons.start') }}
-							</v-btn>
-							<v-btn
-								v-if="canView(item)"
-								color="green"
-								variant="flat"
-								@click="handleView(item)"
-							>
-								{{ $t('buttons.view') }}
-							</v-btn>
+								:disabled="buttonOkDisabled"
+								:loading="isLoading"
+								@click="clickSearch"
+							>{{ $t('buttons.search') }}</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-col>
 			</v-row>
-		</v-col>
-		<v-col
-			v-show="colsEditPanel"
-			:cols="colsEditPanel"
-		>
-			<Checklist
-				:model-value="detailItem"
-				@cancel="detailClose"
-				@close="detailClose"
-				@ok="detailOk"
-				:debug="debug"
-			>
-			</Checklist>
-		</v-col>
-	</v-row>
+		</template>
+		<template v-slot:listing>
+			<v-row dense>
+				<v-col
+					v-show="colsSearchResults"
+					:cols="colsSearchResults"
+				>
+					<v-row dense>
+						<v-col
+							cols="12"
+							v-for="item in items"
+							:key="item.name"
+						>
+							<v-card>
+								<v-card-title>
+									{{ item.name }}
+								</v-card-title>
+								<v-card-text>
+									{{ item.description }}
+								</v-card-text>
+								<v-card-actions>
+									<v-chip
+										v-if="isDefault(item)"
+									>
+										{{  $t('strings.content.checklists.isDefault') }}
+									</v-chip>
+									<v-spacer></v-spacer>
+									<v-btn
+										v-if="canCopy(item)"
+										color="blue"
+										variant="flat"
+										:disabled="isCopying(item)"
+										@click="dialogCopyOpen(item)"
+									>
+										{{ $t('buttons.copy') }}
+									</v-btn>
+									<v-btn
+										v-if="canDelete(item)"
+										color="red"
+										variant="flat"
+										:disabled="isDeleting(item)"
+										@click="dialogDeleteOpen(item)"
+									>
+										{{ $t('buttons.delete') }}
+									</v-btn>
+									<v-btn
+										v-if="canEdit(item)"
+										color="blue"
+										variant="flat"
+										@click="handleEdit(item)"
+									>
+										{{ $t('buttons.edit') }}
+									</v-btn>
+									<v-btn
+										v-if="canStart(item)"
+										color="green"
+										variant="flat"
+										:disabled="isStarting(item)"
+										@click="dialogStartOpen(item)"
+									>
+										{{ $t('buttons.start') }}
+									</v-btn>
+									<v-btn
+										v-if="canView(item)"
+										color="green"
+										variant="flat"
+										@click="handleView(item)"
+									>
+										{{ $t('buttons.view') }}
+									</v-btn>
+								</v-card-actions>
+							</v-card>
+						</v-col>
+					</v-row>
+				</v-col>
+			</v-row>
+		</template>
+	</VFormListing>
 	<ChecklistCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
@@ -160,13 +178,28 @@
 </template>
 
 <script>
+import useVuelidate from '@vuelidate/core';
+
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
+import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
 import { useChecklistsBaseComponent } from '@/components/content/checklists/checklistsComponent';
 import { useChecklistsBaseProps } from '@/components/content/checklists/checklistsComponentProps';
+import { useChecklistsFilterValidation } from '@/components/content/checklists/checklistsFilterValidation';
 
 import Checklist from '@/components/content/checklists/checklist/Checklist';
 import ChecklistCopyDialog from '@/components/content/checklists/dialogs/ChecklistCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
+import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
+
+import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
+import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
+import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
 	name: 'Checklists',
@@ -174,9 +207,18 @@ export default {
 		Checklist,
 		ChecklistCopyDialog,
 		ContentHeader,
-		VConfirmationDialog
+		MeasurementUnitSelect,
+		MeasurementUnitsSelect,
+		VConfirmationDialog,
+		VFormListing,
+		VNumberFieldWithValidation,
+		VSelectWithValidation,
+		VSwitchWithValidation,
+		VTextAreaWithValidation,
+		VTextFieldWithValidation
 	},
 	props: {
+		...useMasterDetailComponentProps,
 		...useChecklistsBaseProps
 	},
 	setup(props, context) {
@@ -235,8 +277,10 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
+			isOwner,
 			display,
 			debug,
+			dialogChecklistsLookupRef,
 			dialogStartManager,
 			dialogStartMessage,
 			title,
@@ -244,15 +288,21 @@ export default {
 			checklistTypeIcon,
 			checklistTypeIconDetermine,
 			dialogStartCancel,
+			clickSearch,
+			clickSearchClear,
 			dialogStartParams,
+			filterItemName,
+			filterItemIsDefault,
+			filterItemShared,
+			filterItemYours,
 			dialogStartOk,
 			dialogStartOpen,
-			params,
 			isCompleted,
 			isDefault,
 			isInProgress,
 			isShared,
-			isStarting
+			isStarting,
+			resetAdditional
 		} = useChecklistsBaseComponent(props, context);
 
 		return {
@@ -310,8 +360,10 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
+			isOwner,
 			display,
 			debug,
+			dialogChecklistsLookupRef,
 			dialogStartManager,
 			dialogStartMessage,
 			title,
@@ -319,16 +371,28 @@ export default {
 			checklistTypeIcon,
 			checklistTypeIconDetermine,
 			dialogStartCancel,
+			clickSearch,
+			clickSearchClear,
 			dialogStartParams,
+			filterItemName,
+			filterItemIsDefault,
+			filterItemShared,
+			filterItemYours,
 			dialogStartOk,
 			dialogStartOpen,
-			params,
 			isCompleted,
 			isDefault,
 			isInProgress,
 			isShared,
-			isStarting
+			isStarting,
+			resetAdditional,
+			scope: 'RocketsFilterControl',
+			validation: useVuelidate({ $scope: 'RocketsFilterControl' })
 		};
+	},
+	validations () {
+		return Object.assign(LibraryCommonUtility.cloneDeep(useChecklistsFilterValidation), {
+		});
 	}
 };
 </script>

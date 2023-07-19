@@ -29,39 +29,26 @@
 			<v-row dense>
 				<v-col cols="12" sm="6">
 					<VTextFieldWithValidation
-						ref="detailItemNameRef"
-						v-model="detailItemName"
-						vid="detailItemName"
+						ref="filterItemNameRef"
+						v-model="filterItemName"
+						vid="filterItemName"
 						:label="$t('forms.name')"
 						:validation="validation"
 					/>
 				</v-col>
 				<v-col cols="6" sm="6">
-					<v-radio-group
-						v-model="detailItemIsPublic"
-						inline
+					<PartsPublicComponent
+						v-model="filterItemIsPublic"
 					>
-						<v-radio
-						:label="$t('forms.content.parts.all')"
-							value=""
-						></v-radio>
-						<v-radio
-						:label="$t('forms.content.parts.yours')"
-							:value="false"
-						></v-radio>
-						<v-radio
-							:label="$t('forms.content.parts.public')"
-							:value="true"
-						></v-radio>
-					</v-radio-group>
+					</PartsPublicComponent>
 				</v-col>
 			</v-row>
 			<v-row dense>
 				<v-col cols="12" sm="6">
 					<VSelectWithValidation
-						ref="detailItemManufacturersRef"
-						v-model="detailItemManufacturers"
-						vid="detailItemManufacturers"
+						ref="filterItemManufacturersRef"
+						v-model="filterItemManufacturers"
+						vid="filterItemManufacturers"
 						multiple
 						:max-values="2"
 						:items="manufacturers"
@@ -72,9 +59,9 @@
 				</v-col>
 				<v-col cols="12" sm="6">
 					<VTextFieldWithValidation
-						ref="detailItemManufacturerStockIdRef"
-						v-model="detailItemManufacturerStockId"
-						vid="detailItemManufacturerStockId"
+						ref="filterItemManufacturerStockIdRef"
+						v-model="filterItemManufacturerStockId"
+						vid="filterItemManufacturerStockId"
 						:label="$t('forms.content.parts.manufacturerId')"
 						:validation="validation"
 					/>
@@ -83,9 +70,9 @@
 			<v-row dense>
 				<!-- <v-col cols="12" sm="6">
 					<VTextFieldWithValidation
-						ref="detailItemDiameterRef"
-						v-model="detailItemDiameter"
-						vid="detailItemDiameter"
+						ref="filterItemDiameterRef"
+						v-model="filterItemDiameter"
+						vid="filterItemDiameter"
 						:label="$t('forms.content.parts.diameter')"
 						:validation="validation"
 					/>
@@ -107,6 +94,7 @@ import { usePartsListingFilterValidation } from '@/components/content/parts/part
 import { useStreamerPartsListingFilterValidation } from '@/components/content/parts/streamers/streamerPartsListingFilterValidation';
 
 import Parts from '@/components/content/parts/Parts';
+import PartsPublicComponent from '@/components/content/parts/PartsPublicComponent';
 import Streamer from '@/components/content/parts/part/streamer/Streamer';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
@@ -124,6 +112,7 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
 		Parts,
+		PartsPublicComponent,
 		Streamer,
 		StreamerPanelTitle,
 		VNumberFieldWithValidation,
@@ -148,12 +137,11 @@ export default {
 			sort,
 			target,
 			debug,
-			detailItemDescription,
-			detailItemIsPublic,
-			detailItemManufacturers,
-			detailItemManufacturerStockId,
-			detailItemName,
-			detailItemWeight,
+			filterItemIsPublic,
+			filterItemManufacturers,
+			filterItemManufacturerStockId,
+			filterItemName,
+			filterItemWeight,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
 			manufacturers,
@@ -179,12 +167,11 @@ export default {
 			sort,
 			target,
 			debug,
-			detailItemDescription,
-			detailItemIsPublic,
-			detailItemManufacturers,
-			detailItemManufacturerStockId,
-			detailItemName,
-			detailItemWeight,
+			filterItemIsPublic,
+			filterItemManufacturers,
+			filterItemManufacturerStockId,
+			filterItemName,
+			filterItemWeight,
 			weightMeasurementUnitId,
 			weightMeasurementUnitsId,
 			manufacturers,

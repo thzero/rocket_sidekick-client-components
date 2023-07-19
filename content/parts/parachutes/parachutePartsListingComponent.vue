@@ -19,12 +19,11 @@ export function useParachutesPartsListingComponent(props, context, options) {
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,
@@ -33,23 +32,23 @@ export function useParachutesPartsListingComponent(props, context, options) {
 		resetAdditionalFilter
 	} = usePartsListingComponent(props, context, Object.assign(options, {
 		fetchParams: (correlationId, params) => {
-			params.diameter = detailItemDiameter.value;
+			params.diameter = filterItemDiameter.value;
 			// params.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
 			// params.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
-			params.thinMill = detailItemThinMill.value;
+			params.thinMill = filterItemThinMill.value;
 			return params;
 		},
-		resetAdditionalFilter: (correlationId) => {
-			detailItemDiameter.value = null;
-			detailItemThinMill.value = false;
+		resetAdditionalFilter: (correlationId, data) => {
+			filterItemDiameter.value = data ? data.diameter : null;
+			filterItemThinMill.value = data ? data.thinMill : false;
 
 			// diameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 			// diameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 		}
 	}));
 
-	const detailItemDiameter = ref(null);
-	const detailItemThinMill = ref(false);
+	const filterItemDiameter = ref(null);
+	const filterItemThinMill = ref(false);
 
 	return {
 		correlationId,
@@ -66,20 +65,19 @@ export function useParachutesPartsListingComponent(props, context, options) {
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,
 		type,
 		fetchParams,
 		resetAdditionalFilter,
-		detailItemDiameter,
-		detailItemThinMill
+		filterItemDiameter,
+		filterItemThinMill
 	};
 };
 </script>

@@ -19,12 +19,11 @@ export function useDeploymentBagPartsListingComponent(props, context, options) {
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,
@@ -33,19 +32,19 @@ export function useDeploymentBagPartsListingComponent(props, context, options) {
 		resetAdditionalFilter
 	} = usePartsListingComponent(props, context, Object.assign(options, {
 		fetchParams: (correlationId, params) => {
-			params.diameter = detailItemDiameter.value;
+			params.diameter = filterItemDiameter.value;
 			// params.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
 			// params.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
-			params.length = detailItemLength.value;
+			params.length = filterItemLength.value;
 			// params.lengthMeasurementUnitId = lengthMeasurementUnitId.value;
 			// params.lengthMeasurementUnitsId = lengthMeasurementUnitsId.value;
-			params.pilotChute = detailItemPilotChute.value;
+			params.pilotChute = filterItemPilotChute.value;
 			return params;
 		},
-		resetAdditionalFilter: (correlationId) => {
-			detailItemDiameter.value = null;
-			detailItemLength.value = null;
-			detailItemPilotChute.value = false;
+		resetAdditionalFilter: (correlationId, data) => {
+			filterItemDiameter.value = data ? data.diameter : null;
+			filterItemLength.value = data ? data.length : null;
+			filterItemPilotChute.value = data ? data.pilotChute : false;
 
 			// diameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 			// diameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
@@ -55,9 +54,9 @@ export function useDeploymentBagPartsListingComponent(props, context, options) {
 		}
 	}));
 
-	const detailItemDiameter = ref(null);
-	const detailItemLength = ref(null);
-	const detailItemPilotChute = ref(false);
+	const filterItemDiameter = ref(null);
+	const filterItemLength = ref(null);
+	const filterItemPilotChute = ref(false);
 
 	return {
 		correlationId,
@@ -74,21 +73,20 @@ export function useDeploymentBagPartsListingComponent(props, context, options) {
 		sort,
 		target,
 		debug,
-		detailItemDescription,
-		detailItemIsPublic,
-		detailItemManufacturers,
-		detailItemManufacturerStockId,
-		detailItemName,
-		detailItemWeight,
+		filterItemIsPublic,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemWeight,
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		manufacturers,
 		type,
 		fetchParams,
 		resetAdditionalFilter,
-		detailItemDiameter,
-		detailItemLength,
-		detailItemPilotChute
+		filterItemDiameter,
+		filterItemLength,
+		filterItemPilotChute
 	};
 };
 </script>
