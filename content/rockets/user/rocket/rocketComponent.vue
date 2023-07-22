@@ -5,6 +5,8 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import RocketStageData from 'rocket_sidekick_common/data/rockets/stage';
+
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useRocketsComponent } from '@/components/content/rockets/rocketsComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
@@ -163,6 +165,9 @@ export function useRocketComponent(props, context, options) {
 	const hasAdmin = computed(() => {
 		return true;
 	});
+	const stages = computed(() => {
+		return detailItemData.value ? detailItemData.value.stages : [{}];
+	});
 
 	const handleAdd = () => {
 	};
@@ -212,13 +217,6 @@ export function useRocketComponent(props, context, options) {
 		weightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		weightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
-
-	watch(() => props.modelValue,
-		async (value) => {
-			if (formControlRef && formControlRef.value)
-				await formControlRef.value.reset(correlationId, false);
-		}
-	);
 	
 	return {
 		correlationId,
@@ -286,6 +284,7 @@ export function useRocketComponent(props, context, options) {
 		weightMeasurementUnitsId,
 		canAdd,
 		hasAdmin,
+		stages,
 		handleAdd,
 		requestManufacturers,
 		scope: 'RocketControl',

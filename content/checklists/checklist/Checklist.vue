@@ -120,21 +120,21 @@
 			</div>
 		</template>
 		<template v-slot:after>	
-		<v-row
-			dense 
-			class="mt-4"
-		>
-			<v-col>
-				<ChecklistSteps
-					:item="detailItemData"
-					:readonly="!isEditable"
-					:update="updateDataModel"
-					:debug="debug"
-				>
-				</ChecklistSteps>
-			</v-col>
-		</v-row>
-	</template>
+			<v-row
+				dense 
+				class="mt-4"
+			>
+				<v-col>
+					<ChecklistSteps
+						:item="detailItemData"
+						:readonly="!isEditable"
+						:update="updateDataModel"
+						:debug="debug"
+					>
+					</ChecklistSteps>
+				</v-col>
+			</v-row>
+		</template>
 	</VFormControl>
 </template>
 

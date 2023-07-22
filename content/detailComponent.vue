@@ -117,6 +117,9 @@ export function useDetailComponent(props, context, options) {
 				await options.init(correlationId(), detailItem.value.data);
 				detailItemOrig.value = LibraryCommonUtility.cloneDeep(value);
 			}
+
+			if (formControlRef && formControlRef.value)
+				await formControlRef.value.reset(correlationId, false, true);
 		}
 	);
 

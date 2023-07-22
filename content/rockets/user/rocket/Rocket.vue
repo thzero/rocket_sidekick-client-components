@@ -209,6 +209,57 @@
 				</table>
 			</v-col>
 		</v-row>
+		<template v-slot:buttons_pre>
+			<template
+				v-if="$vuetify.display.mdAndUp"
+			>
+				<v-btn
+					v-if="canAdd"
+					class="mr-2"
+					color="primary"
+					@click="handleAdd"
+				>
+					{{ $t('buttons.add') }} {{ $t('buttons.rockets.stage') }}
+				</v-btn>
+				<span
+					v-if="canAdd"
+					class="mr-2"
+				>|</span>
+			</template>
+		</template>
+		<template v-slot:buttons_post>
+			<div 
+				v-if="$vuetify.display.smAndDown"
+				class="mt-2"
+			>
+				<v-btn
+					v-if="canAdd"
+					color="primary"
+					@click="handleAdd"
+				>
+					{{ $t('buttons.add') }} {{ $t('buttons.rockets.stage') }}
+				</v-btn>
+			</div>
+		</template>
+		<template v-slot:after>	
+			<v-row
+				v-if="detailItem"
+				dense 
+				class="mt-4"
+			>
+				<v-col>
+					asdasd
+					<v-row
+						v-for="item in detailItem.stages"
+						:key="item.id"
+					>
+						<v-col cols="12">
+							asdfasdf
+						</v-col>
+					</v-row>
+				</v-col>
+			</v-row>
+		</template>
 	</VFormControl>
 </template>
 
@@ -313,6 +364,7 @@ export default {
 			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
+			stages,
 			handleAdd,
 			requestManufacturers,
 			scope,
@@ -385,6 +437,7 @@ export default {
 			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
+			stages,
 			handleAdd,
 			requestManufacturers,
 			scope,
