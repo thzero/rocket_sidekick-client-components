@@ -151,13 +151,6 @@ export function usePartComponent(props, context, options) {
 		weightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		weightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
-
-	watch(() => props.modelValue,
-		async (value) => {
-			if (formControlRef && formControlRef.value)
-				await formControlRef.value.reset(correlationId, false);
-		}
-	);
 	
 	return {
 		correlationId,

@@ -121,13 +121,6 @@ export function useChecklistComponent(props, context, options) {
 		detailItemReorder.value = !detailItemReorder.value;
 	};
 
-	watch(() => props.modelValue,
-		async (value) => {
-			if (formControlRef && formControlRef.value)
-				await formControlRef.value.reset(correlationId, false);
-		}
-	);
-
 	// const dataModel = ref(
 	// {
 	// 	"id":"d99dfilopphpzhss52lmk",

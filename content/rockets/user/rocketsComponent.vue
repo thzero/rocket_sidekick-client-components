@@ -9,10 +9,10 @@ import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
+import RocketData from 'rocket_sidekick_common/data/rockets/index';
+
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 import { useRocketsComponent } from '@/components/content/rockets/rocketsComponent';
-
-import RocketData from 'rocket_sidekick_common/data/rockets/index';
 
 export function useRocketsBaseComponent(props, context, options) {
 	const {
