@@ -23,10 +23,12 @@
 						<v-btn
 							v-if="!readonly && moveUp1"
 							class="mr-2"
+							size="small"
 							icon="mdi-menu-up"
 						></v-btn>
 						<v-btn
 							v-if="!readonly && moveDown1"
+							size="small"
 							icon="mdi-menu-down"
 						></v-btn>
 					</div>

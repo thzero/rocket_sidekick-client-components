@@ -23,8 +23,8 @@
 										<td>
 											<VNumberFieldWithValidation
 												ref="airDensityRef"
-												vid="airDensity"
 												v-model="airDensity"
+												vid="airDensity"
 												:validation="validation"
 												:label="$t('forms.content.tools.parachuteSizing.airDensity')"
 											/>
@@ -32,8 +32,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="airDensityMeasurementUnitsIdRef"
-												vid="airDensityMeasurementUnitsId"
 												v-model="airDensityMeasurementUnitsId"
+												vid="airDensityMeasurementUnitsId"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
@@ -41,8 +41,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitSelect
 												ref="airDensityMeasurementUnitIdRef"
-												vid="airDensityMeasurementUnitId"
 												v-model="airDensityMeasurementUnitId"
+												vid="airDensityMeasurementUnitId"
 												:measurementUnitsId="airDensityMeasurementUnitsId"
 												:measurementUnitsType="measurementUnitsDensityType"
 												:validation="validation"
@@ -58,8 +58,8 @@
 										<td>
 											<VNumberFieldWithValidation
 												ref="massRef"
-												vid="mass"
 												v-model="mass"
+												vid="mass"
 												:validation="validation"
 												:label="$t('forms.content.tools.parachuteSizing.mass')"
 											/>
@@ -67,8 +67,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="massWeightMeasurementUnitsIdRef"
-												vid="massWeightMeasurementUnitsId"
 												v-model="massWeightMeasurementUnitsId"
+												vid="massWeightMeasurementUnitsId"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
@@ -76,8 +76,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitSelect
 												ref="massWeightMeasurementUnitIdRef"
-												vid="massWeightMeasurementUnitId"
 												v-model="massWeightMeasurementUnitId"
+												vid="massWeightMeasurementUnitId"
 												:measurementUnitsId="massWeightMeasurementUnitsId"
 												:measurementUnitsType="measurementUnitsWeightType"
 												:validation="validation"
@@ -92,8 +92,8 @@
 							<v-col cols="12" sm="6" >
 								<VNumberFieldWithValidation
 									ref="coeffDragRef"
-									vid="coeffDrag"
 									v-model="coeffDrag"
+									vid="coeffDrag"
 									:validation="validation"
 									:label="$t('forms.content.tools.parachuteSizing.coeffDrag')"
 								/>
@@ -104,8 +104,8 @@
 										<td>
 											<VNumberFieldWithValidation
 												ref="desiredVelocityRef"
-												vid="desiredVelocity"
 												v-model="desiredVelocity"
+												vid="desiredVelocity"
 												:validation="validation"
 												:label="$t('forms.content.tools.parachuteSizing.desiredVelocity')"
 											/>
@@ -113,8 +113,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="desiredVelocityMeasurementUnitsIdRef"
-												vid="desiredVelocityMeasurementUnitsId"
 												v-model="desiredVelocityMeasurementUnitsId"
+												vid="desiredVelocityMeasurementUnitsId"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
@@ -122,8 +122,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitSelect
 												ref="desiredVelocityMeasurementUnitIdRef"
-												vid="desiredVelocityMeasurementUnitId"
 												v-model="desiredVelocityMeasurementUnitId"
+												vid="desiredVelocityMeasurementUnitId"
 												:measurementUnitsId="desiredVelocityMeasurementUnitsId"
 												:measurementUnitsType="measurementUnitsVelocityType"
 												:validation="validation"
@@ -144,8 +144,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="diameterLengthMeasurementUnitsIdRef"
-												vid="diameterLengthMeasurementUnitsId"
 												v-model="diameterLengthMeasurementUnitsId"
+												vid="diameterLengthMeasurementUnitsId"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
@@ -153,8 +153,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitSelect
 												ref="diameterLengthMeasurementUnitIdRef"
-												vid="diameterLengthMeasurementUnitId"
 												v-model="diameterLengthMeasurementUnitId"
+												vid="diameterLengthMeasurementUnitId"
 												:measurementUnitsId="diameterLengthMeasurementUnitsId"
 												:measurementUnitsType="measurementUnitsLengthType"
 												:validation="validation"

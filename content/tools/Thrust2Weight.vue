@@ -30,8 +30,8 @@
 										>
 											<VNumberFieldWithValidation
 												ref="massRef"
-												vid="mass"
 												v-model="mass"
+												vid="mass"
 												:validation="validation"
 												:label="$t('forms.content.tools.thrust2Weight.mass')"
 											/>
@@ -42,8 +42,8 @@
 										>
 											<MeasurementUnitsSelect
 												ref="massMeasurementUnitsIdRef"
-												vid="massMeasurementUnitsId"
 												v-model="massMeasurementUnitsId"
+												vid="massMeasurementUnitsId"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
@@ -54,8 +54,8 @@
 										>
 											<MeasurementUnitSelect
 												ref="massMeasurementUnitRef"
-												vid="massMeasurementUnitId"
 												v-model="massMeasurementUnitId"
+												vid="massMeasurementUnitId"
 												:measurementUnitsId="massMeasurementUnitsId"
 												:measurementUnitsType="measurementUnitsWeightType"
 												:validation="validation"
@@ -69,8 +69,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="massMeasurementUnitsIdRef"
-												vid="massMeasurementUnitsId"
 												v-model="massMeasurementUnitsId"
+												vid="massMeasurementUnitsId"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
@@ -78,8 +78,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitSelect
 												ref="massMeasurementUnitRef"
-												vid="massMeasurementUnitId"
 												v-model="massMeasurementUnitId"
+												vid="massMeasurementUnitId"
 												:measurementUnitsId="massMeasurementUnitsId"
 												:measurementUnitsType="measurementUnitsWeightType"
 												:validation="validation"
@@ -92,8 +92,8 @@
 							<v-col cols="12" md="6">
 								<VNumberFieldWithValidation
 									ref="maxLaunchRodTimeRef"
-									vid="maxLaunchRodTime"
 									v-model="maxLaunchRodTime"
+									vid="maxLaunchRodTime"
 									:validation="validation"
 									:label="$t('forms.content.tools.thrust2Weight.max_launch_rod_timespan')"
 									:placeholder="$t('forms.content.tools.thrust2Weight.max_launch_rod_timespan_hint')"
@@ -104,8 +104,8 @@
 									<v-col cols="12">
 										<VCheckboxWithValidation
 											ref="motorSelected1Ref"
-											vid="motorSelected1"
 											v-model="motorSelected1"
+											vid="motorSelected1"
 											:validation="validation"
 											:readonly="true"
 											:label="$t('forms.content.tools.thrust2Weight.specifications') + ' 1'"
@@ -116,8 +116,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustInitial1Ref"
-											vid="thrustInitial1"
 											v-model="thrustInitial1"
+											vid="thrustInitial1"
 											:validation="validation"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_initial') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
 											:placeholder="$t('forms.content.tools.thrust2Weight.thrust_initial_hint')"
@@ -126,8 +126,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustPeak1Ref"
-											vid="thrustPeak1"
 											v-model="thrustPeak1"
+											vid="thrustPeak1"
 											:validation="validation"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_peak') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
 											:placeholder="$t('forms.content.tools.thrust2Weight.thrust_peak_hint')"
@@ -136,8 +136,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustAverage1Ref"
-											vid="thrustAverage1"
 											v-model="thrustAverage1"
+											vid="thrustAverage1"
 											:validation="validation"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_average') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
 											:placeholder="$t('forms.content.tools.thrust2Weight.thrust_average_hint')"
@@ -149,8 +149,8 @@
 												<td style="width: 100%;">
 													<VTextField
 														ref="motorLookup1Ref"
-														vid="motorLookup1"
 														v-model="motorLookup1"
+														vid="motorLookup1"
 														:readonly="true"
 														:label="$t('forms.content.tools.thrust2Weight.motor')"
 														:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
@@ -175,8 +175,8 @@
 									<v-col cols="12">
 										<VCheckboxWithValidation
 											ref="motorSelected2Ref"
-											vid="motorSelected2"
 											v-model="motorSelected2"
+											vid="motorSelected2"
 											:validation="validation"
 											:label="$t('forms.content.tools.thrust2Weight.specifications') + ' 2'"
 										/>
@@ -186,8 +186,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustInitial2Ref"
-											vid="thrustInitial2"
 											v-model="thrustInitial2"
+											vid="thrustInitial2"
 											:validation="validation"
 											:readonly="!motorSelected2"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_initial') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -197,8 +197,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustPeak2Ref"
-											vid="thrustPeak2"
 											v-model="thrustPeak2"
+											vid="thrustPeak2"
 											:validation="validation"
 											:readonly="!motorSelected2"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_peak') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -208,8 +208,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustAverage2Ref"
-											vid="thrustAverage2"
 											v-model="thrustAverage2"
+											vid="thrustAverage2"
 											:validation="validation"
 											:readonly="!motorSelected2"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_average') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -222,8 +222,8 @@
 												<td style="width: 100%;">
 													<VTextField
 														ref="motorLookup2Ref"
-														vid="motorLookup2"
 														v-model="motorLookup2"
+														vid="motorLookup2"
 														:readonly="true"
 														:label="$t('forms.content.tools.thrust2Weight.motor')"
 														:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
@@ -249,8 +249,8 @@
 									<v-col cols="12">
 										<VCheckboxWithValidation
 											ref="motorSelected3Ref"
-											vid="motorSelected3"
 											v-model="motorSelected3"
+											vid="motorSelected3"
 											:validation="validation"
 											:label="$t('forms.content.tools.thrust2Weight.specifications') + ' 3'"
 										/>
@@ -260,8 +260,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustInitial3Ref"
-											vid="thrustInitial3"
 											v-model="thrustInitial3"
+											vid="thrustInitial3"
 											:validation="validation"
 											:readonly="!motorSelected3"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_initial') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -271,8 +271,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustPeak3Ref"
-											vid="thrustPeak3"
 											v-model="thrustPeak3"
+											vid="thrustPeak3"
 											:validation="validation"
 											:readonly="!motorSelected3"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_peak') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -282,8 +282,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustAverage3Ref"
-											vid="thrustAverage3"
 											v-model="thrustAverage3"
+											vid="thrustAverage3"
 											:validation="validation"
 											:readonly="!motorSelected3"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_average') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -296,8 +296,8 @@
 												<td style="width: 100%;">
 													<VTextField
 														ref="motorLookup3Ref"
-														vid="motorLookup3"
 														v-model="motorLookup3"
+														vid="motorLookup3"
 														:readonly="true"
 														:label="$t('forms.content.tools.thrust2Weight.motor')"
 														:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
@@ -323,8 +323,8 @@
 									<v-col cols="12">
 										<VCheckboxWithValidation
 											ref="motorSelected4Ref"
-											vid="motorSelected4"
 											v-model="motorSelected4"
+											vid="motorSelected4"
 											:validation="validation"
 											:label="$t('forms.content.tools.thrust2Weight.specifications') + ' 4'"
 										/>
@@ -334,8 +334,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustInitial4Ref"
-											vid="thrustInitial4"
 											v-model="thrustInitial4"
+											vid="thrustInitial4"
 											:validation="validation"
 											:readonly="!motorSelected4"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_initial') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -345,8 +345,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustPeak4Ref"
-											vid="thrustPeak4"
 											v-model="thrustPeak4"
+											vid="thrustPeak4"
 											:validation="validation"
 											:readonly="!motorSelected4"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_peak') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -356,8 +356,8 @@
 									<v-col cols="12" md="6">
 										<VNumberFieldWithValidation
 											ref="thrustAverage4Ref"
-											vid="thrustAverage4"
 											v-model="thrustAverage4"
+											vid="thrustAverage4"
 											:validation="validation"
 											:readonly="!motorSelected4"
 											:label="$t('forms.content.tools.thrust2Weight.thrust_average') + ' ' + $t('forms.content.tools.thrust2Weight.thrust')"
@@ -370,8 +370,8 @@
 												<td style="width: 100%;">
 													<VTextField
 														ref="motorLookup4Ref"
-														vid="motorLookup4"
 														v-model="motorLookup4"
+														vid="motorLookup4"
 														:readonly="true"
 														:label="$t('forms.content.tools.thrust2Weight.motor')"
 														:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"

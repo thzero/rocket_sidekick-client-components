@@ -41,9 +41,10 @@
 			</v-col>
 			<v-col cols="3">
 				<VSwitch
-					ref="isDefaultRef"
 					v-if="!isEditable"
+					ref="isDefaultRef"
 					v-model="detailItemIsDefault"
+					vid="detailItemIsDefault"
 					:label="$t('forms.parts.default')"
 					:readonly="true"
 				/>
@@ -160,13 +161,22 @@ export default {
 			formControlRef,
 			dirty,
 			detailItem,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogDeleteParams,
 			invalid,
 			canDelete,
 			detailItemData,
 			detailItemTextRows,
+			isDeleting,
 			isEditable,
 			isNew,
+			isOwner,
 			dirtyCallback,
+			dialogDeleteCancel,
+			dialogDeleteError,
+			dialogDeleteOk,
+			dialogDeleteOpen,
 			invalidCallback,
 			handleCancel,
 			handleClose,
@@ -203,13 +213,22 @@ export default {
 			formControlRef,
 			dirty,
 			detailItem,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogDeleteParams,
 			invalid,
 			canDelete,
 			detailItemData,
 			detailItemTextRows,
+			isDeleting,
 			isEditable,
 			isNew,
+			isOwner,
 			dirtyCallback,
+			dialogDeleteCancel,
+			dialogDeleteError,
+			dialogDeleteOk,
+			dialogDeleteOpen,
 			invalidCallback,
 			handleCancel,
 			handleClose,

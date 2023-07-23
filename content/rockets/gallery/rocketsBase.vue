@@ -5,7 +5,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
-import { useRocketsComponent } from '@/components/content/rockets/rocketsComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
 export function useRocketsBaseComponent(props, context, options) {
@@ -29,7 +29,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine
-	} = useRocketsComponent(props, context, options);
+	} = useRocketsUtilityComponent(props, context, options);
 
 	const type = ref(options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);
 	const params = ref({});

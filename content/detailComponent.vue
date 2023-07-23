@@ -1,10 +1,12 @@
 <script>
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import LibraryClientConstants from '@thzero/library_client/constants';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useBaseEditComponent } from '@thzero/library_client_vue3/components/baseEdit';
 
@@ -30,8 +32,12 @@ export function useDetailComponent(props, context, options) {
 	const formControlRef = ref(null);
 	const dirty = ref(false);
 	const detailItem = ref(null);
+	const dialogDeleteManager = ref(new DialogSupport());
+	const dialogDeleteMessage = ref(LibraryClientUtility.$trans.t(`messages.${options.dialogDeleteMessage ? options.dialogDeleteMessage : 'items'}.delete_confirm'`));
+	const dialogDeleteParams = ref(null);
 	const invalid = ref(false);
 	const detailItemOrig = ref(null);
+	const user = ref(null);
 
 	const canDelete = computed(() => {
 		return !isNew.value && !dirty.value;
@@ -42,13 +48,66 @@ export function useDetailComponent(props, context, options) {
 	const detailItemTextRows = computed(() => {
 		return isEditable.value ? 5 : 1;
 	});
+	const isDeleting = (item) => {
+		if (!dialogDeleteParams.value || !item)
+			return false;
+
+		return item.id === dialogDeleteParams.value;
+	};
 	const isEditable = computed(() => {
 		return props.modelValue ? props.modelValue.isEditable ?? false : false;
 	});
 	const isNew = computed(() => {
 		return props.modelValue ? props.modelValue.isNew ?? false : false;
 	});
+	const isOwner = (correlationId, item) => {
+		const ownerId = (user.value ?? {}).id;
+		return item ? item.ownerId == ownerId : false;
+	};
 
+	const dialogDeleteCancel = async (item) => {
+		try {
+			dialogDeleteManager.value.cancel();
+		}
+		finally {
+			dialogDeleteParams.value = null;
+		}
+	};
+	const dialogDeleteError = async (err) => {
+		try {
+			dialogDeleteManager.value.cancel();
+		}
+		finally {
+			dialogDeleteParams.value = null;
+		}
+	};
+	const dialogDeleteOk = async () => {
+		try {
+			if (!dialogDeleteParams.value)
+				return;
+
+			const correlationIdI = correlationId();
+			const response = await serviceStore.dispatcher.deletePartByIdUser(correlationIdI, dialogDeleteParams.value);
+			if (hasFailed(response)) {
+				setNotify(correlationIdI, 'messages.error');
+				return;
+			}
+			await fetch(correlationIdI);
+		}
+		finally {
+			dialogDeleteParams.value = null;
+			dialogDeleteManager.value.ok();
+		}
+	};
+	const dialogDeleteOpen = (item) => {
+		if (!item)
+			return;
+		if (!canDelete(item))
+			return;
+
+		dialogDeleteParams.value = item.id;
+		dialogDeleteManager.value.open();
+	};
 	const dirtyCallback = (correlationId, value) => {
 		dirty.value = value.value;
 	};
@@ -108,6 +167,10 @@ export function useDetailComponent(props, context, options) {
 			await options.resetAdditional(correlationId, previous && detailItemOrig.value.data ? detailItemOrig.value.data : null);
 	};
 
+	onMounted(async () => {
+		user.value = await serviceStore.user;
+	});
+
 	watch(() => props.modelValue,
 		async (value) => {
 			console.log('watch.modelValue', value);
@@ -141,12 +204,21 @@ export function useDetailComponent(props, context, options) {
 		formControlRef,
 		dirty,
 		detailItem,
+		dialogDeleteManager,
+		dialogDeleteMessage,
+		dialogDeleteParams,
 		invalid,
 		canDelete,
 		detailItemData,
 		detailItemTextRows,
+		isDeleting,
 		isEditable,
 		isNew,
+		isOwner,
+		dialogDeleteCancel,
+		dialogDeleteError,
+		dialogDeleteOk,
+		dialogDeleteOpen,
 		dirtyCallback,
 		invalidCallback,
 		handleCancel,

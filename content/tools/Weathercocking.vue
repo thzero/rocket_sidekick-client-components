@@ -23,8 +23,8 @@
 										<td>
 											<VNumberFieldWithValidation
 												ref="windVelocityRef"
-												vid="windVelocity"
 												v-model="windVelocity"
+												vid="windVelocity"
 												:validation="validation"
 												:label="$t('forms.content.tools.weathercocking.windVelocity')"
 											/>
@@ -32,8 +32,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="windVelocityMeasurementUnitsIdRef"
-												vid="windVelocityMeasurementUnitsId"
 												v-model="windVelocityMeasurementUnitsId"
+												vid="windVelocityMeasurementUnitsId"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
@@ -41,8 +41,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitSelect
 												ref="windVelocityMeasurementUnitIdRef"
-												vid="windVelocityMeasurementUnitId"
 												v-model="windVelocityMeasurementUnitId"
+												vid="windVelocityMeasurementUnitId"
 												:measurementUnitsId="windVelocityMeasurementUnitsId"
 												:measurementUnitsType="measurementUnitsVelocityType"
 												:validation="validation"
@@ -58,8 +58,8 @@
 										<td>
 											<VNumberFieldWithValidation
 												ref="exitVelocityRef"
-												vid="exitVelocity"
 												v-model="exitVelocity"
+												vid="exitVelocity"
 												:validation="validation"
 												:label="$t('forms.content.tools.weathercocking.exitVelocity')"
 											/>
@@ -67,8 +67,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="exitVelocityMeasurementUnitsIdRef"
-												vid="exitVelocityMeasurementUnitsId"
 												v-model="exitVelocityMeasurementUnitsId"
+												vid="exitVelocityMeasurementUnitsId"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
@@ -76,8 +76,8 @@
 										<td class="measurementUnits">
 											<MeasurementUnitSelect
 												ref="exitVelocityMeasurementUnitIdRef"
-												vid="exitVelocityMeasurementUnitId"
 												v-model="exitVelocityMeasurementUnitId"
+												vid="exitVelocityMeasurementUnitId"
 												:measurementUnitsId="exitVelocityMeasurementUnitsId"
 												:measurementUnitsType="measurementUnitsVelocityType"
 												:validation="validation"

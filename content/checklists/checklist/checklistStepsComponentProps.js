@@ -11,7 +11,7 @@ export const useChecklistStepsComponentProps = {
 		type: Boolean,
 		default: false
 	},
-	update: {
+	updateOrder: {
 		type: Function,
 		default: null
 	}

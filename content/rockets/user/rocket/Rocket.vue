@@ -6,6 +6,9 @@
 		[[ dirty {{ dirty }} ]]
 		[[ isEditable {{ isEditable }} ]]
 		[[ isNew {{ isNew }} ]]
+		[[ canAddSecondary {{ canAddSecondary }} ]]
+		[[ canDeleteSecondary {{ canDeleteSecondary }} ]]
+		[[ canEditSecondary {{ canEditSecondary }} ]]
 		<!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
@@ -95,10 +98,10 @@
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemDiameterMajorRef"
+					v-model="detailItemDiameterMajor"
 					vid="detailItemDiameterMajor"
 					:validation="validation"
 					:readonly="!isEditable"
-					v-model="detailItemDiameterMajor"
 					:label="$t('forms.content.rockets.diameter.major')"
 				/>
 			</v-col>
@@ -108,8 +111,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
 								ref="diameterMajorMeasurementUnitsIdRef"
-								vid="diameterMajorMeasurementUnitsId"
 								v-model="diameterMajorMeasurementUnitsId"
+								vid="diameterMajorMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -118,8 +121,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
 								ref="diameterMajorMeasurementUnitIdRef"
-								vid="diameterMajorMeasurementUnitId"
 								v-model="diameterMajorMeasurementUnitId"
+								vid="diameterMajorMeasurementUnitId"
 								:measurementUnitsId="diameterMajorMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
@@ -133,8 +136,8 @@
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemLengthRef"
-					vid="detailItemLength"
 					v-model="detailItemLength"
+					vid="detailItemLength"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.parts.length')"
@@ -146,8 +149,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
 								ref="lengthMeasurementUnitsIdRef"
-								vid="lengthMeasurementUnitsId"
 								v-model="lengthMeasurementUnitsId"
+								vid="lengthMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -156,8 +159,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
 								ref="lengthMeasurementUnitIdRef"
-								vid="lengthMeasurementUnitId"
 								v-model="lengthMeasurementUnitId"
+								vid="lengthMeasurementUnitId"
 								:measurementUnitsId="lengthMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
@@ -173,8 +176,8 @@
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemWeightRef"
-					vid="detailItemWeight"
 					v-model="detailItemWeight"
+					vid="detailItemWeight"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.parts.weight')"
@@ -186,8 +189,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
 								ref="weightMeasurementUnitsIdRef"
-								vid="weightMeasurementUnitsId"
 								v-model="weightMeasurementUnitsId"
+								vid="weightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -196,8 +199,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
 								ref="weightMeasurementUnitIdRef"
-								vid="weightMeasurementUnitId"
 								v-model="weightMeasurementUnitId"
+								vid="weightMeasurementUnitId"
 								:measurementUnitsId="weightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
@@ -214,15 +217,15 @@
 				v-if="$vuetify.display.mdAndUp"
 			>
 				<v-btn
-					v-if="canAdd"
+					v-if="canAddSecondary"
 					class="mr-2"
 					color="primary"
-					@click="handleAdd"
+					@click="handleAddSecondary"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.rockets.stage') }}
 				</v-btn>
 				<span
-					v-if="canAdd"
+					v-if="canAddSecondary"
 					class="mr-2"
 				>|</span>
 			</template>
@@ -233,9 +236,9 @@
 				class="mt-2"
 			>
 				<v-btn
-					v-if="canAdd"
+					v-if="canAddSecondary"
 					color="primary"
-					@click="handleAdd"
+					@click="handleAddSecondary"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.rockets.stage') }}
 				</v-btn>
@@ -243,24 +246,66 @@
 		</template>
 		<template v-slot:after>	
 			<v-row
-				v-if="detailItem"
+				v-if="stages"
 				dense 
 				class="mt-4"
 			>
 				<v-col>
 					asdasd
 					<v-row
-						v-for="item in detailItem.stages"
+						v-for="item in stages"
 						:key="item.id"
 					>
 						<v-col cols="12">
-							asdfasdf
+							<v-sheet 
+								class="d-flex"
+								color="info"
+								rounded
+							>
+								<div class="pl-2 pr-4 pb-4 pt-2">
+									{{ item.name }}
+								</div>
+								<v-spacer></v-spacer>
+								<div class="pl-4 pr-4 pb-2 pt-2">
+									<v-btn
+										v-if="!readonly"
+										class="mr-2"
+										icon="mdi-pencil"
+										size="small"
+										:disabled="isEditingSecondary(item)"
+										@click="dialogEditSecondaryOpen(item)"
+									></v-btn>
+									<v-btn
+										v-if="!readonly"
+										icon="mdi-delete"
+										size="small"
+										:disabled="isDeletingSecondary(item)"
+										@click="dialogDeleteSecondaryOpen(item)"
+									></v-btn>
+								</div>
+							</v-sheet>
 						</v-col>
 					</v-row>
 				</v-col>
 			</v-row>
 		</template>
 	</VFormControl>
+	<VConfirmationDialog
+		ref="dialogDeleteSecondaryRef"
+		:message="dialogDeleteSecondaryMessage"
+		:messageRaw=true
+		:signal="dialogDeleteSecondaryManager.signal"
+		@cancel="dialogDeleteSecondaryCancel"
+		@error="dialogDeleteSecondaryError"
+		@ok="dialogDeleteSecondaryOk"
+	/>
+	<RocketEditDialog
+		ref="dialogMotorSearchRef"
+		:signal="dialogEditSecondaryManager.signal"
+		@close="dialogEditSecondaryCancel"
+		@ok="dialogEditSecondaryOk"
+		width="90%"
+	/>
 </template>
 
 <script>
@@ -268,11 +313,14 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useRocketValidation } from '@/components/content/rockets/user/rocket/rocketValidation';
+import { useRocketEditValidation } from '@/components/content/rockets/user/rocket/rocketEditValidation';
 import { useRocketComponent } from '@/components/content/rockets/user/rocket/rocketComponent';
 import { useRocketComponentProps } from '@/components/content/rockets/user/rocket/rocketComponentProps';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import RocketEditDialog from '@/components/content/rockets/user/dialogs/RocketEditDialog';
+import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
@@ -285,6 +333,8 @@ export default {
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
+		RocketEditDialog,
+		VConfirmationDialog,
 		VFormControl,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
@@ -316,12 +366,21 @@ export default {
 			formControlRef,
 			dirty,
 			detailItem,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogDeleteParams,
 			invalid,
 			canDelete,
 			detailItemData,
 			detailItemTextRows,
+			isDeleting,
 			isEditable,
 			isNew,
+			isOwner,
+			dialogDeleteCancel,
+			dialogDeleteError,
+			dialogDeleteOk,
+			dialogDeleteOpen,
 			dirtyCallback,
 			invalidCallback,
 			handleCancel,
@@ -329,13 +388,28 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			dialogDeleteSecondaryManager,
+			dialogDeleteSecondaryMessage,
+			dialogDeleteSecondaryParams,
+			dialogEditSecondaryManager,
+			dialogEditSecondaryParams,
+			canAddSecondary,
+			canDeleteSecondary,
+			canEditSecondary,
+			isDeletingSecondary,
+			isEditingSecondary,
+			dialogDeleteSecondaryCancel,
+			dialogDeleteSecondaryError,
+			dialogDeleteSecondaryOk,
+			dialogDeleteSecondaryOpen,
+			dialogEditSecondaryCancel,
+			dialogEditSecondaryError,
+			dialogEditSecondaryOk,
+			dialogEditSecondaryOpen,
+			handleAddSecondary,
+			rocketTypes,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			measurementUnitsLengthDefaultId,
-			measurementUnitsLengthType,
-			measurementUnitsWeightDefaultId,
-			measurementUnitsWeightType,
-			rocketTypes,
 			cgMeasurementUnitId,
 			cgMeasurementUnitsId,
 			cpMeasurementUnitId,
@@ -345,27 +419,31 @@ export default {
 			detailItemCp,
 			detailItemCpFrom,
 			detailItemDescription,
+			detailItemLength,
+			detailItemName,
+			detailItemWeight,
+			lengthMeasurementUnitId,
+			lengthMeasurementUnitsId,
+			measurementUnitsLengthDefaultId,
+			measurementUnitsLengthType,
+			measurementUnitsWeightDefaultId,
+			measurementUnitsWeightType,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
+			resetEditData,
+			setEditData,
 			detailItemDiameterMajor,
 			detailItemDiameterMinor,
-			detailItemLength,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
-			detailItemName,
 			detailItemRocketType,
-			detailItemWeight,
 			diameterMajorMeasurementUnitId,
 			diameterMajorMeasurementUnitsId,
 			diameterMinorMeasurementUnitId,
 			diameterMinorMeasurementUnitsId,
-			lengthMeasurementUnitId,
-			lengthMeasurementUnitsId,
 			manufacturers,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
-			canAdd,
 			hasAdmin,
 			stages,
-			handleAdd,
 			requestManufacturers,
 			scope,
 			validation
@@ -389,12 +467,21 @@ export default {
 			formControlRef,
 			dirty,
 			detailItem,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogDeleteParams,
 			invalid,
 			canDelete,
 			detailItemData,
 			detailItemTextRows,
+			isDeleting,
 			isEditable,
 			isNew,
+			isOwner,
+			dialogDeleteCancel,
+			dialogDeleteError,
+			dialogDeleteOk,
+			dialogDeleteOpen,
 			dirtyCallback,
 			invalidCallback,
 			handleCancel,
@@ -402,13 +489,28 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			dialogDeleteSecondaryManager,
+			dialogDeleteSecondaryMessage,
+			dialogDeleteSecondaryParams,
+			dialogEditSecondaryManager,
+			dialogEditSecondaryParams,
+			canAddSecondary,
+			canDeleteSecondary,
+			canEditSecondary,
+			isDeletingSecondary,
+			isEditingSecondary,
+			dialogDeleteSecondaryCancel,
+			dialogDeleteSecondaryError,
+			dialogDeleteSecondaryOk,
+			dialogDeleteSecondaryOpen,
+			dialogEditSecondaryCancel,
+			dialogEditSecondaryError,
+			dialogEditSecondaryOk,
+			dialogEditSecondaryOpen,
+			handleAddSecondary,
+			rocketTypes,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			measurementUnitsLengthDefaultId,
-			measurementUnitsLengthType,
-			measurementUnitsWeightDefaultId,
-			measurementUnitsWeightType,
-			rocketTypes,
 			cgMeasurementUnitId,
 			cgMeasurementUnitsId,
 			cpMeasurementUnitId,
@@ -418,35 +520,38 @@ export default {
 			detailItemCp,
 			detailItemCpFrom,
 			detailItemDescription,
+			detailItemLength,
+			detailItemName,
+			detailItemWeight,
+			lengthMeasurementUnitId,
+			lengthMeasurementUnitsId,
+			measurementUnitsLengthDefaultId,
+			measurementUnitsLengthType,
+			measurementUnitsWeightDefaultId,
+			measurementUnitsWeightType,
+			weightMeasurementUnitId,
+			weightMeasurementUnitsId,
+			resetEditData,
+			setEditData,
 			detailItemDiameterMajor,
 			detailItemDiameterMinor,
-			detailItemLength,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
-			detailItemName,
 			detailItemRocketType,
-			detailItemWeight,
 			diameterMajorMeasurementUnitId,
 			diameterMajorMeasurementUnitsId,
 			diameterMinorMeasurementUnitId,
 			diameterMinorMeasurementUnitsId,
-			lengthMeasurementUnitId,
-			lengthMeasurementUnitsId,
 			manufacturers,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
-			canAdd,
 			hasAdmin,
 			stages,
-			handleAdd,
 			requestManufacturers,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketValidation), {
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation));
 	}
 };
 </script>

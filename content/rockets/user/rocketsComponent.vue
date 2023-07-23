@@ -12,7 +12,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import RocketData from 'rocket_sidekick_common/data/rockets/index';
 
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
-import { useRocketsComponent } from '@/components/content/rockets/rocketsComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useRocketsBaseComponent(props, context, options) {
 	const {
@@ -38,6 +38,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		dialogCopyRef,
 		dialogDeleteManager,
 		dialogDeleteMessage,
+		dialogDeleteParams,
 		detailItem,
 		items,
 		colsEditPanel,
@@ -62,7 +63,6 @@ export function useRocketsBaseComponent(props, context, options) {
 		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
-		dialogDeleteParams,
 		fetch,
 		handleAdd,
 		handleEdit,
@@ -80,10 +80,10 @@ export function useRocketsBaseComponent(props, context, options) {
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
-			fetch: async (correlationId) => { return await fetchI(correlationId); },
-			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
-			init: (correlationId) => { return initI(correlationId); },
-			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
+			fetch: async (correlationId) => { return await await fetchI(correlationId); },
+			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
+			init: async (correlationId) => { return await initI(correlationId); },
+			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
 	);
 
@@ -92,7 +92,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine
-	} = useRocketsComponent(props, context, options);
+	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);
 	const diameterMeasurementUnitId = ref(null);
@@ -196,10 +196,11 @@ export function useRocketsBaseComponent(props, context, options) {
 		const params = await serviceStore.getters.getRocketsSearchCriteria(correlationId);
 		if (params)
 			resetAdditional(correlationId, params);
+		return success(correlationId);
 	};
-	const initNewI = (correlationId, data) => {
+	const initNewI = async (correlationId, data) => {
 		data = data ? data : new RocketData();
-		return data;
+		return success(correlationId, data);
 	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
@@ -260,6 +261,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		dialogCopyRef,
 		dialogDeleteManager,
 		dialogDeleteMessage,
+		dialogDeleteParams,
 		detailItem,
 		items,
 		colsEditPanel,
@@ -284,7 +286,6 @@ export function useRocketsBaseComponent(props, context, options) {
 		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
-		dialogDeleteParams,
 		fetch,
 		handleAdd,
 		handleEdit,

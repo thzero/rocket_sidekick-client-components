@@ -6,7 +6,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
 
-import { useRocketsComponent } from '@/components/content/rockets/rocketsComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
 export function useRocketInfoBaseComponent(props, context, options) {
@@ -32,7 +32,7 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine
-	} = useRocketsComponent(props, context, options);
+	} = useRocketsUtilityComponent(props, context, options);
 
 	const rocket = ref([]);
 

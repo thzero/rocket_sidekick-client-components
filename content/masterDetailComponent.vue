@@ -122,7 +122,12 @@ export function useMasterDetailComponent(props, context, options) {
 				return;
 			}
 
-			detailItem.value = initNew(response.results);
+			const responseNew = await initNew(correlationIdI, response.results);
+			if (hasFailed(responseNew))
+				return;
+
+			detailItem.value = responseNew.results;
+
 			await fetch(correlationIdI);
 		}
 		finally {
@@ -155,12 +160,12 @@ export function useMasterDetailComponent(props, context, options) {
 			dialogDeleteParams.value = null;
 		}
 	};
-	const dialogDeleteOk = async (item) => {
+	const dialogDeleteOk = async () => {
 		try {
-			if (!dialogDeleteParams.value || !dialogDeleteParams.value.id)
+			if (!dialogDeleteParams.value)
 				return;
 
-			const response = await serviceStore.dispatcher.deletePartByIdUser(correlationId(), dialogDeleteParams.value.id);
+			const response = await serviceStore.dispatcher.deletePartByIdUser(correlationId(), dialogDeleteParams.value);
 			if (hasFailed(response)) {
 				setNotify(correlationIdI, 'messages.error');
 				return;
@@ -178,7 +183,7 @@ export function useMasterDetailComponent(props, context, options) {
 		if (!canDelete(item))
 			return;
 
-		dialogDeleteParams.value = { id: item.id };
+		dialogDeleteParams.value = item.id;
 		dialogDeleteManager.value.open();
 	};
 	const fetch = async (correlationId) => {
@@ -233,16 +238,16 @@ export function useMasterDetailComponent(props, context, options) {
 		return { data: data, isNew: true, isEditable: false  }
 	};
 	const isCopying = (item) => {
-		if (!dialogCopyParams.value || !dialogCopyParams.value.id || !item)
+		if (!dialogCopyParams.value || !item)
 			return false;
 
-		return item.id === dialogCopyParams.value.id;
+		return item.id === dialogCopyParams.value;
 	};
 	const isDeleting = (item) => {
-		if (!dialogDeleteParams.value || !dialogDeleteParams.value.id || !item)
+		if (!dialogDeleteParams.value || !item)
 			return false;
 
-		return item.id === dialogDeleteParams.value.id;
+		return item.id === dialogDeleteParams.value;
 	};
 	const isOwner = (correlationId, item) => {
 		const ownerId = (user.value ?? {}).id;

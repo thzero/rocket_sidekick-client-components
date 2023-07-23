@@ -5,7 +5,11 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants.js';
 
-import { useDetailComponent } from '@/components/content/detailComponent';
+import LibraryCommonUtility from '@thzero/library_common/utility';
+
+import ChecklistStepData from 'rocket_sidekick_common/data/checklists/step';
+
+import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
 
 export function useChecklistComponent(props, context, options) {
 	const {
@@ -26,30 +30,68 @@ export function useChecklistComponent(props, context, options) {
 		formControlRef,
 		dirty,
 		detailItem,
+		dialogDeleteManager,
+		dialogDeleteMessage,
+		dialogDeleteParams,
 		invalid,
 		canDelete,
 		detailItemData,
 		detailItemTextRows,
+		isDeleting,
 		isEditable,
 		isNew,
+		isOwner,
+		dialogDeleteCancel,
+		dialogDeleteError,
+		dialogDeleteOk,
+		dialogDeleteOpen,
 		dirtyCallback,
 		invalidCallback,
 		handleCancel,
 		handleClose,
 		handleOk,
 		preCompleteOk,
-		resetAdditional
-	} = useDetailComponent(props, context, {
+		resetAdditional,
+		dialogDeleteSecondaryManager,
+		dialogDeleteSecondaryMessage,
+		dialogDeleteSecondaryParams,
+		dialogEditSecondaryManager,
+		dialogEditSecondaryParams,
+		canAddSecondary,
+		canDeleteSecondary,
+		canEditSecondary,
+		isDeletingSecondary,
+		isEditingSecondary,
+		dialogDeleteSecondaryCancel,
+		dialogDeleteSecondaryError,
+		dialogDeleteSecondaryOk,
+		dialogDeleteSecondaryOpen,
+		dialogEditSecondaryCancel,
+		dialogEditSecondaryError,
+		dialogEditSecondaryOk,
+		dialogEditSecondaryOpen,
+		handleAddSecondary
+	} = useDetailSecondaryComponent(props, context, {
+		deleteSecondary: async (correlationIdI, id) => {
+			LibraryCommonUtility.deleteArrayById(detailItemData.value.steps, id);
+			return success(correlationId);
+		},
+		dialogDeleteMessage: 'checklists.step',
 		init: (correlationId, value) => {
 			// detailItemDescription.value = value ? value.description : null;
 			// detailItemIsDefault.value = value ? value.isDefault : null;
 			// detailItemName.value = value ? value.name : null;
 			resetData(correlationId, value);
 		},
+		initNewSecondary: async (correlationId) => {
+			detailItemData.value.stages = detailItemData.value.stages ?? [];
+			detailItemData.value.stages.push(new ChecklistStepData());
+			return success(correlationId);
+		},
 		preCompleteOk: async (correlationId) => {
-			detailItem.value.data.description = String.trim(detailItemDescription.value);
-			detailItem.value.data.name = String.trim(detailItemName.value);
-			delete detailItem.value.data.isDefault;
+			detailItemData.value.description = String.trim(detailItemDescription.value);
+			detailItemData.value.name = String.trim(detailItemName.value);
+			delete detailItemData.value.isDefault;
 
 			const response = await serviceStore.dispatcher.saveChecklist(correlationId, detailItemData.value);
 			logger.debug('checklistComponent', 'preCompleteOk', 'response', response, correlationId);
@@ -68,8 +110,8 @@ export function useChecklistComponent(props, context, options) {
 	const detailItemName = ref(null);
 	const detailItemReorder = ref(false);
 
-	const canAdd = computed(() => {
-		return !isNew.value && !dirty.value;
+	const hasAdmin = computed(() => {
+		return false;
 	});
 	const isDefault = computed(() => {
 		return detailItemData.value ? detailItemData.value.isDefault ?? false : false;
@@ -84,30 +126,28 @@ export function useChecklistComponent(props, context, options) {
 		return detailItemData.value ? detailItemData.value.steps : [{}];
 	});
 
-	const handleAdd = () => {
-	};
 	const resetData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemIsDefault.value = value ? value.isDefault : null;
 		detailItemName.value = value ? value.name : null;
 	};
-	const updateDataModel = async (payload, addedIndex, removedIndex) => {
-		console.log('updateDataModel', payload);
-		console.log('updateDataModel', addedIndex);
-		console.log('updateDataModel', removedIndex);
+	const updateOrder = async (payload, addedIndex, removedIndex) => {
+		console.log('updateOrder', payload);
+		console.log('updateOrder', addedIndex);
+		console.log('updateOrder', removedIndex);
 
 		let item = null;
 		let steps = detailItemData.value.steps;
 		for (const id of payload.idChain) {
-			console.log('updateDataModel', id);
+			console.log('updateOrder', id);
 			item = steps.find(l => l.id == id);
 			if (item)
 				steps = item.steps;
 		}
 		if (!item)
-			throw Error('Invalid item in updateDataModel...');
+			throw Error('Invalid item in updateOrder...');
 
-		console.log('updateDataModel', item.steps);
+		console.log('updateOrder', item.steps);
 		if (item.steps) {
 			let itemToAdd = payload.item;
 			if (removedIndex !== null)
@@ -116,7 +156,7 @@ export function useChecklistComponent(props, context, options) {
 			if (addedIndex !== null)
 				item.steps.splice(addedIndex, 0, itemToAdd);
 		}
-		console.log('updateDataModel', detailItemData.value);
+		console.log('updateOrder', detailItemData.value);
 
 		detailItemReorder.value = !detailItemReorder.value;
 	};
@@ -618,12 +658,21 @@ export function useChecklistComponent(props, context, options) {
 		formControlRef,
 		dirty,
 		detailItem,
+		dialogDeleteManager,
+		dialogDeleteMessage,
+		dialogDeleteParams,
 		invalid,
 		canDelete,
 		detailItemData,
 		detailItemTextRows,
+		isDeleting,
 		isEditable,
 		isNew,
+		isOwner,
+		dialogDeleteCancel,
+		dialogDeleteError,
+		dialogDeleteOk,
+		dialogDeleteOpen,
 		dirtyCallback,
 		invalidCallback,
 		handleCancel,
@@ -631,17 +680,35 @@ export function useChecklistComponent(props, context, options) {
 		handleOk,
 		preCompleteOk,
 		resetAdditional,
+		dialogDeleteSecondaryManager,
+		dialogDeleteSecondaryMessage,
+		dialogDeleteSecondaryParams,
+		dialogEditSecondaryManager,
+		dialogEditSecondaryParams,
+		canAddSecondary,
+		canDeleteSecondary,
+		canEditSecondary,
+		isDeletingSecondary,
+		isEditingSecondary,
+		dialogDeleteSecondaryCancel,
+		dialogDeleteSecondaryError,
+		dialogDeleteSecondaryOk,
+		dialogDeleteSecondaryOpen,
+		dialogEditSecondaryCancel,
+		dialogEditSecondaryError,
+		dialogEditSecondaryOk,
+		dialogEditSecondaryOpen,
+		handleAddSecondary,
 		detailItemDescription,
 		detailItemIsDefault,
 		detailItemName,
 		detailItemReorder,
-		canAdd,
+		hasAdmin,
 		isDefault,
 		isInProgress,
 		isShared,
 		steps,
-		handleAdd,
-		updateDataModel,
+		updateOrder,
 		scope: 'ChecklistControl',
 		validation: useVuelidate({ $scope: 'ChecklistControl' })
 	};
