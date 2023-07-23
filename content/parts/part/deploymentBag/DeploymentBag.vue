@@ -72,8 +72,8 @@
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemDiameterRef"
-					vid="detailItemDiameter"
 					v-model="detailItemDiameter"
+					vid="detailItemDiameter"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.parts.diameter')"
@@ -85,8 +85,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
 								ref="diameterMeasurementUnitsIdRef"
-								vid="diameterMeasurementUnitsId"
 								v-model="diameterMeasurementUnitsId"
+								vid="diameterMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -95,8 +95,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
 								ref="diameterMeasurementUnitIdRef"
-								vid="diameterMeasurementUnitId"
 								v-model="diameterMeasurementUnitId"
+								vid="diameterMeasurementUnitId"
 								:measurementUnitsId="diameterMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
@@ -110,8 +110,8 @@
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemLengthRef"
-					vid="detailItemLength"
 					v-model="detailItemLength"
+					vid="detailItemLength"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.parts.length')"
@@ -123,8 +123,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
 								ref="lengthMeasurementUnitsIdRef"
-								vid="lengthMeasurementUnitsId"
 								v-model="lengthMeasurementUnitsId"
+								vid="lengthMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -133,8 +133,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
 								ref="lengthMeasurementUnitIdRef"
-								vid="lengthMeasurementUnitId"
 								v-model="lengthMeasurementUnitId"
+								vid="lengthMeasurementUnitId"
 								:measurementUnitsId="lengthMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
@@ -150,8 +150,8 @@
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemWeightRef"
-					vid="detailItemWeight"
 					v-model="detailItemWeight"
+					vid="detailItemWeight"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.parts.weight')"
@@ -163,8 +163,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
 								ref="weightMeasurementUnitsIdRef"
-								vid="weightMeasurementUnitsId"
 								v-model="weightMeasurementUnitsId"
+								vid="weightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -173,8 +173,8 @@
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
 								ref="weightMeasurementUnitIdRef"
-								vid="weightMeasurementUnitId"
 								v-model="weightMeasurementUnitId"
+								vid="weightMeasurementUnitId"
 								:measurementUnitsId="weightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
@@ -330,13 +330,22 @@ export default {
 			formControlRef,
 			dirty,
 			detailItem,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogDeleteParams,
 			invalid,
 			canDelete,
 			detailItemData,
 			detailItemTextRows,
+			isDeleting,
 			isEditable,
 			isNew,
+			isOwner,
 			dirtyCallback,
+			dialogDeleteCancel,
+			dialogDeleteError,
+			dialogDeleteOk,
+			dialogDeleteOpen,
 			invalidCallback,
 			handleCancel,
 			handleClose,
@@ -396,13 +405,22 @@ export default {
 			formControlRef,
 			dirty,
 			detailItem,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogDeleteParams,
 			invalid,
 			canDelete,
 			detailItemData,
 			detailItemTextRows,
+			isDeleting,
 			isEditable,
 			isNew,
+			isOwner,
 			dirtyCallback,
+			dialogDeleteCancel,
+			dialogDeleteError,
+			dialogDeleteOk,
+			dialogDeleteOpen,
 			invalidCallback,
 			handleCancel,
 			handleClose,

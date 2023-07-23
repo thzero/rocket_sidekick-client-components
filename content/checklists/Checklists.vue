@@ -27,21 +27,21 @@
 										<v-checkbox
 											v-model="filterItemYours"
 											density="compact"
-											:label="$t('forms.content.checklist.yours')"
+											:label="$t('forms.content.checklists.yours')"
 										/>
 									</v-col>
 									<v-col cols="4" md="2">
 										<v-checkbox
 											v-model="filterItemIsDefault"
 											density="compact"
-											:label="$t('forms.content.checklist.default')"
+											:label="$t('forms.content.checklists.default')"
 										/>
 									</v-col>
 									<v-col cols="4" md="2">
 										<v-checkbox
 											v-model="filterItemShared"
 											density="compact"
-											:label="$t('forms.content.checklist.shared')"
+											:label="$t('forms.content.checklists.shared')"
 										/>
 									</v-col>
 								</v-row>
@@ -160,7 +160,7 @@
 		@ok="dialogCopyOk"
 	/>
 	<VConfirmationDialog
-		ref="dialoDeleteRef"
+		ref="dialogDeleteRef"
 		:message="dialogDeleteMessage"
 		:messageRaw=true
 		:signal="dialogDeleteManager.signal"
@@ -168,7 +168,7 @@
 		@ok="dialogDeleteOk"
 	/>
 	<VConfirmationDialog
-		ref="dialoStartRef"
+		ref="dialogStartRef"
 		:message="dialogStartMessage"
 		:messageRaw=true
 		:signal="dialogStartManager.signal"
@@ -245,6 +245,7 @@ export default {
 			dialogCopyRef,
 			dialogDeleteManager,
 			dialogDeleteMessage,
+			dialogDeleteParams,
 			detailItem,
 			items,
 			colsEditPanel,
@@ -268,7 +269,6 @@ export default {
 			dialogDeleteError,
 			dialogDeleteOk,
 			dialogDeleteOpen,
-			dialogDeleteParams,
 			handleAdd,
 			handleEdit,
 			handleView,
@@ -328,6 +328,7 @@ export default {
 			dialogCopyRef,
 			dialogDeleteManager,
 			dialogDeleteMessage,
+			dialogDeleteParams,
 			detailItem,
 			items,
 			colsEditPanel,
@@ -351,7 +352,6 @@ export default {
 			dialogDeleteError,
 			dialogDeleteOk,
 			dialogDeleteOpen,
-			dialogDeleteParams,
 			handleAdd,
 			handleEdit,
 			handleView,

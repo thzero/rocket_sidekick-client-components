@@ -6,7 +6,9 @@
 		[[ dirty {{ dirty }} ]]
 		[[ isEditable {{ isEditable }} ]]
 		[[ isNew {{ isNew }} ]]
-		[[ canAdd {{ canAdd }} ]]
+		[[ canAddStep {{ canAddStep }} ]]
+		[[ canDeleteStep {{ canDeleteStep }} ]]
+		[[ canEditStep {{ canEditStep }} ]]
 		[[ isDefault {{ isDefault }} ]]
 		[[ isInProgress {{ isInProgress }} ]]
 		[[ isShared {{ isShared }} ]]
@@ -45,8 +47,8 @@
 			</v-col>
 			<v-col cols="2">
 				<VSwitch
-					ref="isDefaultRef"
 					v-if="!isEditable"
+					ref="isDefaultRef"
 					v-model="detailItemIsDefault"
 					:label="$t('forms.checklists.default')"
 					:readonly="true"
@@ -84,15 +86,15 @@
 				v-if="$vuetify.display.mdAndUp"
 			>
 				<v-btn
-					v-if="canAdd"
+					v-if="canAddStep"
 					class="mr-2"
 					color="primary"
-					@click="handleAdd"
+					@click="handleAddSecondary"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.checklists.step') }}
 				</v-btn>
 				<span
-					v-if="canAdd"
+					v-if="canAddStep"
 					class="mr-2"
 				>|</span>
 			</template>
@@ -111,9 +113,9 @@
 				class="mt-2"
 			>
 				<v-btn
-					v-if="canAdd"
+					v-if="canAddStep"
 					color="primary"
-					@click="handleAdd"
+					@click="handleAddSecondary"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.checklists.step') }}
 				</v-btn>
@@ -128,7 +130,7 @@
 					<ChecklistSteps
 						:item="detailItemData"
 						:readonly="!isEditable"
-						:update="updateDataModel"
+						:update-order="updateOrder"
 						:debug="debug"
 					>
 					</ChecklistSteps>
@@ -183,12 +185,21 @@ export default {
 			formControlRef,
 			dirty,
 			detailItem,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogDeleteParams,
 			invalid,
 			canDelete,
 			detailItemData,
 			detailItemTextRows,
+			isDeleting,
 			isEditable,
 			isNew,
+			isOwner,
+			dialogDeleteCancel,
+			dialogDeleteError,
+			dialogDeleteOk,
+			dialogDeleteOpen,
 			dirtyCallback,
 			invalidCallback,
 			handleCancel,
@@ -196,17 +207,35 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			dialogDeleteSecondaryManager,
+			dialogDeleteSecondaryMessage,
+			dialogDeleteSecondaryParams,
+			dialogEditSecondaryManager,
+			dialogEditSecondaryParams,
+			canAddSecondary,
+			canDeleteSecondary,
+			canEditSecondary,
+			isDeletingSecondary,
+			isEditingSecondary,
+			dialogDeleteSecondaryCancel,
+			dialogDeleteSecondaryError,
+			dialogDeleteSecondaryOk,
+			dialogDeleteSecondaryOpen,
+			dialogEditSecondaryCancel,
+			dialogEditSecondaryError,
+			dialogEditSecondaryOk,
+			dialogEditSecondaryOpen,
+			handleAddSecondary,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,
 			detailItemReorder,
-			canAdd,
+			hasAdmin,
 			isDefault,
 			isInProgress,
 			isShared,
 			steps,
-			handleAdd,
-			updateDataModel,
+			updateOrder,
 			scope,
 			validation
 		} = useChecklistComponent(props, context);
@@ -229,12 +258,21 @@ export default {
 			formControlRef,
 			dirty,
 			detailItem,
+			dialogDeleteManager,
+			dialogDeleteMessage,
+			dialogDeleteParams,
 			invalid,
 			canDelete,
 			detailItemData,
 			detailItemTextRows,
+			isDeleting,
 			isEditable,
 			isNew,
+			isOwner,
+			dialogDeleteCancel,
+			dialogDeleteError,
+			dialogDeleteOk,
+			dialogDeleteOpen,
 			dirtyCallback,
 			invalidCallback,
 			handleCancel,
@@ -242,17 +280,35 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			dialogDeleteSecondaryManager,
+			dialogDeleteSecondaryMessage,
+			dialogDeleteSecondaryParams,
+			dialogEditSecondaryManager,
+			dialogEditSecondaryParams,
+			canAddSecondary,
+			canDeleteSecondary,
+			canEditSecondary,
+			isDeletingSecondary,
+			isEditingSecondary,
+			dialogDeleteSecondaryCancel,
+			dialogDeleteSecondaryError,
+			dialogDeleteSecondaryOk,
+			dialogDeleteSecondaryOpen,
+			dialogEditSecondaryCancel,
+			dialogEditSecondaryError,
+			dialogEditSecondaryOk,
+			dialogEditSecondaryOpen,
+			handleAddSecondary,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,
 			detailItemReorder,
-			canAdd,
+			hasAdmin,
 			isDefault,
 			isInProgress,
 			isShared,
 			steps,
-			handleAdd,
-			updateDataModel,
+			updateOrder,
 			scope,
 			validation
 		};

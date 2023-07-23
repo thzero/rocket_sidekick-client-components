@@ -210,7 +210,7 @@
 		@ok="dialogCopyOk"
 	/>
 	<VConfirmationDialog
-		ref="dialoDeleteRef"
+		ref="dialogDeleteRef"
 		:message="dialogDeleteMessage"
 		:messageRaw=true
 		:signal="dialogDeleteManager.signal"

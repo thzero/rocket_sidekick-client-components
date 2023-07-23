@@ -24,13 +24,22 @@ export function usePartComponent(props, context, options) {
 		formControlRef,
 		dirty,
 		detailItem,
+		dialogDeleteManager,
+		dialogDeleteMessage,
+		dialogDeleteParams,
 		invalid,
 		canDelete,
 		detailItemData,
 		detailItemTextRows,
+		isDeleting,
 		isEditable,
 		isNew,
+		isOwner,
 		dirtyCallback,
+		dialogDeleteCancel,
+		dialogDeleteError,
+		dialogDeleteOk,
+		dialogDeleteOpen,
 		invalidCallback,
 		handleCancel,
 		handleClose,
@@ -49,21 +58,21 @@ export function usePartComponent(props, context, options) {
 		manufacturerType: options.manufacturerType,
 		partsType: options.partsType,
 		preCompleteOk : async (correlationId) => {
-			detailItem.value.data.description = String.trim(detailItemDescription.value);
-			detailItem.value.data.name = String.trim(detailItemName.value);
+			detailItemData.value.description = String.trim(detailItemDescription.value);
+			detailItemData.value.name = String.trim(detailItemName.value);
 
-			detailItem.value.data.typeId = options.partsType;
-			detailItem.value.data.manufacturerId = detailItemManufacturer.value;
-			detailItem.value.data.manufacturerStockId = detailItemManufacturerStockId.value;
+			detailItemData.value.typeId = options.partsType;
+			detailItemData.value.manufacturerId = detailItemManufacturer.value;
+			detailItemData.value.manufacturerStockId = detailItemManufacturerStockId.value;
 
-			detailItem.value.data.public = detailItemIsPublic.value ?? false;
+			detailItemData.value.public = detailItemIsPublic.value ?? false;
 			
-			detailItem.value.data.weight = Number(detailItemWeight.value);
-			detailItem.value.data.weightMeasurementUnitId = weightMeasurementUnitId.value;
-			detailItem.value.data.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
+			detailItemData.value.weight = Number(detailItemWeight.value);
+			detailItemData.value.weightMeasurementUnitId = weightMeasurementUnitId.value;
+			detailItemData.value.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 
 			if (options.preCompleteOkPart)
-				detailItem.value.data = options.preCompleteOkPart(correlationId, detailItem.value.data);
+			detailItemData.value = options.preCompleteOkPart(correlationId, detailItemData.value);
 
 			const response = await serviceStore.dispatcher.savePart(correlationId, detailItemData.value);
 			logger.debug('partComponent', 'preCompleteOk', 'response', response, correlationId);
@@ -170,13 +179,22 @@ export function usePartComponent(props, context, options) {
 		formControlRef,
 		dirty,
 		detailItem,
+		dialogDeleteManager,
+		dialogDeleteMessage,
+		dialogDeleteParams,
 		invalid,
 		canDelete,
 		detailItemData,
 		detailItemTextRows,
+		isDeleting,
 		isEditable,
 		isNew,
+		isOwner,
 		dirtyCallback,
+		dialogDeleteCancel,
+		dialogDeleteError,
+		dialogDeleteOk,
+		dialogDeleteOpen,
 		invalidCallback,
 		handleCancel,
 		handleClose,

@@ -165,7 +165,7 @@
 		@ok="dialogCopyOk"
 	/>
 	<VConfirmationDialog
-		ref="dialoDeleteRef"
+		ref="dialogDeleteRef"
 		:message="dialogDeleteMessage"
 		:messageRaw=true
 		:signal="dialogDeleteManager.signal"
@@ -221,6 +221,7 @@ export default {
 			dialogCopyRef,
 			dialogDeleteManager,
 			dialogDeleteMessage,
+			dialogDeleteParams,
 			detailItem,
 			items,
 			colsEditPanel,
@@ -245,7 +246,6 @@ export default {
 			dialogDeleteError,
 			dialogDeleteOk,
 			dialogDeleteOpen,
-			dialogDeleteParams,
 			fetch,
 			handleAdd,
 			handleEdit,
@@ -292,6 +292,7 @@ export default {
 			dialogCopyRef,
 			dialogDeleteManager,
 			dialogDeleteMessage,
+			dialogDeleteParams,
 			detailItem,
 			items,
 			colsEditPanel,
@@ -316,7 +317,6 @@ export default {
 			dialogDeleteError,
 			dialogDeleteOk,
 			dialogDeleteOpen,
-			dialogDeleteParams,
 			fetch,
 			handleAdd,
 			handleEdit,

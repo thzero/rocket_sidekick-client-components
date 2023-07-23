@@ -58,11 +58,11 @@ export function useChecklistStepsComponent(props, context, options) {
     };
 	const onDrop = (dropResult) => {
 		console.log('onDrop', dropResult);
-		if (!props.update)
+		if (!props.updateOrder)
 			return;
 
 		(async () => {
-			await props.update(dropResult.payload, dropResult.addedIndex, dropResult.removedIndex);
+			await props.updateOrder(dropResult.payload, dropResult.addedIndex, dropResult.removedIndex);
 		})();
 	};
 	

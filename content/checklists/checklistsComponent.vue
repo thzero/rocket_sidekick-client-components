@@ -38,6 +38,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogCopyRef,
 		dialogDeleteManager,
 		dialogDeleteMessage,
+		dialogDeleteParams,
 		detailItem,
 		items,
 		colsEditPanel,
@@ -62,7 +63,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
-		dialogDeleteParams,
 		fetch,
 		handleAdd,
 		handleEdit,
@@ -81,9 +81,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
-			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
-			init: (correlationId) => { return initI(correlationId); },
-			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
+			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
+			init: async (correlationId) => { return await initI(correlationId); },
+			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
 	);
 
@@ -158,11 +158,12 @@ export function useChecklistsBaseComponent(props, context, options) {
 	};
 	const dialogStartOk = async (item) => {
 		try {
-			if (!dialogStartParams.value || !dialogStartParams.value.id)
+			if (!dialogStartParams.value)
 				return;
 
 			// TODO
-			// const response = await serviceStore.dispatcher.startChecklist(correlationId(), dialogDeleteParams.value.id);
+			// const correlationIdI = correlationId();
+			// const response = await serviceStore.dispatcher.startChecklist(correlationIdI, dialogStartParams.value);
 			// if (hasFailed(response)) {
 			// 	setNotify(correlationIdI, 'messages.error');
 			// 	return;
@@ -180,7 +181,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		if (!canStart(item))
 			return;
 
-		dialogStartParams.value = { id: item.id };
+		dialogStartParams.value = item.id;
 		dialogStartManager.value.open();
 	};
 	const fetchI = async (correlationId) => {
@@ -206,11 +207,12 @@ export function useChecklistsBaseComponent(props, context, options) {
 		const params = await serviceStore.getters.getChecklistsSearchCriteria(correlationId);
 		if (params)
 			resetAdditional(correlationId, params);
+		return success(correlationId);
 	};
-	const initNewI = (correlationId, data) => {
+	const initNewI = async (correlationId, data) => {
 		data = data ? data : new ChecklistData();
 		data.typeId = AppCommonConstants.Checklists.ChecklistTypes.launch;
-		return data;
+		return success(correlationId, data);
 	};
 	const isCompleted = (item) => {
 		return item ? item.completed  ?? false : false;
@@ -225,10 +227,10 @@ export function useChecklistsBaseComponent(props, context, options) {
 		return item ? item.isShared ?? false : false;
 	};
 	const isStarting = (item) => {
-		if (!dialogStartParams.value || !dialogStartParams.value.id || !item)
+		if (!dialogStartParams.value || !item)
 			return false;
 
-		return item.id === dialogStartParams.value.id;
+		return item.id === dialogStartParams.value;
 	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
@@ -265,6 +267,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogCopyRef,
 		dialogDeleteManager,
 		dialogDeleteMessage,
+		dialogDeleteParams,
 		detailItem,
 		items,
 		colsEditPanel,
@@ -289,7 +292,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
-		dialogDeleteParams,
 		fetch,
 		handleAdd,
 		handleEdit,

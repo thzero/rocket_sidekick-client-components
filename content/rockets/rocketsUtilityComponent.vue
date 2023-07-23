@@ -7,7 +7,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
-export function useRocketsComponent(props, context, options) {
+export function useRocketsUtilityComponent(props, context, options) {
 	const {
 		correlationId,
 		error,

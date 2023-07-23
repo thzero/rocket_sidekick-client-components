@@ -1,7 +1,7 @@
 <script>
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import { useRocketsComponent } from '@/components/content/rockets/rocketsComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
 export function useRocketPanelBaseComponent(props, context, options) {
@@ -25,7 +25,7 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine
-	} = useRocketsComponent(props, context, options);
+	} = useRocketsUtilityComponent(props, context, options);
 
 	const rocketUrl = (item) => {
 		if (!item)

@@ -33,6 +33,7 @@ export function usePartsBaseComponent(props, context, options) {
 		dialogCopyRef,
 		dialogDeleteManager,
 		dialogDeleteMessage,
+		dialogDeleteParams,
 		detailItem,
 		items,
 		colsEditPanel,
@@ -57,7 +58,6 @@ export function usePartsBaseComponent(props, context, options) {
 		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
-		dialogDeleteParams,
 		fetch,
 		handleAdd,
 		handleEdit,
@@ -76,9 +76,9 @@ export function usePartsBaseComponent(props, context, options) {
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
-			fetchItem: (correlationId, id) => { return fetchItemI(correlationId, id); },
-			init: (correlationId) => { return initI(correlationId); },
-			initNew: (correlationId, data) => { return initNewI(correlationId, data); }
+			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
+			init: async (correlationId) => { return await initI(correlationId); },
+			initNew: async (correlationId, data) => { return initNewI(correlationId, data); }
 		}
 	);
 
@@ -165,9 +165,9 @@ export function usePartsBaseComponent(props, context, options) {
 		if (params) 
 			resetAdditional(correlationId, params[props.type]);
 	};
-	const initNewI = (correlationId, data) => {
+	const initNewI = async (correlationId, data) => {
 		data = data ? data : new PartData();
-		return data;
+		return success(correlationId, data);
 	};
 	const isPublic = (correlationId, item) => {
 		return item ? item.public ?? false : false;
@@ -218,6 +218,7 @@ export function usePartsBaseComponent(props, context, options) {
 		dialogCopyRef,
 		dialogDeleteManager,
 		dialogDeleteMessage,
+		dialogDeleteParams,
 		detailItem,
 		items,
 		colsEditPanel,
@@ -242,7 +243,6 @@ export function usePartsBaseComponent(props, context, options) {
 		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
-		dialogDeleteParams,
 		fetch,
 		handleAdd,
 		handleEdit,
