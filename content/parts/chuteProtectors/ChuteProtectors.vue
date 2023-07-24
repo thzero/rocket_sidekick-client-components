@@ -83,8 +83,6 @@
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core';
-
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
@@ -149,7 +147,9 @@ export default {
 			fetchParams,
 			resetAdditionalFilter,
 			filterItemDiameter,
-			filterItemDimension
+			filterItemDimension,
+			scope,
+			validation
 		} = useChuteProtectorPartsListingComponent(props, context, { 
 			type: AppCommonConstants.Rocketry.PartTypes.chuteProtector
 		});
@@ -182,8 +182,8 @@ export default {
 			resetAdditionalFilter,
 			filterItemDiameter,
 			filterItemDimension,
-			scope: 'ChuteProectorsFilterControl',
-			validation: useVuelidate({ $scope: 'ChuteProectorsFilterControl' })
+			scope,
+			validation
 		};
 	},
 	validations () {

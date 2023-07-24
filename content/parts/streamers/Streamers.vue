@@ -83,8 +83,6 @@
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core';
-
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
@@ -148,6 +146,8 @@ export default {
 			type,
 			fetchParams,
 			resetAdditionalFilter,
+			scope,
+			validation
 		} = useDeploymentBagPartsListingComponent(props, context, { 
 			type: AppCommonConstants.Rocketry.PartTypes.streamer
 		});
@@ -178,8 +178,8 @@ export default {
 			type,
 			fetchParams,
 			resetAdditionalFilter,
-			scope: 'StreamersFilterControl',
-			validation: useVuelidate({ $scope: 'StreamersFilterControl' })
+			scope,
+			validation
 		};
 	},
 	validations () {

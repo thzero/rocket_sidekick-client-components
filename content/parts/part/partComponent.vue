@@ -1,5 +1,5 @@
 <script>
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
@@ -20,6 +20,11 @@ export function usePartComponent(props, context, options) {
 		isSaving,
 		serverErrors,
 		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
 		serviceStore,
 		formControlRef,
 		dirty,
@@ -35,11 +40,11 @@ export function usePartComponent(props, context, options) {
 		isEditable,
 		isNew,
 		isOwner,
-		dirtyCallback,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
+		dirtyCallback,
 		invalidCallback,
 		handleCancel,
 		handleClose,
@@ -175,6 +180,11 @@ export function usePartComponent(props, context, options) {
 		isSaving,
 		serverErrors,
 		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
 		serviceStore,
 		formControlRef,
 		dirty,
@@ -190,11 +200,11 @@ export function usePartComponent(props, context, options) {
 		isEditable,
 		isNew,
 		isOwner,
-		dirtyCallback,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,
 		dialogDeleteOpen,
+		dirtyCallback,
 		invalidCallback,
 		handleCancel,
 		handleClose,

@@ -90,8 +90,6 @@
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core';
-
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
@@ -157,7 +155,9 @@ export default {
 			resetAdditionalFilter,
 			filterItemDiameter,
 			filterItemLength,
-			filterItemPilotChute
+			filterItemPilotChute,
+			scope,
+			validation
 		} = useDeploymentBagPartsListingComponent(props, context, { 
 			type: AppCommonConstants.Rocketry.PartTypes.deploymentBag
 		});
@@ -191,8 +191,8 @@ export default {
 			filterItemDiameter,
 			filterItemLength,
 			filterItemPilotChute,
-			scope: 'DeploymentBagsFilterControl',
-			validation: useVuelidate({ $scope: 'DeploymentBagsFilterControl' })
+			scope,
+			validation
 		};
 	},
 	validations () {

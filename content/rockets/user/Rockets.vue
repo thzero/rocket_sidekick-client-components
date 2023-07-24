@@ -221,8 +221,6 @@
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core';
-
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
@@ -344,6 +342,8 @@ export default {
 			manufacturer,
 			measurementUnitTranslateWeight,
 			resetAdditional,
+			scope,
+			validation
 		} = useRocketsBaseComponent(props, context);
 
 		return {
@@ -425,8 +425,8 @@ export default {
 			manufacturer,
 			measurementUnitTranslateWeight,
 			resetAdditional,
-			scope: 'RocketsFilterControl',
-			validation: useVuelidate({ $scope: 'RocketsFilterControl' })
+			scope,
+			validation
 		};
 	},
 	validations () {

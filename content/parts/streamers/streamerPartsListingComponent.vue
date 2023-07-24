@@ -1,4 +1,6 @@
 <script>
+import useVuelidate from '@vuelidate/core';
+
 import { usePartsListingComponent } from '@/components/content/parts/partsListingComponent';
 
 export function useStreamerPartsListingComponent(props, context, options) {
@@ -61,7 +63,9 @@ export function useStreamerPartsListingComponent(props, context, options) {
 		manufacturers,
 		type,
 		fetchParams,
-		resetAdditionalFilter
+		resetAdditionalFilter,
+		scope: 'StreamersFilterControl',
+		validation: useVuelidate({ $scope: 'StreamersFilterControl' })
 	};
 };
 </script>

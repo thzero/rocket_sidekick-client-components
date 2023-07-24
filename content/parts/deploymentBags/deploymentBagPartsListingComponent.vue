@@ -1,5 +1,6 @@
 <script>
 import { ref } from 'vue';
+import useVuelidate from '@vuelidate/core';
 
 import { usePartsListingComponent } from '@/components/content/parts/partsListingComponent';
 
@@ -86,7 +87,9 @@ export function useDeploymentBagPartsListingComponent(props, context, options) {
 		resetAdditionalFilter,
 		filterItemDiameter,
 		filterItemLength,
-		filterItemPilotChute
+		filterItemPilotChute,
+		scope: 'DeploymentBagsFilterControl',
+		validation: useVuelidate({ $scope: 'DeploymentBagsFilterControl' })
 	};
 };
 </script>

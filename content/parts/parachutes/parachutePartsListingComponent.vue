@@ -1,5 +1,6 @@
 <script>
 import { ref } from 'vue';
+import useVuelidate from '@vuelidate/core';
 
 import { usePartsListingComponent } from '@/components/content/parts/partsListingComponent';
 
@@ -77,7 +78,9 @@ export function useParachutesPartsListingComponent(props, context, options) {
 		fetchParams,
 		resetAdditionalFilter,
 		filterItemDiameter,
-		filterItemThinMill
+		filterItemThinMill,
+		scope: 'ParchutesFilterControl',
+		validation: useVuelidate({ $scope: 'ParchutesFilterControl' })
 	};
 };
 </script>

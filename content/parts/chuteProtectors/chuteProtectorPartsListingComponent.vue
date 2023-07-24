@@ -1,5 +1,6 @@
 <script>
 import {  ref } from 'vue';
+import useVuelidate from '@vuelidate/core';
 
 import { usePartsListingComponent } from '@/components/content/parts/partsListingComponent';
 
@@ -82,7 +83,9 @@ export function useChuteProtectorPartsListingComponent(props, context, options) 
 		fetchParams,
 		resetAdditionalFilter,
 		filterItemDiameter,
-		filterItemDimension
+		filterItemDimension,
+		scope: 'ChuteProectorsFilterControl',
+		validation: useVuelidate({ $scope: 'ChuteProectorsFilterControl' })
 	};
 };
 </script>

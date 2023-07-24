@@ -1,6 +1,7 @@
 <script>
 import { computed, onMounted, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
+import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
@@ -316,7 +317,9 @@ export function useRocketsBaseComponent(props, context, options) {
 		fetchManufacturers,
 		manufacturer,
 		measurementUnitTranslateWeight,
-		resetAdditional
+		resetAdditional,
+		scope: 'RocketsFilterControl',
+		validation: useVuelidate({ $scope: 'RocketsFilterControl' })
 	};
 };
 </script>
