@@ -30,6 +30,11 @@ export function useRocketComponent(props, context, options) {
 		isSaving,
 		serverErrors,
 		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
 		serviceStore,
 		formControlRef,
 		dirty,
@@ -76,9 +81,12 @@ export function useRocketComponent(props, context, options) {
 		dialogEditSecondaryOpen,
 		handleAddSecondary
 	} = useDetailSecondaryComponent(props, context, {
-		deleteSecondary: async (correlationIdI, id) => {
+		deleteSecondary: async (correlationId, id) => {
 			LibraryCommonUtility.deleteArrayById(detailItemData.value.stages, id);
-			return success(correlationId);
+			
+			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
+			logger.debug('rocketComponent', 'deleteSecondary', 'response', response, correlationId);
+			return response;
 		},
 		dialogDeleteMessage: 'rockets.stage',
 		init: async (correlationId, value) => {
@@ -89,8 +97,13 @@ export function useRocketComponent(props, context, options) {
 		},
 		initNewSecondary: async (correlationId) => {
 			detailItemData.value.stages = detailItemData.value.stages ?? [];
-			detailItemData.value.stages.push(new RocketStageData());
-			return success(correlationId);
+			const rocketStage = new RocketStageData();
+			rocketStage.rocketId = detailItemData.value.id;
+			detailItemData.value.stages.push(rocketStage);
+			
+			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
+			logger.debug('rocketComponent', 'initNewSecondary', 'response', response, correlationId);
+			return response;
 		},
 		preCompleteOk : async (correlationId) => {
 			// detailItemData.value.description = String.trim(detailItemDescription.value);
@@ -308,7 +321,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemData.value.diameterMinorMeasurementUnitId = diameterMinorMeasurementUnitId.value;
 		detailItemData.value.diameterMinorMeasurementUnitsId = diameterMinorMeasurementUnitsId.value;
 
-		setEditData(correlationId);
+		setEditData(correlationId, detailItemData.value);
 	};
 	
 	return {
@@ -325,6 +338,11 @@ export function useRocketComponent(props, context, options) {
 		isSaving,
 		serverErrors,
 		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
 		serviceStore,
 		formControlRef,
 		dirty,

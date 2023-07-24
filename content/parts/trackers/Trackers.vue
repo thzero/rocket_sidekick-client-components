@@ -83,10 +83,6 @@
 </template>
 
 <script>
-// import { between, decimal } from '@vuelidate/validators';
-
-import useVuelidate from '@vuelidate/core';
-
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
@@ -150,6 +146,8 @@ export default {
 			type,
 			fetchParams,
 			resetAdditionalFilter,
+			scope,
+			validation
 		} = useDeploymentBagPartsListingComponent(props, context, { 
 			type: AppCommonConstants.Rocketry.PartTypes.tracker
 		});
@@ -180,8 +178,8 @@ export default {
 			type,
 			fetchParams,
 			resetAdditionalFilter,
-			scope: 'TrackersFilterControl',
-			validation: useVuelidate({ $scope: 'TrackersFilterControl' })
+			scope,
+			validation
 		};
 	},
 	validations () {

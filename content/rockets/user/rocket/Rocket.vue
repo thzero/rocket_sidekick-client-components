@@ -212,6 +212,84 @@
 				</table>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemCgRef"
+					v-model="detailItemCg"
+					vid="detailItemCg"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.cg')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="cgMeasurementUnitsIdRef"
+								v-model="cgMeasurementUnitsId"
+								vid="cgMeasurementUnitsId"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="cgMeasurementUnitIdRef"
+								v-model="cgMeasurementUnitId"
+								vid="cgMeasurementUnitId"
+								:measurementUnitsId="cgMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemCpRef"
+					v-model="detailItemCp"
+					vid="detailItemCp"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.cp')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="cpMeasurementUnitsIdRef"
+								v-model="cpMeasurementUnitsId"
+								vid="cpMeasurementUnitsId"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="cpMeasurementUnitIdRef"
+								v-model="cpMeasurementUnitId"
+								vid="cpMeasurementUnitId"
+								:measurementUnitsId="cpMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+		</v-row>
 		<template v-slot:buttons_pre>
 			<template
 				v-if="$vuetify.display.mdAndUp"
@@ -300,6 +378,7 @@
 		@ok="dialogDeleteSecondaryOk"
 	/>
 	<RocketEditDialog
+		v-if="!readonly"
 		ref="dialogMotorSearchRef"
 		:signal="dialogEditSecondaryManager.signal"
 		@close="dialogEditSecondaryCancel"
@@ -362,6 +441,11 @@ export default {
 			isSaving,
 			serverErrors,
 			setErrors,
+			notifyColor,
+			notifyMessage,
+			notifySignal,
+			notifyTimeout,
+			setNotify,
 			serviceStore,
 			formControlRef,
 			dirty,
@@ -463,6 +547,11 @@ export default {
 			isSaving,
 			serverErrors,
 			setErrors,
+			notifyColor,
+			notifyMessage,
+			notifySignal,
+			notifyTimeout,
+			setNotify,
 			serviceStore,
 			formControlRef,
 			dirty,

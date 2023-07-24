@@ -22,6 +22,11 @@ export function useDetailSecondaryComponent(props, context, options) {
 		isSaving,
 		serverErrors,
 		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
 		serviceStore,
 		formControlRef,
 		dirty,
@@ -107,10 +112,9 @@ export function useDetailSecondaryComponent(props, context, options) {
 
 			const correlationIdI = correlationId();
 			const response = await options.deleteSecondary(correlationIdI, dialogDeleteSecondaryParams.value);
-			if (hasFailed(response)) {
+			if (hasFailed(response))
 				setNotify(correlationIdI, 'messages.error');
-				return;
-			}
+			return response;
 		}
 		finally {
 			dialogDeleteSecondaryParams.value = null;
@@ -192,6 +196,11 @@ export function useDetailSecondaryComponent(props, context, options) {
 		isSaving,
 		serverErrors,
 		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
 		serviceStore,
 		formControlRef,
 		dirty,

@@ -1,5 +1,6 @@
 <script>
 import { ref} from 'vue';
+import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
@@ -326,7 +327,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isInProgress,
 		isShared,
 		isStarting,
-		resetAdditional
+		resetAdditional,
+		scope: 'RocketsFilterControl',
+		validation: useVuelidate({ $scope: 'RocketsFilterControl' })
 	};
 };
 </script>

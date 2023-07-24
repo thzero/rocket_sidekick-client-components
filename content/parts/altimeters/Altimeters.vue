@@ -83,13 +83,11 @@
 </template>
 
 <script>
-import useVuelidate from '@vuelidate/core';
-
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useDeploymentBagPartsListingComponent } from '@/components/content/parts/deploymentBags/deploymentBagPartsListingComponent';
+import { useAltimeterPartsListingComponent } from '@/components/content/parts/altimeters/altimeterPartsListingComponent';
 import { usePartsListingFilterValidation } from '@/components/content/parts/partsListingFilterValidation';
 import { useAltimeterPartsListingFilterValidation } from '@/components/content/parts/altimeters/altimeterPartsListingFilterValidation';
 
@@ -148,7 +146,9 @@ export default {
 			type,
 			fetchParams,
 			resetAdditionalFilter,
-		} = useDeploymentBagPartsListingComponent(props, context, { 
+			scope,
+			validation
+		} = useAltimeterPartsListingComponent(props, context, { 
 			type: AppCommonConstants.Rocketry.PartTypes.altimeter
 		});
 
@@ -178,8 +178,8 @@ export default {
 			type,
 			fetchParams,
 			resetAdditionalFilter,
-			scope: 'AltimetersFilterControl',
-			validation: useVuelidate({ $scope: 'AltimetersFilterControl' })
+			scope,
+			validation
 		};
 	},
 	validations () {

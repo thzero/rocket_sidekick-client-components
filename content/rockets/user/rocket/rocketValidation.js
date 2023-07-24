@@ -27,6 +27,7 @@ export const useRocketValidation = {
 	// },
 	// detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 	detailItemRocketType: { $autoDirty: true },
+	detailItemStages: { $autoDirty: true }
 	// diameterMajorMeasurementUnitId: { $autoDirty: true },
 	// diameterMajorMeasurementUnitsId: { $autoDirty: true },
 	// diameterMinorMeasurementUnitId: { $autoDirty: true },

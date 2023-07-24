@@ -8,6 +8,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
+import { useNotify } from '@thzero/library_client_vue3/components/notify';
 import { useBaseEditComponent } from '@thzero/library_client_vue3/components/baseEdit';
 
 export function useDetailComponent(props, context, options) {
@@ -26,6 +27,14 @@ export function useDetailComponent(props, context, options) {
 		serverErrors,
 		setErrors
 	} = useBaseEditComponent(props, context, options);
+
+	const {
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify
+	} = useNotify(props, context, options);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
@@ -200,6 +209,11 @@ export function useDetailComponent(props, context, options) {
 		isSaving,
 		serverErrors,
 		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
 		serviceStore,
 		formControlRef,
 		dirty,

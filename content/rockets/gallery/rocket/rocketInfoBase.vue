@@ -70,6 +70,12 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return '/user/rockets';
 		return null;
 	});
+	const displayTypeSite = computed(() => {
+		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site);
+	});
+	const displayTypeUser = computed(() => {
+		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.User);
+	});
 
 	const fetch = async () => {
 		let response;
@@ -120,6 +126,8 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		rocketTypeIconDetermine,
 		rocket,
 		rocketId,
+		displayTypeSite,
+		displayTypeUser,
 		measurementUnitTranslateLength,
 		measurementUnitTranslateWeight,
 		videos,

@@ -86,27 +86,27 @@ export function useRocketEditComponent(props, context, options) {
 		weightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	
-	const setEditData = (correlationId) => {
-		detailItemData.value.description = String.trim(detailItemDescription.value);
-		detailItemData.value.name = String.trim(detailItemName.value);
+	const setEditData = (correlationId, value) => {
+		value.description = String.trim(detailItemDescription.value);
+		value.name = String.trim(detailItemName.value);
 		
-		detailItemData.value.cg = Number(detailItemCg.value);
-		detailItemData.value.cgFrom = detailItemCgFrom.value;
-		detailItemData.value.cgMeasurementUnitId = cgMeasurementUnitId.value;
-		detailItemData.value.cgMeasurementUnitsId = cgMeasurementUnitsId.value;
+		value.cg = Number(detailItemCg.value);
+		value.cgFrom = detailItemCgFrom.value;
+		value.cgMeasurementUnitId = cgMeasurementUnitId.value;
+		value.cgMeasurementUnitsId = cgMeasurementUnitsId.value;
 
-		detailItemData.value.cp = Number(detailItemCp.value);
-		detailItemData.value.cpFrom = detailItemCpFrom.value;
-		detailItemData.value.cpMeasurementUnitId = cpMeasurementUnitId.value;
-		detailItemData.value.cpMeasurementUnitsId = cpMeasurementUnitsId.value;
+		value.cp = Number(detailItemCp.value);
+		value.cpFrom = detailItemCpFrom.value;
+		value.cpMeasurementUnitId = cpMeasurementUnitId.value;
+		value.cpMeasurementUnitsId = cpMeasurementUnitsId.value;
 
-		detailItemData.value.length = Number(detailItemLength.value);
-		detailItemData.value.lengthMeasurementUnitId = lengthMeasurementUnitId.value;
-		detailItemData.value.lengthMeasurementUnitsId = lengthMeasurementUnitsId.value;
+		value.length = Number(detailItemLength.value);
+		value.lengthMeasurementUnitId = lengthMeasurementUnitId.value;
+		value.lengthMeasurementUnitsId = lengthMeasurementUnitsId.value;
 		
-		detailItemData.value.weight = Number(detailItemWeight.value);
-		detailItemData.value.weightMeasurementUnitId = weightMeasurementUnitId.value;
-		detailItemData.value.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
+		value.weight = Number(detailItemWeight.value);
+		value.weightMeasurementUnitId = weightMeasurementUnitId.value;
+		value.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 	};
 	
 	return {

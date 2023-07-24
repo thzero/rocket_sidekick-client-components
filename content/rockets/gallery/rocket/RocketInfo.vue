@@ -71,6 +71,33 @@
 									<td nowrap class="specifications">{{ $t('strings.measurements.weight') }}</td>
 									<td>{{ rocket.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitsId, rocket.weightMeasurementUnitId) }}</td>
 								</tr>
+								<tr
+									v-if="rocket.cg"
+								>
+									<td nowrap class="specifications">{{ $t('strings.rockets.cg') }}</td>
+									<td>{{ rocket.cg }} {{ measurementUnitTranslateLength(rocket.cgMeasurementUnitsId, rocket.cgMeasurementUnitId) }} </td>
+								</tr>
+								<tr
+									v-if="rocket.cp"
+								>
+									<td nowrap class="specifications">{{ $t('strings.rockets.cp') }}</td>
+									<td>{{ rocket.cp }} {{ measurementUnitTranslateLength(rocket.cpMeasurementUnitsId, rocket.cpMeasurementUnitId) }} </td>
+								</tr>
+								<tr
+									v-if="rocket.manufacturerId"
+								>
+									<td nowrap class="specifications">{{ $t('strings.rockets.manufacturer') }}</td>
+									<td>
+										<span>
+											{{ rocket.cp }}
+										</span>
+										<span
+											v-if="rocket.manufacturerStockId"
+										>
+											({{ rocket.manufacturerStockId }})
+										</span>
+									</td>
+								</tr>
 								<tr>
 									<td nowrap class="specifications">{{ $t('strings.rockets.buildLogUrl') }}</td>
 									<td><a :href="rocket.buildLogUrl" target="_blank">{{ rocket.buildLogUrl }}</a></td>
@@ -80,6 +107,7 @@
 					</v-card>
 				</v-col>
 			</v-row>
+			// TODO: stages for displayTypeUser
 		</v-col>
 		<v-col cols="12" md="6">
 			<v-row dense>
@@ -186,6 +214,8 @@ export default {
 			rocketTypeIconDetermine,
 			rocket,
 			rocketId,
+			displayTypeSite,
+			displayTypeUser,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
 			videos,
@@ -215,6 +245,8 @@ export default {
 			rocketTypeIconDetermine,
 			rocket,
 			rocketId,
+			displayTypeSite,
+			displayTypeUser,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
 			videos,

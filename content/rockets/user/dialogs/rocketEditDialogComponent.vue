@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
