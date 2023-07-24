@@ -387,7 +387,7 @@ export default {
 			isStarting,
 			resetAdditional,
 			scope,
-			validation:
+			validation
 		};
 	},
 	validations () {
