@@ -9,7 +9,7 @@ import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
-export function useRocketEditComponent(props, context, options) {
+export function useRocketMeasurementComponent(props, context, options) {
 	const {
 		correlationId,
 		error,

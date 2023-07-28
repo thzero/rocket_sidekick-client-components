@@ -16,18 +16,20 @@
 					{{ item.name }}
 				</v-expansion-panel-title>
 				<v-expansion-panel-text>
-		 <v-row dense>
+		 <!-- <v-row dense>
 			<v-col cols="12" md="8">
 				<VTextField
+					ref="di-name"
 					v-model="displayItem.name"
 					:readonly="true"
 					:label="$t('forms.name')"
 				/>
 			</v-col>
-		</v-row> 
+		</v-row>  -->
 		<v-row dense>
 			<v-col>
 				<VTextArea
+					ref="di-description"
 					v-model="displayItem.description"
 					:readonly="true"
 					:label="$t('forms.description')"
@@ -38,25 +40,26 @@
 		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberField
+					ref="di-diameter"
 					v-model="displayItem.diameter"
 					:readonly="true"
 					:label="$t('forms.content.rockets.diameter.name')"
 				/>
 			</v-col>
-			<!-- <v-col cols="7" md="4">
+			<v-col cols="7" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								v-model="diameterMeasurementUnitsId"
+								v-model="displayItem.diameterMeasurementUnitsId"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								v-model="diameterMeasurementUnitId"
-								:measurementUnitsId="diameterMeasurementUnitsId"
+								v-model="displayItem.diameterMeasurementUnitId"
+								:measurementUnitsId="displayItem.diameterMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -64,28 +67,29 @@
 						</td>
 					</tr>
 				</table>
-			</v-col> -->
+			</v-col>
 			<v-col cols="5" md="2">
 				<VNumberField
+					ref="di-length"
 					v-model="displayItem.length"
 					:readonly="true"
 					:label="$t('forms.content.parts.length')"
 				/>
 			</v-col>
-			<!-- <v-col cols="7" md="4">
+			<v-col cols="7" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								v-model="lengthMeasurementUnitsId"
+								v-model="displayItem.lengthMeasurementUnitsId"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								v-model="lengthMeasurementUnitId"
-								:measurementUnitsId="lengthMeasurementUnitsId"
+								v-model="displayItem.lengthMeasurementUnitId"
+								:measurementUnitsId="displayItem.lengthMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -93,30 +97,31 @@
 						</td>
 					</tr>
 				</table>
-			</v-col> -->
+			</v-col>
 		</v-row>
 		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberField
+					ref="di-weight"
 					v-model="displayItem.weight"
 					:readonly="true"
 					:label="$t('forms.content.parts.weight')"
 				/>
 			</v-col>
-			<!-- <v-col cols="7" md="4">
+			<v-col cols="7" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								v-model="weightMeasurementUnitsId"
+								v-model="displayItem.weightMeasurementUnitsId"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								v-model="weightMeasurementUnitId"
-								:measurementUnitsId="weightMeasurementUnitsId"
+								v-model="displayItem.weightMeasurementUnitId"
+								:measurementUnitsId="displayItem.weightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.weight')"
@@ -124,30 +129,31 @@
 						</td>
 					</tr>
 				</table>
-			</v-col> -->
+			</v-col>
 		</v-row>
 		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberField
+					ref="di-cg"
 					v-model="displayItem.cg"
 					:readonly="true"
 					:label="$t('forms.content.rockets.cg')"
 				/>
 			</v-col>
-			<!-- <v-col cols="7" md="4">
+			<v-col cols="7" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								v-model="cgMeasurementUnitsId"
+								v-model="displayItem.cgMeasurementUnitsId"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								v-model="cgMeasurementUnitId"
-								:measurementUnitsId="cgMeasurementUnitsId"
+								v-model="displayItem.cgMeasurementUnitId"
+								:measurementUnitsId="displayItem.cgMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -155,28 +161,29 @@
 						</td>
 					</tr>
 				</table>
-			</v-col> -->
+			</v-col>
 			<v-col cols="5" md="2">
 				<VNumberField
+					ref="di-cp"
 					v-model="displayItem.cp"
 					:readonly="true"
 					:label="$t('forms.content.rockets.cp')"
 				/>
 			</v-col>
-			<!-- <v-col cols="7" md="4">
+			<v-col cols="7" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								v-model="cpMeasurementUnitsId"
+								v-model="displayItem.cpMeasurementUnitsId"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								v-model="cpMeasurementUnitId"
-								:measurementUnitsId="cpMeasurementUnitsId"
+								v-model="displayItem.cpMeasurementUnitId"
+								:measurementUnitsId="displayItem.cpMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:readonly="true"
 								:label="$t('forms.settings.measurementUnits.length')"
@@ -184,7 +191,7 @@
 						</td>
 					</tr>
 				</table>
-			</v-col> -->
+			</v-col>
 		</v-row>
 				</v-expansion-panel-text>
 			</v-expansion-panel>
@@ -248,6 +255,12 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			measurementUnitsIdOutput,
+			measurementUnitsIdSettings,
+			measurementUnitsLengthDefaultId,
+			measurementUnitsLengthType,
+			measurementUnitsWeightDefaultId,
+			measurementUnitsWeightType,
 			displayItem
 		} = useRocketStageComponent(props, context, options);
 
@@ -261,6 +274,12 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			measurementUnitsIdOutput,
+			measurementUnitsIdSettings,
+			measurementUnitsLengthDefaultId,
+			measurementUnitsLengthType,
+			measurementUnitsWeightDefaultId,
+			measurementUnitsWeightType,
 			displayItem
 		};
 	}
