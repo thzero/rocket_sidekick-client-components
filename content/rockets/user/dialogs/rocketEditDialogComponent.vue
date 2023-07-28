@@ -8,7 +8,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
-import { useRocketEditComponent } from '@/components/content/rockets/user/rocket/rocketEditComponent';
+import { useRocketMeasurementComponent } from '@/components/content/rockets/user/rocket/rocketMeasurementComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketEditDialogComponent(props, context, options) {
@@ -61,7 +61,7 @@ export function useRocketEditDialogComponent(props, context, options) {
 		weightMeasurementUnitsId,
 		resetEditData,
 		setEditData
-	} = useRocketEditComponent(props, context, options);
+	} = useRocketMeasurementComponent(props, context, options);
 
 	const detailItemDiameter = ref(null);
 	const diameterMeasurementUnitId = ref(null);

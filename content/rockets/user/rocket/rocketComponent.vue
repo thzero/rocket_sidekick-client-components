@@ -11,7 +11,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility';
 import RocketStageData from 'rocket_sidekick_common/data/rockets/stage';
 
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
-import { useRocketEditComponent } from '@/components/content/rockets/user/rocket/rocketEditComponent';
+import { useRocketMeasurementComponent } from '@/components/content/rockets/user/rocket/rocketMeasurementComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -165,7 +165,7 @@ export function useRocketComponent(props, context, options) {
 		weightMeasurementUnitsId,
 		resetEditData,
 		setEditData
-	} =  useRocketEditComponent(props, context, options);
+	} =  useRocketMeasurementComponent(props, context, options);
 
 	const detailItemDiameterMajor = ref(null);
 	const detailItemDiameterMinor = ref(null);
