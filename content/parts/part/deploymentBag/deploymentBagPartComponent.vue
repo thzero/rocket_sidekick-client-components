@@ -83,8 +83,8 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag,
 		partsType: AppCommonConstants.Rocketry.PartTypes.deploymentBag, 
 		preCompleteOkPart: (correlationId, data) => {
-			data.diameter = Number(detailItemDiameter.value);
-			data.length = Number(detailItemLength.value);
+			data.diameter = AppUtility.convertNumber(detailItemDiameter.value);
+			data.length = AppUtility.convertNumber(detailItemLength.value);
 
 			data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
 			data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
@@ -93,8 +93,8 @@ export function useDeploymentBagPartComponent(props, context, options) {
 			data.lengthMeasurementUnitsId = lengthMeasurementUnitsId.value;
 
 			data.pilotChute = detailItemPilotChute.value ?? false;
-			data.pilotChuteCd = Number(detailItemPilotChuteCd.value);
-			data.pilotChuteDiameter = Number(detailItemPilotChuteDiameter.value);
+			data.pilotChuteCd = AppUtility.convertNumber(detailItemPilotChuteCd.value);
+			data.pilotChuteDiameter = AppUtility.convertNumber(detailItemPilotChuteDiameter.value);
 
 			data.pilotChuteDiameterMeasurementUnitId = pilotChuteDiameterMeasurementUnitId.value;
 			data.pilotChuteDiameterMeasurementUnitsId = pilotChuteDiameterMeasurementUnitsId.value;

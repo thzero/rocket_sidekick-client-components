@@ -16,21 +16,20 @@
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
-		:button-cancel="true"
-		button-cancel-name="buttons.close"
+		:button-close="true"
 		:button-clear="isEditable"
 		button-clear-name="buttons.reset"
 		:button-delete="false"
 		:button-ok="isEditable"
 		:dirty-callback="dirtyCallback"
 		:invalid-callback="invalidCallback"
+		:readonly="!isEditable "
 		:reset-additional="resetAdditional"
 		:pre-complete-ok="preCompleteOk"
 		@cancel="handleCancel"
 		@ok="handleOk"
 		:debug="debug"
 	>
-		<!-- :readonly="!isEditable" -->
 		<v-row dense>
 			<v-col cols="12" md="8">
 				<VTextFieldWithValidation
@@ -329,24 +328,22 @@
 				class="mt-4"
 			>
 				<v-col>
-					asdasd
 					<v-row
 						v-for="item in stages"
 						:key="item.id"
 					>
-						<v-col cols="12">
-							<v-sheet 
-								class="d-flex"
-								color="info"
-								rounded
-							>
-								<div class="pl-2 pr-4 pb-4 pt-2">
-									{{ item.name }}
-								</div>
-								<v-spacer></v-spacer>
+						<RocketStage
+							:item="item"
+							:isEditable="isEditable"
+							:debug="debug"
+						>
+							<template 
+								v-if="isEditable"
+								v-slot:actionsEdit
+							>	
 								<div class="pl-4 pr-4 pb-2 pt-2">
 									<v-btn
-										v-if="!readonly"
+										v-if="isEditable"
 										class="mr-2"
 										icon="mdi-pencil"
 										size="small"
@@ -354,15 +351,15 @@
 										@click="dialogEditSecondaryOpen(item)"
 									></v-btn>
 									<v-btn
-										v-if="!readonly"
+										v-if="isEditable"
 										icon="mdi-delete"
 										size="small"
 										:disabled="isDeletingSecondary(item)"
 										@click="dialogDeleteSecondaryOpen(item)"
 									></v-btn>
 								</div>
-							</v-sheet>
-						</v-col>
+							</template>
+						</RocketStage>
 					</v-row>
 				</v-col>
 			</v-row>
@@ -380,6 +377,9 @@
 	<RocketEditDialog
 		v-if="!readonly"
 		ref="dialogMotorSearchRef"
+		:debug="debug"
+		:pre-complete-ok="dialogEditSecondaryPreCompleteOk"
+		:value="dialogEditSecondaryParams"
 		:signal="dialogEditSecondaryManager.signal"
 		@close="dialogEditSecondaryCancel"
 		@ok="dialogEditSecondaryOk"
@@ -399,6 +399,7 @@ import { useRocketComponentProps } from '@/components/content/rockets/user/rocke
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketEditDialog from '@/components/content/rockets/user/dialogs/RocketEditDialog';
+import RocketStage from '@/components/content/rockets/user/rocket/RocketStage';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
@@ -413,6 +414,7 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
 		RocketEditDialog,
+		RocketStage,
 		VConfirmationDialog,
 		VFormControl,
 		VNumberFieldWithValidation,
@@ -490,6 +492,7 @@ export default {
 			dialogEditSecondaryError,
 			dialogEditSecondaryOk,
 			dialogEditSecondaryOpen,
+			dialogEditSecondaryPreCompleteOk,
 			handleAddSecondary,
 			rocketTypes,
 			measurementUnitsIdOutput,
@@ -596,6 +599,7 @@ export default {
 			dialogEditSecondaryError,
 			dialogEditSecondaryOk,
 			dialogEditSecondaryOpen,
+			dialogEditSecondaryPreCompleteOk,
 			handleAddSecondary,
 			rocketTypes,
 			measurementUnitsIdOutput,
@@ -640,7 +644,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation(true)));
 	}
 };
 </script>

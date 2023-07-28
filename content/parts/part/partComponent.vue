@@ -1,6 +1,8 @@
 <script>
 import { computed, ref } from 'vue';
 
+import AppUtility from '@/utility/app';
+
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
@@ -72,7 +74,7 @@ export function usePartComponent(props, context, options) {
 
 			detailItemData.value.public = detailItemIsPublic.value ?? false;
 			
-			detailItemData.value.weight = Number(detailItemWeight.value);
+			detailItemData.value.weight = AppUtility.convertNumber(detailItemWeight.value);
 			detailItemData.value.weightMeasurementUnitId = weightMeasurementUnitId.value;
 			detailItemData.value.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 

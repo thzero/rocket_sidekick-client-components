@@ -42,7 +42,7 @@ export function useDetailComponent(props, context, options) {
 	const dirty = ref(false);
 	const detailItem = ref(null);
 	const dialogDeleteManager = ref(new DialogSupport());
-	const dialogDeleteMessage = ref(LibraryClientUtility.$trans.t(`messages.${options.dialogDeleteMessage ? options.dialogDeleteMessage : 'items'}.delete_confirm'`));
+	const dialogDeleteMessage = ref(LibraryClientUtility.$trans.t(`messages.${options.dialogDeleteMessage ? options.dialogDeleteMessage : 'items'}.delete_confirm`));
 	const dialogDeleteParams = ref(null);
 	const invalid = ref(false);
 	const detailItemOrig = ref(null);

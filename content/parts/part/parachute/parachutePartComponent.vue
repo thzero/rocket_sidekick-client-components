@@ -83,10 +83,10 @@ export function useParachutePartComponent(props, context, options) {
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
 		partsType: AppCommonConstants.Rocketry.PartTypes.parachute, 
 		preCompleteOkPart: (correlationId, data) => {
-			data.cd = Number(detailItemCd.value);
-			data.diameter = Number(detailItemDiameter.value);
-			data.loadMax = Number(detailItemLoadMax.value);
-			data.loadMin = Number(detailItemLoadMin.value);
+			data.cd = AppUtility.convertNumber(detailItemCd.value);
+			data.diameter = AppUtility.convertNumber(detailItemDiameter.value);
+			data.loadMax = AppUtility.convertNumber(detailItemLoadMax.value);
+			data.loadMin = AppUtility.convertNumber(detailItemLoadMin.value);
 			data.thinMill = detailItemThinMill.value ?? false;
 
 			data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
