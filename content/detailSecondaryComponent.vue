@@ -107,11 +107,11 @@ export function useDetailSecondaryComponent(props, context, options) {
 			if (!dialogDeleteSecondaryParams.value)
 				return;
 
-			if (!options || !options.deleteSecondary)
+			if (!options || !options.dialogDeleteSecondaryOk)
 				return;
 
 			const correlationIdI = correlationId();
-			const response = await options.deleteSecondary(correlationIdI, dialogDeleteSecondaryParams.value);
+			const response = await options.dialogDeleteSecondaryOk(correlationIdI, dialogDeleteSecondaryParams.value);
 			if (hasFailed(response))
 				setNotify(correlationIdI, 'messages.error');
 			return response;
@@ -172,8 +172,14 @@ export function useDetailSecondaryComponent(props, context, options) {
 		if (!canEditSecondary.value)
 			return;
 
-		dialogEditSecondaryParams.value = item.id;
+		dialogEditSecondaryParams.value = item;
 		dialogEditSecondaryManager.value.open();
+	};
+	const dialogEditSecondaryPreCompleteOk = async (correlationId, item) => {
+		if (!options || !options.dialogEditSecondaryPreCompleteOk)
+			return failed(correlationId);
+
+		return await options.dialogEditSecondaryPreCompleteOk(correlationId, item);
 	};
 	const handleAddSecondary = async () => {
 		if (!options || !options.initNewSecondary)
@@ -245,6 +251,7 @@ export function useDetailSecondaryComponent(props, context, options) {
 		dialogEditSecondaryError,
 		dialogEditSecondaryOk,
 		dialogEditSecondaryOpen,
+		dialogEditSecondaryPreCompleteOk,
 		handleAddSecondary
 	};
 };

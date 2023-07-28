@@ -76,7 +76,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		isOwner,
 		display
 	} = useMasterDetailComponent(props, context, {
-			dialogDeleteMessage : 'checklists',
+			dialogDeleteMessage : 'rockets',
 			canCopy: (correlationId, item) => { return canCopyI(correlationId, item); },
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },

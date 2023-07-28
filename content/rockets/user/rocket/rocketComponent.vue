@@ -5,6 +5,7 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import AppUtility from '@/utility/app';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import RocketStageData from 'rocket_sidekick_common/data/rockets/stage';
@@ -12,7 +13,6 @@ import RocketStageData from 'rocket_sidekick_common/data/rockets/stage';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
 import { useRocketEditComponent } from '@/components/content/rockets/user/rocket/rocketEditComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
-// import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketComponent(props, context, options) {
@@ -79,16 +79,24 @@ export function useRocketComponent(props, context, options) {
 		dialogEditSecondaryError,
 		dialogEditSecondaryOk,
 		dialogEditSecondaryOpen,
+		dialogEditSecondaryPreCompleteOk,
 		handleAddSecondary
 	} = useDetailSecondaryComponent(props, context, {
-		deleteSecondary: async (correlationId, id) => {
+		dialogDeleteMessage: 'rockets.stage',
+		dialogDeleteSecondaryOk: async (correlationId, id) => {
 			LibraryCommonUtility.deleteArrayById(detailItemData.value.stages, id);
 			
 			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
-			logger.debug('rocketComponent', 'deleteSecondary', 'response', response, correlationId);
+			logger.debug('rocketComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
 			return response;
 		},
-		dialogDeleteMessage: 'rockets.stage',
+		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
+			detailItemData.value.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
+			
+			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
+			logger.debug('rocketComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);
+			return response;
+		},
 		init: async (correlationId, value) => {
 			await requestManufacturers(correlationId);
 			const temp = manufacturersI.value ? manufacturersI.value.find(l => l.isDefault) : null;
@@ -99,45 +107,18 @@ export function useRocketComponent(props, context, options) {
 			detailItemData.value.stages = detailItemData.value.stages ?? [];
 			const rocketStage = new RocketStageData();
 			rocketStage.rocketId = detailItemData.value.id;
-			detailItemData.value.stages.push(rocketStage);
+
+			// Instead of adding immediately, just open the dialog...
+			// detailItemData.value.stages.push(rocketStage);
 			
-			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
-			logger.debug('rocketComponent', 'initNewSecondary', 'response', response, correlationId);
-			return response;
+			// const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
+			// logger.debug('rocketComponent', 'initNewSecondary', 'response', response, correlationId);
+			// return response;
+
+			// Open the dialog...
+			dialogEditSecondaryOpen(rocketStage);
 		},
 		preCompleteOk : async (correlationId) => {
-			// detailItemData.value.description = String.trim(detailItemDescription.value);
-			// detailItemData.value.name = String.trim(detailItemName.value);
-			// detailItemData.value.typeId = detailItemRocketType.value;
-			
-			// detailItemData.value.manufacturerId = detailItemManufacturer.value;
-			// detailItemData.value.manufacturerStockId = detailItemManufacturerStockId.value;
-
-			// detailItemData.value.cg = Number(detailItemCg.value);
-			// detailItemData.value.cgFrom = detailItemCgFrom.value;
-			// detailItemData.value.cgMeasurementUnitId = cgMeasurementUnitId.value;
-			// detailItemData.value.cgMeasurementUnitsId = cgMeasurementUnitsId.value;
-
-			// detailItemData.value.cp = Number(detailItemCp.value);
-			// detailItemData.value.cpFrom = detailItemCpFrom.value;
-			// detailItemData.value.cpMeasurementUnitId = cpMeasurementUnitId.value;
-			// detailItemData.value.cpMeasurementUnitsId = cpMeasurementUnitsId.value;
-
-			// detailItemData.value.diameterMajor = Number(detailItemDiameterMajor.value);
-			// detailItemData.value.diameterMajorMeasurementUnitId = diameterMajorMeasurementUnitId.value;
-			// detailItemData.value.diameterMajorMeasurementUnitsId = diameterMajorMeasurementUnitsId.value;
-			
-			// detailItemData.value.diameterMinor = Number(detailItemDiameterMinor.value);
-			// detailItemData.value.diameterMinorMeasurementUnitId = diameterMinorMeasurementUnitId.value;
-			// detailItemData.value.diameterMinorMeasurementUnitsId = diameterMinorMeasurementUnitsId.value;
-
-			// detailItemData.value.length = Number(detailItemLength.value);
-			// detailItemData.value.lengthMeasurementUnitId = lengthMeasurementUnitId.value;
-			// detailItemData.value.lengthMeasurementUnitsId = lengthMeasurementUnitsId.value;
-			
-			// detailItemData.value.weight = Number(detailItemWeight.value);
-			// detailItemData.value.weightMeasurementUnitId = weightMeasurementUnitId.value;
-			// detailItemData.value.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 			setData(correlationId);
 
 			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
@@ -186,53 +167,16 @@ export function useRocketComponent(props, context, options) {
 		setEditData
 	} =  useRocketEditComponent(props, context, options);
 
-	// const {
-	// 	measurementUnitsAccelerationDefaultId,
-	// 	measurementUnitsAccelerationType,
-	// 	measurementUnitsAreaDefaultId,
-	// 	measurementUnitsAreaType,
-	// 	measurementUnitsDensityDefaultId,
-	// 	measurementUnitsDensityType,
-	// 	measurementUnitsDistanceType,
-	// 	measurementUnitsDistanceDefaultId,
-	// 	measurementUnitsFluidDefaultId,
-	// 	measurementUnitsFluidType,
-	// 	measurementUnitsLengthDefaultId,
-	// 	measurementUnitsLengthType,
-	// 	measurementUnitsVelocityDefaultId,
-	// 	measurementUnitsVelocityType,
-	// 	measurementUnitsVolumeDefaultId,
-	// 	measurementUnitsVolumeType,
-	// 	measurementUnitsWeightDefaultId,
-	// 	measurementUnitsWeightType
-	// } = useToolsMeasurementBaseComponent(props, context);
-
-	// const cgMeasurementUnitId = ref(null);
-	// const cgMeasurementUnitsId = ref(null);
-	// const cpMeasurementUnitId = ref(null);
-	// const cpMeasurementUnitsId = ref(null);
-	// const detailItemDescription = ref(null);
-	// const detailItemCg = ref(null);
-	// const detailItemCgFrom = ref(null);
-	// const detailItemCp = ref(null);
-	// const detailItemCpFrom = ref(null);
 	const detailItemDiameterMajor = ref(null);
 	const detailItemDiameterMinor = ref(null);
-	// const detailItemLength = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemManufacturerStockId = ref(null);
-	// const detailItemName = ref(null);
 	const detailItemRocketType = ref(null);
-	// const detailItemWeight = ref(null);
 	const diameterMajorMeasurementUnitId = ref(null);
 	const diameterMajorMeasurementUnitsId = ref(null);
 	const diameterMinorMeasurementUnitId = ref(null);
 	const diameterMinorMeasurementUnitsId = ref(null);
-	// const lengthMeasurementUnitId = ref(null);
-	// const lengthMeasurementUnitsId = ref(null);
 	const manufacturersI = ref(null);
-	// const weightMeasurementUnitId = ref(null);
-	// const weightMeasurementUnitsId = ref(null);
 	const manufacturerDefault = ref(null);
 	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
 	
@@ -245,7 +189,7 @@ export function useRocketComponent(props, context, options) {
 	const stages = computed(() => {
 		return detailItemData.value ? detailItemData.value.stages : [{}];
 	});
-
+	
 	const requestManufacturers = async (correlationId) => {
 		if (manufacturersI.value)
 			return;
@@ -273,39 +217,6 @@ export function useRocketComponent(props, context, options) {
 		diameterMinorMeasurementUnitsId.value = value ? value.diameterMinorMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		resetEditData(correlationId, value);
-
-		// detailItemDescription.value = value ? value.description : null;
-		// detailItemRocketType.value = value? value.typeId : AppCommonConstants.Rocketry.RocketTypes.highone;	
-		// detailItemName.value = value ? value.name : null;
-		
-		// detailItemManufacturer.value = value && value.manufacturerId ? value.manufacturerId : manufacturerDefault.value; // 'd37HEk5Wjm3mmV4InK90U';
-		// detailItemManufacturerStockId.value = value? value.manufacturerStockId : null;
-
-		// detailItemCg.value = value ? value.cg : null;
-		// detailItemCgFrom.value = value ? value.cgFrom : AppCommonConstants.Rocketry.Direction.Tip;
-		// cgMeasurementUnitId.value = value ? value.cgMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		// cgMeasurementUnitsId.value = value ? value.cgMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		
-		// detailItemCp.value = value ? value.cp : null;
-		// detailItemCpFrom.value = value ? value.cpFrom : AppCommonConstants.Rocketry.Direction.Tip;
-		// cpMeasurementUnitId.value = value ? value.cpMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		// cpMeasurementUnitsId.value = value ? value.cpMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		
-		// detailItemDiameterMajor.value = value ? value.diameterMajor : null;
-		// diameterMajorMeasurementUnitId.value = value ? value.diameterMajorMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		// diameterMajorMeasurementUnitsId.value = value ? value.diameterMajorMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		
-		// detailItemDiameterMinor.value = value ? value.diameterMinor : null;
-		// diameterMinorMeasurementUnitId.value = value ? value.diameterMinorMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		// diameterMinorMeasurementUnitsId.value = value ? value.diameterMinorMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-
-		// detailItemLength.value = value ? value.length : null;
-		// lengthMeasurementUnitId.value = value ? value.lengthMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		// lengthMeasurementUnitsId.value = value ? value.lengthMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-
-		// detailItemWeight.value = value ? value.weight : null;
-		// weightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
-		// weightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	const setData = (correlationId) => {
 		detailItemData.value.typeId = detailItemRocketType.value;
@@ -313,11 +224,11 @@ export function useRocketComponent(props, context, options) {
 		detailItemData.value.manufacturerId = detailItemManufacturer.value;
 		detailItemData.value.manufacturerStockId = detailItemManufacturerStockId.value;
 
-		detailItemData.value.diameterMajor = Number(detailItemDiameterMajor.value);
+		detailItemData.value.diameterMajor = AppUtility.convertNumber(detailItemDiameterMajor.value);
 		detailItemData.value.diameterMajorMeasurementUnitId = diameterMajorMeasurementUnitId.value;
 		detailItemData.value.diameterMajorMeasurementUnitsId = diameterMajorMeasurementUnitsId.value;
 		
-		detailItemData.value.diameterMinor = Number(detailItemDiameterMinor.value);
+		detailItemData.value.diameterMinor = AppUtility.convertNumber(detailItemDiameterMinor.value);
 		detailItemData.value.diameterMinorMeasurementUnitId = diameterMinorMeasurementUnitId.value;
 		detailItemData.value.diameterMinorMeasurementUnitsId = diameterMinorMeasurementUnitsId.value;
 
@@ -387,6 +298,7 @@ export function useRocketComponent(props, context, options) {
 		dialogEditSecondaryError,
 		dialogEditSecondaryOk,
 		dialogEditSecondaryOpen,
+		dialogEditSecondaryPreCompleteOk,
 		handleAddSecondary,
 		rocketTypes,
 		measurementUnitsIdOutput,

@@ -3,6 +3,8 @@ import { ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import AppUtility from '@/utility/app';
+
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
@@ -90,21 +92,21 @@ export function useRocketEditComponent(props, context, options) {
 		value.description = String.trim(detailItemDescription.value);
 		value.name = String.trim(detailItemName.value);
 		
-		value.cg = Number(detailItemCg.value);
+		value.cg = AppUtility.convertNumber(detailItemCg.value);
 		value.cgFrom = detailItemCgFrom.value;
 		value.cgMeasurementUnitId = cgMeasurementUnitId.value;
 		value.cgMeasurementUnitsId = cgMeasurementUnitsId.value;
 
-		value.cp = Number(detailItemCp.value);
+		value.cp = AppUtility.convertNumber(detailItemCp.value);
 		value.cpFrom = detailItemCpFrom.value;
 		value.cpMeasurementUnitId = cpMeasurementUnitId.value;
 		value.cpMeasurementUnitsId = cpMeasurementUnitsId.value;
 
-		value.length = Number(detailItemLength.value);
+		value.length = AppUtility.convertNumber(detailItemLength.value);
 		value.lengthMeasurementUnitId = lengthMeasurementUnitId.value;
 		value.lengthMeasurementUnitsId = lengthMeasurementUnitsId.value;
 		
-		value.weight = Number(detailItemWeight.value);
+		value.weight = AppUtility.convertNumber(detailItemWeight.value);
 		value.weightMeasurementUnitId = weightMeasurementUnitId.value;
 		value.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 	};
