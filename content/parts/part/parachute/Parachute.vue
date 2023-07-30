@@ -84,9 +84,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="diameterMeasurementUnitsIdRef"
-								v-model="diameterMeasurementUnitsId"
-								vid="diameterMeasurementUnitsId"
+								ref="detailItemDiameterMeasurementUnitsIdRef"
+								v-model="detailItemDiameterMeasurementUnitsId"
+								vid="detailItemDiameterMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -94,10 +94,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="diameterMeasurementUnitIdRef"
-								v-model="diameterMeasurementUnitId"
-								vid="diameterMeasurementUnitId"
-								:measurementUnitsId="diameterMeasurementUnitsId"
+								ref="detailItemDiameterMeasurementUnitIdRef"
+								v-model="detailItemDiameterMeasurementUnitId"
+								vid="detailItemDiameterMeasurementUnitId"
+								:measurementUnitsId="detailItemDiameterMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -122,9 +122,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="weightMeasurementUnitsIdRef"
-								v-model="weightMeasurementUnitsId"
-								vid="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitsIdRef"
+								v-model="detailItemWeightMeasurementUnitsId"
+								vid="detailItemWeightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -132,10 +132,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="weightMeasurementUnitIdRef"
-								v-model="weightMeasurementUnitId"
-								vid="weightMeasurementUnitId"
-								:measurementUnitsId="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitIdRef"
+								v-model="detailItemWeightMeasurementUnitId"
+								vid="detailItemWeightMeasurementUnitId"
+								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -185,9 +185,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="loadMaxWeightMeasurementUnitsIdRef"
-								v-model="loadMaxWeightMeasurementUnitsId"
-								vid="loadMaxWeightMeasurementUnitsId"
+								ref="detailItemLoadMaxWeightMeasurementUnitsIdRef"
+								v-model="detailItemLoadMaxWeightMeasurementUnitsId"
+								vid="detailItemLoadMaxWeightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -195,10 +195,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="loadMaxWeightMeasurementUnitIdRef"
-								v-model="loadMaxWeightMeasurementUnitId"
-								vid="loadMaxWeightMeasurementUnitId"
-								:measurementUnitsId="loadMaxWeightMeasurementUnitsId"
+								ref="detailItemLoadMaxWeightMeasurementUnitIdRef"
+								v-model="detailItemLoadMaxWeightMeasurementUnitId"
+								vid="detailItemLoadMaxWeightMeasurementUnitId"
+								:measurementUnitsId="detailItemLoadMaxWeightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -223,9 +223,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="loadMinWeightMeasurementUnitsIdRef"
-								v-model="loadMinWeightMeasurementUnitsId"
-								vid="loadMinWeightMeasurementUnitsId"
+								ref="detailItemLoadMinWeightMeasurementUnitsIdRef"
+								v-model="detailItemLoadMinWeightMeasurementUnitsId"
+								vid="detailItemLoadMinWeightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -233,10 +233,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="loadMinWeightMeasurementUnitIdRef"
-								v-model="loadMinWeightMeasurementUnitId"
-								vid="loadMinWeightMeasurementUnitId"
-								:measurementUnitsId="loadMinWeightMeasurementUnitsId"
+								ref="detailItemLoadMinWeightMeasurementUnitIdRef"
+								v-model="detailItemLoadMinWeightMeasurementUnitId"
+								vid="detailItemLoadMinWeightMeasurementUnitId"
+								:measurementUnitsId="detailItemLoadMinWeightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -367,9 +367,9 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			manufacturers,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
 			isPublic,
@@ -377,15 +377,15 @@ export default {
 			requestManufacturers,
 			detailItemCd,
 			detailItemDiameter,
+			detailItemDiameterMeasurementUnitId,
+			detailItemDiameterMeasurementUnitsId,
 			detailItemLoadMax,
+			detailItemLoadMaxWeightMeasurementUnitId,
+			detailItemLoadMaxWeightMeasurementUnitsId,
 			detailItemLoadMin,
+			detailItemLoadMinWeightMeasurementUnitId,
+			detailItemLoadMinWeightMeasurementUnitsId,
 			detailItemThinMill,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
-			loadMaxWeightMeasurementUnitId,
-			loadMaxWeightMeasurementUnitsId,
-			loadMinWeightMeasurementUnitId,
-			loadMinWeightMeasurementUnitsId,
 			scope,
 			validation
 		} = useParachutePartComponent(props, context, options);
@@ -447,9 +447,9 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			manufacturers,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
 			isPublic,
@@ -457,15 +457,15 @@ export default {
 			requestManufacturers,
 			detailItemCd,
 			detailItemDiameter,
+			detailItemDiameterMeasurementUnitId,
+			detailItemDiameterMeasurementUnitsId,
 			detailItemLoadMax,
+			detailItemLoadMaxWeightMeasurementUnitId,
+			detailItemLoadMaxWeightMeasurementUnitsId,
 			detailItemLoadMin,
+			detailItemLoadMinWeightMeasurementUnitId,
+			detailItemLoadMinWeightMeasurementUnitsId,
 			detailItemThinMill,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
-			loadMaxWeightMeasurementUnitId,
-			loadMaxWeightMeasurementUnitsId,
-			loadMinWeightMeasurementUnitId,
-			loadMinWeightMeasurementUnitsId,
 			scope,
 			validation
 		};

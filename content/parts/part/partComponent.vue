@@ -125,9 +125,9 @@ export function usePartComponent(props, context, options) {
 	const detailItemManufacturerStockId = ref(null);
 	const detailItemName = ref(null);
 	const detailItemWeight = ref(null);
+	const detailItemWeightMeasurementUnitId = ref(null);
+	const detailItemWeightMeasurementUnitsId = ref(null);
 	const manufacturersI = ref(null);
-	const weightMeasurementUnitId = ref(null);
-	const weightMeasurementUnitsId = ref(null);
 	
 	const manufacturers = computed(() => {
 		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
@@ -162,10 +162,10 @@ export function usePartComponent(props, context, options) {
 		detailItemManufacturer.value = value ? value.manufacturerId : null;
 		detailItemManufacturerStockId.value = value? value.manufacturerStockId : null;
 		detailItemName.value = value ? value.name : null;
-		detailItemWeight.value = value ? value.weight : null;
 
-		weightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
-		weightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemWeight.value = value ? value.weight : null;
+		detailItemWeightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
+		detailItemWeightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	
 	return {
@@ -225,9 +225,9 @@ export function usePartComponent(props, context, options) {
 		detailItemManufacturerStockId,
 		detailItemName,
 		detailItemWeight,
+		detailItemWeightMeasurementUnitId,
+		detailItemWeightMeasurementUnitsId,
 		manufacturers,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
 		canAdd,
 		hasAdmin,
 		isPublic,
