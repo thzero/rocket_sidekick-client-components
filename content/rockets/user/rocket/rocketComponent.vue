@@ -11,7 +11,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility';
 import RocketStageData from 'rocket_sidekick_common/data/rockets/stage';
 
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
-import { useRocketMeasurementComponent } from '@/components/content/rockets/user/rocket/rocketMeasurementComponent';
+import { useRocketDetailItemComponent } from '@/components/content/rockets/user/rocket/rocketDetailItemComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -143,39 +143,45 @@ export function useRocketComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 	
 	const {
-		cgMeasurementUnitId,
-		cgMeasurementUnitsId,
-		cpMeasurementUnitId,
-		cpMeasurementUnitsId,
+		altimeters,
+		detailItemAltimeters,
 		detailItemCg,
 		detailItemCgFrom,
+		detailItemCgMeasurementUnitId,
+		detailItemCgMeasurementUnitsId,
 		detailItemCp,
 		detailItemCpFrom,
+		detailItemCpMeasurementUnitId,
+		detailItemCpMeasurementUnitsId,
 		detailItemDescription,
 		detailItemLength,
+		detailItemLengthMeasurementUnitId,
+		detailItemLengthMeasurementUnitsId,
 		detailItemName,
+		detailItemRecovery,
+		detailItemTracking,
 		detailItemWeight,
-		lengthMeasurementUnitId,
-		lengthMeasurementUnitsId,
+		detailItemWeightMeasurementUnitId,
+		detailItemWeightMeasurementUnitsId,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
+		recovery,
+		tracking,
 		resetEditData,
 		setEditData
-	} =  useRocketMeasurementComponent(props, context, options);
+	} =  useRocketDetailItemComponent(props, context, detailItem, options);
 
 	const detailItemDiameterMajor = ref(null);
+	const detailItemDiameterMajorMeasurementUnitId = ref(null);
+	const detailItemDiameterMajorMeasurementUnitsId = ref(null);
 	const detailItemDiameterMinor = ref(null);
+	const detailItemDiameterMinorMeasurementUnitId = ref(null);
+	const detailItemDiameterMinorMeasurementUnitsId = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemManufacturerStockId = ref(null);
 	const detailItemRocketType = ref(null);
-	const diameterMajorMeasurementUnitId = ref(null);
-	const diameterMajorMeasurementUnitsId = ref(null);
-	const diameterMinorMeasurementUnitId = ref(null);
-	const diameterMinorMeasurementUnitsId = ref(null);
 	const manufacturersI = ref(null);
 	const manufacturerDefault = ref(null);
 	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
@@ -187,7 +193,7 @@ export function useRocketComponent(props, context, options) {
 		return false;
 	});
 	const stages = computed(() => {
-		return detailItemData.value ? detailItemData.value.stages : [{}];
+		return detailItemData.value ? detailItemData.value.stages : [];
 	});
 	
 	const requestManufacturers = async (correlationId) => {
@@ -209,12 +215,12 @@ export function useRocketComponent(props, context, options) {
 		detailItemManufacturerStockId.value = value? value.manufacturerStockId : null;
 
 		detailItemDiameterMajor.value = value ? value.diameterMajor : null;
-		diameterMajorMeasurementUnitId.value = value ? value.diameterMajorMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		diameterMajorMeasurementUnitsId.value = value ? value.diameterMajorMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemDiameterMajorMeasurementUnitId.value = value ? value.diameterMajorMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		detailItemDiameterMajorMeasurementUnitsId.value = value ? value.diameterMajorMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 		
 		detailItemDiameterMinor.value = value ? value.diameterMinor : null;
-		diameterMinorMeasurementUnitId.value = value ? value.diameterMinorMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		diameterMinorMeasurementUnitsId.value = value ? value.diameterMinorMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemDiameterMinorMeasurementUnitId.value = value ? value.diameterMinorMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		detailItemDiameterMinorMeasurementUnitsId.value = value ? value.diameterMinorMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		resetEditData(correlationId, value);
 	};
@@ -225,12 +231,12 @@ export function useRocketComponent(props, context, options) {
 		detailItemData.value.manufacturerStockId = detailItemManufacturerStockId.value;
 
 		detailItemData.value.diameterMajor = AppUtility.convertNumber(detailItemDiameterMajor.value);
-		detailItemData.value.diameterMajorMeasurementUnitId = diameterMajorMeasurementUnitId.value;
-		detailItemData.value.diameterMajorMeasurementUnitsId = diameterMajorMeasurementUnitsId.value;
+		detailItemData.value.diameterMajorMeasurementUnitId = detailItemDiameterMajorMeasurementUnitId.value;
+		detailItemData.value.diameterMajorMeasurementUnitsId = detailItemDiameterMajorMeasurementUnitsId.value;
 		
 		detailItemData.value.diameterMinor = AppUtility.convertNumber(detailItemDiameterMinor.value);
-		detailItemData.value.diameterMinorMeasurementUnitId = diameterMinorMeasurementUnitId.value;
-		detailItemData.value.diameterMinorMeasurementUnitsId = diameterMinorMeasurementUnitsId.value;
+		detailItemData.value.diameterMinorMeasurementUnitId = detailItemDiameterMinorMeasurementUnitId.value;
+		detailItemData.value.diameterMinorMeasurementUnitsId = detailItemDiameterMinorMeasurementUnitsId.value;
 
 		setEditData(correlationId, detailItemData.value);
 	};
@@ -303,37 +309,43 @@ export function useRocketComponent(props, context, options) {
 		rocketTypes,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
-		cgMeasurementUnitId,
-		cgMeasurementUnitsId,
-		cpMeasurementUnitId,
-		cpMeasurementUnitsId,
+		altimeters,
+		detailItemAltimeters,
 		detailItemCg,
 		detailItemCgFrom,
+		detailItemCgMeasurementUnitId,
+		detailItemCgMeasurementUnitsId,
 		detailItemCp,
 		detailItemCpFrom,
+		detailItemCpMeasurementUnitId,
+		detailItemCpMeasurementUnitsId,
 		detailItemDescription,
 		detailItemLength,
+		detailItemLengthMeasurementUnitId,
+		detailItemLengthMeasurementUnitsId,
 		detailItemName,
+		detailItemRecovery,
+		detailItemTracking,
 		detailItemWeight,
-		lengthMeasurementUnitId,
-		lengthMeasurementUnitsId,
+		detailItemWeightMeasurementUnitId,
+		detailItemWeightMeasurementUnitsId,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
+		recovery,
+		tracking,
 		resetEditData,
 		setEditData,
 		detailItemDiameterMajor,
+		detailItemDiameterMajorMeasurementUnitId,
+		detailItemDiameterMajorMeasurementUnitsId,
 		detailItemDiameterMinor,
+		detailItemDiameterMinorMeasurementUnitId,
+		detailItemDiameterMinorMeasurementUnitsId,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
 		detailItemRocketType,
-		diameterMajorMeasurementUnitId,
-		diameterMajorMeasurementUnitsId,
-		diameterMinorMeasurementUnitId,
-		diameterMinorMeasurementUnitsId,
 		manufacturers,
 		hasAdmin,
 		stages,

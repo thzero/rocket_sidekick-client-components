@@ -62,9 +62,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="diameterMeasurementUnitsIdRef"
-								v-model="diameterMeasurementUnitsId"
-								vid="diameterMeasurementUnitsId"
+								ref="detailItemDiameterMeasurementUnitsIdRef"
+								v-model="detailItemDiameterMeasurementUnitsId"
+								vid="detailItemDiameterMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -72,10 +72,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="diameterMeasurementUnitIdRef"
-								v-model="diameterMeasurementUnitId"
-								vid="diameterMeasurementUnitId"
-								:measurementUnitsId="diameterMeasurementUnitsId"
+								ref="detailItemDiameterMeasurementUnitIdRef"
+								v-model="detailItemDiameterMeasurementUnitId"
+								vid="detailItemDiameterMeasurementUnitId"
+								:measurementUnitsId="detailItemDiameterMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -100,9 +100,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="lengthMeasurementUnitsIdRef"
-								v-model="lengthMeasurementUnitsId"
-								vid="lengthMeasurementUnitsId"
+								ref="detailItemLengthMeasurementUnitsIdRef"
+								v-model="detailItemLengthMeasurementUnitsId"
+								vid="detailItemLengthMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -110,10 +110,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="lengthMeasurementUnitIdRef"
-								v-model="lengthMeasurementUnitId"
-								vid="lengthMeasurementUnitId"
-								:measurementUnitsId="lengthMeasurementUnitsId"
+								ref="detailItemLengthMeasurementUnitIdRef"
+								v-model="detailItemLengthMeasurementUnitId"
+								vid="detailItemLengthMeasurementUnitId"
+								:measurementUnitsId="detailItemLengthMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -140,9 +140,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="weightMeasurementUnitsIdRef"
-								v-model="weightMeasurementUnitsId"
-								vid="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitsIdRef"
+								v-model="detailItemWeightMeasurementUnitsId"
+								vid="detailItemWeightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -150,10 +150,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="weightMeasurementUnitIdRef"
-								v-model="weightMeasurementUnitId"
-								vid="weightMeasurementUnitId"
-								:measurementUnitsId="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitIdRef"
+								v-model="detailItemWeightMeasurementUnitId"
+								vid="detailItemWeightMeasurementUnitId"
+								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -180,9 +180,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="cgMeasurementUnitsIdRef"
-								v-model="cgMeasurementUnitsId"
-								vid="cgMeasurementUnitsId"
+								ref="detailItemCgMeasurementUnitsIdRef"
+								v-model="detailItemCgMeasurementUnitsId"
+								vid="detailItemCgMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -190,10 +190,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="cgMeasurementUnitIdRef"
-								v-model="cgMeasurementUnitId"
-								vid="cgMeasurementUnitId"
-								:measurementUnitsId="cgMeasurementUnitsId"
+								ref="detailItemCgMeasurementUnitIdRef"
+								v-model="detailItemCgMeasurementUnitId"
+								vid="detailItemCgMeasurementUnitId"
+								:measurementUnitsId="detailItemCgMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -218,9 +218,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="cpMeasurementUnitsIdRef"
-								v-model="cpMeasurementUnitsId"
-								vid="cpMeasurementUnitsId"
+								ref="detailItemCpMeasurementUnitsIdRef"
+								v-model="detailItemCpMeasurementUnitsId"
+								vid="detailItemCpMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -228,10 +228,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="cpMeasurementUnitIdRef"
-								v-model="cpMeasurementUnitId"
-								vid="cpMeasurementUnitId"
-								:measurementUnitsId="cpMeasurementUnitsId"
+								ref="detailItemCpMeasurementUnitIdRef"
+								v-model="detailItemCpMeasurementUnitId"
+								vid="detailItemCpMeasurementUnitId"
+								:measurementUnitsId="detailItemCpMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -289,33 +289,39 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			cgMeasurementUnitId,
-			cgMeasurementUnitsId,
-			cpMeasurementUnitId,
-			cpMeasurementUnitsId,
-			detailItemCg,
-			detailItemCgFrom,
-			detailItemCp,
-			detailItemCpFrom,
-			detailItemDescription,
-			detailItemLength,
-			detailItemName,
-			detailItemWeight,
-			lengthMeasurementUnitId,
-			lengthMeasurementUnitsId,
-			measurementUnitsLengthDefaultId,
-			measurementUnitsLengthType,
-			measurementUnitsWeightDefaultId,
-			measurementUnitsWeightType,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
-			resetEditData,
-			setEditData,
 			detailItemTextRows,
 			dialogError,
 			dialogClose,
 			dialogOk,
 			isEditable,
+			altimeters,
+			detailItemAltimeters,
+			detailItemCg,
+			detailItemCgFrom,
+			detailItemCgMeasurementUnitId,
+			detailItemCgMeasurementUnitsId,
+			detailItemCp,
+			detailItemCpFrom,
+			detailItemCpMeasurementUnitId,
+			detailItemCpMeasurementUnitsId,
+			detailItemDescription,
+			detailItemLength,
+			detailItemLengthMeasurementUnitId,
+			detailItemLengthMeasurementUnitsId,
+			detailItemName,
+			detailItemRecovery,
+			detailItemTracking,
+			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
+			measurementUnitsLengthDefaultId,
+			measurementUnitsLengthType,
+			measurementUnitsWeightDefaultId,
+			measurementUnitsWeightType,
+			recovery,
+			tracking,
+			resetEditData,
+			setEditData,
 			detailItemDiameter,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
@@ -337,33 +343,39 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			cgMeasurementUnitId,
-			cgMeasurementUnitsId,
-			cpMeasurementUnitId,
-			cpMeasurementUnitsId,
-			detailItemCg,
-			detailItemCgFrom,
-			detailItemCp,
-			detailItemCpFrom,
-			detailItemDescription,
-			detailItemLength,
-			detailItemName,
-			detailItemWeight,
-			lengthMeasurementUnitId,
-			lengthMeasurementUnitsId,
-			measurementUnitsLengthDefaultId,
-			measurementUnitsLengthType,
-			measurementUnitsWeightDefaultId,
-			measurementUnitsWeightType,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
-			resetEditData,
-			setEditData,
 			detailItemTextRows,
 			dialogError,
 			dialogClose,
 			dialogOk,
 			isEditable,
+			altimeters,
+			detailItemAltimeters,
+			detailItemCg,
+			detailItemCgFrom,
+			detailItemCgMeasurementUnitId,
+			detailItemCgMeasurementUnitsId,
+			detailItemCp,
+			detailItemCpFrom,
+			detailItemCpMeasurementUnitId,
+			detailItemCpMeasurementUnitsId,
+			detailItemDescription,
+			detailItemLength,
+			detailItemLengthMeasurementUnitId,
+			detailItemLengthMeasurementUnitsId,
+			detailItemName,
+			detailItemRecovery,
+			detailItemTracking,
+			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
+			measurementUnitsLengthDefaultId,
+			measurementUnitsLengthType,
+			measurementUnitsWeightDefaultId,
+			measurementUnitsWeightType,
+			recovery,
+			tracking,
+			resetEditData,
+			setEditData,
 			detailItemDiameter,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
