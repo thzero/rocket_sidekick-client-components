@@ -68,9 +68,9 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		detailItemManufacturerStockId,
 		detailItemName,
 		detailItemWeight,
+		detailItemWeightMeasurementUnitId,
+		detailItemWeightMeasurementUnitsId,
 		manufacturers,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
 		canAdd,
 		hasAdmin,
 		isPublic,
@@ -84,20 +84,19 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		partsType: AppCommonConstants.Rocketry.PartTypes.deploymentBag, 
 		preCompleteOkPart: (correlationId, data) => {
 			data.diameter = AppUtility.convertNumber(detailItemDiameter.value);
+			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUnitId.value;
+			data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
+
 			data.length = AppUtility.convertNumber(detailItemLength.value);
-
-			data.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
-			data.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
-
-			data.lengthMeasurementUnitId = lengthMeasurementUnitId.value;
-			data.lengthMeasurementUnitsId = lengthMeasurementUnitsId.value;
+			data.lengthMeasurementUnitId = detailItemLengthMeasurementUnitId.value;
+			data.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
 
 			data.pilotChute = detailItemPilotChute.value ?? false;
 			data.pilotChuteCd = AppUtility.convertNumber(detailItemPilotChuteCd.value);
 			data.pilotChuteDiameter = AppUtility.convertNumber(detailItemPilotChuteDiameter.value);
 
-			data.pilotChuteDiameterMeasurementUnitId = pilotChuteDiameterMeasurementUnitId.value;
-			data.pilotChuteDiameterMeasurementUnitsId = pilotChuteDiameterMeasurementUnitsId.value;
+			data.pilotChuteDiameterMeasurementUnitId = detailItemPilotChuteMeasurementUnitId.value;
+			data.pilotChuteDiameterMeasurementUnitsId = detailItemPilotChuteMeasurementUnitsId.value;
 
 			if (!data.pilotChute) {
 				data.pilotChuteCd = null;
@@ -107,8 +106,8 @@ export function useDeploymentBagPartComponent(props, context, options) {
 				data.pilotChuteDiameterMeasurementUnitsId = null;
 			}
 			
-			const temp = AppUtility.measurementUnitTranslateLength(correlationId, diameterMeasurementUnitsId.value, diameterMeasurementUnitId.value);
-			const temp2 = AppUtility.measurementUnitTranslateLength(correlationId, lengthMeasurementUnitId.value, lengthMeasurementUnitsId.value);
+			const temp = AppUtility.measurementUnitTranslateLength(correlationId, detailItemDiameterMeasurementUnitsId.value, detailItemDiameterMeasurementUnitId.value);
+			const temp2 = AppUtility.measurementUnitTranslateLength(correlationId, detailItemLengthMeasurementUnitId.value, detailItemLengthMeasurementUnitsId.value);
 			data.sortName = String(data.diameter ?? '').padStart(4, '0') + temp + String(data.length ?? '').padStart(4, '0') + temp2 + (data.pilotChute ? 'Pilot' : '') + data.name;
 		
 			return data;
@@ -119,34 +118,34 @@ export function useDeploymentBagPartComponent(props, context, options) {
 	});
 	
 	const detailItemDiameter = ref(null);
+	const detailItemDiameterMeasurementUnitId = ref(null);
+	const detailItemDiameterMeasurementUnitsId = ref(null);
 	const detailItemLength = ref(null);
+	const detailItemLengthMeasurementUnitId = ref(null);
+	const detailItemLengthMeasurementUnitsId = ref(null);
 	const detailItemPilotChute = ref(false);
 	const detailItemPilotChuteCd = ref(null);
 	const detailItemPilotChuteDiameter = ref(null);
-	const diameterMeasurementUnitId = ref(null);
-	const diameterMeasurementUnitsId = ref(null);
-	const lengthMeasurementUnitId = ref(null);
-	const lengthMeasurementUnitsId = ref(null);
-	const pilotChuteDiameterMeasurementUnitId = ref(null);
-	const pilotChuteDiameterMeasurementUnitsId = ref(null);
+	const detailItemPilotChuteMeasurementUnitId = ref(null);
+	const detailItemPilotChuteMeasurementUnitsId = ref(null);
 
 	const resetData = (correlationId, value) => {
 		detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.blnaket.name');
 
-		detailItemDiameter.value = value ? value.diameter : null;
-		detailItemLength.value = value ? value.length : null;
 		detailItemPilotChute.value = value ? value.pilotChute ?? false : false;
 		detailItemPilotChuteCd.value = value ? value.pilotChuteCd : null;
+
 		detailItemPilotChuteDiameter.value = value ? value.pilotChuteDiameter : null;
+		detailItemPilotChuteMeasurementUnitId.value = value ? value.pilotChuteDiameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		detailItemPilotChuteMeasurementUnitsId.value = value ? value.pilotChuteDiameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+	
+		detailItemDiameter.value = value ? value.diameter : null;
+		detailItemDiameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		detailItemDiameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 		
-		diameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		diameterMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		
-		lengthMeasurementUnitId.value = value ? value.lengthMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		lengthMeasurementUnitsId.value = value ? value.lengthMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		
-		pilotChuteDiameterMeasurementUnitId.value = value ? value.pilotChuteDiameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		pilotChuteDiameterMeasurementUnitsId.value = value ? value.pilotChuteDiameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemLength.value = value ? value.length : null;
+		detailItemLengthMeasurementUnitId.value = value ? value.lengthMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		detailItemLengthMeasurementUnitsId.value = value ? value.lengthMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	
 	return {
@@ -206,25 +205,25 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		detailItemManufacturerStockId,
 		detailItemName,
 		detailItemWeight,
+		detailItemWeightMeasurementUnitId,
+		detailItemWeightMeasurementUnitsId,
 		manufacturers,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
 		canAdd,
 		hasAdmin,
 		isPublic,
 		handleAdd,
 		requestManufacturers,
 		detailItemDiameter,
+		detailItemDiameterMeasurementUnitId,
+		detailItemDiameterMeasurementUnitsId,
 		detailItemLength,
+		detailItemLengthMeasurementUnitId,
+		detailItemLengthMeasurementUnitsId,
 		detailItemPilotChute,
 		detailItemPilotChuteCd,
 		detailItemPilotChuteDiameter,
-		diameterMeasurementUnitId,
-		diameterMeasurementUnitsId,
-		lengthMeasurementUnitId,
-		lengthMeasurementUnitsId,
-		pilotChuteDiameterMeasurementUnitId,
-		pilotChuteDiameterMeasurementUnitsId,
+		detailItemPilotChuteMeasurementUnitId,
+		detailItemPilotChuteMeasurementUnitsId,
 		scope: 'DeploymentBagPartControl',
 		validation: useVuelidate({ $scope: 'DeploymentBagPartControl' })
 	};

@@ -84,9 +84,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="weightMeasurementUnitsIdRef"
-								v-model="weightMeasurementUnitsId"
-								vid="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitsIdRef"
+								v-model="detailItemWeightMeasurementUnitsId"
+								vid="detailItemWeightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -94,10 +94,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="weightMeasurementUnitIdRef"
-								v-model="weightMeasurementUnitId"
-								vid="weightMeasurementUnitId"
-								:measurementUnitsId="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitIdRef"
+								v-model="detailItemWeightMeasurementUnitId"
+								vid="detailItemWeightMeasurementUnitId"
+								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -228,9 +228,9 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			manufacturers,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
 			isPublic,
@@ -297,9 +297,9 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			manufacturers,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
 			isPublic,

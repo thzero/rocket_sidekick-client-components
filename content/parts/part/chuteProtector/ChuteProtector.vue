@@ -84,9 +84,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="dimensionMeasurementUnitsIdRef"
-								v-model="dimensionMeasurementUnitsId"
-								vid="dimensionMeasurementUnitsId"
+								ref="detailItemDimensionMeasurementUnitsIdRef"
+								v-model="detailItemDimensionMeasurementUnitsId"
+								vid="detailItemDimensionMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -94,10 +94,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="dimensionMeasurementUnitIdRef"
-								v-model="dimensionMeasurementUnitId"
-								vid="dimensionMeasurementUnitId"
-								:measurementUnitsId="dimensionMeasurementUnitsId"
+								ref="detailItemDimensionMeasurementUnitIdRef"
+								v-model="detailItemDimensionMeasurementUnitId"
+								vid="detailItemDimensionMeasurementUnitId"
+								:measurementUnitsId="detailItemDimensionMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -122,9 +122,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="diameterMeasurementUnitsIdRef"
-								v-model="diameterMeasurementUnitsId"
-								vid="diameterMeasurementUnitsId"
+								ref="detailItemDiameterMeasurementUnitsIdRef"
+								v-model="detailItemDiameterMeasurementUnitsId"
+								vid="detailItemDiameterMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -132,10 +132,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="diameterMeasurementUnitIdRef"
-								v-model="diameterMeasurementUnitId"
-								vid="diameterMeasurementUnitId"
-								:measurementUnitsId="diameterMeasurementUnitsId"
+								ref="detailItemDiameterMeasurementUnitIdRef"
+								v-model="detailItemDiameterMeasurementUnitId"
+								vid="detailItemDiameterMeasurementUnitId"
+								:measurementUnitsId="detailItemDiameterMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -162,9 +162,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="weightMeasurementUnitsIdRef"
-								v-model="weightMeasurementUnitsId"
-								vid="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitsIdRef"
+								v-model="detailItemWeightMeasurementUnitsId"
+								vid="detailItemWeightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -172,10 +172,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="weightMeasurementUnitIdRef"
-								v-model="weightMeasurementUnitId"
-								vid="weightMeasurementUnitId"
-								:measurementUnitsId="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitIdRef"
+								v-model="detailItemWeightMeasurementUnitId"
+								vid="detailItemWeightMeasurementUnitId"
+								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -306,9 +306,9 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			manufacturers,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
 			isPublic,
@@ -316,11 +316,11 @@ export default {
 			requestManufacturers,
 			detailItemCd,
 			detailItemDiameter,
+			detailItemDiameterMeasurementUnitId,
+			detailItemDiameterMeasurementUnitsId,
 			detailItemDimension,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
-			dimensionMeasurementUnitId,
-			dimensionMeasurementUnitsId,
+			detailItemDimensionMeasurementUnitId,
+			detailItemDimensionMeasurementUnitsId,
 			scope,
 			validation
 		} = useChuteProtectorPartComponent(props, context, options);
@@ -382,9 +382,9 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			manufacturers,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			canAdd,
 			hasAdmin,
 			isPublic,
@@ -392,11 +392,11 @@ export default {
 			requestManufacturers,
 			detailItemCd,
 			detailItemDiameter,
+			detailItemDiameterMeasurementUnitId,
+			detailItemDiameterMeasurementUnitsId,
 			detailItemDimension,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
-			dimensionMeasurementUnitId,
-			dimensionMeasurementUnitsId,
+			detailItemDimensionMeasurementUnitId,
+			detailItemDimensionMeasurementUnitsId,
 			scope,
 			validation
 		};
