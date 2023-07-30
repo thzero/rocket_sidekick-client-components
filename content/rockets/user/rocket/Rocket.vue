@@ -109,9 +109,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="diameterMajorMeasurementUnitsIdRef"
-								v-model="diameterMajorMeasurementUnitsId"
-								vid="diameterMajorMeasurementUnitsId"
+								ref="detailItemDiameterMajorMeasurementUnitsIdRef"
+								v-model="detailItemDiameterMajorMeasurementUnitsId"
+								vid="detailItemDdiameterMajorMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -119,10 +119,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="diameterMajorMeasurementUnitIdRef"
-								v-model="diameterMajorMeasurementUnitId"
-								vid="diameterMajorMeasurementUnitId"
-								:measurementUnitsId="diameterMajorMeasurementUnitsId"
+								ref="detailItemDiameterMajorMeasurementUnitIdRef"
+								v-model="detailItemDiameterMajorMeasurementUnitId"
+								vid="detailItemDiameterMajorMeasurementUnitId"
+								:measurementUnitsId="detailItemDiameterMajorMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -147,9 +147,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="lengthMeasurementUnitsIdRef"
-								v-model="lengthMeasurementUnitsId"
-								vid="lengthMeasurementUnitsId"
+								ref="detailItemLengthMeasurementUnitsIdRef"
+								v-model="detailItemLengthMeasurementUnitsId"
+								vid="detailItemLengthMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -157,10 +157,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="lengthMeasurementUnitIdRef"
-								v-model="lengthMeasurementUnitId"
-								vid="lengthMeasurementUnitId"
-								:measurementUnitsId="lengthMeasurementUnitsId"
+								ref="detailItemLengthMeasurementUnitIdRef"
+								v-model="detailItemLengthMeasurementUnitId"
+								vid="detailItemLengthMeasurementUnitId"
+								:measurementUnitsId="detailItemLengthMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -187,9 +187,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="weightMeasurementUnitsIdRef"
-								v-model="weightMeasurementUnitsId"
-								vid="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitsIdRef"
+								v-model="detailItemWeightMeasurementUnitsId"
+								vid="detailItemWeightMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -197,10 +197,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="weightMeasurementUnitIdRef"
-								v-model="weightMeasurementUnitId"
-								vid="weightMeasurementUnitId"
-								:measurementUnitsId="weightMeasurementUnitsId"
+								ref="detailItemWeightMeasurementUnitIdRef"
+								v-model="detailItemWeightMeasurementUnitId"
+								vid="detailItemWeighttMeasurementUnitId"
+								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -227,9 +227,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="cgMeasurementUnitsIdRef"
-								v-model="cgMeasurementUnitsId"
-								vid="cgMeasurementUnitsId"
+								ref="detailItemCgMeasurementUnitsIdRef"
+								v-model="detailItemCgMeasurementUnitsId"
+								vid="detailItemCgMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -237,10 +237,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="cgMeasurementUnitIdRef"
-								v-model="cgMeasurementUnitId"
-								vid="cgMeasurementUnitId"
-								:measurementUnitsId="cgMeasurementUnitsId"
+								ref="detailItemCgMeasurementUnitIdRef"
+								v-model="detailItemCgMeasurementUnitId"
+								vid="detailItemCgMeasurementUnitId"
+								:measurementUnitsId="detailItemCgMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -265,9 +265,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="cpMeasurementUnitsIdRef"
-								v-model="cpMeasurementUnitsId"
-								vid="cpMeasurementUnitsId"
+								ref="detailItemCpMeasurementUnitsIdRef"
+								v-model="detailItemCpMeasurementUnitsId"
+								vid="detailItemCpMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -275,10 +275,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="cpMeasurementUnitIdRef"
-								v-model="cpMeasurementUnitId"
-								vid="cpMeasurementUnitId"
-								:measurementUnitsId="cpMeasurementUnitsId"
+								ref="detailItemCpMeasurementUnitIdRef"
+								v-model="detailItemCpMeasurementUnitId"
+								vid="detailItemCpMeasurementUnitId"
+								:measurementUnitsId="detailItemCpMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -293,13 +293,51 @@
 			<template
 				v-if="$vuetify.display.mdAndUp"
 			>
-				<v-btn
+				<!-- <v-btn
 					v-if="canAddSecondary"
 					class="mr-2"
 					color="primary"
 					@click="handleAddSecondary"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.rockets.stage') }}
+				</v-btn> -->
+				<v-btn
+					v-if="canAddSecondary"
+					class="mr-2"
+					color="primary"
+				>
+					{{ $t('buttons.add') }}
+					<v-menu 
+						activator="parent"
+						location="top"
+					>
+						<v-list>
+						<v-list-item>
+							<v-btn
+								color="red"
+							>
+								{{ $t('buttons.rockets.tracking') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								color="blue"
+							>
+								{{ $t('buttons.rockets.recovery') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item
+							v-if="canAddSecondary"
+						>
+							<v-btn
+								color="green"
+								@click="handleAddSecondary"
+							>
+								{{ $t('buttons.rockets.stage') }}
+							</v-btn>
+						</v-list-item>
+						</v-list>
+					</v-menu>
 				</v-btn>
 				<span
 					v-if="canAddSecondary"
@@ -312,12 +350,50 @@
 				v-if="$vuetify.display.smAndDown"
 				class="mt-2"
 			>
-				<v-btn
+				<!-- <v-btn
 					v-if="canAddSecondary"
 					color="primary"
 					@click="handleAddSecondary"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.rockets.stage') }}
+				</v-btn> -->
+				<v-btn
+					v-if="canAddSecondary"
+					class="mr-2"
+					color="primary"
+				>
+					{{ $t('buttons.add') }}
+					<v-menu 
+						activator="parent"
+						location="top"
+					>
+						<v-list>
+						<v-list-item>
+							<v-btn
+								color="red"
+							>
+								a
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								color="blue"
+							>
+								s
+							</v-btn>
+						</v-list-item>
+						<v-list-item
+							v-if="canAddSecondary"
+						>
+							<v-btn
+								color="green"
+								@click="handleAddSecondary"
+							>
+								{{ $t('buttons.rockets.stage') }}
+							</v-btn>
+						</v-list-item>
+						</v-list>
+					</v-menu>
 				</v-btn>
 			</div>
 		</template>
@@ -497,37 +573,43 @@ export default {
 			rocketTypes,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			cgMeasurementUnitId,
-			cgMeasurementUnitsId,
-			cpMeasurementUnitId,
-			cpMeasurementUnitsId,
+			altimeters,
+			detailItemAltimeters,
 			detailItemCg,
 			detailItemCgFrom,
+			detailItemCgMeasurementUnitId,
+			detailItemCgMeasurementUnitsId,
 			detailItemCp,
 			detailItemCpFrom,
+			detailItemCpMeasurementUnitId,
+			detailItemCpMeasurementUnitsId,
 			detailItemDescription,
 			detailItemLength,
+			detailItemLengthMeasurementUnitId,
+			detailItemLengthMeasurementUnitsId,
 			detailItemName,
+			detailItemRecovery,
+			detailItemTracking,
 			detailItemWeight,
-			lengthMeasurementUnitId,
-			lengthMeasurementUnitsId,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
+			recovery,
+			tracking,
 			resetEditData,
 			setEditData,
 			detailItemDiameterMajor,
+			detailItemDiameterMajorMeasurementUnitId,
+			detailItemDiameterMajorMeasurementUnitsId,
 			detailItemDiameterMinor,
+			detailItemDiameterMinorMeasurementUnitId,
+			detailItemDiameterMinorMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemRocketType,
-			diameterMajorMeasurementUnitId,
-			diameterMajorMeasurementUnitsId,
-			diameterMinorMeasurementUnitId,
-			diameterMinorMeasurementUnitsId,
 			manufacturers,
 			hasAdmin,
 			stages,
@@ -604,37 +686,43 @@ export default {
 			rocketTypes,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			cgMeasurementUnitId,
-			cgMeasurementUnitsId,
-			cpMeasurementUnitId,
-			cpMeasurementUnitsId,
+			altimeters,
+			detailItemAltimeters,
 			detailItemCg,
 			detailItemCgFrom,
+			detailItemCgMeasurementUnitId,
+			detailItemCgMeasurementUnitsId,
 			detailItemCp,
 			detailItemCpFrom,
+			detailItemCpMeasurementUnitId,
+			detailItemCpMeasurementUnitsId,
 			detailItemDescription,
 			detailItemLength,
+			detailItemLengthMeasurementUnitId,
+			detailItemLengthMeasurementUnitsId,
 			detailItemName,
+			detailItemRecovery,
+			detailItemTracking,
 			detailItemWeight,
-			lengthMeasurementUnitId,
-			lengthMeasurementUnitsId,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
+			recovery,
+			tracking,
 			resetEditData,
 			setEditData,
 			detailItemDiameterMajor,
+			detailItemDiameterMajorMeasurementUnitId,
+			detailItemDiameterMajorMeasurementUnitsId,
 			detailItemDiameterMinor,
+			detailItemDiameterMinorMeasurementUnitId,
+			detailItemDiameterMinorMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemRocketType,
-			diameterMajorMeasurementUnitId,
-			diameterMajorMeasurementUnitsId,
-			diameterMinorMeasurementUnitId,
-			diameterMinorMeasurementUnitsId,
 			manufacturers,
 			hasAdmin,
 			stages,

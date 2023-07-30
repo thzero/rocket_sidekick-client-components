@@ -8,7 +8,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
-import { useRocketMeasurementComponent } from '@/components/content/rockets/user/rocket/rocketMeasurementComponent';
+import { useRocketDetailItemComponent } from '@/components/content/rockets/user/rocket/rocketDetailItemComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketEditDialogComponent(props, context, options) {
@@ -39,29 +39,35 @@ export function useRocketEditDialogComponent(props, context, options) {
 	} = useDetailFormDialogComponent(props, context, options);
 	
 	const {
-		cgMeasurementUnitId,
-		cgMeasurementUnitsId,
-		cpMeasurementUnitId,
-		cpMeasurementUnitsId,
+		altimeters,
+		detailItemAltimeters,
 		detailItemCg,
 		detailItemCgFrom,
+		detailItemCgMeasurementUnitId,
+		detailItemCgMeasurementUnitsId,
 		detailItemCp,
 		detailItemCpFrom,
+		detailItemCpMeasurementUnitId,
+		detailItemCpMeasurementUnitsId,
 		detailItemDescription,
 		detailItemLength,
+		detailItemLengthMeasurementUnitId,
+		detailItemLengthMeasurementUnitsId,
 		detailItemName,
+		detailItemRecovery,
+		detailItemTracking,
 		detailItemWeight,
-		lengthMeasurementUnitId,
-		lengthMeasurementUnitsId,
+		detailItemWeightMeasurementUnitId,
+		detailItemWeightMeasurementUnitsId,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
+		recovery,
+		tracking,
 		resetEditData,
 		setEditData
-	} = useRocketMeasurementComponent(props, context, options);
+	} = useRocketDetailItemComponent(props, context, options);
 
 	const detailItemDiameter = ref(null);
 	const diameterMeasurementUnitId = ref(null);
@@ -111,26 +117,32 @@ export function useRocketEditDialogComponent(props, context, options) {
 		dialogClose,
 		dialogOk,
 		isEditable,
-		cgMeasurementUnitId,
-		cgMeasurementUnitsId,
-		cpMeasurementUnitId,
-		cpMeasurementUnitsId,
+		altimeters,
+		detailItemAltimeters,
 		detailItemCg,
 		detailItemCgFrom,
+		detailItemCgMeasurementUnitId,
+		detailItemCgMeasurementUnitsId,
 		detailItemCp,
 		detailItemCpFrom,
+		detailItemCpMeasurementUnitId,
+		detailItemCpMeasurementUnitsId,
 		detailItemDescription,
 		detailItemLength,
+		detailItemLengthMeasurementUnitId,
+		detailItemLengthMeasurementUnitsId,
 		detailItemName,
+		detailItemRecovery,
+		detailItemTracking,
 		detailItemWeight,
-		lengthMeasurementUnitId,
-		lengthMeasurementUnitsId,
+		detailItemWeightMeasurementUnitId,
+		detailItemWeightMeasurementUnitsId,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
+		recovery,
+		tracking,
 		resetEditData,
 		setEditData,
 		detailItemDiameter,

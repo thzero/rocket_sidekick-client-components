@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
-import { useRocketMeasurementComponent } from '@/components/content/rockets/user/rocket/rocketMeasurementComponent';
+import { useRocketDetailItemComponent } from '@/components/content/rockets/user/rocket/rocketDetailItemComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketStageComponent(props, context, options) {
@@ -46,7 +46,7 @@ export function useRocketStageComponent(props, context, options) {
 		weightMeasurementUnitsId,
 		resetEditData,
 		setEditData
-	} =  useRocketMeasurementComponent(props, context, options);
+	} =  useRocketDetailItemComponent(props, context, options);
 
 	const displayItem = computed(() => {
 		return props.item ? props.item : {};

@@ -61,7 +61,7 @@
 							<table>
 								<tr>
 									<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
-									<td>{{ rocket.diameterMajor }} {{ measurementUnitTranslateLength(rocket.diameterMajorMeasurementUnitsId, rocket.diameterMajorMeasurementUnitId) }} </td>
+									<td>{{ rocket.diameterMajor }} {{ measurementUnitTranslateLength(rocket.detailItemDiameterMajorMeasurementUnitsId, rocket.detailItemDiameterMajorMeasurementUnitsId) }} </td>
 								</tr>
 								<tr>
 									<td nowrap class="specifications">{{ $t('strings.measurements.length') }}</td>
