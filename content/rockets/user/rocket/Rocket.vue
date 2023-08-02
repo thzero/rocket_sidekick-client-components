@@ -314,7 +314,7 @@
 						<v-list>
 						<v-list-item>
 							<v-btn
-								color="red"
+								color="purple"
 							>
 								{{ $t('buttons.rockets.tracking') }}
 							</v-btn>
@@ -322,6 +322,7 @@
 						<v-list-item>
 							<v-btn
 								color="blue"
+								@click="clickRecoverySearch"
 							>
 								{{ $t('buttons.rockets.recovery') }}
 							</v-btn>
@@ -370,16 +371,17 @@
 						<v-list>
 						<v-list-item>
 							<v-btn
-								color="red"
+								color="purple"
 							>
-								a
+								{{ $t('buttons.rockets.tracking') }}
 							</v-btn>
 						</v-list-item>
 						<v-list-item>
 							<v-btn
 								color="blue"
+								@click="clickRecoverySearch"
 							>
-								s
+								{{ $t('buttons.rockets.recovery') }}
 							</v-btn>
 						</v-list-item>
 						<v-list-item
@@ -398,47 +400,90 @@
 			</div>
 		</template>
 		<template v-slot:after>	
-			<v-row
+			<div
 				v-if="stages"
-				dense 
 				class="mt-4"
 			>
-				<v-col>
-					<v-row
-						v-for="item in stages"
-						:key="item.id"
-					>
-						<RocketStage
-							:item="item"
-							:isEditable="isEditable"
-							:debug="debug"
+				<h3>Stages</h3>
+				<v-row
+					dense 
+				>
+					<v-col>
+						<v-row
+							v-for="item in stages"
+							:key="item.id"
 						>
-							<template 
-								v-if="isEditable"
-								v-slot:actionsEdit
-							>	
-								<div class="pl-4 pr-4 pb-2 pt-2">
-									<v-btn
-										v-if="isEditable"
-										class="mr-2"
-										icon="mdi-pencil"
-										size="small"
-										:disabled="isEditingSecondary(item)"
-										@click="dialogEditSecondaryOpen(item)"
-									></v-btn>
-									<v-btn
-										v-if="isEditable"
-										icon="mdi-delete"
-										size="small"
-										:disabled="isDeletingSecondary(item)"
-										@click="dialogDeleteSecondaryOpen(item)"
-									></v-btn>
-								</div>
-							</template>
-						</RocketStage>
-					</v-row>
-				</v-col>
-			</v-row>
+							<RocketStage
+								:item="item"
+								:isEditable="isEditable"
+								:debug="debug"
+							>
+								<template 
+									v-if="isEditable"
+									v-slot:actionsEdit
+								>	
+									<div class="pl-4 pr-4 pb-2 pt-2">
+										<v-btn
+											v-if="isEditable"
+											class="mr-2"
+											icon="mdi-pencil"
+											size="small"
+											:disabled="isEditingSecondary(item)"
+											@click="dialogEditSecondaryOpen(item)"
+										></v-btn>
+										<v-btn
+											v-if="isEditable"
+											icon="mdi-delete"
+											size="small"
+											:disabled="isDeletingSecondary(item)"
+											@click="dialogDeleteSecondaryOpen(item)"
+										></v-btn>
+									</div>
+								</template>
+							</RocketStage>
+						</v-row>
+					</v-col>
+				</v-row>
+			</div>
+			<div
+				v-if="altimeters"
+				class="mt-4"
+			>
+				<h3>Altimters</h3>
+				<!-- <RocketParts
+					class="mt-4"
+					:items="recovery"
+					:deletable="isEditable"
+				>
+				</RocketParts> -->
+					<!-- @delete="clickRecoveryDelete" -->
+			</div>
+			<div
+				v-if="recovery"
+				class="mt-4"
+			>
+				<h3>Recovery</h3>
+				<RocketParts
+					class="mt-4"
+					:items="recovery"
+					:deletable="isEditable"
+				>
+				</RocketParts>
+					<!-- @delete="clickRecoveryDelete" -->
+			</div>
+			<div
+				v-if="tracking"
+				class="mt-4"
+			>
+				<h3>Tracking</h3>
+				<!-- <RocketParts
+					class="mt-4"
+					:items="recovery"
+					:deletable="isEditable"
+				>
+				</RocketParts> -->
+					<!-- @delete="clickRecoveryDelete" -->
+			</div>
 		</template>
 	</VFormControl>
 	<VConfirmationDialog
@@ -450,9 +495,9 @@
 		@error="dialogDeleteSecondaryError"
 		@ok="dialogDeleteSecondaryOk"
 	/>
-	<RocketEditDialog
+	<RocketStageEditDialog
 		v-if="!readonly"
-		ref="dialogMotorSearchRef"
+		ref="dialogEditSecondaryRef"
 		:debug="debug"
 		:pre-complete-ok="dialogEditSecondaryPreCompleteOk"
 		:value="dialogEditSecondaryParams"
@@ -460,6 +505,12 @@
 		@close="dialogEditSecondaryCancel"
 		@ok="dialogEditSecondaryOk"
 		width="90%"
+	/>
+	<RecoveryLookupDialog
+		ref="dialogRecoverySearchRef"
+		:signal="dialogRecoverySearchManager.signal"
+		@close="dialogRecoverySearchManager.cancel()"
+		@ok="selectRecovery"
 	/>
 </template>
 
@@ -472,10 +523,18 @@ import { useRocketEditValidation } from '@/components/content/rockets/user/rocke
 import { useRocketComponent } from '@/components/content/rockets/user/rocket/rocketComponent';
 import { useRocketComponentProps } from '@/components/content/rockets/user/rocket/rocketComponentProps';
 
+import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
+import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
+import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
+import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
+
+import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
+
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RocketEditDialog from '@/components/content/rockets/user/dialogs/RocketEditDialog';
 import RocketStage from '@/components/content/rockets/user/rocket/RocketStage';
+import RocketStageEditDialog from '@/components/content/rockets/user/dialogs/RocketStageEditDialog';
+import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
@@ -487,10 +546,16 @@ import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/compo
 export default {
 	name: 'RocketControl',
 	components: {
+		ChuteProtectorPanelTitle,
+		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		RocketEditDialog,
+		ParachutePanelTitle,
+		RocketParts,
 		RocketStage,
+		RocketStageEditDialog,
+		RecoveryLookupDialog,
+		StreamerPanelTitle,
 		VConfirmationDialog,
 		VFormControl,
 		VNumberFieldWithValidation,
@@ -599,7 +664,10 @@ export default {
 			measurementUnitsWeightType,
 			recovery,
 			tracking,
+			dialogRecoverySearchManager,
+			clickRecoverySearch,
 			resetEditData,
+			selectRecovery,
 			setEditData,
 			detailItemDiameterMajor,
 			detailItemDiameterMajorMeasurementUnitId,
@@ -712,7 +780,10 @@ export default {
 			measurementUnitsWeightType,
 			recovery,
 			tracking,
+			dialogRecoverySearchManager,
+			clickRecoverySearch,
 			resetEditData,
+			selectRecovery,
 			setEditData,
 			detailItemDiameterMajor,
 			detailItemDiameterMajorMeasurementUnitId,

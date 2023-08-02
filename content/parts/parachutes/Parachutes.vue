@@ -21,7 +21,6 @@
 		<template #panelTitle="{ item }">
 			<ParachutePanelTitle
 				:item="item"
-				:manufacturers="manufacturers"
 			>
 			</ParachutePanelTitle>
 		</template> 

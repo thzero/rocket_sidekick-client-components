@@ -21,7 +21,6 @@
 		<template #panelTitle="{ item }">
 			<StreamerPanelTitle
 				:item="item"
-				:manufacturers="manufacturers"
 			>
 			</StreamerPanelTitle>
 		</template> 

@@ -21,7 +21,6 @@
 		<template #panelTitle="{ item }">
 			<deploymentBagPanelTitle
 				:item="item"
-				:manufacturers="manufacturers"
 			>
 			</DeploymentBagPanelTitle>
 		</template> 

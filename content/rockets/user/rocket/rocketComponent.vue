@@ -169,7 +169,10 @@ export function useRocketComponent(props, context, options) {
 		measurementUnitsWeightType,
 		recovery,
 		tracking,
+		dialogRecoverySearchManager,
+		clickRecoverySearch,
 		resetEditData,
+		selectRecovery,
 		setEditData
 	} =  useRocketDetailItemComponent(props, context, detailItem, options);
 
@@ -335,7 +338,10 @@ export function useRocketComponent(props, context, options) {
 		measurementUnitsWeightType,
 		recovery,
 		tracking,
+		dialogRecoverySearchManager,
+		clickRecoverySearch,
 		resetEditData,
+		selectRecovery,
 		setEditData,
 		detailItemDiameterMajor,
 		detailItemDiameterMajorMeasurementUnitId,

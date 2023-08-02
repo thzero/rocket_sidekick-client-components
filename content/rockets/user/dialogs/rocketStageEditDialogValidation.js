@@ -1,7 +1,7 @@
 import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
 
-export const useRocketEditDialogValidation = {
+export const useRocketStageEditDialogValidation = {
 	detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
-	diameterMeasurementUnitId: { $autoDirty: true },
-	diameterMeasurementUnitsId: { $autoDirty: true }
+	detailItemDiameterMeasurementUnitId: { $autoDirty: true },
+	detailItemDiameterMeasurementUnitsId: { $autoDirty: true }
 };

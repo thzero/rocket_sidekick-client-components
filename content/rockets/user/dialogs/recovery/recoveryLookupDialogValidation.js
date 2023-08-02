@@ -1,0 +1,10 @@
+import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
+
+export const useRocketLookupDialogValidation = {
+	detailItemDiameterMax: { decimal, between: between(0, 2004), $autoDirty: true },
+	detailItemDiameterMin: { decimal, between: between(0, 2004), $autoDirty: true },
+	detailItemDiameterMeasurementUnitId: { $autoDirty: true },
+	detailItemDiameterMeasurementUnitsId: { $autoDirty: true },
+	detailItemLengthMax: { decimal, between: between(0, 2004), $autoDirty: true },
+	detailItemLengthMin: { decimal, between: between(0, 2004), $autoDirty: true },
+};

@@ -127,46 +127,46 @@
 				class="row"
 				style="height: 35vh"
 			>
-				<div
-					class="col-12 q-mb-sm"
+				<v-card
 					v-for="item in results" :key="item.motorId"
+					color="grey-darken-3"
+					class="mb-4"
 				>
-					<table style="width: 100%;">
-						<tr>
-							<td colspan="2" class="text-left text-h6 text-bold">{{ item.manufacturer }} {{ item.commonName }} {{ item.sparky ? '(' + $t('motorSearch.sparky') +  ')' : '' }}</td>
-						</tr>
-						<tr>
-							<td class="text-h7 text-bold" style="width: 30%">{{ $t('motorSearch.motor_designation') }}</td><td>{{ item.designation }}</td>
-						</tr>
-						<tr>
-							<td class="text-h7 text-bold">{{ $t('motorSearch.motor_diameter') }}</td><td>{{ item.diameter }}{{ $t('motorSearch.motor_diameter_measurement') }}</td>
-						</tr>
-						<tr>
-							<td class="text-h7 text-bold">{{ $t('motorSearch.motor_caseInfo') }}</td><td>{{ motorCaseInfo(item) }}</td>
-						</tr>
-						<tr>
-							<td class="text-h7 text-bold">{{ $t('motorSearch.motor_thrust_average') }}</td><td>{{ item.avgThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
-						</tr>
-						<tr>
-							<td class="text-h7 text-bold">{{ $t('motorSearch.motor_thrust_max') }}</td><td>{{ item.maxThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
-						</tr>
-						<tr>
-							<td colspan="2" class="text-left"><a :href="motorUrl(item)" target="_blank">{{ motorUrl(item) }}</a></td>
-						</tr>
-						<tr
-							v-if="selectable"
-						>
-							<td colspan="2" class="text-right">
-								<v-btn
-									variant="flat"
-									color="primary"
-									density="compact"
-									@click="clickMotorSelect(item)"
-								>{{ $t('buttons.select') }}</v-btn>
-							</td>
-						</tr>
-					</table>
-				</div>
+					<v-card-title class="d-flex">
+						<span class="text-left text-h6 text-bold">{{ item.manufacturer }} {{ item.commonName }} {{ item.sparky ? '(' + $t('motorSearch.sparky') +  ')' : '' }}</span>
+					</v-card-title>
+					<v-card-text>
+						<table style="width: 100%;">
+							<tr>
+								<td class="text-h7 text-bold" style="width: 30%">{{ $t('motorSearch.motor_designation') }}</td><td>{{ item.designation }}</td>
+							</tr>
+							<tr>
+								<td class="text-h7 text-bold">{{ $t('motorSearch.motor_diameter') }}</td><td>{{ item.diameter }}{{ $t('motorSearch.motor_diameter_measurement') }}</td>
+							</tr>
+							<tr>
+								<td class="text-h7 text-bold">{{ $t('motorSearch.motor_caseInfo') }}</td><td>{{ motorCaseInfo(item) }}</td>
+							</tr>
+							<tr>
+								<td class="text-h7 text-bold">{{ $t('motorSearch.motor_thrust_average') }}</td><td>{{ item.avgThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
+							</tr>
+							<tr>
+								<td class="text-h7 text-bold">{{ $t('motorSearch.motor_thrust_max') }}</td><td>{{ item.maxThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="text-left"><a :href="motorUrl(item)" target="_blank">{{ motorUrl(item) }}</a></td>
+							</tr>
+						</table>
+					</v-card-text>
+					<v-card-actions>
+						<v-spacer></v-spacer>
+						<v-btn
+							variant="flat"
+							color="primary"
+							density="compact"
+							@click="clickMotorSelect(item)"
+						>{{ $t('buttons.select') }}</v-btn>
+					</v-card-actions>
+				</v-card>
 			</div>
 		</template>
 	</VFormListingDialog>

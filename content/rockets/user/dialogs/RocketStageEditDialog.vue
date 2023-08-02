@@ -249,12 +249,13 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailFormDialogProps } from '@/components/content/detailFormDialogProps';
-import { useRocketEditDialogComponent } from '@/components/content/rockets/user/dialogs/rocketEditDialogComponent';
-import { useRocketEditDialogValidation } from '@/components/content/rockets/user/dialogs/rocketEditDialogValidation';
+import { useRocketStageEditDialogComponent } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogComponent';
+import { useRocketStageEditDialogValidation } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogValidation';
 import { useRocketEditValidation } from '@/components/content/rockets/user/rocket/rocketEditValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
@@ -263,10 +264,11 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RocketEditDialog',
+	name: 'RocketStageEditDialog',
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
+		RecoveryLookupDialog,
 		VFormDialog,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
@@ -320,18 +322,21 @@ export default {
 			measurementUnitsWeightType,
 			recovery,
 			tracking,
+			dialogRecoverySearchManager,
+			clickRecoverySearch,
 			resetEditData,
+			selectRecovery,
 			setEditData,
 			detailItemDiameter,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
+			detailItemDiameterMeasurementUnitId,
+			detailItemDiameterMeasurementUnitsId,
 			displayName,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,
 			scope,
 			validation
-		} = useRocketEditDialogComponent(props, context);
+		} = useRocketStageEditDialogComponent(props, context);
 
 		return {
 			correlationId,
@@ -374,11 +379,13 @@ export default {
 			measurementUnitsWeightType,
 			recovery,
 			tracking,
+			dialogRecoverySearchManager,
 			resetEditData,
+			selectRecovery,
 			setEditData,
 			detailItemDiameter,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
+			detailItemDiameterMeasurementUnitId,
+			detailItemDiameterMeasurementUnitsId,
 			displayName,
 			preCompleteOk,
 			resetAdditional,
@@ -388,7 +395,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketEditDialogValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation(false)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketStageEditDialogValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation(false)));
 	}
 };
 </script>
