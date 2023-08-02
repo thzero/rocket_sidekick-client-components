@@ -2,8 +2,13 @@
 import { computed, ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
+import LibraryClientConstants from '@thzero/library_client/constants';
 
 import AppUtility from '@/utility/app';
+import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
@@ -48,6 +53,8 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		measurementUnitsWeightType
 	} = useToolsMeasurementBaseComponent(props, context);
 
+	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
+
 	const detailItemAltimeters = ref(null);
 	const detailItemCg = ref(null);
 	const detailItemCgFrom = ref(null);
@@ -67,6 +74,7 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 	const detailItemTracking = ref(false);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
+	const dialogRecoverySearchManager = ref(new DialogSupport());
 
 	const altimeters = computed(() => {
 		return detailItemData.value ? detailItemData.value.altimeters : [];
@@ -81,6 +89,9 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		return detailItemData.value ? detailItemData.value.tracking : [];
 	});
 
+	const clickRecoverySearch = async (selection) => {
+		dialogRecoverySearchManager.value.open();
+	};
 	const resetEditData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemName.value = value ? value.name : null;
@@ -108,7 +119,27 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		detailItemWeightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		detailItemWeightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
-	
+	const selectRecovery = async (item) => {
+		try {
+			const correlationIdI = correlationId();
+
+			if (!item)
+				return;
+
+			const saveItem = { id: item.id, typeId: item.typeId };
+
+			detailItemData.value.recovery = detailItemData.value.recovery ? detailItemData.value.recovery : [];
+
+			detailItemData.value.recovery = LibraryCommonUtility.updateArrayByObject(detailItemData.value.recovery, saveItem);
+				
+			const response = await serviceStore.dispatcher.saveRocket(correlationIdI, detailItemData.value);
+			logger.debug('rocketDetailItemComponent', 'selectRecovery', 'response', response, correlationIdI);
+			return response;
+		}
+		finally {
+			dialogRecoverySearchManager.value.ok();
+		}
+	};
 	const setEditData = (correlationId, value) => {
 		value.description = String.trim(detailItemDescription.value);
 		value.name = String.trim(detailItemName.value);
@@ -159,7 +190,10 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		measurementUnitsWeightType,
 		recovery,
 		tracking,
+		dialogRecoverySearchManager,
+		clickRecoverySearch,
 		resetEditData,
+		selectRecovery,
 		setEditData
 	};
 };

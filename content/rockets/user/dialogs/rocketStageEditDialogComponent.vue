@@ -11,7 +11,7 @@ import { useDetailFormDialogComponent } from '@/components/content/detailFormDia
 import { useRocketDetailItemComponent } from '@/components/content/rockets/user/rocket/rocketDetailItemComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
-export function useRocketEditDialogComponent(props, context, options) {
+export function useRocketStageEditDialogComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -65,13 +65,16 @@ export function useRocketEditDialogComponent(props, context, options) {
 		measurementUnitsWeightType,
 		recovery,
 		tracking,
+		dialogRecoverySearchManager,
+		clickRecoverySearch,
 		resetEditData,
+		selectRecovery,
 		setEditData
 	} = useRocketDetailItemComponent(props, context, options);
 
 	const detailItemDiameter = ref(null);
-	const diameterMeasurementUnitId = ref(null);
-	const diameterMeasurementUnitsId = ref(null);
+	const detailItemDiameterMeasurementUnitId = ref(null);
+	const detailItemDiameterMeasurementUnitsId = ref(null);
 	
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.rockets.name') + ' ' + LibraryClientUtility.$trans.t('forms.content.rockets.stage.name') + ' ' + 
@@ -91,15 +94,15 @@ export function useRocketEditDialogComponent(props, context, options) {
 		resetEditData(correlationId, detailItem.value);
 		
 		detailItemDiameter.value = detailItem.value ? detailItem.value.diameter : null;
-		diameterMeasurementUnitId.value = detailItem.value ? detailItem.value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		diameterMeasurementUnitsId.value = detailItem.value ? detailItem.value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemDiameterMeasurementUnitId.value = detailItem.value ? detailItem.value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		detailItemDiameterMeasurementUnitsId.value = detailItem.value ? detailItem.value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	const setAdditional = async (correlationId) => {
 		setEditData(correlationId, detailItem.value);
 		
 		detailItem.value.diameter = AppUtility.convertNumber(detailItemDiameter.value);
-		detailItem.value.diameterMeasurementUnitId = diameterMeasurementUnitId.value;
-		detailItem.value.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
+		detailItem.value.diameterMeasurementUnitId = detailItemDiameterMeasurementUnitId.value;
+		detailItem.value.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
 	};
 
 	return {
@@ -143,11 +146,14 @@ export function useRocketEditDialogComponent(props, context, options) {
 		measurementUnitsWeightType,
 		recovery,
 		tracking,
+		dialogRecoverySearchManager,
+		clickRecoverySearch,
 		resetEditData,
+		selectRecovery,
 		setEditData,
 		detailItemDiameter,
-		diameterMeasurementUnitId,
-		diameterMeasurementUnitsId,
+		detailItemDiameterMeasurementUnitId,
+		detailItemDiameterMeasurementUnitsId,
 		displayName,
 		preCompleteOk,
 		resetAdditional,

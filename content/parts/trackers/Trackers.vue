@@ -21,7 +21,6 @@
 		<template #panelTitle="{ item }">
 			<TrackerPanelTitle
 				:item="item"
-				:manufacturers="manufacturers"
 			>
 			</TrackerPanelTitle>
 		</template> 

@@ -1,5 +1,5 @@
 <script>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
@@ -7,6 +7,8 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
@@ -54,19 +56,28 @@ export function useRecoveryLookupDialogComponent(props, context, options) {
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
-	const dialogRecoveryLookup = ref(null);
-	const detaiLItemDiameter = ref(null);
-	const detaiLItemDiameterMeasurementUnitId = ref(null);
-	const detaiLItemDiameterMeasurementUnitsId = ref(null);
-	const detailItemLength = ref(null);
+	const detailItemDiameterMax = ref(null);
+	const detailItemDiameterMin = ref(null);
+	const detailItemDiameterMeasurementUnitId = ref(null);
+	const detailItemDiameterMeasurementUnitsId = ref(null);
+	const detailItemLengthMax = ref(null);
+	const detailItemLengthMin = ref(null);
 	const detailItemLengthMeasurementUnitId = ref(null);
 	const detailItemLengthMeasurementUnitsId = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemManufacturerStockId = ref(null);
 	const detailItemName = ref(null);
-	const manufacturers = ref(null);
+	const detailItemThinMill = ref(false);
+	const dialogRecoveryLookup = ref(null);
+	const dialogResetManager = ref(new DialogSupport());
+	const dialogResetMessage = ref(null);
+	const manufacturersI = ref(null);
+	const partTypes = ref(AppCommonConstants.Rocketry.PartTypes);
 	const results = ref([]);
-	const detailItemThinNill = ref(false);
+	
+	const manufacturers = computed(() => {
+		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
+	});
 
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
 		return invalid;
@@ -79,7 +90,6 @@ export function useRecoveryLookupDialogComponent(props, context, options) {
 	};
 	const clickRecoverySelect = async (item) => {
 		context.emit('ok', item);
-		return true;
 	};
 	const close = () => {
 		context.emit('close');
@@ -87,60 +97,83 @@ export function useRecoveryLookupDialogComponent(props, context, options) {
 	const dialogResetOk = async () => {
 		dialogResetManager.value.ok();
 		const correlationIdI = correlationId();
-		await serviceStore.dispatcher.requestRecoverySearchReset(correlationIdI);
-		ttl.value = serviceStore.state.recoverySearchResults ? serviceStore.state.recoverySearchResults.ttl : 0;
+		await serviceStore.dispatcher.requestPartsRecoverySearchReset(correlationIdI);
 		await preCompleteOk(correlationIdI);
+	};
+	const isPartType = (item, typeId) => {
+		return item && item.typeId === typeId;
+	};
+	const manufacturer = (item) => {
+		const id = item ? item.manufacturerId ?? null : null;
+		if (!id)
+			return null;
+
+		if (!manufacturersI.value)
+			return null;
+
+		const temp = manufacturersI.value.find(l => l.id === id);
+		return temp ? temp.name : null;
+	};
+	const partTypeName = (id) => {
+		return LibraryClientUtility.$trans.t(`forms.content.parts['${id}'].name`);
 	};
 	const preCompleteOk = async (correlationId) => {
 		results.value = null;
 
 		const request = {
-			diameter: diameter.value,
-			manufacturer: manufacturer.value,
-			recovery: recovery.value,
-			singleUse: singleUse.value,
-			sparky: sparky.value
+			diameterMax: detailItemDiameterMax.value,
+			diameterMin: detailItemDiameterMin.value,
+			diameterMeasurementUnitId: detailItemDiameterMeasurementUnitId.value,
+			diameterMeasurementUnitsId: detailItemDiameterMeasurementUnitsId.value,
+			lengthMax: detailItemLengthMax.value,
+			lengthMin: detailItemLengthMin.value,
+			lengthMeasurementUnitId: detailItemLengthMeasurementUnitId.value,
+			lengthMeasurementUnitsId: detailItemLengthMeasurementUnitsId.value,
+			manufacturerId: detailItemManufacturer.value,
+			manufacturerStockId: detailItemManufacturerStockId.value,
+			name: detailItemName.value,
+			thinMill: detailItemThinMill.value
 		};
 
-		const response = await serviceStore.dispatcher.requestRecoverySearchResults(correlationId, request);
-		results.value = response || [];
+		results.value = await serviceStore.dispatcher.requestPartsRecoverySearchResults(correlationId, request);
 		return success(correlationId);
 	};
-	// eslint-disable-next-line
 	const resetAdditional = async (correlationId, ignoreSettings) => {
-		diameter.value = null;
-		length.value = null;
 		detailItemManufacturer.value = null;
 		detailItemManufacturerStockId.value = null;
 		detailItemName.value = null;
 
-		detailItemDiameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		detailItemDMeasurementUnitsId.value = value ? value.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemDiameterMax.value = null;
+		detailItemDiameterMin.value = null;
+		detailItemDiameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
+		detailItemDiameterMeasurementUnitsId.value =  measurementUnitsIdSettings.value;
 
-		detailItemLengthhMeasurementUnitId.value = value ? value.lengthMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		detailItemLengthMeasurementUnitsId.value = value ? value.lengthMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemLengthMax.value = null;
+		detailItemLengthMin.value = null;
+		detailItemLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
+		detailItemLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 
-		detailItemThinNill.value = false;
+		detailItemThinMill.value = false;
 
 		await preCompleteOk(correlationId);
 	};
 
 	onMounted(async () => {
-		if (manufacturers.value)
+		if (manufacturersI.value)
 			return;
 
 		const response = await serviceStore.dispatcher.requestManufacturers(correlationId());
 		if (hasFailed(response))
 			return;
 
-		const temp2 = response.results.filter(l => l.types.find(j => 
+		let temp2 = response.results.filter(l => l.types.find(j => 
 			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
 			(j === AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag) ||
 			(j === AppCommonConstants.Rocketry.ManufacturerTypes.parachute) ||
 			(j === AppCommonConstants.Rocketry.ManufacturerTypes.streamer)
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
-		manufacturers.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
+		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
 	});
 
 	return {
@@ -158,27 +191,34 @@ export function useRecoveryLookupDialogComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		serviceStore,
-		dialogRecoveryLookup,
-		dialogResetMessage,
-		dialogResetManager,
-		detaiLItemDiameter,
-		detaiLItemDiameterMeasurementUnitId,
-		detaiLItemDiameterMeasurementUnitsId,
-		detailItemLength,
+		detailItemDiameterMax,
+		detailItemDiameterMin,
+		detailItemDiameterMeasurementUnitId,
+		detailItemDiameterMeasurementUnitsId,
+		detailItemLengthMax,
+		detailItemLengthMin,
 		detailItemLengthMeasurementUnitId,
 		detailItemLengthMeasurementUnitsId,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
 		detailItemName,
-		detailItemThinNill,
-		manufacturers,
+		detailItemThinMill,
+		dialogRecoveryLookup,
+		dialogResetManager,
+		dialogResetMessage,
+		manufacturersI,
+		partTypes,
 		results,
+		manufacturers,
 		buttonOkDisabledOverride,
 		clickRecoverySearch,
 		clickRecoverySearchClear,
 		clickRecoverySelect,
 		close,
 		dialogResetOk,
+		isPartType,
+		manufacturer,
+		partTypeName,
 		preCompleteOk,
 		resetAdditional,
 		scope: 'RecoveryLookupDialog',

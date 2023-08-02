@@ -21,7 +21,6 @@
 		<template #panelTitle="{ item }">
 			<chuteProtectorPanelTitle
 				:item="item"
-				:manufacturers="manufacturers"
 			>
 			</ChuteProtectorPanelTitle>
 		</template> 

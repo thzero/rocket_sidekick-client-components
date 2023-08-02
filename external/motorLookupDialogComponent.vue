@@ -10,9 +10,9 @@ import LibraryClientConstants from '@thzero/library_client/constants';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
-
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
+
+import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
 export function useMotorLookupDialogComponent(props, context, options) {
 	const {
