@@ -290,55 +290,17 @@
 			</v-col>
 		</v-row>
 		<template v-slot:buttons_pre>
-			<v-btn
-				v-if="canAddSecondary"
-				class="mr-2"
-				color="primary"
+			<template
+				v-if="$vuetify.display.mdAndUp"
 			>
-				{{ $t('buttons.add') }}
-				<v-menu 
-					activator="parent"
-					location="top"
+				<!-- <v-btn
+					v-if="canAddSecondary"
+					class="mr-2"
+					color="primary"
+					@click="handleAddSecondary"
 				>
-					<v-list>
-					<v-list-item>
-						<v-btn
-							color="purple"
-						>
-							{{ $t('buttons.rockets.tracking') }}
-						</v-btn>
-					</v-list-item>
-					<v-list-item>
-						<v-btn
-							color="blue"
-							@click="clickRecoverySearch"
-						>
-							{{ $t('buttons.rockets.recovery') }}
-						</v-btn>
-					</v-list-item>
-					<v-list-item
-						v-if="canAddSecondary"
-					>
-						<v-btn
-							color="green"
-							@click="handleAddSecondary"
-						>
-							{{ $t('buttons.rockets.stage') }}
-						</v-btn>
-					</v-list-item>
-					</v-list>
-				</v-menu>
-			</v-btn>
-			<span
-				v-if="canAddSecondary"
-				class="mr-2"
-			>|</span>
-		</template>
-		<template v-slot:buttons_post>
-			<!-- <div 
-				v-if="$vuetify.display.xs"
-				class="mt-2"
-			>>
+					{{ $t('buttons.add') }} {{ $t('buttons.rockets.stage') }}
+				</v-btn> -->
 				<v-btn
 					v-if="canAddSecondary"
 					class="mr-2"
@@ -378,122 +340,76 @@
 						</v-list>
 					</v-menu>
 				</v-btn>
-			</div> -->
+				<span
+					v-if="canAddSecondary"
+					class="mr-2"
+				>|</span>
+			</template>
+		</template>
+		<template v-slot:buttons_post>
+			<div 
+				v-if="$vuetify.display.smAndDown"
+				class="mt-2"
+			>
+				<!-- <v-btn
+					v-if="canAddSecondary"
+					color="primary"
+					@click="handleAddSecondary"
+				>
+					{{ $t('buttons.add') }} {{ $t('buttons.rockets.stage') }}
+				</v-btn> -->
+				<v-btn
+					v-if="canAddSecondary"
+					class="mr-2"
+					color="primary"
+				>
+					{{ $t('buttons.add') }}
+					<v-menu 
+						activator="parent"
+						location="top"
+					>
+						<v-list>
+						<v-list-item>
+							<v-btn
+								color="purple"
+							>
+								{{ $t('buttons.rockets.tracking') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								color="blue"
+								@click="clickRecoverySearch"
+							>
+								{{ $t('buttons.rockets.recovery') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item
+							v-if="canAddSecondary"
+						>
+							<v-btn
+								color="green"
+								@click="handleAddSecondary"
+							>
+								{{ $t('buttons.rockets.stage') }}
+							</v-btn>
+						</v-list-item>
+						</v-list>
+					</v-menu>
+				</v-btn>
+			</div>
 		</template>
 		<template v-slot:after>	
-			<div
-				v-if="altimeters"
-				class="mt-4"
-			>
-				<h3>{{ $t(`forms.content.parts.altimeter.plural`) }}</h3>
-				<!-- <RocketParts
-					class="mt-4"
-					:items="recovery"
-					:deletable="isEditable"
-				>
-				</RocketParts> -->
-					<!-- @delete="clickRecoveryDelete" -->
-			</div>
-			<div
-				v-if="recovery"
-				class="mt-4"
-			>
-				<h3>{{ $t(`forms.content.parts.recovery`) }}</h3>
-				<RocketParts
-					class="mt-4"
-					:items="recovery"
-					:deletable="isEditable"
-				>
-				</RocketParts>
-					<!-- @delete="clickRecoveryDelete" -->
-			</div>
-			<div
-				v-if="tracking"
-				class="mt-4"
-			>
-				<h3>{{ $t(`forms.content.parts.tracker.plural`) }}</h3>
-				<!-- <RocketParts
-					class="mt-4"
-					:items="recovery"
-					:deletable="isEditable"
-				>
-				</RocketParts> -->
-					<!-- @delete="clickRecoveryDelete" -->
-			</div>
 			<div
 				v-if="stages"
 				class="mt-4"
 			>
-				<h3>{{ $t(`forms.content.rockets.stage.plural`) }}</h3>
+				<h3>Stages</h3>
 				<v-row
-					dense
-					class="mt-4"
+					dense 
 				>
 					<v-col>
-						<v-expansion-panels
-							v-model="panels"
-							multiple
-						>
-							<v-expansion-panel
-								v-for="item in stages" 
-								:key="item.id"
-								:value="item.id"
-							>
-								<v-expansion-panel-title
-									color="primary"
-								>
-									{{ item.name}}
-								</v-expansion-panel-title>
-								<v-expansion-panel-text>
-									<RocketStage
-										:item="item"
-										:isEditable="isEditable"
-										:debug="debug"
-									>
-										<template 
-											v-if="isEditable"
-											v-slot:actionsEdit
-										>	
-											<div class="pl-4 pr-4 pb-2 pt-2">
-												<!-- <v-btn
-													v-if="isEditable"
-													class="mr-2"
-													icon="mdi-pencil"
-													size="small"
-													:disabled="isEditingSecondary(item)"
-													@click="dialogEditSecondaryOpen(item)"
-												></v-btn>
-												<v-btn
-													v-if="isEditable"
-													icon="mdi-delete"
-													size="small"
-													:disabled="isDeletingSecondary(item)"
-													@click="dialogDeleteSecondaryOpen(item)"
-												></v-btn> -->
-												<v-btn
-													v-if="isEditable"
-													class="mr-2"
-													color="red"
-													:disabled="isDeletingSecondary(item)"
-													@click="dialogDeleteSecondaryOpen(item)"
-												>
-													{{ $t('buttons.delete') }}
-												</v-btn>
-												<v-btn
-													v-if="isEditable"
-													color="primary"
-													:disabled="isEditingSecondary(item)"
-													@click="dialogEditSecondaryOpen(item)"
-												>
-													{{ $t('buttons.edit') }}
-												</v-btn>
-											</div>
-										</template>
-									</RocketStage>
-								</v-expansion-panel-text>
-							</v-expansion-panel>
-						</v-expansion-panels>
-						<!-- <v-row
+						<v-row
 							v-for="item in stages"
 							:key="item.id"
 						>
@@ -525,9 +441,48 @@
 									</div>
 								</template>
 							</RocketStage>
-						</v-row> -->
+						</v-row>
 					</v-col>
 				</v-row>
+			</div>
+			<div
+				v-if="altimeters"
+				class="mt-4"
+			>
+				<h3>Altimters</h3>
+				<!-- <RocketParts
+					class="mt-4"
+					:items="recovery"
+					:deletable="isEditable"
+				>
+				</RocketParts> -->
+					<!-- @delete="clickRecoveryDelete" -->
+			</div>
+			<div
+				v-if="recovery"
+				class="mt-4"
+			>
+				<h3>Recovery</h3>
+				<RocketParts
+					class="mt-4"
+					:items="recovery"
+					:deletable="isEditable"
+				>
+				</RocketParts>
+					<!-- @delete="clickRecoveryDelete" -->
+			</div>
+			<div
+				v-if="tracking"
+				class="mt-4"
+			>
+				<h3>Tracking</h3>
+				<!-- <RocketParts
+					class="mt-4"
+					:items="recovery"
+					:deletable="isEditable"
+				>
+				</RocketParts> -->
+					<!-- @delete="clickRecoveryDelete" -->
 			</div>
 		</template>
 	</VFormControl>
@@ -724,7 +679,6 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemRocketType,
 			manufacturers,
-			panels,
 			hasAdmin,
 			stages,
 			requestManufacturers,
@@ -841,7 +795,6 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemRocketType,
 			manufacturers,
-			panels,
 			hasAdmin,
 			stages,
 			requestManufacturers,
