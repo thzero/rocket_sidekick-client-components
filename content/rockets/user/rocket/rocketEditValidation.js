@@ -19,7 +19,7 @@ export function useRocketEditValidation(nameRequired) {
 		detailItemLengthMeasurementUnitId: { $autoDirty: true },
 		detailItemLengthMeasurementUnitsId: { $autoDirty: true },
 		detailItemRecovery: { $autoDirty: true },
-		detailItemTracking: { $autoDirty: true },
+		detailItemTrackers: { $autoDirty: true },
 		detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 		detailItemWeightMeasurementUnitId: { $autoDirty: true },
 		detailItemWeightMeasurementUnitsId: { $autoDirty: true }

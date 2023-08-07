@@ -55,7 +55,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemLengthMeasurementUnitsId,
 		detailItemName,
 		detailItemRecovery,
-		detailItemTracking,
+		detailItemTrackers,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
@@ -64,11 +64,17 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		recovery,
-		tracking,
+		trackers,
+		dialogAltimtersSearchManager,
 		dialogRecoverySearchManager,
+		dialogTrackersSearchManager,
+		clickAltimetersSearch,
 		clickRecoverySearch,
+		clickTrackersSearch,
 		resetEditData,
+		selectAltimter,
 		selectRecovery,
+		selectTracker,
 		setEditData
 	} = useRocketDetailItemComponent(props, context, options);
 
@@ -85,7 +91,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		await setAdditional(correlationId);
 
 		if (!props.preCompleteOk)
-			return failed(correlationId, 'invalid preCompletedOk property');
+			return error('useToolsMeasurementSettingsComponent', 'preCompleteOk', 'invalid preCompletedOk property', null, null, null, correlationId);
 
 		// call the parent to tell them to save off the detail item
 		return await props.preCompleteOk(correlationId, detailItem.value);
@@ -136,7 +142,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemLengthMeasurementUnitsId,
 		detailItemName,
 		detailItemRecovery,
-		detailItemTracking,
+		detailItemTrackers,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
@@ -145,11 +151,17 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		recovery,
-		tracking,
+		trackers,
+		dialogAltimtersSearchManager,
 		dialogRecoverySearchManager,
+		dialogTrackersSearchManager,
+		clickAltimetersSearch,
 		clickRecoverySearch,
+		clickTrackersSearch,
 		resetEditData,
+		selectAltimter,
 		selectRecovery,
+		selectTracker,
 		setEditData,
 		detailItemDiameter,
 		detailItemDiameterMeasurementUnitId,

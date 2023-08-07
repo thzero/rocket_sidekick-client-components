@@ -1,6 +1,5 @@
 <template>
 	<div>
-		{{  panels }}
 		<v-expansion-panels
 			v-model="panels"
 			multiple
@@ -12,8 +11,8 @@
 				:value="item.typeId"
 			>
 				<v-expansion-panel-title
-					color="primary"
-				>[[{{ item.typeId }}]]
+					color="secondary"
+				>
 					{{ partTypeName(item.name) }}
 				</v-expansion-panel-title>
 				<v-expansion-panel-text>

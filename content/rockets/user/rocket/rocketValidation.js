@@ -13,5 +13,5 @@ export const useRocketValidation = {
 	detailItemRocketType: { $autoDirty: true },
 	detailItemRecovery: { $autoDirty: true },
 	detailItemStages: { $autoDirty: true },
-	detailItemTracking: { $autoDirty: true }
+	detailItemTrackers: { $autoDirty: true }
 };
