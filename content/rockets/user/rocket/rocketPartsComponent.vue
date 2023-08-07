@@ -81,7 +81,7 @@ export function useRocketPartsComponent(props, context, options) {
 		return temp ? temp.name : null;
 	};
 	const partTypeName = (id) => {
-		return LibraryClientUtility.$trans.t(`forms.content.parts['${id}'].name`);
+		return LibraryClientUtility.$trans.t(`forms.content.parts['${id}'].plural`);
 	};
 
 	onMounted(async () => {

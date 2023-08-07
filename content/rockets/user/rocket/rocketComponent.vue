@@ -188,6 +188,7 @@ export function useRocketComponent(props, context, options) {
 	const manufacturersI = ref(null);
 	const manufacturerDefault = ref(null);
 	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
+	const panels = ref();
 	
 	const manufacturers = computed(() => {
 		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
@@ -196,6 +197,7 @@ export function useRocketComponent(props, context, options) {
 		return false;
 	});
 	const stages = computed(() => {
+		panels.value = detailItemData.value ? detailItemData.value.stages.map(l => l.id) : [];
 		return detailItemData.value ? detailItemData.value.stages : [];
 	});
 	
@@ -353,6 +355,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemManufacturerStockId,
 		detailItemRocketType,
 		manufacturers,
+		panels,
 		hasAdmin,
 		stages,
 		requestManufacturers,

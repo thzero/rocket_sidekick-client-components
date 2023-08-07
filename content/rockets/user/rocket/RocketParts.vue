@@ -24,7 +24,7 @@
 							color="grey-darken-3"
 							class="mb-4"
 						>
-							<v-card-title class="d-flex">
+							<v-card-title>
 								<ChuteProtectorPanelTitle
 									v-if="isPartType(item2, partTypes.chuteProtector)"
 									:item="item2"
@@ -41,7 +41,6 @@
 									v-if="isPartType(item2, partTypes.streamer)"
 									:item="item2"
 								/>
-								<v-spacer></v-spacer>
 								<div 
 									class="float-right"
 								>{{ manufacturer(item2) }}</div>
@@ -53,7 +52,7 @@
 								<v-btn
 									v-if="deletable"
 									variant="flat"
-									color="primary"
+									color="red"
 									density="compact"
 									@click="clickDelete(item2)"
 								>{{ $t('buttons.delete') }}</v-btn>
