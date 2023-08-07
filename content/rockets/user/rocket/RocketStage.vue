@@ -6,7 +6,7 @@
 		{{ item  }}
 	</div>
 	<v-col cols="12">
-		<v-expansion-panels
+		<!-- <v-expansion-panels
 			v-if="!isEditable"
 		>
 			<v-expansion-panel>
@@ -15,7 +15,7 @@
 				>
 					{{ item.name }}
 				</v-expansion-panel-title>
-				<v-expansion-panel-text>
+				<v-expansion-panel-text> -->
 		 <!-- <v-row dense>
 			<v-col cols="12" md="8">
 				<VTextField
@@ -193,30 +193,31 @@
 				</table>
 			</v-col>
 		</v-row>
-				</v-expansion-panel-text>
+				<!-- </v-expansion-panel-text>
 			</v-expansion-panel>
-		</v-expansion-panels>
-		<v-sheet 
+		</v-expansion-panels> -->
+		<!-- <v-sheet 
 			v-if="isEditable"
 			class="d-flex"
 			color="info"
 			rounded
+		> -->
+		<div
+			v-if="isEditable"
+			class="d-flex"
 		>
-			<div class="pl-6 pr-4 pb-4 pt-2">
+			<!-- <div class="pl-6 pr-4 pb-4 pt-2">
 				{{ item.name }}
-			</div>
+			</div> -->
 			<v-spacer></v-spacer>
-			<div
-				v-if="isEditable"
-			>
+			<div>
 				<slot name="actionsEdit"></slot>
 			</div>
-			<div
-				v-if="isEditable"
-			>
+			<div>
 				<slot name="actionsView"></slot>
 			</div>
-		</v-sheet>
+		</div>
+		<!-- </v-sheet> -->
 	</v-col>
 </template>
 
