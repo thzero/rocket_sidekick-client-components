@@ -406,7 +406,7 @@
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<RocketParts
-							class="mt-4"
+							class="mt-2"
 							:items="altimeters"
 							:typeId="altimeters"
 							:deletable="isEditable"
@@ -426,7 +426,7 @@
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<RocketParts
-							class="mt-4"
+							class="mt-2"
 							:id="rocketId"
 							:items="recovery"
 							:typeId="recovery"
@@ -447,7 +447,7 @@
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<RocketParts
-							class="mt-4"
+							class="mt-2"
 							:id="rocketId"
 							:items="trackers"
 							:typeId="trackers"
@@ -469,7 +469,7 @@
 					<v-expansion-panel-text>
 						<v-row
 							dense
-							class="mt-4"
+							class="mt-2"
 						>
 							<v-col>
 								<v-expansion-panels
