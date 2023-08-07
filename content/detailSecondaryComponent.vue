@@ -177,7 +177,7 @@ export function useDetailSecondaryComponent(props, context, options) {
 	};
 	const dialogEditSecondaryPreCompleteOk = async (correlationId, item) => {
 		if (!options || !options.dialogEditSecondaryPreCompleteOk)
-			return failed(correlationId);
+			return error('useDetailSecondaryComponent', 'dialogEditSecondaryPreCompleteOk', null, null, null, null, correlationId);
 
 		return await options.dialogEditSecondaryPreCompleteOk(correlationId, item);
 	};

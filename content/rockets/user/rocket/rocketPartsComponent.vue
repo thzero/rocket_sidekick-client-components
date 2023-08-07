@@ -42,7 +42,6 @@ export function useRocketPartsComponent(props, context, options) {
 			// .thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 			// .thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
 		);
-		const panels2 = [];
 		let prev = null;
 		let prevId = null;
 		const output = [];
@@ -57,10 +56,7 @@ export function useRocketPartsComponent(props, context, options) {
 			prev = { name: item.typeId, typeId: item.typeId, separator: true, results: [] };
 			prev.results.push(item);
 			output.push(prev);
-			panels2.push(item.typeId);
 		}
-		if (!panels.value || panels.value.length === 0)
-			panels.value = panels2;
 		return output;
 	});
 
@@ -110,7 +106,12 @@ export function useRocketPartsComponent(props, context, options) {
 			
 		const temp3 = await serviceStore.getters.getRocketsExpanded();
 		const temp4 = temp3[panelsLKey()];
-		panels.value = temp4 ?? [];
+		panels.value = temp4 ?? [ 
+			AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
+			AppCommonConstants.Rocketry.ManufacturerTypes.streamer
+		];
 	});
 	
 	

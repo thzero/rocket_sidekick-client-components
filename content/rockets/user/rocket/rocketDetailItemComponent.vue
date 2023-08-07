@@ -71,10 +71,12 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 	const detailItemLengthMeasurementUnitsId = ref(null);
 	const detailItemName = ref(null);
 	const detailItemRecovery = ref(false);
-	const detailItemTracking = ref(false);
+	const detailItemTrackers = ref(false);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
+	const dialogAltimtersSearchManager = ref(new DialogSupport());
 	const dialogRecoverySearchManager = ref(new DialogSupport());
+	const dialogTrackersSearchManager = ref(new DialogSupport());
 
 	const altimeters = computed(() => {
 		return detailItemData.value ? detailItemData.value.altimeters : [];
@@ -85,13 +87,20 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 	const recovery = computed(() => {
 		return detailItemData.value ? detailItemData.value.recovery : [];
 	});
-	const tracking = computed(() => {
-		return detailItemData.value ? detailItemData.value.tracking : [];
+	const trackers = computed(() => {
+		return detailItemData.value ? detailItemData.value.trackers : [];
 	});
 
+	const clickAltimetersSearch = async (selection) => {
+		dialogAltimtersSearchManager.value.open();
+	};
 	const clickRecoverySearch = async (selection) => {
 		dialogRecoverySearchManager.value.open();
 	};
+	const clickTrackersSearch = async (selection) => {
+		dialogTrackersSearchManager.value.open();
+	};
+
 	const resetEditData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemName.value = value ? value.name : null;
@@ -113,31 +122,78 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		detailItemLengthMeasurementUnitsId.value = value ? value.lengthMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		detailItemRecovery.value = false;
-		detailItemTracking.value = false;
+		detailItemTrackers.value = false;
 
 		detailItemWeight.value = value ? value.weight : null;
 		detailItemWeightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		detailItemWeightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
+	const selectPart = async(correlationId, item, getF, setF) => {
+		if (!item || !getF || !setF)
+			return error('useRocketDetailItemComponent', 'selectPart', null, null, null, null, correlationId);
+
+		const saveItem = { id: item.id, typeId: item.typeId };
+
+		let parts = getF();
+		parts =  parts ? parts : [];
+
+		const temp = LibraryCommonUtility.updateArrayByObject(parts, saveItem);
+		setF(temp);
+			
+		const response = await serviceStore.dispatcher.saveRocket(correlationIdI, detailItemData.value);
+		logger.debug('rocketDetailItemComponent', 'selectPart', 'response', response, correlationIdI);
+		return response;
+	};
+	const selectAltimter = async (item) => {
+		try {
+			return selectPart(correlationId(), item, () => detailItemData.value.altimters, (t) => { detailItemData.value.altimters = t; });
+		}
+		finally {
+			dialogAltimtersSearchManager.value.ok();
+		}
+	};
 	const selectRecovery = async (item) => {
 		try {
-			const correlationIdI = correlationId();
+			return selectPart(correlationId(), item, () => detailItemData.value.recovery, (t) => { detailItemData.value.recovery = t; });
+			// const correlationIdI = correlationId();
 
-			if (!item)
-				return;
+			// if (!item)
+			// 	return;
 
-			const saveItem = { id: item.id, typeId: item.typeId };
+			// const saveItem = { id: item.id, typeId: item.typeId };
 
-			detailItemData.value.recovery = detailItemData.value.recovery ? detailItemData.value.recovery : [];
+			// detailItemData.value.recovery = detailItemData.value.recovery ? detailItemData.value.recovery : [];
 
-			detailItemData.value.recovery = LibraryCommonUtility.updateArrayByObject(detailItemData.value.recovery, saveItem);
+			// detailItemData.value.recovery = LibraryCommonUtility.updateArrayByObject(detailItemData.value.recovery, saveItem);
 				
-			const response = await serviceStore.dispatcher.saveRocket(correlationIdI, detailItemData.value);
-			logger.debug('rocketDetailItemComponent', 'selectRecovery', 'response', response, correlationIdI);
-			return response;
+			// const response = await serviceStore.dispatcher.saveRocket(correlationIdI, detailItemData.value);
+			// logger.debug('rocketDetailItemComponent', 'selectRecovery', 'response', response, correlationIdI);
+			// return response;
 		}
 		finally {
 			dialogRecoverySearchManager.value.ok();
+		}
+	};
+	const selectTracker = async (item) => {
+		try {
+			return selectPart(correlationId(), item, () => detailItemData.value.trackers, (t) => { detailItemData.value.trackers = t; });
+			// const correlationIdI = correlationId();
+
+			// if (!item)
+			// 	return;
+
+			// const saveItem = { id: item.id, typeId: item.typeId };
+
+			// detailItemData.value.trackers = detailItemData.value.recovery ? detailItemData.value.trackers : [];
+
+			// detailItemData.value.trackers = LibraryCommonUtility.updateArrayByObject(detailItemData.value.trackers, saveItem);
+				
+			// const response = await serviceStore.dispatcher.saveRocket(correlationIdI, detailItemData.value);
+			// logger.debug('rocketDetailItemComponent', 'selectTracker', 'response', response, correlationIdI);
+			// return response;
+		}
+		finally {
+			dialogTrackersSearchManager.value.ok();
 		}
 	};
 	const setEditData = (correlationId, value) => {
@@ -180,7 +236,7 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		detailItemLengthMeasurementUnitsId,
 		detailItemName,
 		detailItemRecovery,
-		detailItemTracking,
+		detailItemTrackers,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
@@ -189,11 +245,17 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		recovery,
-		tracking,
+		trackers,
+		dialogAltimtersSearchManager,
 		dialogRecoverySearchManager,
+		dialogTrackersSearchManager,
+		clickAltimetersSearch,
 		clickRecoverySearch,
+		clickTrackersSearch,
 		resetEditData,
+		selectAltimter,
 		selectRecovery,
+		selectTracker,
 		setEditData
 	};
 };

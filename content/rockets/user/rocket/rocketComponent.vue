@@ -105,6 +105,10 @@ export function useRocketComponent(props, context, options) {
 			const temp2 = await serviceStore.getters.getRocketsExpanded();
 			const temp3 = temp2[panelsLKey()];
 			panels.value = temp3 ?? [];
+
+			const temp4 = await serviceStore.getters.getRocketsExpanded();
+			const temp5 = temp4[stagesPanelsLKey()];
+			stagesPanels.value = temp5 ?? [];
 			
 			resetData(correlationId, value);
 		},
@@ -164,7 +168,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemLengthMeasurementUnitsId,
 		detailItemName,
 		detailItemRecovery,
-		detailItemTracking,
+		detailItemTrackers,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
@@ -173,13 +177,19 @@ export function useRocketComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		recovery,
-		tracking,
+		trackers,
+		dialogAltimtersSearchManager,
 		dialogRecoverySearchManager,
+		dialogTrackersSearchManager,
+		clickAltimetersSearch,
 		clickRecoverySearch,
+		clickTrackersSearch,
 		resetEditData,
+		selectAltimter,
 		selectRecovery,
+		selectTracker,
 		setEditData
-	} =  useRocketDetailItemComponent(props, context, detailItem, options);
+	} = useRocketDetailItemComponent(props, context, detailItem, options);
 
 	const detailItemDiameterMajor = ref(null);
 	const detailItemDiameterMajorMeasurementUnitId = ref(null);
@@ -194,6 +204,13 @@ export function useRocketComponent(props, context, options) {
 	const manufacturerDefault = ref(null);
 	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
 	const panels = ref([]);
+	const panelsId = ref([ 
+		{ id: 'altimeters', text: 'forms.content.parts.altimeter.plural' },
+		{ id: 'recovery', text: 'forms.content.parts.recovery' },
+		{ id: 'trackers', text: 'forms.content.parts.tracker.plural' },
+		{ id: 'stages', text: 'forms.content.rockets.stage.plural' },
+	]);
+	const stagesPanels = ref([]);
 	
 	const manufacturers = computed(() => {
 		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
@@ -209,7 +226,7 @@ export function useRocketComponent(props, context, options) {
 	});
 	
 	const panelsLKey = () => {
-		return detailItemData.value.id + '-stages';
+		return detailItemData.value.id;
 	};
 	const panelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
@@ -257,6 +274,12 @@ export function useRocketComponent(props, context, options) {
 		detailItemData.value.diameterMinorMeasurementUnitsId = detailItemDiameterMinorMeasurementUnitsId.value;
 
 		setEditData(correlationId, detailItemData.value);
+	};
+	const stagesPanelsLKey = () => {
+		return detailItemData.value.id + '-stages';
+	};
+	const stagesPanelsUpdated = async (value) => {
+		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: stagesPanelsLKey(), expanded: value });
 	};
 	
 	return {
@@ -343,7 +366,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemLengthMeasurementUnitsId,
 		detailItemName,
 		detailItemRecovery,
-		detailItemTracking,
+		detailItemTrackers,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
@@ -352,11 +375,17 @@ export function useRocketComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		recovery,
-		tracking,
+		trackers,
+		dialogAltimtersSearchManager,
 		dialogRecoverySearchManager,
+		dialogTrackersSearchManager,
+		clickAltimetersSearch,
 		clickRecoverySearch,
+		clickTrackersSearch,
 		resetEditData,
+		selectAltimter,
 		selectRecovery,
+		selectTracker,
 		setEditData,
 		detailItemDiameterMajor,
 		detailItemDiameterMajorMeasurementUnitId,
@@ -369,11 +398,14 @@ export function useRocketComponent(props, context, options) {
 		detailItemRocketType,
 		manufacturers,
 		panels,
+		panelsId,
+		stagesPanels,
 		hasAdmin,
 		rocketId,
 		stages,
-		requestManufacturers,
 		panelsUpdated,
+		requestManufacturers,
+		stagesPanelsUpdated,
 		scope: 'RocketControl',
 		validation: useVuelidate({ $scope: 'RocketControl' })
 	};
