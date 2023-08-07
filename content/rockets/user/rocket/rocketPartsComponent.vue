@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { firstBy, thenBy } from 'thenby';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
@@ -59,7 +59,8 @@ export function useRocketPartsComponent(props, context, options) {
 			output.push(prev);
 			panels2.push(item.typeId);
 		}
-		panels.value = panels2;
+		if (!panels.value || panels.value.length === 0)
+			panels.value = panels2;
 		return output;
 	});
 
@@ -83,6 +84,12 @@ export function useRocketPartsComponent(props, context, options) {
 	const partTypeName = (id) => {
 		return LibraryClientUtility.$trans.t(`forms.content.parts['${id}'].plural`);
 	};
+	const panelsLKey = () => {
+		return props.id + '-parts-' + props.typeId;
+	};
+	const panelsUpdated = async (value) => {
+		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
+	};
 
 	onMounted(async () => {
 		if (manufacturersI.value)
@@ -100,13 +107,12 @@ export function useRocketPartsComponent(props, context, options) {
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
+			
+		const temp3 = await serviceStore.getters.getRocketsExpanded();
+		const temp4 = temp3[panelsLKey()];
+		panels.value = temp4 ?? [];
 	});
-
-	watch(() => props.items,
-		(value) => {
-			alert(value);
-		}
-	);
+	
 	
 	return {
 		correlationId,
@@ -129,7 +135,8 @@ export function useRocketPartsComponent(props, context, options) {
 		clickSelect,
 		isPartType,
 		manufacturer,
-		partTypeName
+		partTypeName,
+		panelsUpdated
 	};
 };
 </script>
