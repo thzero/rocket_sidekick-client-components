@@ -401,6 +401,7 @@
 				<h3>{{ $t(`forms.content.parts.recovery`) }}</h3>
 				<RocketParts
 					class="mt-4"
+					:id="rocketId"
 					:items="recovery"
 					:deletable="isEditable"
 				>
@@ -433,6 +434,7 @@
 						<v-expansion-panels
 							v-model="panels"
 							multiple
+							@update:modelValue="panelsUpdated"
 						>
 							<v-expansion-panel
 								v-for="item in stages" 
@@ -726,7 +728,9 @@ export default {
 			manufacturers,
 			panels,
 			hasAdmin,
+			rocketId,
 			stages,
+			panelsUpdated,
 			requestManufacturers,
 			scope,
 			validation
@@ -843,7 +847,9 @@ export default {
 			manufacturers,
 			panels,
 			hasAdmin,
+			rocketId,
 			stages,
+			panelsUpdated,
 			requestManufacturers,
 			scope,
 			validation

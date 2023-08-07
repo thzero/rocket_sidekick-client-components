@@ -7,6 +7,10 @@ export const useRocketPartsComponentProps = {
 		type: Boolean,
 		value: false
 	},
+	id: {
+		type: String,
+		value: null
+	},
 	items: {
 		type: Array,
 		value: null

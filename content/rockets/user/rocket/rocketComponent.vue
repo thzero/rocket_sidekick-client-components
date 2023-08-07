@@ -101,6 +101,11 @@ export function useRocketComponent(props, context, options) {
 			await requestManufacturers(correlationId);
 			const temp = manufacturersI.value ? manufacturersI.value.find(l => l.isDefault) : null;
 			manufacturerDefault.value = temp ? temp.id : null;
+
+			const temp2 = await serviceStore.getters.getRocketsExpanded();
+			const temp3 = temp2[panelsLKey()];
+			panels.value = temp3 ?? [];
+			
 			resetData(correlationId, value);
 		},
 		initNewSecondary: async (correlationId) => {
@@ -188,7 +193,7 @@ export function useRocketComponent(props, context, options) {
 	const manufacturersI = ref(null);
 	const manufacturerDefault = ref(null);
 	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
-	const panels = ref();
+	const panels = ref([]);
 	
 	const manufacturers = computed(() => {
 		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
@@ -196,11 +201,19 @@ export function useRocketComponent(props, context, options) {
 	const hasAdmin = computed(() => {
 		return false;
 	});
+	const rocketId = computed(() => {
+		return detailItemData.value ? detailItemData.value.id : [];
+	});
 	const stages = computed(() => {
-		panels.value = detailItemData.value ? detailItemData.value.stages.map(l => l.id) : [];
 		return detailItemData.value ? detailItemData.value.stages : [];
 	});
 	
+	const panelsLKey = () => {
+		return detailItemData.value.id + '-stages';
+	};
+	const panelsUpdated = async (value) => {
+		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
+	};
 	const requestManufacturers = async (correlationId) => {
 		if (manufacturersI.value)
 			return;
@@ -357,8 +370,10 @@ export function useRocketComponent(props, context, options) {
 		manufacturers,
 		panels,
 		hasAdmin,
+		rocketId,
 		stages,
 		requestManufacturers,
+		panelsUpdated,
 		scope: 'RocketControl',
 		validation: useVuelidate({ $scope: 'RocketControl' })
 	};

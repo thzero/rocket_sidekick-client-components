@@ -1,9 +1,10 @@
 <template>
 	<div>
-		{{  results.panel }}
+		{{  panels }}
 		<v-expansion-panels
 			v-model="panels"
 			multiple
+			@update:modelValue="panelsUpdated"
 		>
 			<v-expansion-panel
 				v-for="item in results" 
@@ -12,7 +13,7 @@
 			>
 				<v-expansion-panel-title
 					color="primary"
-				>
+				>[[{{ item.typeId }}]]
 					{{ partTypeName(item.name) }}
 				</v-expansion-panel-title>
 				<v-expansion-panel-text>
@@ -53,14 +54,12 @@
 									v-if="deletable"
 									variant="flat"
 									color="red"
-									density="compact"
 									@click="clickDelete(item2)"
 								>{{ $t('buttons.delete') }}</v-btn>
 								<v-btn
 									v-if="selectable"
 									variant="flat"
 									color="primary"
-									density="compact"
 									@click="clickSelect(item2)"
 								>{{ $t('buttons.select') }}</v-btn>
 							</v-card-actions>
@@ -115,7 +114,8 @@ export default {
 			clickSelect,
 			isPartType,
 			manufacturer,
-			partTypeName
+			partTypeName,
+			panelsUpdated
 		} = useRocketPartsComponent(props, context, options);
 
 		return {
@@ -139,7 +139,8 @@ export default {
 			clickSelect,
 			isPartType,
 			manufacturer,
-			partTypeName
+			partTypeName,
+			panelsUpdated
 		};
 	}
 };
