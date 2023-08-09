@@ -87,8 +87,9 @@
 			>
 				<v-btn
 					v-if="canAddStep"
+					:variant="buttonsForms.variant.add"
+					:color="buttonsForms.color.add"
 					class="mr-2"
-					color="primary"
 					@click="handleAddSecondary"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.checklists.step') }}
@@ -102,8 +103,9 @@
 		<template v-slot:buttons_post>
 			<!-- <v-btn
 				v-if="!isEditable"
+				:variant="buttonsForms.variant.close"
+				:color="buttonsForms.color.close"
 				class="ml-2"
-				color="primary"
 				@click="handleClose"
 			>
 				{{ $t('buttons.close') }}
@@ -114,7 +116,8 @@
 			>
 				<v-btn
 					v-if="canAddStep"
-					color="primary"
+					:variant="buttonsForms.variant.add"
+					:color="buttonsForms.color.add"
 					@click="handleAddSecondary"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.checklists.step') }}
@@ -231,6 +234,8 @@ export default {
 			dialogEditSecondaryOk,
 			dialogEditSecondaryOpen,
 			handleAddSecondary,
+			buttonsDialog,
+			buttonsForms,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,
@@ -309,6 +314,8 @@ export default {
 			dialogEditSecondaryOk,
 			dialogEditSecondaryOpen,
 			handleAddSecondary,
+			buttonsDialog,
+			buttonsForms,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemName,

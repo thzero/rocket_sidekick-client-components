@@ -1,6 +1,7 @@
 <script>
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
@@ -19,6 +20,11 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 	
 	const {
 		rocketTypes,
@@ -50,6 +56,8 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		serviceStore,
 		sortByOrder,
 		target,
+		buttonsDialog,
+		buttonsForms,
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,

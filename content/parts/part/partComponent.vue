@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 
 import AppUtility from '@/utility/app';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
@@ -92,6 +93,11 @@ export function usePartComponent(props, context, options) {
 				options.resetAdditional(correlationId, orig);
 		}
 	});
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const {
 		measurementUnitsIdOutput,
@@ -213,6 +219,8 @@ export function usePartComponent(props, context, options) {
 		handleOk,
 		preCompleteOk,
 		resetAdditional,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,

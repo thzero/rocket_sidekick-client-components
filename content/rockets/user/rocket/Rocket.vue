@@ -295,6 +295,7 @@
 				class="mr-2"
 				color="primary"
 			>
+				{{ $t('buttons.add') }}
 				<v-menu 
 					activator="parent"
 					location="top"
@@ -302,6 +303,7 @@
 					<v-list>
 					<v-list-item>
 						<v-btn
+							variant="flat"
 							color="purple"
 							@click="clickAltimetersSearch"
 						>
@@ -310,6 +312,7 @@
 					</v-list-item>
 					<v-list-item>
 						<v-btn
+							variant="flat"
 							color="orange"
 							@click="clickRecoverySearch"
 						>
@@ -318,6 +321,7 @@
 					</v-list-item>
 					<v-list-item>
 						<v-btn
+							variant="flat"
 							color="blue"
 							@click="clickTrackersSearch"
 						>
@@ -328,7 +332,8 @@
 						v-if="canAddSecondary"
 					>
 						<v-btn
-							color="green"
+							:variant="buttonsForms.variant.ok"
+							:color="buttonsForms.color.ok"
 							@click="handleAddSecondary"
 						>
 							{{ $t('forms.content.rockets.stage.name') }}
@@ -350,6 +355,7 @@
 				<v-btn
 					v-if="canAddSecondary"
 					class="mr-2"
+					variant="flat"
 					color="primary"
 				>
 					{{ $t('buttons.add') }}
@@ -360,6 +366,7 @@
 						<v-list>
 						<v-list-item>
 							<v-btn
+								variant="flat"
 								color="purple"
 							>
 								{{ $t('buttons.rockets.tracers') }}
@@ -367,6 +374,7 @@
 						</v-list-item>
 						<v-list-item>
 							<v-btn
+								variant="flat"
 								color="blue"
 								@click="clickRecoverySearch"
 							>
@@ -377,7 +385,8 @@
 							v-if="canAddSecondary"
 						>
 							<v-btn
-								color="green"
+								:variant="buttonsForms.variant.ok"
+								:color="buttonsForms.color.ok"
 								@click="handleAddSecondary"
 							>
 								{{ $t('buttons.rockets.stage') }}
@@ -500,8 +509,9 @@
 													<div class="pl-4 pr-4 pb-2 pt-2">
 														<v-btn
 															v-if="isEditable"
+															:variant="buttonsForms.variant.delete"
+															:color="buttonsForms.color.delete"
 															class="mr-2"
-															color="red"
 															:disabled="isDeletingSecondary(item)"
 															@click="dialogDeleteSecondaryOpen(item)"
 														>
@@ -509,7 +519,8 @@
 														</v-btn>
 														<v-btn
 															v-if="isEditable"
-															color="primary"
+															:variant="buttonsForms.variant.edit"
+															:color="buttonsForms.color.edit"
 															:disabled="isEditingSecondary(item)"
 															@click="dialogEditSecondaryOpen(item)"
 														>
@@ -628,8 +639,9 @@ anels"
 											<div class="pl-4 pr-4 pb-2 pt-2">
 												<v-btn
 													v-if="isEditable"
+													:variant="buttonsForms.variant.delete"
+													:color="buttonsForms.color.delete"
 													class="mr-2"
-													color="red"
 													:disabled="isDeletingSecondary(item)"
 													@click="dialogDeleteSecondaryOpen(item)"
 												>
@@ -637,7 +649,8 @@ anels"
 												</v-btn>
 												<v-btn
 													v-if="isEditable"
-													color="primary"
+													:variant="buttonsForms.variant.edit"
+													:color="buttonsForms.color.edit"
 													:disabled="isEditingSecondary(item)"
 													@click="dialogEditSecondaryOpen(item)"
 												>
@@ -804,6 +817,8 @@ export default {
 			dialogEditSecondaryPreCompleteOk,
 			handleAddSecondary,
 			rocketTypes,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			altimeters,
@@ -932,6 +947,8 @@ export default {
 			dialogEditSecondaryPreCompleteOk,
 			handleAddSecondary,
 			rocketTypes,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			altimeters,
@@ -1000,5 +1017,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.v-expansion-panel-text__wrapper {
+	padding-bottom: 0px !important;
+	padding-right: 0px !important;
+}
 </style>

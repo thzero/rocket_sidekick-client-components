@@ -9,6 +9,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
@@ -72,6 +73,11 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.thrust2Weight')
 	 });
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const {
 		measurementUnitsIdOutput,
@@ -367,6 +373,8 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		setErrorMessage,
 		setErrorTimer,
 		setNotify,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsWeightType,

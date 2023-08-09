@@ -90,22 +90,22 @@
 						<v-card-actions>
 							<v-spacer />
 							<v-btn
-								variant="flat"
-								color="primary"
+								:variant="buttonsForms.variant.clear"
+								:color="buttonsForms.color.clear"
 								:label="$t('buttons.reset')"
 								:disabled="buttonMotorSearchResetDisabled"
 								:loading="isLoading"
 								@click="clickMotorSearchReset"
 							>{{ $t('buttons.reset') }}</v-btn>
 							<v-btn
-								variant="flat"
-								color="primary"
+								:variant="buttonsForms.variant.clear"
+								:color="buttonsForms.color.clear"
 								:loading="isLoading"
 								@click="clickMotorSearchClear"
 							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
-								variant="flat"
-								color="green"
+								:variant="buttonsForms.variant.ok"
+								:color="buttonsForms.color.ok"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
 								@click="clickMotorSearch"
@@ -160,11 +160,12 @@
 					<v-card-actions>
 						<v-spacer></v-spacer>
 						<v-btn
-							variant="flat"
-							color="primary"
+							:color="buttonsForms.color.default"
 							density="compact"
 							@click="clickMotorSelect(item)"
-						>{{ $t('buttons.select') }}</v-btn>
+						>
+							{{ $t('buttons.select') }}
+						</v-btn>
 					</v-card-actions>
 				</v-card>
 			</div>
@@ -213,6 +214,8 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			buttonsDialog,
+			buttonsForms,
 			serviceExternalMotorSearch,
 			serviceStore,
 			dialogMotorLookup,
@@ -256,6 +259,8 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			buttonsDialog,
+			buttonsForms,
 			serviceExternalMotorSearch,
 			serviceStore,
 			dialogMotorLookup,

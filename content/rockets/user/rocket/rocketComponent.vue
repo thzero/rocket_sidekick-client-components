@@ -10,6 +10,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import RocketStageData from 'rocket_sidekick_common/data/rockets/stage';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
 import { useRocketDetailItemComponent } from '@/components/content/rockets/user/rocket/rocketDetailItemComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
@@ -138,6 +139,11 @@ export function useRocketComponent(props, context, options) {
 			resetData(correlationId, orig);
 		}
 	});
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const {
 		rocketTypes,
@@ -348,6 +354,8 @@ export function useRocketComponent(props, context, options) {
 		dialogEditSecondaryPreCompleteOk,
 		handleAddSecondary,
 		rocketTypes,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		altimeters,

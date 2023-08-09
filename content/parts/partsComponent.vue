@@ -5,6 +5,7 @@ import { firstBy, thenBy } from 'thenby';
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 
 import PartData from 'rocket_sidekick_common/data/parts/index';
@@ -81,6 +82,11 @@ export function usePartsBaseComponent(props, context, options) {
 			initNew: async (correlationId, data) => { return initNewI(correlationId, data); }
 		}
 	);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const dialogPartsLookupRef = ref(null);
 	const manufacturers = ref(null);
@@ -254,6 +260,8 @@ export function usePartsBaseComponent(props, context, options) {
 		isDeleting,
 		isOwner,
 		display,
+		buttonsDialog,
+		buttonsForms,
 		dialogPartsLookupRef,
 		manufacturers,
 		params,

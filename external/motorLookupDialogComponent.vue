@@ -13,6 +13,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 
 export function useMotorLookupDialogComponent(props, context, options) {
 	const {
@@ -26,6 +27,11 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		notImplementedError,
 		success
 	} = useBaseComponent(props, context, options);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 	const serviceExternalMotorSearch = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_EXTERNAL_MOTOR_SEARCH);
@@ -232,6 +238,8 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		buttonsDialog,
+		buttonsForms,
 		serviceExternalMotorSearch,
 		serviceStore,
 		dialogMotorLookup,

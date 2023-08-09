@@ -12,6 +12,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -48,6 +49,11 @@ export function useRecoveryLookupDialogComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType
 	} = useToolsMeasurementBaseComponent(props, context);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const {
 		measurementUnitsIdOutput,
@@ -188,6 +194,8 @@ export function useRecoveryLookupDialogComponent(props, context, options) {
 		success,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		serviceStore,

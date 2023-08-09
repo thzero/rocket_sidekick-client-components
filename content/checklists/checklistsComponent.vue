@@ -8,12 +8,12 @@ import LibraryClientConstants from '@thzero/library_client/constants.js';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 
 import ChecklistData from 'rocket_sidekick_common/data/checklists/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
-import { filter } from 'mathjs';
 
 export function useChecklistsBaseComponent(props, context, options) {
 	const {
@@ -87,6 +87,11 @@ export function useChecklistsBaseComponent(props, context, options) {
 			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
 	);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const debug = ref(false);
 	const dialogChecklistsLookupRef = ref(null);
@@ -304,6 +309,8 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isDeleting,
 		isOwner,
 		display,
+		buttonsDialog,
+		buttonsForms,
 		debug,
 		dialogChecklistsLookupRef,
 		dialogStartManager,

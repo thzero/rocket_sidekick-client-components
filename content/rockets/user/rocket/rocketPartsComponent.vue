@@ -9,6 +9,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
 export function useRocketPartsComponent(props, context, options) {
@@ -27,6 +28,11 @@ export function useRocketPartsComponent(props, context, options) {
 		serverErrors,
 		setErrors
 	} = useBaseComponent(props, context, options);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 	
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
@@ -129,6 +135,8 @@ export function useRocketPartsComponent(props, context, options) {
 		isSaving,
 		serverErrors,
 		setErrors,
+		buttonsDialog,
+		buttonsForms,
 		manufacturersI,
 		panels,
 		partTypes,
