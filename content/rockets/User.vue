@@ -14,8 +14,8 @@
 					<v-spacer></v-spacer>
 					<v-btn
 						v-if="!hasDetailItem"
-						color="blue"
-						variant="flat"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
 						@click="handleAdd(item)"
 					>
 						{{ $t('buttons.add') }}

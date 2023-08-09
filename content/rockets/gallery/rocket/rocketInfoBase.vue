@@ -6,6 +6,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
@@ -26,6 +27,11 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 	
 	const {
 		rocketTypes,
@@ -125,6 +131,8 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
 		rocket,
+		buttonsDialog,
+		buttonsForms,
 		rocketId,
 		displayTypeSite,
 		displayTypeUser,

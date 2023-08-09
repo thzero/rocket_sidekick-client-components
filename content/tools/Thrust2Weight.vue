@@ -158,8 +158,9 @@
 												</td>
 												<td>
 													<v-btn
+														:variant="buttonsForms.variant.default"
+														:color="buttonsForms.color.default"
 														class="ml-2"
-														color="primary"
 														@click="clickMotorSearch(1)"
 													>
 														{{ $t('buttons.search') }}
@@ -231,8 +232,9 @@
 												</td>
 												<td>
 													<v-btn
+														:variant="buttonsForms.variant.default"
+														:color="buttonsForms.color.default"
 														class="ml-2"
-														color="primary"
 														:disabled="!motorSelected2"
 														@click="clickMotorSearch(2)"
 													>
@@ -305,8 +307,9 @@
 												</td>
 												<td>
 													<v-btn
+														:variant="buttonsForms.variant.default"
+														:color="buttonsForms.color.default"
 														class="ml-2"
-														color="primary"
 														:disabled="!motorSelected3"
 														@click="clickMotorSearch(3)"
 													>
@@ -379,8 +382,9 @@
 												</td>
 												<td>
 													<v-btn
+														:variant="buttonsForms.variant.default"
+														:color="buttonsForms.color.default"
 														class="ml-2"
-														color="primary"
 														:disabled="!motorSelected4"
 														@click="clickMotorSearch(4)"
 													>
@@ -397,7 +401,8 @@
 					<!-- <template v-slot:buttons_pre>
 						<v-btn
 							class="mr-2"
-							color="primary"
+							:variant="buttonsForms.variant.default"
+							:color="buttonsForms.color.default"
 							@click="clickMotorSearch"
 						>
 							{{ $t('buttons.search') }}
@@ -565,6 +570,8 @@ export default {
 			setErrorMessage,
 			setErrorTimer,
 			setNotify,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsWeightType,
@@ -648,6 +655,8 @@ export default {
 			setErrorMessage,
 			setErrorTimer,
 			setNotify,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsWeightType,

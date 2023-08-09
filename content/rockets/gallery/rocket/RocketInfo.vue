@@ -2,8 +2,9 @@
 	<ContentHeader :value="rocket.name">
 		<!-- <template v-slot:after>
 			<v-btn
+				:variant="buttonsForms.variant.default"
+				:color="buttonsForms.color.default"
 				class="mr-2"
-				color="primary"
 			>
 				{{ $t('buttons.back') }}
 			</v-btn>
@@ -21,8 +22,9 @@
 				>
 					<div class="text-right pt-4">
 						<v-btn
+							:variant="buttonsForms.variant.default"
+							:color="buttonsForms.color.default"
 							class="mr-2"
-							color="primary"
 							:to="rocketsUrl"
 						>
 							{{ $t('buttons.back') }}
@@ -213,6 +215,8 @@ export default {
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			rocket,
+			buttonsDialog,
+			buttonsForms,
 			rocketId,
 			displayTypeSite,
 			displayTypeUser,
@@ -244,6 +248,8 @@ export default {
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			rocket,
+			buttonsDialog,
+			buttonsForms,
 			rocketId,
 			displayTypeSite,
 			displayTypeUser,

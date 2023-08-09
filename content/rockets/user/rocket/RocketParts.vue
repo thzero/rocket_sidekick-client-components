@@ -51,14 +51,14 @@
 								<v-spacer></v-spacer>
 								<v-btn
 									v-if="deletable"
-									variant="flat"
-									color="red"
+									:variant="buttonsForms.variant.delete"
+									:color="buttonsForms.color.delete"
 									@click="clickDelete(item2)"
 								>{{ $t('buttons.delete') }}</v-btn>
 								<v-btn
 									v-if="selectable"
-									variant="flat"
-									color="primary"
+									:variant="buttonsForms.variant.select"
+									:color="buttonsForms.color.select"
 									@click="clickSelect(item2)"
 								>{{ $t('buttons.select') }}</v-btn>
 							</v-card-actions>
@@ -106,6 +106,8 @@ export default {
 			isSaving,
 			serverErrors,
 			setErrors,
+			buttonsDialog,
+			buttonsForms,
 			manufacturersI,
 			panels,
 			partTypes,
@@ -131,6 +133,8 @@ export default {
 			isSaving,
 			serverErrors,
 			setErrors,
+			buttonsDialog,
+			buttonsForms,
 			manufacturersI,
 			panels,
 			partTypes,
@@ -148,5 +152,6 @@ export default {
 <style>
 .v-expansion-panel-text__wrapper {
 	padding-bottom: 0px !important;
+	padding-right: 0px !important;
 }
 </style>

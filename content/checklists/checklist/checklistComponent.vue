@@ -1,5 +1,5 @@
 <script>
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
@@ -9,6 +9,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import ChecklistStepData from 'rocket_sidekick_common/data/checklists/step';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
 
 export function useChecklistComponent(props, context, options) {
@@ -109,6 +110,11 @@ export function useChecklistComponent(props, context, options) {
 			resetData(correlationId, orig);
 		}
 	});
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const detailItemDescription = ref(null);
 	const detailItemIsDefault = ref(null);
@@ -709,6 +715,8 @@ export function useChecklistComponent(props, context, options) {
 		dialogEditSecondaryOk,
 		dialogEditSecondaryOpen,
 		handleAddSecondary,
+		buttonsDialog,
+		buttonsForms,
 		detailItemDescription,
 		detailItemIsDefault,
 		detailItemName,

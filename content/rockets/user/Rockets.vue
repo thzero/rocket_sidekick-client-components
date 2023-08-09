@@ -63,25 +63,29 @@
 							<v-spacer />
 							<v-btn
 								v-if="!showDetailItem"
-								color="blue"
-								variant="flat"
+								:variant="buttonsForms.variant.add"
+								:color="buttonsForms.color.add"
 								@click="handleAdd(item)"
 							>
 								{{ $t('buttons.add') }}
 							</v-btn>
 							<v-btn
-								variant="flat"
-								color="primary"
+								:variant="buttonsForms.variant.clear"
+								:color="buttonsForms.color.clear"
 								:loading="isLoading"
 								@click="clickSearchClear"
-							>{{ $t('buttons.clear') }}</v-btn>
+							>
+								{{ $t('buttons.clear') }}
+							</v-btn>
 							<v-btn
-								variant="flat"
-								color="green"
+								:variant="buttonsForms.variant.ok"
+								:color="buttonsForms.color.ok"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
 								@click="clickSearch"
-							>{{ $t('buttons.search') }}</v-btn>
+							>
+								{{ $t('buttons.search') }}
+							</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-col>
@@ -144,8 +148,8 @@
 									<v-spacer></v-spacer>
 									<v-btn
 										v-if="canCopy(item)"
-										color="blue"
-										variant="flat"
+										:variant="buttonsForms.variant.copy"
+										:color="buttonsForms.color.copy"
 										:disabled="isCopying(item)"
 										@click="dialogCopyOpen(item)"
 									>
@@ -153,8 +157,8 @@
 									</v-btn>
 									<v-btn
 										v-if="canDelete(item)"
-										color="red"
-										variant="flat"
+										:variant="buttonsForms.variant.delete"
+										:color="buttonsForms.color.delete"
 										:disabled="isDeleting(item)"
 										@click="dialogDeleteOpen(item)"
 									>
@@ -162,16 +166,16 @@
 									</v-btn>
 									<v-btn
 										v-if="canEdit(item)"
-										color="blue"
-										variant="flat"
+										:variant="buttonsForms.variant.edit"
+										:color="buttonsForms.color.edit"
 										@click="handleEdit(item)"
 									>
 										{{ $t('buttons.edit') }}
 									</v-btn>
 									<v-btn
 										v-if="canView(item)"
-										color="green"
-										variant="flat"
+										:variant="buttonsForms.variant.ok"
+										:color="buttonsForms.color.ok"
 										@click="handleView(item)"
 									>
 										{{ $t('buttons.view') }}
@@ -286,6 +290,7 @@ export default {
 			dialogCopyRef,
 			dialogDeleteManager,
 			dialogDeleteMessage,
+			dialogDeleteParams,
 			detailItem,
 			items,
 			colsEditPanel,
@@ -310,7 +315,6 @@ export default {
 			dialogDeleteError,
 			dialogDeleteOk,
 			dialogDeleteOpen,
-			dialogDeleteParams,
 			fetch,
 			handleAdd,
 			handleEdit,
@@ -322,6 +326,8 @@ export default {
 			isDeleting,
 			isOwner,
 			display,
+			buttonsDialog,
+			buttonsForms,
 			debug,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
@@ -369,6 +375,7 @@ export default {
 			dialogCopyRef,
 			dialogDeleteManager,
 			dialogDeleteMessage,
+			dialogDeleteParams,
 			detailItem,
 			items,
 			colsEditPanel,
@@ -393,7 +400,6 @@ export default {
 			dialogDeleteError,
 			dialogDeleteOk,
 			dialogDeleteOpen,
-			dialogDeleteParams,
 			fetch,
 			handleAdd,
 			handleEdit,
@@ -405,6 +411,8 @@ export default {
 			isDeleting,
 			isOwner,
 			display,
+			buttonsDialog,
+			buttonsForms,
 			debug,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,

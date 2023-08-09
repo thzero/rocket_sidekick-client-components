@@ -82,8 +82,9 @@
 			>
 				<v-btn
 					v-if="canAdd"
+					:variant="buttonsForms.variant.add"
+					:color="buttonsForms.color.add"
 					class="mr-2"
-					color="primary"
 					@click="handleAdd"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.parts.step') }}
@@ -97,8 +98,9 @@
 		<template v-slot:buttons_post>
 			<!-- <v-btn
 				v-if="!isEditable"
+				:variant="buttonsForms.variant.close"
+				:color="buttonsForms.color.close"
 				class="ml-2"
-				color="primary"
 				@click="handleClose"
 			>
 				{{ $t('buttons.close') }}
@@ -109,7 +111,8 @@
 			>
 				<v-btn
 					v-if="canAdd"
-					color="primary"
+					:variant="buttonsForms.variant.add"
+					:color="buttonsForms.color.add"
 					@click="handleAdd"
 				>
 					{{ $t('buttons.add') }} {{ $t('buttons.parts.step') }}
@@ -188,6 +191,8 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
@@ -257,6 +262,8 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,

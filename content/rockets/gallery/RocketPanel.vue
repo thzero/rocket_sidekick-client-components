@@ -15,7 +15,8 @@
 			<v-row dense>
 				<v-col>
 					<v-btn
-						color="primary"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
 						:to="rocketUrl(item)"
 						size="large"
 					>
@@ -53,6 +54,8 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			buttonsDialog,
+			buttonsForms,
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
@@ -72,6 +75,8 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			buttonsDialog,
+			buttonsForms,
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,

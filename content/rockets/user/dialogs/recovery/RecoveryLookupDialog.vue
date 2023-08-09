@@ -155,14 +155,14 @@
 						<v-card-actions>
 							<v-spacer />
 							<v-btn
-								variant="flat"
-								color="primary"
+								:variant="buttonsForms.variant.clear"
+								:color="buttonsForms.color.clear"
 								:loading="isLoading"
 								@click="clickRecoverySearchClear"
 							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
-								variant="flat"
-								color="green"
+								:variant="buttonsForms.variant.ok"
+								:color="buttonsForms.color.ok"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
 								@click="clickRecoverySearch"
@@ -258,6 +258,8 @@ export default {
 			success,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			serviceStore,
@@ -307,6 +309,8 @@ export default {
 			success,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			serviceStore,

@@ -12,6 +12,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import RocketData from 'rocket_sidekick_common/data/rockets/index';
 
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
@@ -87,6 +88,11 @@ export function useRocketsBaseComponent(props, context, options) {
 			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
 	);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const {
 		rocketTypes,
@@ -298,6 +304,8 @@ export function useRocketsBaseComponent(props, context, options) {
 		isDeleting,
 		isOwner,
 		display,
+		buttonsDialog,
+		buttonsForms,
 		debug,
 		diameterMeasurementUnitId,
 		diameterMeasurementUnitsId,
