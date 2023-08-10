@@ -417,7 +417,7 @@
 						<RocketParts
 							class="mt-2"
 							:items="altimeters"
-							:typeId="altimeters"
+							panelTypeId="altimeters"
 							:deletable="isEditable"
 						>
 						</RocketParts>
@@ -438,7 +438,7 @@
 							class="mt-2"
 							:id="rocketId"
 							:items="recovery"
-							:typeId="recovery"
+							panelTypeId="recovery"
 							:deletable="isEditable"
 						>
 						</RocketParts>
@@ -459,7 +459,7 @@
 							class="mt-2"
 							:id="rocketId"
 							:items="trackers"
-							:typeId="trackers"
+							panelTypeId="trackers"
 							:deletable="isEditable"
 						>
 						</RocketParts>
@@ -552,7 +552,7 @@
 				<RocketParts
 					class="ml-4 mt-4"
 					:items="altimeters"
-					:typeId="altimeters"
+					panelTypeId="altimeters"
 					:deletable="isEditable"
 				>
 				</RocketParts>
@@ -573,7 +573,7 @@
 					class="ml-4 mt-4"
 					:id="rocketId"
 					:items="recovery"
-					:typeId="recovery"
+					panelTypeId="recovery"
 					:deletable="isEditable"
 				>
 				</RocketParts>
@@ -588,7 +588,7 @@
 				<RocketParts
 					class="ml-4 mt-4"
 					:items="trackers"
-					:typeId="trackers"
+					panelTypeId="trackers"
 					:deletable="isEditable"
 				>
 				</RocketParts>
@@ -687,11 +687,23 @@ anels"
 		@ok="dialogEditSecondaryOk"
 		width="90%"
 	/>
+	<AltimetersLookupDialog
+		ref="dialogAltimetersSearchManagerRef"
+		:signal="dialogAltimetersSearchManager.signal"
+		@close="dialogAltimetersSearchManager.cancel()"
+		@ok="selectAltimeter"
+	/>
 	<RecoveryLookupDialog
 		ref="dialogRecoverySearchRef"
 		:signal="dialogRecoverySearchManager.signal"
 		@close="dialogRecoverySearchManager.cancel()"
 		@ok="selectRecovery"
+	/>
+	<TrackersLookupDialog
+		ref="dialogTrackersSearchRef"
+		:signal="dialogTrackersSearchManager.signal"
+		@close="dialogTrackersSearchManager.cancel()"
+		@ok="selectTracker"
 	/>
 </template>
 
@@ -711,11 +723,13 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 
 import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
 
+import AltimetersLookupDialog from '@/components/content/rockets/user/dialogs/altimeters/AltimetersLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketStage from '@/components/content/rockets/user/rocket/RocketStage';
 import RocketStageEditDialog from '@/components/content/rockets/user/dialogs/RocketStageEditDialog';
 import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
+import TrackersLookupDialog from '@/components/content/rockets/user/dialogs/trackers/TrackersLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
@@ -727,6 +741,7 @@ import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/compo
 export default {
 	name: 'RocketControl',
 	components: {
+		AltimetersLookupDialog,
 		ChuteProtectorPanelTitle,
 		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
@@ -737,6 +752,7 @@ export default {
 		RocketStageEditDialog,
 		RecoveryLookupDialog,
 		StreamerPanelTitle,
+		TrackersLookupDialog,
 		VConfirmationDialog,
 		VFormControl,
 		VNumberFieldWithValidation,
@@ -847,14 +863,14 @@ export default {
 			measurementUnitsWeightType,
 			recovery,
 			trackers,
-			dialogAltimtersSearchManager,
+			dialogAltimetersSearchManager,
 			dialogRecoverySearchManager,
 			dialogTrackersSearchManager,
 			clickAltimetersSearch,
 			clickRecoverySearch,
 			clickTrackersSearch,
 			resetEditData,
-			selectAltimter,
+			selectAltimeter,
 			selectRecovery,
 			selectTracker,
 			setEditData,
@@ -977,14 +993,14 @@ export default {
 			measurementUnitsWeightType,
 			recovery,
 			trackers,
-			dialogAltimtersSearchManager,
+			dialogAltimetersSearchManager,
 			dialogRecoverySearchManager,
 			dialogTrackersSearchManager,
 			clickAltimetersSearch,
 			clickRecoverySearch,
 			clickTrackersSearch,
 			resetEditData,
-			selectAltimter,
+			selectAltimeter,
 			selectRecovery,
 			selectTracker,
 			setEditData,

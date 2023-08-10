@@ -74,7 +74,7 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 	const detailItemTrackers = ref(false);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
-	const dialogAltimtersSearchManager = ref(new DialogSupport());
+	const dialogAltimetersSearchManager = ref(new DialogSupport());
 	const dialogRecoverySearchManager = ref(new DialogSupport());
 	const dialogTrackersSearchManager = ref(new DialogSupport());
 
@@ -92,7 +92,7 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 	});
 
 	const clickAltimetersSearch = async (selection) => {
-		dialogAltimtersSearchManager.value.open();
+		dialogAltimetersSearchManager.value.open();
 	};
 	const clickRecoverySearch = async (selection) => {
 		dialogRecoverySearchManager.value.open();
@@ -144,12 +144,12 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		logger.debug('rocketDetailItemComponent', 'selectPart', 'response', response, correlationIdI);
 		return response;
 	};
-	const selectAltimter = async (item) => {
+	const selectAltimeter = async (item) => {
 		try {
-			return selectPart(correlationId(), item, () => detailItemData.value.altimters, (t) => { detailItemData.value.altimters = t; });
+			return selectPart(correlationId(), item, () => detailItemData.value.altimeters, (t) => { detailItemData.value.altimeters = t; });
 		}
 		finally {
-			dialogAltimtersSearchManager.value.ok();
+			dialogAltimetersSearchManager.value.ok();
 		}
 	};
 	const selectRecovery = async (item) => {
@@ -246,14 +246,14 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		measurementUnitsWeightType,
 		recovery,
 		trackers,
-		dialogAltimtersSearchManager,
+		dialogAltimetersSearchManager,
 		dialogRecoverySearchManager,
 		dialogTrackersSearchManager,
 		clickAltimetersSearch,
 		clickRecoverySearch,
 		clickTrackersSearch,
 		resetEditData,
-		selectAltimter,
+		selectAltimeter,
 		selectRecovery,
 		selectTracker,
 		setEditData

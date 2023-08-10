@@ -25,8 +25,16 @@
 							class="mb-4"
 						>
 							<v-card-title>
+								<AltimeterPanelTitle
+									v-if="isPartType(item2, partTypes.altimeter)"
+									:item="item2"
+								/>
 								<ChuteProtectorPanelTitle
 									v-if="isPartType(item2, partTypes.chuteProtector)"
+									:item="item2"
+								/>
+								<ChuteReleasePanelTitle
+									v-if="isPartType(item2, partTypes.chuteRelease)"
 									:item="item2"
 								/>
 								<DeploymentBagPanelTitle
@@ -39,6 +47,10 @@
 								/>
 								<StreamerPanelTitle
 									v-if="isPartType(item2, partTypes.streamer)"
+									:item="item2"
+								/>
+								<TrackerPanelTitle
+									v-if="isPartType(item2, partTypes.tracker)"
 									:item="item2"
 								/>
 								<div 
@@ -57,8 +69,8 @@
 								>{{ $t('buttons.delete') }}</v-btn>
 								<v-btn
 									v-if="selectable"
-									:variant="buttonsForms.variant.select"
-									:color="buttonsForms.color.select"
+									:variant="buttonsForms.variant.default"
+									:color="buttonsForms.color.default"
 									@click="clickSelect(item2)"
 								>{{ $t('buttons.select') }}</v-btn>
 							</v-card-actions>
@@ -74,18 +86,24 @@
 import { useRocketPartsComponent } from '@/components/content/rockets/user/rocket/rocketPartsComponent';
 import { useRocketPartsComponentProps } from '@/components/content/rockets/user/rocket/rocketPartsComponentProps';
 
+import AltimeterPanelTitle from '@/components/content/parts/altimeters/AltimeterPanelTitle';
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
+import ChuteReleasePanelTitle from '@/components/content/parts/chuteReleases/ChuteReleasePanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
+import TrackerPanelTitle from '@/components/content/parts/trackers/TrackerPanelTitle';
 
 export default {
 	name: 'RocketPartsControl',
 	components: {
+		AltimeterPanelTitle,
 		ChuteProtectorPanelTitle,
+		ChuteReleasePanelTitle,
 		DeploymentBagPanelTitle,
 		ParachutePanelTitle,
-		StreamerPanelTitle
+		StreamerPanelTitle,
+		TrackerPanelTitle
 	},
 	props: {
 		...useRocketPartsComponentProps
