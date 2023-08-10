@@ -1,4 +1,4 @@
-export const useRecoveryLookupDialogProps = {
+export const useRocketLookupDialogProps = {
 	selectable: {
 		type: Boolean,
 		default: true

@@ -87,7 +87,7 @@ export function useRocketPartsComponent(props, context, options) {
 		return LibraryClientUtility.$trans.t(`forms.content.parts['${id}'].plural`);
 	};
 	const panelsLKey = () => {
-		return props.id + '-parts-' + props.typeId;
+		return props.id + '-parts-' + props.panelTypeId;
 	};
 	const panelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
@@ -102,10 +102,14 @@ export function useRocketPartsComponent(props, context, options) {
 			return;
 
 		let temp2 = response.results.filter(l => l.types.find(j => 
+			(j === AppCommonConstants.Rocketry.ManufacturerTypes.altimeter) ||
+			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
+			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease) ||
 			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
 			(j === AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag) ||
 			(j === AppCommonConstants.Rocketry.ManufacturerTypes.parachute) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.streamer)
+			(j === AppCommonConstants.Rocketry.ManufacturerTypes.streamer) ||
+			(j === AppCommonConstants.Rocketry.ManufacturerTypes.trackers)
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
@@ -113,10 +117,14 @@ export function useRocketPartsComponent(props, context, options) {
 		const temp3 = await serviceStore.getters.getRocketsExpanded();
 		const temp4 = temp3[panelsLKey()];
 		panels.value = temp4 ?? [ 
+			AppCommonConstants.Rocketry.ManufacturerTypes.altimeter, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease, 
 			AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector, 
 			AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag, 
 			AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
-			AppCommonConstants.Rocketry.ManufacturerTypes.streamer
+			AppCommonConstants.Rocketry.ManufacturerTypes.streamer,
+			AppCommonConstants.Rocketry.ManufacturerTypes.tracker
 		];
 	});
 	

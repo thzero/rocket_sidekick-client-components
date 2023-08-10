@@ -17,7 +17,7 @@ import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/compone
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
-export function useRecoveryRocketLookupDialogComponent(props, context, options) {
+export function useAltimetersRocketLookupDialogComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -63,19 +63,10 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
-	const detailItemDiameterMax = ref(null);
-	const detailItemDiameterMin = ref(null);
-	const detailItemDiameterMeasurementUnitId = ref(null);
-	const detailItemDiameterMeasurementUnitsId = ref(null);
-	const detailItemLengthMax = ref(null);
-	const detailItemLengthMin = ref(null);
-	const detailItemLengthMeasurementUnitId = ref(null);
-	const detailItemLengthMeasurementUnitsId = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemManufacturerStockId = ref(null);
 	const detailItemName = ref(null);
-	const detailItemThinMill = ref(false);
-	const dialogRecoveryLookup = ref(null);
+	const dialogAltimetersLookup = ref(null);
 	const dialogResetManager = ref(new DialogSupport());
 	const dialogResetMessage = ref(null);
 	const manufacturersI = ref(null);
@@ -89,13 +80,13 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
 		return invalid;
 	};
-	const clickRecoverySearch = async () => {
-		await dialogRecoveryLookup.value.submit(correlationId());
+	const clickAltimetersSearch = async () => {
+		await dialogAltimetersLookup.value.submit(correlationId());
 	};
-	const clickRecoverySearchClear = async () => {
-		await dialogRecoveryLookup.value.reset(correlationId(), null, true);
+	const clickAltimetersSearchClear = async () => {
+		await dialogAltimetersLookup.value.reset(correlationId(), null, true);
 	};
-	const clickRecoverySelect = async (item) => {
+	const clickAltimetersSelect = async (item) => {
 		context.emit('ok', item);
 	};
 	const close = () => {
@@ -104,7 +95,7 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 	const dialogResetOk = async () => {
 		dialogResetManager.value.ok();
 		const correlationIdI = correlationId();
-		await serviceStore.dispatcher.requestPartsRecoverySearchReset(correlationIdI);
+		await serviceStore.dispatcher.requestPartsAltimetersSearchReset(correlationIdI);
 		await preCompleteOk(correlationIdI);
 	};
 	const isPartType = (item, typeId) => {
@@ -128,21 +119,12 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		results.value = null;
 
 		const request = {
-			diameterMax: detailItemDiameterMax.value,
-			diameterMin: detailItemDiameterMin.value,
-			diameterMeasurementUnitId: detailItemDiameterMeasurementUnitId.value,
-			diameterMeasurementUnitsId: detailItemDiameterMeasurementUnitsId.value,
-			lengthMax: detailItemLengthMax.value,
-			lengthMin: detailItemLengthMin.value,
-			lengthMeasurementUnitId: detailItemLengthMeasurementUnitId.value,
-			lengthMeasurementUnitsId: detailItemLengthMeasurementUnitsId.value,
 			manufacturerId: detailItemManufacturer.value,
 			manufacturerStockId: detailItemManufacturerStockId.value,
-			name: detailItemName.value,
-			thinMill: detailItemThinMill.value
+			name: detailItemName.value
 		};
 
-		const temp = await serviceStore.dispatcher.requestPartsRecoverySearchResults(correlationId, request);
+		const temp = await serviceStore.dispatcher.requestPartsAltimetersSearchResults(correlationId, request);
 		results.value = temp.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
@@ -153,18 +135,6 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		detailItemManufacturer.value = null;
 		detailItemManufacturerStockId.value = null;
 		detailItemName.value = null;
-
-		detailItemDiameterMax.value = null;
-		detailItemDiameterMin.value = null;
-		detailItemDiameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-		detailItemDiameterMeasurementUnitsId.value =  measurementUnitsIdSettings.value;
-
-		detailItemLengthMax.value = null;
-		detailItemLengthMin.value = null;
-		detailItemLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-		detailItemLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
-
-		detailItemThinMill.value = false;
 
 		await preCompleteOk(correlationId);
 	};
@@ -178,10 +148,8 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 			return;
 
 		let temp2 = response.results.filter(l => l.types.find(j => 
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.parachute) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.streamer)
+			(j === AppCommonConstants.Rocketry.ManufacturerTypes.altimeter) ||
+			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease)
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
@@ -204,19 +172,10 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		serviceStore,
-		detailItemDiameterMax,
-		detailItemDiameterMin,
-		detailItemDiameterMeasurementUnitId,
-		detailItemDiameterMeasurementUnitsId,
-		detailItemLengthMax,
-		detailItemLengthMin,
-		detailItemLengthMeasurementUnitId,
-		detailItemLengthMeasurementUnitsId,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
 		detailItemName,
-		detailItemThinMill,
-		dialogRecoveryLookup,
+		dialogAltimetersLookup,
 		dialogResetManager,
 		dialogResetMessage,
 		manufacturersI,
@@ -224,9 +183,9 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		results,
 		manufacturers,
 		buttonOkDisabledOverride,
-		clickRecoverySearch,
-		clickRecoverySearchClear,
-		clickRecoverySelect,
+		clickAltimetersSearch,
+		clickAltimetersSearchClear,
+		clickAltimetersSelect,
 		close,
 		dialogResetOk,
 		isPartType,
@@ -234,8 +193,8 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		partTypeName,
 		preCompleteOk,
 		resetAdditional,
-		scope: 'RecoveryLookupDialog',
-		validation: useVuelidate({ $scope: 'RecoveryLookupDialog' })
+		scope: 'AltimetersLookupDialog',
+		validation: useVuelidate({ $scope: 'AltimetersLookupDialog' })
 	};
 };
 </script>

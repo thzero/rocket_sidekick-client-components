@@ -1,7 +1,7 @@
 <template>
 	<VFormListingDialog
-		ref="dialogRecoveryLookup"
-		:label="$t('titles.content.parts.recovery.search')"
+		ref="dialogAltimetersLookup"
+		:label="$t('titles.content.parts.altimeters.search')"
 		:signal="signal"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
 		:pre-complete-ok="preCompleteOk"
@@ -18,7 +18,7 @@
 					<v-card>
 						<v-card-text>
 							<v-row dense>
-								<v-col cols="8">
+								<v-col cols="12">
 									<VTextFieldWithValidation
 										ref="detailItemNameRef"
 										v-model="detailItemName"
@@ -27,105 +27,6 @@
 										:label="$t('forms.name')"
 										:counter="30"
 									/>
-								</v-col>
-								<v-col cols="4">
-									<v-checkbox
-										v-model="detailItemThinMill"
-										density="compact"
-										:label="$t('forms.content.parts.parachute.thinMill')"
-									/>
-								</v-col>
-							</v-row>
-							<v-row dense>
-								<v-col cols="3">
-									<VNumberFieldWithValidation
-										ref="detailItemDiameterMinRef"
-										v-model="detailItemDiameterMin"
-										vid="detailItemDiameterMin"
-										:validation="validation"
-										:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.min.abbr')"
-									/>
-								</v-col>
-								<v-col cols="3">
-									<VNumberFieldWithValidation
-										ref="detailItemDiameterMaxRef"
-										v-model="detailItemDiameterMax"
-										vid="detailItemDiameterMax"
-										:validation="validation"
-										:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.max.abbr')"
-									/>
-								</v-col>
-								<v-col cols="6">
-									<table>
-										<tr>
-											<td class="measurementUnits">
-												<MeasurementUnitsSelect
-													ref="detailItemDiameterMeasurementUnitsIdRef"
-													v-model="detailItemDiameterMeasurementUnitsId"
-													vid="detailItemDiameterMeasurementUnitsId"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.title')"
-												/>
-											</td>
-											<td class="measurementUnits">
-												<MeasurementUnitSelect
-													ref="detailItemDiameterMeasurementUnitIdRef"
-													v-model="detailItemDiameterMeasurementUnitId"
-													vid="detailItemDiameterMeasurementUnitId"
-													:measurementUnitsId="detailItemDiameterMeasurementUnitsId"
-													:measurementUnitsType="measurementUnitsLengthType"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.length')"
-												/>
-											</td>
-										</tr>
-									</table>
-								</v-col>
-							</v-row>
-							<v-row dense>
-								<v-col cols="3">
-									<VNumberFieldWithValidation
-										ref="detailItemLengthMinRef"
-										v-model="detailItemLengthMin"
-										vid="detailItemLengthMin"
-										:validation="validation"
-										:label="$t('forms.content.parts.length') + ' ' + $t('forms.content.parts.min.abbr')"
-									/>
-								</v-col>
-								<v-col cols="3">
-									<VNumberFieldWithValidation
-										ref="detailItemLengthMaxRef"
-										v-model="detailItemLengthMax"
-										vid="detailItemLengthMax"
-										:validation="validation"
-										:label="$t('forms.content.parts.length') + ' ' + $t('forms.content.parts.max.abbr')"
-									/>
-								</v-col>
-								<v-col cols="6">
-									<table>
-										<tr>
-											<td class="measurementUnits">
-												<MeasurementUnitsSelect
-													ref="detailItemLengthMeasurementUnitsIdRef"
-													v-model="detailItemLengthMeasurementUnitsId"
-													vid="detailItemLengthMeasurementUnitsId"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.title')"
-												/>
-											</td>
-											<td class="measurementUnits">
-												<MeasurementUnitSelect
-													ref="detailItemLengthMeasurementUnitIdRef"
-													v-model="detailItemLengthMeasurementUnitId"
-													vid="detailItemLengthMeasurementUnitId"
-													:measurementUnitsId="detailItemLengthMeasurementUnitsId"
-													:measurementUnitsType="measurementUnitsLengthType"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.length')"
-												/>
-											</td>
-										</tr>
-									</table>
 								</v-col>
 							</v-row>
 							<v-row dense>
@@ -158,14 +59,14 @@
 								:variant="buttonsForms.variant.clear"
 								:color="buttonsForms.color.clear"
 								:loading="isLoading"
-								@click="clickRecoverySearchClear"
+								@click="clickAltimetersSearchClear"
 							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
 								:variant="buttonsForms.variant.ok"
 								:color="buttonsForms.color.ok"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
-								@click="clickRecoverySearch"
+								@click="clickAltimetersSearch"
 							>{{ $t('buttons.search') }}</v-btn>
 						</v-card-actions>
 					</v-card>
@@ -187,8 +88,8 @@
 				<RocketParts
 					:items="results"
 					:selectable="true"
-					panelTypeId="recovery-search"
-					@select="clickRecoverySelect"
+					panelTypeId="altimeters-search"
+					@select="clickAltimetersSelect"
 				>
 				</RocketParts>
 			</div>
@@ -207,8 +108,8 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useRocketEditValidation } from '@/components/content/rockets/user/rocket/rocketEditValidation';
-import { useRecoveryRocketLookupDialogComponent } from '@/components/content/rockets/user/dialogs/recovery/recoveryLookupDialogComponent';
-import { useRecoveryRocketLookupDialogValidation } from '@/components/content/rockets/user/dialogs/recovery/recoveryLookupDialogValidation';
+import { useAltimetersRocketLookupDialogComponent } from '@/components/content/rockets/user/dialogs/altimeters/altimetersLookupDialogComponent';
+import { useAltimetersRocketLookupDialogValidation } from '@/components/content/rockets/user/dialogs/altimeters/altimetersLookupDialogValidation';
 import { useRocketLookupDialogProps } from '@/components/content/rockets/user/dialogs/lookupDialogProps';
 
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
@@ -227,7 +128,7 @@ import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/componen
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RecoveryLookupDialog',
+	name: 'AltimetersLookupDialog',
 	components: {
 		ChuteProtectorPanelTitle,
 		DeploymentBagPanelTitle,
@@ -264,19 +165,10 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			serviceStore,
-			detailItemDiameterMax,
-			detailItemDiameterMin,
-			detailItemDiameterMeasurementUnitId,
-			detailItemDiameterMeasurementUnitsId,
-			detailItemLengthMax,
-			detailItemLengthMin,
-			detailItemLengthMeasurementUnitId,
-			detailItemLengthMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
-			detailItemThinMill,
-			dialogRecoveryLookup,
+			dialogAltimetersLookup,
 			dialogResetManager,
 			dialogResetMessage,
 			manufacturersI,
@@ -284,9 +176,9 @@ export default {
 			results,
 			manufacturers,
 			buttonOkDisabledOverride,
-			clickRecoverySearch,
-			clickRecoverySearchClear,
-			clickRecoverySelect,
+			clickAltimetersSearch,
+			clickAltimetersSearchClear,
+			clickAltimetersSelect,
 			close,
 			dialogResetOk,
 			isPartType,
@@ -296,7 +188,7 @@ export default {
 			resetAdditional,
 			scope,
 			validation
-		} = useRecoveryRocketLookupDialogComponent(props, context);
+		} = useAltimetersRocketLookupDialogComponent(props, context);
 
 		return {
 			correlationId,
@@ -315,19 +207,10 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			serviceStore,
-			detailItemDiameterMax,
-			detailItemDiameterMin,
-			detailItemDiameterMeasurementUnitId,
-			detailItemDiameterMeasurementUnitsId,
-			detailItemLengthMax,
-			detailItemLengthMin,
-			detailItemLengthMeasurementUnitId,
-			detailItemLengthMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
-			detailItemThinMill,
-			dialogRecoveryLookup,
+			dialogAltimetersLookup,
 			dialogResetManager,
 			dialogResetMessage,
 			manufacturersI,
@@ -335,9 +218,9 @@ export default {
 			results,
 			manufacturers,
 			buttonOkDisabledOverride,
-			clickRecoverySearch,
-			clickRecoverySearchClear,
-			clickRecoverySelect,
+			clickAltimetersSearch,
+			clickAltimetersSearchClear,
+			clickAltimetersSelect,
 			close,
 			dialogResetOk,
 			isPartType,
@@ -350,7 +233,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketEditValidation(false), LibraryCommonUtility.cloneDeep(useRecoveryRocketLookupDialogValidation)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketEditValidation(false), LibraryCommonUtility.cloneDeep(useAltimetersRocketLookupDialogValidation)));
 	}
 };
 </script>

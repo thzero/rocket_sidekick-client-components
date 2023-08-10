@@ -19,6 +19,10 @@ export const useRocketPartsComponentProps = {
 		type: Array,
 		value: null
 	},
+	panelTypeId: {
+		type: String,
+		value: null
+	},
 	selectable: {
 		type: Boolean,
 		value: false
