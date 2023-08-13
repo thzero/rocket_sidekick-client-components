@@ -184,11 +184,13 @@ export function useDetailComponent(props, context, options) {
 		async (value) => {
 			console.log('watch.modelValue', value);
 
-			detailItem.value = value;
-			if (detailItem.value) {
-				await options.init(correlationId(), detailItem.value.data);
+			if (value) {
+				await options.init(correlationId(), value.data);
+				detailItem.value = value;
 				detailItemOrig.value = LibraryCommonUtility.cloneDeep(value);
 			}
+			else
+				detailItem.value = value;
 
 			if (formControlRef && formControlRef.value)
 				await formControlRef.value.reset(correlationId, false, true);

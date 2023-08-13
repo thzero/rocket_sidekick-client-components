@@ -104,11 +104,11 @@ export function useRocketComponent(props, context, options) {
 			manufacturerDefault.value = temp ? temp.id : null;
 
 			const temp2 = await serviceStore.getters.getRocketsExpanded();
-			const temp3 = temp2[panelsLKey()];
+			const temp3 = temp2[panelsLKey(value)];
 			panels.value = temp3 ?? [];
 
 			const temp4 = await serviceStore.getters.getRocketsExpanded();
-			const temp5 = temp4[stagesPanelsLKey()];
+			const temp5 = temp4[stagesPanelsLKey(value)];
 			stagesPanels.value = temp5 ?? [];
 			
 			resetData(correlationId, value);
@@ -184,12 +184,19 @@ export function useRocketComponent(props, context, options) {
 		measurementUnitsWeightType,
 		recovery,
 		trackers,
+		dialogPartsDeleteManager,
+		dialogPartsDeleteMessage,
 		dialogAltimetersSearchManager,
 		dialogRecoverySearchManager,
 		dialogTrackersSearchManager,
+		clickAltimeterDelete,
+		clickRecoveryDelete,
+		clickTrackerDelete,
 		clickAltimetersSearch,
 		clickRecoverySearch,
 		clickTrackersSearch,
+		dialogPartsDeleteCancel,
+		dialogPartsDeleteOk,
 		resetEditData,
 		selectAltimeter,
 		selectRecovery,
@@ -231,8 +238,8 @@ export function useRocketComponent(props, context, options) {
 		return detailItemData.value ? detailItemData.value.stages : [];
 	});
 	
-	const panelsLKey = () => {
-		return detailItemData.value.id;
+	const panelsLKey = (value) => {
+		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;
 	};
 	const panelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
@@ -281,8 +288,11 @@ export function useRocketComponent(props, context, options) {
 
 		setEditData(correlationId, detailItemData.value);
 	};
-	const stagesPanelsLKey = () => {
-		return detailItemData.value.id + '-stages';
+	const stagesPanelsLKey = (value) => {
+		const temp = value ? value.id : detailItemData.value ? detailItemData.value.id : null;
+		if (temp)
+			return temp + '-stages';
+		return null;
 	};
 	const stagesPanelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: stagesPanelsLKey(), expanded: value });
@@ -384,12 +394,19 @@ export function useRocketComponent(props, context, options) {
 		measurementUnitsWeightType,
 		recovery,
 		trackers,
+		dialogPartsDeleteManager,
+		dialogPartsDeleteMessage,
 		dialogAltimetersSearchManager,
 		dialogRecoverySearchManager,
 		dialogTrackersSearchManager,
+		clickAltimeterDelete,
+		clickRecoveryDelete,
+		clickTrackerDelete,
 		clickAltimetersSearch,
 		clickRecoverySearch,
 		clickTrackersSearch,
+		dialogPartsDeleteCancel,
+		dialogPartsDeleteOk,
 		resetEditData,
 		selectAltimeter,
 		selectRecovery,

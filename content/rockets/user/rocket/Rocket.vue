@@ -398,6 +398,7 @@
 			</div> -->
 		</template>
 		<template v-slot:after>	
+		[[ {{ panels }} ]]
 			<v-expansion-panels
 				v-model="panels"
 				class="mt-4"
@@ -406,7 +407,7 @@
 			>
 				<v-expansion-panel
 					v-if="altimeters"
-					:value="altimeters"
+					value="altimeters"
 				>
 					<v-expansion-panel-title
 						color="primary"
@@ -419,14 +420,14 @@
 							:items="altimeters"
 							panelTypeId="altimeters"
 							:deletable="isEditable"
+							@delete="clickAltimeterDelete"
 						>
 						</RocketParts>
-						<!-- @delete="clickAltimeterDelete" -->
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 				<v-expansion-panel
 					v-if="recovery"
-					:value="recovery"
+					value="recovery"
 				>
 					<v-expansion-panel-title
 						color="primary"
@@ -447,7 +448,7 @@
 				</v-expansion-panel>
 				<v-expansion-panel
 					v-if="trackers"
-					:value="trackers"
+					value="trackers"
 				>
 					<v-expansion-panel-title
 						color="primary"
@@ -468,7 +469,7 @@
 				</v-expansion-panel>
 				<v-expansion-panel
 					v-if="stages"
-					:value="stages"
+					value="stages"
 				>
 					<v-expansion-panel-title
 						color="primary"
@@ -705,6 +706,14 @@ anels"
 		@close="dialogTrackersSearchManager.cancel()"
 		@ok="selectTracker"
 	/>
+	<VConfirmationDialog
+		ref="dialogPartsDeleteRef"
+		:message="dialogPartsDeleteMessage"
+		:messageRaw=true
+		:signal="dialogPartsDeleteManager.signal"
+		@cancel="dialogPartsDeleteCancel"
+		@ok="dialogPartsDeleteOk"
+	/>
 </template>
 
 <script>
@@ -863,12 +872,19 @@ export default {
 			measurementUnitsWeightType,
 			recovery,
 			trackers,
+			dialogPartsDeleteManager,
+			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
 			dialogRecoverySearchManager,
 			dialogTrackersSearchManager,
+			clickAltimeterDelete,
+			clickRecoveryDelete,
+			clickTrackerDelete,
 			clickAltimetersSearch,
 			clickRecoverySearch,
 			clickTrackersSearch,
+			dialogPartsDeleteCancel,
+			dialogPartsDeleteOk,
 			resetEditData,
 			selectAltimeter,
 			selectRecovery,
@@ -993,12 +1009,19 @@ export default {
 			measurementUnitsWeightType,
 			recovery,
 			trackers,
+			dialogPartsDeleteManager,
+			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
 			dialogRecoverySearchManager,
 			dialogTrackersSearchManager,
+			clickAltimeterDelete,
+			clickRecoveryDelete,
+			clickTrackerDelete,
 			clickAltimetersSearch,
 			clickRecoverySearch,
 			clickTrackersSearch,
+			dialogPartsDeleteCancel,
+			dialogPartsDeleteOk,
 			resetEditData,
 			selectAltimeter,
 			selectRecovery,
