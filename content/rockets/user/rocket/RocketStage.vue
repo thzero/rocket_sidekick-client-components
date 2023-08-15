@@ -3,7 +3,10 @@
 		v-if="debug"
 	>
 		[[ isEditable {{ isEditable }} ]]
-		{{ item  }}
+		[[ detailItemData {{ detailItemData }} ]]
+		[[ altimeters {{ altimeters }} ]]
+		[[ recovery {{ recovery }} ]]
+		[[ trackers {{ trackers }} ]]
 	</div>
 	<v-row dense>
 		<v-col>
@@ -35,7 +38,7 @@
 							:label="$t('forms.settings.measurementUnits.title')"
 						/>
 					</td>
-					<td class="measurementUnits">
+					<td class="measurementUnit">
 						<MeasurementUnitSelect
 							v-model="displayItem.diameterMeasurementUnitId"
 							:measurementUnitsId="displayItem.diameterMeasurementUnitsId"
@@ -65,7 +68,7 @@
 							:label="$t('forms.settings.measurementUnits.title')"
 						/>
 					</td>
-					<td class="measurementUnits">
+					<td class="measurementUnit">
 						<MeasurementUnitSelect
 							v-model="displayItem.lengthMeasurementUnitId"
 							:measurementUnitsId="displayItem.lengthMeasurementUnitsId"
@@ -97,7 +100,7 @@
 							:label="$t('forms.settings.measurementUnits.title')"
 						/>
 					</td>
-					<td class="measurementUnits">
+					<td class="measurementUnit">
 						<MeasurementUnitSelect
 							v-model="displayItem.weightMeasurementUnitId"
 							:measurementUnitsId="displayItem.weightMeasurementUnitsId"
@@ -129,7 +132,7 @@
 							:label="$t('forms.settings.measurementUnits.title')"
 						/>
 					</td>
-					<td class="measurementUnits">
+					<td class="measurementUnit">
 						<MeasurementUnitSelect
 							v-model="displayItem.cgMeasurementUnitId"
 							:measurementUnitsId="displayItem.cgMeasurementUnitsId"
@@ -159,7 +162,7 @@
 							:label="$t('forms.settings.measurementUnits.title')"
 						/>
 					</td>
-					<td class="measurementUnits">
+					<td class="measurementUnit">
 						<MeasurementUnitSelect
 							v-model="displayItem.cpMeasurementUnitId"
 							:measurementUnitsId="displayItem.cpMeasurementUnitsId"
@@ -170,6 +173,77 @@
 					</td>
 				</tr>
 			</table>
+		</v-col>
+	</v-row>
+	<v-row dense>
+		<v-col>
+			<v-expansion-panels
+				multiple
+			>
+				<v-expansion-panel
+					v-if="hasAltimeters"
+					value="altimeters"
+				>
+					<v-expansion-panel-title
+						color="primary"
+					>
+						{{ $t(`forms.content.parts.altimeter.plural`) }}
+					</v-expansion-panel-title>
+					<v-expansion-panel-text>
+						<RocketParts
+							class="mt-2"
+							:items="altimeters"
+							panelTypeId="altimeters"
+							:deletable="isEditable"
+							:stage-id="detailItemData.id"
+							@delete="clickAltimeterDelete2"
+						>
+						</RocketParts>
+					</v-expansion-panel-text>
+				</v-expansion-panel>
+				<v-expansion-panel
+					v-if="hasRecovery"
+					value="recovery"
+				>
+					<v-expansion-panel-title
+						color="primary"
+					>
+						{{ $t(`forms.content.parts.recovery`) }}
+					</v-expansion-panel-title>
+					<v-expansion-panel-text>
+						<RocketParts
+							class="mt-2"
+							:items="recovery"
+							panelTypeId="recovery"
+							:deletable="isEditable"
+							:stageId="detailItemData.id"
+							@delete="clickRecoveryDeleteStage2"
+						>
+						</RocketParts>
+					</v-expansion-panel-text>
+				</v-expansion-panel>
+				<v-expansion-panel
+					v-if="hasTrackers"
+					value="trackers"
+				>
+					<v-expansion-panel-title
+						color="primary"
+					>
+						{{ $t(`forms.content.parts.tracker.plural`) }}
+					</v-expansion-panel-title>
+					<v-expansion-panel-text>
+						<RocketParts
+							class="mt-2"
+							:items="trackers"
+							panelTypeId="trackers"
+							:deletable="isEditable"
+							:stage-id="detailItemData.id"
+							@Wdelete="clickTrackerDeleteStage2"
+						>
+						</RocketParts>
+					</v-expansion-panel-text>
+				</v-expansion-panel>
+			</v-expansion-panels>
 		</v-col>
 	</v-row>
 	<div
@@ -192,6 +266,7 @@ import { useRocketStageComponentProps } from '@/components/content/rockets/user/
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
 import VNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VNumberField';
 import VSelect from '@thzero/library_client_vue3_vuetify3/components/form/VSelect';
 import VTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea';
@@ -202,6 +277,7 @@ export default {
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
+		RocketParts,
 		VNumberField,
 		VSelect,
 		VTextArea,
@@ -210,6 +286,7 @@ export default {
 	props: {
 		...useRocketStageComponentProps
 	},
+	emits: ['deleteAltimeter', 'deleteRecovery', 'deleteTracker'],
 	setup (props, context, options) {
 		const {
 			correlationId,
@@ -223,11 +300,65 @@ export default {
 			success,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			altimeters,
+			detailItemData,
+			hasAltimeters,
+			hasRecovery,
+			hasTrackers,
+			recovery,
+			trackers,
+			detailItemAltimeters,
+			detailItemCg,
+			detailItemCgFrom,
+			detailItemCgMeasurementUnitId,
+			detailItemCgMeasurementUnitsId,
+			detailItemCp,
+			detailItemCpFrom,
+			detailItemCpMeasurementUnitId,
+			detailItemCpMeasurementUnitsId,
+			detailItemDescription,
+			detailItemLength,
+			detailItemLengthMeasurementUnitId,
+			detailItemLengthMeasurementUnitsId,
+			detailItemName,
+			detailItemRecovery,
+			detailItemTrackers,
+			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			displayItem
+			dialogPartsDeleteManager,
+			dialogPartsDeleteMessage,
+			dialogAltimetersSearchManager,
+			dialogRecoverySearchManager,
+			dialogTrackersSearchManager,
+			clickAltimeterDelete,
+			clickAltimeterDeleteStage,
+			clickRecoveryDelete,
+			clickRecoveryDeleteStage,
+			clickTrackerDelete,
+			clickTrackerDeleteStage,
+			clickAltimetersSearch,
+			clickAltimetersSearchStage,
+			clickRecoverySearch,
+			clickRecoverySearchStage,
+			clickTrackersSearch,
+			clickTrackersSearchStage,
+			dialogPartsDeleteCancel,
+			dialogPartsDeleteOk,
+			resetEditData,
+			selectAltimeter,
+			selectRecovery,
+			selectTracker,
+			setEditData,
+			detailItemI,
+			displayItem,
+			clickAltimeterDelete2,
+			clickRecoveryDeleteStage2,
+			clickTrackerDeleteStage2
 		} = useRocketStageComponent(props, context, options);
 
 		return {
@@ -242,11 +373,65 @@ export default {
 			success,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			altimeters,
+			detailItemData,
+			hasAltimeters,
+			hasRecovery,
+			hasTrackers,
+			recovery,
+			trackers,
+			detailItemAltimeters,
+			detailItemCg,
+			detailItemCgFrom,
+			detailItemCgMeasurementUnitId,
+			detailItemCgMeasurementUnitsId,
+			detailItemCp,
+			detailItemCpFrom,
+			detailItemCpMeasurementUnitId,
+			detailItemCpMeasurementUnitsId,
+			detailItemDescription,
+			detailItemLength,
+			detailItemLengthMeasurementUnitId,
+			detailItemLengthMeasurementUnitsId,
+			detailItemName,
+			detailItemRecovery,
+			detailItemTrackers,
+			detailItemWeight,
+			detailItemWeightMeasurementUnitId,
+			detailItemWeightMeasurementUnitsId,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			displayItem
+			dialogPartsDeleteManager,
+			dialogPartsDeleteMessage,
+			dialogAltimetersSearchManager,
+			dialogRecoverySearchManager,
+			dialogTrackersSearchManager,
+			clickAltimeterDelete,
+			clickAltimeterDeleteStage,
+			clickRecoveryDelete,
+			clickRecoveryDeleteStage,
+			clickTrackerDelete,
+			clickTrackerDeleteStage,
+			clickAltimetersSearch,
+			clickAltimetersSearchStage,
+			clickRecoverySearch,
+			clickRecoverySearchStage,
+			clickTrackersSearch,
+			clickTrackersSearchStage,
+			dialogPartsDeleteCancel,
+			dialogPartsDeleteOk,
+			resetEditData,
+			selectAltimeter,
+			selectRecovery,
+			selectTracker,
+			setEditData,
+			detailItemI,
+			displayItem,
+			clickAltimeterDelete2,
+			clickRecoveryDeleteStage2,
+			clickTrackerDeleteStage2
 		};
 	}
 };

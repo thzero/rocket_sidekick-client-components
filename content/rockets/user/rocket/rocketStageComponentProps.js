@@ -3,7 +3,7 @@ export const useRocketStageComponentProps = {
 		type: Boolean,
 		value: false
 	},
-	item: {
+	detailItem: {
 		type: Object,
 		value: null
 	},

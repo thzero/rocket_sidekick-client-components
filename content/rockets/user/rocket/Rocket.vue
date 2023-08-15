@@ -70,7 +70,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="8">
+			<v-col cols="6">
 				<VSelectWithValidation
 					ref="manufacturerRef"
 					v-model="detailItemManufacturer"
@@ -81,7 +81,7 @@
 					:label="$t('forms.content.manufacturer.name')"
 				/>
 			</v-col>
-			<v-col cols="4">
+			<v-col cols="6">
 				<VTextFieldWithValidation
 					ref="detailItemManufacturerStockIdRef"
 					v-model="detailItemManufacturerStockId"
@@ -94,7 +94,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="5" md="2">
+			<v-col cols="6" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemDiameterMajorRef"
 					v-model="detailItemDiameterMajor"
@@ -104,7 +104,7 @@
 					:label="$t('forms.content.rockets.diameter.major')"
 				/>
 			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="6" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
@@ -117,7 +117,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnit">
 							<MeasurementUnitSelect
 								ref="detailItemDiameterMajorMeasurementUnitIdRef"
 								v-model="detailItemDiameterMajorMeasurementUnitId"
@@ -132,7 +132,7 @@
 					</tr>
 				</table>
 			</v-col>
-			<v-col cols="5" md="2">
+			<v-col cols="6" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemLengthRef"
 					v-model="detailItemLength"
@@ -142,7 +142,7 @@
 					:label="$t('forms.content.parts.length')"
 				/>
 			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="6" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
@@ -155,7 +155,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnit">
 							<MeasurementUnitSelect
 								ref="detailItemLengthMeasurementUnitIdRef"
 								v-model="detailItemLengthMeasurementUnitId"
@@ -172,7 +172,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="5" md="2">
+			<v-col cols="6" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemWeightRef"
 					v-model="detailItemWeight"
@@ -182,7 +182,7 @@
 					:label="$t('forms.content.parts.weight')"
 				/>
 			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="6" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
@@ -195,7 +195,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnit">
 							<MeasurementUnitSelect
 								ref="detailItemWeightMeasurementUnitIdRef"
 								v-model="detailItemWeightMeasurementUnitId"
@@ -212,7 +212,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="5" md="2">
+			<v-col cols="6" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemCgRef"
 					v-model="detailItemCg"
@@ -222,7 +222,7 @@
 					:label="$t('forms.content.rockets.cg')"
 				/>
 			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="6" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
@@ -235,7 +235,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnit">
 							<MeasurementUnitSelect
 								ref="detailItemCgMeasurementUnitIdRef"
 								v-model="detailItemCgMeasurementUnitId"
@@ -250,7 +250,7 @@
 					</tr>
 				</table>
 			</v-col>
-			<v-col cols="5" md="2">
+			<v-col cols="6" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemCpRef"
 					v-model="detailItemCp"
@@ -260,7 +260,7 @@
 					:label="$t('forms.content.rockets.cp')"
 				/>
 			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="6" md="4">
 				<table>
 					<tr>
 						<td class="measurementUnits">
@@ -273,7 +273,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnit">
 							<MeasurementUnitSelect
 								ref="detailItemCpMeasurementUnitIdRef"
 								v-model="detailItemCpMeasurementUnitId"
@@ -406,7 +406,7 @@
 				@update:modelValue="panelsUpdated"
 			>
 				<v-expansion-panel
-					v-if="altimeters"
+					v-if="hasAltimeters"
 					value="altimeters"
 				>
 					<v-expansion-panel-title
@@ -426,7 +426,7 @@
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 				<v-expansion-panel
-					v-if="recovery"
+					v-if="hasRecovery"
 					value="recovery"
 				>
 					<v-expansion-panel-title
@@ -441,13 +441,13 @@
 							:items="recovery"
 							panelTypeId="recovery"
 							:deletable="isEditable"
+							@delete="clickRecoveryDelete"
 						>
 						</RocketParts>
-						<!-- @delete="clickRecoveryDelete" -->
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 				<v-expansion-panel
-					v-if="trackers"
+					v-if="hasTrackers"
 					value="trackers"
 				>
 					<v-expansion-panel-title
@@ -462,9 +462,9 @@
 							:items="trackers"
 							panelTypeId="trackers"
 							:deletable="isEditable"
+							@delete="clickTrackerDelete"
 						>
 						</RocketParts>
-						<!-- @delete="clickRecoveryDelete" -->
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 				<v-expansion-panel
@@ -498,16 +498,59 @@
 											{{ item.name}}
 										</v-expansion-panel-title>
 										<v-expansion-panel-text>
+											
 											<RocketStage
-												:item="item"
+												:detail-item="item"
 												:isEditable="isEditable"
 												:debug="debug"
+												@deleteAltimeter="clickAltimeterDeleteStage"
+												@deleteRecovery="clickRecoveryDeleteStage"
+												@deleteTracker="clickTrackerDeleteStage"
 											>
-												<template 
+												<template
 													v-if="isEditable"
 													v-slot:actionsEdit
 												>	
-													<div class="pl-4 pr-4 pb-2 pt-2">
+													<div class="pl-4 pr-4 pb-2 pt-2"><v-btn
+														class="mr-2"
+														color="primary"
+													>
+														{{ $t('buttons.add') }}
+														<v-menu 
+															activator="parent"
+															location="top"
+														>
+															<v-list>
+																<v-list-item>
+																	<v-btn
+																		variant="flat"
+																		color="purple"
+																		@click="clickAltimetersSearchStage(item)"
+																	>
+																		{{ $t('forms.content.parts.altimeter.name') }}
+																	</v-btn>
+																</v-list-item>
+																<v-list-item>
+																	<v-btn
+																		variant="flat"
+																		color="orange"
+																		@click="clickRecoverySearchStage(item)"
+																	>
+																		{{ $t('forms.content.parts.recovery') }}
+																	</v-btn>
+																</v-list-item>
+																<v-list-item>
+																	<v-btn
+																		variant="flat"
+																		color="blue"
+																		@click="clickTrackersSearchStage(item)"
+																	>
+																		{{ $t('forms.content.parts.tracker.name') }}
+																	</v-btn>
+																</v-list-item>
+															</v-list>
+														</v-menu>
+													</v-btn>
 														<v-btn
 															v-if="isEditable"
 															:variant="buttonsForms.variant.delete"
@@ -538,134 +581,6 @@
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 			</v-expansion-panels>
-			<!-- <div
-				v-if="altimeters"
-				class="mt-4"
-			>
-				<v-sheet
-					color="blue"
-					rounded
-				>
-					<div class="pl-6 pr-4 pb-4 pt-2">
-						<h3>{{ $t(`forms.content.parts.altimeter.plural`) }}</h3>
-					</div>
-				</v-sheet>
-				<RocketParts
-					class="ml-4 mt-4"
-					:items="altimeters"
-					panelTypeId="altimeters"
-					:deletable="isEditable"
-				>
-				</RocketParts>
-			</div>
-			<div
-				v-if="recovery"
-				class="mt-4"
-			>
-				<v-sheet
-					color="blue"
-					rounded
-				>
-					<div class="pl-6 pr-4 pb-4 pt-2">
-						<h3>{{ $t(`forms.content.parts.recovery`) }}</h3>
-					</div>
-				</v-sheet>
-				<RocketParts
-					class="ml-4 mt-4"
-					:id="rocketId"
-					:items="recovery"
-					panelTypeId="recovery"
-					:deletable="isEditable"
-				>
-				</RocketParts>
-			</div>
-			<div
-				v-if="trackers"
-				class="mt-4"
-			>
-				<div class="pl-6 pr-4 pb-4 pt-2">
-					<h3>{{ $t(`forms.content.parts.tracker.plural`) }}</h3>
-				</div>
-				<RocketParts
-					class="ml-4 mt-4"
-					:items="trackers"
-					panelTypeId="trackers"
-					:deletable="isEditable"
-				>
-				</RocketParts>
-			</div>
-			<div
-				v-if="stages"
-				class="mt-4"
-			>
-				<v-sheet
-					color="blue"
-					rounded
-				>
-					<div class="pl-6 pr-4 pb-4 pt-2">
-						<h3>{{ $t(`forms.content.rockets.stage.plural`) }}</h3>
-					</div>
-				</v-sheet>
-				<v-row
-					dense
-					class="ml-4 mt-4"
-				>
-					<v-col>
-						<v-expansion-panels
-							v-model="				{{ $t('buttons.add') }}
-anels"
-							multiple
-							@update:modelValue="stagesPanelsUpdated"
-						>
-							<v-expansion-panel
-								v-for="item in stages" 
-								:key="item.id"
-								:value="item.id"
-							>
-								<v-expansion-panel-title
-									color="secondary"
-								>
-									{{ item.name}}
-								</v-expansion-panel-title>
-								<v-expansion-panel-text>
-									<RocketStage
-										:item="item"
-										:isEditable="isEditable"
-										:debug="debug"
-									>
-										<template 
-											v-if="isEditable"
-											v-slot:actionsEdit
-										>	
-											<div class="pl-4 pr-4 pb-2 pt-2">
-												<v-btn
-													v-if="isEditable"
-													:variant="buttonsForms.variant.delete"
-													:color="buttonsForms.color.delete"
-													class="mr-2"
-													:disabled="isDeletingSecondary(item)"
-													@click="dialogDeleteSecondaryOpen(item)"
-												>
-													{{ $t('buttons.delete') }}
-												</v-btn>
-												<v-btn
-													v-if="isEditable"
-													:variant="buttonsForms.variant.edit"
-													:color="buttonsForms.color.edit"
-													:disabled="isEditingSecondary(item)"
-													@click="dialogEditSecondaryOpen(item)"
-												>
-													{{ $t('buttons.edit') }}
-												</v-btn>
-											</div>
-										</template>g
-									</RocketStage>
-								</v-expansion-panel-text>
-							</v-expansion-panel>
-						</v-expansion-panels>
-					</v-col>
-				</v-row>
-			</div> -->
 		</template>
 	</VFormControl>
 	<VConfirmationDialog
@@ -730,11 +645,10 @@ import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/D
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
-import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
-
 import AltimetersLookupDialog from '@/components/content/rockets/user/dialogs/altimeters/AltimetersLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
 import RocketStage from '@/components/content/rockets/user/rocket/RocketStage';
 import RocketStageEditDialog from '@/components/content/rockets/user/dialogs/RocketStageEditDialog';
 import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
@@ -847,6 +761,11 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			altimeters,
+			hasAltimeters,
+			hasRecovery,
+			hasTrackers,
+			recovery,
+			trackers,
 			detailItemAltimeters,
 			detailItemCg,
 			detailItemCgFrom,
@@ -870,19 +789,23 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			recovery,
-			trackers,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
 			dialogRecoverySearchManager,
 			dialogTrackersSearchManager,
 			clickAltimeterDelete,
+			clickAltimeterDeleteStage,
 			clickRecoveryDelete,
+			clickRecoveryDeleteStage,
 			clickTrackerDelete,
+			clickTrackerDeleteStage,
 			clickAltimetersSearch,
+			clickAltimetersSearchStage,
 			clickRecoverySearch,
+			clickRecoverySearchStage,
 			clickTrackersSearch,
+			clickTrackersSearchStage,
 			dialogPartsDeleteCancel,
 			dialogPartsDeleteOk,
 			resetEditData,
@@ -984,6 +907,11 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			altimeters,
+			hasAltimeters,
+			hasRecovery,
+			hasTrackers,
+			recovery,
+			trackers,
 			detailItemAltimeters,
 			detailItemCg,
 			detailItemCgFrom,
@@ -1007,19 +935,23 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			recovery,
-			trackers,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
 			dialogRecoverySearchManager,
 			dialogTrackersSearchManager,
 			clickAltimeterDelete,
+			clickAltimeterDeleteStage,
 			clickRecoveryDelete,
+			clickRecoveryDeleteStage,
 			clickTrackerDelete,
+			clickTrackerDeleteStage,
 			clickAltimetersSearch,
+			clickAltimetersSearchStage,
 			clickRecoverySearch,
+			clickRecoverySearchStage,
 			clickTrackersSearch,
+			clickTrackersSearchStage,
 			dialogPartsDeleteCancel,
 			dialogPartsDeleteOk,
 			resetEditData,
@@ -1059,6 +991,7 @@ export default {
 <style>
 .v-expansion-panel-text__wrapper {
 	padding-bottom: 0px !important;
+	padding-left: 12px !important;
 	padding-right: 0px !important;
 }
 </style>

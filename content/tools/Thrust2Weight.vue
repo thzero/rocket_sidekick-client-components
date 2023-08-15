@@ -75,7 +75,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<td class="measurementUnit">
 											<MeasurementUnitSelect
 												ref="massMeasurementUnitRef"
 												v-model="massMeasurementUnitId"
