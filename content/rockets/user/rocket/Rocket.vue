@@ -474,7 +474,7 @@
 					<v-expansion-panel-title
 						color="primary"
 					>
-						{{ $t(`forms.content.rockets.stage.name`) }}
+						{{ $t(`forms.content.rockets.stage.plural`) }}
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<v-row
