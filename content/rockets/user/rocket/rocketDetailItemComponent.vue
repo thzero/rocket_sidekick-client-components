@@ -78,6 +78,7 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 	const dialogPartsDeleteType = ref(null);
 	const dialogPartsDeleteManager = ref(new DialogSupport());
 	const dialogPartsDeleteMessage = ref();
+	const dialogPartsSearchStageId = ref(null);
 	const dialogAltimetersSearchManager = ref(new DialogSupport());
 	const dialogRecoverySearchManager = ref(new DialogSupport());
 	const dialogTrackersSearchManager = ref(new DialogSupport());
@@ -86,7 +87,19 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		return detailItemData.value ? detailItemData.value.altimeters : [];
 	});
 	const detailItemData = computed(() => {
-		return detailItem.value ? detailItem.value.data : [];
+		return detailItem.value ? detailItem.value.data : {};
+	});
+	const hasAltimeters = computed(() => {
+		const temp = altimeters.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasRecovery = computed(() => {
+		const temp = recovery.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasTrackers = computed(() => {
+		const temp = trackers.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
 	});
 	const recovery = computed(() => {
 		return detailItemData.value ? detailItemData.value.recovery : [];
@@ -105,7 +118,19 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		dialogPartsDeleteType.value = partsDeleteKeyAltimeters;
 		dialogPartsDeleteManager.value.open();
 	};
+	const clickAltimeterDeleteStage = async (item, stageId) => {
+		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyAltimeters}.delete_confirm`);
+		dialogPartsDeleteId.value = item.id;
+		dialogPartsDeleteType.value = partsDeleteKeyAltimeters;
+		dialogPartsDeleteManager.value.open();
+	};
 	const clickRecoveryDelete = async (item) => {
+		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyRecovery}.delete_confirm`);
+		dialogPartsDeleteId.value = item.id;
+		dialogPartsDeleteType.value = partsDeleteKeyRecovery;
+		dialogPartsDeleteManager.value.open();
+	};
+	const clickRecoveryDeleteStage = async (ite, stageIdm) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyRecovery}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsDeleteKeyRecovery;
@@ -117,13 +142,43 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		dialogPartsDeleteType.value = partsDeleteKeyTrackers;
 		dialogPartsDeleteManager.value.open();
 	};
+	const clickTrackerDeleteStage = async (item, stageId) => {
+		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyTrackers}.delete_confirm`);
+		dialogPartsDeleteId.value = item.id;
+		dialogPartsDeleteType.value = partsDeleteKeyTrackers;
+		dialogPartsDeleteManager.value.open();
+	};
 	const clickAltimetersSearch = async (selection) => {
+		dialogPartsSearchStageId.value = null;
+		dialogAltimetersSearchManager.value.open();
+	};
+	const clickAltimetersSearchStage = async (selection) => {
+		if (!selection)
+			return;
+
+		dialogPartsSearchStageId.value = selection.id;
 		dialogAltimetersSearchManager.value.open();
 	};
 	const clickRecoverySearch = async (selection) => {
+		dialogPartsSearchStageId.value = null;
+		dialogRecoverySearchManager.value.open();
+	};
+	const clickRecoverySearchStage = async (selection) => {
+		if (!selection)
+			return;
+
+		dialogPartsSearchStageId.value = selection.id;
 		dialogRecoverySearchManager.value.open();
 	};
 	const clickTrackersSearch = async (selection) => {
+		dialogPartsSearchStageId.value = null;
+		dialogTrackersSearchManager.value.open();
+	};
+	const clickTrackersSearchStage = async (selection) => {
+		if (!selection)
+			return;
+
+		dialogPartsSearchStageId.value = selection.id;
 		dialogTrackersSearchManager.value.open();
 	};
 	const dialogPartsDeleteCancel = async () => {
@@ -196,45 +251,44 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		detailItemWeightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		detailItemWeightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
-	const selectPart = async(correlationId, item, getF, saveF, setF, type) => {
-		// if (!item || !getF || !saveF || !setF)
-		// 	return error('useRocketDetailItemComponent', 'selectPart', null, null, null, null, correlationId);
-		
-		// const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
-
-		// let parts = getF(temp);
-		// parts =  parts ? parts : [];
-		
-		// const saveItem = { id: LibraryCommonUtility.generateId(), itemId: item.id, typeId: item.typeId };
-		// const tempParts = LibraryCommonUtility.updateArrayByObject(parts, saveItem);
-		// saveF(temp, tempParts);
-			
-		// const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
-		// logger.debug('rocketDetailItemComponent', 'selectPart', 'response', response, correlationId);
-		// if (hasFailed(response))
-		// 	return response;
-		
-		// setF(response.results);
-		// return response;
+	const selectPart = async(correlationId, item, type, stageId) => {
 		if (!item || !type)
-			return error('useRocketDetailItemComponent', 'selectPart', null, null, null, null, correlationId);
+			return error('useRocketDetailItemComponent', 'selectPart', 'Invalid item or type.', null, null, null, correlationId);
 
 		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 
 		let parts = getParts(correlationId, temp, type);
+
+		let stage = null;
+		if (stageId) {
+			stage = temp.stages.find(l => l.id === stageId);
+			if (!stage)
+				return error('useRocketDetailItemComponent', 'selectPart', `No stage found for ${stageId}'.`, null, null, null, correlationId);
+			parts = getParts(correlationId, stage, type);
+		}
+
 		parts =  parts ? parts : [];
 		
 		const saveItem = { id: LibraryCommonUtility.generateId(), itemId: item.id, typeId: item.typeId };
 		const tempParts = LibraryCommonUtility.updateArrayByObject(parts, saveItem);
-		setParts(correlationId, temp, tempParts, type);
+		setParts(correlationId, stage ? stage : temp, tempParts, type);
 			
 		const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
 		logger.debug('rocketDetailItemComponent', 'selectPart', 'response', response, correlationId);
 		if (hasFailed(response))
 			return response;
 	
-		parts = getParts(correlationId, response.results, type);
-		setParts(correlationId, detailItemData.value, parts, type);
+		let fetch = response.results;
+		let update = detailItemData.value;
+		if (stage) {
+			fetch = response.results.stages.find(l => l.id === stageId);
+			update = detailItemData.value.stages.find(l => l.id === stageId);
+			if (!update || !fetch)
+				return error('useRocketDetailItemComponent', 'selectPart', `No stage to update found for ${stageId}'.`, null, null, null, correlationId);
+		}
+
+		parts = getParts(correlationId, fetch, type);
+		setParts(correlationId, update, parts, type);
 		return response;
 	};
 	const selectAltimeter = async (item) => {
@@ -242,10 +296,8 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 			return selectPart(
 				correlationId(), 
 				item, 
-				(value) => value.altimeters, 
-				(value, items) => { value.altimeters = items; }, 
-				(value) => { detailItemData.value.altimeters = value.altimeters; },
-				partsDeleteKeyAltimeters
+				partsDeleteKeyAltimeters,
+				dialogPartsSearchStageId.value
 			);
 		}
 		finally {
@@ -257,10 +309,8 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 			return selectPart(
 				correlationId(), 
 				item, 
-				(value) => value.recovery, 
-				(value, items) => { value.recovery = items; }, 
-				(value) => { detailItemData.value.recovery = value.recovery; },
-				partsDeleteKeyRecovery
+				partsDeleteKeyRecovery,
+				dialogPartsSearchStageId.value
 			);
 		}
 		finally {
@@ -272,10 +322,8 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 			return selectPart(
 				correlationId(), 
 				item, 
-				(value) => value.trackers, 
-				(value, items) => { value.trackers = items; }, 
-				(value) => { detailItemData.value.trackers = value.trackers; },
-				partsDeleteKeyTrackers
+				partsDeleteKeyTrackers,
+				dialogPartsSearchIsStage.value
 			);
 		}
 		finally {
@@ -321,6 +369,12 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 	
 	return {
 		altimeters,
+		detailItemData,
+		hasAltimeters,
+		hasRecovery,
+		hasTrackers,
+		recovery,
+		trackers,
 		detailItemAltimeters,
 		detailItemCg,
 		detailItemCgFrom,
@@ -344,19 +398,23 @@ export function useRocketDetailItemComponent(props, context, detailItem, options
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		recovery,
-		trackers,
 		dialogPartsDeleteManager,
 		dialogPartsDeleteMessage,
 		dialogAltimetersSearchManager,
 		dialogRecoverySearchManager,
 		dialogTrackersSearchManager,
 		clickAltimeterDelete,
+		clickAltimeterDeleteStage,
 		clickRecoveryDelete,
+		clickRecoveryDeleteStage,
 		clickTrackerDelete,
+		clickTrackerDeleteStage,
 		clickAltimetersSearch,
+		clickAltimetersSearchStage,
 		clickRecoverySearch,
+		clickRecoverySearchStage,
 		clickTrackersSearch,
+		clickTrackersSearchStage,
 		dialogPartsDeleteCancel,
 		dialogPartsDeleteOk,
 		resetEditData,

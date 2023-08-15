@@ -64,11 +64,11 @@ export function useRocketPartsComponent(props, context, options) {
 		return output;
 	});
 
-	const clickDelete = async (item) => {
-		context.emit('delete', item);
+	const clickDelete = async (item, stageId) => {
+		context.emit('delete', item, stageId);
 	};
-	const clickSelect = async (item) => {
-		context.emit('select', item);
+	const clickSelect = async (item, stageId) => {
+		context.emit('select', item, stageId);
 	};
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;

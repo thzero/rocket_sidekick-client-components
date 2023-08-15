@@ -27,6 +27,10 @@ export const useRocketPartsComponentProps = {
 		type: Boolean,
 		value: false
 	},
+	stageId: {
+		type: String,
+		value: null
+	},
 	typeIds: {
 		type: Array,
 		value: []

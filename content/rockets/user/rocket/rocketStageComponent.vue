@@ -1,5 +1,5 @@
 <script>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useRocketDetailItemComponent } from '@/components/content/rockets/user/rocket/rocketDetailItemComponent';
@@ -22,9 +22,17 @@ export function useRocketStageComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings
 	} = useToolsMeasurementSettingsComponent(props, context);
+
+	const detailItemI = ref({ data: props.detailItem });
 	
 	const {
 		altimeters,
+		detailItemData,
+		hasAltimeters,
+		hasRecovery,
+		hasTrackers,
+		recovery,
+		trackers,
 		detailItemAltimeters,
 		detailItemCg,
 		detailItemCgFrom,
@@ -48,24 +56,47 @@ export function useRocketStageComponent(props, context, options) {
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		recovery,
-		trackers,
+		dialogPartsDeleteManager,
+		dialogPartsDeleteMessage,
 		dialogAltimetersSearchManager,
 		dialogRecoverySearchManager,
 		dialogTrackersSearchManager,
+		clickAltimeterDelete,
+		clickAltimeterDeleteStage,
+		clickRecoveryDelete,
+		clickRecoveryDeleteStage,
+		clickTrackerDelete,
+		clickTrackerDeleteStage,
 		clickAltimetersSearch,
+		clickAltimetersSearchStage,
 		clickRecoverySearch,
+		clickRecoverySearchStage,
 		clickTrackersSearch,
+		clickTrackersSearchStage,
+		dialogPartsDeleteCancel,
+		dialogPartsDeleteOk,
 		resetEditData,
 		selectAltimeter,
 		selectRecovery,
 		selectTracker,
 		setEditData
-	} =  useRocketDetailItemComponent(props, context, options);
+	} = useRocketDetailItemComponent(props, context, detailItemI, options);
 
 	const displayItem = computed(() => {
-		return props.item ? props.item : {};
+		return props.detailItem ? props.detailItem : {};
 	});
+
+	const clickAltimeterDelete2 = async (item, stageId) => {
+		context.emit('deleteAltimeter', item, stageId);
+	};
+
+	const clickRecoveryDeleteStage2 = async (item, stageId) => {
+		context.emit('deleteRecovery', item, stageId);
+	};
+
+	const clickTrackerDeleteStage2 = async (item, stageId) => {
+		context.emit('deleteTracker', item, stageId);
+	};
 
 	return {
 		correlationId,
@@ -79,11 +110,65 @@ export function useRocketStageComponent(props, context, options) {
 		success,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
+		altimeters,
+		detailItemData,
+		hasAltimeters,
+		hasRecovery,
+		hasTrackers,
+		recovery,
+		trackers,
+		detailItemAltimeters,
+		detailItemCg,
+		detailItemCgFrom,
+		detailItemCgMeasurementUnitId,
+		detailItemCgMeasurementUnitsId,
+		detailItemCp,
+		detailItemCpFrom,
+		detailItemCpMeasurementUnitId,
+		detailItemCpMeasurementUnitsId,
+		detailItemDescription,
+		detailItemLength,
+		detailItemLengthMeasurementUnitId,
+		detailItemLengthMeasurementUnitsId,
+		detailItemName,
+		detailItemRecovery,
+		detailItemTrackers,
+		detailItemWeight,
+		detailItemWeightMeasurementUnitId,
+		detailItemWeightMeasurementUnitsId,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		displayItem
+		dialogPartsDeleteManager,
+		dialogPartsDeleteMessage,
+		dialogAltimetersSearchManager,
+		dialogRecoverySearchManager,
+		dialogTrackersSearchManager,
+		clickAltimeterDelete,
+		clickAltimeterDeleteStage,
+		clickRecoveryDelete,
+		clickRecoveryDeleteStage,
+		clickTrackerDelete,
+		clickTrackerDeleteStage,
+		clickAltimetersSearch,
+		clickAltimetersSearchStage,
+		clickRecoverySearch,
+		clickRecoverySearchStage,
+		clickTrackersSearch,
+		clickTrackersSearchStage,
+		dialogPartsDeleteCancel,
+		dialogPartsDeleteOk,
+		resetEditData,
+		selectAltimeter,
+		selectRecovery,
+		selectTracker,
+		setEditData,
+		detailItemI,
+		displayItem,
+		clickAltimeterDelete2,
+		clickRecoveryDeleteStage2,
+		clickTrackerDeleteStage2
 	};
 };
 </script>

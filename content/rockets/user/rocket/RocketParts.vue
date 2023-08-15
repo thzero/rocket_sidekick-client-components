@@ -65,13 +65,13 @@
 									v-if="deletable"
 									:variant="buttonsForms.variant.delete"
 									:color="buttonsForms.color.delete"
-									@click="clickDelete(item2)"
+									@click="clickDelete(item2, stageId)"
 								>{{ $t('buttons.delete') }}</v-btn>
 								<v-btn
 									v-if="selectable"
 									:variant="buttonsForms.variant.default"
 									:color="buttonsForms.color.default"
-									@click="clickSelect(item2)"
+									@click="clickSelect(item2, stageId)"
 								>{{ $t('buttons.select') }}</v-btn>
 							</v-card-actions>
 						</v-card>

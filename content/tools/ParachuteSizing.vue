@@ -38,7 +38,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<td class="measurementUnit">
 											<MeasurementUnitSelect
 												ref="airDensityMeasurementUnitIdRef"
 												v-model="airDensityMeasurementUnitId"
@@ -73,7 +73,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<td class="measurementUnit">
 											<MeasurementUnitSelect
 												ref="massWeightMeasurementUnitIdRef"
 												v-model="massWeightMeasurementUnitId"
@@ -119,7 +119,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<td class="measurementUnit">
 											<MeasurementUnitSelect
 												ref="desiredVelocityMeasurementUnitIdRef"
 												v-model="desiredVelocityMeasurementUnitId"
@@ -150,7 +150,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<td class="measurementUnit">
 											<MeasurementUnitSelect
 												ref="diameterLengthMeasurementUnitIdRef"
 												v-model="diameterLengthMeasurementUnitId"
