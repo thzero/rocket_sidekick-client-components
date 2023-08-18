@@ -264,7 +264,6 @@
 	</v-row>
 	<v-row dense>
 		<v-col>
-			[[ {{ panels }}]]
 			<v-expansion-panels
 				v-model="panels"
 				multiple
