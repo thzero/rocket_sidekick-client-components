@@ -23,6 +23,10 @@ export const useRocketPartsComponentProps = {
 		type: String,
 		value: null
 	},
+	search: {
+		type: Boolean,
+		value: false
+	},
 	selectable: {
 		type: Boolean,
 		value: false

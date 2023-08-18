@@ -51,6 +51,12 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return [];
 		return rocket.value.albums;
 	});
+	const displayTypeSite = computed(() => {
+		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site);
+	});
+	const displayTypeUser = computed(() => {
+		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.User);
+	});
 	const hasAlbums = computed(() => {
 		if (!rocket.value || !rocket.value.albums)
 			return false;
@@ -61,7 +67,7 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return false;
 		return rocket.value.logs.length > 0;
 	});
-	const hasAlbumsOrVideos= computed(() => {
+	const hasAlbumsOrVideos = computed(() => {
 		return hasAlbums.value || hasVideos.value;
 	});
 	const hasVideos = computed(() => {
@@ -76,11 +82,10 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return '/user/rockets';
 		return null;
 	});
-	const displayTypeSite = computed(() => {
-		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site);
-	});
-	const displayTypeUser = computed(() => {
-		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.User);
+	const stagePrimary = computed(() => {
+		if (!rocket.value || !rocket.value.stages || rocket.value.stages.length === 0)
+			return {};
+		return rocket.value.stages[0];
 	});
 
 	const fetch = async () => {
@@ -122,24 +127,27 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		serviceStore,
 		sortByOrder,
 		target,
-		albums,
-		hasAlbums,
-		hasAlbumsOrVideos,
-		hasLaunches,
-		hasVideos,
+		rocket,
+		rocketId,
+		buttonsDialog,
+		buttonsForms,
+		rocketTypes,
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
-		rocket,
-		buttonsDialog,
-		buttonsForms,
-		rocketId,
+		albums,
 		displayTypeSite,
 		displayTypeUser,
+		hasAlbums,
+		hasLaunches,
+		hasAlbumsOrVideos,
+		hasVideos,
+		rocketsUrl,
+		stagePrimary,
+		fetch,
 		measurementUnitTranslateLength,
 		measurementUnitTranslateWeight,
-		videos,
-		rocketsUrl
+		videos
 	};
 };
 </script>

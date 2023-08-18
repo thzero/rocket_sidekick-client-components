@@ -33,6 +33,30 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
+			<v-col cols="6">
+				<VSelectWithValidation
+					ref="manufacturerRef"
+					v-model="detailItemManufacturer"
+					vid="detailItemManufacturer"
+					:items="manufacturers"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.manufacturer.name')"
+				/>
+			</v-col>
+			<v-col cols="6">
+				<VTextFieldWithValidation
+					ref="detailItemManufacturerStockIdRef"
+					v-model="detailItemManufacturerStockId"
+					vid="detailItemManufacturerStockId"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.parts.manufacturerId')"
+					:counter="30"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
 			<v-col>
 				<VTextAreaWithValidation
 					ref="descriptionRef"
@@ -49,9 +73,9 @@
 		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
-					ref="detailItemDiameterRef"
-					v-model="detailItemDiameter"
-					vid="detailItemDiameterr"
+					ref="detailItemDiameterMajorRef"
+					v-model="detailItemDiameterMajor"
+					vid="detailItemDiameterMajorr"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.rockets.diameter.name')"
@@ -62,9 +86,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="detailItemDiameterMeasurementUnitsIdRef"
-								v-model="detailItemDiameterMeasurementUnitsId"
-								vid="detailItemDiameterMeasurementUnitsId"
+								ref="detailItemDiameterMajorMeasurementUnitsIdRef"
+								v-model="detailItemDiameterMajorMeasurementUnitsId"
+								vid="detailItemDiameterMajorMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -72,10 +96,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="detailItemDiameterMeasurementUnitIdRef"
-								v-model="detailItemDiameterMeasurementUnitId"
-								vid="detailItemDiameterMeasurementUnitId"
-								:measurementUnitsId="detailItemDiameterMeasurementUnitsId"
+								ref="detailItemDiameterMajorMeasurementUnitIdRef"
+								v-model="detailItemDiameterMajorMeasurementUnitId"
+								vid="detailItemDiameterMajorMeasurementUnitId"
+								:measurementUnitsId="detailItemDiameterMajorMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -251,6 +275,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import { useDetailFormDialogProps } from '@/components/content/detailFormDialogProps';
 import { useRocketStageEditDialogComponent } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogComponent';
 import { useRocketStageEditDialogValidation } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogValidation';
+import { useRocketStageEditDialogComponentProps } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogComponentProps';
 import { useRocketEditValidation } from '@/components/content/rockets/user/rocket/rocketEditValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
@@ -277,27 +302,18 @@ export default {
 		VTextFieldWithValidation
 	},
 	props: {
-		...useDetailFormDialogProps
+		...useDetailFormDialogProps,
+		...useRocketStageEditDialogComponentProps
 	},
 	emits: ['close', 'error', 'ok'],
 	setup (props, context) {
 		const {
-			correlationId,
-			error,
-			hasFailed,
-			hasSucceeded,
-			initialize,
-			logger,
-			noBreakingSpaces,
-			notImplementedError,
-			success,
+			detailItem,
 			detailItemTextRows,
 			dialogError,
 			dialogClose,
 			dialogOk,
 			isEditable,
-			altimeters,
-			detailItemAltimeters,
 			detailItemCg,
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
@@ -307,12 +323,18 @@ export default {
 			detailItemCpMeasurementUnitId,
 			detailItemCpMeasurementUnitsId,
 			detailItemDescription,
+			detailItemDiameterMajor,
+			detailItemDiameterMajorMeasurementUnitId,
+			detailItemDiameterMajorMeasurementUnitsId,
+			detailItemDiameterMinor,
+			detailItemDiameterMinorMeasurementUnitId,
+			detailItemDiameterMinorMeasurementUnitsId,
 			detailItemLength,
 			detailItemLengthMeasurementUnitId,
 			detailItemLengthMeasurementUnitsId,
+			detailItemManufacturer,
+			detailItemManufacturerStockId,
 			detailItemName,
-			detailItemRecovery,
-			detailItemTrackers,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
@@ -320,16 +342,8 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			recovery,
-			trackers,
-			dialogRecoverySearchManager,
-			clickRecoverySearch,
 			resetEditData,
-			selectRecovery,
 			setEditData,
-			detailItemDiameter,
-			detailItemDiameterMeasurementUnitId,
-			detailItemDiameterMeasurementUnitsId,
 			displayName,
 			preCompleteOk,
 			resetAdditional,
@@ -339,22 +353,12 @@ export default {
 		} = useRocketStageEditDialogComponent(props, context);
 
 		return {
-			correlationId,
-			error,
-			hasFailed,
-			hasSucceeded,
-			initialize,
-			logger,
-			noBreakingSpaces,
-			notImplementedError,
-			success,
+			detailItem,
 			detailItemTextRows,
 			dialogError,
 			dialogClose,
 			dialogOk,
 			isEditable,
-			altimeters,
-			detailItemAltimeters,
 			detailItemCg,
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
@@ -364,12 +368,18 @@ export default {
 			detailItemCpMeasurementUnitId,
 			detailItemCpMeasurementUnitsId,
 			detailItemDescription,
+			detailItemDiameterMajor,
+			detailItemDiameterMajorMeasurementUnitId,
+			detailItemDiameterMajorMeasurementUnitsId,
+			detailItemDiameterMinor,
+			detailItemDiameterMinorMeasurementUnitId,
+			detailItemDiameterMinorMeasurementUnitsId,
 			detailItemLength,
 			detailItemLengthMeasurementUnitId,
 			detailItemLengthMeasurementUnitsId,
+			detailItemManufacturer,
+			detailItemManufacturerStockId,
 			detailItemName,
-			detailItemRecovery,
-			detailItemTrackers,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
@@ -377,15 +387,8 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			recovery,
-			trackers,
-			dialogRecoverySearchManager,
 			resetEditData,
-			selectRecovery,
 			setEditData,
-			detailItemDiameter,
-			detailItemDiameterMeasurementUnitId,
-			detailItemDiameterMeasurementUnitsId,
 			displayName,
 			preCompleteOk,
 			resetAdditional,
