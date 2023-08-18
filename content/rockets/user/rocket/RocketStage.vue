@@ -23,7 +23,7 @@
 			<v-col cols="6">
 				<VSelect
 					ref="manufacturerRef"
-					v-model="detailItemManufacturer"
+					v-model="displayItem.manufacturerId"
 					vid="detailItemManufacturer"
 					:items="manufacturers"
 					:readonly="true"
@@ -33,7 +33,7 @@
 			<v-col cols="6">
 				<VTextField
 					ref="detailItemManufacturerStockIdRef"
-					v-model="detailItemManufacturerStockId"
+					v-model="displayItem.manufacturerStockId"
 					vid="detailItemManufacturerStockId"
 					:readonly="true"
 					:label="$t('forms.content.parts.manufacturerId')"
@@ -264,7 +264,6 @@
 	</v-row>
 	<v-row dense>
 		<v-col>
-			[[ {{ panels }}]]
 			<v-expansion-panels
 				v-model="panels"
 				multiple
@@ -380,6 +379,7 @@ export default {
 			success,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			displayItem,
 			altimeters,
 			detailItemData,
 			hasAltimeters,
@@ -387,27 +387,6 @@ export default {
 			hasTrackers,
 			recovery,
 			trackers,
-			detailItemAltimeters,
-			detailItemCg,
-			detailItemCgFrom,
-			detailItemCgMeasurementUnitId,
-			detailItemCgMeasurementUnitsId,
-			detailItemCp,
-			detailItemCpFrom,
-			detailItemCpMeasurementUnitId,
-			detailItemCpMeasurementUnitsId,
-			detailItemDescription,
-			detailItemLength,
-			detailItemLengthMeasurementUnitId,
-			detailItemLengthMeasurementUnitsId,
-			detailItemManufacturer,
-			detailItemManufacturerStockId,
-			detailItemName,
-			detailItemRecovery,
-			detailItemTrackers,
-			detailItemWeight,
-			detailItemWeightMeasurementUnitId,
-			detailItemWeightMeasurementUnitsId,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
@@ -427,13 +406,10 @@ export default {
 			handleAltimeterDeleteStage,
 			handleRecoveryDeleteStage,
 			handleTrackerDeleteStage,
-			resetEditData,
+			panelsUpdated,
 			selectAltimeter,
 			selectRecovery,
-			selectTracker,
-			setEditData,
-			displayItem,
-			panelsUpdated
+			selectTracker
 		} = useRocketStageComponent(props, context, options);
 
 		return {
@@ -448,6 +424,7 @@ export default {
 			success,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			displayItem,
 			altimeters,
 			detailItemData,
 			hasAltimeters,
@@ -455,27 +432,6 @@ export default {
 			hasTrackers,
 			recovery,
 			trackers,
-			detailItemAltimeters,
-			detailItemCg,
-			detailItemCgFrom,
-			detailItemCgMeasurementUnitId,
-			detailItemCgMeasurementUnitsId,
-			detailItemCp,
-			detailItemCpFrom,
-			detailItemCpMeasurementUnitId,
-			detailItemCpMeasurementUnitsId,
-			detailItemDescription,
-			detailItemLength,
-			detailItemLengthMeasurementUnitId,
-			detailItemLengthMeasurementUnitsId,
-			detailItemManufacturer,
-			detailItemManufacturerStockId,
-			detailItemName,
-			detailItemRecovery,
-			detailItemTrackers,
-			detailItemWeight,
-			detailItemWeightMeasurementUnitId,
-			detailItemWeightMeasurementUnitsId,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
@@ -495,13 +451,10 @@ export default {
 			handleAltimeterDeleteStage,
 			handleRecoveryDeleteStage,
 			handleTrackerDeleteStage,
-			resetEditData,
+			panelsUpdated,
 			selectAltimeter,
 			selectRecovery,
-			selectTracker,
-			setEditData,
-			displayItem,
-			panelsUpdated
+			selectTracker
 		};
 	}
 };
