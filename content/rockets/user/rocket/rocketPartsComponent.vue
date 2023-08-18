@@ -91,10 +91,24 @@ export function useRocketPartsComponent(props, context, options) {
 		return props.id + '-parts-' + props.panelTypeId;
 	};
 	const panelsUpdated = async (value) => {
-		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
+		if (props.updatePanelsF) 
+			await props.updatePanelsF(value);
 	};
 
 	onMounted(async () => {
+		const temp3 = await serviceStore.getters.getRocketsExpanded();
+		const temp4 = temp3[panelsLKey()];
+		panels.value = temp4 ?? [ 
+			AppCommonConstants.Rocketry.ManufacturerTypes.altimeter, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag, 
+			AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
+			AppCommonConstants.Rocketry.ManufacturerTypes.streamer,
+			AppCommonConstants.Rocketry.ManufacturerTypes.tracker
+		];
+		
 		if (manufacturersI.value)
 			return;
 
@@ -114,21 +128,7 @@ export function useRocketPartsComponent(props, context, options) {
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
-			
-		const temp3 = await serviceStore.getters.getRocketsExpanded();
-		const temp4 = temp3[panelsLKey()];
-		panels.value = temp4 ?? [ 
-			AppCommonConstants.Rocketry.ManufacturerTypes.altimeter, 
-			AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector, 
-			AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease, 
-			AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector, 
-			AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag, 
-			AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
-			AppCommonConstants.Rocketry.ManufacturerTypes.streamer,
-			AppCommonConstants.Rocketry.ManufacturerTypes.tracker
-		];
 	});
-	
 	
 	return {
 		correlationId,

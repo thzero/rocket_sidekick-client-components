@@ -19,11 +19,32 @@
 			/>
 		</v-col>
 	</v-row>
+		<v-row dense>
+			<v-col cols="6">
+				<VSelect
+					ref="manufacturerRef"
+					v-model="detailItemManufacturer"
+					vid="detailItemManufacturer"
+					:items="manufacturers"
+					:readonly="true"
+					:label="$t('forms.content.manufacturer.name')"
+				/>
+			</v-col>
+			<v-col cols="6">
+				<VTextField
+					ref="detailItemManufacturerStockIdRef"
+					v-model="detailItemManufacturerStockId"
+					vid="detailItemManufacturerStockId"
+					:readonly="true"
+					:label="$t('forms.content.parts.manufacturerId')"
+				/>
+			</v-col>
+		</v-row>
 	<v-row dense>
 		<v-col cols="5" md="2">
 			<VNumberField
 				ref="di-diameter"
-				v-model="displayItem.diameter"
+				v-model="displayItem.diameterMajor"
 				:readonly="true"
 				:label="$t('forms.content.rockets.diameter.name')"
 			/>
@@ -33,15 +54,15 @@
 				<tr>
 					<td class="measurementUnits">
 						<MeasurementUnitsSelect
-							v-model="displayItem.diameterMeasurementUnitsId"
+							v-model="displayItem.diameterMajorMeasurementUnitsId"
 							:readonly="true"
 							:label="$t('forms.settings.measurementUnits.title')"
 						/>
 					</td>
 					<td class="measurementUnit">
 						<MeasurementUnitSelect
-							v-model="displayItem.diameterMeasurementUnitId"
-							:measurementUnitsId="displayItem.diameterMeasurementUnitsId"
+							v-model="displayItem.diameterMajorMeasurementUnitId"
+							:measurementUnitsId="displayItem.diameterMajorMeasurementUnitsId"
 							:measurementUnitsType="measurementUnitsLengthType"
 							:readonly="true"
 							:label="$t('forms.settings.measurementUnits.length')"
@@ -177,96 +198,146 @@
 	</v-row>
 	<v-row dense>
 		<v-col>
-			<v-expansion-panels
-				multiple
+			<div
+				v-if="isEditable"
+				class="d-flex"
 			>
-				<v-expansion-panel
-					v-if="hasAltimeters"
-					value="altimeters"
+				<v-spacer></v-spacer>
+				<div
+					v-if="isEditable"
+					class="pl-4 pr-4 pb-2 pt-2"
 				>
-					<v-expansion-panel-title
+					<v-btn
+						class="mr-2"
 						color="primary"
 					>
-						{{ $t(`forms.content.parts.altimeter.plural`) }}
-					</v-expansion-panel-title>
-					<v-expansion-panel-text>
-						<RocketParts
-							class="mt-2"
-							:items="altimeters"
-							panelTypeId="altimeters"
-							:deletable="isEditable"
-							:stage-id="detailItemData.id"
-							@delete="clickAltimeterDelete2"
+						{{ $t('buttons.add') }}
+						<v-menu 
+							activator="parent"
+							location="top"
 						>
-						</RocketParts>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-				<v-expansion-panel
-					v-if="hasRecovery"
-					value="recovery"
-				>
-					<v-expansion-panel-title
-						color="primary"
+							<v-list>
+								<v-list-item>
+									<v-btn
+										variant="flat"
+										color="purple"
+										@click="clickAltimetersSearchStage(detailItemData.id)"
+									>
+										{{ $t('forms.content.parts.altimeter.name') }}
+									</v-btn>
+								</v-list-item>
+								<v-list-item>
+									<v-btn
+										variant="flat"
+										color="orange"
+										@click="clickRecoverySearchStage(item)"
+									>
+										{{ $t('forms.content.parts.recovery') }}
+									</v-btn>
+								</v-list-item>
+								<v-list-item>
+									<v-btn
+										variant="flat"
+										color="blue"
+										@click="clickTrackersSearchStage(item)"
+									>
+										{{ $t('forms.content.parts.tracker.name') }}
+									</v-btn>
+								</v-list-item>
+							</v-list>
+						</v-menu>
+					</v-btn>
+					<slot 
+						v-if="isEditable"
+						name="actionsEdit"
 					>
-						{{ $t(`forms.content.parts.recovery`) }}
-					</v-expansion-panel-title>
-					<v-expansion-panel-text>
-						<RocketParts
-							class="mt-2"
-							:items="recovery"
-							panelTypeId="recovery"
-							:deletable="isEditable"
-							:stageId="detailItemData.id"
-							@delete="clickRecoveryDeleteStage2"
-						>
-						</RocketParts>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-				<v-expansion-panel
-					v-if="hasTrackers"
-					value="trackers"
+					</slot>
+				</div>
+				<div>
+					<slot 
+						v-if="!isEditable"
+						name="actionsView"
+					></slot>
+				</div>
+			</div>
+		</v-col>
+	</v-row>
+	<v-row dense>
+		<v-col>
+			[[ {{ panels }}]]
+			<v-expansion-panels
+				v-model="panels"
+				multiple
+				@update:modelValue="panelsUpdated"
+			>
+				<RocketParts
+					:items="altimeters"
+					:deletable="isEditable"
+					:stage-id="detailItemData.id"
+					@delete="handleAltimeterDeleteStage"
 				>
-					<v-expansion-panel-title
-						color="primary"
-					>
-						{{ $t(`forms.content.parts.tracker.plural`) }}
-					</v-expansion-panel-title>
-					<v-expansion-panel-text>
-						<RocketParts
-							class="mt-2"
-							:items="trackers"
-							panelTypeId="trackers"
-							:deletable="isEditable"
-							:stage-id="detailItemData.id"
-							@Wdelete="clickTrackerDeleteStage2"
-						>
-						</RocketParts>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
+				</RocketParts>
+				<RocketParts
+					:items="recovery"
+					:deletable="isEditable"
+					:stageId="detailItemData.id"
+					@delete="handleRecoveryDeleteStage"
+				>
+				</RocketParts>
+				<RocketParts
+					:items="trackers"
+					:deletable="isEditable"
+					:stageId="detailItemData.id"
+					@delete="handleTrackerDeleteStage"
+				></RocketParts>
 			</v-expansion-panels>
 		</v-col>
 	</v-row>
-	<div
-		v-if="isEditable"
-		class="d-flex"
-	>
-		<v-spacer></v-spacer>
-		<div>
-			<slot name="actionsEdit"></slot>
-		</div>
-		<div>
-			<slot name="actionsView"></slot>
-		</div>
-	</div>
+	<AltimetersLookupDialog
+		ref="dialogAltimetersSearchManagerRef"
+		:signal="dialogAltimetersSearchManager.signal"
+		@close="dialogAltimetersSearchManager.cancel()"
+		@ok="selectAltimeter"
+	/>
+	<RecoveryLookupDialog
+		ref="dialogRecoverySearchRef"
+		:signal="dialogRecoverySearchManager.signal"
+		@close="dialogRecoverySearchManager.cancel()"
+		@ok="selectRecovery"
+	/>
+	<TrackersLookupDialog
+		ref="dialogTrackersSearchRef"
+		:signal="dialogTrackersSearchManager.signal"
+		@close="dialogTrackersSearchManager.cancel()"
+		@ok="selectTracker"
+	/>
+	<VConfirmationDialog
+		ref="dialogPartsDeleteRef"
+		:message="dialogPartsDeleteMessage"
+		:messageRaw=true
+		:signal="dialogPartsDeleteManager.signal"
+		@cancel="dialogPartsDeleteCancel"
+		@ok="dialogPartsDeleteOk"
+	/>
 </template>
 
 <script>
 import { useRocketStageComponent } from '@/components/content/rockets/user/rocket/rocketStageComponent';
 import { useRocketStageComponentProps } from '@/components/content/rockets/user/rocket/rocketStageComponentProps';
 
+import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
+import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
+import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
+import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
+
+import AltimetersLookupDialog from '@/components/content/rockets/user/dialogs/altimeters/AltimetersLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
+import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
+import TrackersLookupDialog from '@/components/content/rockets/user/dialogs/trackers/TrackersLookupDialog';
+import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
+import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VNumberField';
 import VSelect from '@thzero/library_client_vue3_vuetify3/components/form/VSelect';
 import VTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea';
@@ -275,9 +346,18 @@ import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTe
 export default {
 	name: 'RocketStageControl',
 	components: {
+		AltimetersLookupDialog,
+		ChuteProtectorPanelTitle,
+		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
+		ParachutePanelTitle,
 		RocketParts,
+		RecoveryLookupDialog,
+		StreamerPanelTitle,
+		TrackersLookupDialog,
+		VConfirmationDialog,
+		VFormControl,
 		VNumberField,
 		VSelect,
 		VTextArea,
@@ -286,7 +366,7 @@ export default {
 	props: {
 		...useRocketStageComponentProps
 	},
-	emits: ['deleteAltimeter', 'deleteRecovery', 'deleteTracker'],
+	// emits: ['deleteAltimeter', 'deleteRecovery', 'deleteTracker'],
 	setup (props, context, options) {
 		const {
 			correlationId,
@@ -320,6 +400,8 @@ export default {
 			detailItemLength,
 			detailItemLengthMeasurementUnitId,
 			detailItemLengthMeasurementUnitsId,
+			detailItemManufacturer,
+			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemRecovery,
 			detailItemTrackers,
@@ -335,30 +417,23 @@ export default {
 			dialogAltimetersSearchManager,
 			dialogRecoverySearchManager,
 			dialogTrackersSearchManager,
-			clickAltimeterDelete,
-			clickAltimeterDeleteStage,
-			clickRecoveryDelete,
-			clickRecoveryDeleteStage,
-			clickTrackerDelete,
-			clickTrackerDeleteStage,
-			clickAltimetersSearch,
+			manufacturers,
+			panels,
 			clickAltimetersSearchStage,
-			clickRecoverySearch,
 			clickRecoverySearchStage,
-			clickTrackersSearch,
 			clickTrackersSearchStage,
 			dialogPartsDeleteCancel,
 			dialogPartsDeleteOk,
+			handleAltimeterDeleteStage,
+			handleRecoveryDeleteStage,
+			handleTrackerDeleteStage,
 			resetEditData,
 			selectAltimeter,
 			selectRecovery,
 			selectTracker,
 			setEditData,
-			detailItemI,
 			displayItem,
-			clickAltimeterDelete2,
-			clickRecoveryDeleteStage2,
-			clickTrackerDeleteStage2
+			panelsUpdated
 		} = useRocketStageComponent(props, context, options);
 
 		return {
@@ -393,6 +468,8 @@ export default {
 			detailItemLength,
 			detailItemLengthMeasurementUnitId,
 			detailItemLengthMeasurementUnitsId,
+			detailItemManufacturer,
+			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemRecovery,
 			detailItemTrackers,
@@ -408,30 +485,23 @@ export default {
 			dialogAltimetersSearchManager,
 			dialogRecoverySearchManager,
 			dialogTrackersSearchManager,
-			clickAltimeterDelete,
-			clickAltimeterDeleteStage,
-			clickRecoveryDelete,
-			clickRecoveryDeleteStage,
-			clickTrackerDelete,
-			clickTrackerDeleteStage,
-			clickAltimetersSearch,
+			manufacturers,
+			panels,
 			clickAltimetersSearchStage,
-			clickRecoverySearch,
 			clickRecoverySearchStage,
-			clickTrackersSearch,
 			clickTrackersSearchStage,
 			dialogPartsDeleteCancel,
 			dialogPartsDeleteOk,
+			handleAltimeterDeleteStage,
+			handleRecoveryDeleteStage,
+			handleTrackerDeleteStage,
 			resetEditData,
 			selectAltimeter,
 			selectRecovery,
 			selectTracker,
 			setEditData,
-			detailItemI,
 			displayItem,
-			clickAltimeterDelete2,
-			clickRecoveryDeleteStage2,
-			clickTrackerDeleteStage2
+			panelsUpdated
 		};
 	}
 };

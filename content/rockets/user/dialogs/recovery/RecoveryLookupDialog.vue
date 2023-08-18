@@ -184,13 +184,18 @@
 				class="row"
 				style="height: 35vh"
 			>
-				<RocketParts
-					:items="results"
-					:selectable="true"
-					panelTypeId="recovery-search"
-					@select="clickRecoverySelect"
+				<v-expansion-panels
+					multiple
 				>
-				</RocketParts>
+					<RocketParts
+						:items="results"
+						:selectable="true"
+						:search="true"
+						panel-type-id="recovery-search"
+						@select="clickRecoverySelect"
+					>
+					</RocketParts>
+				</v-expansion-panels>
 			</div>
 		</template>
 	</VFormListingDialog>
