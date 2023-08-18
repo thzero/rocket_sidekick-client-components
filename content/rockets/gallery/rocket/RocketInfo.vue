@@ -57,46 +57,46 @@
 				<v-col cols="12">
 					<v-card>
 						<v-card-title>
-		<p class="text-h6 text-center">{{ $t('titles.rockets.specifications') }}</p>
+							<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
 						</v-card-title>
 						<v-card-text>
 							<table>
 								<tr>
 									<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
-									<td>{{ rocket.diameterMajor }} {{ measurementUnitTranslateLength(rocket.detailItemDiameterMajorMeasurementUnitsId, rocket.detailItemDiameterMajorMeasurementUnitsId) }} </td>
+									<td>{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(rocket.detailItemDiameterMajorMeasurementUnitsId, rocket.detailItemDiameterMajorMeasurementUnitsId) }} </td>
 								</tr>
 								<tr>
 									<td nowrap class="specifications">{{ $t('strings.measurements.length') }}</td>
-									<td>{{ rocket.length }} {{ measurementUnitTranslateLength(rocket.lengthMeasurementUnitsId, rocket.lengthMeasurementUnitId) }}</td>
+									<td>{{ stagePrimary.length }} {{ measurementUnitTranslateLength(rocket.lengthMeasurementUnitsId, rocket.lengthMeasurementUnitId) }}</td>
 								</tr>
 								<tr>
 									<td nowrap class="specifications">{{ $t('strings.measurements.weight') }}</td>
-									<td>{{ rocket.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitsId, rocket.weightMeasurementUnitId) }}</td>
+									<td>{{ stagePrimary.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitsId, rocket.weightMeasurementUnitId) }}</td>
 								</tr>
 								<tr
-									v-if="rocket.cg"
+									v-if="stagePrimary.cg"
 								>
 									<td nowrap class="specifications">{{ $t('strings.rockets.cg') }}</td>
-									<td>{{ rocket.cg }} {{ measurementUnitTranslateLength(rocket.cgMeasurementUnitsId, rocket.cgMeasurementUnitId) }} </td>
+									<td>{{ stagePrimary.cg }} {{ measurementUnitTranslateLength(rocket.cgMeasurementUnitsId, rocket.cgMeasurementUnitId) }} </td>
 								</tr>
 								<tr
-									v-if="rocket.cp"
+									v-if="stagePrimary.cp"
 								>
 									<td nowrap class="specifications">{{ $t('strings.rockets.cp') }}</td>
-									<td>{{ rocket.cp }} {{ measurementUnitTranslateLength(rocket.cpMeasurementUnitsId, rocket.cpMeasurementUnitId) }} </td>
+									<td>{{ stagePrimary.cp }} {{ measurementUnitTranslateLength(rocket.cpMeasurementUnitsId, rocket.cpMeasurementUnitId) }} </td>
 								</tr>
 								<tr
-									v-if="rocket.manufacturerId"
+									v-if="stagePrimary.manufacturerId"
 								>
 									<td nowrap class="specifications">{{ $t('strings.rockets.manufacturer') }}</td>
 									<td>
 										<span>
-											{{ rocket.cp }}
+											{{ stagePrimary.cp }}
 										</span>
 										<span
-											v-if="rocket.manufacturerStockId"
+											v-if="stagePrimary.manufacturerStockId"
 										>
-											({{ rocket.manufacturerStockId }})
+											({{ stagePrimary.manufacturerStockId }})
 										</span>
 									</td>
 								</tr>
@@ -119,7 +119,7 @@
 				>
 					<v-card>
 						<v-card-title>
-			<p class="text-h6 text-center">{{ $t('titles.rockets.albums') }}</p>
+			<p class="text-h6 text-center">{{ $t('titles.content.rockets.albums') }}</p>
 						</v-card-title>
 						<v-card-text>
 			<v-list density="compact">
@@ -142,7 +142,7 @@
 				>
 					<v-card>
 						<v-card-title>
-		<p class="text-h6 text-center">{{ $t('titles.rockets.videos') }}</p>
+		<p class="text-h6 text-center">{{ $t('titles.content.rockets.videos') }}</p>
 						</v-card-title>
 						<v-card-text>
 			<v-list density="compact">
@@ -206,24 +206,27 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
-			albums,
-			hasAlbums,
-			hasAlbumsOrVideos,
-			hasLaunches,
-			hasVideos,
+			rocket,
+			rocketId,
+			buttonsDialog,
+			buttonsForms,
+			rocketTypes,
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
-			rocket,
-			buttonsDialog,
-			buttonsForms,
-			rocketId,
+			albums,
 			displayTypeSite,
 			displayTypeUser,
+			hasAlbums,
+			hasLaunches,
+			hasAlbumsOrVideos,
+			hasVideos,
+			rocketsUrl,
+			stagePrimary,
+			fetch,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
-			videos,
-			rocketsUrl
+			videos
 		} = useRocketInfoBaseComponent(props, context);
 
 		return {
@@ -239,24 +242,27 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
-			albums,
-			hasAlbums,
-			hasAlbumsOrVideos,
-			hasLaunches,
-			hasVideos,
+			rocket,
+			rocketId,
+			buttonsDialog,
+			buttonsForms,
+			rocketTypes,
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
-			rocket,
-			buttonsDialog,
-			buttonsForms,
-			rocketId,
+			albums,
 			displayTypeSite,
 			displayTypeUser,
+			hasAlbums,
+			hasLaunches,
+			hasAlbumsOrVideos,
+			hasVideos,
+			rocketsUrl,
+			stagePrimary,
+			fetch,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
-			videos,
-			rocketsUrl
+			videos
 		};
 	}
 };

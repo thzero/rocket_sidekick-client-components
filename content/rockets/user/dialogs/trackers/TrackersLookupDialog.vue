@@ -85,13 +85,18 @@
 				class="row"
 				style="height: 35vh"
 			>
-				<RocketParts
-					:items="results"
-					:selectable="true"
-					panelTypeId="trackers-search"
-					@select="clickTrackersSelect"
+				<v-expansion-panels
+					multiple
 				>
-				</RocketParts>
+					<RocketParts
+						:items="results"
+						:selectable="true"
+						:search="true"
+						panel-type-id="trackers-search"
+						@select="clickTrackersSelect"
+					>
+					</RocketParts>
+				</v-expansion-panels>
 			</div>
 		</template>
 	</VFormListingDialog>
