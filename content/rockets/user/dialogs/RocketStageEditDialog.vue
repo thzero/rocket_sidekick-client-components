@@ -187,8 +187,46 @@
 					</tr>
 				</table>
 			</v-col>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemCpRef"
+					v-model="detailItemCp"
+					vid="detailItemCp"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.cp')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="detailItemCpMeasurementUnitsIdRef"
+								v-model="detailItemCpMeasurementUnitsId"
+								vid="detailItemCpMeasurementUnitsId"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="detailItemCpMeasurementUnitIdRef"
+								v-model="detailItemCpMeasurementUnitId"
+								vid="detailItemCpMeasurementUnitId"
+								:measurementUnitsId="detailItemCpMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
 		</v-row>
-		<v-row dense>
+		<!-- <v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemCgRef"
@@ -265,7 +303,7 @@
 					</tr>
 				</table>
 			</v-col>
-		</v-row>
+		</v-row> -->
 	</VFormDialog>
 </template>
 
@@ -314,10 +352,10 @@ export default {
 			dialogClose,
 			dialogOk,
 			isEditable,
-			detailItemCg,
-			detailItemCgFrom,
-			detailItemCgMeasurementUnitId,
-			detailItemCgMeasurementUnitsId,
+			// detailItemCg,
+			// detailItemCgFrom,
+			// detailItemCgMeasurementUnitId,
+			// detailItemCgMeasurementUnitsId,
 			detailItemCp,
 			detailItemCpFrom,
 			detailItemCpMeasurementUnitId,
@@ -359,10 +397,10 @@ export default {
 			dialogClose,
 			dialogOk,
 			isEditable,
-			detailItemCg,
-			detailItemCgFrom,
-			detailItemCgMeasurementUnitId,
-			detailItemCgMeasurementUnitsId,
+			// detailItemCg,
+			// detailItemCgFrom,
+			// detailItemCgMeasurementUnitId,
+			// detailItemCgMeasurementUnitsId,
 			detailItemCp,
 			detailItemCpFrom,
 			detailItemCpMeasurementUnitId,

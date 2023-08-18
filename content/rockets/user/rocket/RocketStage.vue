@@ -133,8 +133,38 @@
 				</tr>
 			</table>
 		</v-col>
+		<v-col cols="5" md="2">
+			<VNumberField
+				ref="di-cp"
+				v-model="displayItem.cp"
+				:readonly="true"
+				:label="$t('forms.content.rockets.cp')"
+			/>
+		</v-col>
+		<v-col cols="7" md="4">
+			<table>
+				<tr>
+					<td class="measurementUnits">
+						<MeasurementUnitsSelect
+							v-model="displayItem.cpMeasurementUnitsId"
+							:readonly="true"
+							:label="$t('forms.settings.measurementUnits.title')"
+						/>
+					</td>
+					<td class="measurementUnit">
+						<MeasurementUnitSelect
+							v-model="displayItem.cpMeasurementUnitId"
+							:measurementUnitsId="displayItem.cpMeasurementUnitsId"
+							:measurementUnitsType="measurementUnitsLengthType"
+							:readonly="true"
+							:label="$t('forms.settings.measurementUnits.length')"
+						/>
+					</td>
+				</tr>
+			</table>
+		</v-col>
 	</v-row>
-	<v-row dense>
+	<!-- <v-row dense>
 		<v-col cols="5" md="2">
 			<VNumberField
 				ref="di-cg"
@@ -195,7 +225,7 @@
 				</tr>
 			</table>
 		</v-col>
-	</v-row>
+	</v-row> -->
 	<v-row dense>
 		<v-col>
 			<div
