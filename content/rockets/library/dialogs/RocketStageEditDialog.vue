@@ -311,14 +311,14 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailFormDialogProps } from '@/components/content/detailFormDialogProps';
-import { useRocketStageEditDialogComponent } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogComponent';
-import { useRocketStageEditDialogValidation } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogValidation';
-import { useRocketStageEditDialogComponentProps } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogComponentProps';
-import { useRocketEditValidation } from '@/components/content/rockets/user/rocket/rocketEditValidation';
+import { useRocketStageEditDialogComponent } from '@/components/content/rockets/library/dialogs/rocketStageEditDialogComponent';
+import { useRocketStageEditDialogValidation } from '@/components/content/rockets/library/dialogs/rocketStageEditDialogValidation';
+import { useRocketStageEditDialogComponentProps } from '@/components/content/rockets/library/dialogs/rocketStageEditDialogComponentProps';
+import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
+import RecoveryLookupDialog from '@/components/content/rockets/library/dialogs/recovery/RecoveryLookupDialog';
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';

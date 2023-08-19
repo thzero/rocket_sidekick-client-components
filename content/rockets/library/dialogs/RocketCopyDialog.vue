@@ -25,9 +25,9 @@
 <script>
 // import { maxLength, minLength, required } from '@vuelidate/validators';
 
-import { useRocketCopyDialogComponent } from '@/components/content/rockets/user/dialogs/rocketCopyDialogComponent';
-import { useRocketCopyDialogProps } from '@/components/content/rockets/user/dialogs/rocketCopyDialogProps';
-import { useRocketCopyDialogValidation } from '@/components/content/rockets/user/dialogs/rocketCopyDialogValidation';
+import { useRocketCopyDialogComponent } from '@/components/content/rockets/library/dialogs/rocketCopyDialogComponent';
+import { useRocketCopyDialogProps } from '@/components/content/rockets/library/dialogs/rocketCopyDialogProps';
+import { useRocketCopyDialogValidation } from '@/components/content/rockets/library/dialogs/rocketCopyDialogValidation';
 
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';

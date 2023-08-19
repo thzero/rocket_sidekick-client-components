@@ -193,10 +193,10 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
-import { useRocketValidation } from '@/components/content/rockets/user/rocket/rocketValidation';
-import { useRocketEditValidation } from '@/components/content/rockets/user/rocket/rocketEditValidation';
-import { useRocketComponent } from '@/components/content/rockets/user/rocket/rocketComponent';
-import { useRocketComponentProps } from '@/components/content/rockets/user/rocket/rocketComponentProps';
+import { useRocketValidation } from '@/components/content/rockets/library/rocket/rocketValidation';
+import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
+import { useRocketComponent } from '@/components/content/rockets/library/rocket/rocketComponent';
+import { useRocketComponentProps } from '@/components/content/rockets/library/rocket/rocketComponentProps';
 
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
@@ -205,9 +205,9 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
-import RocketStage from '@/components/content/rockets/user/rocket/RocketStage';
-import RocketStageEditDialog from '@/components/content/rockets/user/dialogs/RocketStageEditDialog';
+import RocketParts from '@/components/content/rockets/library/rocket/RocketParts';
+import RocketStage from '@/components/content/rockets/library/rocket/RocketStage';
+import RocketStageEditDialog from '@/components/content/rockets/library/dialogs/RocketStageEditDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';

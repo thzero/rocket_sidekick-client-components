@@ -228,12 +228,12 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
-import { useRocketsBaseComponent } from '@/components/content/rockets/user/rocketsComponent';
-import { useRocketsBaseComponentProps } from '@/components/content/rockets/user/rocketsComponentProps';
-import { useRocketsFilterValidation } from '@/components/content/rockets/user/rocketsFilterValidation';
+import { useRocketsBaseComponent } from '@/components/content/rockets/library/rocketsComponent';
+import { useRocketsBaseComponentProps } from '@/components/content/rockets/library/rocketsComponentProps';
+import { useRocketsFilterValidation } from '@/components/content/rockets/library/rocketsFilterValidation';
 
-import Rocket from '@/components/content/rockets/user/rocket/Rocket';
-import RocketCopyDialog from '@/components/content/rockets/user/dialogs/RocketCopyDialog';
+import Rocket from '@/components/content/rockets/library/rocket/Rocket';
+import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';

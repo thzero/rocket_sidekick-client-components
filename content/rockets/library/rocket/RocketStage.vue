@@ -351,20 +351,20 @@
 </template>
 
 <script>
-import { useRocketStageComponent } from '@/components/content/rockets/user/rocket/rocketStageComponent';
-import { useRocketStageComponentProps } from '@/components/content/rockets/user/rocket/rocketStageComponentProps';
+import { useRocketStageComponent } from '@/components/content/rockets/library/rocket/rocketStageComponent';
+import { useRocketStageComponentProps } from '@/components/content/rockets/library/rocket/rocketStageComponentProps';
 
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
-import AltimetersLookupDialog from '@/components/content/rockets/user/dialogs/altimeters/AltimetersLookupDialog';
+import AltimetersLookupDialog from '@/components/content/rockets/library/dialogs/altimeters/AltimetersLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
-import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
-import TrackersLookupDialog from '@/components/content/rockets/user/dialogs/trackers/TrackersLookupDialog';
+import RocketParts from '@/components/content/rockets/library/rocket/RocketParts';
+import RecoveryLookupDialog from '@/components/content/rockets/library/dialogs/recovery/RecoveryLookupDialog';
+import TrackersLookupDialog from '@/components/content/rockets/library/dialogs/trackers/TrackersLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VNumberField';
