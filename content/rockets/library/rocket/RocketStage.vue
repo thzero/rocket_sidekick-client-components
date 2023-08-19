@@ -133,8 +133,38 @@
 				</tr>
 			</table>
 		</v-col>
+		<v-col cols="5" md="2">
+			<VNumberField
+				ref="di-cp"
+				v-model="displayItem.cp"
+				:readonly="true"
+				:label="$t('forms.content.rockets.cp')"
+			/>
+		</v-col>
+		<v-col cols="7" md="4">
+			<table>
+				<tr>
+					<td class="measurementUnits">
+						<MeasurementUnitsSelect
+							v-model="displayItem.cpMeasurementUnitsId"
+							:readonly="true"
+							:label="$t('forms.settings.measurementUnits.title')"
+						/>
+					</td>
+					<td class="measurementUnit">
+						<MeasurementUnitSelect
+							v-model="displayItem.cpMeasurementUnitId"
+							:measurementUnitsId="displayItem.cpMeasurementUnitsId"
+							:measurementUnitsType="measurementUnitsLengthType"
+							:readonly="true"
+							:label="$t('forms.settings.measurementUnits.length')"
+						/>
+					</td>
+				</tr>
+			</table>
+		</v-col>
 	</v-row>
-	<v-row dense>
+	<!-- <v-row dense>
 		<v-col cols="5" md="2">
 			<VNumberField
 				ref="di-cg"
@@ -195,7 +225,7 @@
 				</tr>
 			</table>
 		</v-col>
-	</v-row>
+	</v-row> -->
 	<v-row dense>
 		<v-col>
 			<div
@@ -321,20 +351,20 @@
 </template>
 
 <script>
-import { useRocketStageComponent } from '@/components/content/rockets/user/rocket/rocketStageComponent';
-import { useRocketStageComponentProps } from '@/components/content/rockets/user/rocket/rocketStageComponentProps';
+import { useRocketStageComponent } from '@/components/content/rockets/library/rocket/rocketStageComponent';
+import { useRocketStageComponentProps } from '@/components/content/rockets/library/rocket/rocketStageComponentProps';
 
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
-import AltimetersLookupDialog from '@/components/content/rockets/user/dialogs/altimeters/AltimetersLookupDialog';
+import AltimetersLookupDialog from '@/components/content/rockets/library/dialogs/altimeters/AltimetersLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
-import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
-import TrackersLookupDialog from '@/components/content/rockets/user/dialogs/trackers/TrackersLookupDialog';
+import RocketParts from '@/components/content/rockets/library/rocket/RocketParts';
+import RecoveryLookupDialog from '@/components/content/rockets/library/dialogs/recovery/RecoveryLookupDialog';
+import TrackersLookupDialog from '@/components/content/rockets/library/dialogs/trackers/TrackersLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VNumberField';

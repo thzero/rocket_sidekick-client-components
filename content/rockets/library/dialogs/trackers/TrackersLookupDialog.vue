@@ -112,17 +112,17 @@
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useRocketEditValidation } from '@/components/content/rockets/user/rocket/rocketEditValidation';
-import { useTrackersRocketLookupDialogComponent } from '@/components/content/rockets/user/dialogs/trackers/trackersLookupDialogComponent';
-import { useTrackersRocketLookupDialogValidation } from '@/components/content/rockets/user/dialogs/trackers/trackersLookupDialogValidation';
-import { useRocketLookupDialogProps } from '@/components/content/rockets/user/dialogs/lookupDialogProps';
+import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
+import { useTrackersRocketLookupDialogComponent } from '@/components/content/rockets/library/dialogs/trackers/trackersLookupDialogComponent';
+import { useTrackersRocketLookupDialogValidation } from '@/components/content/rockets/library/dialogs/trackers/trackersLookupDialogValidation';
+import { useRocketLookupDialogProps } from '@/components/content/rockets/library/dialogs/lookupDialogProps';
 
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
-import RocketParts from '@/components/content/rockets/user/rocket/RocketParts';
+import RocketParts from '@/components/content/rockets/library/rocket/RocketParts';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';

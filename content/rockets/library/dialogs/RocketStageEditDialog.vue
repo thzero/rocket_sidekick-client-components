@@ -187,8 +187,46 @@
 					</tr>
 				</table>
 			</v-col>
+			<v-col cols="5" md="2">
+				<VNumberFieldWithValidation
+					ref="detailItemCpRef"
+					v-model="detailItemCp"
+					vid="detailItemCp"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.cp')"
+				/>
+			</v-col>
+			<v-col cols="7" md="4">
+				<table>
+					<tr>
+						<td class="measurementUnits">
+							<MeasurementUnitsSelect
+								ref="detailItemCpMeasurementUnitsIdRef"
+								v-model="detailItemCpMeasurementUnitsId"
+								vid="detailItemCpMeasurementUnitsId"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnits">
+							<MeasurementUnitSelect
+								ref="detailItemCpMeasurementUnitIdRef"
+								v-model="detailItemCpMeasurementUnitId"
+								vid="detailItemCpMeasurementUnitId"
+								:measurementUnitsId="detailItemCpMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
 		</v-row>
-		<v-row dense>
+		<!-- <v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
 					ref="detailItemCgRef"
@@ -265,7 +303,7 @@
 					</tr>
 				</table>
 			</v-col>
-		</v-row>
+		</v-row> -->
 	</VFormDialog>
 </template>
 
@@ -273,14 +311,14 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailFormDialogProps } from '@/components/content/detailFormDialogProps';
-import { useRocketStageEditDialogComponent } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogComponent';
-import { useRocketStageEditDialogValidation } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogValidation';
-import { useRocketStageEditDialogComponentProps } from '@/components/content/rockets/user/dialogs/rocketStageEditDialogComponentProps';
-import { useRocketEditValidation } from '@/components/content/rockets/user/rocket/rocketEditValidation';
+import { useRocketStageEditDialogComponent } from '@/components/content/rockets/library/dialogs/rocketStageEditDialogComponent';
+import { useRocketStageEditDialogValidation } from '@/components/content/rockets/library/dialogs/rocketStageEditDialogValidation';
+import { useRocketStageEditDialogComponentProps } from '@/components/content/rockets/library/dialogs/rocketStageEditDialogComponentProps';
+import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RecoveryLookupDialog from '@/components/content/rockets/user/dialogs/recovery/RecoveryLookupDialog';
+import RecoveryLookupDialog from '@/components/content/rockets/library/dialogs/recovery/RecoveryLookupDialog';
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
@@ -314,10 +352,10 @@ export default {
 			dialogClose,
 			dialogOk,
 			isEditable,
-			detailItemCg,
-			detailItemCgFrom,
-			detailItemCgMeasurementUnitId,
-			detailItemCgMeasurementUnitsId,
+			// detailItemCg,
+			// detailItemCgFrom,
+			// detailItemCgMeasurementUnitId,
+			// detailItemCgMeasurementUnitsId,
 			detailItemCp,
 			detailItemCpFrom,
 			detailItemCpMeasurementUnitId,
@@ -359,10 +397,10 @@ export default {
 			dialogClose,
 			dialogOk,
 			isEditable,
-			detailItemCg,
-			detailItemCgFrom,
-			detailItemCgMeasurementUnitId,
-			detailItemCgMeasurementUnitsId,
+			// detailItemCg,
+			// detailItemCgFrom,
+			// detailItemCgMeasurementUnitId,
+			// detailItemCgMeasurementUnitsId,
 			detailItemCp,
 			detailItemCpFrom,
 			detailItemCpMeasurementUnitId,
