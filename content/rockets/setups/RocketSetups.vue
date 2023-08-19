@@ -229,8 +229,8 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
 import { useRocketSetupsBaseComponent } from '@/components/content/rockets/setups/rocketSetupsComponent';
-import { useRocketSetupsBaseComponentProps } from '@/components/content/rockets/setups/rocketSetupsComponent';
-import { useRocketSetupsFilterValidation } from '@/components/content/rockets/setups/rocketSetupsComponent';
+import { useRocketSetupsBaseComponentProps } from '@/components/content/rockets/setups/rocketSetupsComponentProps';
+import { useRocketSetupsFilterValidation } from '@/components/content/rockets/setups/rocketSetupsFilterValidation';
 
 import Rocket from '@/components/content/rockets/library/rocket/Rocket';
 import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
@@ -438,7 +438,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketsFilterValidation), {
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketSetupsFilterValidation), {
 		});
 	}
 };
