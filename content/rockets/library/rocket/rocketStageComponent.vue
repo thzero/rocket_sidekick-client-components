@@ -1,6 +1,7 @@
 <script>
 import { computed, onMounted, ref } from 'vue';
 
+import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -59,8 +60,19 @@ export function useRocketStageComponent(props, context, options) {
 	const dialogPartsDeleteMessage = ref();
 	const dialogPartsSearchStageId = ref(null);
 	const dialogAltimetersSearchManager = ref(new DialogSupport());
-	const dialogRecoverySearchManager = ref(new DialogSupport());
+	const dialogChuteProtectorsSearchManager = ref(new DialogSupport());
+	const dialogChuteReleasesSearchManager = ref(new DialogSupport());
+	const dialogDeploymentBagsSearchManager = ref(new DialogSupport());
+	const dialogParachutesSearchManager = ref(new DialogSupport());
+	const dialogStreamersSearchManager = ref(new DialogSupport());
 	const dialogTrackersSearchManager = ref(new DialogSupport());
+	const manufacturerTypeAltimeter = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.altimeter ]);
+	const manufacturerTypeChuteProtector = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector ]);
+	const manufacturerTypeChuteRelease = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease ]);
+	const manufacturerTypeChuteDeploymentBag = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag ]);
+	const manufacturerTypeParachute = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.parachute ]);
+	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.streamer ]);
+	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.tracker ]);
 	const manufacturers = ref(props.manufacturers);
 	const panels = ref([]);
 
@@ -71,6 +83,15 @@ export function useRocketStageComponent(props, context, options) {
 	const altimeters = computed(() => {
 		return props.detailItem ? props.detailItem.altimeters : [];
 	});
+	const chuteProtectors = computed(() => {
+		return props.detailItem ? props.detailItem.chuteProtectors : [];
+	});
+	const chuteReleases = computed(() => {
+		return props.detailItem ? props.detailItem.chuteReleases : [];
+	});
+	const deploymentBags = computed(() => {
+		return props.detailItem ? props.detailItem.deploymentBags : [];
+	});
 	const detailItemData = computed(() => {
 		return props.detailItem ? props.detailItem : {};
 	});
@@ -78,44 +99,95 @@ export function useRocketStageComponent(props, context, options) {
 		const temp = altimeters.value;
 		return temp &&  Array.isArray(temp) && temp.length > 0;
 	});
-	const hasRecovery = computed(() => {
-		const temp = recovery.value;
+	const hasChuteProtectors = computed(() => {
+		const temp = chuteProtectors.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasChuteReleases = computed(() => {
+		const temp = chuteReleases.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasDeploymentBags = computed(() => {
+		const temp = deploymentBags.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasParachutes = computed(() => {
+		const temp = parachutes.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasStreamers = computed(() => {
+		const temp = streamers.value;
 		return temp &&  Array.isArray(temp) && temp.length > 0;
 	});
 	const hasTrackers = computed(() => {
 		const temp = trackers.value;
 		return temp &&  Array.isArray(temp) && temp.length > 0;
 	});
-	const recovery = computed(() => {
-		return props.detailItem ? props.detailItem.recovery : [];
+	const parachutes = computed(() => {
+		return props.detailItem ? props.detailItem.parachutes : [];
+	});
+	const streamers = computed(() => {
+		return props.detailItem ? props.detailItem.streamers : [];
 	});
 	const trackers = computed(() => {
 		return props.detailItem ? props.detailItem.trackers : [];
 	});
 
 	const partsDeleteKeyAltimeters = 'altimeters';
-	const partsDeleteKeyRecovery = 'recovery';
+	const partsDeleteKeyChuteProtectors = 'chuteProtectors';
+	const partsDeleteKeyChuteReleases = 'chuteReleases';
+	const partsDeleteKeyDeploymentBags = 'deploymentBags';
+	const partsDeleteKeyParachutes = 'parachutes';
+	const partsDeleteKeyStreamers = 'streamers';
 	const partsDeleteKeyTrackers = 'trackers';
 	
-	const clickAltimetersSearchStage = async (selection) => {
+	const clickAltimetersSearch = async (selection) => {
 		if (!selection)
 			return;
 
 		dialogPartsSearchStageId.value = selection;
 		dialogAltimetersSearchManager.value.open();
 	};
-	const clickRecoverySearchStage = async (selection) => {
+	const clickChuteProtectorsSearch = async (selection) => {
 		if (!selection)
 			return;
 
-		dialogPartsSearchStageId.value = selection.id;
-		dialogRecoverySearchManager.value.open();
+		dialogPartsSearchStageId.value = selection;
+		dialogChuteProtectorsSearchManager.value.open();
 	};
-	const clickTrackersSearchStage = async (selection) => {
+	const clickChuteReleasesSearch = async (selection) => {
 		if (!selection)
 			return;
 
-		dialogPartsSearchStageId.value = selection.id;
+		dialogPartsSearchStageId.value = selection;
+		dialogChuteReleasesSearchManager.value.open();
+	};
+	const clickDeploymentBagsSearch = async (selection) => {
+		if (!selection)
+			return;
+
+		dialogPartsSearchStageId.value = selection;
+		dialogDeploymentBagsSearchManager.value.open();
+	};
+	const clickParachutesSearch = async (selection) => {
+		if (!selection)
+			return;
+
+		dialogPartsSearchStageId.value = selection;
+		dialogParachutesSearchManager.value.open();
+	};
+	const clickStreamersSearch = async (selection) => {
+		if (!selection)
+			return;
+
+		dialogPartsSearchStageId.value = selection;
+		dialogStreamersSearchManager.value.open();
+	};
+	const clickTrackersSearch = async (selection) => {
+		if (!selection)
+			return;
+
+		dialogPartsSearchStageId.value = selection;
 		dialogTrackersSearchManager.value.open();
 	};
 	const dialogPartsDeleteCancel = async () => {
@@ -153,19 +225,43 @@ export function useRocketStageComponent(props, context, options) {
 			dialogPartsDeleteType.value = null;
 		}
 	};
-	const handleAltimeterDeleteStage = async (item, stageId) => {
+	const handleAltimeterDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyAltimeters}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsDeleteKeyAltimeters;
 		dialogPartsDeleteManager.value.open();
 	};
-	const handleRecoveryDeleteStage = async (ite, stageIdm) => {
-		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyRecovery}.delete_confirm`);
+	const handleChuteProtectorsDelete = async (ite) => {
+		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyChuteProtectors}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
-		dialogPartsDeleteType.value = partsDeleteKeyRecovery;
+		dialogPartsDeleteType.value = partsDeleteKeyChuteProtectors;
 		dialogPartsDeleteManager.value.open();
 	};
-	const handleTrackerDeleteStage = async (item, stageId) => {
+	const handleChuteReleasesDelete = async (ite) => {
+		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyChuteReleases}.delete_confirm`);
+		dialogPartsDeleteId.value = item.id;
+		dialogPartsDeleteType.value = partsDeleteKeyChuteReleases;
+		dialogPartsDeleteManager.value.open();
+	};
+	const handleDeploymentBagsDelete = async (ite) => {
+		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyDeploymentBags}.delete_confirm`);
+		dialogPartsDeleteId.value = item.id;
+		dialogPartsDeleteType.value = partsDeleteKeyDeploymentBags;
+		dialogPartsDeleteManager.value.open();
+	};
+	const handleParachutesDelete = async (ite) => {
+		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyParachutes}.delete_confirm`);
+		dialogPartsDeleteId.value = item.id;
+		dialogPartsDeleteType.value = partsDeleteKeyParachutes;
+		dialogPartsDeleteManager.value.open();
+	};
+	const handleStreamersDelete = async (ite) => {
+		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyStreamers}.delete_confirm`);
+		dialogPartsDeleteId.value = item.id;
+		dialogPartsDeleteType.value = partsDeleteKeyStreamers;
+		dialogPartsDeleteManager.value.open();
+	};
+	const handleTrackerDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsDeleteKeyTrackers}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsDeleteKeyTrackers;
@@ -174,8 +270,16 @@ export function useRocketStageComponent(props, context, options) {
 	const getParts = (correlationId, item, type) => {
 		if (type === partsDeleteKeyAltimeters)
 			return item.altimeters;
-		if (type === partsDeleteKeyRecovery)
-			return item.recovery;
+		if (type === partsDeleteKeyChuteProtectors)
+			return item.chuteProtectors;
+		if (type === partsDeleteKeyChuteReleases)
+			return item.chuteReleases;
+		if (type === partsDeleteKeyDeploymentBags)
+			return item.deploymentBags;
+		if (type === partsDeleteKeyParachutes)
+			return item.parachutes;
+		if (type === partsDeleteKeyStreamers)
+			return item.streamers;
 		if (type === partsDeleteKeyTrackers)
 			return item.trackers;
 		return null;
@@ -217,17 +321,69 @@ export function useRocketStageComponent(props, context, options) {
 			dialogAltimetersSearchManager.value.ok();
 		}
 	};
-	const selectRecovery = async (item) => {
+	const selectChuteProtectors = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
 				item, 
-				partsDeleteKeyRecovery,
+				partsDeleteKeyChuteProtectors,
 				dialogPartsSearchStageId.value
 			);
 		}
 		finally {
-			dialogRecoverySearchManager.value.ok();
+			dialogChuteProtectorsSearchManager.value.ok();
+		}
+	};
+	const selectChuteReleases = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item, 
+				partsDeleteKeyChuteReleases,
+				dialogPartsSearchStageId.value
+			);
+		}
+		finally {
+			dialogChuteReleasesSearchManager.value.ok();
+		}
+	};
+	const selectDeploymentBags = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item, 
+				partsDeleteKeyDeploymentBags,
+				dialogPartsSearchStageId.value
+			);
+		}
+		finally {
+			dialogDeploymentBagsSearchManager.value.ok();
+		}
+	};
+	const selectParachutes = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item, 
+				partsDeleteKeyParachutes,
+				dialogPartsSearchStageId.value
+			);
+		}
+		finally {
+			dialogParachutesSearchManager.value.ok();
+		}
+	};
+	const selectStreamers = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item, 
+				partsDeleteKeyStreamers,
+				dialogPartsSearchStageId.value
+			);
+		}
+		finally {
+			dialogStreamersSearchManager.value.ok();
 		}
 	};
 	const selectTracker = async (item) => {
@@ -236,7 +392,7 @@ export function useRocketStageComponent(props, context, options) {
 				correlationId(), 
 				item, 
 				partsDeleteKeyTrackers,
-				dialogPartsSearchIsStage.value
+				dialogPartsSearchStageId.value
 			);
 		}
 		finally {
@@ -248,8 +404,24 @@ export function useRocketStageComponent(props, context, options) {
 			item.altimeters = parts;
 			return;
 		}
-		if (type === partsDeleteKeyRecovery) {
-			item.recovery = parts;
+		if (type === partsDeleteKeyChuteProtectors) {
+			item.chuteProtectors = parts;
+			return;
+		}
+		if (type === partsDeleteKeyChuteReleases) {
+			item.chuteReleases = parts;
+			return;
+		}
+		if (type === partsDeleteKeyDeploymentBags) {
+			item.deploymentBags = parts;
+			return;
+		}
+		if (type === partsDeleteKeyParachutes) {
+			item.parachutes = parts;
+			return;
+		}
+		if (type === partsDeleteKeyStreamers) {
+			item.streamers = parts;
 			return;
 		}
 		if (type === partsDeleteKeyTrackers) {
@@ -263,7 +435,11 @@ export function useRocketStageComponent(props, context, options) {
 		const temp4 = temp3[panelsLKey()];
 		panels.value = temp4 ?? [ 
 			partsDeleteKeyAltimeters,
-			partsDeleteKeyRecovery,
+			partsDeleteKeyChuteProtectors,
+			partsDeleteKeyChuteReleases,
+			partsDeleteKeyDeploymentBags,
+			partsDeleteKeyParachutes,
+			partsDeleteKeyStreamers,
 			partsDeleteKeyTrackers
 		];
 	});
@@ -282,11 +458,19 @@ export function useRocketStageComponent(props, context, options) {
 		measurementUnitsIdSettings,
 		displayItem,
 		altimeters,
+		chuteProtectors,
+		chuteReleases,
+		deploymentBags,
 		detailItemData,
 		hasAltimeters,
-		hasRecovery,
+		hasChuteProtectors,
+		hasChuteReleases,
+		hasDeploymentBags,
+		hasParachutes,
+		hasStreamers,
 		hasTrackers,
-		recovery,
+		parachutes,
+		streamers,
 		trackers,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
@@ -295,21 +479,44 @@ export function useRocketStageComponent(props, context, options) {
 		dialogPartsDeleteManager,
 		dialogPartsDeleteMessage,
 		dialogAltimetersSearchManager,
-		dialogRecoverySearchManager,
+		dialogChuteProtectorsSearchManager,
+		dialogChuteReleasesSearchManager,
+		dialogDeploymentBagsSearchManager,
+		dialogParachutesSearchManager,
+		dialogStreamersSearchManager,
 		dialogTrackersSearchManager,
+		manufacturerTypeAltimeter,
+		manufacturerTypeChuteProtector,
+		manufacturerTypeChuteRelease,
+		manufacturerTypeChuteDeploymentBag,
+		manufacturerTypeParachute,
+		manufacturerTypeStreamer,
+		manufacturerTypeTracker,
 		manufacturers,
 		panels,
-		clickAltimetersSearchStage,
-		clickRecoverySearchStage,
-		clickTrackersSearchStage,
+		clickAltimetersSearch,
+		clickChuteProtectorsSearch,
+		clickChuteReleasesSearch,
+		clickDeploymentBagsSearch,
+		clickParachutesSearch,
+		clickStreamersSearch,
+		clickTrackersSearch,
 		dialogPartsDeleteCancel,
 		dialogPartsDeleteOk,
-		handleAltimeterDeleteStage,
-		handleRecoveryDeleteStage,
-		handleTrackerDeleteStage,
+		handleAltimeterDelete,
+		handleChuteProtectorsDelete,
+		handleChuteReleasesDelete,
+		handleDeploymentBagsDelete,
+		handleParachutesDelete,
+		handleStreamersDelete,
+		handleTrackerDelete,
 		panelsUpdated,
 		selectAltimeter,
-		selectRecovery,
+		selectChuteProtectors,
+		selectChuteReleases,
+		selectDeploymentBags,
+		selectParachutes,
+		selectStreamers,
 		selectTracker
 	};
 };

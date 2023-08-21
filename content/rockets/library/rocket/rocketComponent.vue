@@ -242,7 +242,7 @@ export function useRocketComponent(props, context, options) {
 		if (hasFailed(response))
 			return response;
 
-		detailItemData.value.stages = temp.stages;
+		detailItemData.value.stages = response.results.stages;
 		return response;
 	};
 	

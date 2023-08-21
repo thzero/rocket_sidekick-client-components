@@ -205,7 +205,7 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RocketParts from '@/components/content/rockets/library/rocket/RocketParts';
+import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RocketStage from '@/components/content/rockets/library/rocket/RocketStage';
 import RocketStageEditDialog from '@/components/content/rockets/library/dialogs/RocketStageEditDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';

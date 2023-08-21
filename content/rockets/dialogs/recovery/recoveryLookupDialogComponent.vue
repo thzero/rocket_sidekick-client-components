@@ -79,11 +79,41 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 	const dialogResetManager = ref(new DialogSupport());
 	const dialogResetMessage = ref(null);
 	const manufacturersI = ref(null);
-	const partTypes = ref(AppCommonConstants.Rocketry.PartTypes);
 	const results = ref([]);
 	
+	const isAltimeters = () => {
+		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.altimeter);
+	};
+	const isChuteProtectors = () => {
+		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.chuteProtector);
+	};
+	const isChuteReleases = () => {
+		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.chuteRelease);
+	};
+	const isDeploymentBags = () => {
+		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.deploymentBag);
+	};
+	const isParachutes = () => {
+		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.parachute);
+	};
+	const isStreamers = () => {
+		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.streamer);
+	};
+	const isTrackers = () => {
+		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.tracker);
+	};
 	const manufacturers = computed(() => {
 		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
+	});
+	const partTypeName = computed(() => {
+		let partTypeId = null;
+		if ((props.partTypes ?? []).length === 1)
+			partTypeId = props.partTypes[0];
+
+		if (partTypeId)
+			return LibraryClientUtility.$trans.t(`forms.content.parts['${partTypeId}'].name`) + ' ' + LibraryClientUtility.$trans.t('titles.search');
+
+		return LibraryClientUtility.$trans.t(`forms.content.parts.recovery.search`);
 	});
 
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
@@ -107,8 +137,26 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		await serviceStore.dispatcher.requestPartsRecoverySearchReset(correlationIdI);
 		await preCompleteOk(correlationIdI);
 	};
-	const isPartType = (item, typeId) => {
-		return item && item.typeId === typeId;
+	const isAltimetersI = (id) => {
+		return (props.partTypes ?? []).indexOf(id) > -1;
+	};
+	const isChuteProtectorsI = (id) => {
+		return (props.partTypes ?? []).indexOf(id) > -1;
+	};
+	const isChuteReleasesI = (id) => {
+		return (props.partTypes ?? []).indexOf(id) > -1;
+	};
+	const isDeploymentBagsI = (id) => {
+		return (props.partTypes ?? []).indexOf(id) > -1;
+	};
+	const isParachutesI = (id) => {
+		return (props.partTypes ?? []).indexOf(id) > -1;
+	};
+	const isStreamersI = (id) => {
+		return (props.partTypes ?? []).indexOf(id) > -1;
+	};
+	const isTrackersI = (id) => {
+		return (props.partTypes ?? []).indexOf(id) > -1;
 	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
@@ -120,9 +168,6 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 
 		const temp = manufacturersI.value.find(l => l.id === id);
 		return temp ? temp.name : null;
-	};
-	const partTypeName = (id) => {
-		return LibraryClientUtility.$trans.t(`forms.content.parts['${id}'].name`);
 	};
 	const preCompleteOk = async (correlationId) => {
 		results.value = null;
@@ -139,6 +184,7 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 			manufacturerId: detailItemManufacturer.value,
 			manufacturerStockId: detailItemManufacturerStockId.value,
 			name: detailItemName.value,
+			partTypes: props.partTypes, 
 			thinMill: detailItemThinMill.value
 		};
 
@@ -178,10 +224,18 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 			return;
 
 		let temp2 = response.results.filter(l => l.types.find(j => 
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.parachute) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.streamer)
+			// (j === AppCommonConstants.Rocketry.PartTypes.chuteProtector && props.partTypeId) ||
+			// (j === AppCommonConstants.Rocketry.PartTypes.chuteRelease && props.partTypeId) ||
+			// (j === AppCommonConstants.Rocketry.PartTypes.deploymentBag && props.partTypeId) ||
+			// (j === AppCommonConstants.Rocketry.PartTypes.parachute && props.partTypeId) ||
+			// (j === AppCommonConstants.Rocketry.PartTypes.streamer && props.partTypeId)
+			isAltimetersI(j) ||
+			isChuteProtectorsI(j) ||
+			isChuteReleasesI(j) ||
+			isDeploymentBagsI(j) ||
+			isParachutesI(j) ||
+			isStreamersI(j) ||
+			isTrackersI(j)
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
@@ -220,18 +274,23 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		dialogResetManager,
 		dialogResetMessage,
 		manufacturersI,
-		partTypes,
 		results,
 		manufacturers,
+		partTypeName,
 		buttonOkDisabledOverride,
 		clickRecoverySearch,
 		clickRecoverySearchClear,
 		clickRecoverySelect,
 		close,
 		dialogResetOk,
-		isPartType,
+		isAltimeters,
+		isChuteProtectors,
+		isChuteReleases,
+		isDeploymentBags,
+		isParachutes,
+		isStreamers,
+		isTrackers,
 		manufacturer,
-		partTypeName,
 		preCompleteOk,
 		resetAdditional,
 		scope: 'RecoveryLookupDialog',
