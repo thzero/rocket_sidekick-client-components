@@ -1,7 +1,7 @@
 <template>
 	<VFormListingDialog
 		ref="dialogRecoveryLookup"
-		:label="$t('titles.content.parts.recovery.search')"
+		:label="$t(partTypeName)"
 		:signal="signal"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
 		:pre-complete-ok="preCompleteOk"
@@ -15,6 +15,7 @@
 		<template #default="{ buttonOkDisabled, isLoading }">
 			<v-row dense>
 				<v-col cols="12">
+					[[{{ partTypeName }}]]
 					<v-card>
 						<v-card-text>
 							<v-row dense>
@@ -28,7 +29,10 @@
 										:counter="30"
 									/>
 								</v-col>
-								<v-col cols="4">
+								<v-col
+									v-if="isParachutes() || isStreamers()"
+									cols="4"
+								>
 									<v-checkbox
 										v-model="detailItemThinMill"
 										density="compact"
@@ -36,7 +40,10 @@
 									/>
 								</v-col>
 							</v-row>
-							<v-row dense>
+							<v-row 
+								v-if="isChuteProtectors() || isDeploymentBags() || isParachutes()"
+								dense
+							>
 								<v-col cols="3">
 									<VNumberFieldWithValidation
 										ref="detailItemDiameterMinRef"
@@ -82,7 +89,10 @@
 									</table>
 								</v-col>
 							</v-row>
-							<v-row dense>
+							<v-row 
+								v-if="isDeploymentBags() || isStreamers()"
+								dense
+							>
 								<v-col cols="3">
 									<VNumberFieldWithValidation
 										ref="detailItemLengthMinRef"
@@ -212,16 +222,17 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
-import { useRecoveryRocketLookupDialogComponent } from '@/components/content/rockets/library/dialogs/recovery/recoveryLookupDialogComponent';
-import { useRecoveryRocketLookupDialogValidation } from '@/components/content/rockets/library/dialogs/recovery/recoveryLookupDialogValidation';
-import { useRocketLookupDialogProps } from '@/components/content/rockets/library/dialogs/lookupDialogProps';
+import { useRecoveryRocketLookupDialogComponent } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogComponent';
+import { useRecoveryLookupDialogComponentProps } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogComponentProps';
+import { useRecoveryRocketLookupDialogValidation } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogValidation';
+import { useRocketLookupDialogProps } from '@/components/content/rockets/dialogs/lookupDialogProps';
 
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
-import RocketParts from '@/components/content/rockets/library/rocket/RocketParts';
+import RocketParts from '@/components/content/rockets/parts/RocketParts';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
@@ -248,7 +259,8 @@ export default {
 		VTextFieldWithValidation
 	},
 	props: {
-		...useRocketLookupDialogProps
+		...useRocketLookupDialogProps,
+		...useRecoveryLookupDialogComponentProps
 	},
 	emits: ['close', 'ok'],
 	setup (props, context) {
@@ -285,18 +297,23 @@ export default {
 			dialogResetManager,
 			dialogResetMessage,
 			manufacturersI,
-			partTypes,
 			results,
 			manufacturers,
+			partTypeName,
 			buttonOkDisabledOverride,
 			clickRecoverySearch,
 			clickRecoverySearchClear,
 			clickRecoverySelect,
 			close,
 			dialogResetOk,
-			isPartType,
+			isAltimeters,
+			isChuteProtectors,
+			isChuteReleases,
+			isDeploymentBags,
+			isParachutes,
+			isStreamers,
+			isTrackers,
 			manufacturer,
-			partTypeName,
 			preCompleteOk,
 			resetAdditional,
 			scope,
@@ -336,18 +353,23 @@ export default {
 			dialogResetManager,
 			dialogResetMessage,
 			manufacturersI,
-			partTypes,
 			results,
 			manufacturers,
+			partTypeName,
 			buttonOkDisabledOverride,
 			clickRecoverySearch,
 			clickRecoverySearchClear,
 			clickRecoverySelect,
 			close,
 			dialogResetOk,
-			isPartType,
+			isAltimeters,
+			isChuteProtectors,
+			isChuteReleases,
+			isDeploymentBags,
+			isParachutes,
+			isStreamers,
+			isTrackers,
 			manufacturer,
-			partTypeName,
 			preCompleteOk,
 			resetAdditional,
 			scope,

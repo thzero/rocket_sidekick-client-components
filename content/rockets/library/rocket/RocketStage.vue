@@ -3,10 +3,14 @@
 		v-if="debug"
 	>
 		[[ isEditable {{ isEditable }} ]]
-		[[ detailItemData {{ detailItemData }} ]]
+		<!-- [[ detailItemData {{ detailItemData }} ]]
 		[[ altimeters {{ altimeters }} ]]
-		[[ recovery {{ recovery }} ]]
-		[[ trackers {{ trackers }} ]]
+		[[ chuteProtectors {{ chuteProtectors }} ]]
+		[[ chuteReleases {{ chuteReleases }} ]]
+		[[ deploymentBags {{ deploymentBags }} ]]
+		[[ parachutes {{ parachutes }} ]]
+		[[ streamers {{ streamers }} ]]
+		[[ trackers {{ trackers }} ]] -->
 	</div>
 	<v-row dense>
 		<v-col>
@@ -251,7 +255,7 @@
 									<v-btn
 										variant="flat"
 										color="purple"
-										@click="clickAltimetersSearchStage(detailItemData.id)"
+										@click="clickAltimetersSearch(detailItemData.id)"
 									>
 										{{ $t('forms.content.parts.altimeter.name') }}
 									</v-btn>
@@ -260,16 +264,52 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickRecoverySearchStage(item)"
+										@click="clickChuteProtectorsSearch(detailItemData.id)"
 									>
-										{{ $t('forms.content.parts.recovery') }}
+										{{ $t('forms.content.parts.chuteProtector.name') }}
+									</v-btn>
+								</v-list-item>
+								<v-list-item>
+									<v-btn
+										variant="flat"
+										color="orange"
+										@click="clickChuteReleasesSearch(detailItemData.id)"
+									>
+										{{ $t('forms.content.parts.chuteRelease.name') }}
+									</v-btn>
+								</v-list-item>
+								<v-list-item>
+									<v-btn
+										variant="flat"
+										color="orange"
+										@click="clickDeploymentBagsSearch(detailItemData.id)"
+									>
+										{{ $t('forms.content.parts.deploymentBag.name') }}
+									</v-btn>
+								</v-list-item>
+								<v-list-item>
+									<v-btn
+										variant="flat"
+										color="orange"
+										@click="clickParachutesSearch(detailItemData.id)"
+									>
+										{{ $t('forms.content.parts.parachute.name') }}
+									</v-btn>
+								</v-list-item>
+								<v-list-item>
+									<v-btn
+										variant="flat"
+										color="orange"
+										@click="clickStreamersSearch(detailItemData.id)"
+									>
+										{{ $t('forms.content.parts.streamer.name') }}
 									</v-btn>
 								</v-list-item>
 								<v-list-item>
 									<v-btn
 										variant="flat"
 										color="blue"
-										@click="clickTrackersSearchStage(item)"
+										@click="clickTrackersSearch(detailItemData.id)"
 									>
 										{{ $t('forms.content.parts.tracker.name') }}
 									</v-btn>
@@ -303,40 +343,99 @@
 					:items="altimeters"
 					:deletable="isEditable"
 					:stage-id="detailItemData.id"
-					@delete="handleAltimeterDeleteStage"
+					@delete="handleAltimeterDelete"
 				>
 				</RocketParts>
 				<RocketParts
-					:items="recovery"
+					:items="chuteProtectors"
 					:deletable="isEditable"
 					:stageId="detailItemData.id"
-					@delete="handleRecoveryDeleteStage"
+					@delete="handleChuteProtectorsDelete"
+				>
+				</RocketParts>
+				<RocketParts
+					:items="chuteReleases"
+					:deletable="isEditable"
+					:stageId="detailItemData.id"
+					@delete="handleChuteReleasesDelete"
+				>
+				</RocketParts>
+				<RocketParts
+					:items="deploymentBags"
+					:deletable="isEditable"
+					:stageId="detailItemData.id"
+					@delete="handleDeploymentBagsDelete"
+				>
+				</RocketParts>
+				<RocketParts
+					:items="parachutes"
+					:deletable="isEditable"
+					:stageId="detailItemData.id"
+					@delete="handleParachutesDelete"
+				>
+				</RocketParts>
+				<RocketParts
+					:items="streamers"
+					:deletable="isEditable"
+					:stageId="detailItemData.id"
+					@delete="handleStreamersDelete"
 				>
 				</RocketParts>
 				<RocketParts
 					:items="trackers"
 					:deletable="isEditable"
 					:stageId="detailItemData.id"
-					@delete="handleTrackerDeleteStage"
+					@delete="handleTrackerDelete"
 				></RocketParts>
 			</v-expansion-panels>
 		</v-col>
 	</v-row>
-	<AltimetersLookupDialog
+	<RecoveryLookupDialog
 		ref="dialogAltimetersSearchManagerRef"
 		:signal="dialogAltimetersSearchManager.signal"
+		:part-types="manufacturerTypeAltimeter"
 		@close="dialogAltimetersSearchManager.cancel()"
 		@ok="selectAltimeter"
 	/>
 	<RecoveryLookupDialog
-		ref="dialogRecoverySearchRef"
-		:signal="dialogRecoverySearchManager.signal"
-		@close="dialogRecoverySearchManager.cancel()"
-		@ok="selectRecovery"
+		ref="dialogChuteProtectorsSearchRef"
+		:signal="dialogChuteProtectorsSearchManager.signal"
+		:part-types="manufacturerTypeChuteProtector"
+		@close="dialogChuteProtectorsSearchManager.cancel()"
+		@ok="selectChuteProtectors"
 	/>
-	<TrackersLookupDialog
-		ref="dialogTrackersSearchRef"
+	<RecoveryLookupDialog
+		ref="dialogChuteReleasesSearchRef"
+		:signal="dialogChuteReleasesSearchManager.signal"
+		:part-types="manufacturerTypeChuteRelease"
+		@close="dialogChuteReleasesSearchManager.cancel()"
+		@ok="selectChuteReleases"
+	/>
+	<RecoveryLookupDialog
+		ref="dialogDeploymentBagsSearchRef"
+		:signal="dialogDeploymentBagsSearchManager.signal"
+		:part-types="manufacturerTypeChuteDeploymentBag"
+		@close="dialogDeploymentBagsSearchManager.cancel()"
+		@ok="selectDeploymentBags"
+	/>
+	<RecoveryLookupDialog
+		ref="dialogParachutesSearchRef"
+		:signal="dialogParachutesSearchManager.signal"
+		:part-types="manufacturerTypeParachute"
+		@close="dialogParachutesSearchManager.cancel()"
+		@ok="selectParachutes"
+	/>
+	<RecoveryLookupDialog
+		ref="dialogStreamersSearchRef"
+		:signal="dialogStreamersSearchManager.signal"
+		:part-types="manufacturerTypeStreamer"
+		@close="dialogStreamersSearchManager.cancel()"
+		@ok="selectStreamers"
+	/>
+	<RecoveryLookupDialog
+		ref="dialogStreamersSearchRef"
 		:signal="dialogTrackersSearchManager.signal"
+		:part-types="manufacturerTypeTracker"
 		@close="dialogTrackersSearchManager.cancel()"
 		@ok="selectTracker"
 	/>
@@ -359,12 +458,10 @@ import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/D
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
-import AltimetersLookupDialog from '@/components/content/rockets/library/dialogs/altimeters/AltimetersLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RocketParts from '@/components/content/rockets/library/rocket/RocketParts';
-import RecoveryLookupDialog from '@/components/content/rockets/library/dialogs/recovery/RecoveryLookupDialog';
-import TrackersLookupDialog from '@/components/content/rockets/library/dialogs/trackers/TrackersLookupDialog';
+import RocketParts from '@/components/content/rockets/parts/RocketParts';
+import RecoveryLookupDialog from '@/components/content/rockets/dialogs/recovery/RecoveryLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VNumberField';
@@ -375,7 +472,6 @@ import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTe
 export default {
 	name: 'RocketStageControl',
 	components: {
-		AltimetersLookupDialog,
 		ChuteProtectorPanelTitle,
 		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
@@ -384,7 +480,6 @@ export default {
 		RocketParts,
 		RecoveryLookupDialog,
 		StreamerPanelTitle,
-		TrackersLookupDialog,
 		VConfirmationDialog,
 		VFormControl,
 		VNumberField,
@@ -411,11 +506,19 @@ export default {
 			measurementUnitsIdSettings,
 			displayItem,
 			altimeters,
+			chuteProtectors,
+			chuteReleases,
+			deploymentBags,
 			detailItemData,
 			hasAltimeters,
-			hasRecovery,
+			hasChuteProtectors,
+			hasChuteReleases,
+			hasDeploymentBags,
+			hasParachutes,
+			hasStreamers,
 			hasTrackers,
-			recovery,
+			parachutes,
+			streamers,
 			trackers,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
@@ -424,21 +527,44 @@ export default {
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
-			dialogRecoverySearchManager,
+			dialogChuteProtectorsSearchManager,
+			dialogChuteReleasesSearchManager,
+			dialogDeploymentBagsSearchManager,
+			dialogParachutesSearchManager,
+			dialogStreamersSearchManager,
 			dialogTrackersSearchManager,
+			manufacturerTypeAltimeter,
+			manufacturerTypeChuteProtector,
+			manufacturerTypeChuteRelease,
+			manufacturerTypeChuteDeploymentBag,
+			manufacturerTypeParachute,
+			manufacturerTypeStreamer,
+			manufacturerTypeTracker,
 			manufacturers,
 			panels,
-			clickAltimetersSearchStage,
-			clickRecoverySearchStage,
-			clickTrackersSearchStage,
+			clickAltimetersSearch,
+			clickChuteProtectorsSearch,
+			clickChuteReleasesSearch,
+			clickDeploymentBagsSearch,
+			clickParachutesSearch,
+			clickStreamersSearch,
+			clickTrackersSearch,
 			dialogPartsDeleteCancel,
 			dialogPartsDeleteOk,
-			handleAltimeterDeleteStage,
-			handleRecoveryDeleteStage,
-			handleTrackerDeleteStage,
+			handleAltimeterDelete,
+			handleChuteProtectorsDelete,
+			handleChuteReleasesDelete,
+			handleDeploymentBagsDelete,
+			handleParachutesDelete,
+			handleStreamersDelete,
+			handleTrackerDelete,
 			panelsUpdated,
 			selectAltimeter,
-			selectRecovery,
+			selectChuteProtectors,
+			selectChuteReleases,
+			selectDeploymentBags,
+			selectParachutes,
+			selectStreamers,
 			selectTracker
 		} = useRocketStageComponent(props, context, options);
 
@@ -456,11 +582,19 @@ export default {
 			measurementUnitsIdSettings,
 			displayItem,
 			altimeters,
+			chuteProtectors,
+			chuteReleases,
+			deploymentBags,
 			detailItemData,
 			hasAltimeters,
-			hasRecovery,
+			hasChuteProtectors,
+			hasChuteReleases,
+			hasDeploymentBags,
+			hasParachutes,
+			hasStreamers,
 			hasTrackers,
-			recovery,
+			parachutes,
+			streamers,
 			trackers,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
@@ -469,21 +603,44 @@ export default {
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
-			dialogRecoverySearchManager,
+			dialogChuteProtectorsSearchManager,
+			dialogChuteReleasesSearchManager,
+			dialogDeploymentBagsSearchManager,
+			dialogParachutesSearchManager,
+			dialogStreamersSearchManager,
 			dialogTrackersSearchManager,
+			manufacturerTypeAltimeter,
+			manufacturerTypeChuteProtector,
+			manufacturerTypeChuteRelease,
+			manufacturerTypeChuteDeploymentBag,
+			manufacturerTypeParachute,
+			manufacturerTypeStreamer,
+			manufacturerTypeTracker,
 			manufacturers,
 			panels,
-			clickAltimetersSearchStage,
-			clickRecoverySearchStage,
-			clickTrackersSearchStage,
+			clickAltimetersSearch,
+			clickChuteProtectorsSearch,
+			clickChuteReleasesSearch,
+			clickDeploymentBagsSearch,
+			clickParachutesSearch,
+			clickStreamersSearch,
+			clickTrackersSearch,
 			dialogPartsDeleteCancel,
 			dialogPartsDeleteOk,
-			handleAltimeterDeleteStage,
-			handleRecoveryDeleteStage,
-			handleTrackerDeleteStage,
+			handleAltimeterDelete,
+			handleChuteProtectorsDelete,
+			handleChuteReleasesDelete,
+			handleDeploymentBagsDelete,
+			handleParachutesDelete,
+			handleStreamersDelete,
+			handleTrackerDelete,
 			panelsUpdated,
 			selectAltimeter,
-			selectRecovery,
+			selectChuteProtectors,
+			selectChuteReleases,
+			selectDeploymentBags,
+			selectParachutes,
+			selectStreamers,
 			selectTracker
 		};
 	}

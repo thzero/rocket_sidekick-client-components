@@ -156,8 +156,8 @@
 </template>
 
 <script>
-import { useRocketPartsComponent } from '@/components/content/rockets/library/rocket/rocketPartsComponent';
-import { useRocketPartsComponentProps } from '@/components/content/rockets/library/rocket/rocketPartsComponentProps';
+import { useRocketPartsComponent } from '@/components/content/rockets/parts/rocketPartsComponent';
+import { useRocketPartsComponentProps } from '@/components/content/rockets/parts/rocketPartsComponentProps';
 
 import AltimeterPanelTitle from '@/components/content/parts/altimeters/AltimeterPanelTitle';
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
