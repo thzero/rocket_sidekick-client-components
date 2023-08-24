@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<VFormListing
-		ref="dialogRocketsLookupRef"
+		ref="dialogRocketSetupsRef"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -23,6 +23,40 @@
 											:validation="validation"
 										/>
 									</v-col>
+									<v-col cols="12" sm="6">
+										<VSelectWithValidation
+											ref="filterItemRocketTypesRef"
+											v-model="filterItemRocketTypes"
+											vid="filterItemRocketTypes"
+											multiple
+											:max-values="3"
+											:items="rocketTypes"
+											:validation="validation"
+											:label="$t('forms.content.rockets.level')"
+											:hint="$t('forms.content.rockets.level')"
+										/>
+									</v-col>
+								</v-row>
+								<v-row dense>
+									<v-col cols="6">
+										<div class="d-flex">
+											<VTextField
+												ref="filterItemRocketNameRef"
+												v-model="filterItemRocketName"
+												vid="filterItemRocketName"
+												:label="$t('forms.content.rockets.name')"
+												:readonly="true"
+											/>
+											<v-btn
+												class="ml-4 text-right"
+												:variant="buttonsForms.variant.add"
+												:color="buttonsForms.color.add"
+												@click="clickSearchRockets(item)"
+											>
+												{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+											</v-btn>
+										</div>
+									</v-col>
 								</v-row>
 								<v-row dense>
 									<v-col cols="12" sm="6">
@@ -31,7 +65,7 @@
 											v-model="filterItemManufacturers"
 											vid="filterItemManufacturers"
 											multiple
-											:max-values="2"
+											:max-values="3"
 											:items="manufacturers"
 											:validation="validation"
 											:label="$t('forms.content.manufacturer.plural')"
@@ -213,6 +247,12 @@
 		@error="dialogCopyError"
 		@ok="dialogCopyOk"
 	/>
+	<RocketLookupDialog
+		ref="dialogRocketLookupManagerRef"
+		:signal="dialogRocketLookupManager.signal"
+		@close="dialogRocketLookupManager.cancel()"
+		@select="selectRocket"
+	/>
 	<VConfirmationDialog
 		ref="dialogDeleteRef"
 		:message="dialogDeleteMessage"
@@ -234,6 +274,7 @@ import { useRocketSetupsFilterValidation } from '@/components/content/rockets/se
 
 import Rocket from '@/components/content/rockets/library/rocket/Rocket';
 import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
+import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
@@ -244,6 +285,7 @@ import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/com
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
 import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
+import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
@@ -254,12 +296,14 @@ export default {
 		MeasurementUnitsSelect,
 		Rocket,
 		RocketCopyDialog,
+		RocketLookupDialog,
 		VConfirmationDialog,
 		VFormListing,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
 		VSwitchWithValidation,
 		VTextAreaWithValidation,
+		VTextField,
 		VTextFieldWithValidation
 	},
 	props: {
@@ -328,15 +372,19 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
+			rocketTypes,
 			debug,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
-			dialogRocketsLookupRef,
+			dialogRocketLookupManager,
+			dialogRocketSetupsRef,
 			filterItemDiameter,
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemName,
-			filterItemWeight,
+			filterItemRocketId,
+			filterItemRocketName,
+			filterItemRocketTypes,
 			manufacturers,
 			title,
 			weightMeasurementUnitId,
@@ -344,10 +392,12 @@ export default {
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
+			clickSearchRockets,
 			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
 			resetAdditional,
+			selectRocket,
 			scope,
 			validation
 		} = useRocketSetupsBaseComponent(props, context);
@@ -413,15 +463,19 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
+			rocketTypes,
 			debug,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
-			dialogRocketsLookupRef,
+			dialogRocketLookupManager,
+			dialogRocketSetupsRef,
 			filterItemDiameter,
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemName,
-			filterItemWeight,
+			filterItemRocketId,
+			filterItemRocketName,
+			filterItemRocketTypes,
 			manufacturers,
 			title,
 			weightMeasurementUnitId,
@@ -429,10 +483,12 @@ export default {
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
+			clickSearchRockets,
 			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
 			resetAdditional,
+			selectRocket,
 			scope,
 			validation
 		};

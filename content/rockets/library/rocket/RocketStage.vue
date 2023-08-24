@@ -395,35 +395,35 @@
 		:signal="dialogAltimetersSearchManager.signal"
 		:part-types="manufacturerTypeAltimeter"
 		@close="dialogAltimetersSearchManager.cancel()"
-		@ok="selectAltimeter"
+		@select="selectAltimeter"
 	/>
 	<RecoveryLookupDialog
 		ref="dialogChuteProtectorsSearchRef"
 		:signal="dialogChuteProtectorsSearchManager.signal"
 		:part-types="manufacturerTypeChuteProtector"
 		@close="dialogChuteProtectorsSearchManager.cancel()"
-		@ok="selectChuteProtectors"
+		@select="selectChuteProtectors"
 	/>
 	<RecoveryLookupDialog
 		ref="dialogChuteReleasesSearchRef"
 		:signal="dialogChuteReleasesSearchManager.signal"
 		:part-types="manufacturerTypeChuteRelease"
 		@close="dialogChuteReleasesSearchManager.cancel()"
-		@ok="selectChuteReleases"
+		@select="selectChuteReleases"
 	/>
 	<RecoveryLookupDialog
 		ref="dialogDeploymentBagsSearchRef"
 		:signal="dialogDeploymentBagsSearchManager.signal"
 		:part-types="manufacturerTypeChuteDeploymentBag"
 		@close="dialogDeploymentBagsSearchManager.cancel()"
-		@ok="selectDeploymentBags"
+		@select="selectDeploymentBags"
 	/>
 	<RecoveryLookupDialog
 		ref="dialogParachutesSearchRef"
 		:signal="dialogParachutesSearchManager.signal"
 		:part-types="manufacturerTypeParachute"
 		@close="dialogParachutesSearchManager.cancel()"
-		@ok="selectParachutes"
+		@select="selectParachutes"
 	/>
 	<RecoveryLookupDialog
 		ref="dialogStreamersSearchRef"

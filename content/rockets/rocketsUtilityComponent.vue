@@ -22,7 +22,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 
 	const rocketTypes = computed(() => {
 		const object = AppCommonConstants.Rocketry.RocketTypes;
-		return Object.getOwnPropertyNames(object).filter(l => l !== 'high').map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.rockets.' + item) }; });
+		return Object.getOwnPropertyNames(object).filter(l => l !== 'high').map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.rockets.levels.' + item) }; });
 	});
 
 	const hasCoverUrl = (item) => {

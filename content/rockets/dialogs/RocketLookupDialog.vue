@@ -1,7 +1,7 @@
 <template>
 	<VFormListingDialog
-		ref="dialogRecoveryLookup"
-		:label="$t(partTypeName)"
+		ref="dialogRocketLookup"
+		:label="$t('titles.content.rockets.title')"
 		:signal="signal"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
 		:pre-complete-ok="preCompleteOk"
@@ -15,11 +15,10 @@
 		<template #default="{ buttonOkDisabled, isLoading }">
 			<v-row dense>
 				<v-col cols="12">
-					[[{{ partTypeName }}]]
 					<v-card>
 						<v-card-text>
 							<v-row dense>
-								<v-col cols="8">
+								<v-col cols="12" sm="6">
 									<VTextFieldWithValidation
 										ref="filterItemNameRef"
 										v-model="filterItemName"
@@ -29,21 +28,21 @@
 										:counter="30"
 									/>
 								</v-col>
-								<v-col
-									v-if="isParachutes() || isStreamers()"
-									cols="4"
-								>
-									<v-checkbox
+								<v-col cols="12" sm="6">
+									<VSelectWithValidation
+										ref="filterItemRocketTypesRef"
 										v-model="filterItemRocketTypes"
-										density="compact"
-										:label="$t('forms.content.parts.parachute.thinMill')"
+										vid="filterItemRocketTypes"
+										multiple
+										:max-values="3"
+										:items="rocketTypes"
+										:validation="validation"
+										:label="$t('forms.content.rockets.level')"
+										:hint="$t('forms.content.rockets.level')"
 									/>
 								</v-col>
 							</v-row>
-							<v-row 
-								v-if="isChuteProtectors() || isDeploymentBags() || isParachutes()"
-								dense
-							>
+							<v-row dense>
 								<v-col cols="3">
 									<VNumberFieldWithValidation
 										ref="filterItemDiameterMinRef"
@@ -89,61 +88,12 @@
 									</table>
 								</v-col>
 							</v-row>
-							<v-row 
-								v-if="isDeploymentBags() || isStreamers()"
-								dense
-							>
-								<v-col cols="3">
-									<VNumberFieldWithValidation
-										ref="filterItemLengthMinRef"
-										v-model="filterItemLengthMin"
-										vid="filterItemLengthMin"
-										:validation="validation"
-										:label="$t('forms.content.parts.length') + ' ' + $t('forms.content.parts.min.abbr')"
-									/>
-								</v-col>
-								<v-col cols="3">
-									<VNumberFieldWithValidation
-										ref="filterItemLengthMaxRef"
-										v-model="filterItemLengthMax"
-										vid="filterItemLengthMax"
-										:validation="validation"
-										:label="$t('forms.content.parts.length') + ' ' + $t('forms.content.parts.max.abbr')"
-									/>
-								</v-col>
-								<v-col cols="6">
-									<table>
-										<tr>
-											<td class="measurementUnits">
-												<MeasurementUnitsSelect
-													ref="filterItemLengthMeasurementUnitsIdRef"
-													v-model="filterItemLengthMeasurementUnitsId"
-													vid="filterItemLengthMeasurementUnitsId"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.title')"
-												/>
-											</td>
-											<td class="measurementUnit">
-												<MeasurementUnitSelect
-													ref="filterItemLengthMeasurementUnitIdRef"
-													v-model="filterItemLengthMeasurementUnitId"
-													vid="filterItemLengthMeasurementUnitId"
-													:measurementUnitsId="filterItemLengthMeasurementUnitsId"
-													:measurementUnitsType="measurementUnitsLengthType"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.length')"
-												/>
-											</td>
-										</tr>
-									</table>
-								</v-col>
-							</v-row>
 							<v-row dense>
 								<v-col cols="8">
 									<VSelectWithValidation
-										ref="filterItemManufacturerRef"
-										v-model="filterItemManufacturer"
-										vid="filterItemManufacturer"
+										ref="filterItemManufacturersRef"
+										v-model="filterItemManufacturers"
+										vid="filterItemManufacturers"
 										multiple
 										:max-values="2"
 										:items="manufacturers"
@@ -168,14 +118,14 @@
 								:variant="buttonsForms.variant.clear"
 								:color="buttonsForms.color.clear"
 								:loading="isLoading"
-								@click="clickRecoverySearchClear"
+								@click="clickRocketSearchClear"
 							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
 								:variant="buttonsForms.variant.ok"
 								:color="buttonsForms.color.ok"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
-								@click="clickRecoverySearch"
+								@click="clickRocketSearch"
 							>{{ $t('buttons.search') }}</v-btn>
 						</v-card-actions>
 					</v-card>
@@ -194,18 +144,32 @@
 				class="row"
 				style="height: 35vh"
 			>
-				<v-expansion-panels
-					multiple
+				<div
+				v-for="item of results"
+				:key="item.id"
 				>
-					<RocketParts
-						:items="results"
-						:selectable="true"
-						:search="true"
-						panel-type-id="recovery-search"
-						@select="clickRecoverySelect"
-					>
-					</RocketParts>
-				</v-expansion-panels>
+					<v-card>
+						<v-card-title
+							class="bg-primary"
+						>
+							{{ item.name }}
+							<div class="float-right">{{ manufacturer(item) }}</div>
+						</v-card-title>
+						<v-card-text>
+							<VMarkdown v-model="item.description" :use-github=false />
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								:color="buttonsForms.color.default"
+								@click="clickRocketSelect(item)"
+							>
+								{{ $t('buttons.select') }}
+							</v-btn>
+						</v-card-actions>
+					</v-card>
+				</div>
 			</div>
 		</template>
 	</VFormListingDialog>
@@ -221,29 +185,27 @@
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
-import { useRecoveryRocketLookupDialogComponent } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogComponent';
-import { useRecoveryLookupDialogComponentProps } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogComponentProps';
-import { useRecoveryRocketLookupDialogValidation } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogValidation';
+import { useRocketRocketLookupDialogComponent } from '@/components/content/rockets/dialogs/rocketLookupDialogComponent';
+import { useRocketLookupDialogComponentProps } from '@/components/content/rockets/dialogs/rocketLookupDialogComponentProps';
+import { useRocketRocketLookupDialogValidation } from '@/components/content/rockets/dialogs/rocketLookupDialogValidation';
 import { useRocketLookupDialogProps } from '@/components/content/rockets/dialogs/lookupDialogProps';
 
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
-import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
-import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
-
-import RocketParts from '@/components/content/rockets/parts/RocketParts';
-
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
+import RocketParts from '@/components/content/rockets/parts/RocketParts';
+import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormListingDialog';
+import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RecoveryLookupDialog',
+	name: 'RocketLookupDialog',
 	components: {
 		ChuteProtectorPanelTitle,
 		DeploymentBagPanelTitle,
@@ -254,13 +216,14 @@ export default {
 		StreamerPanelTitle,
 		VConfirmationDialog,
 		VFormListingDialog,
+		VMarkdown,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
 		VTextFieldWithValidation
 	},
 	props: {
 		...useRocketLookupDialogProps,
-		...useRecoveryLookupDialogComponentProps
+		...useRocketLookupDialogComponentProps
 	},
 	emits: ['close', 'ok', 'select'],
 	setup (props, context) {
@@ -280,45 +243,34 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			rocketTypes,
 			serviceStore,
 			filterItemDiameterMax,
 			filterItemDiameterMin,
 			filterItemDiameterMeasurementUnitId,
 			filterItemDiameterMeasurementUnitsId,
-			filterItemLengthMax,
-			filterItemLengthMin,
-			filterItemLengthMeasurementUnitId,
-			filterItemLengthMeasurementUnitsId,
-			filterItemManufacturer,
+			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemName,
 			filterItemRocketTypes,
-			dialogRecoveryLookup,
+			dialogRocketLookup,
 			dialogResetManager,
 			dialogResetMessage,
 			manufacturersI,
 			results,
 			manufacturers,
-			partTypeName,
 			buttonOkDisabledOverride,
-			clickRecoverySearch,
-			clickRecoverySearchClear,
-			clickRecoverySelect,
+			clickRocketSearch,
+			clickRocketSearchClear,
+			clickRocketSelect,
 			close,
 			dialogResetOk,
-			isAltimeters,
-			isChuteProtectors,
-			isChuteReleases,
-			isDeploymentBags,
-			isParachutes,
-			isStreamers,
-			isTrackers,
 			manufacturer,
 			preCompleteOk,
 			resetAdditional,
 			scope,
 			validation
-		} = useRecoveryRocketLookupDialogComponent(props, context);
+		} = useRocketRocketLookupDialogComponent(props, context);
 
 		return {
 			correlationId,
@@ -336,39 +288,28 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			rocketTypes,
 			serviceStore,
 			filterItemDiameterMax,
 			filterItemDiameterMin,
 			filterItemDiameterMeasurementUnitId,
 			filterItemDiameterMeasurementUnitsId,
-			filterItemLengthMax,
-			filterItemLengthMin,
-			filterItemLengthMeasurementUnitId,
-			filterItemLengthMeasurementUnitsId,
-			filterItemManufacturer,
+			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemName,
 			filterItemRocketTypes,
-			dialogRecoveryLookup,
+			dialogRocketLookup,
 			dialogResetManager,
 			dialogResetMessage,
 			manufacturersI,
 			results,
 			manufacturers,
-			partTypeName,
 			buttonOkDisabledOverride,
-			clickRecoverySearch,
-			clickRecoverySearchClear,
-			clickRecoverySelect,
+			clickRocketSearch,
+			clickRocketSearchClear,
+			clickRocketSelect,
 			close,
 			dialogResetOk,
-			isAltimeters,
-			isChuteProtectors,
-			isChuteReleases,
-			isDeploymentBags,
-			isParachutes,
-			isStreamers,
-			isTrackers,
 			manufacturer,
 			preCompleteOk,
 			resetAdditional,
@@ -377,7 +318,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketEditValidation(false), LibraryCommonUtility.cloneDeep(useRecoveryRocketLookupDialogValidation)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(LibraryCommonUtility.cloneDeep(useRocketRocketLookupDialogValidation)));
 	}
 };
 </script>
