@@ -23,6 +23,19 @@
 											:validation="validation"
 										/>
 									</v-col>
+									<v-col cols="12" sm="6">
+										<VSelectWithValidation
+											ref="filterItemRocketTypesRef"
+											v-model="filterItemRocketTypes"
+											vid="filterItemRocketTypes"
+											multiple
+											:max-values="3"
+											:items="rocketTypes"
+											:validation="validation"
+											:label="$t('forms.content.rockets.level')"
+											:hint="$t('forms.content.rockets.level')"
+										/>
+									</v-col>
 								</v-row>
 								<v-row dense>
 									<v-col cols="12" sm="6">
@@ -31,7 +44,7 @@
 											v-model="filterItemManufacturers"
 											vid="filterItemManufacturers"
 											multiple
-											:max-values="2"
+											:max-values="3"
 											:items="manufacturers"
 											:validation="validation"
 											:label="$t('forms.content.manufacturer.plural')"
@@ -123,26 +136,22 @@
 							:key="item.id"
 						>
 							<v-card>
-								<v-card-title>
-									<slot name="panelTitle" :item="item">
-										{{ item.name }}
-									</slot>
+								<v-card-title
+									class="bg-primary"
+								>
+									{{ item.name }}
 									<div class="float-right">{{ manufacturer(item) }}</div>
 								</v-card-title>
-								<v-card-text
+								<v-card-text>
+									<VMarkdown v-model="item.description" :use-github=false />
+									<div
+										v-if="debug"
 									>
-										<!-- v-if="item.description" -->
-										<slot name="panelText" :item="item">
-											{{ item.description }}
-										</slot>
-										<div
-											v-if="debug"
-										>
-											canCopy [[ {{ canCopy(item) }}]]
-											canDelete [[ {{ canDelete(item) }}]]
-											canEdit [[ {{ canEdit(item) }}]]
-											canView [[ {{ canView(item) }}]]
-										</div>
+										canCopy [[ {{ canCopy(item) }}]]
+										canDelete [[ {{ canDelete(item) }}]]
+										canEdit [[ {{ canEdit(item) }}]]
+										canView [[ {{ canView(item) }}]]
+									</div>
 								</v-card-text>
 								<v-card-actions>
 									<v-spacer></v-spacer>
@@ -190,17 +199,15 @@
 					v-show="colsEditPanel"
 					:cols="colsEditPanel"
 				>
-					<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug">
-						<Rocket
-							:model-value="detailItem"
-							@cancel="detailClose"
-							@close="detailClose"
-							@error="detailError"
-							@ok="detailOk"
-							:debug="debug"
-						>
-						</Rocket>
-					</slot>
+					<Rocket
+						:model-value="detailItem"
+						@cancel="detailClose"
+						@close="detailClose"
+						@error="detailError"
+						@ok="detailOk"
+						:debug="debug"
+					>
+					</Rocket>
 				</v-col>
 			</v-row>
 		</template>
@@ -232,14 +239,14 @@ import { useRocketsBaseComponent } from '@/components/content/rockets/library/ro
 import { useRocketsBaseComponentProps } from '@/components/content/rockets/library/rocketsComponentProps';
 import { useRocketsFilterValidation } from '@/components/content/rockets/library/rocketsFilterValidation';
 
-import Rocket from '@/components/content/rockets/library/rocket/Rocket';
-import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
 import ContentHeader from '@/components/content/Header';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
-
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import Rocket from '@/components/content/rockets/library/rocket/Rocket';
+import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
+import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
+import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
+import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
 import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
@@ -256,6 +263,7 @@ export default {
 		RocketCopyDialog,
 		VConfirmationDialog,
 		VFormListing,
+		VMarkdown,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
 		VSwitchWithValidation,
@@ -328,6 +336,7 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
+			rocketTypes,
 			debug,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
@@ -336,6 +345,7 @@ export default {
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemName,
+			filterItemRocketTypes,
 			filterItemWeight,
 			manufacturers,
 			title,
@@ -413,6 +423,7 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
+			rocketTypes,
 			debug,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
@@ -421,6 +432,7 @@ export default {
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemName,
+			filterItemRocketTypes,
 			filterItemWeight,
 			manufacturers,
 			title,

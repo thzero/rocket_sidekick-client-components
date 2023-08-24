@@ -10,7 +10,9 @@ import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import RocketData from 'rocket_sidekick_common/data/rockets/index';
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
+
+import RocketSetupData from 'rocket_sidekick_common/data/rockets/setups/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
@@ -104,17 +106,19 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	const debug = ref(false);
 	const diameterMeasurementUnitId = ref(null);
 	const diameterMeasurementUnitsId = ref(null);
-	const dialogRocketsLookupRef = ref(null);
+	const dialogRocketLookupManager = ref(new DialogSupport());
+	const dialogRocketSetupsRef = ref(null);
 	const filterItemDiameter = ref(null);
 	const filterItemManufacturers = ref(null);
 	const filterItemManufacturerStockId = ref(null);
 	const filterItemName = ref(null);
-	const filterItemWeight = ref(null);
+	const filterItemRocketId = ref(null);
+	const filterItemRocketName = ref(null);
+	const filterItemRocketTypes = ref(null);
 	const manufacturers = ref(null);
-	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.rockets.title`));
+	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.rocketSetups.title`));
 	const weightMeasurementUnitId = ref(null);
 	const weightMeasurementUnitsId = ref(null);
-	const params = ref({});
 
 	if (LibraryCommonUtility.isDev) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
@@ -142,8 +146,11 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		await fetch(correlationId);
 	};
 	const clickSearchClear = async (correlationId) => {
-		await dialogRocketsLookupRef.value.reset(correlationId, true);
+		await dialogRocketSetupsRef.value.reset(correlationId, true);
 		await fetch(correlationId);
+	};
+	const clickSearchRockets = async (correlationId) => {
+		dialogRocketLookupManager.value.open();
 	};
 	const fetchI = async (correlationId) => {
 		await fetchManufacturers(correlationId);
@@ -152,9 +159,9 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		if (!params)
 			return error('useRocketsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
 
-		serviceStore.dispatcher.setRocketsSearchCriteria(correlationId, params);
+		serviceStore.dispatcher.setRocketSetupsSearchCriteria(correlationId, params);
 			
-		const response = await serviceStore.dispatcher.requestRockets(correlationId, params);
+		const response = await serviceStore.dispatcher.requestRocketSetups(correlationId, params);
 		if (hasFailed(response))
 			return response;
 
@@ -192,21 +199,22 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	const fetchParams = (correlationId, params) => {
 		params.name = filterItemName.value;
 		params.diameter = filterItemDiameter.value;
-		params.weight = filterItemWeight.value;
 		params.manufacturers = filterItemManufacturers.value;
 		params.manufacturerStockId = filterItemManufacturerStockId.value;
+		params.rocketId = filterItemRocketId.value;
+		params.rocketTypes = filterItemRocketTypes.value;
 		// params.weightMeasurementUnitId = weightMeasurementUnitId.value;
 		// params.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 		return params;
 	};
 	const initI = async (correlationId) => {
-		const params = await serviceStore.getters.getRocketsSearchCriteria(correlationId);
+		const params = await serviceStore.getters.getRocketSetupsSearchCriteria(correlationId);
 		if (params)
 			resetAdditional(correlationId, params);
 		return success(correlationId);
 	};
 	const initNewI = async (correlationId, data) => {
-		data = data ? data : new RocketData();
+		data = data ? data : new RocketSetupData();
 		return success(correlationId, data);
 	};
 	const manufacturer = (item) => {
@@ -228,21 +236,35 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		filterItemDiameter.value = data ? data.diameter : null;
 		filterItemManufacturers.value = data ? data.manufacturers : null;
 		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
-		filterItemWeight.value = data ? data.weight : null;
+		filterItemRocketId.value = data ? data.rocketId : null;
+		filterItemRocketName.value = data ? data.rocketName : null;
+		filterItemRocketTypes.value = data ? data.rocketTypes : null;
+	};
+	const selectRocket = async (item) => {
+		try {
+			if (!item)
+				return error('useRocketSetupsBaseComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
+			
+			filterItemRocketId.value = item.id;
+			filterItemRocketName.value = item.name;
+		}
+		finally {
+			dialogRocketLookupManager.value.ok();
+		}
 	};
 
 	onMounted(async () => {
-		if (manufacturers.value)
-			return;
-
 		const correlationIdI = correlationId();
-		const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
-		if (hasFailed(response))
-			return;
-			
-		let temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket));
-		temp2 = temp2.map((item) => { return { id: item.id, name: item.name }; });
-		manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
+
+		if (!manufacturers.value) {
+			const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
+			if (hasFailed(response))
+				return;
+				
+			let temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket));
+			temp2 = temp2.map((item) => { return { id: item.id, name: item.name }; });
+			manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
+		}		
 	});
 
 	return {
@@ -306,15 +328,19 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		display,
 		buttonsDialog,
 		buttonsForms,
+		rocketTypes,
 		debug,
 		diameterMeasurementUnitId,
 		diameterMeasurementUnitsId,
-		dialogRocketsLookupRef,
+		dialogRocketLookupManager,
+		dialogRocketSetupsRef,
 		filterItemDiameter,
 		filterItemManufacturers,
 		filterItemManufacturerStockId,
 		filterItemName,
-		filterItemWeight,
+		filterItemRocketId,
+		filterItemRocketName,
+		filterItemRocketTypes,
 		manufacturers,
 		title,
 		weightMeasurementUnitId,
@@ -322,9 +348,11 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		buttonSearchResetDisabled,
 		clickSearch,
 		clickSearchClear,
+		clickSearchRockets,
 		fetchManufacturers,
 		manufacturer,
 		measurementUnitTranslateWeight,
+		selectRocket,
 		resetAdditional,
 		scope: 'RocketsFilterControl',
 		validation: useVuelidate({ $scope: 'RocketsFilterControl' })

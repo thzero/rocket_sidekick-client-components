@@ -14,10 +14,11 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
-export function useRecoveryRocketLookupDialogComponent(props, context, options) {
+export function useRocketRocketLookupDialogComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -61,71 +62,43 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		measurementUnitsIdSettings
 	} = useToolsMeasurementSettingsComponent(props, context);
 
+	const {
+		rocketTypes,
+		hasCoverUrl,
+		rocketTypeIcon,
+		rocketTypeIconDetermine
+	} = useRocketsUtilityComponent(props, context, options);
+
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
 	const filterItemDiameterMax = ref(null);
 	const filterItemDiameterMin = ref(null);
 	const filterItemDiameterMeasurementUnitId = ref(null);
 	const filterItemDiameterMeasurementUnitsId = ref(null);
-	const filterItemLengthMax = ref(null);
-	const filterItemLengthMin = ref(null);
-	const filterItemLengthMeasurementUnitId = ref(null);
-	const filterItemLengthMeasurementUnitsId = ref(null);
-	const filterItemManufacturer = ref(null);
+	const filterItemManufacturers = ref(null);
 	const filterItemManufacturerStockId = ref(null);
 	const filterItemName = ref(null);
-	const filterItemRocketTypes = ref(null);
-	const dialogRecoveryLookup = ref(null);
+	const filterItemRocketTypes = ref(false);
+	const dialogRocketLookup = ref(null);
 	const dialogResetManager = ref(new DialogSupport());
 	const dialogResetMessage = ref(null);
 	const manufacturersI = ref(null);
 	const results = ref([]);
 	
-	const isAltimeters = () => {
-		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.altimeter);
-	};
-	const isChuteProtectors = () => {
-		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.chuteProtector);
-	};
-	const isChuteReleases = () => {
-		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.chuteRelease);
-	};
-	const isDeploymentBags = () => {
-		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.deploymentBag);
-	};
-	const isParachutes = () => {
-		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.parachute);
-	};
-	const isStreamers = () => {
-		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.streamer);
-	};
-	const isTrackers = () => {
-		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.tracker);
-	};
 	const manufacturers = computed(() => {
 		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
-	});
-	const partTypeName = computed(() => {
-		let partTypeId = null;
-		if ((props.partTypes ?? []).length === 1)
-			partTypeId = props.partTypes[0];
-
-		if (partTypeId)
-			return LibraryClientUtility.$trans.t(`forms.content.parts['${partTypeId}'].name`) + ' ' + LibraryClientUtility.$trans.t('titles.search');
-
-		return LibraryClientUtility.$trans.t(`forms.content.parts.recovery.search`);
 	});
 
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
 		return invalid;
 	};
-	const clickRecoverySearch = async () => {
-		await dialogRecoveryLookup.value.submit(correlationId());
+	const clickRocketSearch = async () => {
+		await dialogRocketLookup.value.submit(correlationId());
 	};
-	const clickRecoverySearchClear = async () => {
-		await dialogRecoveryLookup.value.reset(correlationId(), null, true);
+	const clickRocketSearchClear = async () => {
+		await dialogRocketLookup.value.reset(correlationId(), null, true);
 	};
-	const clickRecoverySelect = async (item) => {
+	const clickRocketSelect = async (item) => {
 		context.emit('select', item);
 	};
 	const close = () => {
@@ -134,29 +107,8 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 	const dialogResetOk = async () => {
 		dialogResetManager.value.ok();
 		const correlationIdI = correlationId();
-		await serviceStore.dispatcher.requestPartsRecoverySearchReset(correlationIdI);
+		await serviceStore.dispatcher.requestPartsRocketSearchReset(correlationIdI);
 		await preCompleteOk(correlationIdI);
-	};
-	const isAltimetersI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
-	};
-	const isChuteProtectorsI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
-	};
-	const isChuteReleasesI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
-	};
-	const isDeploymentBagsI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
-	};
-	const isParachutesI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
-	};
-	const isStreamersI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
-	};
-	const isTrackersI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
 	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
@@ -177,26 +129,24 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 			diameterMin: filterItemDiameterMin.value,
 			diameterMeasurementUnitId: filterItemDiameterMeasurementUnitId.value,
 			diameterMeasurementUnitsId: filterItemDiameterMeasurementUnitsId.value,
-			lengthMax: filterItemLengthMax.value,
-			lengthMin: filterItemLengthMin.value,
-			lengthMeasurementUnitId: filterItemLengthMeasurementUnitId.value,
-			lengthMeasurementUnitsId: filterItemLengthMeasurementUnitsId.value,
-			manufacturerId: filterItemManufacturer.value,
+			manufacturers: filterItemManufacturers.value,
 			manufacturerStockId: filterItemManufacturerStockId.value,
 			name: filterItemName.value,
-			partTypes: props.partTypes, 
 			rocketTypes: filterItemRocketTypes.value
 		};
 
-		const temp = await serviceStore.dispatcher.requestPartsRecoverySearchResults(correlationId, request);
-		results.value = temp.sort(
+		const response = await serviceStore.dispatcher.requestRockets(correlationId, request);
+		if (hasFailed(response))
+			return response;
+
+		results.value = response.results.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 		);
 		return success(correlationId);
 	};
 	const resetAdditional = async (correlationId, ignoreSettings) => {
-		filterItemManufacturer.value = null;
+		filterItemManufacturers.value = null;
 		filterItemManufacturerStockId.value = null;
 		filterItemName.value = null;
 
@@ -204,11 +154,6 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		filterItemDiameterMin.value = null;
 		filterItemDiameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
 		filterItemDiameterMeasurementUnitsId.value =  measurementUnitsIdSettings.value;
-
-		filterItemLengthMax.value = null;
-		filterItemLengthMin.value = null;
-		filterItemLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-		filterItemLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 
 		filterItemRocketTypes.value = null;
 
@@ -224,18 +169,7 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 			return;
 
 		let temp2 = response.results.filter(l => l.types.find(j => 
-			// (j === AppCommonConstants.Rocketry.PartTypes.chuteProtector && props.partTypeId) ||
-			// (j === AppCommonConstants.Rocketry.PartTypes.chuteRelease && props.partTypeId) ||
-			// (j === AppCommonConstants.Rocketry.PartTypes.deploymentBag && props.partTypeId) ||
-			// (j === AppCommonConstants.Rocketry.PartTypes.parachute && props.partTypeId) ||
-			// (j === AppCommonConstants.Rocketry.PartTypes.streamer && props.partTypeId)
-			isAltimetersI(j) ||
-			isChuteProtectorsI(j) ||
-			isChuteReleasesI(j) ||
-			isDeploymentBagsI(j) ||
-			isParachutesI(j) ||
-			isStreamersI(j) ||
-			isTrackersI(j)
+			(j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket)
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
@@ -257,39 +191,28 @@ export function useRecoveryRocketLookupDialogComponent(props, context, options) 
 		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
+		rocketTypes,
 		serviceStore,
 		filterItemDiameterMax,
 		filterItemDiameterMin,
 		filterItemDiameterMeasurementUnitId,
 		filterItemDiameterMeasurementUnitsId,
-		filterItemLengthMax,
-		filterItemLengthMin,
-		filterItemLengthMeasurementUnitId,
-		filterItemLengthMeasurementUnitsId,
-		filterItemManufacturer,
+		filterItemManufacturers,
 		filterItemManufacturerStockId,
 		filterItemName,
 		filterItemRocketTypes,
-		dialogRecoveryLookup,
+		dialogRocketLookup,
 		dialogResetManager,
 		dialogResetMessage,
 		manufacturersI,
 		results,
 		manufacturers,
-		partTypeName,
 		buttonOkDisabledOverride,
-		clickRecoverySearch,
-		clickRecoverySearchClear,
-		clickRecoverySelect,
+		clickRocketSearch,
+		clickRocketSearchClear,
+		clickRocketSelect,
 		close,
 		dialogResetOk,
-		isAltimeters,
-		isChuteProtectors,
-		isChuteReleases,
-		isDeploymentBags,
-		isParachutes,
-		isStreamers,
-		isTrackers,
 		manufacturer,
 		preCompleteOk,
 		resetAdditional,
