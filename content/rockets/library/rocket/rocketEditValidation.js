@@ -2,7 +2,6 @@ import { between, decimal, maxLength, minLength, required } from '@vuelidate/val
 
 export function useRocketEditValidation(nameRequired) { 
 	const validation = {
-		detailItemAltimeters: { $autoDirty: true },
 		detailItemCg: {  decimal, between: between(0, 2004), $autoDirty: true }, // TODO: max of length
 		detailItemCgFrom: { minLength: minLength(3), maxLength: maxLength(50), $autoDirty: true },
 		detailItemCgMeasurementUnitId: { $autoDirty: true },
@@ -18,8 +17,6 @@ export function useRocketEditValidation(nameRequired) {
 		detailItemLength: { decimal, between: between(0, 120), $autoDirty: true },
 		detailItemLengthMeasurementUnitId: { $autoDirty: true },
 		detailItemLengthMeasurementUnitsId: { $autoDirty: true },
-		detailItemRecovery: { $autoDirty: true },
-		detailItemTrackers: { $autoDirty: true },
 		detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 		detailItemWeightMeasurementUnitId: { $autoDirty: true },
 		detailItemWeightMeasurementUnitsId: { $autoDirty: true }

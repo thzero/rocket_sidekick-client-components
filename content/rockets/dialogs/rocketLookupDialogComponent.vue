@@ -145,7 +145,7 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		);
 		return success(correlationId);
 	};
-	const resetAdditional = async (correlationId, ignoreSettings) => {
+	const resetAdditional = async (correlationId, previous, loaded) => {
 		filterItemManufacturers.value = null;
 		filterItemManufacturerStockId.value = null;
 		filterItemName.value = null;
@@ -157,7 +157,10 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 
 		filterItemRocketTypes.value = null;
 
-		await preCompleteOk(correlationId);
+		if (loaded)
+			return await preCompleteOk(correlationId);
+
+		results.value = [];
 	};
 
 	onMounted(async () => {
