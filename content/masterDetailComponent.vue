@@ -199,8 +199,8 @@ export function useMasterDetailComponent(props, context, options) {
 		items.value = results;
 		return results;
 	};
-	const handleAdd = () => {
-		detailItem.value = initNew();
+	const handleAdd = async () => {
+		detailItem.value = await initNew();
 	};
 	const handleEdit = async (item) => {
 		const correlationIdI = correlationId();
@@ -227,9 +227,13 @@ export function useMasterDetailComponent(props, context, options) {
 	const initEdit = (data) => {
 		return { data: LibraryCommonUtility.cloneDeep(data), isNew: false, isEditable: true }
 	};
-	const initNew = (data) => {
-		if (options.initNew)
-			data = options.initNew(correlationId(), data);
+	const initNew = async (data) => {
+		if (options.initNew) {
+			const response = await options.initNew(correlationId(), data);
+			if (hasFailed(response))
+				throw Error('Invalid data...');
+			data = response.results;
+		}
 		if (!data)
 			throw Error('Invalid data...');
 		return { data: data, isNew: true, isEditable: true  }

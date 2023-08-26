@@ -42,17 +42,6 @@
 					:counter="30"
 				/>
 			</v-col>
-			<v-col cols="12" md="4">
-				<VSelectWithValidation
-					ref="detailItemRocketTypeRef"
-					v-model="detailItemRocketType"
-					vid="detailItemRocketType"
-					:items="rocketTypes"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.type')"
-				/>
-			</v-col>
 		</v-row>
 		<v-row dense>
 			<v-col>
@@ -70,26 +59,44 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="6">
-				<VSelectWithValidation
-					ref="manufacturerRef"
-					v-model="detailItemManufacturer"
-					vid="detailItemManufacturer"
-					:items="manufacturers"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.manufacturer.name')"
-				/>
+			<v-col cols="12" sm="6">
+				<div class="d-flex">
+					<!-- <VTextField
+						ref="detailItemRocketNameRef"
+						v-model="detailItemRocketName"
+						vid="detailItemRocketName"
+						:label="$t('forms.content.rockets.name')"
+						:readonly="true"
+					/> -->
+					<VTextFieldWithValidation
+						ref="detailItemRocketNameRef"
+						v-model="detailItemRocketName"
+						vid="detailItemRocketName"
+						:validation="validation"
+						:label="$t('forms.content.rockets.name')"
+						:readonly="true"
+						:errorsReadonly="validation.detailItemRocketId.$silentErrors"
+					/>
+					<v-btn
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
+						@click="clickSearchRockets(item)"
+					>
+						{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+					</v-btn>
+				</div>
 			</v-col>
-			<v-col cols="6">
-				<VTextFieldWithValidation
-					ref="detailItemManufacturerStockIdRef"
-					v-model="detailItemManufacturerStockId"
-					vid="detailItemManufacturerStockId"
+			<v-col cols="12" sm="6">
+				<VSelectWithValidation
+					v-if="detailItemRocketId"
+					ref="detailItemTypeRef"
+					v-model="detailItemType"
+					vid="detailItemType"
+					:items="types"
 					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.manufacturerId')"
-					:counter="30"
+					:label="$t('forms.content.rockets.level')"
+					:hint="$t('forms.content.rockets.level')"
 				/>
 			</v-col>
 		</v-row>
@@ -110,7 +117,6 @@
 		<template v-slot:buttons_post>
 		</template>
 		<template v-slot:after>	
-		[[ {{ panels }} ]]
 			<v-expansion-panels
 				v-if="!isNew"
 				v-model="panels"
@@ -129,7 +135,7 @@
 						{{ $t(`forms.content.rockets.stage.name`) }} {{ item.name}}
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
-						<RocketStage
+						<RocketSetupStage
 							:detail-item="item"
 							:is-editable="isEditable"
 							:manufacturers="manufacturers"
@@ -160,7 +166,7 @@
 									{{ $t('buttons.edit') }}
 								</v-btn>
 							</template>
-						</RocketStage>
+						</RocketSetupStage>
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 			</v-expansion-panels>
@@ -175,7 +181,13 @@
 		@error="dialogDeleteSecondaryError"
 		@ok="dialogDeleteSecondaryOk"
 	/>
-	<RocketStageEditDialog
+	<RocketLookupDialog
+		ref="dialogRocketLookupManagerRef"
+		:signal="dialogRocketLookupManager.signal"
+		@close="dialogRocketLookupManager.cancel()"
+		@select="selectRocket"
+	/>
+	<RocketSetupStageEditDialog
 		v-if="!readonly"
 		ref="dialogEditSecondaryRef"
 		:debug="debug"
@@ -193,10 +205,9 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
-import { useRocketValidation } from '@/components/content/rockets/library/rocket/rocketValidation';
-import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
-import { useRocketComponent } from '@/components/content/rockets/library/rocket/rocketComponent';
-import { useRocketComponentProps } from '@/components/content/rockets/library/rocket/rocketComponentProps';
+import { useRocketSetupEditValidation } from '@/components/content/rockets/setups/setup/rocketSetupEditValidation';
+import { useRocketSetupComponent } from '@/components/content/rockets/setups/setup/rocketSetupComponent';
+import { useRocketSetupComponentProps } from '@/components/content/rockets/setups/setup/rocketSetupComponentProps';
 
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
@@ -205,9 +216,10 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
-import RocketStage from '@/components/content/rockets/library/rocket/RocketStage';
-import RocketStageEditDialog from '@/components/content/rockets/library/dialogs/RocketStageEditDialog';
+import RocketSetupStage from '@/components/content/rockets/setups/setup/RocketSetupStage';
+import RocketSetupStageEditDialog from '@/components/content/rockets/setups/dialogs/RocketSetupStageEditDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
@@ -224,9 +236,10 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
 		ParachutePanelTitle,
+		RocketLookupDialog,
 		RocketParts,
-		RocketStage,
-		RocketStageEditDialog,
+		RocketSetupStage,
+		RocketSetupStageEditDialog,
 		StreamerPanelTitle,
 		VConfirmationDialog,
 		VFormControl,
@@ -238,7 +251,7 @@ export default {
 	},
 	props: {
 		...useDetailComponentProps,
-		...useRocketComponentProps
+		...useRocketSetupComponentProps
 	},
 	emits: ['cancel', 'close', 'error', 'ok'],
 	setup (props, context, options) {
@@ -312,25 +325,29 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			dialogRocketLookupManager,
 			detailItemDescription,
-			detailItemManufacturer,
-			detailItemManufacturerStockId,
 			detailItemName,
-			detailItemRocketType,
+			detailItemRocketId,
+			detailItemRocketName,
+			detailItemType,
 			manufacturers,
 			panels,
 			panelsId,
 			stagesPanels,
+			types,
 			hasAdmin,
 			rocketId,
 			stages,
+			clickSearchRockets,
 			panelsUpdated,
 			requestManufacturers,
 			stagesPanelsUpdated,
+			selectRocket,
 			updateStage,
 			scope,
 			validation
-		} = useRocketComponent(props, context, options);
+		} = useRocketSetupComponent(props, context, options);
 
 		return {
 			correlationId,
@@ -402,28 +419,32 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			dialogRocketLookupManager,
 			detailItemDescription,
-			detailItemManufacturer,
-			detailItemManufacturerStockId,
 			detailItemName,
-			detailItemRocketType,
+			detailItemRocketId,
+			detailItemRocketName,
+			detailItemType,
 			manufacturers,
 			panels,
 			panelsId,
 			stagesPanels,
+			types,
 			hasAdmin,
 			rocketId,
 			stages,
+			clickSearchRockets,
 			panelsUpdated,
 			requestManufacturers,
 			stagesPanelsUpdated,
+			selectRocket,
 			updateStage,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation(true)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketSetupEditValidation(false)), LibraryCommonUtility.cloneDeep({}));
 	}
 };
 </script>

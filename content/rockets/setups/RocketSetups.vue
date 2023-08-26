@@ -225,7 +225,7 @@
 					:cols="colsEditPanel"
 				>
 					<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug">
-						<Rocket
+						<RocketSetup
 							:model-value="detailItem"
 							@cancel="detailClose"
 							@close="detailClose"
@@ -233,13 +233,13 @@
 							@ok="detailOk"
 							:debug="debug"
 						>
-						</Rocket>
+						</RocketSetup>
 					</slot>
 				</v-col>
 			</v-row>
 		</template>
 	</VFormListing>
-	<RocketCopyDialog
+	<RocketSetupCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
 		:signal="dialogCopyManager.signal"
@@ -272,9 +272,9 @@ import { useRocketSetupsBaseComponent } from '@/components/content/rockets/setup
 import { useRocketSetupsBaseComponentProps } from '@/components/content/rockets/setups/rocketSetupsComponentProps';
 import { useRocketSetupsFilterValidation } from '@/components/content/rockets/setups/rocketSetupsFilterValidation';
 
-import Rocket from '@/components/content/rockets/library/rocket/Rocket';
-import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
+import RocketSetup from '@/components/content/rockets/setups/setup/RocketSetup';
+import RocketSetupCopyDialog from '@/components/content/rockets/setups/dialogs/RocketSetupCopyDialog';
 import ContentHeader from '@/components/content/Header';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
@@ -294,9 +294,9 @@ export default {
 		ContentHeader,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		Rocket,
-		RocketCopyDialog,
 		RocketLookupDialog,
+		RocketSetup,
+		RocketSetupCopyDialog,
 		VConfirmationDialog,
 		VFormListing,
 		VNumberFieldWithValidation,

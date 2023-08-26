@@ -95,7 +95,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		await setAdditional(correlationId);
 
 		if (!props.preCompleteOk)
-			return error('useToolsMeasurementSettingsComponent', 'preCompleteOk', 'invalid preCompletedOk property', null, null, null, correlationId);
+			return error('useRocketStageEditDialogComponent', 'preCompleteOk', 'invalid preCompletedOk property', null, null, null, correlationId);
 
 		// call the parent to tell them to save off the detail item
 		return await props.preCompleteOk(correlationId, detailItem.value);
