@@ -77,6 +77,9 @@ export function useHomeBaseComponent(props, context, options) {
 		const news = serviceStore.news.latest.slice(0);
 		return news.length;
 	});
+	const slideshow = computed(() => {
+		return serviceStore.getters.getContentInfoSlideshow();
+	});
 	const tools = computed(() => {
 		let tools = serviceStore.getters.getContentTools();
 		return tools.sort((a, b) => a.order >= b.order);
@@ -117,16 +120,17 @@ export function useHomeBaseComponent(props, context, options) {
 			clearTimeout(timeout);
 		}
 
-		// // Selecting the iframe element
-		const iframe = document.getElementById('slideshow');
-		// // Adjusting the iframe height onload event
-		// // frame.onload = function()
-		// // function execute while load the iframe
-		// iframe.addEventListener('load', function() {
-		// 	iframe.style.height = (Number(iframe.style.width.replace('%')) * 0.75) + 'px';
-		// 	// iframe.style.width = iframe.contentWindow.body.scrollWidth + 'px';
-		// });
-		iframe.src = 'https://docs.google.com/presentation/d/e/2PACX-1vQdHTQzjsz9rYx3DUY7sXjoPOxGJ7emhlGBJ-jMbuntHD9i9JbktdR_WuWXxe72VaJa_Q1y2jYIFAc0/embed?start=true&loop=true&delayms=3000';
+		// // // Selecting the iframe element
+		// const iframe = document.getElementById('slideshow');
+		// // // Adjusting the iframe height onload event
+		// // // frame.onload = function()
+		// // // function execute while load the iframe
+		// // iframe.addEventListener('load', function() {
+		// // 	iframe.style.height = (Number(iframe.style.width.replace('%')) * 0.75) + 'px';
+		// // 	// iframe.style.width = iframe.contentWindow.body.scrollWidth + 'px';
+		// // });
+		// //iframe.src = 'https://docs.google.com/presentation/d/e/2PACX-1vTkWnQ-bvOzt4DhMOeUe7xiANFfkPB7Wnlc8EqIVyynNrLLHp6HlGwfvoPyjj8UmGvnErqclg2UVBzG/embed?start=true&loop=true&delayms=3000';
+		// iframe.src = slideshow.value;
 	});
 
 	return {
@@ -152,6 +156,7 @@ export function useHomeBaseComponent(props, context, options) {
 		info,
 		isLoggedIn,
 		newsCount,
+		slideshow,
 		tools,
 		user,
 		userDisplayName,
