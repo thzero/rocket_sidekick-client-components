@@ -194,7 +194,7 @@
 								cols="12"
 							>
 								<div class="slideshow">
-									<iframe id="slideshow" frameborder="0" class="slideshowFrame"></iframe>
+									<iframe id="slideshow" :src="slideshow" frameborder="0" class="slideshowFrame"></iframe>
 								</div>
 							</v-col>
 						</v-row>
@@ -277,6 +277,7 @@ export default {
 			info,
 			isLoggedIn,
 			newsCount,
+			slideshow,
 			tools,
 			user,
 			userDisplayName,
@@ -306,6 +307,7 @@ export default {
 			info,
 			isLoggedIn,
 			newsCount,
+			slideshow,
 			tools,
 			user,
 			userDisplayName,
