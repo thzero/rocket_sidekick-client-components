@@ -76,8 +76,8 @@ export function usePartComponent(props, context, options) {
 			detailItemData.value.public = detailItemIsPublic.value ?? false;
 			
 			detailItemData.value.weight = AppUtility.convertNumber(detailItemWeight.value);
-			detailItemData.value.weightMeasurementUnitId = weightMeasurementUnitId.value;
-			detailItemData.value.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
+			detailItemData.value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
+			detailItemData.value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
 
 			if (options.preCompleteOkPart)
 			detailItemData.value = options.preCompleteOkPart(correlationId, detailItemData.value);
