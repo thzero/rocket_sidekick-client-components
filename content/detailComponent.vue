@@ -96,7 +96,7 @@ export function useDetailComponent(props, context, options) {
 				return;
 
 			const correlationIdI = correlationId();
-			const response = await serviceStore.dispatcher.deletePartByIdUser(correlationIdI, dialogDeleteParams.value);
+			const response = await serviceStore.dispatcher.deletePartById(correlationIdI, dialogDeleteParams.value);
 			if (hasFailed(response)) {
 				setNotify(correlationIdI, 'messages.error');
 				return;

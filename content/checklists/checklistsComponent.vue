@@ -193,7 +193,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const fetchI = async (correlationId) => {
 		const params = fetchParams(correlationId, {});
 		if (!params)
-			return error('useRocketsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
+			return error('useRocketsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 
 		serviceStore.dispatcher.setChecklistsSearchCriteria(correlationId, params);
 			

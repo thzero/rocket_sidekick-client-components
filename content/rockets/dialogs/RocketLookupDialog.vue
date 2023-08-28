@@ -180,6 +180,15 @@
 		@cancel="dialogResetManager.cancel()"
 		@ok="dialogResetOk"
 	/>
+	<VConfirmationDialog
+		ref="dialogSelectRocketConfirmRef"
+		:message="dialogSelectRocketConfirmMessage"
+		:messageRaw=true
+		:signal="dialogSelectRocketConfirmManager.signal"
+		@cancel="dialogSelectRocketConfirmCancel"
+		@error="dialogSelectRocketConfirmError"
+		@ok="dialogSelectRocketConfirmOk"
+	/>
 </template>
 
 <script>
@@ -245,6 +254,9 @@ export default {
 			measurementUnitsIdSettings,
 			rocketTypes,
 			serviceStore,
+			dialogSelectRocketConfirmManager,
+			dialogSelectRocketConfirmMessage,
+			dialogSelectRocketConfirmParams,
 			filterItemDiameterMax,
 			filterItemDiameterMin,
 			filterItemDiameterMeasurementUnitId,
@@ -265,6 +277,9 @@ export default {
 			clickRocketSelect,
 			close,
 			dialogResetOk,
+			dialogSelectRocketConfirmCancel,
+			dialogSelectRocketConfirmError,
+			dialogSelectRocketConfirmOk,
 			manufacturer,
 			preCompleteOk,
 			resetAdditional,
@@ -290,6 +305,9 @@ export default {
 			measurementUnitsIdSettings,
 			rocketTypes,
 			serviceStore,
+			dialogSelectRocketConfirmManager,
+			dialogSelectRocketConfirmMessage,
+			dialogSelectRocketConfirmParams,
 			filterItemDiameterMax,
 			filterItemDiameterMin,
 			filterItemDiameterMeasurementUnitId,
@@ -310,6 +328,9 @@ export default {
 			clickRocketSelect,
 			close,
 			dialogResetOk,
+			dialogSelectRocketConfirmCancel,
+			dialogSelectRocketConfirmError,
+			dialogSelectRocketConfirmOk,
 			manufacturer,
 			preCompleteOk,
 			resetAdditional,

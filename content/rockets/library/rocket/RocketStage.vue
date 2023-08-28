@@ -13,41 +13,47 @@
 		[[ trackers {{ trackers }} ]] -->
 	</div>
 	<v-row dense>
-		<v-col>
+		<v-col cols="9">
 			<VTextArea
-				ref="di-description"
+				ref="descriptionRef"
 				v-model="displayItem.description"
 				:readonly="true"
 				:label="$t('forms.description')"
 				:rows="0"
 			/>
 		</v-col>
+		<v-col cols="3">
+			<VTextField
+				ref="di-description"
+				v-model="stageNumber"
+				:readonly="true"
+				:label="$t('forms.content.rockets.stage.name')"
+			/>
+		</v-col>
 	</v-row>
-		<v-row dense>
-			<v-col cols="6">
-				<VSelect
-					ref="manufacturerRef"
-					v-model="displayItem.manufacturerId"
-					vid="detailItemManufacturer"
-					:items="manufacturers"
-					:readonly="true"
-					:label="$t('forms.content.manufacturer.name')"
-				/>
-			</v-col>
-			<v-col cols="6">
-				<VTextField
-					ref="detailItemManufacturerStockIdRef"
-					v-model="displayItem.manufacturerStockId"
-					vid="detailItemManufacturerStockId"
-					:readonly="true"
-					:label="$t('forms.content.parts.manufacturerId')"
-				/>
-			</v-col>
-		</v-row>
+	<v-row dense>
+		<v-col cols="6">
+			<VSelect
+				ref="manufacturerRef"
+				v-model="displayItem.manufacturerId"
+				:items="manufacturers"
+				:readonly="true"
+				:label="$t('forms.content.manufacturer.name')"
+			/>
+		</v-col>
+		<v-col cols="6">
+			<VTextField
+				ref="manufacturerStockIdRef"
+				v-model="displayItem.manufacturerStockId"
+				:readonly="true"
+				:label="$t('forms.content.parts.manufacturerId')"
+			/>
+		</v-col>
+	</v-row>
 	<v-row dense>
 		<v-col cols="5" md="2">
 			<VNumberField
-				ref="di-diameter"
+				ref="diameterRef"
 				v-model="displayItem.diameterMajor"
 				:readonly="true"
 				:label="$t('forms.content.rockets.diameter.name')"
@@ -77,7 +83,7 @@
 		</v-col>
 		<v-col cols="5" md="2">
 			<VNumberField
-				ref="di-length"
+				ref="lengthRef"
 				v-model="displayItem.length"
 				:readonly="true"
 				:label="$t('forms.content.parts.length')"
@@ -168,68 +174,6 @@
 			</table>
 		</v-col>
 	</v-row>
-	<!-- <v-row dense>
-		<v-col cols="5" md="2">
-			<VNumberField
-				ref="di-cg"
-				v-model="displayItem.cg"
-				:readonly="true"
-				:label="$t('forms.content.rockets.cg')"
-			/>
-		</v-col>
-		<v-col cols="7" md="4">
-			<table>
-				<tr>
-					<td class="measurementUnits">
-						<MeasurementUnitsSelect
-							v-model="displayItem.cgMeasurementUnitsId"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.title')"
-						/>
-					</td>
-					<td class="measurementUnit">
-						<MeasurementUnitSelect
-							v-model="displayItem.cgMeasurementUnitId"
-							:measurementUnitsId="displayItem.cgMeasurementUnitsId"
-							:measurementUnitsType="measurementUnitsLengthType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.length')"
-						/>
-					</td>
-				</tr>
-			</table>
-		</v-col>
-		<v-col cols="5" md="2">
-			<VNumberField
-				ref="di-cp"
-				v-model="displayItem.cp"
-				:readonly="true"
-				:label="$t('forms.content.rockets.cp')"
-			/>
-		</v-col>
-		<v-col cols="7" md="4">
-			<table>
-				<tr>
-					<td class="measurementUnits">
-						<MeasurementUnitsSelect
-							v-model="displayItem.cpMeasurementUnitsId"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.title')"
-						/>
-					</td>
-					<td class="measurementUnit">
-						<MeasurementUnitSelect
-							v-model="displayItem.cpMeasurementUnitId"
-							:measurementUnitsId="displayItem.cpMeasurementUnitsId"
-							:measurementUnitsType="measurementUnitsLengthType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.length')"
-						/>
-					</td>
-				</tr>
-			</table>
-		</v-col>
-	</v-row> -->
 	<v-row dense>
 		<v-col>
 			<div
@@ -518,6 +462,7 @@ export default {
 			hasStreamers,
 			hasTrackers,
 			parachutes,
+			stageNumber,
 			streamers,
 			trackers,
 			measurementUnitsLengthDefaultId,
@@ -594,6 +539,7 @@ export default {
 			hasStreamers,
 			hasTrackers,
 			parachutes,
+			stageNumber,
 			streamers,
 			trackers,
 			measurementUnitsLengthDefaultId,

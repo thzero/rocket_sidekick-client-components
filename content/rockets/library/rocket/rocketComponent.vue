@@ -83,7 +83,15 @@ export function useRocketComponent(props, context, options) {
 	} = useDetailSecondaryComponent(props, context, {
 		dialogDeleteMessage: 'rockets.stage',
 		dialogDeleteSecondaryOk: async (correlationId, id) => {
-			LibraryCommonUtility.deleteArrayById(detailItemData.value.stages, id);
+			// LibraryCommonUtility.deleteArrayById(detailItemData.value.stages, id);
+			let stages = LibraryCommonUtility.cloneDeep(detailItemData.value.stages);
+			LibraryCommonUtility.deleteArrayById(stages, id);
+
+			stages = stages.sort((a, b) => a.number >= b.number);
+			let index = 0;
+			for (const item of stages)
+				item.order = index++;
+			detailItem.value.stages = stages;
 			
 			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
 			logger.debug('rocketComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
@@ -236,6 +244,16 @@ export function useRocketComponent(props, context, options) {
 		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 
 		temp.stages = LibraryCommonUtility.updateArrayByObject(temp.stages, stage);
+
+		temp.stages.array.forEach(element => {
+			element.number = element.level ? element.number : 99;
+		});
+
+		temp.stages = temp.stages.sort((a, b) => a.number >= b.number);
+			let index = 0;
+			for (const item of stages)
+				item.order = index++;
+			detailItem.value.stages = stages;
 
 		const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
 		logger.debug('useRocketComponent', 'selectPart', 'response', response, correlationId);

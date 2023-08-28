@@ -82,7 +82,8 @@ export function useRocketsBaseComponent(props, context, options) {
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
-			fetch: async (correlationId) => { return await await fetchI(correlationId); },
+			deleteItem: async (correlationId, id) => { return await deleteItemI(correlationId, id); },
+			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
 			init: async (correlationId) => { return await initI(correlationId); },
 			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
@@ -145,12 +146,15 @@ export function useRocketsBaseComponent(props, context, options) {
 		await dialogRocketsLookupRef.value.reset(correlationId, true);
 		await fetch(correlationId);
 	};
+	const deleteItemI = async (correlationId, id) => {
+		return await serviceStore.dispatcher.deleteRocketById(correlationId, id);
+	};
 	const fetchI = async (correlationId) => {
 		await fetchManufacturers(correlationId);
 
 		const params = fetchParams(correlationId, {});
 		if (!params)
-			return error('useRocketsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
+			return error('useRocketsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 
 		serviceStore.dispatcher.setRocketsSearchCriteria(correlationId, params);
 			

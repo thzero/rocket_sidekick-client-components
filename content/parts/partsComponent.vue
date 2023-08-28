@@ -76,6 +76,7 @@ export function usePartsBaseComponent(props, context, options) {
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
+			deleteItem: async (correlationId, id) => { return await deleteItemI(correlationId, id); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
 			init: async (correlationId) => { return await initI(correlationId); },
@@ -120,12 +121,15 @@ export function usePartsBaseComponent(props, context, options) {
 		await dialogPartsLookupRef.value.reset(correlationId, true);
 		await fetch(correlationId);
 	};
+	const deleteItemI = async (correlationId, id) => {
+		return await serviceStore.dispatcher.deletePartById(correlationId, id);
+	};
 	const fetchI = async (correlationId) => {
 		params.value = { typeId: props.type };
 		if (props.fetchParams)
 			params.value = await props.fetchParams(correlationId, params.value);
 		if (!params)
-			return error('usePartsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
+			return error('usePartsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 			
 		const response = await serviceStore.dispatcher.requestParts(correlationId, params.value);
 		if (hasFailed(response))

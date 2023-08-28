@@ -70,7 +70,10 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
-
+	
+	const dialogSelectRocketConfirmManager = ref(new DialogSupport());
+	const dialogSelectRocketConfirmMessage = ref(LibraryClientUtility.$trans.t(`messages.rocketSetups.rocket.replace_confirm`));
+	const dialogSelectRocketConfirmParams = ref(null);
 	const filterItemDiameterMax = ref(null);
 	const filterItemDiameterMin = ref(null);
 	const filterItemDiameterMeasurementUnitId = ref(null);
@@ -99,6 +102,12 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		await dialogRocketLookup.value.reset(correlationId(), null, true);
 	};
 	const clickRocketSelect = async (item) => {
+		if (props.rocketId) {
+			dialogSelectRocketConfirmParams.value = item;
+			dialogSelectRocketConfirmManager.value.open();
+			return;
+		}
+		
 		context.emit('select', item);
 	};
 	const close = () => {
@@ -109,6 +118,32 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		const correlationIdI = correlationId();
 		await serviceStore.dispatcher.requestPartsRocketSearchReset(correlationIdI);
 		await preCompleteOk(correlationIdI);
+	};
+	const dialogSelectRocketConfirmCancel = async () => {
+		try {
+			dialogSelectRocketConfirmManager.value.cancel();
+		}
+		finally {
+			dialogSelectRocketConfirmParams.value = null;
+		}
+	};
+	const dialogSelectRocketConfirmError = async () => {
+		try {
+			dialogSelectRocketConfirmManager.value.cancel();
+		}
+		finally {
+			dialogSelectRocketConfirmParams.value = null;
+		}
+	};
+	const dialogSelectRocketConfirmOk = async () => {
+		try {
+			context.emit('select', dialogSelectRocketConfirmParams.value);
+			dialogSelectRocketConfirmManager.value.ok();
+			return success(correlationId());
+		}
+		finally {
+			dialogSelectRocketConfirmParams.value = null;
+		}
 	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
@@ -196,6 +231,9 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		measurementUnitsIdSettings,
 		rocketTypes,
 		serviceStore,
+		dialogSelectRocketConfirmManager,
+		dialogSelectRocketConfirmMessage,
+		dialogSelectRocketConfirmParams,
 		filterItemDiameterMax,
 		filterItemDiameterMin,
 		filterItemDiameterMeasurementUnitId,
@@ -216,6 +254,9 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		clickRocketSelect,
 		close,
 		dialogResetOk,
+		dialogSelectRocketConfirmCancel,
+		dialogSelectRocketConfirmError,
+		dialogSelectRocketConfirmOk,
 		manufacturer,
 		preCompleteOk,
 		resetAdditional,

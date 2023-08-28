@@ -63,15 +63,15 @@ export function useDetailSecondaryComponent(props, context, options) {
 	
 	const canAddSecondary = computed(() => {
 		const correlationIdI = correlationId();
-		return isOwner(correlationIdI, detailItemData.value) && !isNew.value && !dirty.value && (options && options.canAddSecondary ? options.canAddSecondary(correlationIdI, detailItemData.value) : true);
+		return isOwner(correlationIdI, detailItemData.value) && !isNew.value && isEditable.value && !dirty.value && (options && options.canAddSecondary ? options.canAddSecondary(correlationIdI, detailItemData.value) : true);
 	});
 	const canDeleteSecondary = computed(() => {
 		const correlationIdI = correlationId();
-		return isOwner(correlationIdI, detailItemData.value) && !isNew.value && !dirty.value && (options && options.canDeleteSecondary ? options.canDeleteSecondary(correlationIdI, detailItemData.value) : true);
+		return isOwner(correlationIdI, detailItemData.value) && !isNew.value && isEditable.value && !dirty.value && (options && options.canDeleteSecondary ? options.canDeleteSecondary(correlationIdI, detailItemData.value) : true);
 	});
 	const canEditSecondary = computed(() => {
 		const correlationIdI = correlationId();
-		return isOwner(correlationIdI, detailItemData.value) && !isNew.value && !dirty.value && (options && options.canEditSecondary ? options.canEditSecondary(correlationIdI, detailItemData.value) : true);
+		return isOwner(correlationIdI, detailItemData.value) && !isNew.value && isEditable.value && !dirty.value && (options && options.canEditSecondary ? options.canEditSecondary(correlationIdI, detailItemData.value) : true);
 	});
 	const isDeletingSecondary = (item) => {
 		if (!dialogDeleteSecondaryParams.value || !item)
