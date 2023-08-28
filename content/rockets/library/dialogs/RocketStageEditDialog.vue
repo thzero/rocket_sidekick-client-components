@@ -8,7 +8,8 @@
 		:validation="validation"
 		button-clear-name="buttons.reset"
 		:debug="debug"
-		max-width="70vh"
+		width="80vh"
+		max-width="90vh"
 		@close="dialogClose"
 		@error="dialogError"
 		@ok="dialogOk"
@@ -19,16 +20,38 @@
 		>
 			isEditable: {{ isEditable }} readonly: {{ readonly }}
 		</div>
-		<v-row dense>
+		<!-- <v-row dense>
 			<v-col cols="12" md="8">
 				<VTextFieldWithValidation
-					ref="nameRef"
+					ref="detailItemNameRef"
 					v-model="detailItemName"
 					vid="detailItemName"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.name')"
 					:counter="30"
+				/>
+			</v-col>
+		</v-row> -->
+		<v-row dense>
+			<v-col cols="12" md="9">
+				<VTextAreaWithValidation
+					ref="detailItemDescriptionnRef"
+					v-model="detailItemDescription"
+					vid="detailItemDescription"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.description')"
+					:counter="30"
+					:rows="detailItemTextRows"
+				/>
+			</v-col>
+			<v-col cols="12" md="3">
+				<VTextField
+					ref="detailItemNumberRef"
+					v-model="detailItemNumber"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.stage.name')"
 				/>
 			</v-col>
 		</v-row>
@@ -53,20 +76,6 @@
 					:readonly="!isEditable"
 					:label="$t('forms.content.parts.manufacturerId')"
 					:counter="30"
-				/>
-			</v-col>
-		</v-row>
-		<v-row dense>
-			<v-col>
-				<VTextAreaWithValidation
-					ref="descriptionRef"
-					v-model="detailItemDescription"
-					vid="detailItemDescription"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.description')"
-					:counter="30"
-					:rows="detailItemTextRows"
 				/>
 			</v-col>
 		</v-row>
@@ -373,6 +382,7 @@ export default {
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemNumber,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
@@ -418,6 +428,7 @@ export default {
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemNumber,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,

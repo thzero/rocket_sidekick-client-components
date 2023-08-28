@@ -98,7 +98,7 @@ export function useMasterDetailComponent(props, context, options) {
 	const detailOk = async () => {
 		await fetch(correlationId());
 	};
-	const dialogCopyCancel = async (item) => {
+	const dialogCopyCancel = async (item) => {dialogDeleteParams.idV
 		try {
 			dialogCopyManager.value.cancel();
 		}
@@ -149,7 +149,7 @@ export function useMasterDetailComponent(props, context, options) {
 			dialogDeleteManager.value.cancel();
 		}
 		finally {
-			dialogDeleteParams.value = null;
+			dialogDeleteParams.id = null;
 		}
 	};
 	const dialogDeleteError = async (err) => {
@@ -157,15 +157,17 @@ export function useMasterDetailComponent(props, context, options) {
 			dialogDeleteManager.value.cancel();
 		}
 		finally {
-			dialogDeleteParams.value = null;
+			dialogDeleteParams.id = null;
 		}
 	};
 	const dialogDeleteOk = async () => {
 		try {
-			if (!dialogDeleteParams.value)
+			if (!dialogDeleteParams.id)
 				return;
+			if (!options.deleteItem)
+				throw Error('No deleteItem function...');
 
-			const response = await serviceStore.dispatcher.deletePartByIdUser(correlationId(), dialogDeleteParams.value);
+			const response = await options.deleteItem(correlationId(), dialogDeleteParams.id);
 			if (hasFailed(response)) {
 				setNotify(correlationIdI, 'messages.error');
 				return;
@@ -173,7 +175,7 @@ export function useMasterDetailComponent(props, context, options) {
 			await fetch(correlationId());
 		}
 		finally {
-			dialogDeleteParams.value = null;
+			dialogDeleteParams.id = null;
 			dialogDeleteManager.value.ok();
 		}
 	};
@@ -183,7 +185,7 @@ export function useMasterDetailComponent(props, context, options) {
 		if (!canDelete(item))
 			return;
 
-		dialogDeleteParams.value = item.id;
+		dialogDeleteParams.id = item.id;
 		dialogDeleteManager.value.open();
 	};
 	const fetch = async (correlationId) => {
@@ -239,7 +241,7 @@ export function useMasterDetailComponent(props, context, options) {
 		return { data: data, isNew: true, isEditable: true  }
 	};
 	const initView = (correlationIdI, data) => {
-		return { data: data, isNew: true, isEditable: false  }
+		return { data: data, isNew: false, isEditable: false  }
 	};
 	const isCopying = (item) => {
 		if (!dialogCopyParams.value || !item)
@@ -248,10 +250,10 @@ export function useMasterDetailComponent(props, context, options) {
 		return item.id === dialogCopyParams.value;
 	};
 	const isDeleting = (item) => {
-		if (!dialogDeleteParams.value || !item)
+		if (!dialogDeleteParams.id || !item)
 			return false;
 
-		return item.id === dialogDeleteParams.value;
+		return item.id === dialogDeleteParams.id;
 	};
 	const isOwner = (correlationId, item) => {
 		const ownerId = (user.value ?? {}).id;

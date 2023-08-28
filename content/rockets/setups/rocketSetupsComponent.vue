@@ -79,12 +79,13 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		isOwner,
 		display
 	} = useMasterDetailComponent(props, context, {
-			dialogDeleteMessage : 'rockets',
+			dialogDeleteMessage : 'rocketSetups',
 			canCopy: (correlationId, item) => { return canCopyI(correlationId, item); },
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
-			fetch: async (correlationId) => { return await await fetchI(correlationId); },
+			deleteItem: async (correlationId, id) => { return await deleteItemI(correlationId, id); },
+			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
 			init: async (correlationId) => { return await initI(correlationId); },
 			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
@@ -152,12 +153,15 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	const clickSearchRockets = async (correlationId) => {
 		dialogRocketLookupManager.value.open();
 	};
+	const deleteItemI = async (correlationId, id) => {
+		return await serviceStore.dispatcher.deleteRocketSetupById(correlationId, id);
+	};
 	const fetchI = async (correlationId) => {
 		await fetchManufacturers(correlationId);
 
 		const params = fetchParams(correlationId, {});
 		if (!params)
-			return error('useRocketsBaseComponent', 'procfetchIess', 'Invalid params', null, null, null, correlationId);
+			return error('useRocketsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 
 		serviceStore.dispatcher.setRocketSetupsSearchCriteria(correlationId, params);
 			
@@ -184,7 +188,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		return response;
 	};
 	const fetchItemI = async (correlationId, id) => {
-		return await serviceStore.dispatcher.requestRocketById(correlationId, id);
+		return await serviceStore.dispatcher.requestRocketSetupById(correlationId, id);
 	};
 	const fetchManufacturers = async (correlationId) => {
 		if (manufacturers.value)

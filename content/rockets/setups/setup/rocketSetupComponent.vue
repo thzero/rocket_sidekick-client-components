@@ -5,6 +5,7 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import RocketSetupStageData from 'rocket_sidekick_common/data/rockets/setups/stage';
@@ -158,6 +159,7 @@ export function useRocketSetupComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 	
 	const dialogRocketLookupManager = ref(new DialogSupport());
+
 	const detailItemDescription = ref(null);
 	const detailItemName = ref(null);
 	const detailItemRocketId = ref(null);
@@ -183,7 +185,7 @@ export function useRocketSetupComponent(props, context, options) {
 		return false;
 	});
 	const rocketId = computed(() => {
-		return detailItemData.value ? detailItemData.value.id : [];
+		return detailItemData.value ? detailItemData.value.id : '';
 	});
 	const stages = computed(() => {
 		return detailItemData.value ? detailItemData.value.stages : [];
@@ -212,21 +214,51 @@ export function useRocketSetupComponent(props, context, options) {
 	};
 	const resetData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
-
 		detailItemName.value = value ? value.name : null;
 
-		detailItemRocketId.value = value ? value.rocketId : null;
-		detailItemRocketName.value = value ? value.rocketName : null;
-		// detailItemType.value = value ? value.typeId : null;
+		if (value && value.rocket) {
+			detailItemRocketId.value = value.rocket.id;
+			detailItemRocketName.value = value.rocket.name;
+			
+			if (value.rocket.rocketTypes)
+				types.value = rocketTypes.value.filter(l => value.rocket.rocketTypes.indexOf(l.id) > -1);
+		
+			detailItemType.value = value.typeId;
+		}
+		else {
+			detailItemRocketId.value = null;
+			detailItemRocketName.value = null;
+			detailItemType.value = null;
+
+			types.value = [];
+		}
 	};
 	const selectRocket = async (item) => {
 		try {
 			if (!item)
-				return error('useRocketSetupsBaseComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
-			
+				return error('useRocketSetupsBaseComponent', 'selectRocket', 'Invalid item.', null, null, null, correlationId);
+
 			detailItemRocketId.value = item.id;
 			detailItemRocketName.value = item.name;
+
+			// if (detailItemData.value.stages.length < item.stages.length) {
+			// 	const temp = LibraryCommonUtility.cloneDeep(detailItemData.value.stages);
+			// 	for (const item of item.stages) {
+			// 		const stage = temp.find(l => l.rocketStageId === item.id);
+			// 		if (stage)
+			// 			continue;
+
+			// 		stage = new RocketSetupStageData();
+			// 		stage.rocketSetupId = detailItemData.value.id;
+			// 		stage.rocketStageId = item.id;
+			// 		temp.push(stage);
+			// 	}
+			// 	detailItemData.value.stages = temp;
+			// }
+
 			types.value = rocketTypes.value.filter(l => item.rocketTypes.indexOf(l.id) > -1);
+		
+			detailItemType.value = null;
 		}
 		finally {
 			dialogRocketLookupManager.value.ok();
@@ -234,11 +266,9 @@ export function useRocketSetupComponent(props, context, options) {
 	};
 	const setData = (correlationId) => {
 		detailItemData.value.description = detailItemDescription.value;
-		
 		detailItemData.value.name = detailItemName.value;
 
 		detailItemData.value.rocketId = detailItemRocketId.value;
-
 		detailItemData.value.typeId = detailItemType.value;		
 	};
 	const stagesPanelsLKey = (value) => {

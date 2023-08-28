@@ -82,6 +82,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	const detailItemManufacturer = ref(null);
 	const detailItemManufacturerStockId = ref(null);
 	const detailItemName = ref(null);
+	const detailItemNumber = ref(null);
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
@@ -129,6 +130,8 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		
 		detailItemManufacturer.value = value ? value.manufacturerId : null; // 'd37HEk5Wjm3mmV4InK90U';
 		detailItemManufacturerStockId.value = value ? value.manufacturerStockId : null;
+
+		detailItemNumber.value = value ? value.number : null;
 
 		detailItemWeight.value = value ? value.weight : null;
 		detailItemWeightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
@@ -202,6 +205,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
 		detailItemName,
+		detailItemNumber,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,

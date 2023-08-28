@@ -186,6 +186,7 @@
 		:signal="dialogRocketLookupManager.signal"
 		@close="dialogRocketLookupManager.cancel()"
 		@select="selectRocket"
+		:rocket-id="rocketId"
 	/>
 	<RocketSetupStageEditDialog
 		v-if="!readonly"

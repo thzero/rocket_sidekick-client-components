@@ -110,7 +110,8 @@
 		<template v-slot:buttons_post>
 		</template>
 		<template v-slot:after>	
-		[[ {{ panels }} ]]
+		[[ {{ panels }} ]] 
+		[[ {{ isNew }} ]] 
 			<v-expansion-panels
 				v-if="!isNew"
 				v-model="panels"

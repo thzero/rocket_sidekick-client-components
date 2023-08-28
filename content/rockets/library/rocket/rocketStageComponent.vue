@@ -126,6 +126,9 @@ export function useRocketStageComponent(props, context, options) {
 	const parachutes = computed(() => {
 		return props.detailItem ? props.detailItem.parachutes : [];
 	});
+	const stageNumber = computed(() => {
+		return props.detailItem ? (props.detailItem.number + 1) : null;
+	});
 	const streamers = computed(() => {
 		return props.detailItem ? props.detailItem.streamers : [];
 	});
@@ -470,6 +473,7 @@ export function useRocketStageComponent(props, context, options) {
 		hasStreamers,
 		hasTrackers,
 		parachutes,
+		stageNumber,
 		streamers,
 		trackers,
 		measurementUnitsLengthDefaultId,
