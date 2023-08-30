@@ -47,7 +47,7 @@
 		</v-col>
 	</v-row>
 	<v-row dense>
-		<v-col cols="6" sm="3">
+		<v-col cols="6" xs="3">
 			<VTextField
 				v-model="displayItemDiameterMajor"
 				:hide-details="true"
@@ -55,7 +55,7 @@
 				:label="$t('forms.content.rockets.diameter.name')"
 			/>
 		</v-col>
-		<v-col cols="6" sm="3">
+		<v-col cols="6" xs="3">
 			<VTextField
 				v-model="displayItemLength"
 				:hide-details="true"
@@ -63,7 +63,7 @@
 				:label="$t('forms.content.parts.length')"
 			/>
 		</v-col>
-		<v-col cols="6" sm="3">
+		<v-col cols="6" xs="3">
 			<VTextField
 				v-model="displayItemWeight"
 				:hide-details="true"
@@ -71,7 +71,7 @@
 				:label="$t('forms.content.parts.weight')"
 			/>
 		</v-col>
-		<v-col cols="6" sm="3">
+		<v-col cols="6" xs="3">
 			<VTextField
 				v-model="displayItemCp"
 				:hide-details="true"
@@ -105,7 +105,7 @@
 									<v-btn
 										variant="flat"
 										color="purple"
-										@click="clickAltimetersSearch(detailItemData.id)"
+										@click="clickAltimetersSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.altimeter.name') }}
 									</v-btn>
@@ -114,7 +114,7 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickChuteProtectorsSearch(detailItemData.id)"
+										@click="clickChuteProtectorsSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.chuteProtector.name') }}
 									</v-btn>
@@ -123,7 +123,7 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickChuteReleasesSearch(detailItemData.id)"
+										@click="clickChuteReleasesSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.chuteRelease.name') }}
 									</v-btn>
@@ -132,7 +132,7 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickDeploymentBagsSearch(detailItemData.id)"
+										@click="clickDeploymentBagsSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.deploymentBag.name') }}
 									</v-btn>
@@ -141,7 +141,7 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickParachutesSearch(detailItemData.id)"
+										@click="clickParachutesSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.parachute.name') }}
 									</v-btn>
@@ -150,7 +150,7 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickStreamersSearch(detailItemData.id)"
+										@click="clickStreamersSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.streamer.name') }}
 									</v-btn>
@@ -159,7 +159,7 @@
 									<v-btn
 										variant="flat"
 										color="blue"
-										@click="clickTrackersSearch(detailItemData.id)"
+										@click="clickTrackersSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.tracker.name') }}
 									</v-btn>

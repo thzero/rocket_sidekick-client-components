@@ -291,8 +291,8 @@ export function useRocketSetupComponent(props, context, options) {
 
 		temp.stages = LibraryCommonUtility.updateArrayByObject(temp.stages, stage);
 
-		const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
-		logger.debug('useRocketSetupComponent', 'selectPart', 'response', response, correlationId);
+		const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, temp);
+		logger.debug('useRocketSetupComponent', 'updateStage', 'response', response, correlationId);
 		if (hasFailed(response))
 			return response;
 
