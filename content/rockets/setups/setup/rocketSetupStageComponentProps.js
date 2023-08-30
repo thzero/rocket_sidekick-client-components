@@ -15,6 +15,10 @@ export const useRocketSetupStageComponentProps = {
 		type: Array,
 		value: []
 	},
+	detailItemSetup: {
+		type: Object,
+		value: null
+	},
 	updateStage: {
 		type: Function,
 		value: null

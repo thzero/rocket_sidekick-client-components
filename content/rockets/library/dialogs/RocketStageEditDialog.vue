@@ -36,7 +36,7 @@
 		<v-row dense>
 			<v-col cols="12" md="9">
 				<VTextAreaWithValidation
-					ref="detailItemDescriptionnRef"
+					ref="detailItemDescriptionRef"
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
 					:validation="validation"
@@ -58,7 +58,7 @@
 		<v-row dense>
 			<v-col cols="6">
 				<VSelectWithValidation
-					ref="manufacturerRef"
+					ref="detailItemManufacturerRef"
 					v-model="detailItemManufacturer"
 					vid="detailItemManufacturer"
 					:items="manufacturers"
@@ -235,84 +235,6 @@
 				</table>
 			</v-col>
 		</v-row>
-		<!-- <v-row dense>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemCgRef"
-					v-model="detailItemCg"
-					vid="detailItemCg"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.cg')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
-				<table>
-					<tr>
-						<td class="measurementUnits">
-							<MeasurementUnitsSelect
-								ref="detailItemCgMeasurementUnitsIdRef"
-								v-model="detailItemCgMeasurementUnitsId"
-								vid="detailItemCgMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnits">
-							<MeasurementUnitSelect
-								ref="detailItemCgMeasurementUnitIdRef"
-								v-model="detailItemCgMeasurementUnitId"
-								vid="detailItemCgMeasurementUnitId"
-								:measurementUnitsId="detailItemCgMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td>
-					</tr>
-				</table>
-			</v-col>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemCpRef"
-					v-model="detailItemCp"
-					vid="detailItemCp"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.cp')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
-				<table>
-					<tr>
-						<td class="measurementUnits">
-							<MeasurementUnitsSelect
-								ref="detailItemCpMeasurementUnitsIdRef"
-								v-model="detailItemCpMeasurementUnitsId"
-								vid="detailItemCpMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnits">
-							<MeasurementUnitSelect
-								ref="detailItemCpMeasurementUnitIdRef"
-								v-model="detailItemCpMeasurementUnitId"
-								vid="detailItemCpMeasurementUnitId"
-								:measurementUnitsId="detailItemCpMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td>
-					</tr>
-				</table>
-			</v-col>
-		</v-row> -->
 	</VFormDialog>
 </template>
 
@@ -361,10 +283,6 @@ export default {
 			dialogClose,
 			dialogOk,
 			isEditable,
-			// detailItemCg,
-			// detailItemCgFrom,
-			// detailItemCgMeasurementUnitId,
-			// detailItemCgMeasurementUnitsId,
 			detailItemCp,
 			detailItemCpFrom,
 			detailItemCpMeasurementUnitId,
@@ -381,7 +299,7 @@ export default {
 			detailItemLengthMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
-			detailItemName,
+			// detailItemName,
 			detailItemNumber,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
@@ -393,6 +311,7 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
+			stageNumber,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,
@@ -407,10 +326,6 @@ export default {
 			dialogClose,
 			dialogOk,
 			isEditable,
-			// detailItemCg,
-			// detailItemCgFrom,
-			// detailItemCgMeasurementUnitId,
-			// detailItemCgMeasurementUnitsId,
 			detailItemCp,
 			detailItemCpFrom,
 			detailItemCpMeasurementUnitId,
@@ -427,7 +342,7 @@ export default {
 			detailItemLengthMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
-			detailItemName,
+			// detailItemName,
 			detailItemNumber,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
@@ -439,6 +354,7 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
+			stageNumber,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,

@@ -5,7 +5,6 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import RocketSetupStageData from 'rocket_sidekick_common/data/rockets/setups/stage';
@@ -105,11 +104,11 @@ export function useRocketSetupComponent(props, context, options) {
 			manufacturerDefault.value = temp ? temp.id : null;
 
 			const temp2 = await serviceStore.getters.getRocketSetupsExpanded();
-			const temp3 = temp2[panelsLKey(value)];
+			const temp3 = temp2[panelsKey(value)];
 			panels.value = temp3 ?? [];
 
 			const temp4 = await serviceStore.getters.getRocketSetupsExpanded();
-			const temp5 = temp4[stagesPanelsLKey(value)];
+			const temp5 = temp4[stagesPanelsKey(value)];
 			stagesPanels.value = temp5 ?? [];
 			
 			resetData(correlationId, value);
@@ -131,6 +130,26 @@ export function useRocketSetupComponent(props, context, options) {
 		},
 		preCompleteOk : async (correlationId) => {
 			setData(correlationId);
+
+			// TODO: maybe moves this to the server?
+			if (detailItemData.value.stages.length !== detailItemData.value.rocket.stages.length) {
+				const temp = [];
+				let stage;
+				for (const item of detailItemData.value.rocket.stages) {
+					stage = detailItemData.value.stages.find(l => l.rocketStageId === item.id);
+					if (stage) {
+						temp.push(stage);
+						continue;
+					}
+
+					stage = new RocketSetupStageData();
+					stage.rocketSetupId = detailItemData.value.id;
+					stage.rocketStageId = item.id;
+					stage.number = item.number;
+					temp.push(stage);
+				}
+				detailItemData.value.stages = temp;
+			}
 
 			const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, detailItemData.value);
 			logger.debug('rocketSetupComponent', 'preCompleteOk', 'response', response, correlationId);
@@ -188,17 +207,17 @@ export function useRocketSetupComponent(props, context, options) {
 		return detailItemData.value ? detailItemData.value.id : '';
 	});
 	const stages = computed(() => {
-		return detailItemData.value ? detailItemData.value.stages : [];
+		return detailItemData.value ? detailItemData.value.stages.filter(l => l.enabled) : [];
 	});
 	
 	const clickSearchRockets = async (correlationId) => {
 		dialogRocketLookupManager.value.open();
 	};
-	const panelsLKey = (value) => {
+	const panelsKey = (value) => {
 		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;
 	};
 	const panelsUpdated = async (value) => {
-		await serviceStore.dispatcher.setRocketSetupsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
+		await serviceStore.dispatcher.setRocketSetupsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
 	const requestManufacturers = async (correlationId) => {
 		if (manufacturersI.value)
@@ -241,24 +260,11 @@ export function useRocketSetupComponent(props, context, options) {
 			detailItemRocketId.value = item.id;
 			detailItemRocketName.value = item.name;
 
-			// if (detailItemData.value.stages.length < item.stages.length) {
-			// 	const temp = LibraryCommonUtility.cloneDeep(detailItemData.value.stages);
-			// 	for (const item of item.stages) {
-			// 		const stage = temp.find(l => l.rocketStageId === item.id);
-			// 		if (stage)
-			// 			continue;
-
-			// 		stage = new RocketSetupStageData();
-			// 		stage.rocketSetupId = detailItemData.value.id;
-			// 		stage.rocketStageId = item.id;
-			// 		temp.push(stage);
-			// 	}
-			// 	detailItemData.value.stages = temp;
-			// }
-
 			types.value = rocketTypes.value.filter(l => item.rocketTypes.indexOf(l.id) > -1);
 		
 			detailItemType.value = null;
+
+			detailItemData.value.rocket = item;
 		}
 		finally {
 			dialogRocketLookupManager.value.ok();
@@ -271,14 +277,14 @@ export function useRocketSetupComponent(props, context, options) {
 		detailItemData.value.rocketId = detailItemRocketId.value;
 		detailItemData.value.typeId = detailItemType.value;		
 	};
-	const stagesPanelsLKey = (value) => {
+	const stagesPanelsKey = (value) => {
 		const temp = value ? value.id : detailItemData.value ? detailItemData.value.id : null;
 		if (temp)
 			return temp + '-stages';
 		return null;
 	};
 	const stagesPanelsUpdated = async (value) => {
-		await serviceStore.dispatcher.setRocketSetupsExpanded(correlationId(), { id: stagesPanelsLKey(), expanded: value });
+		await serviceStore.dispatcher.setRocketSetupsExpanded(correlationId(), { id: stagesPanelsKey(), expanded: value });
 	};
 	const updateStage = async(correlationId, stage) => {
 		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);

@@ -132,11 +132,12 @@
 					<v-expansion-panel-title
 						color="secondary"
 					>
-						{{ $t(`forms.content.rockets.stage.name`) }} {{ item.name}}
+						{{ $t(`forms.content.rockets.stage.name`) }} {{ item.number  + 1 }}
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<RocketSetupStage
 							:detail-item="item"
+							:detail-item-setup="detailItemData"
 							:is-editable="isEditable"
 							:manufacturers="manufacturers"
 							:update-stage="updateStage"

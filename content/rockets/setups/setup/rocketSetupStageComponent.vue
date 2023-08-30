@@ -49,7 +49,10 @@ export function useRocketSetupStageComponent(props, context, options) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
@@ -75,10 +78,6 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.tracker ]);
 	const manufacturers = ref(props.manufacturers);
 	const panels = ref([]);
-
-	const displayItem = computed(() => {
-		return props.detailItem ? props.detailItem : {};
-	});
 	
 	const altimeters = computed(() => {
 		return props.detailItem ? props.detailItem.altimeters : [];
@@ -92,8 +91,14 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const deploymentBags = computed(() => {
 		return props.detailItem ? props.detailItem.deploymentBags : [];
 	});
-	const detailItemData = computed(() => {
+	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
+	});
+	const displayItemCg = computed(() => {
+		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.cg; }, (value) => { return value.cgMeasurementUnitsId; }, (value) => { return value.cgMeasurementUnitId; });
+	});
+	const displayItemWeight = computed(() => {
+		return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
 	});
 	const hasAltimeters = computed(() => {
 		const temp = altimeters.value;
@@ -125,6 +130,12 @@ export function useRocketSetupStageComponent(props, context, options) {
 	});
 	const parachutes = computed(() => {
 		return props.detailItem ? props.detailItem.parachutes : [];
+	});
+	const stageNumber = computed(() => {
+		if (!props.detailItem)
+			return null;
+		
+		return props.detailItem.number + 1;
 	});
 	const streamers = computed(() => {
 		return props.detailItem ? props.detailItem.streamers : [];
@@ -284,11 +295,11 @@ export function useRocketSetupStageComponent(props, context, options) {
 			return item.trackers;
 		return null;
 	};
-	const panelsLKey = (type) => {
-		return detailItemData.value.id + '-stage-';
+	const panelsKey = (type) => {
+		return displayItem.value.id + '-stage-';
 	};
 	const panelsUpdated = async (value) => {
-		 await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
+		 await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
 	const selectPart = async(correlationId, item, type, stageId) => {
 		if (!item || String.isNullOrEmpty(type) || String.isNullOrEmpty(stageId))
@@ -432,7 +443,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 
 	onMounted(async () => {
 		const temp3 = await serviceStore.getters.getRocketsExpanded();
-		const temp4 = temp3[panelsLKey()];
+		const temp4 = temp3[panelsKey()];
 		panels.value = temp4 ?? [ 
 			partsDeleteKeyAltimeters,
 			partsDeleteKeyChuteProtectors,
@@ -456,12 +467,13 @@ export function useRocketSetupStageComponent(props, context, options) {
 		success,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
-		displayItem,
 		altimeters,
 		chuteProtectors,
 		chuteReleases,
 		deploymentBags,
-		detailItemData,
+		displayItem,
+		displayItemCg,
+		displayItemWeight,
 		hasAltimeters,
 		hasChuteProtectors,
 		hasChuteReleases,
@@ -470,6 +482,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		hasStreamers,
 		hasTrackers,
 		parachutes,
+		stageNumber,
 		streamers,
 		trackers,
 		measurementUnitsLengthDefaultId,

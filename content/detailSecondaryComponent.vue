@@ -166,11 +166,14 @@ export function useDetailSecondaryComponent(props, context, options) {
 			dialogEditSecondaryManager.value.ok();
 		}
 	};
-	const dialogEditSecondaryOpen = (item) => {
+	const dialogEditSecondaryOpen = async (item) => {
 		if (!item)
 			return;
 		if (!canEditSecondary.value)
 			return;
+
+		if (options && options.initEditSecondary)
+			item = await options.initEditSecondary(correlationId(), item);
 
 		dialogEditSecondaryParams.value = item;
 		dialogEditSecondaryManager.value.open();
