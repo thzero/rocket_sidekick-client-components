@@ -96,9 +96,9 @@
 					<tr>
 						<td class="measurementUnits">
 							<MeasurementUnitsSelect
-								ref="detailItemCpMeasurementUnitsIdRef"
-								v-model="detailItemCpMeasurementUnitsId"
-								vid="detailItemCpMeasurementUnitsId"
+								ref="detailItemCgMeasurementUnitsIdRef"
+								v-model="detailItemCgMeasurementUnitsId"
+								vid="detailItemCgMeasurementUnitsId"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.title')"
@@ -106,10 +106,10 @@
 						</td>
 						<td class="measurementUnits">
 							<MeasurementUnitSelect
-								ref="detailItemCpMeasurementUnitIdRef"
-								v-model="detailItemCpMeasurementUnitId"
-								vid="detailItemCpMeasurementUnitId"
-								:measurementUnitsId="detailItemCpMeasurementUnitsId"
+								ref="detailItemCgMeasurementUnitIdRef"
+								v-model="detailItemCgMeasurementUnitId"
+								vid="detailItemCgMeasurementUnitId"
+								:measurementUnitsId="detailItemCgMeasurementUnitsId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
