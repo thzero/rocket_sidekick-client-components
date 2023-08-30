@@ -30,7 +30,7 @@
 		</v-col>
 	</v-row>
 	<v-row dense>
-		<v-col cols="6" sm="3">
+		<v-col cols="6" xs="3">
 			<VTextField
 				v-model="displayItemWeight"
 				:hide-details="true"
@@ -38,7 +38,7 @@
 				:label="$t('forms.content.parts.weight')"
 			/>
 		</v-col>
-		<v-col cols="6" sm="3">
+		<v-col cols="6" xs="3">
 			<VTextField
 				v-model="displayItemCg"
 				:hide-details="true"

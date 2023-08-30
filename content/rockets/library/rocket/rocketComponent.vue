@@ -90,7 +90,7 @@ export function useRocketComponent(props, context, options) {
 			stages = stages.sort((a, b) => a.number >= b.number);
 			let index = 0;
 			for (const item of stages)
-				item.order = index++;
+				item.number = index++;
 			detailItem.value.stages = stages;
 			
 			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
@@ -245,18 +245,28 @@ export function useRocketComponent(props, context, options) {
 
 		temp.stages = LibraryCommonUtility.updateArrayByObject(temp.stages, stage);
 
-		temp.stages.array.forEach(element => {
-			element.number = element.level ? element.number : 99;
+		temp.stages.forEach(element => {
+			if (element.primary) {
+				element.number = 0;
+				return;
+			}
+
+			element.number = LibraryCommonUtility.isNotNull(element.number) ? element.number : Number.MAX_SAFE_INTEGER;
 		});
 
 		temp.stages = temp.stages.sort((a, b) => a.number >= b.number);
 			let index = 0;
-			for (const item of stages)
-				item.order = index++;
+			for (const item of temp.stages)
+				item.number = index++;
 			detailItem.value.stages = stages;
 
+		let number = 0;
+		temp.stages.forEach(element => {
+			element.number = number++;
+		});
+
 		const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
-		logger.debug('useRocketComponent', 'selectPart', 'response', response, correlationId);
+		logger.debug('useRocketComponent', 'updateStage', 'response', response, correlationId);
 		if (hasFailed(response))
 			return response;
 
