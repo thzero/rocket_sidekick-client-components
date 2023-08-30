@@ -110,11 +110,11 @@ export function useRocketComponent(props, context, options) {
 			manufacturerDefault.value = temp ? temp.id : null;
 
 			const temp2 = await serviceStore.getters.getRocketsExpanded();
-			const temp3 = temp2[panelsLKey(value)];
+			const temp3 = temp2[panelsKey(value)];
 			panels.value = temp3 ?? [];
 
 			const temp4 = await serviceStore.getters.getRocketsExpanded();
-			const temp5 = temp4[stagesPanelsLKey(value)];
+			const temp5 = temp4[stagesPanelsKey(value)];
 			stagesPanels.value = temp5 ?? [];
 			
 			resetData(correlationId, value);
@@ -193,11 +193,11 @@ export function useRocketComponent(props, context, options) {
 		return detailItemData.value ? detailItemData.value.stages : [];
 	});
 	
-	const panelsLKey = (value) => {
+	const panelsKey = (value) => {
 		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;
 	};
 	const panelsUpdated = async (value) => {
-		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
+		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
 	const requestManufacturers = async (correlationId) => {
 		if (manufacturersI.value)
@@ -231,14 +231,14 @@ export function useRocketComponent(props, context, options) {
 
 		detailItemData.value.name = detailItemName.value;
 	};
-	const stagesPanelsLKey = (value) => {
+	const stagesPanelsKey = (value) => {
 		const temp = value ? value.id : detailItemData.value ? detailItemData.value.id : null;
 		if (temp)
 			return temp + '-stages';
 		return null;
 	};
 	const stagesPanelsUpdated = async (value) => {
-		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: stagesPanelsLKey(), expanded: value });
+		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: stagesPanelsKey(), expanded: value });
 	};
 	const updateStage = async(correlationId, stage) => {
 		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);

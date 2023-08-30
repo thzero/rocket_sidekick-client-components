@@ -18,25 +18,13 @@
 			v-if="debug"
 			class="text-center"
 		>
-			isEditable: {{ isEditable }} readonly: {{ readonly }}
+			isEditable: {{ isEditable }} readonly: {{ readonly }} <br>
+			detailItem {{ detailItem }} 
 		</div>
 		<v-row dense>
-			<v-col cols="12" md="8">
-				<VTextFieldWithValidation
-					ref="nameRef"
-					v-model="detailItemName"
-					vid="detailItemName"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.name')"
-					:counter="30"
-				/>
-			</v-col>
-		</v-row>
-		<v-row dense>
-			<v-col>
+			<v-col cols="9">
 				<VTextAreaWithValidation
-					ref="descriptionRef"
+					ref="detailItemDescriptionRef"
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
 					:validation="validation"
@@ -44,6 +32,13 @@
 					:label="$t('forms.description')"
 					:counter="30"
 					:rows="detailItemTextRows"
+				/>
+			</v-col>
+			<v-col cols="3">
+				<VTextField
+					v-model="stageNumber"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.stage.name')"
 				/>
 			</v-col>
 		</v-row>
@@ -178,7 +173,7 @@ export default {
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
 			detailItemDescription,
-			detailItemName,
+			// detailItemName,
 			detailItemNotes,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
@@ -190,6 +185,7 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
+			stageNumber,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,
@@ -209,7 +205,7 @@ export default {
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
 			detailItemDescription,
-			detailItemName,
+			// detailItemName,
 			detailItemNotes,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
@@ -221,6 +217,7 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
+			stageNumber,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,

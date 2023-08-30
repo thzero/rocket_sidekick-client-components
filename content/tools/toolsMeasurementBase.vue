@@ -45,6 +45,26 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 	const measurementUnitsVolumeType = ref(AppCommonConstants.MeasurementUnits.types.volume);
 	const measurementUnitsWeightDefaultId = ref(null);
 	const measurementUnitsWeightType = ref(AppCommonConstants.MeasurementUnits.types.weight);
+	
+	const displayItemMeasurement = (correlationId, value, func, units) => {
+		if (!value)
+			return '';
+		
+		const unit = func(value);
+		return (!String.isNullOrEmpty(unit) ? unit + ' ' + units : '');
+	};
+	const displayItemMeasurementLength = (correlationId, value, func, func1, func2) => {
+		if (!value)
+			return '';
+		
+		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateLength(correlationId, func1(value), func2(value)));
+	};
+	const displayItemMeasurementWeight = (correlationId, value, func, func1, func2) => {
+		if (!value)
+			return '';
+		
+		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateWeight(correlationId, func1(value), func2(value)));
+	};
 
 	onMounted(async () => {
 		const settings = serviceStore.getters.user.getUserSettings();
@@ -79,7 +99,10 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight
 	};
 };
 </script>

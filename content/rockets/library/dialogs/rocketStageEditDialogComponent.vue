@@ -61,10 +61,6 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		isEditable
 	} = useDetailFormDialogComponent(props, context, options);
 
-	// const detailItemCg = ref(null);
-	// const detailItemCgFrom = ref(null);
-	// const detailItemCgMeasurementUnitId = ref(null);
-	// const detailItemCgMeasurementUnitsId = ref(null);
 	const detailItemCp = ref(null);
 	const detailItemCpFrom = ref(null);
 	const detailItemCpMeasurementUnitId = ref(null);
@@ -81,7 +77,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	const detailItemLengthMeasurementUnitsId = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemManufacturerStockId = ref(null);
-	const detailItemName = ref(null);
+	// const detailItemName = ref(null);
 	const detailItemNumber = ref(null);
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
@@ -89,7 +85,11 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.rockets.name') + ' ' + LibraryClientUtility.$trans.t('forms.content.rockets.stage.name') + ' ' + 
-		(!String.isNullOrEmpty(detailItemName.value) ? `(${detailItemName.value})` : '');
+		// (!String.isNullOrEmpty(detailItemName.value) ? `(${detailItemName.value})` : '');
+		stageNumber.value;
+	});
+	const stageNumber = computed(() => {
+		return detailItemNumber.value ? detailItemNumber.value + 1 : null;
 	});
 
 	const preCompleteOk = async (correlationId) => {
@@ -104,12 +104,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 
 	const resetEditData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
-		detailItemName.value = value ? value.name : null;
-		
-		// detailItemCg.value = value ? value.cg : null;
-		// detailItemCgFrom.value = value ? value.cgFrom : AppCommonConstants.Rocketry.Direction.Tip;
-		// detailItemCgMeasurementUnitId.value = value ? value.cgMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		// detailItemCgMeasurementUnitsId.value = value ? value.cgMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		// detailItemName.value = value ? value.name : null;
 		
 		detailItemCp.value = value ? value.cp : null;
 		detailItemCpFrom.value = value ? value.cpFrom : AppCommonConstants.Rocketry.Direction.Tip;
@@ -139,12 +134,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	};
 	const setEditData = (correlationId, value) => {
 		value.description = String.trim(detailItemDescription.value);
-		value.name = String.trim(detailItemName.value);
-
-		// value.cg = AppUtility.convertNumber(detailItemCg.value);
-		// value.cgFrom = detailItemCgFrom.value;
-		// value.cgMeasurementUnitId = detailItemCgMeasurementUnitId.value;
-		// value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
+		// value.name = String.trim(detailItemName.value);
 
 		value.cp = AppUtility.convertNumber(detailItemCp.value);
 		value.cpFrom = detailItemCpFrom.value;
@@ -184,10 +174,6 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		dialogClose,
 		dialogOk,
 		isEditable,
-		// detailItemCg,
-		// detailItemCgFrom,
-		// detailItemCgMeasurementUnitId,
-		// detailItemCgMeasurementUnitsId,
 		detailItemCp,
 		detailItemCpFrom,
 		detailItemCpMeasurementUnitId,
@@ -204,7 +190,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemLengthMeasurementUnitsId,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
-		detailItemName,
+		// detailItemName,
 		detailItemNumber,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
@@ -216,6 +202,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		resetEditData,
 		setEditData,
 		displayName,
+		stageNumber,
 		preCompleteOk,
 		resetAdditional,
 		setAdditional,

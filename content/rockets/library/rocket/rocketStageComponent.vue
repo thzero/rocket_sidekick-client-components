@@ -4,6 +4,7 @@ import { computed, onMounted, ref } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
@@ -49,7 +50,10 @@ export function useRocketStageComponent(props, context, options) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
@@ -76,10 +80,6 @@ export function useRocketStageComponent(props, context, options) {
 	const manufacturers = ref(props.manufacturers);
 	const panels = ref([]);
 
-	const displayItem = computed(() => {
-		return props.detailItem ? props.detailItem : {};
-	});
-	
 	const altimeters = computed(() => {
 		return props.detailItem ? props.detailItem.altimeters : [];
 	});
@@ -92,8 +92,23 @@ export function useRocketStageComponent(props, context, options) {
 	const deploymentBags = computed(() => {
 		return props.detailItem ? props.detailItem.deploymentBags : [];
 	});
-	const detailItemData = computed(() => {
+	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
+	});
+	const displayItemCp = computed(() => {
+		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.cp; }, (value) => { return value.cpMeasurementUnitsId; }, (value) => { return value.cpMeasurementUnitId; });
+	});
+	const displayItemDiameterMajor = computed(() => {
+		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.diameterMajor; }, (value) => { return value.diameterMajorMeasurementUnitsId; }, (value) => { return value.diameterMajorMeasurementUnitId; });
+	});
+	const displayItemDiameterMinor = computed(() => {
+		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.diameterMinor; }, (value) => { return value.diameterMinorMeasurementUnitsId; }, (value) => { return value.diameterMinorMeasurementUnitId; });
+	});
+	const displayItemLength = computed(() => {
+		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.length; },  (value) => { return value.lengthMeasurementUnitsId; }, (value) => { return value.lengthMeasurementUnitId; });
+	});
+	const displayItemWeight = computed(() => {
+		return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
 	});
 	const hasAltimeters = computed(() => {
 		const temp = altimeters.value;
@@ -287,11 +302,11 @@ export function useRocketStageComponent(props, context, options) {
 			return item.trackers;
 		return null;
 	};
-	const panelsLKey = (type) => {
-		return detailItemData.value.id + '-stage-';
+	const panelsKey = (type) => {
+		return displayItem.value.id + '-stage-';
 	};
 	const panelsUpdated = async (value) => {
-		 await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsLKey(), expanded: value });
+		 await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
 	const selectPart = async(correlationId, item, type, stageId) => {
 		if (!item || String.isNullOrEmpty(type) || String.isNullOrEmpty(stageId))
@@ -435,7 +450,7 @@ export function useRocketStageComponent(props, context, options) {
 
 	onMounted(async () => {
 		const temp3 = await serviceStore.getters.getRocketsExpanded();
-		const temp4 = temp3[panelsLKey()];
+		const temp4 = temp3[panelsKey()];
 		panels.value = temp4 ?? [ 
 			partsDeleteKeyAltimeters,
 			partsDeleteKeyChuteProtectors,
@@ -459,12 +474,16 @@ export function useRocketStageComponent(props, context, options) {
 		success,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
-		displayItem,
 		altimeters,
 		chuteProtectors,
 		chuteReleases,
 		deploymentBags,
-		detailItemData,
+		displayItem,
+		displayItemCp,
+		displayItemDiameterMajor,
+		displayItemDiameterMinor,
+		displayItemLength,
+		displayItemWeight,
 		hasAltimeters,
 		hasChuteProtectors,
 		hasChuteReleases,

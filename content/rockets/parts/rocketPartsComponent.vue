@@ -87,7 +87,7 @@ export function useRocketPartsComponent(props, context, options) {
 	const partTypeName = (id) => {
 		return LibraryClientUtility.$trans.t(`forms.content.parts['${id}'].plural`);
 	};
-	const panelsLKey = () => {
+	const panelsKey = () => {
 		return props.id + '-parts-' + props.panelTypeId;
 	};
 	const panelsUpdated = async (value) => {
@@ -97,7 +97,7 @@ export function useRocketPartsComponent(props, context, options) {
 
 	onMounted(async () => {
 		const temp3 = await serviceStore.getters.getRocketsExpanded();
-		const temp4 = temp3[panelsLKey()];
+		const temp4 = temp3[panelsKey()];
 		panels.value = temp4 ?? [ 
 			AppCommonConstants.Rocketry.ManufacturerTypes.altimeter, 
 			AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector, 

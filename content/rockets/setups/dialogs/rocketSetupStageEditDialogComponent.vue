@@ -66,7 +66,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const detailItemCgMeasurementUnitId = ref(null);
 	const detailItemCgMeasurementUnitsId = ref(null);
 	const detailItemDescription = ref(null);
-	const detailItemName = ref(null);
+	// const detailItemName = ref(null);
 	const detailItemNotes = ref(null);
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
@@ -74,7 +74,14 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.rockets.name') + ' ' + LibraryClientUtility.$trans.t('forms.content.rockets.stage.name') + ' ' + 
-		(!String.isNullOrEmpty(detailItemName.value) ? `(${detailItemName.value})` : '');
+		// (!String.isNullOrEmpty(detailItemName.value) ? `(${detailItemName.value})` : '');
+		stageNumber.value;
+	});
+	const stageNumber = computed(() => {
+		if (!detailItem.value)
+			return null;
+
+		return detailItem.value.number + 1;
 	});
 
 	const preCompleteOk = async (correlationId) => {
@@ -89,7 +96,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 
 	const resetEditData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
-		detailItemName.value = value ? value.name : null;
+		// detailItemName.value = value ? value.name : null;
 		detailItemNotes.value = value ? value.name : null;
 		
 		detailItemCg.value = value ? value.cg : null;
@@ -103,7 +110,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	};
 	const setEditData = (correlationId, value) => {
 		value.description = String.trim(detailItemDescription.value);
-		value.name = String.trim(detailItemName.value);
+		// value.name = String.trim(detailItemName.value);
 		value.notes = String.trim(detailItemNotes.value);
 
 		value.cg = AppUtility.convertNumber(detailItemCg.value);
@@ -134,7 +141,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemCgMeasurementUnitId,
 		detailItemCgMeasurementUnitsId,
 		detailItemDescription,
-		detailItemName,
+		// detailItemName,
 		detailItemNotes,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
@@ -146,6 +153,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		resetEditData,
 		setEditData,
 		displayName,
+		stageNumber,
 		preCompleteOk,
 		resetAdditional,
 		setAdditional,

@@ -42,6 +42,8 @@ export function useDetailFormDialogComponent(props, context, options) {
 
 	watch(() => props.value,
 		async (value) => {
+			if (options && options.initEdit)
+				value = options.initEdit(correlationId(), value);
 			detailItem.value = LibraryCommonUtility.cloneDeep(value);
 		}
 	);

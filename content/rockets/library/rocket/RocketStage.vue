@@ -3,7 +3,7 @@
 		v-if="debug"
 	>
 		[[ isEditable {{ isEditable }} ]]
-		<!-- [[ detailItemData {{ detailItemData }} ]]
+		<!-- [[ displayItem {{ displayItem }} ]]
 		[[ altimeters {{ altimeters }} ]]
 		[[ chuteProtectors {{ chuteProtectors }} ]]
 		[[ chuteReleases {{ chuteReleases }} ]]
@@ -15,7 +15,6 @@
 	<v-row dense>
 		<v-col cols="9">
 			<VTextArea
-				ref="descriptionRef"
 				v-model="displayItem.description"
 				:readonly="true"
 				:label="$t('forms.description')"
@@ -24,7 +23,6 @@
 		</v-col>
 		<v-col cols="3">
 			<VTextField
-				ref="di-description"
 				v-model="stageNumber"
 				:readonly="true"
 				:label="$t('forms.content.rockets.stage.name')"
@@ -34,7 +32,6 @@
 	<v-row dense>
 		<v-col cols="6">
 			<VSelect
-				ref="manufacturerRef"
 				v-model="displayItem.manufacturerId"
 				:items="manufacturers"
 				:readonly="true"
@@ -43,7 +40,6 @@
 		</v-col>
 		<v-col cols="6">
 			<VTextField
-				ref="manufacturerStockIdRef"
 				v-model="displayItem.manufacturerStockId"
 				:readonly="true"
 				:label="$t('forms.content.parts.manufacturerId')"
@@ -51,127 +47,37 @@
 		</v-col>
 	</v-row>
 	<v-row dense>
-		<v-col cols="5" md="2">
-			<VNumberField
-				ref="diameterRef"
-				v-model="displayItem.diameterMajor"
+		<v-col cols="6" sm="3">
+			<VTextField
+				v-model="displayItemDiameterMajor"
+				:hide-details="true"
 				:readonly="true"
 				:label="$t('forms.content.rockets.diameter.name')"
 			/>
 		</v-col>
-		<v-col cols="7" md="4">
-			<table>
-				<tr>
-					<td class="measurementUnits">
-						<MeasurementUnitsSelect
-							v-model="displayItem.diameterMajorMeasurementUnitsId"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.title')"
-						/>
-					</td>
-					<td class="measurementUnit">
-						<MeasurementUnitSelect
-							v-model="displayItem.diameterMajorMeasurementUnitId"
-							:measurementUnitsId="displayItem.diameterMajorMeasurementUnitsId"
-							:measurementUnitsType="measurementUnitsLengthType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.length')"
-						/>
-					</td>
-				</tr>
-			</table>
-		</v-col>
-		<v-col cols="5" md="2">
-			<VNumberField
-				ref="lengthRef"
-				v-model="displayItem.length"
+		<v-col cols="6" sm="3">
+			<VTextField
+				v-model="displayItemLength"
+				:hide-details="true"
 				:readonly="true"
 				:label="$t('forms.content.parts.length')"
 			/>
 		</v-col>
-		<v-col cols="7" md="4">
-			<table>
-				<tr>
-					<td class="measurementUnits">
-						<MeasurementUnitsSelect
-							v-model="displayItem.lengthMeasurementUnitsId"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.title')"
-						/>
-					</td>
-					<td class="measurementUnit">
-						<MeasurementUnitSelect
-							v-model="displayItem.lengthMeasurementUnitId"
-							:measurementUnitsId="displayItem.lengthMeasurementUnitsId"
-							:measurementUnitsType="measurementUnitsLengthType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.length')"
-						/>
-					</td>
-				</tr>
-			</table>
-		</v-col>
-	</v-row>
-	<v-row dense>
-		<v-col cols="5" md="2">
-			<VNumberField
-				ref="di-weight"
-				v-model="displayItem.weight"
+		<v-col cols="6" sm="3">
+			<VTextField
+				v-model="displayItemWeight"
+				:hide-details="true"
 				:readonly="true"
 				:label="$t('forms.content.parts.weight')"
 			/>
 		</v-col>
-		<v-col cols="7" md="4">
-			<table>
-				<tr>
-					<td class="measurementUnits">
-						<MeasurementUnitsSelect
-							v-model="displayItem.weightMeasurementUnitsId"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.title')"
-						/>
-					</td>
-					<td class="measurementUnit">
-						<MeasurementUnitSelect
-							v-model="displayItem.weightMeasurementUnitId"
-							:measurementUnitsId="displayItem.weightMeasurementUnitsId"
-							:measurementUnitsType="measurementUnitsWeightType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.weight')"
-						/>
-					</td>
-				</tr>
-			</table>
-		</v-col>
-		<v-col cols="5" md="2">
-			<VNumberField
-				ref="di-cp"
-				v-model="displayItem.cp"
+		<v-col cols="6" sm="3">
+			<VTextField
+				v-model="displayItemCp"
+				:hide-details="true"
 				:readonly="true"
 				:label="$t('forms.content.rockets.cp')"
 			/>
-		</v-col>
-		<v-col cols="7" md="4">
-			<table>
-				<tr>
-					<td class="measurementUnits">
-						<MeasurementUnitsSelect
-							v-model="displayItem.cpMeasurementUnitsId"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.title')"
-						/>
-					</td>
-					<td class="measurementUnit">
-						<MeasurementUnitSelect
-							v-model="displayItem.cpMeasurementUnitId"
-							:measurementUnitsId="displayItem.cpMeasurementUnitsId"
-							:measurementUnitsType="measurementUnitsLengthType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.length')"
-						/>
-					</td>
-				</tr>
-			</table>
 		</v-col>
 	</v-row>
 	<v-row dense>
@@ -286,49 +192,49 @@
 				<RocketParts
 					:items="altimeters"
 					:deletable="isEditable"
-					:stage-id="detailItemData.id"
+					:stage-id="displayItem.id"
 					@delete="handleAltimeterDelete"
 				>
 				</RocketParts>
 				<RocketParts
 					:items="chuteProtectors"
 					:deletable="isEditable"
-					:stageId="detailItemData.id"
+					:stageId="displayItem.id"
 					@delete="handleChuteProtectorsDelete"
 				>
 				</RocketParts>
 				<RocketParts
 					:items="chuteReleases"
 					:deletable="isEditable"
-					:stageId="detailItemData.id"
+					:stageId="displayItem.id"
 					@delete="handleChuteReleasesDelete"
 				>
 				</RocketParts>
 				<RocketParts
 					:items="deploymentBags"
 					:deletable="isEditable"
-					:stageId="detailItemData.id"
+					:stageId="displayItem.id"
 					@delete="handleDeploymentBagsDelete"
 				>
 				</RocketParts>
 				<RocketParts
 					:items="parachutes"
 					:deletable="isEditable"
-					:stageId="detailItemData.id"
+					:stageId="displayItem.id"
 					@delete="handleParachutesDelete"
 				>
 				</RocketParts>
 				<RocketParts
 					:items="streamers"
 					:deletable="isEditable"
-					:stageId="detailItemData.id"
+					:stageId="displayItem.id"
 					@delete="handleStreamersDelete"
 				>
 				</RocketParts>
 				<RocketParts
 					:items="trackers"
 					:deletable="isEditable"
-					:stageId="detailItemData.id"
+					:stageId="displayItem.id"
 					@delete="handleTrackerDelete"
 				></RocketParts>
 			</v-expansion-panels>
@@ -402,13 +308,9 @@ import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/D
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
-import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
-import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RecoveryLookupDialog from '@/components/content/rockets/dialogs/recovery/RecoveryLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VNumberField';
 import VSelect from '@thzero/library_client_vue3_vuetify3/components/form/VSelect';
 import VTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea';
 import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
@@ -418,15 +320,11 @@ export default {
 	components: {
 		ChuteProtectorPanelTitle,
 		DeploymentBagPanelTitle,
-		MeasurementUnitSelect,
-		MeasurementUnitsSelect,
 		ParachutePanelTitle,
 		RocketParts,
 		RecoveryLookupDialog,
 		StreamerPanelTitle,
 		VConfirmationDialog,
-		VFormControl,
-		VNumberField,
 		VSelect,
 		VTextArea,
 		VTextField
@@ -448,12 +346,16 @@ export default {
 			success,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			displayItem,
 			altimeters,
 			chuteProtectors,
 			chuteReleases,
 			deploymentBags,
-			detailItemData,
+			displayItem,
+			displayItemCp,
+			displayItemDiameterMajor,
+			displayItemDiameterMinor,
+			displayItemLength,
+			displayItemWeight,
 			hasAltimeters,
 			hasChuteProtectors,
 			hasChuteReleases,
@@ -525,12 +427,16 @@ export default {
 			success,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			displayItem,
 			altimeters,
 			chuteProtectors,
 			chuteReleases,
 			deploymentBags,
-			detailItemData,
+			displayItem,
+			displayItemCp,
+			displayItemDiameterMajor,
+			displayItemDiameterMinor,
+			displayItemLength,
+			displayItemWeight,
 			hasAltimeters,
 			hasChuteProtectors,
 			hasChuteReleases,
