@@ -1,6 +1,6 @@
 <template>
 	<VFormListingDialog
-		ref="dialogRecoveryLookup"
+		ref="dialogRocketPartsLookup"
 		:label="$t(partTypeName)"
 		:signal="signal"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
@@ -37,6 +37,48 @@
 										v-model="filterItemRocketTypes"
 										density="compact"
 										:label="$t('forms.content.parts.parachute.thinMill')"
+									/>
+								</v-col>
+							</v-row>
+							<v-row 
+								v-if="isMotors()"
+								dense
+							>
+								<v-col 
+									cols="12" sm="6"
+								>
+									<VSelectWithValidation
+										ref="filterItemMotorImpulseClassRef"
+										v-model="filterItemMotorImpulseClass"
+										vid="filterItemMotorImpulseClass"
+										:items="motorImpulseClasses"
+										:validation="validation"
+										:label="$t('forms.external.motorSearch.impulseClass')"
+									/>
+								</v-col>
+								<v-col cols="12" sm="6">
+									<VSelectWithValidation
+										ref="filterItemMotorDiameterRef"
+										v-model="filterItemMotorDiameter"
+										vid="filterItemMotorDiameter"
+										:items="motorDiameters"
+										:validation="validation"
+										:label="$t('forms.external.motorSearch.diameter')"
+									/>
+								</v-col>
+							</v-row>
+							<v-row 
+								v-if="isMotorCases()"
+								dense
+							>
+								<v-col cols="12" sm="6">
+									<VSelectWithValidation
+										ref="filterItemMotorDiameterRef"
+										v-model="filterItemMotorDiameter"
+										vid="filterItemMotorDiameter"
+										:items="motorDiameters"
+										:validation="validation"
+										:label="$t('forms.external.motorSearch.diameter')"
 									/>
 								</v-col>
 							</v-row>
@@ -168,14 +210,14 @@
 								:variant="buttonsForms.variant.clear"
 								:color="buttonsForms.color.clear"
 								:loading="isLoading"
-								@click="clickRecoverySearchClear"
+								@click="clickRocketPartsSearchClear"
 							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
 								:variant="buttonsForms.variant.ok"
 								:color="buttonsForms.color.ok"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
-								@click="clickRecoverySearch"
+								@click="clickRocketPartsSearch"
 							>{{ $t('buttons.search') }}</v-btn>
 						</v-card-actions>
 					</v-card>
@@ -200,9 +242,10 @@
 					<RocketParts
 						:items="results"
 						:selectable="true"
+						:manufacturers="manufacturers"
 						:search="true"
-						panel-type-id="recovery-search"
-						@select="clickRecoverySelect"
+						panel-type-id="rocket-search"
+						@select="clickRocketPartSelect"
 					>
 					</RocketParts>
 				</v-expansion-panels>
@@ -222,15 +265,10 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
-import { useRecoveryRocketLookupDialogComponent } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogComponent';
-import { useRecoveryLookupDialogComponentProps } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogComponentProps';
-import { useRecoveryRocketLookupDialogValidation } from '@/components/content/rockets/dialogs/recovery/recoveryLookupDialogValidation';
+import { useRocketPartsLookupDialogComponent } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogComponent';
+import { useRocketPartsLookupDialogComponentProps } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogComponentProps';
+import { useRocketPartsLookupDialogValidation } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogValidation';
 import { useRocketLookupDialogProps } from '@/components/content/rockets/dialogs/lookupDialogProps';
-
-import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
-import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
-import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
-import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
 
@@ -243,15 +281,11 @@ import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/componen
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RecoveryLookupDialog',
+	name: 'RocketPartsLookupDialog',
 	components: {
-		ChuteProtectorPanelTitle,
-		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		ParachutePanelTitle,
 		RocketParts,
-		StreamerPanelTitle,
 		VConfirmationDialog,
 		VFormListingDialog,
 		VNumberFieldWithValidation,
@@ -260,7 +294,7 @@ export default {
 	},
 	props: {
 		...useRocketLookupDialogProps,
-		...useRecoveryLookupDialogComponentProps
+		...useRocketPartsLookupDialogComponentProps
 	},
 	emits: ['close', 'ok', 'select'],
 	setup (props, context) {
@@ -280,6 +314,10 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			motorDiameters,
+			motorImpulseClasses,
+			motorCaseInfo,
+			motorUrl,
 			serviceStore,
 			filterItemDiameterMax,
 			filterItemDiameterMin,
@@ -291,25 +329,28 @@ export default {
 			filterItemLengthMeasurementUnitsId,
 			filterItemManufacturer,
 			filterItemManufacturerStockId,
+			filterItemMotorDiameter,
+			filterItemMotorImpulseClass,
 			filterItemName,
 			filterItemRocketTypes,
-			dialogRecoveryLookup,
+			dialogRocketPartsLookup,
 			dialogResetManager,
 			dialogResetMessage,
-			manufacturersI,
 			results,
 			manufacturers,
 			partTypeName,
 			buttonOkDisabledOverride,
-			clickRecoverySearch,
-			clickRecoverySearchClear,
-			clickRecoverySelect,
+			clickRocketPartsSearch,
+			clickRocketPartsSearchClear,
+			clickRocketPartSelect,
 			close,
 			dialogResetOk,
 			isAltimeters,
 			isChuteProtectors,
 			isChuteReleases,
 			isDeploymentBags,
+			isMotors,
+			isMotorCases,
 			isParachutes,
 			isStreamers,
 			isTrackers,
@@ -318,7 +359,7 @@ export default {
 			resetAdditional,
 			scope,
 			validation
-		} = useRecoveryRocketLookupDialogComponent(props, context);
+		} = useRocketPartsLookupDialogComponent(props, context);
 
 		return {
 			correlationId,
@@ -336,6 +377,10 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			motorDiameters,
+			motorImpulseClasses,
+			motorCaseInfo,
+			motorUrl,
 			serviceStore,
 			filterItemDiameterMax,
 			filterItemDiameterMin,
@@ -347,25 +392,28 @@ export default {
 			filterItemLengthMeasurementUnitsId,
 			filterItemManufacturer,
 			filterItemManufacturerStockId,
+			filterItemMotorDiameter,
+			filterItemMotorImpulseClass,
 			filterItemName,
 			filterItemRocketTypes,
-			dialogRecoveryLookup,
+			dialogRocketPartsLookup,
 			dialogResetManager,
 			dialogResetMessage,
-			manufacturersI,
 			results,
 			manufacturers,
 			partTypeName,
 			buttonOkDisabledOverride,
-			clickRecoverySearch,
-			clickRecoverySearchClear,
-			clickRecoverySelect,
+			clickRocketPartsSearch,
+			clickRocketPartsSearchClear,
+			clickRocketPartSelect,
 			close,
 			dialogResetOk,
 			isAltimeters,
 			isChuteProtectors,
 			isChuteReleases,
 			isDeploymentBags,
+			isMotors,
+			isMotorCases,
 			isParachutes,
 			isStreamers,
 			isTrackers,
@@ -377,7 +425,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketEditValidation(false), LibraryCommonUtility.cloneDeep(useRecoveryRocketLookupDialogValidation)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketEditValidation(false), LibraryCommonUtility.cloneDeep(useRocketPartsLookupDialogValidation)));
 	}
 };
 </script>

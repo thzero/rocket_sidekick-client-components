@@ -227,6 +227,7 @@
 					<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug">
 						<RocketSetup
 							:model-value="detailItem"
+							:manufacturers="manufacturers"
 							@cancel="detailClose"
 							@close="detailClose"
 							@error="detailError"

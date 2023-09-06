@@ -1,6 +1,6 @@
 import { between, decimal } from '@vuelidate/validators';
 
-export const useRecoveryRocketLookupDialogValidation = {
+export const useRocketPartsLookupDialogValidation = {
 	filterItemDiameterMax: { decimal, between: between(0, 2004), $autoDirty: true },
 	filterItemDiameterMin: { decimal, between: between(0, 2004), $autoDirty: true },
 	filterItemDiameterMeasurementUnitId: { $autoDirty: true },

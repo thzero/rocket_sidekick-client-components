@@ -201,6 +201,7 @@
 				>
 					<Rocket
 						:model-value="detailItem"
+						:manufacturers="manufacturers"
 						@cancel="detailClose"
 						@close="detailClose"
 						@error="detailError"

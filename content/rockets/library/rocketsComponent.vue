@@ -246,7 +246,7 @@ export function useRocketsBaseComponent(props, context, options) {
 				return;
 				
 			let temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket));
-			temp2 = temp2.map((item) => { return { id: item.id, name: item.name }; });
+			temp2 = temp2.map((item) => { return { id: item.id, name: item.name, types: item.types}; });
 			manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		}		
 	});

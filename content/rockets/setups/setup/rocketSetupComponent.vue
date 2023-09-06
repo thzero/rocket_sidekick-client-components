@@ -99,8 +99,8 @@ export function useRocketSetupComponent(props, context, options) {
 			return response;
 		},
 		init: async (correlationId, value) => {
-			await requestManufacturers(correlationId);
-			const temp = manufacturersI.value ? manufacturersI.value.find(l => l.isDefault) : null;
+			// await requestManufacturers(correlationId);
+			const temp = manufacturers.value ? manufacturers.value.find(l => l.isDefault) : null;
 			manufacturerDefault.value = temp ? temp.id : null;
 
 			const temp2 = await serviceStore.getters.getRocketSetupsExpanded();
@@ -184,7 +184,6 @@ export function useRocketSetupComponent(props, context, options) {
 	const detailItemRocketId = ref(null);
 	const detailItemRocketName = ref(null);
 	const detailItemType = ref(null);
-	const manufacturersI = ref(null);
 	const manufacturerDefault = ref(null);
 	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
 	const panels = ref([]);
@@ -198,7 +197,7 @@ export function useRocketSetupComponent(props, context, options) {
 	const types = ref([]);
 	
 	const manufacturers = computed(() => {
-		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
+		return props.manufacturers ? props.manufacturers : [];
 	});
 	const hasAdmin = computed(() => {
 		return false;
@@ -218,18 +217,6 @@ export function useRocketSetupComponent(props, context, options) {
 	};
 	const panelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setRocketSetupsExpanded(correlationId(), { id: panelsKey(), expanded: value });
-	};
-	const requestManufacturers = async (correlationId) => {
-		if (manufacturersI.value)
-			return;
-
-		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
-		if (hasFailed(response))
-			return;
-
-		let temp2 = response.results.filter(l => l.types.find(j => j === manufacturerType.value));
-		temp2 = temp2.map((item) => { return { id: item.id, name: item.name, isDefault: item.isDefault }; });
-		manufacturersI.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
 	};
 	const resetData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
@@ -386,7 +373,6 @@ export function useRocketSetupComponent(props, context, options) {
 		stages,
 		clickSearchRockets,
 		panelsUpdated,
-		requestManufacturers,
 		stagesPanelsUpdated,
 		selectRocket,
 		updateStage,

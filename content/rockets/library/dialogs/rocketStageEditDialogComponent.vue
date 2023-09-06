@@ -10,6 +10,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
+import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -61,6 +62,13 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		isEditable
 	} = useDetailFormDialogComponent(props, context, options);
 
+	const {
+		motorDiameters,
+		motorImpulseClasses,
+		motorCaseInfo,
+		motorUrl
+	} = useMotorLookupComponent(props, context);
+
 	const detailItemCp = ref(null);
 	const detailItemCpFrom = ref(null);
 	const detailItemCpMeasurementUnitId = ref(null);
@@ -77,7 +85,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	const detailItemLengthMeasurementUnitsId = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemManufacturerStockId = ref(null);
-	// const detailItemName = ref(null);
+	const detailItemMotorDiameter = ref(null);
 	const detailItemNumber = ref(null);
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
@@ -85,7 +93,6 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.rockets.name') + ' ' + LibraryClientUtility.$trans.t('forms.content.rockets.stage.name') + ' ' + 
-		// (!String.isNullOrEmpty(detailItemName.value) ? `(${detailItemName.value})` : '');
 		stageNumber.value;
 	});
 	const stageNumber = computed(() => {
@@ -104,7 +111,6 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 
 	const resetEditData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
-		// detailItemName.value = value ? value.name : null;
 		
 		detailItemCp.value = value ? value.cp : null;
 		detailItemCpFrom.value = value ? value.cpFrom : AppCommonConstants.Rocketry.Direction.Tip;
@@ -126,6 +132,8 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemManufacturer.value = value ? value.manufacturerId : null; // 'd37HEk5Wjm3mmV4InK90U';
 		detailItemManufacturerStockId.value = value ? value.manufacturerStockId : null;
 
+		detailItemMotorDiameter.value = value ? value.motorDiameter : null;
+
 		detailItemNumber.value = value ? value.number : null;
 
 		detailItemWeight.value = value ? value.weight : null;
@@ -134,7 +142,6 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	};
 	const setEditData = (correlationId, value) => {
 		value.description = String.trim(detailItemDescription.value);
-		// value.name = String.trim(detailItemName.value);
 
 		value.cp = AppUtility.convertNumber(detailItemCp.value);
 		value.cpFrom = detailItemCpFrom.value;
@@ -155,6 +162,8 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		
 		value.manufacturerId = detailItemManufacturer.value;
 		value.manufacturerStockId = detailItemManufacturerStockId.value;
+
+		value.motorDiameter = detailItemMotorDiameter.value;
 		
 		value.weight = AppUtility.convertNumber(detailItemWeight.value);
 		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
@@ -174,6 +183,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		dialogClose,
 		dialogOk,
 		isEditable,
+		motorDiameters,
 		detailItemCp,
 		detailItemCpFrom,
 		detailItemCpMeasurementUnitId,
@@ -190,7 +200,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemLengthMeasurementUnitsId,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
-		// detailItemName,
+		detailItemMotorDiameter,
 		detailItemNumber,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
