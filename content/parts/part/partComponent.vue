@@ -159,7 +159,7 @@ export function usePartComponent(props, context, options) {
 			return;
 
 		let temp2 = response.results.filter(l => l.types.find(j => j === options.manufacturerType));
-		temp2 = temp2.map((item) => { return { id: item.id, name: item.name }; });
+		temp2 = temp2.map((item) => { return { id: item.id, name: item.name, types: item.types}; });
 		manufacturersI.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
 	}
 	const resetData = (correlationId, value) => {

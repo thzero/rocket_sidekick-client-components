@@ -34,7 +34,6 @@ export function useRocketPartsComponent(props, context, options) {
 	
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
-	const manufacturersI = ref(null);
 	const panels = ref([]);
 	const partTypes = ref(AppCommonConstants.Rocketry.PartTypes);
 
@@ -78,10 +77,10 @@ export function useRocketPartsComponent(props, context, options) {
 		if (!id)
 			return null;
 
-		if (!manufacturersI.value)
+		if (!props.manufacturers)
 			return null;
 
-		const temp = manufacturersI.value.find(l => l.id === id);
+		const temp = props.manufacturers.find(l => l.id === id);
 		return temp ? temp.name : null;
 	};
 	const partTypeName = (id) => {
@@ -109,25 +108,25 @@ export function useRocketPartsComponent(props, context, options) {
 			AppCommonConstants.Rocketry.ManufacturerTypes.tracker
 		];
 		
-		if (manufacturersI.value)
-			return;
+		// if (manufacturersI.value)
+		// 	return;
 
-		const response = await serviceStore.dispatcher.requestManufacturers(correlationId());
-		if (hasFailed(response))
-			return;
+		// const response = await serviceStore.dispatcher.requestManufacturers(correlationId());
+		// if (hasFailed(response))
+		// 	return;
 
-		let temp2 = response.results.filter(l => l.types.find(j => 
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.altimeter) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.parachute) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.streamer) ||
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.trackers)
-		));
-		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
-		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
+		// let temp2 = response.results.filter(l => l.types.find(j => 
+		// 	(j === AppCommonConstants.Rocketry.ManufacturerTypes.altimeter) ||
+		// 	(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
+		// 	(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease) ||
+		// 	(j === AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector) ||
+		// 	(j === AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag) ||
+		// 	(j === AppCommonConstants.Rocketry.ManufacturerTypes.parachute) ||
+		// 	(j === AppCommonConstants.Rocketry.ManufacturerTypes.streamer) ||
+		// 	(j === AppCommonConstants.Rocketry.ManufacturerTypes.trackers)
+		// ));
+		// temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
+		// manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
 	});
 	
 	return {
@@ -146,7 +145,6 @@ export function useRocketPartsComponent(props, context, options) {
 		setErrors,
 		buttonsDialog,
 		buttonsForms,
-		manufacturersI,
 		panels,
 		partTypes,
 		results,

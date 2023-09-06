@@ -11,6 +11,10 @@ export const useRocketPartsComponentProps = {
 		type: String,
 		value: null
 	},
+	editable: {
+		type: Boolean,
+		value: false
+	},
 	items: {
 		type: Array,
 		value: null

@@ -15,6 +15,8 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 
+import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
+
 export function useMotorLookupDialogComponent(props, context, options) {
 	const {
 		correlationId,
@@ -32,6 +34,13 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms
 	} = useButtonComponent(props, context);
+
+	const {
+		motorDiameters,
+		motorImpulseClasses,
+		motorCaseInfo,
+		motorUrl
+	} = useMotorLookupComponent(props, context);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 	const serviceExternalMotorSearch = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_EXTERNAL_MOTOR_SEARCH);
@@ -53,12 +62,6 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		// const ttl = .serviceStore.state.motorSearchResults ? serviceStore.state.motorSearchResults.ttl : 0;
 		const now = LibraryCommonUtility.getTimestamp();
 		return (ttl.value < now);
-	});
-	const diameters = computed(() => {
-		return ['', '13', '18', '24', '29', '38', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
-	});
-	const impulseClasses = computed(() => {
-		return ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'].map((item) => { return { id: item, name: item }; });
 	});
 	const searchLocaleName = computed(() => {
 		return serviceExternalMotorSearch.nameLocale();
@@ -92,7 +95,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		// this.serviceStore.dispatcher.setMotorSearchCriteria(this.correlationId(), request);
 
 		// // const response = await this.serviceExternalMotorSearch.search(correlationId, request);
-		// const response = await this.serviceStore.dispatcher.requestMotorSearchResults(correlationId, request);
+		// const response = await this.serviceStore.dispatcher.requestMotorSearch(correlationId, request);
 		// console.log(response);
 		// this.results = response || [];
 	};
@@ -151,22 +154,6 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		ttl.value = serviceStore.state.motorSearchResults ? serviceStore.state.motorSearchResults.ttl : 0;
 		await preCompleteOk(correlationIdI);
 	};
-	const motorCaseInfo = (motor) => {
-		if (motor.type === 'SU')
-			return LibraryClientUtility.$trans.t('motorSearch.motor_type_singleuse');
-
-		if (motor.type === 'hybrid' || motor.type === 'reload') {
-			if (motor.caseInfo !== null) {
-				const type = LibraryClientUtility.$trans.t('motorSearch.motor_type_' + motor.type.toLowerCase());
-				return '(' + motor.caseInfo + '; ' + type + ')';
-			}
-		}
-
-		return '';
-	};
-	const motorUrl = (motor) => {
-		return serviceExternalMotorSearch.urlMotor(motor);
-	};
 	const preCompleteOk = async (correlationId) => {
 		results.value = null;
 
@@ -181,7 +168,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 
 		serviceStore.dispatcher.setMotorSearchCriteria(correlationId, request);
 
-		const response = await serviceStore.dispatcher.requestMotorSearchResults(correlationId, request);
+		const response = await serviceStore.dispatcher.requestMotorSearch(correlationId, request);
 		results.value = response || [];
 		ttl.value = serviceStore.state.motorSearchResults ? serviceStore.state.motorSearchResults.ttl : 0;
 		return success(correlationId);
@@ -224,8 +211,13 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		if (hasFailed(response))
 			return;
 
-		const temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.motor));
-		manufacturers.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
+		let temp = response.results;
+		if (options && options.filterManufacturers)
+			temp = options.filterManufacturers(temp);
+
+		temp = temp.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.motor));
+		temp = temp.sort((a, b) => a.name.localeCompare(b.name));
+		manufacturers.value = temp.map((item) => { return { id: item.id, name: item.name }; });
 	});
 
 	return {
@@ -240,6 +232,10 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		success,
 		buttonsDialog,
 		buttonsForms,
+		motorDiameters,
+		motorImpulseClasses,
+		motorCaseInfo,
+		motorUrl,
 		serviceExternalMotorSearch,
 		serviceStore,
 		dialogMotorLookup,
@@ -254,8 +250,6 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		sparky,
 		singleUse,
 		buttonMotorSearchResetDisabled,
-		diameters,
-		impulseClasses,
 		searchLocaleName,
 		searchUrl,
 		buttonOkDisabledOverride,
@@ -265,8 +259,6 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		clickMotorSelect,
 		close,
 		dialogResetOk,
-		motorCaseInfo,
-		motorUrl,
 		preCompleteOk,
 		resetAdditional,
 		scope: 'MotorLookupDialog',

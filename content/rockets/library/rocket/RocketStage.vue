@@ -192,6 +192,7 @@
 				<RocketParts
 					:items="altimeters"
 					:deletable="isEditable"
+					:manufacturers="manufacturers"
 					:stage-id="displayItem.id"
 					@delete="handleAltimeterDelete"
 				>
@@ -199,6 +200,7 @@
 				<RocketParts
 					:items="chuteProtectors"
 					:deletable="isEditable"
+					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleChuteProtectorsDelete"
 				>
@@ -206,6 +208,7 @@
 				<RocketParts
 					:items="chuteReleases"
 					:deletable="isEditable"
+					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleChuteReleasesDelete"
 				>
@@ -213,6 +216,7 @@
 				<RocketParts
 					:items="deploymentBags"
 					:deletable="isEditable"
+					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleDeploymentBagsDelete"
 				>
@@ -220,12 +224,14 @@
 				<RocketParts
 					:items="parachutes"
 					:deletable="isEditable"
+					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleParachutesDelete"
 				>
 				</RocketParts>
 				<RocketParts
 					:items="streamers"
+					:manufacturers="manufacturers"
 					:deletable="isEditable"
 					:stageId="displayItem.id"
 					@delete="handleStreamersDelete"
@@ -234,55 +240,56 @@
 				<RocketParts
 					:items="trackers"
 					:deletable="isEditable"
+					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleTrackerDelete"
 				></RocketParts>
 			</v-expansion-panels>
 		</v-col>
 	</v-row>
-	<RecoveryLookupDialog
+	<RocketPartsLookupDialog
 		ref="dialogAltimetersSearchManagerRef"
 		:signal="dialogAltimetersSearchManager.signal"
 		:part-types="manufacturerTypeAltimeter"
 		@close="dialogAltimetersSearchManager.cancel()"
 		@select="selectAltimeter"
 	/>
-	<RecoveryLookupDialog
+	<RocketPartsLookupDialog
 		ref="dialogChuteProtectorsSearchRef"
 		:signal="dialogChuteProtectorsSearchManager.signal"
 		:part-types="manufacturerTypeChuteProtector"
 		@close="dialogChuteProtectorsSearchManager.cancel()"
 		@select="selectChuteProtectors"
 	/>
-	<RecoveryLookupDialog
+	<RocketPartsLookupDialog
 		ref="dialogChuteReleasesSearchRef"
 		:signal="dialogChuteReleasesSearchManager.signal"
 		:part-types="manufacturerTypeChuteRelease"
 		@close="dialogChuteReleasesSearchManager.cancel()"
 		@select="selectChuteReleases"
 	/>
-	<RecoveryLookupDialog
+	<RocketPartsLookupDialog
 		ref="dialogDeploymentBagsSearchRef"
 		:signal="dialogDeploymentBagsSearchManager.signal"
 		:part-types="manufacturerTypeChuteDeploymentBag"
 		@close="dialogDeploymentBagsSearchManager.cancel()"
 		@select="selectDeploymentBags"
 	/>
-	<RecoveryLookupDialog
+	<RocketPartsLookupDialog
 		ref="dialogParachutesSearchRef"
 		:signal="dialogParachutesSearchManager.signal"
 		:part-types="manufacturerTypeParachute"
 		@close="dialogParachutesSearchManager.cancel()"
 		@select="selectParachutes"
 	/>
-	<RecoveryLookupDialog
+	<RocketPartsLookupDialog
 		ref="dialogStreamersSearchRef"
 		:signal="dialogStreamersSearchManager.signal"
 		:part-types="manufacturerTypeStreamer"
 		@close="dialogStreamersSearchManager.cancel()"
 		@ok="selectStreamers"
 	/>
-	<RecoveryLookupDialog
+	<RocketPartsLookupDialog
 		ref="dialogStreamersSearchRef"
 		:signal="dialogTrackersSearchManager.signal"
 		:part-types="manufacturerTypeTracker"
@@ -309,7 +316,7 @@ import ParachutePanelTitle from '@/components/content/parts/parachutes/Parachute
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
-import RecoveryLookupDialog from '@/components/content/rockets/dialogs/recovery/RecoveryLookupDialog';
+import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VSelect from '@thzero/library_client_vue3_vuetify3/components/form/VSelect';
 import VTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea';
@@ -322,7 +329,7 @@ export default {
 		DeploymentBagPanelTitle,
 		ParachutePanelTitle,
 		RocketParts,
-		RecoveryLookupDialog,
+		RocketPartsLookupDialog,
 		StreamerPanelTitle,
 		VConfirmationDialog,
 		VSelect,

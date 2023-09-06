@@ -134,7 +134,6 @@ import { useRocketSetupEditValidation } from '@/components/content/rockets/setup
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RecoveryLookupDialog from '@/components/content/rockets/dialogs/recovery/RecoveryLookupDialog';
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
@@ -147,7 +146,6 @@ export default {
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		RecoveryLookupDialog,
 		VFormDialog,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
@@ -167,13 +165,13 @@ export default {
 			dialogError,
 			dialogClose,
 			dialogOk,
+			motorDiameters,
 			isEditable,
 			detailItemCg,
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
 			detailItemDescription,
-			// detailItemName,
 			detailItemNotes,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
@@ -199,13 +197,13 @@ export default {
 			dialogError,
 			dialogClose,
 			dialogOk,
+			motorDiameters,
 			isEditable,
 			detailItemCg,
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
 			detailItemDescription,
-			// detailItemName,
 			detailItemNotes,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,

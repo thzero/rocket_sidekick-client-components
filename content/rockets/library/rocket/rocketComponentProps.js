@@ -3,6 +3,10 @@ export const useRocketComponentProps = {
 		type: Object,
 		default: { }
 	},
+	manufacturers: {
+		type: Array,
+		default: []
+	},
 	readonly: {
 		type: Boolean,
 		value: false

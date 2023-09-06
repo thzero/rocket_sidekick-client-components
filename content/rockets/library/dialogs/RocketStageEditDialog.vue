@@ -20,21 +20,8 @@
 		>
 			isEditable: {{ isEditable }} readonly: {{ readonly }}
 		</div>
-		<!-- <v-row dense>
-			<v-col cols="12" md="8">
-				<VTextFieldWithValidation
-					ref="detailItemNameRef"
-					v-model="detailItemName"
-					vid="detailItemName"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.name')"
-					:counter="30"
-				/>
-			</v-col>
-		</v-row> -->
 		<v-row dense>
-			<v-col cols="12" md="9">
+			<v-col>
 				<VTextAreaWithValidation
 					ref="detailItemDescriptionRef"
 					v-model="detailItemDescription"
@@ -46,7 +33,19 @@
 					:rows="detailItemTextRows"
 				/>
 			</v-col>
-			<v-col cols="12" md="3">
+		</v-row>
+		<v-row dense>
+			<v-col cols="6">
+				<VSelectWithValidation
+					ref="detailItemMotorDiameterRef"
+					v-model="detailItemMotorDiameter"
+					vid="detailItemMotorDiameter"
+					:items="motorDiameters"
+					:validation="validation"
+					:label="$t('forms.external.motorSearch.diameter')"
+				/>
+			</v-col>
+			<v-col cols="6">
 				<VTextField
 					ref="detailItemNumberRef"
 					v-model="detailItemNumber"
@@ -249,7 +248,6 @@ import { useRocketEditValidation } from '@/components/content/rockets/library/ro
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RecoveryLookupDialog from '@/components/content/rockets/dialogs/recovery/RecoveryLookupDialog';
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
@@ -262,7 +260,6 @@ export default {
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		RecoveryLookupDialog,
 		VFormDialog,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
@@ -282,6 +279,7 @@ export default {
 			dialogError,
 			dialogClose,
 			dialogOk,
+			motorDiameters,
 			isEditable,
 			detailItemCp,
 			detailItemCpFrom,
@@ -299,7 +297,7 @@ export default {
 			detailItemLengthMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
-			// detailItemName,
+			detailItemMotorDiameter,
 			detailItemNumber,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
@@ -325,6 +323,7 @@ export default {
 			dialogError,
 			dialogClose,
 			dialogOk,
+			motorDiameters,
 			isEditable,
 			detailItemCp,
 			detailItemCpFrom,
@@ -342,7 +341,7 @@ export default {
 			detailItemLengthMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
-			// detailItemName,
+			detailItemMotorDiameter,
 			detailItemNumber,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,

@@ -89,7 +89,7 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 	const results = ref([]);
 	
 	const manufacturers = computed(() => {
-		return manufacturersI.value ? manufacturersI.value.map((item) => { return { id: item.id, name: item.name }; }) : [];
+		return manufacturersI.value ? manufacturersI.value : [];
 	});
 
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
@@ -150,10 +150,10 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		if (!id)
 			return null;
 
-		if (!manufacturersI.value)
+		if (!manufacturers.value)
 			return null;
 
-		const temp = manufacturersI.value.find(l => l.id === id);
+		const temp = manufacturers.value.find(l => l.id === id);
 		return temp ? temp.name : null;
 	};
 	const preCompleteOk = async (correlationId) => {
@@ -164,7 +164,7 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 			diameterMin: filterItemDiameterMin.value,
 			diameterMeasurementUnitId: filterItemDiameterMeasurementUnitId.value,
 			diameterMeasurementUnitsId: filterItemDiameterMeasurementUnitsId.value,
-			manufacturers: filterItemManufacturers.value,
+			manufacturer: filterItemManufacturers.value,
 			manufacturerStockId: filterItemManufacturerStockId.value,
 			name: filterItemName.value,
 			rocketTypes: filterItemRocketTypes.value
@@ -245,7 +245,6 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		dialogRocketLookup,
 		dialogResetManager,
 		dialogResetMessage,
-		manufacturersI,
 		results,
 		manufacturers,
 		buttonOkDisabledOverride,
@@ -260,8 +259,8 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		manufacturer,
 		preCompleteOk,
 		resetAdditional,
-		scope: 'RecoveryLookupDialog',
-		validation: useVuelidate({ $scope: 'RecoveryLookupDialog' })
+		scope: 'RocketLookupDialog',
+		validation: useVuelidate({ $scope: 'RocketLookupDialog' })
 	};
 };
 </script>

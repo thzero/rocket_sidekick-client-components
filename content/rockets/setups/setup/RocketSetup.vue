@@ -185,9 +185,9 @@
 	<RocketLookupDialog
 		ref="dialogRocketLookupManagerRef"
 		:signal="dialogRocketLookupManager.signal"
+		:rocket-id="rocketId"
 		@close="dialogRocketLookupManager.cancel()"
 		@select="selectRocket"
-		:rocket-id="rocketId"
 	/>
 	<RocketSetupStageEditDialog
 		v-if="!readonly"
@@ -219,7 +219,6 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
-import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RocketSetupStage from '@/components/content/rockets/setups/setup/RocketSetupStage';
 import RocketSetupStageEditDialog from '@/components/content/rockets/setups/dialogs/RocketSetupStageEditDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
@@ -239,7 +238,6 @@ export default {
 		MeasurementUnitsSelect,
 		ParachutePanelTitle,
 		RocketLookupDialog,
-		RocketParts,
 		RocketSetupStage,
 		RocketSetupStageEditDialog,
 		StreamerPanelTitle,
@@ -343,7 +341,6 @@ export default {
 			stages,
 			clickSearchRockets,
 			panelsUpdated,
-			requestManufacturers,
 			stagesPanelsUpdated,
 			selectRocket,
 			updateStage,
@@ -437,7 +434,6 @@ export default {
 			stages,
 			clickSearchRockets,
 			panelsUpdated,
-			requestManufacturers,
 			stagesPanelsUpdated,
 			selectRocket,
 			updateStage,

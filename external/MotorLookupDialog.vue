@@ -27,7 +27,7 @@
 										ref="impulseClassRef"
 										v-model="impulseClass"
 										vid="impulseClass"
-										:items="impulseClasses"
+										:items="motorImpulseClasses"
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.impulseClass')"
 									/>
@@ -37,7 +37,7 @@
 										ref="diameterRef"
 										v-model="diameter"
 										vid="diameter"
-										:items="diameters"
+										:items="motorDiameters"
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.diameter')"
 									/>
@@ -216,6 +216,10 @@ export default {
 			success,
 			buttonsDialog,
 			buttonsForms,
+			motorDiameters,
+			motorImpulseClasses,
+			motorCaseInfo,
+			motorUrl,
 			serviceExternalMotorSearch,
 			serviceStore,
 			dialogMotorLookup,
@@ -223,15 +227,13 @@ export default {
 			dialogResetManager,
 			diameter,
 			impulseClass,
-			manufacturer,
 			manufacturers,
+			manufacturer,
 			motor,
 			results,
 			sparky,
 			singleUse,
 			buttonMotorSearchResetDisabled,
-			diameters,
-			impulseClasses,
 			searchLocaleName,
 			searchUrl,
 			buttonOkDisabledOverride,
@@ -241,8 +243,6 @@ export default {
 			clickMotorSelect,
 			close,
 			dialogResetOk,
-			motorCaseInfo,
-			motorUrl,
 			preCompleteOk,
 			resetAdditional,
 			scope,
@@ -261,6 +261,10 @@ export default {
 			success,
 			buttonsDialog,
 			buttonsForms,
+			motorDiameters,
+			motorImpulseClasses,
+			motorCaseInfo,
+			motorUrl,
 			serviceExternalMotorSearch,
 			serviceStore,
 			dialogMotorLookup,
@@ -268,15 +272,13 @@ export default {
 			dialogResetManager,
 			diameter,
 			impulseClass,
-			manufacturer,
 			manufacturers,
+			manufacturer,
 			motor,
 			results,
 			sparky,
 			singleUse,
 			buttonMotorSearchResetDisabled,
-			diameters,
-			impulseClasses,
 			searchLocaleName,
 			searchUrl,
 			buttonOkDisabledOverride,
@@ -286,8 +288,6 @@ export default {
 			clickMotorSelect,
 			close,
 			dialogResetOk,
-			motorCaseInfo,
-			motorUrl,
 			preCompleteOk,
 			resetAdditional,
 			scope,

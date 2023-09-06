@@ -10,6 +10,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
+import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -61,12 +62,18 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		isEditable
 	} = useDetailFormDialogComponent(props, context, options);
 
+	const {
+		motorDiameters,
+		motorImpulseClasses,
+		motorCaseInfo,
+		motorUrl
+	} = useMotorLookupComponent(props, context);
+
 	const detailItemCg = ref(null);
 	const detailItemCgFrom = ref(null);
 	const detailItemCgMeasurementUnitId = ref(null);
 	const detailItemCgMeasurementUnitsId = ref(null);
 	const detailItemDescription = ref(null);
-	// const detailItemName = ref(null);
 	const detailItemNotes = ref(null);
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
@@ -74,7 +81,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.rockets.name') + ' ' + LibraryClientUtility.$trans.t('forms.content.rockets.stage.name') + ' ' + 
-		// (!String.isNullOrEmpty(detailItemName.value) ? `(${detailItemName.value})` : '');
 		stageNumber.value;
 	});
 	const stageNumber = computed(() => {
@@ -96,7 +102,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 
 	const resetEditData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
-		// detailItemName.value = value ? value.name : null;
 		detailItemNotes.value = value ? value.name : null;
 		
 		detailItemCg.value = value ? value.cg : null;
@@ -110,7 +115,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	};
 	const setEditData = (correlationId, value) => {
 		value.description = String.trim(detailItemDescription.value);
-		// value.name = String.trim(detailItemName.value);
 		value.notes = String.trim(detailItemNotes.value);
 
 		value.cg = AppUtility.convertNumber(detailItemCg.value);
@@ -135,13 +139,13 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		dialogError,
 		dialogClose,
 		dialogOk,
+		motorDiameters,
 		isEditable,
 		detailItemCg,
 		detailItemCgFrom,
 		detailItemCgMeasurementUnitId,
 		detailItemCgMeasurementUnitsId,
 		detailItemDescription,
-		// detailItemName,
 		detailItemNotes,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
