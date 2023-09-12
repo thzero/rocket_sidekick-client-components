@@ -2,8 +2,8 @@
 	<div
 		v-if="debug"
 	>
-		[[ isEditable {{ isEditable }} ]]
-		<!-- [[ displayItem {{ displayItem }} ]]
+		<!-- [[ isEditable {{ isEditable }} ]]
+		[[ displayItem {{ displayItem }} ]]
 		[[ altimeters {{ altimeters }} ]]
 		[[ chuteProtectors {{ chuteProtectors }} ]]
 		[[ chuteReleases {{ chuteReleases }} ]]
@@ -23,15 +23,18 @@
 		</v-col>
 		<v-col cols="3">
 			<VTextField
-				v-model="stageNumber"
+				v-model="stageIndex"
 				:readonly="true"
 				:label="$t('forms.content.rockets.stage.name')"
 			/>
 		</v-col>
 	</v-row>
-	<v-row dense>
+	<v-row
+		v-if="displayItem.manufacturerId"
+		dense
+	>
 		<v-col cols="6">
-			<VSelect
+			<VSelect2
 				v-model="displayItem.manufacturerId"
 				:items="manufacturers"
 				:readonly="true"
@@ -46,8 +49,13 @@
 			/>
 		</v-col>
 	</v-row>
-	<v-row dense>
-		<v-col cols="6" xs="3">
+	<v-row
+		dense
+	>
+		<v-col 
+			v-if="displayItemDiameterMajor"
+			cols="6" xs="3"
+		>
 			<VTextField
 				v-model="displayItemDiameterMajor"
 				:hide-details="true"
@@ -55,7 +63,10 @@
 				:label="$t('forms.content.rockets.diameter.name')"
 			/>
 		</v-col>
-		<v-col cols="6" xs="3">
+		<v-col 
+			v-if="displayItemLength"
+			cols="6" xs="3"
+		>
 			<VTextField
 				v-model="displayItemLength"
 				:hide-details="true"
@@ -63,7 +74,10 @@
 				:label="$t('forms.content.parts.length')"
 			/>
 		</v-col>
-		<v-col cols="6" xs="3">
+		<v-col 
+			v-if="displayItemWeight"
+			cols="6" xs="3"
+		>
 			<VTextField
 				v-model="displayItemWeight"
 				:hide-details="true"
@@ -71,12 +85,49 @@
 				:label="$t('forms.content.parts.weight')"
 			/>
 		</v-col>
-		<v-col cols="6" xs="3">
+		<v-col 
+			v-if="displayItemCp"
+			cols="6" xs="3"
+		>
 			<VTextField
 				v-model="displayItemCp"
 				:hide-details="true"
 				:readonly="true"
 				:label="$t('forms.content.rockets.cp')"
+			/>
+		</v-col>
+	</v-row>
+	<v-row
+	 	dense
+	>
+		<v-col 
+			v-if="hasMotor(0)"
+			cols="12" sm="4"
+		>
+			<VTextField
+				v-model="motor(0).value"
+				:readonly="true"
+				:label="$t('forms.content.parts.motor.name')"
+			/>
+		</v-col>
+		<v-col 
+			v-if="hasMotor(1)"
+			cols="12" sm="4"
+		>
+			<VTextField
+				v-model="motor(1).value"
+				:readonly="true"
+				:label="$t('forms.content.parts.motor.name')"
+			/>
+		</v-col>
+		<v-col 
+			v-if="hasMotor(2)"
+			cols="12" sm="4"
+		>
+			<VTextField
+				v-model="motor(2).value"
+				:readonly="true"
+				:label="$t('forms.content.parts.motor.name')"
 			/>
 		</v-col>
 	</v-row>
@@ -259,35 +310,35 @@
 		:signal="dialogChuteProtectorsSearchManager.signal"
 		:part-types="manufacturerTypeChuteProtector"
 		@close="dialogChuteProtectorsSearchManager.cancel()"
-		@select="selectChuteProtectors"
+		@select="selectChuteProtector"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogChuteReleasesSearchRef"
 		:signal="dialogChuteReleasesSearchManager.signal"
 		:part-types="manufacturerTypeChuteRelease"
 		@close="dialogChuteReleasesSearchManager.cancel()"
-		@select="selectChuteReleases"
+		@select="selectChuteRelease"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogDeploymentBagsSearchRef"
 		:signal="dialogDeploymentBagsSearchManager.signal"
 		:part-types="manufacturerTypeChuteDeploymentBag"
 		@close="dialogDeploymentBagsSearchManager.cancel()"
-		@select="selectDeploymentBags"
+		@select="selectDeploymentBag"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogParachutesSearchRef"
 		:signal="dialogParachutesSearchManager.signal"
 		:part-types="manufacturerTypeParachute"
 		@close="dialogParachutesSearchManager.cancel()"
-		@select="selectParachutes"
+		@select="selectParachute"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogStreamersSearchRef"
 		:signal="dialogStreamersSearchManager.signal"
 		:part-types="manufacturerTypeStreamer"
 		@close="dialogStreamersSearchManager.cancel()"
-		@ok="selectStreamers"
+		@ok="selectStreamer"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogStreamersSearchRef"
@@ -318,7 +369,7 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VSelect from '@thzero/library_client_vue3_vuetify3/components/form/VSelect';
+import VSelect2 from '@thzero/library_client_vue3_vuetify3/components/form/VSelect2';
 import VTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea';
 import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
 
@@ -332,7 +383,7 @@ export default {
 		RocketPartsLookupDialog,
 		StreamerPanelTitle,
 		VConfirmationDialog,
-		VSelect,
+		VSelect2,
 		VTextArea,
 		VTextField
 	},
@@ -371,13 +422,15 @@ export default {
 			hasStreamers,
 			hasTrackers,
 			parachutes,
-			stageNumber,
+			stageIndex,
 			streamers,
 			trackers,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			motorDiameters,
+			motorDiameter,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
@@ -412,13 +465,15 @@ export default {
 			handleParachutesDelete,
 			handleStreamersDelete,
 			handleTrackerDelete,
+			hasMotor,
+			motor,
 			panelsUpdated,
 			selectAltimeter,
-			selectChuteProtectors,
-			selectChuteReleases,
-			selectDeploymentBags,
-			selectParachutes,
-			selectStreamers,
+			selectChuteProtector,
+			selectChuteRelease,
+			selectDeploymentBag,
+			selectParachute,
+			selectStreamer,
 			selectTracker
 		} = useRocketStageComponent(props, context, options);
 
@@ -452,13 +507,15 @@ export default {
 			hasStreamers,
 			hasTrackers,
 			parachutes,
-			stageNumber,
+			stageIndex,
 			streamers,
 			trackers,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			motorDiameters,
+			motorDiameter,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
@@ -493,13 +550,16 @@ export default {
 			handleParachutesDelete,
 			handleStreamersDelete,
 			handleTrackerDelete,
+			hasMotor,
+			motor,
 			panelsUpdated,
+			motor,
 			selectAltimeter,
-			selectChuteProtectors,
-			selectChuteReleases,
-			selectDeploymentBags,
-			selectParachutes,
-			selectStreamers,
+			selectChuteProtector,
+			selectChuteRelease,
+			selectDeploymentBag,
+			selectParachute,
+			selectStreamer,
 			selectTracker
 		};
 	}

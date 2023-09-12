@@ -7,12 +7,15 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
 import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 export function useRocketSetupStageEditDialogComponent(props, context, options) {
 	const {
@@ -66,6 +69,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		motorDiameters,
 		motorImpulseClasses,
 		motorCaseInfo,
+		motorDiameter,
 		motorUrl
 	} = useMotorLookupComponent(props, context);
 
@@ -74,10 +78,37 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const detailItemCgMeasurementUnitId = ref(null);
 	const detailItemCgMeasurementUnitsId = ref(null);
 	const detailItemDescription = ref(null);
+	const detailItemMotor0 = ref(null);
+	const detailItemMotor1 = ref(null);
+	const detailItemMotor2 = ref(null);
+	const detailItemMotorCase0 = ref(null);
+	const detailItemMotorCase1 = ref(null);
+	const detailItemMotorCase2 = ref(null);
+	const detailItemMotorCaseId0 = ref(null);
+	const detailItemMotorCaseId1 = ref(null);
+	const detailItemMotorCaseId2 = ref(null);
+	const detailItemMotorDelay0 = ref(null);
+	const detailItemMotorDelay1 = ref(null);
+	const detailItemMotorDelay2 = ref(null);
+	const detailItemMotorDiameter0 = ref(null);
+	const detailItemMotorDiameter1 = ref(null);
+	const detailItemMotorDiameter2 = ref(null);
+	const detailItemMotorId0 = ref(null);
+	const detailItemMotorId1 = ref(null);
+	const detailItemMotorId2 = ref(null);
+	const detailItemMotorInfo0 = ref(null);
+	const detailItemMotorInfo1 = ref(null);
+	const detailItemMotorInfo2 = ref(null);
 	const detailItemNotes = ref(null);
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
+	const dialogPartsSearchMotorsDiameter = ref(null);
+	const dialogPartsSearchMotorIndex = ref(null);
+	const dialogPartsSearchMotorsManager = ref(new DialogSupport());
+	const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
+	const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
+	const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
 	
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.rockets.name') + ' ' + LibraryClientUtility.$trans.t('forms.content.rockets.stage.name') + ' ' + 
@@ -87,9 +118,19 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		if (!detailItem.value)
 			return null;
 
-		return detailItem.value.number + 1;
+		return detailItem.value.index + 1;
 	});
 
+	const clickMotorsSearch = async (index, diameter) => {
+		dialogPartsSearchMotorsDiameter.value = diameter;
+		dialogPartsSearchMotorIndex.value = index;
+		dialogPartsSearchMotorsManager.value.open();
+	};
+	const clickMotorCasesSearch = async (index, diameter) => {
+		dialogPartsSearchMotorsDiameter.value = diameter;
+		dialogPartsSearchMotorIndex.value = index;
+		dialogPartsSearchMotorCasesManager.value.open();
+	};
 	const preCompleteOk = async (correlationId) => {
 		await setAdditional(correlationId);
 
@@ -100,6 +141,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		return await props.preCompleteOk(correlationId, detailItem.value);
 	};
 
+	const resetAdditional = async (correlationId, previous) => {
+		resetEditData(correlationId, detailItem.value);
+	};
 	const resetEditData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemNotes.value = value ? value.name : null;
@@ -109,9 +153,175 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemCgMeasurementUnitId.value = value ? value.cgMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 		detailItemCgMeasurementUnitsId.value = value ? value.cgMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 		
+		detailItemMotor0.value = null;
+		detailItemMotor1.value = null;
+		detailItemMotor2.value = null;
+		detailItemMotorCase0.value = null;
+		detailItemMotorCase1.value = null;
+		detailItemMotorCase2.value = null;
+		detailItemMotorCaseId0.value = null;
+		detailItemMotorCaseId1.value = null;
+		detailItemMotorCaseId2.value = null;
+		detailItemMotorDelay0.value = null;
+		detailItemMotorDelay1.value = null;
+		detailItemMotorDelay2.value = null;
+		detailItemMotorDiameter0.value = null;
+		detailItemMotorDiameter1.value = null;
+		detailItemMotorDiameter2.value = null;
+		detailItemMotorId0.value = null;
+		detailItemMotorId1.value = null;
+		detailItemMotorId2.value = null;
+		detailItemMotorInfo0.value = null;
+		detailItemMotorInfo1.value = null;
+		detailItemMotorInfo2.value = null;
+		const fromRocket = value && value.fromRocket ? value.fromRocket : null;
+		if (fromRocket) {
+			// let tempMotor;
+			// let tempMotorCase;
+			// let tempMotorCaseId;
+			// let tempMotorDelay;
+			// let tempMotorId;
+			// let tempMotorInfo;
+			let temp;
+			let index = -1;
+			let diameter;
+			let count;
+			for (const item of fromRocket.motors) {
+				index++;
+				if (!item.diameter || !item.count)
+					continue;
+
+				// if (index === 0) {
+				// 	tempMotor = detailItemMotor0;
+				// 	tempMotorCase = detailItemMotorCase0;
+				// 	tempMotorCaseId = detailItemMotorCaseId0;
+				// 	tempMotorDelay = detailItemMotorDelay0;
+				// 	tempMotorId = detailItemMotorId0;
+				// 	tempMotorInfo = detailItemMotorInfo0;
+				// }
+				// else if (index === 1) {
+				// 	tempMotor = detailItemMotor1;
+				// 	tempMotorCase = detailItemMotorCase1;
+				// 	tempMotorCaseId = detailItemMotorCaseId1;
+				// 	tempMotorDelay = detailItemMotorDelay1;
+				// 	tempMotorId = detailItemMotorId1;
+				// 	tempMotorInfo = detailItemMotorInfo1;
+				// }
+				// else if (index === 2) {
+				// 	tempMotor = detailItemMotor2;
+				// 	tempMotorCase = detailItemMotorCase2;
+				// 	tempMotorCaseId = detailItemMotorCaseId2;
+				// 	tempMotorDelay = detailItemMotorDelay2;
+				// 	tempMotorId = detailItemMotorId2;
+				// 	tempMotorInfo = detailItemMotorInfo2;
+				// }
+				// else
+				// 	break;
+
+				if (index > 2)
+					break;
+
+				temp = selectMotorByIndex(index);
+				if (!temp)
+					break;
+
+				diameter = item.diameter ? motorDiameter(item.diameter) : null;
+				count = item.count ? item.count : null;
+				temp.motorInfo.value = `${diameter}${diameter ? ' x ' : ''}${count}`;
+
+				temp.motorCase.value = item.motorCase;
+				temp.motorCaseId.value = item.motorCaseId;
+				temp.motorDelay.value = item.delay;
+				temp.motorDiameter.value = item.diameter;
+				temp.motor.value = item.motor;
+				temp.motorId.value = item.motorId;
+			}
+		}
+		
 		detailItemWeight.value = value ? value.weight : null;
 		detailItemWeightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		detailItemWeightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+	};
+	const selectMotor = async (item) => {
+		try {
+			if (!item)
+				return;
+			const temp = selectMotorByIndex(dialogPartsSearchMotorIndex.value);
+			if (!temp)
+				return;
+
+			temp.motor.value = `${item.manufacturerAbbrev} ${item.name}`;
+			temp.motorId.value = item.id;
+		}
+		finally {
+			dialogPartsSearchMotorsManager.value.ok();
+		}
+	};
+	const selectMotorByIndex = (index) => {
+		const temp = {
+			motor: null,
+			motorCase: null,
+			motorCaseId: null,
+			motorDiameter: null,
+			motorDelay: null,
+			motorId: null,
+			motorInfo: null
+		}
+
+		if (index === 0) {
+			temp.motor = detailItemMotor0;
+			temp.motorCase = detailItemMotorCase0;
+			temp.motorCaseId = detailItemMotorCaseId0;
+			temp.motorDelay = detailItemMotorDelay0;
+			temp.motorDiameter = detailItemMotorDiameter0;
+			temp.motorId = detailItemMotorId0;
+			temp.motorInfo = detailItemMotorInfo0;
+			return temp;
+		}
+		if (index === 1) {
+			temp.motor = detailItemMotor1;
+			temp.motorCase = detailItemMotorCase1;
+			temp.motorCaseId = detailItemMotorCaseId1;
+			temp.motorDelay = detailItemMotorDelay1;
+			temp.motorDiameter = detailItemMotorDiameter1;
+			temp.motorId = detailItemMotorId1;
+			temp.motorInfo = detailItemMotorInfo1;
+			return temp;
+		}
+		if (index === 2) {
+			temp.motor = detailItemMotor2;
+			temp.motorCase = detailItemMotorCase2;
+			temp.motorCaseId = detailItemMotorCaseId2;
+			temp.motorDelay = detailItemMotorDelay2;
+			temp.motorDiameter = detailItemMotorDiameter2;
+			temp.motorId = detailItemMotorId2;
+			temp.motorInfo = detailItemMotorInfo2;
+			return temp;
+		}
+
+		return null;
+	};
+	const selectMotorCase = async (item) => {
+		try {
+			if (!item)
+				return;
+			const temp = selectMotorByIndex(dialogPartsSearchMotorIndex.value);
+			if (!temp)
+				return;
+
+			let manufacturer = null;
+			if (props.manufacturers)
+				manufacturer = props.manufacturers.find(l => l.id === item.manufacturerId);
+
+			temp.motor.value = `${manufacturer ? manufacturer.abbrev : ''} ${item.name}`.trim();
+			temp.motorCaseId.value = item.id;
+		}
+		finally {
+			dialogPartsSearchMotorCasesManager.value.ok();
+		}
+	};
+	const setAdditional = async (correlationId) => {
+		setEditData(correlationId, detailItem.value);
 	};
 	const setEditData = (correlationId, value) => {
 		value.description = String.trim(detailItemDescription.value);
@@ -126,12 +336,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
 		value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
 	};
-	const resetAdditional = async (correlationId, previous) => {
-		resetEditData(correlationId, detailItem.value);
-	};
-	const setAdditional = async (correlationId) => {
-		setEditData(correlationId, detailItem.value);
-	};
 
 	return {
 		detailItem,
@@ -141,28 +345,58 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		dialogOk,
 		motorDiameters,
 		isEditable,
+		measurementUnitsLengthDefaultId,
+		measurementUnitsLengthType,
+		measurementUnitsWeightDefaultId,
+		measurementUnitsWeightType,
 		detailItemCg,
 		detailItemCgFrom,
 		detailItemCgMeasurementUnitId,
 		detailItemCgMeasurementUnitsId,
 		detailItemDescription,
+		detailItemMotor0,
+		detailItemMotor1,
+		detailItemMotor2,
+		detailItemMotorCase0,
+		detailItemMotorCase1,
+		detailItemMotorCase2,
+		detailItemMotorCaseId0,
+		detailItemMotorCaseId1,
+		detailItemMotorCaseId2,
+		detailItemMotorDelay0,
+		detailItemMotorDelay1,
+		detailItemMotorDelay2,
+		detailItemMotorDiameter0,
+		detailItemMotorDiameter1,
+		detailItemMotorDiameter2,
+		detailItemMotorInfo0,
+		detailItemMotorInfo1,
+		detailItemMotorInfo2,
+		detailItemMotorId0,
+		detailItemMotorId1,
+		detailItemMotorId2,
 		detailItemNotes,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
-		measurementUnitsLengthDefaultId,
-		measurementUnitsLengthType,
-		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType,
-		resetEditData,
-		setEditData,
+		dialogPartsSearchMotorsManager,
+		dialogPartsSearchMotorCasesManager,
+		dialogPartsSearchMotorsDiameter,
+		manufacturerTypeMotor,
+		manufacturerTypeMotorCase,
 		displayName,
 		stageNumber,
+		clickMotorsSearch,
+		clickMotorCasesSearch,
 		preCompleteOk,
 		resetAdditional,
+		selectMotor,
+		selectMotorCase,
 		setAdditional,
-		scope: 'RocketEditDialog',
-		validation: useVuelidate({ $scope: 'RocketEditDialog' })
+		resetEditData,
+		setEditData,
+		scope: 'RocketStageEditDialog',
+		validation: useVuelidate({ $scope: 'RocketStageEditDialog' })
 	};
 };
 </script>

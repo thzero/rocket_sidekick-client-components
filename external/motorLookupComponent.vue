@@ -42,6 +42,9 @@ export function useMotorLookupComponent(props, context, options) {
 
 		return '';
 	};
+	const motorDiameter = (diameter) => {
+		return `${diameter}${LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement')}`;
+	};
 	const motorUrl = (motor) => {
 		return serviceExternalMotorSearch.urlMotor(motor);
 	};
@@ -50,6 +53,7 @@ export function useMotorLookupComponent(props, context, options) {
 		motorDiameters,
 		motorImpulseClasses,
 		motorCaseInfo,
+		motorDiameter,
 		motorUrl
 	};
 };

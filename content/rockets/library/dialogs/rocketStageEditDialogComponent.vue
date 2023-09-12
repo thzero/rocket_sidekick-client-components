@@ -85,20 +85,29 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	const detailItemLengthMeasurementUnitsId = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemManufacturerStockId = ref(null);
-	const detailItemMotorDiameter = ref(null);
-	const detailItemNumber = ref(null);
+	const detailItemMotorCount0 = ref(null);
+	const detailItemMotorCount1 = ref(null);
+	const detailItemMotorCount2 = ref(null);
+	const detailItemMotorDiameter0 = ref(null);
+	const detailItemMotorDiameter1 = ref(null);
+	const detailItemMotorDiameter2 = ref(null);
+	const detailItemIndex = ref(null);
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
+	const motorCountI = ref(null);
 	
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.rockets.name') + ' ' + LibraryClientUtility.$trans.t('forms.content.rockets.stage.name') + ' ' + 
-		stageNumber.value;
+		stageIndex.value;
 	});
-	const stageNumber = computed(() => {
-		return detailItemNumber.value ? detailItemNumber.value + 1 : null;
+	const stageIndex = computed(() => {
+		return detailItemIndex.value ? detailItemIndex.value + 1 : null;
 	});
 
+	const motorCount = computed(() => {
+		return props.detailItem && props.detailItem.motors ? props.detailItem.motors.length : 0;
+	});
 	const preCompleteOk = async (correlationId) => {
 		await setAdditional(correlationId);
 
@@ -108,7 +117,6 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		// call the parent to tell them to save off the detail item
 		return await props.preCompleteOk(correlationId, detailItem.value);
 	};
-
 	const resetEditData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		
@@ -132,13 +140,20 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemManufacturer.value = value ? value.manufacturerId : null; // 'd37HEk5Wjm3mmV4InK90U';
 		detailItemManufacturerStockId.value = value ? value.manufacturerStockId : null;
 
-		detailItemMotorDiameter.value = value ? value.motorDiameter : null;
+		detailItemMotorCount0.value = value ? value.motors[0].count : null;
+		detailItemMotorCount1.value = value ? value.motors[1].count : null;
+		detailItemMotorCount2.value = value ? value.motors[2].count : null;
+		detailItemMotorDiameter0.value = value ? value.motors[0].diameter : null;
+		detailItemMotorDiameter1.value = value ? value.motors[1].diameter : null;
+		detailItemMotorDiameter2.value = value ? value.motors[2].diameter : null;
 
-		detailItemNumber.value = value ? value.number : null;
+		detailItemIndex.value = value ? value.index + 1 : null;
 
 		detailItemWeight.value = value ? value.weight : null;
 		detailItemWeightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		detailItemWeightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		motorCountI.value = value && value.motors ? value.motors.length : 0;
 	};
 	const setEditData = (correlationId, value) => {
 		value.description = String.trim(detailItemDescription.value);
@@ -163,7 +178,13 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		value.manufacturerId = detailItemManufacturer.value;
 		value.manufacturerStockId = detailItemManufacturerStockId.value;
 
-		value.motorDiameter = detailItemMotorDiameter.value;
+		value.motors[0].count = detailItemMotorCount0.value;
+		value.motors[1].count = detailItemMotorCount1.value;
+		value.motors[2].count = detailItemMotorCount2.value;
+
+		value.motors[0].diameter = detailItemMotorDiameter0.value;
+		value.motors[1].diameter = detailItemMotorDiameter1.value;
+		value.motors[2].diameter = detailItemMotorDiameter2.value;
 		
 		value.weight = AppUtility.convertNumber(detailItemWeight.value);
 		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
@@ -200,8 +221,13 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemLengthMeasurementUnitsId,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
-		detailItemMotorDiameter,
-		detailItemNumber,
+		detailItemMotorCount0,
+		detailItemMotorCount1,
+		detailItemMotorCount2,
+		detailItemMotorDiameter0,
+		detailItemMotorDiameter1,
+		detailItemMotorDiameter2,
+		detailItemIndex,
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
@@ -212,7 +238,8 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		resetEditData,
 		setEditData,
 		displayName,
-		stageNumber,
+		stageIndex,
+		motorCount,
 		preCompleteOk,
 		resetAdditional,
 		setAdditional,

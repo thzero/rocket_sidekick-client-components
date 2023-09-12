@@ -127,58 +127,34 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		await preCompleteOk(correlationIdI);
 	};
 	const isAltimeters = () => {
-		return isAltimetersI(AppCommonConstants.Rocketry.PartTypes.altimeter);
-	};
-	const isAltimetersI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.altimeter);
 	};
 	const isChuteProtectors = () => {
-		return isChuteProtectorsI(AppCommonConstants.Rocketry.PartTypes.chuteProtector);
-	};
-	const isChuteProtectorsI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.chuteProtector);
 	};
 	const isChuteReleases = () => {
-		return isChuteReleasesI(AppCommonConstants.Rocketry.PartTypes.chuteRelease);
-	};
-	const isChuteReleasesI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.chuteRelease);
 	};
 	const isDeploymentBags = () => {
-		return isDeploymentBagsI(AppCommonConstants.Rocketry.PartTypes.deploymentBag);
-	};
-	const isDeploymentBagsI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.deploymentBag);
 	};
 	const isMotors = () => {
-		return isMotorsI(AppCommonConstants.Rocketry.PartTypes.motor);
-	};
-	const isMotorsI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.motor);
 	};
 	const isMotorCases = () => {
-		return isMotorCasesI(AppCommonConstants.Rocketry.PartTypes.motorCase);
-	};
-	const isMotorCasesI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.motorCase);
 	};
 	const isParachutes = () => {
-		return isParachutesI(AppCommonConstants.Rocketry.PartTypes.parachute);
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.parachute);
 	};
-	const isParachutesI = (id) => {
+	const isPartByType = (id) => {
 		return (props.partTypes ?? []).indexOf(id) > -1;
 	};
 	const isStreamers = () => {
-		return isStreamersI(AppCommonConstants.Rocketry.PartTypes.streamer);
-	};
-	const isStreamersI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.streamer);
 	};
 	const isTrackers = () => {
-		return isTrackersI(AppCommonConstants.Rocketry.PartTypes.tracker);
-	};
-	const isTrackersI = (id) => {
-		return (props.partTypes ?? []).indexOf(id) > -1;
+		return isPartByType(AppCommonConstants.Rocketry.PartTypes.tracker);
 	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
@@ -205,8 +181,8 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 			lengthMeasurementUnitsId: filterItemLengthMeasurementUnitsId.value,
 			manufacturerId: filterItemManufacturer.value,
 			manufacturerStockId: filterItemManufacturerStockId.value,
-			diameter: filterItemMotorDiameter.value,
-			impulseClass: filterItemMotorImpulseClass.value,
+			motorDiameter: filterItemMotorDiameter.value,
+			motorImpulseClass: filterItemMotorImpulseClass.value,
 			name: filterItemName.value,
 			partTypes: props.partTypes, 
 			rocketTypes: filterItemRocketTypes.value
@@ -234,7 +210,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		filterItemLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
 		filterItemLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 
-		filterItemMotorDiameter.value = null;
+		filterItemMotorDiameter.value = props.diameter ? props.diameter : null;
 		filterItemMotorImpulseClass.value = null;
 
 		filterItemRocketTypes.value = null;
@@ -254,20 +230,14 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 			return;
 
 		let temp2 = response.results.filter(l => l.types.find(j => 
-			// (j === AppCommonConstants.Rocketry.PartTypes.chuteProtector && props.partTypeId) ||
-			// (j === AppCommonConstants.Rocketry.PartTypes.chuteRelease && props.partTypeId) ||
-			// (j === AppCommonConstants.Rocketry.PartTypes.deploymentBag && props.partTypeId) ||
-			// (j === AppCommonConstants.Rocketry.PartTypes.parachute && props.partTypeId) ||
-			// (j === AppCommonConstants.Rocketry.PartTypes.streamer && props.partTypeId)
-			isAltimetersI(j) ||
-			isChuteProtectorsI(j) ||
-			isChuteReleasesI(j) ||
-			isDeploymentBagsI(j) ||
-			isMotorsI(j) ||
-			isMotorCasesI(j) ||
-			isParachutesI(j) ||
-			isStreamersI(j) ||
-			isTrackersI(j)
+			(j === AppCommonConstants.Rocketry.PartTypes.altimeter) ||
+			(j === AppCommonConstants.Rocketry.PartTypes.chuteProtector) ||
+			(j === AppCommonConstants.Rocketry.PartTypes.chuteRelease) ||
+			(j === AppCommonConstants.Rocketry.PartTypes.deploymentBag) ||
+			(j === AppCommonConstants.Rocketry.PartTypes.motor) ||
+			(j === AppCommonConstants.Rocketry.PartTypes.motorCase) ||
+			(j === AppCommonConstants.Rocketry.PartTypes.parachute) ||
+			(j === AppCommonConstants.Rocketry.PartTypes.streamer)
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });

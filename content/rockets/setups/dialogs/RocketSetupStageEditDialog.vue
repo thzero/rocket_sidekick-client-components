@@ -120,6 +120,285 @@
 				</table>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col
+				v-if="detailItemMotorInfo0"
+				cols="12"
+			>
+				<v-row dense>
+					<v-col 
+						cols="12" md="9"
+					>
+						<v-row dense>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									class="mr-2"
+									v-model="detailItemMotorInfo0"
+									:readonly="true"
+									:hide-details="true"
+									:label="$t('forms.content.parts.motor.name')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotor0Ref"
+									v-model="detailItemMotor0"
+									vid="detailItemMotor0"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motor.name')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotorCase0Ref"
+									v-model="detailItemMotorCase0"
+									vid="detailItemMotorCase0"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motorCase.name2')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotorDelay0Ref"
+									v-model="detailItemMotorDelay0"
+									vid="detailItemMotorDelay0"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motor.delay')"
+								/>
+							</v-col>
+						</v-row>
+					</v-col>
+					<v-col 
+						cols="12" md="3"
+						class="text-right"
+					>
+						<table class="float-right">
+							<tr>
+								<td>
+									<v-btn
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorsSearch(0, detailItemMotorDiameter0)"
+									>
+										{{ $t('forms.content.parts.motor.name') }}
+									</v-btn>
+								</td>
+								<td>
+									<v-btn
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorCasesSearch(0, detailItemMotorDiameter0)"
+									>
+										{{ $t('forms.content.parts.motorCase.name2') }}
+									</v-btn>
+								</td>
+							</tr>
+						</table>
+					</v-col>
+				</v-row>
+			</v-col>
+			<v-col
+				v-if="detailItemMotorInfo0"
+				cols="12"
+			>
+				<v-row dense>
+					<v-col 
+						cols="12" md="9"
+					>
+						<v-row dense>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									class="mr-2"
+									v-model="detailItemMotorInfo1"
+									:readonly="true"
+									:hide-details="true"
+									:label="$t('forms.content.parts.motor.name')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotor1Ref"
+									v-model="detailItemMotor1"
+									vid="detailItemMotor1"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motor.name')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotorCase1Ref"
+									v-model="detailItemMotorCase1"
+									vid="detailItemMotorCase1"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motorCase.name2')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotorDelay1Ref"
+									v-model="detailItemMotorDelay1"
+									vid="detailItemMotorDelay1"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motor.delay')"
+								/>
+							</v-col>
+						</v-row>
+					</v-col>
+					<v-col 
+						cols="12" md="3"
+						class="text-right"
+					>
+						<table class="float-right">
+							<tr>
+								<td>
+									<v-btn
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorsSearch(1, detailItemMotorDiameter1)"
+									>
+										{{ $t('forms.content.parts.motor.name') }}
+									</v-btn>
+								</td>
+								<td>
+									<v-btn
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorCasesSearch(1, detailItemMotorDiameter1)"
+									>
+										{{ $t('forms.content.parts.motorCase.name2') }}
+									</v-btn>
+								</td>
+							</tr>
+						</table>
+					</v-col>
+				</v-row>
+			</v-col>
+			<v-col
+				v-if="detailItemMotorInfo2"
+				cols="12"
+			>
+				<v-row dense>
+					<v-col 
+						cols="12" md="9"
+					>
+						<v-row dense>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									class="mr-2"
+									v-model="detailItemMotorInfo2.value"
+									:readonly="true"
+									:hide-details="true"
+									:label="$t('forms.content.parts.motor.name')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotor2Ref"
+									v-model="detailItemMotor2"
+									vid="detailItemMotor2"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motor.name')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotorCase2Ref"
+									v-model="detailItemMotorCase2"
+									vid="detailItemMotorCase2"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motorCase.name')"
+								/>
+							</v-col>
+							<v-col 
+								cols="6" md="3"
+							>
+								<VTextFieldWithValidation
+									ref="detailItemMotorDelay2Ref"
+									v-model="detailItemMotorDelay2"
+									vid="detailItemMotorDelay2"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.motor.delay')"
+								/>
+							</v-col>
+						</v-row>
+					</v-col>
+					<v-col 
+						cols="12" md="3"
+						class="text-right"
+					>
+						<table class="float-right">
+							<tr>
+								<td>
+									<v-btn
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorsSearch(2, detailItemMotorDiameter2)"
+									>
+										{{ $t('forms.content.parts.motor.name') }}
+									</v-btn>
+								</td>
+								<td>
+									<v-btn
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorCasesSearch(2, detailItemMotorDiameter2)"
+									>
+										{{ $t('forms.content.parts.motorCase.name2') }}
+									</v-btn>
+								</td>
+							</tr>
+						</table>
+					</v-col>
+				</v-row>
+			</v-col>
+		</v-row>
+		<RocketPartsLookupDialog
+			ref="dialoSearchgMotorsRef"
+			:signal="dialogPartsSearchMotorsManager.signal"
+			:diameter="dialogPartsSearchMotorsDiameter"
+			:part-types="manufacturerTypeMotor"
+			@close="dialogPartsSearchMotorsManager.cancel()"
+			@select="selectMotor"
+		/>
+		<RocketPartsLookupDialog
+			ref="dialoSearchgMotorCasesRef"
+			:signal="dialogPartsSearchMotorCasesManager.signal"
+			:diameter="dialogPartsSearchMotorsDiameter"
+			:part-types="manufacturerTypeMotorCase"
+			@close="dialogPartsSearchMotorCasesManager.cancel()"
+			@select="selectMotorCase"
+		/>
 	</VFormDialog>
 </template>
 
@@ -134,6 +413,7 @@ import { useRocketSetupEditValidation } from '@/components/content/rockets/setup
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
 import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
@@ -146,6 +426,7 @@ export default {
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
+		RocketPartsLookupDialog,
 		VFormDialog,
 		VNumberFieldWithValidation,
 		VSelectWithValidation,
@@ -167,26 +448,56 @@ export default {
 			dialogOk,
 			motorDiameters,
 			isEditable,
+			measurementUnitsLengthDefaultId,
+			measurementUnitsLengthType,
+			measurementUnitsWeightDefaultId,
+			measurementUnitsWeightType,
 			detailItemCg,
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
 			detailItemDescription,
+			detailItemMotor0,
+			detailItemMotor1,
+			detailItemMotor2,
+			detailItemMotorCase0,
+			detailItemMotorCase1,
+			detailItemMotorCase2,
+			detailItemMotorCaseId0,
+			detailItemMotorCaseId1,
+			detailItemMotorCaseId2,
+			detailItemMotorDelay0,
+			detailItemMotorDelay1,
+			detailItemMotorDelay2,
+			detailItemMotorDiameter0,
+			detailItemMotorDiameter1,
+			detailItemMotorDiameter2,
+			detailItemMotorInfo0,
+			detailItemMotorInfo1,
+			detailItemMotorInfo2,
+			detailItemMotorId0,
+			detailItemMotorId1,
+			detailItemMotorId2,
 			detailItemNotes,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
-			measurementUnitsLengthDefaultId,
-			measurementUnitsLengthType,
-			measurementUnitsWeightDefaultId,
-			measurementUnitsWeightType,
-			resetEditData,
-			setEditData,
+			dialogPartsSearchMotorsDiameter,
+			dialogPartsSearchMotorsManager,
+			dialogPartsSearchMotorCasesManager,
+			manufacturerTypeMotor,
+			manufacturerTypeMotorCase,
 			displayName,
 			stageNumber,
+			clickMotorsSearch,
+			clickMotorCasesSearch,
 			preCompleteOk,
 			resetAdditional,
+			selectMotor,
+			selectMotorCase,
 			setAdditional,
+			resetEditData,
+			setEditData,
 			scope,
 			validation
 		} = useRocketSetupStageEditDialogComponent(props, context);
@@ -199,26 +510,56 @@ export default {
 			dialogOk,
 			motorDiameters,
 			isEditable,
+			measurementUnitsLengthDefaultId,
+			measurementUnitsLengthType,
+			measurementUnitsWeightDefaultId,
+			measurementUnitsWeightType,
 			detailItemCg,
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
 			detailItemDescription,
+			detailItemMotor0,
+			detailItemMotor1,
+			detailItemMotor2,
+			detailItemMotorCase0,
+			detailItemMotorCase1,
+			detailItemMotorCase2,
+			detailItemMotorCaseId0,
+			detailItemMotorCaseId1,
+			detailItemMotorCaseId2,
+			detailItemMotorDelay0,
+			detailItemMotorDelay1,
+			detailItemMotorDelay2,
+			detailItemMotorDiameter0,
+			detailItemMotorDiameter1,
+			detailItemMotorDiameter2,
+			detailItemMotorInfo0,
+			detailItemMotorInfo1,
+			detailItemMotorInfo2,
+			detailItemMotorId0,
+			detailItemMotorId1,
+			detailItemMotorId2,
 			detailItemNotes,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
-			measurementUnitsLengthDefaultId,
-			measurementUnitsLengthType,
-			measurementUnitsWeightDefaultId,
-			measurementUnitsWeightType,
-			resetEditData,
-			setEditData,
+			dialogPartsSearchMotorsDiameter,
+			dialogPartsSearchMotorsManager,
+			dialogPartsSearchMotorCasesManager,
+			manufacturerTypeMotor,
+			manufacturerTypeMotorCase,
 			displayName,
 			stageNumber,
+			clickMotorsSearch,
+			clickMotorCasesSearch,
 			preCompleteOk,
 			resetAdditional,
+			selectMotor,
+			selectMotorCase,
 			setAdditional,
+			resetEditData,
+			setEditData,
 			scope,
 			validation
 		};

@@ -131,25 +131,25 @@ export function useRocketSetupComponent(props, context, options) {
 		preCompleteOk : async (correlationId) => {
 			setData(correlationId);
 
-			// TODO: maybe moves this to the server?
-			if (detailItemData.value.stages.length !== detailItemData.value.rocket.stages.length) {
-				const temp = [];
-				let stage;
-				for (const item of detailItemData.value.rocket.stages) {
-					stage = detailItemData.value.stages.find(l => l.rocketStageId === item.id);
-					if (stage) {
-						temp.push(stage);
-						continue;
-					}
+			// // TODO: maybe moves this to the server?
+			// if (detailItemData.value.stages.length !== detailItemData.value.rocket.stages.length) {
+			// 	const temp = [];
+			// 	let stage;
+			// 	for (const item of detailItemData.value.rocket.stages) {
+			// 		stage = detailItemData.value.stages.find(l => l.rocketStageId === item.id);
+			// 		if (stage) {
+			// 			temp.push(stage);
+			// 			continue;
+			// 		}
 
-					stage = new RocketSetupStageData();
-					stage.rocketSetupId = detailItemData.value.id;
-					stage.rocketStageId = item.id;
-					stage.number = item.number;
-					temp.push(stage);
-				}
-				detailItemData.value.stages = temp;
-			}
+			// 		stage = new RocketSetupStageData();
+			// 		stage.rocketSetupId = detailItemData.value.id;
+			// 		stage.rocketStageId = item.id;
+			// 		stage.index = item.index;
+			// 		temp.push(stage);
+			// 	}
+			// 	detailItemData.value.stages = temp;
+			// }
 
 			const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, detailItemData.value);
 			logger.debug('rocketSetupComponent', 'preCompleteOk', 'response', response, correlationId);

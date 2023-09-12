@@ -101,7 +101,7 @@
 			</v-col>
 		</v-row>
 		<template v-slot:buttons_pre>
-			<v-btn
+			<!-- <v-btn
 				v-if="canAddSecondary"
 				class="mr-2"
 				color="primary"
@@ -112,7 +112,7 @@
 			<span
 				v-if="canAddSecondary"
 				class="mr-2"
-			>|</span>
+			>|</span> -->
 		</template>
 		<template v-slot:buttons_post>
 		</template>
@@ -132,7 +132,7 @@
 					<v-expansion-panel-title
 						color="secondary"
 					>
-						{{ $t(`forms.content.rockets.stage.name`) }} {{ item.number  + 1 }}
+						{{ $t(`forms.content.rockets.stage.name`) }} {{ item.index  + 1 }}
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<RocketSetupStage
@@ -147,7 +147,7 @@
 								v-if="isEditable"
 								v-slot:actionsEdit
 							>	
-								<v-btn
+								<!-- <v-btn
 									v-if="isEditable && !item.primary"
 									:variant="buttonsForms.variant.delete"
 									:color="buttonsForms.color.delete"
@@ -156,7 +156,7 @@
 									@click="dialogDeleteSecondaryOpen(item)"
 								>
 									{{ $t('buttons.delete') }}
-								</v-btn>
+								</v-btn> -->
 								<v-btn
 									v-if="isEditable"
 									:variant="buttonsForms.variant.edit"

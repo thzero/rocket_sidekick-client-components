@@ -21,7 +21,7 @@
 			isEditable: {{ isEditable }} readonly: {{ readonly }}
 		</div>
 		<v-row dense>
-			<v-col>
+			<v-col cols="9">
 				<VTextAreaWithValidation
 					ref="detailItemDescriptionRef"
 					v-model="detailItemDescription"
@@ -33,22 +33,10 @@
 					:rows="detailItemTextRows"
 				/>
 			</v-col>
-		</v-row>
-		<v-row dense>
-			<v-col cols="6">
-				<VSelectWithValidation
-					ref="detailItemMotorDiameterRef"
-					v-model="detailItemMotorDiameter"
-					vid="detailItemMotorDiameter"
-					:items="motorDiameters"
-					:validation="validation"
-					:label="$t('forms.external.motorSearch.diameter')"
-				/>
-			</v-col>
-			<v-col cols="6">
+			<v-col cols="3">
 				<VTextField
-					ref="detailItemNumberRef"
-					v-model="detailItemNumber"
+					ref="detailItemIndexRef"
+					v-model="detailItemIndex"
 					:readonly="!isEditable"
 					:label="$t('forms.content.rockets.stage.name')"
 				/>
@@ -234,6 +222,65 @@
 				</table>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="6" sm="3">
+				<VSelectWithValidation
+					ref="detailItemMotorDiameter0Ref"
+					v-model="detailItemMotorDiameter0"
+					vid="detailItemMotorDiameter0"
+					:items="motorDiameters"
+					:validation="validation"
+					:label="$t('forms.external.motorSearch.diameter')"
+				/>
+			</v-col>
+			<v-col cols="6" sm="3">
+				<VTextFieldWithValidation
+					ref="detailItemMotorCount0Ref"
+					v-model="detailItemMotorCount0"
+					vid="detailItemMotorCount0"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.count')"
+				/>
+			</v-col>
+			<v-col cols="6" sm="3">
+				<VSelectWithValidation
+					ref="detailItemMotorDiameter1Ref"
+					v-model="detailItemMotorDiameter1"
+					vid="detailItemMotorDiameter1"
+					:items="motorDiameters"
+					:validation="validation"
+					:label="$t('forms.content.rockets.diameter.motor')"
+				/>
+			</v-col>
+			<v-col cols="6" sm="3">
+				<VTextFieldWithValidation
+					ref="detailItemMotorCount1Ref"
+					v-model="detailItemMotorCount1"
+					vid="detailItemMotorCount1"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.count')"
+				/>
+			</v-col>
+			<v-col cols="6" sm="3">
+				<VSelectWithValidation
+					ref="detailItemMotorDiameter2Ref"
+					v-model="detailItemMotorDiameter2"
+					vid="detailItemMotorDiameter2"
+					:items="motorDiameters"
+					:validation="validation"
+					:label="$t('forms.content.rockets.diameter.motor')"
+				/>
+			</v-col>
+			<v-col cols="6" sm="3">
+				<VTextFieldWithValidation
+					ref="detailItemMotorCount2Ref"
+					v-model="detailItemMotorCount2"
+					vid="detailItemMotorCount2"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.count')"
+				/>
+			</v-col>
+		</v-row>
 	</VFormDialog>
 </template>
 
@@ -297,8 +344,13 @@ export default {
 			detailItemLengthMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
-			detailItemMotorDiameter,
-			detailItemNumber,
+			detailItemMotorCount0,
+			detailItemMotorCount1,
+			detailItemMotorCount2,
+			detailItemMotorDiameter0,
+			detailItemMotorDiameter1,
+			detailItemMotorDiameter2,
+			detailItemIndex,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
@@ -309,7 +361,8 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
-			stageNumber,
+			stageIndex,
+			motorCount,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,
@@ -341,8 +394,13 @@ export default {
 			detailItemLengthMeasurementUnitsId,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
-			detailItemMotorDiameter,
-			detailItemNumber,
+			detailItemMotorCount0,
+			detailItemMotorCount1,
+			detailItemMotorCount2,
+			detailItemMotorDiameter0,
+			detailItemMotorDiameter1,
+			detailItemMotorDiameter2,
+			detailItemIndex,
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
@@ -353,7 +411,8 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
-			stageNumber,
+			stageIndex,
+			motorCount,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,

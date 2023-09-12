@@ -127,7 +127,7 @@
 					<v-expansion-panel-title
 						color="secondary"
 					>
-						{{ $t(`forms.content.rockets.stage.name`) }} {{ item.number  + 1 }}
+						{{ $t(`forms.content.rockets.stage.name`) }} {{ item.index  + 1 }}
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<RocketStage
