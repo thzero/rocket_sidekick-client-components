@@ -4,13 +4,13 @@ import { computed, onMounted, ref } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -55,6 +55,14 @@ export function useRocketStageComponent(props, context, options) {
 		displayItemMeasurementLength,
 		displayItemMeasurementWeight
 	} = useToolsMeasurementBaseComponent(props, context);
+
+	const {
+		motorDiameters,
+		motorImpulseClasses,
+		motorCaseInfo,
+		motorDiameter,
+		motorUrl
+	} = useMotorLookupComponent(props, context);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
@@ -141,8 +149,8 @@ export function useRocketStageComponent(props, context, options) {
 	const parachutes = computed(() => {
 		return props.detailItem ? props.detailItem.parachutes : [];
 	});
-	const stageNumber = computed(() => {
-		return props.detailItem ? (props.detailItem.number + 1) : null;
+	const stageIndex = computed(() => {
+		return props.detailItem ? (props.detailItem.index + 1) : null;
 	});
 	const streamers = computed(() => {
 		return props.detailItem ? props.detailItem.streamers : [];
@@ -285,6 +293,12 @@ export function useRocketStageComponent(props, context, options) {
 		dialogPartsDeleteType.value = partsDeleteKeyTrackers;
 		dialogPartsDeleteManager.value.open();
 	};
+	const hasMotor = (index) => {
+		if (!displayItem.value || !displayItem.value.motors)
+			return false;
+		const temp = displayItem.value.motors.find(l => l.index === index);
+		return temp && (temp.count > 0);
+	};
 	const getParts = (correlationId, item, type) => {
 		if (type === partsDeleteKeyAltimeters)
 			return item.altimeters;
@@ -302,8 +316,16 @@ export function useRocketStageComponent(props, context, options) {
 			return item.trackers;
 		return null;
 	};
+	const motor = (index) => {
+		if (!displayItem.value || !displayItem.value.motors)
+			return { value: null };
+		const temp = displayItem.value.motors.find(l => l.index === index);
+		const diameter = temp.diameter ? motorDiameter(temp.diameter) : null;
+		const count = temp.count ? temp.count : null;
+		return { value: `${diameter}${diameter ? ' x ' : ''}${count}` };
+	};
 	const panelsKey = (type) => {
-		return displayItem.value.id + '-stage-';
+		return displayItem.value ? displayItem.value.id + '-stage-' : '';
 	};
 	const panelsUpdated = async (value) => {
 		 await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsKey(), expanded: value });
@@ -339,7 +361,7 @@ export function useRocketStageComponent(props, context, options) {
 			dialogAltimetersSearchManager.value.ok();
 		}
 	};
-	const selectChuteProtectors = async (item) => {
+	const selectChuteProtector = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
@@ -352,7 +374,7 @@ export function useRocketStageComponent(props, context, options) {
 			dialogChuteProtectorsSearchManager.value.ok();
 		}
 	};
-	const selectChuteReleases = async (item) => {
+	const selectChuteRelease = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
@@ -365,7 +387,7 @@ export function useRocketStageComponent(props, context, options) {
 			dialogChuteReleasesSearchManager.value.ok();
 		}
 	};
-	const selectDeploymentBags = async (item) => {
+	const selectDeploymentBag = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
@@ -378,7 +400,7 @@ export function useRocketStageComponent(props, context, options) {
 			dialogDeploymentBagsSearchManager.value.ok();
 		}
 	};
-	const selectParachutes = async (item) => {
+	const selectParachute = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
@@ -391,7 +413,7 @@ export function useRocketStageComponent(props, context, options) {
 			dialogParachutesSearchManager.value.ok();
 		}
 	};
-	const selectStreamers = async (item) => {
+	const selectStreamer = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
@@ -492,13 +514,15 @@ export function useRocketStageComponent(props, context, options) {
 		hasStreamers,
 		hasTrackers,
 		parachutes,
-		stageNumber,
+		stageIndex,
 		streamers,
 		trackers,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		motorDiameters,
+		motorDiameter,
 		dialogPartsDeleteManager,
 		dialogPartsDeleteMessage,
 		dialogAltimetersSearchManager,
@@ -534,12 +558,14 @@ export function useRocketStageComponent(props, context, options) {
 		handleStreamersDelete,
 		handleTrackerDelete,
 		panelsUpdated,
+		hasMotor,
+		motor,
 		selectAltimeter,
-		selectChuteProtectors,
-		selectChuteReleases,
-		selectDeploymentBags,
-		selectParachutes,
-		selectStreamers,
+		selectChuteProtector,
+		selectChuteRelease,
+		selectDeploymentBag,
+		selectParachute,
+		selectStreamer,
 		selectTracker
 	};
 };

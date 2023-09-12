@@ -87,10 +87,10 @@ export function useRocketComponent(props, context, options) {
 			let stages = LibraryCommonUtility.cloneDeep(detailItemData.value.stages);
 			LibraryCommonUtility.deleteArrayById(stages, id);
 
-			stages = stages.sort((a, b) => a.number >= b.number);
+			stages = stages.sort((a, b) => a.index >= b.index);
 			let index = 0;
 			for (const item of stages)
-				item.number = index++;
+				item.index = index++;
 			detailItem.value.stages = stages;
 			
 			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
@@ -234,22 +234,22 @@ export function useRocketComponent(props, context, options) {
 
 		temp.stages.forEach(element => {
 			if (element.primary) {
-				element.number = 0;
+				element.index = 0;
 				return;
 			}
 
-			element.number = LibraryCommonUtility.isNotNull(element.number) ? element.number : Number.MAX_SAFE_INTEGER;
+			element.index = LibraryCommonUtility.isNotNull(element.index) ? element.index : Number.MAX_SAFE_INTEGER;
 		});
 
-		temp.stages = temp.stages.sort((a, b) => a.number >= b.number);
-			let index = 0;
-			for (const item of temp.stages)
-				item.number = index++;
-			detailItem.value.stages = stages;
+		temp.stages = temp.stages.sort((a, b) => a.index >= b.index);
+		let index = 0;
+		for (const item of temp.stages)
+			item.index = index++;
+		detailItem.value.stages = stages;
 
-		let number = 0;
+		index = 0;
 		temp.stages.forEach(element => {
-			element.number = number++;
+			element.index = index++;
 		});
 
 		const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);

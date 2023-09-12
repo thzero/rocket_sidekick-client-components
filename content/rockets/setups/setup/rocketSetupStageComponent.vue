@@ -10,6 +10,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -55,12 +56,22 @@ export function useRocketSetupStageComponent(props, context, options) {
 		displayItemMeasurementWeight
 	} = useToolsMeasurementBaseComponent(props, context);
 
+	const {
+		motorDiameters,
+		motorImpulseClasses,
+		motorCaseInfo,
+		motorDiameter,
+		motorUrl
+	} = useMotorLookupComponent(props, context);
+
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
 	const dialogPartsDeleteId = ref(null);
-	const dialogPartsDeleteType = ref(null);
 	const dialogPartsDeleteManager = ref(new DialogSupport());
 	const dialogPartsDeleteMessage = ref();
+	const dialogPartsDeleteType = ref(null);
+	const dialogPartsEditId = ref(null);
+	const dialogPartsEditMessage = ref();
 	const dialogPartsEditAltimeterManager = ref(new DialogSupport());
 	const dialogPartsEditChuteProtectorManager = ref(new DialogSupport());
 	const dialogPartsEditChuteReleaseManager = ref(new DialogSupport());
@@ -70,13 +81,13 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const dialogPartsEditParachuteManager = ref(new DialogSupport());
 	const dialogPartsEditStreamerManager = ref(new DialogSupport());
 	const dialogPartsEditTrackerManager = ref(new DialogSupport());
-	const dialogPartsSearchStageId = ref(null);
+	// const dialogPartsSearchStageMotorIndex = ref(null);
 	const dialogPartsSearchAltimetersManager = ref(new DialogSupport());
 	const dialogPartsSearchChuteProtectorsManager = ref(new DialogSupport());
 	const dialogPartsSearchChuteReleasesManager = ref(new DialogSupport());
 	const dialogPartsSearchDeploymentBagsManager = ref(new DialogSupport());
-	const dialogPartsSearchMotorsManager = ref(new DialogSupport());
-	const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
+	// const dialogPartsSearchMotorsManager = ref(new DialogSupport());
+	// const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
 	const dialogPartsSearchParachutesManager = ref(new DialogSupport());
 	const dialogPartsSearchStreamersManager = ref(new DialogSupport());
 	const dialogPartsSearchTrackersManager = ref(new DialogSupport());
@@ -84,8 +95,8 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const manufacturerTypeChuteProtector = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector ]);
 	const manufacturerTypeChuteRelease = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease ]);
 	const manufacturerTypeDeploymentBag = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag ]);
-	const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
-	const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
+	// const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
+	// const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
 	const manufacturerTypeParachute = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.parachute ]);
 	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.streamer ]);
 	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.tracker ]);
@@ -101,15 +112,6 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const chuteReleases = computed(() => {
 		return props.detailItem ? props.detailItem.chuteReleases : [];
 	});
-	const cp = computed(() => {
-		if (!props.detailItem)
-			return null;
-		if (!props.detailItem.stages)
-			return null;
-		
-		const temp = props.detailItem.stages[stageNumber];
-		return temp ? temp.cp : null;
-	});
 	const deploymentBags = computed(() => {
 		return props.detailItem ? props.detailItem.deploymentBags : [];
 	});
@@ -120,7 +122,9 @@ export function useRocketSetupStageComponent(props, context, options) {
 		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.cg; }, (value) => { return value.cgMeasurementUnitsId; }, (value) => { return value.cgMeasurementUnitId; });
 	});
 	const displayItemWeight = computed(() => {
-		return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
+		// if (displayItem.value)
+		// 	return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
+		return fromRocketStageWeight.value;
 	});
 	const hasAltimeters = computed(() => {
 		const temp = altimeters.value;
@@ -150,23 +154,80 @@ export function useRocketSetupStageComponent(props, context, options) {
 		const temp = trackers.value;
 		return temp &&  Array.isArray(temp) && temp.length > 0;
 	});
-	const motorDiameter = computed(() => {
-		if (!props.detailItem)
+	const fromRocketStage = computed(() => {
+		// if (!props.detailItemSetup)
+		// 	return null;
+		// if (!props.detailItemSetup.rocket)
+		// 	return null;
+		// if (!props.detailItemSetup.rocket.stages)
+		// 	return null;
+		// return props.detailItemSetup.rocket.stages.find(l => l.id === props.detailItem.rocketStageId);
+		return props.detailItem.fromRocket ? props.detailItem.fromRocket : null;
+	});
+	const fromRocketStageCp = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
 			return null;
-		if (!props.detailItem.stages)
+		return displayItemMeasurementLength(correlationId(), temp, (value) => { return value.cp; }, (value) => { return value.cpMeasurementUnitsId; }, (value) => { return value.cpMeasurementUnitId; });
+	});
+	const fromRocketStageDescription = computed(() => {
+		const temp = fromRocketStage.value;
+		return temp ? temp.description : null;
+	});
+	const fromRocketStageDiameterMajor = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
 			return null;
-		
-		const temp = props.detailItem.stages[stageNumber];
-		return temp ? temp.motorDiameter : null;
+		return displayItemMeasurementLength(correlationId(), temp, (value) => { return value.diameterMajor; },  (value) => { return value.diameterMajorMeasurementUnitsId; }, (value) => { return value.diameterMajorMeasurementUnitId; });
+	});
+	const fromRocketStageDiameterMinor = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
+			return null;
+		return displayItemMeasurementLength(correlationId(), temp, (value) => { return value.diameterMinor; },  (value) => { return value.diameterMinorMeasurementUnitsId; }, (value) => { return value.diameterMinorMeasurementUnitId; });
+	});
+	const fromRocketStageLength = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
+			return null;
+		return displayItemMeasurementLength(correlationId(), temp, (value) => { return value.length; },  (value) => { return value.lengthMeasurementUnitsId; }, (value) => { return value.lengthMeasurementUnitId; });
+	});
+	const fromRocketStageHasMotor = (index) => {
+		const temp = fromRocketStage.value;
+		if (!temp || !temp.motors)
+			return false;
+		const temp2 = temp.motors.find(l => l.index === index);
+		return temp2 && (temp2.count > 0);
+	};
+	const fromRocketStageMotorI = (index) => {
+		const temp = fromRocketStage.value;
+		if (!temp || !temp.motors)
+			return {};
+		const temp2 = temp.motors.find(l => l.index === index);
+		return temp2 ? temp2 : {};
+	};
+	const fromRocketStageMotor = (index) => {
+		const temp = fromRocketStageMotorI(index);
+		if (!temp)
+			return { value: null };
+		const diameter = temp.diameter ? motorDiameter(temp.diameter) : null;
+		const count = temp.count ? temp.count : null;
+		return { value: `${diameter}${diameter ? ' x ' : ''}${count}` };
+	};
+	const fromRocketStageWeight = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
+			return null;
+		return displayItemMeasurementWeight(correlationId(), temp, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
 	});
 	const parachutes = computed(() => {
 		return props.detailItem ? props.detailItem.parachutes : [];
 	});
-	const stageNumber = computed(() => {
+	const stageIndex = computed(() => {
 		if (!props.detailItem)
 			return null;
 		
-		return props.detailItem.number + 1;
+		return props.detailItem.index + 1;
 	});
 	const streamers = computed(() => {
 		return props.detailItem ? props.detailItem.streamers : [];
@@ -183,67 +244,39 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const partsKeyStreamers = 'streamers';
 	const partsKeyTrackers = 'trackers';
 	
-	const clickAltimetersSearch = async (selection) => {
-		if (!selection)
-			return;
-
-		dialogPartsSearchStageId.value = selection;
+	const clickAltimetersSearch = async () => {
 		dialogPartsSearchAltimetersManager.value.open();
 	};
-	const clickChuteProtectorsSearch = async (selection) => {
-		if (!selection)
-			return;
-
-		dialogPartsSearchStageId.value = selection;
+	const clickChuteProtectorsSearch = async () => {
 		dialogPartsSearchChuteProtectorsManager.value.open();
 	};
-	const clickChuteReleasesSearch = async (selection) => {
-		if (!selection)
-			return;
-
-		dialogPartsSearchStageId.value = selection;
+	const clickChuteReleasesSearch = async () => {
 		dialogPartsSearchChuteReleasesManager.value.open();
 	};
-	const clickDeploymentBagsSearch = async (selection) => {
-		if (!selection)
-			return;
-
-		dialogPartsSearchStageId.value = selection;
+	const clickDeploymentBagsSearch = async () => {
 		dialogPartsSearchDeploymentBagsManager.value.open();
 	};
-	const clickMotorsSearch = async (selection) => {
-		if (!selection)
-			return;
+	// const clickMotorsSearch = async (index) => {
+	// 	if (!index)
+	// 		return;
 
-		dialogPartsSearchStageId.value = selection;
-		dialogPartsSearchMotorsManager.value.open();
-	};
-	const clickMotorCasesSearch = async (selection) => {
-		if (!selection)
-			return;
+	// 	dialogPartsSearchStageMotorIndex.value = index;
+	// 	dialogPartsSearchMotorsManager.value.open();
+	// };
+	// const clickMotorCasesSearch = async (index) => {
+	// 	if (!index)
+	// 		return;
 
-		dialogPartsSearchStageId.value = selection;
-		dialogPartsSearchMotorCasesManager.value.open();
-	};
-	const clickParachutesSearch = async (selection) => {
-		if (!selection)
-			return;
-
-		dialogPartsSearchStageId.value = selection;
+	// 	dialogPartsSearchStageMotorIndex.value = index;
+	// 	dialogPartsSearchMotorCasesManager.value.open();
+	// };
+	const clickParachutesSearch = async () => {
 		dialogPartsSearchParachutesManager.value.open();
 	};
-	const clickStreamersSearch = async (selection) => {
-		if (!selection)
-			return;
-
-		dialogPartsSearchStageId.value = selection;
+	const clickStreamersSearch = async () => {
 		dialogPartsSearchStreamersManager.value.open();
 	};
-	const clickTrackersSearch = async (selection) => {
-		if (!selection)
-			return;
-
-		dialogPartsSearchStageId.value = selection;
+	const clickTrackersSearch = async () => {
 		dialogPartsSearchTrackersManager.value.open();
 	};
 	const dialogPartsDeleteCancel = async () => {
@@ -287,83 +320,76 @@ export function useRocketSetupStageComponent(props, context, options) {
 		dialogPartsDeleteType.value = partsKeyAltimeters;
 		dialogPartsDeleteManager.value.open();
 	};
-	const handleChuteProtectorDelete = async (ite) => {
+	const handleAltimeterEdit = async (item) => {
+		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyAltimeters}.Edit_confirm`);
+		dialogPartsEditId.value = item.id;
+		dialogPartsEditAltimeterManager.value.open();
+	};
+	const handleChuteProtectorDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyChuteProtectors}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsKeyChuteProtectors;
 		dialogPartsDeleteManager.value.open();
 	};
-	const handleChuteReleaseDelete = async (ite) => {
+	const handleChuteProtectorEdit = async (item) => {
+		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyChuteProtectors}.Edit_confirm`);
+		dialogPartsEditId.value = item.id;
+		dialogPartsEditChuteProtectorManager.value.open();
+	};
+	const handleChuteReleaseDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyChuteReleases}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsKeyChuteReleases;
 		dialogPartsDeleteManager.value.open();
 	};
-	const handleDeploymentBagDelete = async (ite) => {
+	const handleChuteReleaseEdit = async (item) => {
+		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyChuteReleases}.Edit_confirm`);
+		dialogPartsEditId.value = item.id;
+		dialogPartsEditChuteReleaseManager.value.open();
+	};
+	const handleDeploymentBagDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyDeploymentBags}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsKeyDeploymentBags;
 		dialogPartsDeleteManager.value.open();
 	};
-	const handleParachuteDelete = async (ite) => {
+	const handleDeploymentBagEdit = async (item) => {
+		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyDeploymentBags}.Edit_confirm`);
+		dialogPartsEditId.value = item.id;
+		dialogPartsEditDeploymentBagManager.value.open();
+	};
+	const handleParachuteDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyParachutes}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsKeyParachutes;
 		dialogPartsDeleteManager.value.open();
 	};
-	const handleStreamerDelete = async (ite) => {
+	const handleParachuteEdit = async (item) => {
+		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyParachutes}.Edit_confirm`);
+		dialogPartsEditId.value = item.id;
+		dialogPartsEditParachuteManager.value.open();
+	};
+	const handleStreamerDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyStreamers}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsKeyStreamers;
 		dialogPartsDeleteManager.value.open();
 	};
+	const handleStreamerEdit = async (ite) => {
+		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyStreamers}.Edit_confirm`);
+		dialogPartsEditId.value = item.id;
+		dialogPartsEditStreamerManager.value.open();
+	};
 	const handleTrackerDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyTrackers}.delepartsKeyAltimeterste_confirm`);
 		dialogPartsDeleteId.value = item.id;
 		dialogPartsDeleteType.value = partsKeyTrackers;
-		dialogPartsDeleteManager.value.open();
-	};
-	const handleAltimeterEdit = async (item) => {
-		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyAltimeters}.edit_confirm`);
-		dialogPartsEditId.value = item.id;
-		dialogPartsEditType.value = partsKeyAltimeters;
-		dialogPartsEditManager.value.open();
-	};
-	const handleChuteProtectorEdit = async (ite) => {
-		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyChuteProtectors}.Edit_confirm`);
-		dialogPartsEditId.value = item.id;
-		dialogPartsEditType.value = partsKeyChuteProtectors;
-		dialogPartsEditManager.value.open();
-	};
-	const handleChuteReleaseEdit = async (ite) => {
-		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyChuteReleases}.Edit_confirm`);
-		dialogPartsEditId.value = item.id;
-		dialogPartsEditType.value = partsKeyChuteReleases;
-		dialogPartsEditManager.value.open();
-	};
-	const handleDeploymentBagEdit = async (ite) => {
-		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyDeploymentBags}.Edit_confirm`);
-		dialogPartsEditId.value = item.id;
-		dialogPartsEditType.value = partsKeyDeploymentBags;
-		dialogPartsEditManager.value.open();
-	};
-	const handleParachuteEdit = async (ite) => {
-		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyParachutes}.Edit_confirm`);
-		dialogPartsEditId.value = item.id;
-		dialogPartsEditType.value = partsKeyParachutes;
-		dialogPartsEditManager.value.open();
-	};
-	const handleStreamerEdit = async (ite) => {
-		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyStreamers}.Edit_confirm`);
-		dialogPartsEditId.value = item.id;
-		dialogPartsEditType.value = partsKeyStreamers;
-		dialogPartsEditManager.value.open();
+		dialogPartsDeleteTrackerManager.value.open();
 	};
 	const handleTrackerEdit = async (item) => {
 		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyTrackers}.Edit_confirm`);
 		dialogPartsEditId.value = item.id;
-		dialogPartsEditType.value = partsKeyTrackers;
-		dialogPartsEditManager.value.open();
+		dialogPartsEditTrackerManager.value.open();
 	};
 	const getParts = (correlationId, item, type) => {
 		if (type === partsKeyAltimeters)
@@ -412,72 +438,72 @@ export function useRocketSetupStageComponent(props, context, options) {
 				correlationId(), 
 				item, 
 				partsKeyAltimeters,
-				dialogPartsSearchStageId.value
+				displayItem.value.id
 			);
 		}
 		finally {
 			dialogPartsSearchAltimetersManager.value.ok();
 		}
 	};
-	const selectChuteProtectors = async (item) => {
+	const selectChuteProtector = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
 				item, 
 				partsKeyChuteProtectors,
-				dialogPartsSearchStageId.value
+				displayItem.value.id
 			);
 		}
 		finally {
 			dialogPartsSearchChuteProtectorsManager.value.ok();
 		}
 	};
-	const selectChuteReleases = async (item) => {
+	const selectChuteRelease = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
 				item, 
 				partsKeyChuteReleases,
-				dialogPartsSearchStageId.value
+				displayItem.value.id
 			);
 		}
 		finally {
 			dialogPartsSearchChuteReleasesManager.value.ok();
 		}
 	};
-	const selectDeploymentBags = async (item) => {
+	const selectDeploymentBag = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
 				item, 
 				partsKeyDeploymentBags,
-				dialogPartsSearchStageId.value
+				displayItem.value.id
 			);
 		}
 		finally {
 			dialogPartsSearchDeploymentBagsManager.value.ok();
 		}
 	};
-	const selectParachutes = async (item) => {
+	const selectParachute = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
 				item, 
 				partsKeyParachutes,
-				dialogPartsSearchStageId.value
+				displayItem.value.id
 			);
 		}
 		finally {
 			dialogPartsSearchParachutesManager.value.ok();
 		}
 	};
-	const selectStreamers = async (item) => {
+	const selectStreamer = async (item) => {
 		try {
 			return selectPart(
 				correlationId(), 
 				item, 
 				partsKeyStreamers,
-				dialogPartsSearchStageId.value
+				displayItem.value.id
 			);
 		}
 		finally {
@@ -490,7 +516,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 				correlationId(), 
 				item, 
 				partsKeyTrackers,
-				dialogPartsSearchStageId.value
+				displayItem.value.id
 			);
 		}
 		finally {
@@ -557,7 +583,14 @@ export function useRocketSetupStageComponent(props, context, options) {
 		altimeters,
 		chuteProtectors,
 		chuteReleases,
-		cp,
+		fromRocketStageCp,
+		fromRocketStageDescription,
+		fromRocketStageDiameterMajor,
+		fromRocketStageDiameterMinor,
+		fromRocketStageLength,
+		fromRocketStageHasMotor,
+		fromRocketStageMotor,
+		fromRocketStageWeight,
 		deploymentBags,
 		displayItem,
 		displayItemCg,
@@ -570,16 +603,18 @@ export function useRocketSetupStageComponent(props, context, options) {
 		hasStreamers,
 		hasTrackers,
 		parachutes,
-		motorDiameter,
-		stageNumber,
+		stageIndex,
 		streamers,
 		trackers,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		motorDiameters,
+		motorDiameter,
 		dialogPartsDeleteManager,
 		dialogPartsDeleteMessage,
+		dialogPartsEditMessage,
 		dialogPartsEditAltimeterManager,
 		dialogPartsEditChuteProtectorManager,
 		dialogPartsEditChuteReleaseManager,
@@ -593,8 +628,8 @@ export function useRocketSetupStageComponent(props, context, options) {
 		dialogPartsSearchChuteProtectorsManager,
 		dialogPartsSearchChuteReleasesManager,
 		dialogPartsSearchDeploymentBagsManager,
-		dialogPartsSearchMotorsManager,
-		dialogPartsSearchMotorCasesManager,
+		// dialogPartsSearchMotorsManager,
+		// dialogPartsSearchMotorCasesManager,
 		dialogPartsSearchParachutesManager,
 		dialogPartsSearchStreamersManager,
 		dialogPartsSearchTrackersManager,
@@ -602,8 +637,8 @@ export function useRocketSetupStageComponent(props, context, options) {
 		manufacturerTypeChuteProtector,
 		manufacturerTypeChuteRelease,
 		manufacturerTypeDeploymentBag,
-		manufacturerTypeMotor,
-		manufacturerTypeMotorCase,
+		// manufacturerTypeMotor,
+		// manufacturerTypeMotorCase,
 		manufacturerTypeParachute,
 		manufacturerTypeStreamer,
 		manufacturerTypeTracker,
@@ -613,34 +648,34 @@ export function useRocketSetupStageComponent(props, context, options) {
 		clickChuteProtectorsSearch,
 		clickChuteReleasesSearch,
 		clickDeploymentBagsSearch,
-		clickMotorsSearch,
-		clickMotorCasesSearch,
+		// clickMotorsSearch,
+		// clickMotorCasesSearch,
 		clickParachutesSearch,
 		clickStreamersSearch,
 		clickTrackersSearch,
 		dialogPartsDeleteCancel,
 		dialogPartsDeleteOk,
 		handleAltimeterDelete,
-		handleChuteProtectorDelete,
-		handleChuteReleaseDelete,
-		handleDeploymentBagDelete,
-		handleParachuteDelete,
-		handleStreamerDelete,
-		handleTrackerDelete,
 		handleAltimeterEdit,
+		handleChuteProtectorDelete,
 		handleChuteProtectorEdit,
+		handleChuteReleaseDelete,
 		handleChuteReleaseEdit,
+		handleDeploymentBagDelete,
 		handleDeploymentBagEdit,
+		handleParachuteDelete,
 		handleParachuteEdit,
+		handleStreamerDelete,
 		handleStreamerEdit,
+		handleTrackerDelete,
 		handleTrackerEdit,
 		panelsUpdated,
 		selectAltimeter,
-		selectChuteProtectors,
-		selectChuteReleases,
-		selectDeploymentBags,
-		selectParachutes,
-		selectStreamers,
+		selectChuteProtector,
+		selectChuteRelease,
+		selectDeploymentBag,
+		selectParachute,
+		selectStreamer,
 		selectTracker
 	};
 };

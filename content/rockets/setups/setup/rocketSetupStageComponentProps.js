@@ -7,6 +7,10 @@ export const useRocketSetupStageComponentProps = {
 		type: Object,
 		value: null
 	},
+	detailItemSetup: {
+		type: Object,
+		value: null
+	},
 	isEditable: {
 		type: Boolean,
 		value: false
@@ -14,10 +18,6 @@ export const useRocketSetupStageComponentProps = {
 	manufacturers: {
 		type: Array,
 		value: []
-	},
-	detailItemSetup: {
-		type: Object,
-		value: null
 	},
 	updateStage: {
 		type: Function,

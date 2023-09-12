@@ -12,50 +12,188 @@
 		[[ streamers {{ streamers }} ]]
 		[[ trackers {{ trackers }} ]] -->
 	</div>
-	<v-row dense>
-		<v-col>
-			<VTextArea
-				v-model="displayItem.description"
-				:readonly="true"
-				:label="$t('forms.description')"
-				:rows="0"
-			/>
-		</v-col>
-	</v-row>
-	<v-row dense>
-		<v-col cols="6">
-			<VTextField
-				v-model="motorDiameter"
-				:readonly="true"
-				:label="$t('forms.content.rockets.diameter.motor')"
-			/>
-		</v-col>
-		<v-col cols="6">
-			<VTextField
-				v-model="stageNumber"
-				:readonly="true"
-				:label="$t('forms.content.rockets.stage.name')"
-			/>
-		</v-col>
-	</v-row>
-	<v-row dense>
-		<v-col cols="6" xs="3">
-			<VTextField
-				v-model="displayItemWeight"
-				:hide-details="true"
-				:readonly="true"
-				:label="$t('forms.content.parts.weight')"
-			/>
-		</v-col>
-		<v-col cols="6" xs="3">
-			<VTextField
-				v-model="displayItemCg"
-				:hide-details="true"
-				:readonly="true"
-				:label="$t('forms.content.rockets.cg')"
-			/>
-		</v-col>
-	</v-row>
+	<div
+		v-if="displayItem.enabled"
+	>
+		<v-row dense>
+			<v-col cols="9">
+				<VTextArea
+					v-model="fromRocketStageDescription"
+					:readonly="true"
+					:label="$t('forms.description')"
+					:rows="0"
+				/>
+			</v-col>
+			<v-col cols="3">
+				<VTextField
+					v-model="stageIndex"
+					:readonly="true"
+					:label="$t('forms.content.rockets.stage.name')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row
+			dense
+		>
+			<v-col 
+				v-if="fromRocketStageDiameterMajor"
+				cols="6" xs="3"
+			>
+				<VTextField
+					v-model="fromRocketStageDiameterMajor"
+					:hide-details="true"
+					:readonly="true"
+					:label="$t('forms.content.rockets.diameter.name')"
+				/>
+			</v-col>
+			<v-col 
+				v-if="fromRocketStageLength"
+				cols="6" xs="3"
+			>
+				<VTextField
+					v-model="fromRocketStageLength"
+					:hide-details="true"
+					:readonly="true"
+					:label="$t('forms.content.parts.length')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col
+				v-if="displayItemWeight"
+				cols="12" sm="4"
+			>
+				<VTextField
+					v-model="displayItemWeight"
+					:hide-details="true"
+					:readonly="true"
+					:label="$t('forms.content.parts.weight')"
+				/>
+			</v-col>
+			<v-col 
+				v-if="fromRocketStageCp"
+				cols="6" sm="4"
+			>
+				<VTextField
+					v-model="fromRocketStageCp"
+					:hide-details="true"
+					:readonly="true"
+					:label="$t('forms.content.rockets.cp')"
+				/>
+			</v-col>
+			<v-col
+				v-if="displayItemCg"
+				cols="6" sm="4"
+			>
+				<VTextField
+					v-model="displayItemCg"
+					:hide-details="true"
+					:readonly="true"
+					:label="$t('forms.content.rockets.cg')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row
+			dense
+		>
+			<v-col 
+				v-if="fromRocketStageHasMotor(0)"
+				cols="12" sm="4"
+			>
+				<VTextField
+					v-model="fromRocketStageMotor(0).value"
+					:readonly="true"
+					:label="$t('forms.content.parts.motor.name')"
+				/>
+				<!-- <table style="width: 100%;">
+					<tr>
+						<td style="width: 100%;">
+							<VTextField
+								v-model="fromRocketStageMotor(0).value"
+								:readonly="true"
+								:label="$t('forms.content.parts.motor.name')"
+							/>
+						</td>
+						<td
+							v-if="isEditable"
+						>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorsSearch(0)"
+							>
+								{{ $t('forms.content.parts.motor.name') }}
+							</v-btn>
+						</td>
+					</tr>
+				</table> -->
+			</v-col>
+			<v-col 
+				v-if="fromRocketStageHasMotor(1)"
+				cols="12" sm="4"
+			>
+				<VTextField
+					v-model="fromRocketStageMotor(1).value"
+					:readonly="true"
+					:label="$t('forms.content.parts.motor.name')"
+				/>
+				<!-- <table style="width: 100%;">
+					<tr>
+						<td style="width: 100%;">
+							<VTextField
+								v-model="fromRocketStageMotor(1).value"
+								:readonly="true"
+								:label="$t('forms.content.parts.motor.name')"
+							/>
+						</td>
+						<td
+							v-if="isEditable"
+						>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorsSearch(1)"
+							>
+								{{ $t('forms.content.parts.motor.name') }}
+							</v-btn>
+						</td>
+					</tr>
+				</table> -->
+			</v-col>
+			<v-col 
+				v-if="fromRocketStageHasMotor(2)"
+				cols="12" sm="4"
+			>
+				<VTextField
+					v-model="fromRocketStageMotor(2).value"
+					:readonly="true"
+					:label="$t('forms.content.parts.motor.name')"
+				/>
+				<!-- <table style="width: 100%;">
+					<tr>
+						<td style="width: 100%;">
+							<VTextField
+								v-model="fromRocketStageMotor(2).value"
+								:readonly="true"
+								:label="$t('forms.content.parts.motor.name')"
+							/>
+						</td>
+						<td
+							v-if="isEditable"
+						>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorsSearch(2)"
+							>
+								{{ $t('forms.content.parts.motor.name') }}
+							</v-btn>
+						</td>
+					</tr>
+				</table> -->
+			</v-col>
+		</v-row>
+	</div>
 	<v-row dense>
 		<v-col>
 			<div
@@ -68,6 +206,7 @@
 					class="pl-4 pr-4 pb-2 pt-2"
 				>
 					<v-btn
+						v-if="displayItem.enabled"
 						class="mr-2"
 						color="primary"
 					>
@@ -81,7 +220,7 @@
 									<v-btn
 										variant="flat"
 										color="purple"
-										@click="clickAltimetersSearch(displayItem.id)"
+										@click="clickAltimetersSearch"
 									>
 										{{ $t('forms.content.parts.altimeter.name') }}
 									</v-btn>
@@ -90,7 +229,7 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickChuteProtectorsSearch(displayItem.id)"
+										@click="clickChuteProtectorsSearch"
 									>
 										{{ $t('forms.content.parts.chuteProtector.name') }}
 									</v-btn>
@@ -99,7 +238,7 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickChuteReleasesSearch(displayItem.id)"
+										@click="clickChuteReleasesSearch"
 									>
 										{{ $t('forms.content.parts.chuteRelease.name') }}
 									</v-btn>
@@ -108,34 +247,34 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickDeploymentBagsSearch(displayItem.id)"
+										@click="clickDeploymentBagsSearch"
 									>
 										{{ $t('forms.content.parts.deploymentBag.name') }}
 									</v-btn>
 								</v-list-item>
-								<v-list-item>
+								<!-- <v-list-item>
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickMotorsSearch(displayItem.id)"
+										@click="clickMotorsSearch"
 									>
 										{{ $t('forms.content.parts.motor.name') }}
 									</v-btn>
-								</v-list-item>
-								<v-list-item>
+								</v-list-item> -->
+								<!-- <v-list-item>
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickMotorCasesSearch(displayItem.id)"
+										@click="clickMotorCasesSearch"
 									>
 										{{ $t('forms.content.parts.motorCase.name') }}
 									</v-btn>
-								</v-list-item>
+								</v-list-item> -->
 								<v-list-item>
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickParachutesSearch(displayItem.id)"
+										@click="clickParachutesSearch"
 									>
 										{{ $t('forms.content.parts.parachute.name') }}
 									</v-btn>
@@ -144,7 +283,7 @@
 									<v-btn
 										variant="flat"
 										color="orange"
-										@click="clickStreamersSearch(displayItem.id)"
+										@click="clickStreamersSearch"
 									>
 										{{ $t('forms.content.parts.streamer.name') }}
 									</v-btn>
@@ -153,7 +292,7 @@
 									<v-btn
 										variant="flat"
 										color="blue"
-										@click="clickTrackersSearch(displayItem.id)"
+										@click="clickTrackersSearch"
 									>
 										{{ $t('forms.content.parts.tracker.name') }}
 									</v-btn>
@@ -176,7 +315,10 @@
 			</div>
 		</v-col>
 	</v-row>
-	<v-row dense>
+	<v-row 
+		v-if="displayItem.enabled"
+		dense
+	>
 		<v-col>
 			<v-expansion-panels
 				v-model="panels"
@@ -267,23 +409,23 @@
 		:signal="dialogPartsSearchChuteProtectorsManager.signal"
 		:part-types="manufacturerTypeChuteProtector"
 		@close="dialogPartsSearchChuteProtectorsManager.cancel()"
-		@select="selectChuteProtectors"
+		@select="selectChuteProtector"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchChuteReleasesRef"
 		:signal="dialogPartsSearchChuteReleasesManager.signal"
 		:part-types="manufacturerTypeChuteRelease"
 		@close="dialogPartsSearchChuteReleasesManager.cancel()"
-		@select="selectChuteReleases"
+		@select="selectChuteRelease"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialoSearchgDeploymentBagsRef"
 		:signal="dialogPartsSearchDeploymentBagsManager.signal"
 		:part-types="manufacturerTypeDeploymentBag"
 		@close="dialogPartsSearchDeploymentBagsManager.cancel()"
-		@select="selectDeploymentBags"
+		@select="selectDeploymentBag"
 	/>
-	<RocketPartsLookupDialog
+	<!-- <RocketPartsLookupDialog
 		ref="dialoSearchgMotorsRef"
 		:signal="dialogPartsSearchMotorsManager.signal"
 		:part-types="manufacturerTypeMotor"
@@ -296,20 +438,20 @@
 		:part-types="manufacturerTypeMotorCase"
 		@close="dialogPartsSearchMotorCasesManager.cancel()"
 		@select="selectDeploymentBags"
-	/>
+	/> -->
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchParachutesRef"
 		:signal="dialogPartsSearchParachutesManager.signal"
 		:part-types="manufacturerTypeParachute"
 		@close="dialogPartsSearchParachutesManager.cancel()"
-		@select="selectParachutes"
+		@select="selectParachute"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchStreamersRef"
 		:signal="dialogPartsSearchStreamersManager.signal"
 		:part-types="manufacturerTypeStreamer"
 		@close="dialogPartsSearchStreamersManager.cancel()"
-		@ok="selectStreamers"
+		@ok="selectStreamer"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchTrackersRef"
@@ -340,7 +482,7 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VSelect from '@thzero/library_client_vue3_vuetify3/components/form/VSelect';
+import VSelect2 from '@thzero/library_client_vue3_vuetify3/components/form/VSelect2';
 import VTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea';
 import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
 
@@ -354,7 +496,7 @@ export default {
 		RocketPartsLookupDialog,
 		StreamerPanelTitle,
 		VConfirmationDialog,
-		VSelect,
+		VSelect2,
 		VTextArea,
 		VTextField
 	},
@@ -378,7 +520,14 @@ export default {
 			altimeters,
 			chuteProtectors,
 			chuteReleases,
-			cp,
+			fromRocketStageCp,
+			fromRocketStageDescription,
+			fromRocketStageDiameterMajor,
+			fromRocketStageDiameterMinor,
+			fromRocketStageLength,
+			fromRocketStageHasMotor,
+			fromRocketStageMotor,
+			fromRocketStageWeight,
 			deploymentBags,
 			displayItem,
 			displayItemCg,
@@ -390,17 +539,19 @@ export default {
 			hasParachutes,
 			hasStreamers,
 			hasTrackers,
-			motorDiameter,
 			parachutes,
-			stageNumber,
+			stageIndex,
 			streamers,
 			trackers,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			motorDiameter,
+			motorDiameters,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
+			dialogPartsEditMessage,
 			dialogPartsEditAltimeterManager,
 			dialogPartsEditChuteProtectorManager,
 			dialogPartsEditChuteReleaseManager,
@@ -414,8 +565,8 @@ export default {
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
 			dialogPartsSearchDeploymentBagsManager,
-			dialogPartsSearchMotorsManager,
-			dialogPartsSearchMotorCasesManager,
+			// dialogPartsSearchMotorsManager,
+			// dialogPartsSearchMotorCasesManager,
 			dialogPartsSearchParachutesManager,
 			dialogPartsSearchStreamersManager,
 			dialogPartsSearchTrackersManager,
@@ -423,8 +574,8 @@ export default {
 			manufacturerTypeChuteProtector,
 			manufacturerTypeChuteRelease,
 			manufacturerTypeDeploymentBag,
-			manufacturerTypeMotor,
-			manufacturerTypeMotorCase,
+			// manufacturerTypeMotor,
+			// manufacturerTypeMotorCase,
 			manufacturerTypeParachute,
 			manufacturerTypeStreamer,
 			manufacturerTypeTracker,
@@ -434,34 +585,34 @@ export default {
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
 			clickDeploymentBagsSearch,
-			clickMotorsSearch,
-			clickMotorCasesSearch,
+			// clickMotorsSearch,
+			// clickMotorCasesSearch,
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
 			dialogPartsDeleteCancel,
 			dialogPartsDeleteOk,
 			handleAltimeterDelete,
-			handleChuteProtectorDelete,
-			handleChuteReleaseDelete,
-			handleDeploymentBagDelete,
-			handleParachuteDelete,
-			handleStreamerDelete,
-			handleTrackerDelete,
 			handleAltimeterEdit,
+			handleChuteProtectorDelete,
 			handleChuteProtectorEdit,
+			handleChuteReleaseDelete,
 			handleChuteReleaseEdit,
+			handleDeploymentBagDelete,
 			handleDeploymentBagEdit,
+			handleParachuteDelete,
 			handleParachuteEdit,
+			handleStreamerDelete,
 			handleStreamerEdit,
+			handleTrackerDelete,
 			handleTrackerEdit,
 			panelsUpdated,
 			selectAltimeter,
-			selectChuteProtectors,
-			selectChuteReleases,
-			selectDeploymentBags,
-			selectParachutes,
-			selectStreamers,
+			selectChuteProtector,
+			selectChuteRelease,
+			selectDeploymentBag,
+			selectParachute,
+			selectStreamer,
 			selectTracker
 		} = useRocketSetupStageComponent(props, context, options);
 
@@ -480,7 +631,14 @@ export default {
 			altimeters,
 			chuteProtectors,
 			chuteReleases,
-			cp,
+			fromRocketStageCp,
+			fromRocketStageDescription,
+			fromRocketStageDiameterMajor,
+			fromRocketStageDiameterMinor,
+			fromRocketStageLength,
+			fromRocketStageHasMotor,
+			fromRocketStageMotor,
+			fromRocketStageWeight,
 			deploymentBags,
 			displayItem,
 			displayItemCg,
@@ -492,17 +650,19 @@ export default {
 			hasParachutes,
 			hasStreamers,
 			hasTrackers,
-			motorDiameter,
 			parachutes,
-			stageNumber,
+			stageIndex,
 			streamers,
 			trackers,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			motorDiameter,
+			motorDiameters,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
+			dialogPartsEditMessage,
 			dialogPartsEditAltimeterManager,
 			dialogPartsEditChuteProtectorManager,
 			dialogPartsEditChuteReleaseManager,
@@ -516,8 +676,8 @@ export default {
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
 			dialogPartsSearchDeploymentBagsManager,
-			dialogPartsSearchMotorsManager,
-			dialogPartsSearchMotorCasesManager,
+			// dialogPartsSearchMotorsManager,
+			// dialogPartsSearchMotorCasesManager,
 			dialogPartsSearchParachutesManager,
 			dialogPartsSearchStreamersManager,
 			dialogPartsSearchTrackersManager,
@@ -525,8 +685,8 @@ export default {
 			manufacturerTypeChuteProtector,
 			manufacturerTypeChuteRelease,
 			manufacturerTypeDeploymentBag,
-			manufacturerTypeMotor,
-			manufacturerTypeMotorCase,
+			// manufacturerTypeMotor,
+			// manufacturerTypeMotorCase,
 			manufacturerTypeParachute,
 			manufacturerTypeStreamer,
 			manufacturerTypeTracker,
@@ -536,34 +696,34 @@ export default {
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
 			clickDeploymentBagsSearch,
-			clickMotorsSearch,
-			clickMotorCasesSearch,
+			// clickMotorsSearch,
+			// clickMotorCasesSearch,
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
 			dialogPartsDeleteCancel,
 			dialogPartsDeleteOk,
 			handleAltimeterDelete,
-			handleChuteProtectorDelete,
-			handleChuteReleaseDelete,
-			handleDeploymentBagDelete,
-			handleParachuteDelete,
-			handleStreamerDelete,
-			handleTrackerDelete,
 			handleAltimeterEdit,
+			handleChuteProtectorDelete,
 			handleChuteProtectorEdit,
+			handleChuteReleaseDelete,
 			handleChuteReleaseEdit,
+			handleDeploymentBagDelete,
 			handleDeploymentBagEdit,
+			handleParachuteDelete,
 			handleParachuteEdit,
+			handleStreamerDelete,
 			handleStreamerEdit,
+			handleTrackerDelete,
 			handleTrackerEdit,
 			panelsUpdated,
 			selectAltimeter,
-			selectChuteProtectors,
-			selectChuteReleases,
-			selectDeploymentBags,
-			selectParachutes,
-			selectStreamers,
+			selectChuteProtector,
+			selectChuteRelease,
+			selectDeploymentBag,
+			selectParachute,
+			selectStreamer,
 			selectTracker
 		};
 	}
