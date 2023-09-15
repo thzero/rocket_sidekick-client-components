@@ -24,9 +24,9 @@
 							<v-row dense>
 								<v-col cols="12" sm="6">
 									<VSelectWithValidation
-										ref="impulseClassRef"
-										v-model="impulseClass"
-										vid="impulseClass"
+										ref="filterItemImpulseClassRef"
+										v-model="filterItemImpulseClass"
+										vid="filterItemImpulseClass"
 										:items="motorImpulseClasses"
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.impulseClass')"
@@ -34,9 +34,9 @@
 								</v-col>
 								<v-col cols="12" sm="6">
 									<VSelectWithValidation
-										ref="diameterRef"
-										v-model="diameter"
-										vid="diameter"
+										ref="filterItemDiameterRef"
+										v-model="filterItemDiameter"
+										vid="filterItemDiameter"
 										:items="motorDiameters"
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.diameter')"
@@ -46,14 +46,16 @@
 							<v-row dense>
 								<v-col cols="12" sm="6">
 									<v-checkbox
-										v-model="singleUse"
+										ref="filterItemSingleUseRef"
+										v-model="filterItemSingleUse"
 										density="compact"
 										:label="$t('forms.external.motorSearch.singleUse')"
 									/>
 								</v-col>
 								<v-col cols="12" sm="6">
 									<v-checkbox
-										v-model="sparky"
+										ref="filterItemSparkyRef"
+										v-model="filterItemSparky"
 										density="compact"
 										:label="$t('forms.external.motorSearch.sparky')"
 									/>
@@ -62,9 +64,9 @@
 							<v-row dense>
 								<v-col col="12">
 									<VSelectWithValidation
-										ref="manufacturerRef"
-										v-model="manufacturer"
-										vid="manufacturer"
+										ref="filterItemManufacturerRef"
+										v-model="filterItemManufacturer"
+										vid="filterItemManufacturer"
 										multiple
 										:max-values="2"
 										:items="manufacturers"
@@ -77,9 +79,9 @@
 							<v-row dense>
 								<v-col col="12">
 									<VTextFieldWithValidation
-										ref="motorRef"
-										v-model="motor"
-										vid="motor"
+										ref="filterItemMotorRef"
+										v-model="filterItemMotor"
+										vid="filterItemMotor"
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.motor')"
 										:hint="$t('forms.external.motorSearch.motor_hint')"
@@ -225,14 +227,14 @@ export default {
 			dialogMotorLookup,
 			dialogResetMessage,
 			dialogResetManager,
-			diameter,
-			impulseClass,
+			filterItemDiameter,
+			filterItemImpulseClass,
+			filterItemManufacturer,
+			filterItemMotor,
+			filterItemSparky,
+			filterItemSingleUse,
 			manufacturers,
-			manufacturer,
-			motor,
 			results,
-			sparky,
-			singleUse,
 			buttonMotorSearchResetDisabled,
 			searchLocaleName,
 			searchUrl,
@@ -270,14 +272,14 @@ export default {
 			dialogMotorLookup,
 			dialogResetMessage,
 			dialogResetManager,
-			diameter,
-			impulseClass,
+			filterItemDiameter,
+			filterItemImpulseClass,
+			filterItemManufacturer,
+			filterItemMotor,
+			filterItemSparky,
+			filterItemSingleUse,
 			manufacturers,
-			manufacturer,
-			motor,
 			results,
-			sparky,
-			singleUse,
 			buttonMotorSearchResetDisabled,
 			searchLocaleName,
 			searchUrl,
@@ -296,9 +298,9 @@ export default {
 	},
 	validations () {
 		return {
-			impulseClass: { requiredIfMotor: requiredUnless(this.motor), $autoDirty: true },
-			motor: {
-				requiredIfImpulseClass: requiredUnless(this.impulseClass),
+			filterItemImpulseClass: { requiredIfMotor: requiredUnless(this.filterItemMotor), $autoDirty: true },
+			filterItemMotor: {
+				requiredIfImpulseClass: requiredUnless(this.filterItemImpulseClass),
 				minLength: minLength(3),
 				validatorMotor,
 				$autoDirty: true

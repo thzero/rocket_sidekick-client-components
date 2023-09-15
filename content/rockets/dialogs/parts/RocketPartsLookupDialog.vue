@@ -15,7 +15,6 @@
 		<template #default="{ buttonOkDisabled, isLoading }">
 			<v-row dense>
 				<v-col cols="12">
-					[[{{ partTypeName }}]]
 					<v-card>
 						<v-card-text>
 							<v-row dense>
@@ -41,10 +40,10 @@
 								</v-col>
 							</v-row>
 							<v-row 
-								v-if="isMotors()"
 								dense
 							>
-								<v-col 
+								<v-col
+									v-if="isMotors()"
 									cols="12" sm="6"
 								>
 									<VSelectWithValidation
@@ -56,22 +55,10 @@
 										:label="$t('forms.external.motorSearch.impulseClass')"
 									/>
 								</v-col>
-								<v-col cols="12" sm="6">
-									<VSelectWithValidation
-										ref="filterItemMotorDiameterRef"
-										v-model="filterItemMotorDiameter"
-										vid="filterItemMotorDiameter"
-										:items="motorDiameters"
-										:validation="validation"
-										:label="$t('forms.external.motorSearch.diameter')"
-									/>
-								</v-col>
-							</v-row>
-							<v-row 
-								v-if="isMotorCases()"
-								dense
-							>
-								<v-col cols="12" sm="6">
+								<v-col
+									v-if="isMotors() || isMotorCases()"
+									cols="12" sm="6"
+								>
 									<VSelectWithValidation
 										ref="filterItemMotorDiameterRef"
 										v-model="filterItemMotorDiameter"
@@ -264,7 +251,6 @@
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useRocketEditValidation } from '@/components/content/rockets/library/rocket/rocketEditValidation';
 import { useRocketPartsLookupDialogComponent } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogComponent';
 import { useRocketPartsLookupDialogComponentProps } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogComponentProps';
 import { useRocketPartsLookupDialogValidation } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogValidation';
@@ -357,6 +343,7 @@ export default {
 			manufacturer,
 			preCompleteOk,
 			resetAdditional,
+			validationIsMotors,
 			scope,
 			validation
 		} = useRocketPartsLookupDialogComponent(props, context);
@@ -420,12 +407,13 @@ export default {
 			manufacturer,
 			preCompleteOk,
 			resetAdditional,
+			validationIsMotors,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketEditValidation(false), LibraryCommonUtility.cloneDeep(useRocketPartsLookupDialogValidation)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketPartsLookupDialogValidation, {}));
 	}
 };
 </script>

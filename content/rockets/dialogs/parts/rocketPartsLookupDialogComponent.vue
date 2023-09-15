@@ -187,6 +187,16 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 			partTypes: props.partTypes, 
 			rocketTypes: filterItemRocketTypes.value
 		};
+		
+		serviceStore.dispatcher.setPartsRocketSearchCriteria(correlationId, request);
+
+		if (isMotors()) {
+			let data = await serviceStore.getters.getMotorSearchCriteria();
+			data = data ?? {};
+			data.diameter = filterItemMotorDiameter.value;
+			data.impulseClass = filterItemMotorImpulseClass.value;
+			serviceStore.dispatcher.setMotorSearchCriteria(correlationId, request);
+		}
 
 		const temp = await serviceStore.dispatcher.requestPartsRocketSearch(correlationId, request);
 		results.value = temp.sort(
@@ -196,30 +206,40 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		return success(correlationId);
 	};
 	const resetAdditional = async (correlationId, previous, loaded) => {
-		filterItemManufacturer.value = null;
-		filterItemManufacturerStockId.value = null;
-		filterItemName.value = null;
+		const data = await serviceStore.dispatcher.setPartsRocketSearchCriteria();
 
-		filterItemDiameterMax.value = null;
-		filterItemDiameterMin.value = null;
-		filterItemDiameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-		filterItemDiameterMeasurementUnitsId.value =  measurementUnitsIdSettings.value;
+		filterItemDiameterMax.value = data ? data.diameterMax : null;
+		filterItemDiameterMin.value = data ? data.diameterMin : null;
+		filterItemDiameterMeasurementUnitId.value = data ? data.diameterMeasurementUnitId : measurementUnitsLengthDefaultId.value;
+		filterItemDiameterMeasurementUnitsId.value = data ? data.diameterMeasurementUnitsId : measurementUnitsIdSettings.value;
 
-		filterItemLengthMax.value = null;
-		filterItemLengthMin.value = null;
-		filterItemLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-		filterItemLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+		filterItemLengthMax.value = data ? data.lengthMax : null;
+		filterItemLengthMin.value = data ? data.lengthMin : null;
+		filterItemLengthMeasurementUnitId.value = data ? data.lengthMeasurementUnitId : measurementUnitsLengthDefaultId.value;
+		filterItemLengthMeasurementUnitsId.value = data ? data.lengthMeasurementUnitsId : measurementUnitsIdSettings.value;
 
-		filterItemMotorDiameter.value = props.diameter ? props.diameter : null;
-		filterItemMotorImpulseClass.value = null;
+		filterItemManufacturer.value = data ? data.manufacturerId : null;
+		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
 
-		filterItemRocketTypes.value = null;
+		filterItemMotorDiameter.value = props.diameter ? props.diameter : data ? data.motorDiameter : null;
+		filterItemMotorImpulseClass.value = data ? data.motorImpulseClass : null;
+
+		filterItemName.value = data ? data.name : null;
+
+		filterItemRocketTypes.value = data ? data.rocketTypes : null;
+
+		if (isMotors()) {
+			const data = await serviceStore.getters.getMotorSearchCriteria();
+			filterItemMotorImpulseClass.value = data ? data.impulseClass : filterItemMotorImpulseClass.value;
+		}
 
 		if (loaded)
 			return await preCompleteOk(correlationId);
 
 		results.value = [];
 	};
+
+	const validationIsMotors = ref(isMotors());
 
 	onMounted(async () => {
 		if (manufacturersI.value)
@@ -302,8 +322,9 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		manufacturer,
 		preCompleteOk,
 		resetAdditional,
-		scope: 'RecoveryLookupDialog',
-		validation: useVuelidate({ $scope: 'RecoveryLookupDialog' })
+		validationIsMotors,
+		scope: 'RocketPartsLookupDialog',
+		validation: useVuelidate({ $scope: 'RocketPartsLookupDialog' })
 	};
 };
 </script>

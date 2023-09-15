@@ -77,7 +77,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const detailItemCgFrom = ref(null);
 	const detailItemCgMeasurementUnitId = ref(null);
 	const detailItemCgMeasurementUnitsId = ref(null);
-	const detailItemDescription = ref(null);
 	const detailItemMotor0 = ref(null);
 	const detailItemMotor1 = ref(null);
 	const detailItemMotor2 = ref(null);
@@ -145,7 +144,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		resetEditData(correlationId, detailItem.value);
 	};
 	const resetEditData = (correlationId, value) => {
-		detailItemDescription.value = value ? value.description : null;
 		detailItemNotes.value = value ? value.name : null;
 		
 		detailItemCg.value = value ? value.cg : null;
@@ -183,6 +181,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			// let tempMotorId;
 			// let tempMotorInfo;
 			let temp;
+			let temp2;
 			let index = -1;
 			let diameter;
 			let count;
@@ -191,50 +190,27 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 				if (!item.diameter || !item.count)
 					continue;
 
-				// if (index === 0) {
-				// 	tempMotor = detailItemMotor0;
-				// 	tempMotorCase = detailItemMotorCase0;
-				// 	tempMotorCaseId = detailItemMotorCaseId0;
-				// 	tempMotorDelay = detailItemMotorDelay0;
-				// 	tempMotorId = detailItemMotorId0;
-				// 	tempMotorInfo = detailItemMotorInfo0;
-				// }
-				// else if (index === 1) {
-				// 	tempMotor = detailItemMotor1;
-				// 	tempMotorCase = detailItemMotorCase1;
-				// 	tempMotorCaseId = detailItemMotorCaseId1;
-				// 	tempMotorDelay = detailItemMotorDelay1;
-				// 	tempMotorId = detailItemMotorId1;
-				// 	tempMotorInfo = detailItemMotorInfo1;
-				// }
-				// else if (index === 2) {
-				// 	tempMotor = detailItemMotor2;
-				// 	tempMotorCase = detailItemMotorCase2;
-				// 	tempMotorCaseId = detailItemMotorCaseId2;
-				// 	tempMotorDelay = detailItemMotorDelay2;
-				// 	tempMotorId = detailItemMotorId2;
-				// 	tempMotorInfo = detailItemMotorInfo2;
-				// }
-				// else
-				// 	break;
-
 				if (index > 2)
 					break;
 
 				temp = selectMotorByIndex(index);
 				if (!temp)
-					break;
+					continue;
+
+				temp2 = (value.motors ?? [])[index];
+				if (!temp2)
+					continue;
 
 				diameter = item.diameter ? motorDiameter(item.diameter) : null;
 				count = item.count ? item.count : null;
 				temp.motorInfo.value = `${diameter}${diameter ? ' x ' : ''}${count}`;
 
-				temp.motorCase.value = item.motorCase;
-				temp.motorCaseId.value = item.motorCaseId;
-				temp.motorDelay.value = item.delay;
+				temp.motorCase.value = temp2.motorCaseManufacturerAbbrev + ' ' + temp2.motorCaseName;
+				temp.motorCaseId.value = temp2.motorCaseId;
+				temp.motorDelay.value = temp2.delay;
 				temp.motorDiameter.value = item.diameter;
-				temp.motor.value = item.motor;
-				temp.motorId.value = item.motorId;
+				temp.motor.value = temp2.manufacturerAbbrev + ' ' + temp2.motorName;
+				temp.motorId.value = temp2.motorId;
 			}
 		}
 		
@@ -313,7 +289,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			if (props.manufacturers)
 				manufacturer = props.manufacturers.find(l => l.id === item.manufacturerId);
 
-			temp.motor.value = `${manufacturer ? manufacturer.abbrev : ''} ${item.name}`.trim();
+			temp.motorCase.value = `${manufacturer ? manufacturer.abbrev : ''} ${item.name}`.trim();
 			temp.motorCaseId.value = item.id;
 		}
 		finally {
@@ -324,13 +300,29 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		setEditData(correlationId, detailItem.value);
 	};
 	const setEditData = (correlationId, value) => {
-		value.description = String.trim(detailItemDescription.value);
 		value.notes = String.trim(detailItemNotes.value);
 
 		value.cg = AppUtility.convertNumber(detailItemCg.value);
 		value.cgFrom = detailItemCgFrom.value;
 		value.cgMeasurementUnitId = detailItemCgMeasurementUnitId.value;
 		value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
+
+		value.motors = value.motors ?? [];
+
+		let temp;
+		let index = -1;
+		for (const item of value.fromRocket.motors) {
+			index++;
+			temp = selectMotorByIndex(index);
+			if (!temp)
+				continue;
+
+			value.motors[index] = value.motors[index] ?? {};
+			value.motors[index].index = item.index;
+			value.motors[index].motorCaseId = temp.motorCaseId.value;
+			value.motors[index].motorDelay = temp.motorDelay.value;
+			value.motors[index].motorId = temp.motorId.value;
+		}
 
 		value.weight = AppUtility.convertNumber(detailItemWeight.value);
 		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
@@ -353,7 +345,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemCgFrom,
 		detailItemCgMeasurementUnitId,
 		detailItemCgMeasurementUnitsId,
-		detailItemDescription,
 		detailItemMotor0,
 		detailItemMotor1,
 		detailItemMotor2,

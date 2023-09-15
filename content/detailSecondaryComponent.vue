@@ -114,6 +114,8 @@ export function useDetailSecondaryComponent(props, context, options) {
 			const response = await options.dialogDeleteSecondaryOk(correlationIdI, dialogDeleteSecondaryParams.value);
 			if (hasFailed(response))
 				setNotify(correlationIdI, 'messages.error');
+			
+			detailItem.value.data = response.results;
 			return response;
 		}
 		finally {
@@ -182,7 +184,12 @@ export function useDetailSecondaryComponent(props, context, options) {
 		if (!options || !options.dialogEditSecondaryPreCompleteOk)
 			return error('useDetailSecondaryComponent', 'dialogEditSecondaryPreCompleteOk', null, null, null, null, correlationId);
 
-		return await options.dialogEditSecondaryPreCompleteOk(correlationId, item);
+		const response = await options.dialogEditSecondaryPreCompleteOk(correlationId, item);
+		if (hasFailed(response))
+			return response;
+
+		detailItem.value.data = response.results;
+		return response;
 	};
 	const handleAddSecondary = async () => {
 		if (!options || !options.initNewSecondary)

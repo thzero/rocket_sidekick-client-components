@@ -3,8 +3,8 @@
 		v-if="debug"
 	>
 		[[ isEditable {{ isEditable }} ]]
-		<!-- [[ detailItemData {{ detailItemData }} ]]
-		[[ altimeters {{ altimeters }} ]]
+		[[ displayItem {{ displayItem }} ]]
+		<!-- [[ altimeters {{ altimeters }} ]]
 		[[ chuteProtectors {{ chuteProtectors }} ]]
 		[[ chuteReleases {{ chuteReleases }} ]]
 		[[ deploymentBags {{ deploymentBags }} ]]
@@ -16,7 +16,8 @@
 		v-if="displayItem.enabled"
 	>
 		<v-row dense>
-			<v-col cols="9">
+			<!-- <v-col cols="9"> -->
+			<v-col cols="12">
 				<VTextArea
 					v-model="fromRocketStageDescription"
 					:readonly="true"
@@ -24,13 +25,13 @@
 					:rows="0"
 				/>
 			</v-col>
-			<v-col cols="3">
+			<!-- <v-col cols="3">
 				<VTextField
 					v-model="stageIndex"
 					:readonly="true"
 					:label="$t('forms.content.rockets.stage.name')"
 				/>
-			</v-col>
+			</v-col> -->
 		</v-row>
 		<v-row
 			dense
@@ -59,17 +60,6 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col
-				v-if="displayItemWeight"
-				cols="12" sm="4"
-			>
-				<VTextField
-					v-model="displayItemWeight"
-					:hide-details="true"
-					:readonly="true"
-					:label="$t('forms.content.parts.weight')"
-				/>
-			</v-col>
 			<v-col 
 				v-if="fromRocketStageCp"
 				cols="6" sm="4"
@@ -92,105 +82,145 @@
 					:label="$t('forms.content.rockets.cg')"
 				/>
 			</v-col>
+			<v-col
+				v-if="displayItemWeight"
+				cols="6" sm="4"
+			>
+				<VTextField
+					v-model="displayItemWeight"
+					:hide-details="true"
+					:readonly="true"
+					:label="$t('forms.content.parts.weight')"
+				/>
+			</v-col>
 		</v-row>
 		<v-row
 			dense
 		>
 			<v-col 
-				v-if="fromRocketStageHasMotor(0)"
-				cols="12" sm="4"
+				v-if="hasMotorInfo(0)"
+				cols="12"
 			>
-				<VTextField
-					v-model="fromRocketStageMotor(0).value"
-					:readonly="true"
-					:label="$t('forms.content.parts.motor.name')"
-				/>
-				<!-- <table style="width: 100%;">
-					<tr>
-						<td style="width: 100%;">
-							<VTextField
-								v-model="fromRocketStageMotor(0).value"
-								:readonly="true"
-								:label="$t('forms.content.parts.motor.name')"
-							/>
-						</td>
-						<td
-							v-if="isEditable"
-						>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorsSearch(0)"
-							>
-								{{ $t('forms.content.parts.motor.name') }}
-							</v-btn>
-						</td>
-					</tr>
-				</table> -->
+				<v-row
+					dense
+				>
+					<v-col 
+						cols="6" md="4"
+					>
+						<VTextField
+							v-model="fromRocketStageMotor(0).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="6" md="4"
+					>
+						<VTextField
+							v-model="motorInfo(0).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="12" md="4"
+					>
+						<VTextField
+							v-model="motorCaseInfo(0).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motorCase.name2')"
+						/>
+					</v-col>
+				</v-row>
 			</v-col>
+		</v-row>
+		<v-row
+			dense
+		>
 			<v-col 
-				v-if="fromRocketStageHasMotor(1)"
-				cols="12" sm="4"
+				v-if="hasMotorInfo(1)"
+				cols="12"
 			>
-				<VTextField
-					v-model="fromRocketStageMotor(1).value"
-					:readonly="true"
-					:label="$t('forms.content.parts.motor.name')"
-				/>
-				<!-- <table style="width: 100%;">
-					<tr>
-						<td style="width: 100%;">
-							<VTextField
-								v-model="fromRocketStageMotor(1).value"
-								:readonly="true"
-								:label="$t('forms.content.parts.motor.name')"
-							/>
-						</td>
-						<td
-							v-if="isEditable"
-						>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorsSearch(1)"
-							>
-								{{ $t('forms.content.parts.motor.name') }}
-							</v-btn>
-						</td>
-					</tr>
-				</table> -->
+				<v-row
+					dense
+				>
+					<v-col 
+						cols="6" md="4"
+					>
+						<VTextField
+							v-model="fromRocketStageMotor(1).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="6" md="4"
+					>
+						<VTextField
+							v-model="motorInfo(1).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="12" md="4"
+					>
+						<VTextField
+							v-model="motorCaseInfo(1).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motorCase.name2')"
+						/>
+					</v-col>
+				</v-row>
 			</v-col>
+		</v-row>
+		<v-row
+			dense
+		>
 			<v-col 
-				v-if="fromRocketStageHasMotor(2)"
-				cols="12" sm="4"
+				v-if="hasMotorInfo(2)"
+				cols="12"
 			>
-				<VTextField
-					v-model="fromRocketStageMotor(2).value"
-					:readonly="true"
-					:label="$t('forms.content.parts.motor.name')"
-				/>
-				<!-- <table style="width: 100%;">
-					<tr>
-						<td style="width: 100%;">
-							<VTextField
-								v-model="fromRocketStageMotor(2).value"
-								:readonly="true"
-								:label="$t('forms.content.parts.motor.name')"
-							/>
-						</td>
-						<td
-							v-if="isEditable"
-						>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorsSearch(2)"
-							>
-								{{ $t('forms.content.parts.motor.name') }}
-							</v-btn>
-						</td>
-					</tr>
-				</table> -->
+				<v-row
+					dense
+				>
+					<v-col 
+						cols="6" md="4"
+					>
+						<VTextField
+							v-model="fromRocketStageMotor(2).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="6" md="4"
+					>
+						<VTextField
+							v-model="motorInfo(2).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="12" md="4"
+					>
+						<VTextField
+							v-model="motorCaseInfo(2).value"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motorCase.name2')"
+						/>
+					</v-col>
+				</v-row>
 			</v-col>
 		</v-row>
 	</div>
@@ -430,14 +460,14 @@
 		:signal="dialogPartsSearchMotorsManager.signal"
 		:part-types="manufacturerTypeMotor"
 		@close="dialogPartsSearchMotorsManager.cancel()"
-		@select="selectDeploymentBags"
+		@select="selectMotor"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialoSearchgMotorCasesRef"
 		:signal="dialogPartsSearchMotorCasesManager.signal"
 		:part-types="manufacturerTypeMotorCase"
 		@close="dialogPartsSearchMotorCasesManager.cancel()"
-		@select="selectDeploymentBags"
+		@select="selectMotorCase"
 	/> -->
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchParachutesRef"
@@ -547,8 +577,8 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			motorDiameter,
 			motorDiameters,
+			motorDiameter,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogPartsEditMessage,
@@ -606,6 +636,9 @@ export default {
 			handleStreamerEdit,
 			handleTrackerDelete,
 			handleTrackerEdit,
+			hasMotorInfo,
+			motorCaseInfo,
+			motorInfo,
 			panelsUpdated,
 			selectAltimeter,
 			selectChuteProtector,
@@ -658,8 +691,8 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			motorDiameter,
 			motorDiameters,
+			motorDiameter,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogPartsEditMessage,
@@ -717,6 +750,9 @@ export default {
 			handleStreamerEdit,
 			handleTrackerDelete,
 			handleTrackerEdit,
+			hasMotorInfo,
+			motorCaseInfo,
+			motorInfo,
 			panelsUpdated,
 			selectAltimeter,
 			selectChuteProtector,
