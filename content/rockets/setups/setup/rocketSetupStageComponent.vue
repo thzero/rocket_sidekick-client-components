@@ -452,7 +452,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		if (!motor)
 			return { value: '' };
 
-		const output =
+		let output =
 				(!String.isNullOrEmpty(motor.manufacturerAbbrev) ? motor.manufacturerAbbrev : '') + ' ' + 
 				(!String.isNullOrEmpty(motor.motorName) ? motor.motorName : '');
 		if (!String.isNullOrEmpty(motor.motorDelay))
