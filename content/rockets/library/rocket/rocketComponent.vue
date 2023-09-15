@@ -83,25 +83,30 @@ export function useRocketComponent(props, context, options) {
 	} = useDetailSecondaryComponent(props, context, {
 		dialogDeleteMessage: 'rockets.stage',
 		dialogDeleteSecondaryOk: async (correlationId, id) => {
-			// LibraryCommonUtility.deleteArrayById(detailItemData.value.stages, id);
-			let stages = LibraryCommonUtility.cloneDeep(detailItemData.value.stages);
-			LibraryCommonUtility.deleteArrayById(stages, id);
+			// let stages = LibraryCommonUtility.cloneDeep(detailItemData.value.stages);
+			// LibraryCommonUtility.deleteArrayById(stages, id);
+			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+			LibraryCommonUtility.deleteArrayById(temp.stages, id);
 
-			stages = stages.sort((a, b) => a.index >= b.index);
+			temp.stages = temp.stages.sort((a, b) => a.index >= b.index);
 			let index = 0;
-			for (const item of stages)
+			for (const item of temp.stages)
 				item.index = index++;
-			detailItem.value.stages = stages;
+			// detailItemData.value.stages = stages;
 			
-			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
+			const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
 			logger.debug('rocketComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
 			return response;
 		},
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
-			detailItemData.value.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
+			// detailItemData.value.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
+			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+			temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
 			
 			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
 			logger.debug('rocketComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);
+			
+			// detailItem.value.data = response.results;
 			return response;
 		},
 		init: async (correlationId, value) => {

@@ -59,7 +59,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const {
 		motorDiameters,
 		motorImpulseClasses,
-		motorCaseInfo,
+		// motorCaseInfo,
 		motorDiameter,
 		motorUrl
 	} = useMotorLookupComponent(props, context);
@@ -122,8 +122,8 @@ export function useRocketSetupStageComponent(props, context, options) {
 		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.cg; }, (value) => { return value.cgMeasurementUnitsId; }, (value) => { return value.cgMeasurementUnitId; });
 	});
 	const displayItemWeight = computed(() => {
-		// if (displayItem.value)
-		// 	return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
+		if (displayItem.value && displayItem.value.weight)
+			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
 		return fromRocketStageWeight.value;
 	});
 	const hasAltimeters = computed(() => {
@@ -192,33 +192,29 @@ export function useRocketSetupStageComponent(props, context, options) {
 			return null;
 		return displayItemMeasurementLength(correlationId(), temp, (value) => { return value.length; },  (value) => { return value.lengthMeasurementUnitsId; }, (value) => { return value.lengthMeasurementUnitId; });
 	});
-	const fromRocketStageHasMotor = (index) => {
-		const temp = fromRocketStage.value;
-		if (!temp || !temp.motors)
-			return false;
-		const temp2 = temp.motors.find(l => l.index === index);
-		return temp2 && (temp2.count > 0);
-	};
-	const fromRocketStageMotorI = (index) => {
-		const temp = fromRocketStage.value;
-		if (!temp || !temp.motors)
-			return {};
-		const temp2 = temp.motors.find(l => l.index === index);
-		return temp2 ? temp2 : {};
-	};
-	const fromRocketStageMotor = (index) => {
-		const temp = fromRocketStageMotorI(index);
-		if (!temp)
-			return { value: null };
-		const diameter = temp.diameter ? motorDiameter(temp.diameter) : null;
-		const count = temp.count ? temp.count : null;
-		return { value: `${diameter}${diameter ? ' x ' : ''}${count}` };
-	};
 	const fromRocketStageWeight = computed(() => {
 		const temp = fromRocketStage.value;
 		if (!temp)
 			return null;
 		return displayItemMeasurementWeight(correlationId(), temp, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
+	});
+	const motorCaseInfo0 = computed(() => {
+		return motorCaseInfo(0);
+	});
+	const motorCaseInfo1 = computed(() => {
+		return motorCaseInfo(1);
+	});
+	const motorCaseInfo2 = computed(() => {
+		return motorCaseInfo(1);
+	});
+	const motorInfo0 = computed(() => {
+		return motorInfo(0);
+	});
+	const motorInfo1 = computed(() => {
+		return motorInfo(1);
+	});
+	const motorInfo2 = computed(() => {
+		return motorInfo(1);
 	});
 	const parachutes = computed(() => {
 		return props.detailItem ? props.detailItem.parachutes : [];
@@ -314,6 +310,28 @@ export function useRocketSetupStageComponent(props, context, options) {
 			dialogPartsDeleteType.value = null;
 		}
 	};
+	const fromRocketStageHasMotor = (index) => {
+		const temp = fromRocketStage.value;
+		if (!temp || !temp.motors)
+			return false;
+		const temp2 = temp.motors.find(l => l.index === index);
+		return temp2 && (temp2.count > 0);
+	};
+	const fromRocketStageMotorI = (index) => {
+		const temp = fromRocketStage.value;
+		if (!temp || !temp.motors)
+			return {};
+		const temp2 = temp.motors.find(l => l.index === index);
+		return temp2 ? temp2 : {};
+	};
+	const fromRocketStageMotor = (index) => {
+		const temp = fromRocketStageMotorI(index);
+		if (!temp)
+			return { value: null };
+		const diameter = temp.diameter ? motorDiameter(temp.diameter) : null;
+		const count = temp.count ? temp.count : null;
+		return { value: `${diameter}${diameter ? ' x ' : ''}${count}` };
+	};
 	const handleAltimeterDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyAltimeters}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
@@ -391,6 +409,12 @@ export function useRocketSetupStageComponent(props, context, options) {
 		dialogPartsEditId.value = item.id;
 		dialogPartsEditTrackerManager.value.open();
 	};
+	const getMotor = (index) => {
+		if (!displayItem.value || !displayItem.value.motors || (index >= displayItem.value.motors.length))
+			return null;
+
+		return displayItem.value.motors[index];
+	};
 	const getParts = (correlationId, item, type) => {
 		if (type === partsKeyAltimeters)
 			return item.altimeters;
@@ -407,6 +431,33 @@ export function useRocketSetupStageComponent(props, context, options) {
 		if (type === partsKeyTrackers)
 			return item.trackers;
 		return null;
+	};
+	const hasMotorInfo = (index) => {
+		const motor = getMotor(index);
+		const fromRocket = fromRocketStageMotor(index);
+		return ((motor && motor.motorId) || (fromRocket && fromRocket.diameter));
+	};
+	const motorCaseInfo = (index) => {
+		const motor = getMotor(index);
+		if (!motor)
+			return { value: '' };
+
+		const output = 
+				(!String.isNullOrEmpty(motor.motorCaseManufacturerAbbrev) ? motor.motorCaseManufacturerAbbrev : '') + ' ' + 
+				(!String.isNullOrEmpty(motor.motorCaseName) ? motor.motorCaseName : '');
+		return { value: output.trim() };
+	};
+	const motorInfo = (index) => {
+		const motor = getMotor(index);
+		if (!motor)
+			return { value: '' };
+
+		const output =
+				(!String.isNullOrEmpty(motor.manufacturerAbbrev) ? motor.manufacturerAbbrev : '') + ' ' + 
+				(!String.isNullOrEmpty(motor.motorName) ? motor.motorName : '');
+		if (!String.isNullOrEmpty(motor.motorDelay))
+			output += '-' + motor.motorDelay;
+		return { value: output.trim() };
 	};
 	const panelsKey = (type) => {
 		return displayItem.value.id + '-stage-';
@@ -669,6 +720,9 @@ export function useRocketSetupStageComponent(props, context, options) {
 		handleStreamerEdit,
 		handleTrackerDelete,
 		handleTrackerEdit,
+		hasMotorInfo,
+		motorCaseInfo,
+		motorInfo,
 		panelsUpdated,
 		selectAltimeter,
 		selectChuteProtector,

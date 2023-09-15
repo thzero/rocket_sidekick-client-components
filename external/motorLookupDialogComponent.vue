@@ -48,14 +48,14 @@ export function useMotorLookupDialogComponent(props, context, options) {
 	const dialogMotorLookup = ref(null);
 	const dialogResetManager = ref(new DialogSupport());
 	const dialogResetMessage = ref(null);
-	const diameter = ref(null);
-	const impulseClass = ref(null);
-	const manufacturer = ref(null);
+	const filterItemDiameter = ref(null);
+	const filterItemImpulseClass = ref(null);
+	const filterItemMotor = ref(null);
+	const filterItemManufacturer = ref(null);
+	const filterItemSparky = ref(false);
+	const filterItemSingleUse = ref(false);
 	const manufacturers = ref(null);
-	const motor = ref(null);
 	const results = ref([]);
-	const sparky = ref(false);
-	const singleUse = ref(false);
 	const ttl = ref(0);
 
 	const buttonMotorSearchResetDisabled = computed(() => {
@@ -158,12 +158,12 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		results.value = null;
 
 		const request = {
-			diameter: diameter.value,
-			impulseClass: impulseClass.value,
-			manufacturer: manufacturer.value,
-			motor: motor.value,
-			singleUse: singleUse.value,
-			sparky: sparky.value
+			diameter: filterItemDiameter.value,
+			impulseClass: filterItemImpulseClass.value,
+			manufacturer: filterItemManufacturer.value,
+			motor: filterItemMotor.value,
+			singleUse: filterItemSingleUse.value,
+			sparky: filterItemSparky.value
 		};
 
 		serviceStore.dispatcher.setMotorSearchCriteria(correlationId, request);
@@ -175,9 +175,9 @@ export function useMotorLookupDialogComponent(props, context, options) {
 	};
 	// eslint-disable-next-line
 	const resetAdditional = async (correlationId, ignoreSettings) => {
-		impulseClass.value = null;
-		manufacturer.value = null;
-		motor.value = null;
+		filterItemImpulseClass.value = null;
+		filterItemManufacturer.value = null;
+		filterItemMotor.value = null;
 		results.value = null;
 
 		ttl.value = serviceStore.state.motorSearchResults ? serviceStore.state.motorSearchResults.ttl : 0;
@@ -189,12 +189,12 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		if (!data)
 			return;
 
-		diameter.value = data.diameter;
-		impulseClass.value = data.impulseClass;
-		manufacturer.value = data.manufacturer;
-		motor.value = data.motor;
-		sparky.value = !LibraryCommonUtility.isNull(data.sparky) ? data.sparky : false;
-		singleUse.value = !LibraryCommonUtility.isNull(data.singleUse) ? data.singleUse : false;
+		filterItemDiameter.value = data.diameter;
+		filterItemImpulseClass.value = data.impulseClass;
+		filterItemManufacturer.value = data.manufacturer;
+		filterItemMotor.value = data.motor;
+		filterItemSparky.value = !LibraryCommonUtility.isNull(data.sparky) ? data.sparky : false;
+		filterItemSingleUse.value = !LibraryCommonUtility.isNull(data.singleUse) ? data.singleUse : false;
 
 		// (async () => {
 		// 	// await clickMotorSearch();
@@ -204,7 +204,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		if (manufacturers.value)
+		if (filterItemManufacturers.value)
 			return;
 
 		const response = await serviceStore.dispatcher.requestManufacturers(correlationId());
@@ -217,7 +217,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 
 		temp = temp.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.motor));
 		temp = temp.sort((a, b) => a.name.localeCompare(b.name));
-		manufacturers.value = temp.map((item) => { return { id: item.id, name: item.name }; });
+		filterItemManufacturers.value = temp.map((item) => { return { id: item.id, name: item.name }; });
 	});
 
 	return {
@@ -241,14 +241,14 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		dialogMotorLookup,
 		dialogResetMessage,
 		dialogResetManager,
-		diameter,
-		impulseClass,
-		manufacturer,
+		filterItemDiameter,
+		filterItemImpulseClass,
+		filterItemManufacturer,
+		filterItemMotor,
+		filterItemSparky,
+		filterItemSingleUse,
 		manufacturers,
-		motor,
 		results,
-		sparky,
-		singleUse,
 		buttonMotorSearchResetDisabled,
 		searchLocaleName,
 		searchUrl,

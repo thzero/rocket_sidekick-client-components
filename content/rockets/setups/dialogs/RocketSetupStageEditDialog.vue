@@ -18,22 +18,10 @@
 			v-if="debug"
 			class="text-center"
 		>
-			isEditable: {{ isEditable }} readonly: {{ readonly }} <br>
-			detailItem {{ detailItem }} 
+			<!-- isEditable: {{ isEditable }} readonly: {{ readonly }} <br>
+			detailItem {{ detailItem }}  -->
 		</div>
-		<v-row dense>
-			<v-col cols="9">
-				<VTextAreaWithValidation
-					ref="detailItemDescriptionRef"
-					v-model="detailItemDescription"
-					vid="detailItemDescription"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.description')"
-					:counter="30"
-					:rows="detailItemTextRows"
-				/>
-			</v-col>
+		<!-- <v-row dense>
 			<v-col cols="3">
 				<VTextField
 					v-model="stageNumber"
@@ -41,7 +29,7 @@
 					:label="$t('forms.content.rockets.stage.name')"
 				/>
 			</v-col>
-		</v-row>
+		</v-row> -->
 		<v-row dense>
 			<v-col cols="5" md="2">
 				<VNumberFieldWithValidation
@@ -142,7 +130,7 @@
 								/>
 							</v-col>
 							<v-col 
-								cols="6" md="3"
+								cols="6" md="4"
 							>
 								<VTextFieldWithValidation
 									ref="detailItemMotor0Ref"
@@ -154,7 +142,7 @@
 								/>
 							</v-col>
 							<v-col 
-								cols="6" md="3"
+								cols="8" md="4"
 							>
 								<VTextFieldWithValidation
 									ref="detailItemMotorCase0Ref"
@@ -166,7 +154,7 @@
 								/>
 							</v-col>
 							<v-col 
-								cols="6" md="3"
+								cols="4" md="4"
 							>
 								<VTextFieldWithValidation
 									ref="detailItemMotorDelay0Ref"
@@ -456,7 +444,6 @@ export default {
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
-			detailItemDescription,
 			detailItemMotor0,
 			detailItemMotor1,
 			detailItemMotor2,
@@ -518,7 +505,6 @@ export default {
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
-			detailItemDescription,
 			detailItemMotor0,
 			detailItemMotor1,
 			detailItemMotor2,
@@ -565,7 +551,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketSetupStageEditDialogValidation), LibraryCommonUtility.cloneDeep(useRocketSetupEditValidation(false)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketSetupStageEditDialogValidation), {});
 	}
 };
 </script>

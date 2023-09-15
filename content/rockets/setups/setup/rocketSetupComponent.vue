@@ -85,17 +85,25 @@ export function useRocketSetupComponent(props, context, options) {
 	} = useDetailSecondaryComponent(props, context, {
 		dialogDeleteMessage: 'rockets.stage',
 		dialogDeleteSecondaryOk: async (correlationId, id) => {
-			LibraryCommonUtility.deleteArrayById(detailItemData.value.stages, id);
+			// LibraryCommonUtility.deleteArrayById(detailItemData.value.stages, id);
+			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+			LibraryCommonUtility.deleteArrayById(temp.stages, id);
 			
-			const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, detailItemData.value);
+			const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, temp);
 			logger.debug('rocketSetupComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
 			return response;
 		},
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
-			detailItemData.value.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
+			// detailItemData.value.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
+			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+			temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
 			
-			const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, detailItemData.value);
+			const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, temp);
 			logger.debug('rocketSetupComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);
+			if (hasFailed(response))
+				return response;
+
+			// detailItem.value.data = response.results;
 			return response;
 		},
 		init: async (correlationId, value) => {
