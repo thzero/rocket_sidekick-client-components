@@ -85,7 +85,6 @@ export function useRocketSetupComponent(props, context, options) {
 	} = useDetailSecondaryComponent(props, context, {
 		dialogDeleteMessage: 'rockets.stage',
 		dialogDeleteSecondaryOk: async (correlationId, id) => {
-			// LibraryCommonUtility.deleteArrayById(detailItemData.value.stages, id);
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 			LibraryCommonUtility.deleteArrayById(temp.stages, id);
 			
@@ -94,7 +93,6 @@ export function useRocketSetupComponent(props, context, options) {
 			return response;
 		},
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
-			// detailItemData.value.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 			temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
 			
@@ -103,11 +101,9 @@ export function useRocketSetupComponent(props, context, options) {
 			if (hasFailed(response))
 				return response;
 
-			// detailItem.value.data = response.results;
 			return response;
 		},
 		init: async (correlationId, value) => {
-			// await requestManufacturers(correlationId);
 			const temp = manufacturers.value ? manufacturers.value.find(l => l.isDefault) : null;
 			manufacturerDefault.value = temp ? temp.id : null;
 
@@ -138,26 +134,6 @@ export function useRocketSetupComponent(props, context, options) {
 		},
 		preCompleteOk : async (correlationId) => {
 			setData(correlationId);
-
-			// // TODO: maybe moves this to the server?
-			// if (detailItemData.value.stages.length !== detailItemData.value.rocket.stages.length) {
-			// 	const temp = [];
-			// 	let stage;
-			// 	for (const item of detailItemData.value.rocket.stages) {
-			// 		stage = detailItemData.value.stages.find(l => l.rocketStageId === item.id);
-			// 		if (stage) {
-			// 			temp.push(stage);
-			// 			continue;
-			// 		}
-
-			// 		stage = new RocketSetupStageData();
-			// 		stage.rocketSetupId = detailItemData.value.id;
-			// 		stage.rocketStageId = item.id;
-			// 		stage.index = item.index;
-			// 		temp.push(stage);
-			// 	}
-			// 	detailItemData.value.stages = temp;
-			// }
 
 			const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, detailItemData.value);
 			logger.debug('rocketSetupComponent', 'preCompleteOk', 'response', response, correlationId);

@@ -16,7 +16,6 @@
 		v-if="displayItem.enabled"
 	>
 		<v-row dense>
-			<!-- <v-col cols="9"> -->
 			<v-col cols="12">
 				<VTextArea
 					v-model="fromRocketStageDescription"
@@ -25,13 +24,6 @@
 					:rows="0"
 				/>
 			</v-col>
-			<!-- <v-col cols="3">
-				<VTextField
-					v-model="stageIndex"
-					:readonly="true"
-					:label="$t('forms.content.rockets.stage.name')"
-				/>
-			</v-col> -->
 		</v-row>
 		<v-row
 			dense
@@ -282,24 +274,6 @@
 										{{ $t('forms.content.parts.deploymentBag.name') }}
 									</v-btn>
 								</v-list-item>
-								<!-- <v-list-item>
-									<v-btn
-										variant="flat"
-										color="orange"
-										@click="clickMotorsSearch"
-									>
-										{{ $t('forms.content.parts.motor.name') }}
-									</v-btn>
-								</v-list-item> -->
-								<!-- <v-list-item>
-									<v-btn
-										variant="flat"
-										color="orange"
-										@click="clickMotorCasesSearch"
-									>
-										{{ $t('forms.content.parts.motorCase.name') }}
-									</v-btn>
-								</v-list-item> -->
 								<v-list-item>
 									<v-btn
 										variant="flat"
@@ -455,20 +429,6 @@
 		@close="dialogPartsSearchDeploymentBagsManager.cancel()"
 		@select="selectDeploymentBag"
 	/>
-	<!-- <RocketPartsLookupDialog
-		ref="dialoSearchgMotorsRef"
-		:signal="dialogPartsSearchMotorsManager.signal"
-		:part-types="manufacturerTypeMotor"
-		@close="dialogPartsSearchMotorsManager.cancel()"
-		@select="selectMotor"
-	/>
-	<RocketPartsLookupDialog
-		ref="dialoSearchgMotorCasesRef"
-		:signal="dialogPartsSearchMotorCasesManager.signal"
-		:part-types="manufacturerTypeMotorCase"
-		@close="dialogPartsSearchMotorCasesManager.cancel()"
-		@select="selectMotorCase"
-	/> -->
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchParachutesRef"
 		:signal="dialogPartsSearchParachutesManager.signal"
@@ -595,8 +555,6 @@ export default {
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
 			dialogPartsSearchDeploymentBagsManager,
-			// dialogPartsSearchMotorsManager,
-			// dialogPartsSearchMotorCasesManager,
 			dialogPartsSearchParachutesManager,
 			dialogPartsSearchStreamersManager,
 			dialogPartsSearchTrackersManager,
@@ -604,8 +562,6 @@ export default {
 			manufacturerTypeChuteProtector,
 			manufacturerTypeChuteRelease,
 			manufacturerTypeDeploymentBag,
-			// manufacturerTypeMotor,
-			// manufacturerTypeMotorCase,
 			manufacturerTypeParachute,
 			manufacturerTypeStreamer,
 			manufacturerTypeTracker,
@@ -615,8 +571,6 @@ export default {
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
 			clickDeploymentBagsSearch,
-			// clickMotorsSearch,
-			// clickMotorCasesSearch,
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
