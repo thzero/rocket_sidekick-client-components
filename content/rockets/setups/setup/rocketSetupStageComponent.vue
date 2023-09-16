@@ -99,16 +99,36 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const panels = ref([]);
 	
 	const altimeters = computed(() => {
-		return props.detailItem ? props.detailItem.altimeters : [];
+		const temp = props.detailItem ? props.detailItem.altimeters : [];
+		if (fromRocketStage.value.altimeters) {
+			fromRocketStage.value.altimeters.forEach(l => l.fromRocket = true);
+			temp.push(...fromRocketStage.value.altimeters);
+		}
+		return temp;
 	});
 	const chuteProtectors = computed(() => {
-		return props.detailItem ? props.detailItem.chuteProtectors : [];
+		const temp = props.detailItem ? props.detailItem.chuteProtectors : [];
+		if (fromRocketStage.value.chuteProtectors) {
+			fromRocketStage.value.altimeters.forEach(l => l.fromRocket = true);
+			temp.push(...fromRocketStage.value.altimeters);
+		}
+		return temp;
 	});
 	const chuteReleases = computed(() => {
-		return props.detailItem ? props.detailItem.chuteReleases : [];
+		const temp = props.detailItem ? props.detailItem.chuteReleases : [];
+		if (fromRocketStage.value.chuteReleases) {
+			fromRocketStage.value.chuteReleases.forEach(l => l.fromRocket = true);
+			temp.push(...fromRocketStage.value.chuteReleases);
+		}
+		return temp;
 	});
 	const deploymentBags = computed(() => {
-		return props.detailItem ? props.detailItem.deploymentBags : [];
+		const temp = props.detailItem ? props.detailItem.deploymentBags : [];
+		if (fromRocketStage.value.deploymentBags) {
+			fromRocketStage.value.deploymentBags.forEach(l => l.fromRocket = true);
+			temp.push(...fromRocketStage.value.deploymentBags);
+		}
+		return temp;
 	});
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
@@ -212,7 +232,12 @@ export function useRocketSetupStageComponent(props, context, options) {
 		return motorInfo(1);
 	});
 	const parachutes = computed(() => {
-		return props.detailItem ? props.detailItem.parachutes : [];
+		const temp = props.detailItem ? props.detailItem.parachutes : [];
+		if (fromRocketStage.value.parachutes) {
+			fromRocketStage.value.parachutes.forEach(l => l.fromRocket = true);
+			temp.push(...fromRocketStage.value.parachutes);
+		}
+		return temp;
 	});
 	const stageIndex = computed(() => {
 		if (!props.detailItem)
@@ -221,10 +246,20 @@ export function useRocketSetupStageComponent(props, context, options) {
 		return props.detailItem.index + 1;
 	});
 	const streamers = computed(() => {
-		return props.detailItem ? props.detailItem.streamers : [];
+		const temp = props.detailItem ? props.detailItem.streamers : [];
+		if (fromRocketStage.value.streamers) {
+			fromRocketStage.value.streamers.forEach(l => l.fromRocket = true);
+			temp.push(...fromRocketStage.value.streamers);
+		}
+		return temp;
 	});
 	const trackers = computed(() => {
-		return props.detailItem ? props.detailItem.trackers : [];
+		const temp = props.detailItem ? props.detailItem.trackers : [];
+		if (fromRocketStage.value.trackers) {
+			fromRocketStage.value.trackers.forEach(l => l.fromRocket = true);
+			temp.push(...fromRocketStage.value.trackers);
+		}
+		return temp;
 	});
 
 	const partsKeyAltimeters = 'altimeters';

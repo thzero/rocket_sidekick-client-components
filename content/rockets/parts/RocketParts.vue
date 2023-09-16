@@ -80,94 +80,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- <v-expansion-panels
-		v-if="search"
-		v-model="panels"
-		multiple
-		@update:modelValue="panelsUpdated"
-	>
-		<v-expansion-panel
-			v-for="item in results" 
-			:key="item.typeId"
-			:value="item.typeId"
-		>
-			<v-expansion-panel-title
-				color="secondary"
-			>
-				{{ partTypeName(item.name) }}
-			</v-expansion-panel-title>
-			<v-expansion-panel-text>
-				<div
-					v-for="item2 in item.results" 
-					:key="item2.id"
-				>
-					<v-card
-						color="grey-darken-3"
-						class="mb-4"
-					>
-						<v-card-title>
-							<AltimeterPanelTitle
-								v-if="isPartType(item2, partTypes.altimeter)"
-								:item="item2"
-							/>
-							<ChuteProtectorPanelTitle
-								v-if="isPartType(item2, partTypes.chuteProtector)"
-								:item="item2"
-							/>
-							<ChuteReleasePanelTitle
-								v-if="isPartType(item2, partTypes.chuteRelease)"
-								:item="item2"
-							/>
-							<DeploymentBagPanelTitle
-								v-if="isPartType(item2, partTypes.deploymentBag)"
-								:item="item2"
-							/>
-							<MotorPanelTitle
-								v-if="isPartType(item2, partTypes.motor)"
-								:item="item2"
-							/>
-							<MotorCasePanelTitle
-								v-if="isPartType(item2, partTypes.motorCase)"
-								:item="item2"
-							/>
-							<ParachutePanelTitle
-								v-if="isPartType(item2, partTypes.parachute)"
-								:item="item2"
-							/>
-							<StreamerPanelTitle
-								v-if="isPartType(item2, partTypes.streamer)"
-								:item="item2"
-							/>
-							<TrackerPanelTitle
-								v-if="isPartType(item2, partTypes.tracker)"
-								:item="item2"
-							/>
-							<div 
-								class="float-right"
-							>{{ manufacturer(item2) }}</div>
-						</v-card-title>
-						<v-card-actions
-							v-if="deletable || selectable"
-						>
-							<v-spacer></v-spacer>
-							<v-btn
-								v-if="deletable"
-								:variant="buttonsForms.variant.delete"
-								:color="buttonsForms.color.delete"
-								@click="clickDelete(item2, stageId)"
-							>{{ $t('buttons.delete') }}</v-btn>
-							<v-btn
-								v-if="selectable"
-								:variant="buttonsForms.variant.default"
-								:color="buttonsForms.color.default"
-								@click="clickSelect(item2, stageId)"
-							>{{ $t('buttons.select') }}</v-btn>
-						</v-card-actions>
-					</v-card>
-				</div>
-			</v-expansion-panel-text>
-		</v-expansion-panel>
-	</v-expansion-panels> -->
 	<v-expansion-panel
 		v-if="!search"
 		v-for="item in results" 
@@ -230,7 +142,7 @@
 						>{{ manufacturer(item2) }}</div>
 					</v-card-title>
 					<v-card-actions
-						v-if="deletable || editable || selectable"
+						v-if="(deletable || editable || selectable) && !item2.fromRocket"
 					>
 						<v-spacer></v-spacer>
 						<v-btn
