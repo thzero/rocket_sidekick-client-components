@@ -7,7 +7,6 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
-import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
@@ -130,6 +129,15 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		dialogPartsSearchMotorIndex.value = index;
 		dialogPartsSearchMotorCasesManager.value.open();
 	};
+	const generateTitle = (id, name) => {
+		if (String.isNullOrEmpty(name))
+			return '';
+		let manufacturer = null;
+		if (props.manufacturers)
+			manufacturer = props.manufacturers.find(l => l.id === id);
+
+		return `${manufacturer ? manufacturer.abbrev : ''} ${name}`.trim();
+	};
 	const preCompleteOk = async (correlationId) => {
 		await setAdditional(correlationId);
 
@@ -174,12 +182,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemMotorInfo2.value = null;
 		const fromRocket = value && value.fromRocket ? value.fromRocket : null;
 		if (fromRocket) {
-			// let tempMotor;
-			// let tempMotorCase;
-			// let tempMotorCaseId;
-			// let tempMotorDelay;
-			// let tempMotorId;
-			// let tempMotorInfo;
 			let temp;
 			let temp2;
 			let index = -1;
@@ -205,11 +207,11 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 				count = item.count ? item.count : null;
 				temp.motorInfo.value = `${diameter}${diameter ? ' x ' : ''}${count}`;
 
-				temp.motorCase.value = temp2.motorCaseManufacturerAbbrev + ' ' + temp2.motorCaseName;
+				temp.motorCase.value = generateTitle(temp2.motorCaseManufacturerId, temp2.motorCaseName);
 				temp.motorCaseId.value = temp2.motorCaseId;
 				temp.motorDelay.value = temp2.delay;
 				temp.motorDiameter.value = item.diameter;
-				temp.motor.value = temp2.manufacturerAbbrev + ' ' + temp2.motorName;
+				temp.motor.value = generateTitle(temp2.motorManufacturerId, temp2.motorName);
 				temp.motorId.value = temp2.motorId;
 			}
 		}
@@ -226,7 +228,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			if (!temp)
 				return;
 
-			temp.motor.value = `${item.manufacturerAbbrev} ${item.name}`;
+			temp.motor.value = generateTitle(item.manufacturerId, item.name);
 			temp.motorId.value = item.id;
 		}
 		finally {
@@ -285,11 +287,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			if (!temp)
 				return;
 
-			let manufacturer = null;
-			if (props.manufacturers)
-				manufacturer = props.manufacturers.find(l => l.id === item.manufacturerId);
-
-			temp.motorCase.value = `${manufacturer ? manufacturer.abbrev : ''} ${item.name}`.trim();
+			temp.motorCase.value = generateTitle(item.manufacturerId, item.name);
 			temp.motorCaseId.value = item.id;
 		}
 		finally {
