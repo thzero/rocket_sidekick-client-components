@@ -38,7 +38,7 @@
 									</v-col>
 								</v-row>
 								<v-row dense>
-									<v-col cols="6">
+									<v-col cols="12">
 										<div class="d-flex">
 											<VTextField
 												ref="filterItemRocketNameRef"

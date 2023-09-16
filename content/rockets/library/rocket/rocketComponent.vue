@@ -83,8 +83,6 @@ export function useRocketComponent(props, context, options) {
 	} = useDetailSecondaryComponent(props, context, {
 		dialogDeleteMessage: 'rockets.stage',
 		dialogDeleteSecondaryOk: async (correlationId, id) => {
-			// let stages = LibraryCommonUtility.cloneDeep(detailItemData.value.stages);
-			// LibraryCommonUtility.deleteArrayById(stages, id);
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 			LibraryCommonUtility.deleteArrayById(temp.stages, id);
 
@@ -99,7 +97,6 @@ export function useRocketComponent(props, context, options) {
 			return response;
 		},
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
-			// detailItemData.value.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 			temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
 			
@@ -110,7 +107,6 @@ export function useRocketComponent(props, context, options) {
 			return response;
 		},
 		init: async (correlationId, value) => {
-			// await requestManufacturers(correlationId);
 			const temp = manufacturers.value ? manufacturers.value.find(l => l.isDefault) : null;
 			manufacturerDefault.value = temp ? temp.id : null;
 
