@@ -108,267 +108,256 @@
 				</table>
 			</v-col>
 		</v-row>
-		<v-row dense>
-			<v-col
-				v-if="detailItemMotorInfo0"
+		<v-row 
+			v-if="detailItemMotorInfo0"
+			dense
+		>
+			<v-col 
 				cols="12"
 			>
 				<v-row dense>
 					<v-col 
-						cols="12" md="9"
+						cols="6" md="2"
 					>
-						<v-row dense>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									class="mr-2"
-									v-model="detailItemMotorInfo0"
-									:readonly="true"
-									:hide-details="true"
-									:label="$t('forms.content.parts.motor.name')"
-								/>
-							</v-col>
-							<v-col 
-								cols="6" md="4"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotor0Ref"
-									v-model="detailItemMotor0"
-									vid="detailItemMotor0"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motor.name')"
-								/>
-							</v-col>
-							<v-col 
-								cols="8" md="4"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotorCase0Ref"
-									v-model="detailItemMotorCase0"
-									vid="detailItemMotorCase0"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motorCase.name2')"
-								/>
-							</v-col>
-							<v-col 
-								cols="4" md="4"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotorDelay0Ref"
-									v-model="detailItemMotorDelay0"
-									vid="detailItemMotorDelay0"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motor.delay')"
-								/>
-							</v-col>
-						</v-row>
+						<VTextFieldWithValidation
+							v-model="detailItemMotorInfo0"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
 					</v-col>
 					<v-col 
-						cols="12" md="3"
-						class="text-right"
+						cols="6" md="4"
 					>
-						<table class="float-right">
-							<tr>
-								<td>
-									<v-btn
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorsSearch(0, detailItemMotorDiameter0)"
-									>
-										{{ $t('forms.content.parts.motor.name') }}
-									</v-btn>
-								</td>
-								<td>
-									<v-btn
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorCasesSearch(0, detailItemMotorDiameter0)"
-									>
-										{{ $t('forms.content.parts.motorCase.name2') }}
-									</v-btn>
-								</td>
-							</tr>
-						</table>
+						<VTextFieldWithValidation
+							ref="detailItemMotor0Ref"
+							v-model="detailItemMotor0"
+							vid="detailItemMotor0"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="8" md="4"
+					>
+						<VTextFieldWithValidation
+							ref="detailItemMotorCase0Ref"
+							v-model="detailItemMotorCase0"
+							vid="detailItemMotorCase0"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motorCase.name2')"
+						/>
+					</v-col>
+					<v-col 
+						cols="4" md="2"
+					>
+						<VTextFieldWithValidation
+							ref="detailItemMotorDelay0Ref"
+							v-model="detailItemMotorDelay0"
+							vid="detailItemMotorDelay0"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.delay')"
+						/>
 					</v-col>
 				</v-row>
 			</v-col>
-			<v-col
-				v-if="detailItemMotorInfo0"
+			<v-col 
+				cols="12"
+				class="text-right"
+			>
+				<table class="float-right">
+					<tr>
+						<td>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorsSearch(0, detailItemMotorDiameter0)"
+							>
+								{{ $t('forms.content.parts.motor.name') }}
+							</v-btn>
+						</td>
+						<td>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorCasesSearch(0, detailItemMotorDiameter0)"
+							>
+								{{ $t('forms.content.parts.motorCase.name2') }}
+							</v-btn>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row 
+			v-if="detailItemMotorInfo1"
+			dense
+		>
+			<v-col 
 				cols="12"
 			>
 				<v-row dense>
 					<v-col 
-						cols="12" md="9"
+						cols="6" md="2"
 					>
-						<v-row dense>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									class="mr-2"
-									v-model="detailItemMotorInfo1"
-									:readonly="true"
-									:hide-details="true"
-									:label="$t('forms.content.parts.motor.name')"
-								/>
-							</v-col>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotor1Ref"
-									v-model="detailItemMotor1"
-									vid="detailItemMotor1"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motor.name')"
-								/>
-							</v-col>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotorCase1Ref"
-									v-model="detailItemMotorCase1"
-									vid="detailItemMotorCase1"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motorCase.name2')"
-								/>
-							</v-col>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotorDelay1Ref"
-									v-model="detailItemMotorDelay1"
-									vid="detailItemMotorDelay1"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motor.delay')"
-								/>
-							</v-col>
-						</v-row>
+						<VTextFieldWithValidation
+							v-model="detailItemMotorInfo1"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
 					</v-col>
 					<v-col 
-						cols="12" md="3"
-						class="text-right"
+						cols="6" md="4"
 					>
-						<table class="float-right">
-							<tr>
-								<td>
-									<v-btn
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorsSearch(1, detailItemMotorDiameter1)"
-									>
-										{{ $t('forms.content.parts.motor.name') }}
-									</v-btn>
-								</td>
-								<td>
-									<v-btn
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorCasesSearch(1, detailItemMotorDiameter1)"
-									>
-										{{ $t('forms.content.parts.motorCase.name2') }}
-									</v-btn>
-								</td>
-							</tr>
-						</table>
+						<VTextFieldWithValidation
+							ref="detailItemMotor1Ref"
+							v-model="detailItemMotor1"
+							vid="detailItemMotor1"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="8" md="4"
+					>
+						<VTextFieldWithValidation
+							ref="detailItemMotorCase1Ref"
+							v-model="detailItemMotorCase1"
+							vid="detailItemMotorCase1"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motorCase.name2')"
+						/>
+					</v-col>
+					<v-col 
+						cols="4" md="2"
+					>
+						<VTextFieldWithValidation
+							ref="detailItemMotorDelay1Ref"
+							v-model="detailItemMotorDelay1"
+							vid="detailItemMotorDelay1"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.delay')"
+						/>
 					</v-col>
 				</v-row>
 			</v-col>
-			<v-col
-				v-if="detailItemMotorInfo2"
+			<v-col 
+				cols="12"
+				class="text-right"
+			>
+				<table class="float-right">
+					<tr>
+						<td>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorsSearch(1, detailItemMotorDiameter1)"
+							>
+								{{ $t('forms.content.parts.motor.name') }}
+							</v-btn>
+						</td>
+						<td>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorCasesSearch(1, detailItemMotorDiameter1)"
+							>
+								{{ $t('forms.content.parts.motorCase.name2') }}
+							</v-btn>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row 
+			v-if="detailItemMotorInfo2"
+			dense
+		>
+			<v-col 
 				cols="12"
 			>
 				<v-row dense>
 					<v-col 
-						cols="12" md="9"
+						cols="6" md="2"
 					>
-						<v-row dense>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									class="mr-2"
-									v-model="detailItemMotorInfo2.value"
-									:readonly="true"
-									:hide-details="true"
-									:label="$t('forms.content.parts.motor.name')"
-								/>
-							</v-col>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotor2Ref"
-									v-model="detailItemMotor2"
-									vid="detailItemMotor2"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motor.name')"
-								/>
-							</v-col>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotorCase2Ref"
-									v-model="detailItemMotorCase2"
-									vid="detailItemMotorCase2"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motorCase.name')"
-								/>
-							</v-col>
-							<v-col 
-								cols="6" md="3"
-							>
-								<VTextFieldWithValidation
-									ref="detailItemMotorDelay2Ref"
-									v-model="detailItemMotorDelay2"
-									vid="detailItemMotorDelay2"
-									:validation="validation"
-									:readonly="!isEditable"
-									:label="$t('forms.content.parts.motor.delay')"
-								/>
-							</v-col>
-						</v-row>
+						<VTextFieldWithValidation
+							v-model="detailItemMotorInfo2"
+							:readonly="true"
+							:hide-details="true"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
 					</v-col>
 					<v-col 
-						cols="12" md="3"
-						class="text-right"
+						cols="6" md="4"
 					>
-						<table class="float-right">
-							<tr>
-								<td>
-									<v-btn
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorsSearch(2, detailItemMotorDiameter2)"
-									>
-										{{ $t('forms.content.parts.motor.name') }}
-									</v-btn>
-								</td>
-								<td>
-									<v-btn
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorCasesSearch(2, detailItemMotorDiameter2)"
-									>
-										{{ $t('forms.content.parts.motorCase.name2') }}
-									</v-btn>
-								</td>
-							</tr>
-						</table>
+						<VTextFieldWithValidation
+							ref="detailItemMotor2Ref"
+							v-model="detailItemMotor2"
+							vid="detailItemMotor2"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.name')"
+						/>
+					</v-col>
+					<v-col 
+						cols="8" md="4"
+					>
+						<VTextFieldWithValidation
+							ref="detailItemMotorCase2Ref"
+							v-model="detailItemMotorCase2"
+							vid="detailItemMotorCase2"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motorCase.name2')"
+						/>
+					</v-col>
+					<v-col 
+						cols="4" md="2"
+					>
+						<VTextFieldWithValidation
+							ref="detailItemMotorDelay2Ref"
+							v-model="detailItemMotorDelay2"
+							vid="detailItemMotorDelay2"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.delay')"
+						/>
 					</v-col>
 				</v-row>
+			</v-col>
+			<v-col 
+				cols="12"
+				class="text-right"
+			>
+				<table class="float-right">
+					<tr>
+						<td>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorsSearch(2, detailItemMotorDiameter2)"
+							>
+								{{ $t('forms.content.parts.motor.name') }}
+							</v-btn>
+						</td>
+						<td>
+							<v-btn
+								variant="flat"
+								color="green ml-2"
+								@click="clickMotorCasesSearch(2, detailItemMotorDiameter2)"
+							>
+								{{ $t('forms.content.parts.motorCase.name2') }}
+							</v-btn>
+						</td>
+					</tr>
+				</table>
 			</v-col>
 		</v-row>
 		<RocketPartsLookupDialog

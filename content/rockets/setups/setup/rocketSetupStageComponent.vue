@@ -81,13 +81,10 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const dialogPartsEditParachuteManager = ref(new DialogSupport());
 	const dialogPartsEditStreamerManager = ref(new DialogSupport());
 	const dialogPartsEditTrackerManager = ref(new DialogSupport());
-	// const dialogPartsSearchStageMotorIndex = ref(null);
 	const dialogPartsSearchAltimetersManager = ref(new DialogSupport());
 	const dialogPartsSearchChuteProtectorsManager = ref(new DialogSupport());
 	const dialogPartsSearchChuteReleasesManager = ref(new DialogSupport());
 	const dialogPartsSearchDeploymentBagsManager = ref(new DialogSupport());
-	// const dialogPartsSearchMotorsManager = ref(new DialogSupport());
-	// const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
 	const dialogPartsSearchParachutesManager = ref(new DialogSupport());
 	const dialogPartsSearchStreamersManager = ref(new DialogSupport());
 	const dialogPartsSearchTrackersManager = ref(new DialogSupport());
@@ -95,8 +92,6 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const manufacturerTypeChuteProtector = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector ]);
 	const manufacturerTypeChuteRelease = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease ]);
 	const manufacturerTypeDeploymentBag = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag ]);
-	// const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
-	// const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
 	const manufacturerTypeParachute = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.parachute ]);
 	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.streamer ]);
 	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.tracker ]);
@@ -252,20 +247,6 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const clickDeploymentBagsSearch = async () => {
 		dialogPartsSearchDeploymentBagsManager.value.open();
 	};
-	// const clickMotorsSearch = async (index) => {
-	// 	if (!index)
-	// 		return;
-
-	// 	dialogPartsSearchStageMotorIndex.value = index;
-	// 	dialogPartsSearchMotorsManager.value.open();
-	// };
-	// const clickMotorCasesSearch = async (index) => {
-	// 	if (!index)
-	// 		return;
-
-	// 	dialogPartsSearchStageMotorIndex.value = index;
-	// 	dialogPartsSearchMotorCasesManager.value.open();
-	// };
 	const clickParachutesSearch = async () => {
 		dialogPartsSearchParachutesManager.value.open();
 	};
@@ -415,6 +396,15 @@ export function useRocketSetupStageComponent(props, context, options) {
 
 		return displayItem.value.motors[index];
 	};
+	const generateTitle = (id, name) => {
+		if (String.isNullOrEmpty(name))
+			return '';
+		let manufacturer = null;
+		if (props.manufacturers)
+			manufacturer = props.manufacturers.find(l => l.id === id);
+
+		return `${manufacturer ? manufacturer.abbrev : ''} ${name}`.trim();
+	};
 	const getParts = (correlationId, item, type) => {
 		if (type === partsKeyAltimeters)
 			return item.altimeters;
@@ -442,9 +432,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		if (!motor)
 			return { value: '' };
 
-		const output = 
-				(!String.isNullOrEmpty(motor.motorCaseManufacturerAbbrev) ? motor.motorCaseManufacturerAbbrev : '') + ' ' + 
-				(!String.isNullOrEmpty(motor.motorCaseName) ? motor.motorCaseName : '');
+		const output = generateTitle(motor.motorCaseManufacturerId, motor.motorCaseName);
 		return { value: output.trim() };
 	};
 	const motorInfo = (index) => {
@@ -452,9 +440,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		if (!motor)
 			return { value: '' };
 
-		let output =
-				(!String.isNullOrEmpty(motor.manufacturerAbbrev) ? motor.manufacturerAbbrev : '') + ' ' + 
-				(!String.isNullOrEmpty(motor.motorName) ? motor.motorName : '');
+		let output = generateTitle(motor.motorManufacturerId, motor.motorName);
 		if (!String.isNullOrEmpty(motor.motorDelay))
 			output += '-' + motor.motorDelay;
 		return { value: output.trim() };
