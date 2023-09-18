@@ -262,10 +262,18 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 	// };
 	const selectMotor = async (item) => {
 		const correlationIdI = correlationId();
+		// console.log('thrust2Weight.selectMotor.value');
+		// console.dir(motorLookupSelection.value);
 		if (!motorLookupSelection.value)
 			return;
 
+		// console.log('thrust2Weight.selectMotor.item');
+		// console.dir(item);
+		// console.log('thrust2Weight.selectMotor.item.motorId');
+		// console.dir(item.motorId);
 		const response = await serviceStore.dispatcher.requestMotor(correlationIdI, item.motorId);
+		// console.log('thrust2Weight.selectMotor.response');
+		// console.dir(motorLookupSelection.response);
 		if (hasSucceeded(response)) {
 			initCalculationData(correlationIdI);
 
@@ -273,21 +281,31 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 
 			const response2 = await serviceToolsThrust2Weight.update(correlationIdI, response.results, reference.calculationData);
 			if (hasSucceeded(response2)) {
+				// console.log('thrust2Weight.selectMotor.response2');
+				// console.dir(motorLookupSelection.response2);
 				reference.motorLookup.value = item.designation;
 
 				reference.calculationData = response2.results;
 				reference.thrustAverage.value = reference.calculationData.thrustAverage;
 				reference.thrustInitial.value = reference.calculationData.thrustInitial;
 				reference.thrustPeak.value = reference.calculationData.thrustPeak;
+				// console.log('thrust2Weight.selectMotor.reference');
+				// console.dir(motorLookupSelection.reference);
 
 				setNotify(correlationId, 'messages.thrust2Weight.motor.selected');
 				dialogMotorSearchManager.value.ok();
 				return;
 			}
+			// else {
+			// 	console.log('thrust2Weight.selectMotor.response2 - failed');
+			// 	console.dir(response2);
+			// }
 
 			setNotify(correlationId, 'messages.thrust2Weight.motor.selected');
 		}
 		else {
+			// console.log('thrust2Weight.selectMotor.response - failed');
+			// console.dir(response);
 			if (!serviceStore.state.online)
 				setNotify(correlationId, 'messages.thrust2Weight.motor.offline');
 		}
