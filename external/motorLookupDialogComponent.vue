@@ -204,7 +204,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		if (filterItemManufacturers.value)
+		if (manufacturers.value)
 			return;
 
 		const response = await serviceStore.dispatcher.requestManufacturers(correlationId());
@@ -217,7 +217,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 
 		temp = temp.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.motor));
 		temp = temp.sort((a, b) => a.name.localeCompare(b.name));
-		filterItemManufacturers.value = temp.map((item) => { return { id: item.id, name: item.name }; });
+		manufacturers.value = temp.map((item) => { return { id: item.id, name: item.name }; });
 	});
 
 	return {
