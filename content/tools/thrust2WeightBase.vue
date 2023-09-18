@@ -273,7 +273,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		// console.dir(item.motorId);
 		const response = await serviceStore.dispatcher.requestMotor(correlationIdI, item.motorId);
 		// console.log('thrust2Weight.selectMotor.response');
-		// console.dir(motorLookupSelection.response);
+		// console.dir(response);
 		if (hasSucceeded(response)) {
 			initCalculationData(correlationIdI);
 
@@ -282,7 +282,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 			const response2 = await serviceToolsThrust2Weight.update(correlationIdI, response.results, reference.calculationData);
 			if (hasSucceeded(response2)) {
 				// console.log('thrust2Weight.selectMotor.response2');
-				// console.dir(motorLookupSelection.response2);
+				// console.dir(response2);
 				reference.motorLookup.value = item.designation;
 
 				reference.calculationData = response2.results;
@@ -290,7 +290,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 				reference.thrustInitial.value = reference.calculationData.thrustInitial;
 				reference.thrustPeak.value = reference.calculationData.thrustPeak;
 				// console.log('thrust2Weight.selectMotor.reference');
-				// console.dir(motorLookupSelection.reference);
+				// console.dir(reference);
 
 				setNotify(correlationId, 'messages.thrust2Weight.motor.selected');
 				dialogMotorSearchManager.value.ok();
