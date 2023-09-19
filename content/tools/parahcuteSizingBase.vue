@@ -52,11 +52,9 @@ export function useParachuteSizingBaseComponent(props, context) {
 	} = useToolsBaseComponent(props, context, {
 		id: 'parachuteSizing',
 		resetAdditional: (correlationId) => {
-			calculationResults.value.foams = [];
-
-			airDensity.value = null;
-			coeffDrag.value = null;
-			desiredVelocity.value = null;
+			airDensity.value = 0.076;
+			coeffDrag.value =  0.75;
+			desiredVelocity.value = 20;
 			mass.value = null;
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.parachuteSizing')
@@ -134,8 +132,8 @@ export function useParachuteSizingBaseComponent(props, context) {
 		calculationData.value.desiredVelocity = desiredVelocity.value;
 		calculationData.value.desiredVelocityMeasurementUnitId = desiredVelocityMeasurementUnitId.value;
 		calculationData.value.desiredVelocityMeasurementUnitsId = desiredVelocityMeasurementUnitsId.value;
-		calculationData.value.diameterLengthMeasurementUnitsId = diameterLengthMeasurementUnitsId.value;
 		calculationData.value.diameterLengthMeasurementUnitId = diameterLengthMeasurementUnitId.value;
+		calculationData.value.diameterLengthMeasurementUnitsId = diameterLengthMeasurementUnitsId.value;
 		calculationData.value.mass = mass.value;
 		calculationData.value.massWeightMeasurementUnitId = massWeightMeasurementUnitId.value;
 		calculationData.value.massWeightMeasurementUnitsId = massWeightMeasurementUnitsId.value;

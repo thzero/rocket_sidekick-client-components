@@ -286,9 +286,9 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 				reference.motorLookup.value = item.designation;
 
 				reference.calculationData = response2.results;
-				reference.thrustAverage.value = reference.calculationData.thrustAverage;
+				reference.thrustAverage.value = reference.calculationData.thrustAverage ?? null;
 				reference.thrustInitial.value = reference.calculationData.thrustInitial;
-				reference.thrustPeak.value = reference.calculationData.thrustPeak;
+				reference.thrustPeak.value = reference.calculationData.thrustPeak ?? null;
 				// console.log('thrust2Weight.selectMotor.reference');
 				// console.dir(reference);
 
