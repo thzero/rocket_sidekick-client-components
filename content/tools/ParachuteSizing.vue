@@ -27,6 +27,7 @@
 												vid="airDensity"
 												:validation="validation"
 												:label="$t('forms.content.tools.parachuteSizing.airDensity')"
+												:hint="$t('forms.content.tools.parachuteSizing.airDensity_hint')"
 											/>
 										</td>
 										<td class="measurementUnits">
@@ -96,6 +97,7 @@
 									vid="coeffDrag"
 									:validation="validation"
 									:label="$t('forms.content.tools.parachuteSizing.coeffDrag')"
+									:hint="$t('forms.content.tools.parachuteSizing.coeffDrag_hint')"
 								/>
 							</v-col>
 							<v-col cols="12" sm="6" >
@@ -108,6 +110,7 @@
 												vid="desiredVelocity"
 												:validation="validation"
 												:label="$t('forms.content.tools.parachuteSizing.desiredVelocity')"
+												:hint="$t('forms.content.tools.parachuteSizing.desiredVelocity_hint')"
 											/>
 										</td>
 										<td class="measurementUnits">
@@ -376,10 +379,10 @@ export default {
 	},
 	validations () {
 		return {
-			airDensity: { required, decimal, between: between(0.1, 999), $autoDirty: true },
+			airDensity: { required, decimal, between: between(0.01, 5), $autoDirty: true },
 			airDensityMeasurementUnitId: { required, $autoDirty: true },
 			airDensityMeasurementUnitsId: { required, $autoDirty: true },
-			coeffDrag: { required, decimal, between: between(0.1, 999), $autoDirty: true },
+			coeffDrag: { required, decimal, between: between(0.1, 5), $autoDirty: true },
 			desiredVelocity: { required, decimal, between: between(0.1, 999), $autoDirty: true },
 			desiredVelocityMeasurementUnitId: { required, $autoDirty: true },
 			desiredVelocityMeasurementUnitsId: { required, $autoDirty: true },
