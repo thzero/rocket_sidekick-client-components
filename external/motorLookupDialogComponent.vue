@@ -51,7 +51,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 	const filterItemDiameter = ref(null);
 	const filterItemImpulseClass = ref(null);
 	const filterItemMotor = ref(null);
-	const filterItemManufacturer = ref(null);
+	const filterItemManufacturers = ref(null);
 	const filterItemSparky = ref(false);
 	const filterItemSingleUse = ref(false);
 	const manufacturers = ref(null);
@@ -160,7 +160,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		const request = {
 			diameter: filterItemDiameter.value,
 			impulseClass: filterItemImpulseClass.value,
-			manufacturer: filterItemManufacturer.value,
+			manufacturers: filterItemManufacturers.value,
 			motor: filterItemMotor.value,
 			singleUse: filterItemSingleUse.value,
 			sparky: filterItemSparky.value
@@ -176,7 +176,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 	// eslint-disable-next-line
 	const resetAdditional = async (correlationId, ignoreSettings) => {
 		filterItemImpulseClass.value = null;
-		filterItemManufacturer.value = null;
+		filterItemManufacturers.value = null;
 		filterItemMotor.value = null;
 		results.value = null;
 
@@ -191,7 +191,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 
 		filterItemDiameter.value = data.diameter;
 		filterItemImpulseClass.value = data.impulseClass;
-		filterItemManufacturer.value = data.manufacturer;
+		filterItemManufacturers.value = data.manufacturers;
 		filterItemMotor.value = data.motor;
 		filterItemSparky.value = !LibraryCommonUtility.isNull(data.sparky) ? data.sparky : false;
 		filterItemSingleUse.value = !LibraryCommonUtility.isNull(data.singleUse) ? data.singleUse : false;
@@ -243,7 +243,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		dialogResetManager,
 		filterItemDiameter,
 		filterItemImpulseClass,
-		filterItemManufacturer,
+		filterItemManufacturers,
 		filterItemMotor,
 		filterItemSparky,
 		filterItemSingleUse,

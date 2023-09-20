@@ -1,5 +1,5 @@
 <script>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
@@ -53,9 +53,14 @@ export function useParachuteSizingBaseComponent(props, context) {
 		id: 'parachuteSizing',
 		resetAdditional: (correlationId) => {
 			airDensity.value = 0.076;
+			calculationType.value = 'diameter';
 			coeffDrag.value =  0.75;
 			desiredVelocity.value = 20;
 			mass.value = null;
+			parachuteShape.value = 'octagon';
+			spillHoleDiameter.value = null;
+			spillHoleShape.value = 'octagon';
+			spillHolePct.value = null;
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.parachuteSizing')
 	});
@@ -93,6 +98,11 @@ export function useParachuteSizingBaseComponent(props, context) {
 	const airDensity = ref(null);
 	const airDensityMeasurementUnitId = ref(null);
 	const airDensityMeasurementUnitsId = ref(null);
+	const calculationType = ref('diameter');
+	const calculationTypes = ref([
+		{ id: 'diameter', name: LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.calculationType.diameter') },
+		{ id: 'velocity', name: LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.calculationType.velocity') }
+	]);
 	const coeffDrag = ref(null);
 	const desiredVelocity = ref(null);
 	const desiredVelocityMeasurementUnitId = ref(null);
@@ -102,9 +112,28 @@ export function useParachuteSizingBaseComponent(props, context) {
 	const mass = ref(null);
 	const massWeightMeasurementUnitId = ref(null);
 	const massWeightMeasurementUnitsId = ref(null);
+	const parachuteShape = ref('octagon');
+	const parachuteShapes = ref([ { id: 'circle', name: 'Circle' }, { id: 'hexagon', name: 'Hexagon' }, { id: 'octagon', name: 'Octagon' }]);
 	const parachuteSizingFormRef = ref(null);
+	const spillHoleDiameter = ref(null);
+	const spillHoleShape = ref('octagon');
+	const spillHolePct = ref(null);
+	const spillHoleShapes = ref([ { id: 'circle', name: 'Circle' }, { id: 'hexagon', name: 'Hexagon' }, { id: 'octagon', name: 'Octagon' }]);
 	const contentMarkup = ref(LibraryClientUtility.$trans.t('strings.content.tools.parachuteSizing.info', { url: 'http://www.rocketmime.com/rockets/descent.html', title: 'Parachute Descent Calculations' }));
 
+	const resultsTitleParachute = computed(() => {
+		let output = shapeTitle(parachuteShape.value) + ' ';
+		output += LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.diameter');
+		output = output.trim();
+		return output;
+	});
+	const resultsTitleSpillHole = computed(() => {
+		let output = shapeTitle(spillHoleShape.value) + ' ';
+		output += LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.spillHole.diameter');
+		output = output.trim();
+		return output;
+	});
+	
 	const calculationOk = async () => {
 		calculateI(correlationId(), calculationResults, async (correlationIdI, calculationResultsI) => {
 			initCalculationData(correlationIdI);
@@ -128,6 +157,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 		calculationData.value.airDensity = airDensity.value;
 		calculationData.value.airDensityMeasurementUnitId = airDensityMeasurementUnitId.value;
 		calculationData.value.airDensityMeasurementUnitsId = airDensityMeasurementUnitsId.value;
+		calculationData.value.calculationType = calculationType.value;
 		calculationData.value.coeffDrag = coeffDrag.value;
 		calculationData.value.desiredVelocity = desiredVelocity.value;
 		calculationData.value.desiredVelocityMeasurementUnitId = desiredVelocityMeasurementUnitId.value;
@@ -137,9 +167,22 @@ export function useParachuteSizingBaseComponent(props, context) {
 		calculationData.value.mass = mass.value;
 		calculationData.value.massWeightMeasurementUnitId = massWeightMeasurementUnitId.value;
 		calculationData.value.massWeightMeasurementUnitsId = massWeightMeasurementUnitsId.value;
+		calculationData.value.parachuteShape = parachuteShape.value;
+		calculationData.value.spillHoleDiameter = spillHoleDiameter.value;
+		calculationData.value.spillHolePct = spillHolePct.value;
+		calculationData.value.spillHoleShape = spillHoleShape.value;
 	};
 	const reset = async (correlationId) => {
 		await parachuteSizingFormRef.value.reset(correlationId, false);
+	};
+	const shapeTitle = (shape) => {
+		if (parachuteShape.value === 'circle')
+			return LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.shape.circle');
+		if (parachuteShape.value === 'hexagon')
+			return LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.shape.hexagon');
+		if (parachuteShape.value === 'octagon')
+			return LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.shape.octagon');
+		return '';
 	};
 
 	onMounted(async () => {
@@ -204,6 +247,8 @@ export function useParachuteSizingBaseComponent(props, context) {
 		airDensity,
 		airDensityMeasurementUnitId,
 		airDensityMeasurementUnitsId,
+		calculationType,
+		calculationTypes,
 		coeffDrag,
 		desiredVelocity,
 		desiredVelocityMeasurementUnitId,
@@ -214,7 +259,15 @@ export function useParachuteSizingBaseComponent(props, context) {
 		massWeightMeasurementUnitId,
 		massWeightMeasurementUnitsId,
 		parachuteSizingFormRef,
+		parachuteShape,
+		parachuteShapes,
+		spillHoleDiameter,
+		spillHolePct,
+		spillHoleShape,
+		spillHoleShapes,
 		contentMarkup,
+		resultsTitleParachute,
+		resultsTitleSpillHole,
 		calculationOk,
 		initCalculationData,
 		scope: 'Foam',
