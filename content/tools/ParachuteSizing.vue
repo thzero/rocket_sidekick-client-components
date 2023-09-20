@@ -39,7 +39,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnit2">
 											<MeasurementUnitSelect
 												ref="airDensityMeasurementUnitIdRef"
 												v-model="airDensityMeasurementUnitId"
@@ -102,8 +102,11 @@
 							</v-col>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%">
-									<tr>
-										<td>
+									<tr
+										v-if="calculationType==='diameter'"
+									>
+										<td
+										>
 											<VNumberFieldWithValidation
 												ref="desiredVelocityRef"
 												v-model="desiredVelocity"
@@ -138,7 +141,54 @@
 							</v-col>
 						</v-row>
 						<v-row dense>
-							<v-col cols="12" lg="6">
+							<v-col cols="4" sn="4">
+								<VNumberFieldWithValidation
+									ref="spillHoleDiameterRef"
+									v-model="spillHoleDiameter"
+									vid="spillHoleDiameter"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.spillHole.diameter')"
+									:hint="$t('forms.content.tools.parachuteSizing.spillHole.diameter_hint')"
+								/>
+							</v-col>
+							<v-col cols="4" sn="4">
+								<VNumberFieldWithValidation
+									ref="spillHolePctRef"
+									v-model="spillHolePct"
+									vid="spillHolePct"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.spillHole.pct')"
+									:hint="$t('forms.content.tools.parachuteSizing.spillHole.pct_hint')"
+								/>
+							</v-col>
+							<v-col cols="4" sn="4">
+								<VSelectWithValidation
+									ref="spillHoleShapeRef"
+									v-model="spillHoleShape"
+									vid="spillHoleShape"
+									:items="spillHoleShapes"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.spillHole.shape')"
+									:hint="$t('forms.content.tools.parachuteSizing.spillHole.shape_hint')"
+								/>
+							</v-col>
+						</v-row>
+						<v-row dense>
+							<v-col
+								v-if="$vuetify.display.xs"
+								cols="12" sm="6"
+							>
+								<VSelectWithValidation
+									ref="parachuteShapeRef"
+									v-model="parachuteShape"
+									vid="parachuteShape"
+									:items="parachuteShapes"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.parachuteShape')"
+									:hint="$t('forms.content.tools.parachuteSizing.parachuteShape_hint')"
+								/>
+							</v-col>
+							<v-col cols="12" sm="6">
 								<table>
 									<tr>
 										<td>
@@ -167,7 +217,35 @@
 									</tr>
 								</table>
 							</v-col>
+							<v-col
+								v-if="$vuetify.display.smAndUp"
+								cols="12" sm="6"
+							>
+								<VSelectWithValidation
+									ref="parachuteShapeRef"
+									v-model="parachuteShape"
+									vid="parachuteShape"
+									:items="parachuteShapes"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.parachuteShape')"
+									:hint="$t('forms.content.tools.parachuteSizing.parachuteShape_hint')"
+								/>
+							</v-col>
 						</v-row>
+						<!-- <v-row dense>
+							<v-col cols="6">
+							</v-col>
+							<v-col cols="6">
+								<VSelectWithValidation
+									ref="calculationTypeRef"
+									v-model="calculationType"
+									vid="calculationType"
+									:items="calculationTypes"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.calculationType.title')"
+								/>
+							</v-col>
+						</v-row> -->
 					</template>
 				</VFormControl>
 			</v-col>
@@ -189,9 +267,16 @@
 						<v-row dense v-if="calculationResults.calculated">
 							<v-col>
 								<v-row class="pb-2" dense>
-									<v-col cols="4">
-										<span class="text-h6 text-bold">{{ $t('forms.content.tools.parachuteSizing.diameter') }}</span>&nbsp;&nbsp;
+									<v-col cols="6">
+										<span class="text-h6 text-bold">{{ resultsTitleParachute }}</span>&nbsp;&nbsp;
 										<span class="text-h6 text-bold" v-if="calculationResults.diameter">{{ calculationResults.diameter }}</span>
+									</v-col>
+									<v-col
+										v-if="calculationResults.diameterSpillHole!='0.00 in'"
+										cols="6"
+									>
+										<span class="text-h6 text-bold">{{ resultsTitleSpillHole }}</span>&nbsp;&nbsp;
+										<span class="text-h6 text-bold" v-if="calculationResults.diameter">{{ calculationResults.diameterSpillHole }}</span>
 									</v-col>
 								</v-row>
 							</v-col>
@@ -296,6 +381,8 @@ export default {
 			airDensity,
 			airDensityMeasurementUnitId,
 			airDensityMeasurementUnitsId,
+			calculationType,
+			calculationTypes,
 			coeffDrag,
 			desiredVelocity,
 			desiredVelocityMeasurementUnitId,
@@ -306,7 +393,15 @@ export default {
 			massWeightMeasurementUnitId,
 			massWeightMeasurementUnitsId,
 			parachuteSizingFormRef,
+			parachuteShape,
+			parachuteShapes,
+			spillHoleDiameter,
+			spillHolePct,
+			spillHoleShape,
+			spillHoleShapes,
 			contentMarkup,
+			resultsTitleParachute,
+			resultsTitleSpillHole,
 			calculationOk,
 			initCalculationData,
 			scope,
@@ -360,6 +455,8 @@ export default {
 			airDensity,
 			airDensityMeasurementUnitId,
 			airDensityMeasurementUnitsId,
+			calculationType,
+			calculationTypes,
 			coeffDrag,
 			desiredVelocity,
 			desiredVelocityMeasurementUnitId,
@@ -370,7 +467,15 @@ export default {
 			massWeightMeasurementUnitId,
 			massWeightMeasurementUnitsId,
 			parachuteSizingFormRef,
+			parachuteShape,
+			parachuteShapes,
+			spillHoleDiameter,
+			spillHolePct,
+			spillHoleShape,
+			spillHoleShapes,
 			contentMarkup,
+			resultsTitleParachute,
+			resultsTitleSpillHole,
 			calculationOk,
 			initCalculationData,
 			scope,
@@ -390,7 +495,11 @@ export default {
 			diameterLengthMeasurementUnitsId: { required, $autoDirty: true },
 			mass: { required, decimal, between: between(0.1, 999), $autoDirty: true },
 			massWeightMeasurementUnitId: { required, $autoDirty: true },
-			massWeightMeasurementUnitsId: { required, $autoDirty: true }
+			parachuteShape: { required, $autoDirty: true },
+			massWeightMeasurementUnitsId: { required, $autoDirty: true },
+			spillHoleDiameter: { decimal, between: between(0, 100), $autoDirty: true },
+			spillHoleShape: { required, $autoDirty: true },
+			spillHolePct: { decimal, between: between(0, 100), $autoDirty: true }
 		};
 	}
 };

@@ -64,9 +64,9 @@
 							<v-row dense>
 								<v-col col="12">
 									<VSelectWithValidation
-										ref="filterItemManufacturerRef"
-										v-model="filterItemManufacturer"
-										vid="filterItemManufacturer"
+										ref="filterItemManufacturersRef"
+										v-model="filterItemManufacturers"
+										vid="filterItemManufacturers"
 										multiple
 										:max-values="2"
 										:items="manufacturers"
@@ -229,7 +229,7 @@ export default {
 			dialogResetManager,
 			filterItemDiameter,
 			filterItemImpulseClass,
-			filterItemManufacturer,
+			filterItemManufacturers,
 			filterItemMotor,
 			filterItemSparky,
 			filterItemSingleUse,
@@ -274,7 +274,7 @@ export default {
 			dialogResetManager,
 			filterItemDiameter,
 			filterItemImpulseClass,
-			filterItemManufacturer,
+			filterItemManufacturers,
 			filterItemMotor,
 			filterItemSparky,
 			filterItemSingleUse,
