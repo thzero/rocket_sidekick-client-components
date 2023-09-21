@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
+import AppConstants from '@/constants';
 import AppSharedConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -57,9 +58,9 @@ export function useParachuteSizingBaseComponent(props, context) {
 			coeffDrag.value =  0.75;
 			desiredVelocity.value = 20;
 			mass.value = null;
-			parachuteShape.value = 'octagon';
+			parachuteShape.value = AppConstants.Tools.ParachuteSizing.shapes.octagon;
 			spillHoleDiameter.value = null;
-			spillHoleShape.value = 'octagon';
+			spillHoleShape.value = AppConstants.Tools.ParachuteSizing.shapes.octagon;
 			spillHolePct.value = null;
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.parachuteSizing')
@@ -93,6 +94,12 @@ export function useParachuteSizingBaseComponent(props, context) {
 
 	const serviceToolsParachuteSizing = LibraryClientUtility.$injector.getService(AppSharedConstants.InjectorKeys.SERVICE_TOOLS_PARACHUTE_SIZING);
 
+	const shapes = [ 
+		{ id: AppConstants.Tools.ParachuteSizing.shapes.circle, name: LibraryClientUtility.$trans.t(`forms.content.tools.parachuteSizing.shape.${AppConstants.Tools.ParachuteSizing.shapes.circle}`) }, 
+		{ id: AppConstants.Tools.ParachuteSizing.shapes.hexagon, name: LibraryClientUtility.$trans.t(`forms.content.tools.parachuteSizing.shape.${AppConstants.Tools.ParachuteSizing.shapes.hexagon}`) }, 
+		{ id: AppConstants.Tools.ParachuteSizing.shapes.octagon, name: LibraryClientUtility.$trans.t(`forms.content.tools.parachuteSizing.shape.${AppConstants.Tools.ParachuteSizing.shapes.octagon}`) }
+	];
+
 	const calculationData = ref(null);
 	const calculationResults = initCalculationResults(correlationId(), ref({}));
 	const airDensity = ref(null);
@@ -112,13 +119,13 @@ export function useParachuteSizingBaseComponent(props, context) {
 	const mass = ref(null);
 	const massWeightMeasurementUnitId = ref(null);
 	const massWeightMeasurementUnitsId = ref(null);
-	const parachuteShape = ref('octagon');
-	const parachuteShapes = ref([ { id: 'circle', name: 'Circle' }, { id: 'hexagon', name: 'Hexagon' }, { id: 'octagon', name: 'Octagon' }]);
+	const parachuteShape = ref(AppConstants.Tools.ParachuteSizing.shapes.octagon);
+	const parachuteShapes = ref(shapes);
 	const parachuteSizingFormRef = ref(null);
 	const spillHoleDiameter = ref(null);
-	const spillHoleShape = ref('octagon');
+	const spillHoleShape = ref(AppConstants.Tools.ParachuteSizing.shapes.octagon);
 	const spillHolePct = ref(null);
-	const spillHoleShapes = ref([ { id: 'circle', name: 'Circle' }, { id: 'hexagon', name: 'Hexagon' }, { id: 'octagon', name: 'Octagon' }]);
+	const spillHoleShapes = ref(shapes);
 	const contentMarkup = ref(LibraryClientUtility.$trans.t('strings.content.tools.parachuteSizing.info', { url: 'http://www.rocketmime.com/rockets/descent.html', title: 'Parachute Descent Calculations' }));
 
 	const resultsTitleParachute = computed(() => {
@@ -176,11 +183,11 @@ export function useParachuteSizingBaseComponent(props, context) {
 		await parachuteSizingFormRef.value.reset(correlationId, false);
 	};
 	const shapeTitle = (shape) => {
-		if (parachuteShape.value === 'circle')
+		if (parachuteShape.value === AppConstants.Tools.ParachuteSizing.shapes.circle)
 			return LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.shape.circle');
-		if (parachuteShape.value === 'hexagon')
+		if (parachuteShape.value === AppConstants.Tools.ParachuteSizing.shapes.hexagon)
 			return LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.shape.hexagon');
-		if (parachuteShape.value === 'octagon')
+		if (parachuteShape.value === AppConstants.Tools.ParachuteSizing.shapes.octagon)
 			return LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.shape.octagon');
 		return '';
 	};
