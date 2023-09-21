@@ -146,9 +146,10 @@
 </template>
 
 <script>
-import { between, decimal, required } from '@vuelidate/validators';
+// import { between, decimal, required } from '@vuelidate/validators';
 
 import { useWeathercockingBaseComponent } from '@/components/content/tools/weathercockingBase';
+import { useWeatherCockingValidation } from '@/components/content/tools/weathercockingValidation';
 
 import ContentAttribution from '@/components/content/Attribution';
 import CalculatedOuput from '@/components/content/tools//CalculatedOuput';
@@ -287,14 +288,7 @@ export default {
 		};
 	},
 	validations () {
-		return {
-			exitVelocity: { required, decimal, between: between(0.1, 999), $autoDirty: true },
-			exitVelocityMeasurementUnitsId: { required, $autoDirty: true },
-			exitVelocityMeasurementUnitId: { required, $autoDirty: true },
-			windVelocity: { required, decimal, between: between(0.1, 999), $autoDirty: true },
-			windVelocityMeasurementUnitsId: { required, $autoDirty: true },
-			windVelocityMeasurementUnitId: { required, $autoDirty: true }
-		};
+		return useWeatherCockingValidation;
 	}
 };
 </script>

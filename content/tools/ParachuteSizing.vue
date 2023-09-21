@@ -303,9 +303,10 @@
 </template>
 
 <script>
-import { between, decimal, required } from '@vuelidate/validators';
+// import { between, decimal, required } from '@vuelidate/validators';
 
 import { useParachuteSizingBaseComponent } from '@/components/content/tools/parahcuteSizingBase';
+import { useParachuteSizingValidation } from '@/components/content/tools/parahcuteSizingValidation';
 
 import ContentAttribution from '@/components/content/Attribution';
 import CalculatedOuput from '@/components/content/tools//CalculatedOuput';
@@ -483,24 +484,7 @@ export default {
 		};
 	},
 	validations () {
-		return {
-			airDensity: { required, decimal, between: between(0.01, 5), $autoDirty: true },
-			airDensityMeasurementUnitId: { required, $autoDirty: true },
-			airDensityMeasurementUnitsId: { required, $autoDirty: true },
-			coeffDrag: { required, decimal, between: between(0.1, 5), $autoDirty: true },
-			desiredVelocity: { required, decimal, between: between(0.1, 999), $autoDirty: true },
-			desiredVelocityMeasurementUnitId: { required, $autoDirty: true },
-			desiredVelocityMeasurementUnitsId: { required, $autoDirty: true },
-			diameterLengthMeasurementUnitId: { required, $autoDirty: true },
-			diameterLengthMeasurementUnitsId: { required, $autoDirty: true },
-			mass: { required, decimal, between: between(0.1, 999), $autoDirty: true },
-			massWeightMeasurementUnitId: { required, $autoDirty: true },
-			parachuteShape: { required, $autoDirty: true },
-			massWeightMeasurementUnitsId: { required, $autoDirty: true },
-			spillHoleDiameter: { decimal, between: between(0, 100), $autoDirty: true },
-			spillHoleShape: { required, $autoDirty: true },
-			spillHolePct: { decimal, between: between(0, 100), $autoDirty: true }
-		};
+		return useParachuteSizingValidation;
 	}
 };
 </script>
