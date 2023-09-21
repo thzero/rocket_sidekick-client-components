@@ -158,7 +158,7 @@
 									vid="spillHolePct"
 									:validation="validation"
 									:label="$t('forms.content.tools.parachuteSizing.spillHole.pct')"
-									:hint="$t('forms.content.tools.parachuteSizing.spillHole.pct_hint')"
+									:hint="$t('forms.content.tools.parachuteSizing.spillHole.pCt_hint')"
 								/>
 							</v-col>
 							<v-col cols="4" sn="4">
@@ -484,7 +484,7 @@ export default {
 		};
 	},
 	validations () {
-		return useParachuteSizingValidation;
+		return useParachuteSizingValidation(this);
 	}
 };
 </script>
