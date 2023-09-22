@@ -59,7 +59,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 			mass.value = null;
 			parachuteShape.value = AppSharedConstants.Tools.ParachuteSizing.shapes.octagon;
 			spillHoleDiameter.value = null;
-			spillHoleShape.value = AppSharedConstants.Tools.ParachuteSizing.shapes.octagon;
+			spillHoleShape.value = AppSharedConstants.Tools.ParachuteSizing.shapes.circle;
 			spillHolePct.value = null;
 		},
 		title: LibraryClientUtility.$trans.t('titles.content.tools.parachuteSizing')
@@ -118,13 +118,16 @@ export function useParachuteSizingBaseComponent(props, context) {
 	const mass = ref(null);
 	const massWeightMeasurementUnitId = ref(null);
 	const massWeightMeasurementUnitsId = ref(null);
+	const parachuteDiameter = ref(null);
 	const parachuteShape = ref(AppSharedConstants.Tools.ParachuteSizing.shapes.octagon);
 	const parachuteShapes = ref(shapes);
 	const parachuteSizingFormRef = ref(null);
 	const spillHoleDiameter = ref(null);
-	const spillHoleShape = ref(AppSharedConstants.Tools.ParachuteSizing.shapes.octagon);
+	const spillHoleShape = ref(AppSharedConstants.Tools.ParachuteSizing.shapes.circle);
 	const spillHolePct = ref(null);
 	const spillHoleShapes = ref(shapes);
+	const velocityMeasurementUnitId = ref(null);
+	const velocityMeasurementUnitsId = ref(null);
 	const contentMarkup = ref(LibraryClientUtility.$trans.t('strings.content.tools.parachuteSizing.info', { url: 'http://www.rocketmime.com/rockets/descent.html', title: 'Parachute Descent Calculations' }));
 
 	const resultsTitleParachute = computed(() => {
@@ -138,6 +141,9 @@ export function useParachuteSizingBaseComponent(props, context) {
 		output += LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.spillHole.diameter');
 		output = output.trim();
 		return output;
+	});
+	const resultsTitleVelocity = computed(() => {
+		return LibraryClientUtility.$trans.t('forms.content.tools.parachuteSizing.velocity');
 	});
 	
 	const calculationOk = async () => {
@@ -173,10 +179,13 @@ export function useParachuteSizingBaseComponent(props, context) {
 		calculationData.value.mass = mass.value;
 		calculationData.value.massWeightMeasurementUnitId = massWeightMeasurementUnitId.value;
 		calculationData.value.massWeightMeasurementUnitsId = massWeightMeasurementUnitsId.value;
+		calculationData.value.parachuteDiameter = parachuteDiameter.value;
 		calculationData.value.parachuteShape = parachuteShape.value;
 		calculationData.value.spillHoleDiameter = spillHoleDiameter.value;
 		calculationData.value.spillHolePct = spillHolePct.value;
 		calculationData.value.spillHoleShape = spillHoleShape.value;
+		calculationData.value.velocityMeasurementUnitId = velocityMeasurementUnitId.value;
+		calculationData.value.velocityMeasurementUnitsId = velocityMeasurementUnitsId.value;
 	};
 	const reset = async (correlationId) => {
 		await parachuteSizingFormRef.value.reset(correlationId, false);
@@ -199,11 +208,13 @@ export function useParachuteSizingBaseComponent(props, context) {
 		desiredVelocityMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 		diameterLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 		massWeightMeasurementUnitsId.value = measurementUnitsIdSettings.value;
-
+		velocityMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+		
 		airDensityMeasurementUnitId.value = measurementUnitsDensityDefaultId.value;
 		desiredVelocityMeasurementUnitId.value = measurementUnitsVelocityDefaultId.value;
 		diameterLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
 		massWeightMeasurementUnitId.value = measurementUnitsWeightDefaultId.value;
+		velocityMeasurementUnitId.value = measurementUnitsVelocityDefaultId.value;
 	});
 
 	return {
@@ -265,15 +276,19 @@ export function useParachuteSizingBaseComponent(props, context) {
 		massWeightMeasurementUnitId,
 		massWeightMeasurementUnitsId,
 		parachuteSizingFormRef,
+		parachuteDiameter,
 		parachuteShape,
 		parachuteShapes,
 		spillHoleDiameter,
 		spillHolePct,
 		spillHoleShape,
 		spillHoleShapes,
+		velocityMeasurementUnitId,
+		velocityMeasurementUnitsId,
 		contentMarkup,
 		resultsTitleParachute,
 		resultsTitleSpillHole,
+		resultsTitleVelocity,
 		calculationOk,
 		initCalculationData,
 		scope: 'Foam',

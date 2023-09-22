@@ -22,13 +22,27 @@ export function useParachuteSizingValidation(self) {
 		airDensityMeasurementUnitId: { required, $autoDirty: true },
 		airDensityMeasurementUnitsId: { required, $autoDirty: true },
 		coeffDrag: { required, decimal, between: between(0.1, 5), $autoDirty: true },
-		desiredVelocity: { required, decimal, between: between(0.1, 999), $autoDirty: true },
-		desiredVelocityMeasurementUnitId: { required, $autoDirty: true },
-		desiredVelocityMeasurementUnitsId: { required, $autoDirty: true },
+		desiredVelocity: {
+			requiredIfDiameter: requiredIf(self.calculationType === 'diameter'),
+			decimal, between: between(0.1, 999), $autoDirty: true 
+		},
+		desiredVelocityMeasurementUnitId: { 
+			requiredIfDiameter: requiredIf(self.calculationType === 'diameter'),
+			$autoDirty: true 
+		},
+		desiredVelocityMeasurementUnitsId: { 
+			requiredIfDiameter: requiredIf(self.calculationType === 'diameter'),
+			$autoDirty: true 
+		},
 		diameterLengthMeasurementUnitId: { required, $autoDirty: true },
 		diameterLengthMeasurementUnitsId: { required, $autoDirty: true },
 		mass: { required, decimal, between: between(0.1, 999), $autoDirty: true },
 		massWeightMeasurementUnitId: { required, $autoDirty: true },
+		parachuteDiameter: { 
+			requiredIfDiameter: requiredIf(self.calculationType === 'velocity'),
+			between: between(0.1, 999),
+			$autoDirty: true 
+		},
 		parachuteShape: { required, $autoDirty: true },
 		massWeightMeasurementUnitsId: { required, $autoDirty: true },
 		// spillHoleDiameter: { decimal, between: between(0, 100), $autoDirty: true },
