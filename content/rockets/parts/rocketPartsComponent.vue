@@ -44,6 +44,7 @@ export function useRocketPartsComponent(props, context, options) {
 			// .thenBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			// .thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 			// .thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
+			.thenBy((v1, v2) => { return (v1.index && v2.index) && v1.index.compare(v2.index); })
 		);
 		let prev = null;
 		let prevId = null;
@@ -81,7 +82,7 @@ export function useRocketPartsComponent(props, context, options) {
 			return null;
 
 		const temp = props.manufacturers.find(l => l.id === id);
-		return temp ? temp.name : null;
+		return temp ? (props.manufacturerAbbrev ? temp.abbrev : temp.name) : null;
 	};
 	const partTypeName = (id) => {
 		return LibraryClientUtility.$trans.t(`forms.content.parts['${id}'].plural`);

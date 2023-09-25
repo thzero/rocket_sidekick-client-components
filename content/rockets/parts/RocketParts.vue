@@ -141,12 +141,16 @@
 							class="float-right"
 						>{{ manufacturer(item2) }}</div>
 					</v-card-title>
+					<v-card-text>
+						<slot name="partText" :item="item2">
+						</slot>
+					</v-card-text>
 					<v-card-actions
-						v-if="(deletable || editable || selectable) && !item2.fromRocket"
+						v-if="deletable || editable || selectable"
 					>
 						<v-spacer></v-spacer>
 						<v-btn
-							v-if="deletable"
+							v-if="deletable && !item2.fromRocket"
 							:variant="buttonsForms.variant.delete"
 							:color="buttonsForms.color.delete"
 							@click="clickDelete(item2, stageId)"
@@ -158,7 +162,7 @@
 							@click="clickEdit(item2, stageId)"
 						>{{ $t('buttons.edit') }}</v-btn>
 						<v-btn
-							v-if="selectable"
+							v-if="selectable && !item2.fromRocket"
 							:variant="buttonsForms.variant.default"
 							:color="buttonsForms.color.default"
 							@click="clickSelect(item2, stageId)"

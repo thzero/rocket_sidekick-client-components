@@ -86,7 +86,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row
+		<!-- <v-row
 			dense
 		>
 			<v-col 
@@ -214,7 +214,7 @@
 					</v-col>
 				</v-row>
 			</v-col>
-		</v-row>
+		</v-row> -->
 	</div>
 	<v-row dense>
 		<v-col>
@@ -332,7 +332,7 @@
 				<RocketParts
 					:items="altimeters"
 					:deletable="isEditable"
-					:editable="isEditable"
+					:editable="isEditablePart"
 					:manufacturers="manufacturers"
 					:stage-id="displayItem.id"
 					@delete="handleAltimeterDelete"
@@ -342,7 +342,7 @@
 				<RocketParts
 					:items="chuteProtectors"
 					:deletable="isEditable"
-					:editable="isEditable"
+					:editable="isEditablePart"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleChuteProtectorDelete"
@@ -352,7 +352,7 @@
 				<RocketParts
 					:items="chuteReleases"
 					:deletable="isEditable"
-					:editable="isEditable"
+					:editable="isEditablePart"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleChuteReleaseDelete"
@@ -362,7 +362,7 @@
 				<RocketParts
 					:items="deploymentBags"
 					:deletable="isEditable"
-					:editable="isEditable"
+					:editable="isEditablePart"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleDeploymentBagDelete"
@@ -370,9 +370,53 @@
 				>
 				</RocketParts>
 				<RocketParts
+					:items="motors"
+					:manufacturer-abbrev="true"
+					:deletable="false"
+					:editable="false"
+					:manufacturers="manufacturers"
+					:stageId="displayItem.id"
+				>
+					<template #partText	="{ item }">
+						<v-row 
+							dense
+							class="mb-2"
+						>
+							<v-col 
+								cols="12" sm="5"
+							>
+								<VTextField
+									v-model="item.motor"
+									:readonly="true"
+									:hide-details="true"
+									:label="$t('forms.content.parts.motor.name')"
+								/>
+							</v-col><v-col 
+								cols="12" sm="7"
+							>
+								<VTextField
+									v-model="item.motorCase"
+									:readonly="true"
+									:hide-details="true"
+									:label="$t('forms.content.parts.motorCase.name')"
+								/>
+							</v-col>
+						</v-row>
+					</template> 
+				</RocketParts>
+				<!-- <RocketParts
+					:items="motorCases"
+					:manufacturer-abbrev="true"
+					:deletable="false"
+					:editable="false"
+					:manufacturers="manufacturers"
+					:stageId="displayItem.id"
+				>
+				</RocketParts> -->
+				<RocketParts
 					:items="parachutes"
 					:deletable="isEditable"
-					:editable="isEditable"
+					:editable="isEditablePart"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleParachuteDelete"
@@ -382,7 +426,7 @@
 				<RocketParts
 					:items="streamers"
 					:deletable="isEditable"
-					:editable="isEditable"
+					:editable="isEditablePart"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleStreamerDelete"
@@ -392,7 +436,7 @@
 				<RocketParts
 					:items="trackers"
 					:deletable="isEditable"
-					:editable="isEditable"
+					:editable="isEditablePart"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleTrackerDelete"
@@ -529,6 +573,9 @@ export default {
 			hasParachutes,
 			hasStreamers,
 			hasTrackers,
+			isEditablePart,
+			motors,
+			motorCases,
 			parachutes,
 			stageIndex,
 			streamers,
@@ -637,6 +684,9 @@ export default {
 			hasParachutes,
 			hasStreamers,
 			hasTrackers,
+			isEditablePart,
+			motors,
+			motorCases,
 			parachutes,
 			stageIndex,
 			streamers,
