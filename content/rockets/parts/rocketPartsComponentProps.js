@@ -19,6 +19,10 @@ export const useRocketPartsComponentProps = {
 		type: Array,
 		value: null
 	},
+	manufacturerAbbrev: {
+		type: Boolean,
+		value: false
+	},
 	manufacturers: {
 		type: Array,
 		value: null

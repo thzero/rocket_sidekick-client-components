@@ -169,6 +169,10 @@ export function useRocketSetupStageComponent(props, context, options) {
 		const temp = trackers.value;
 		return temp &&  Array.isArray(temp) && temp.length > 0;
 	});
+	const isEditablePart = computed(() => {
+		// return props.isEditable;
+		return false; // TODO
+	});
 	const fromRocketStage = computed(() => {
 		// if (!props.detailItemSetup)
 		// 	return null;
@@ -213,23 +217,29 @@ export function useRocketSetupStageComponent(props, context, options) {
 			return null;
 		return displayItemMeasurementWeight(correlationId(), temp, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
 	});
-	const motorCaseInfo0 = computed(() => {
-		return motorCaseInfo(0);
+	const motorCases = computed(() => {
+		const output = [];
+		if (hasMotorInfo(0))
+			output.push(motorCaseInfo(0));
+		if (hasMotorInfo(1))
+			output.push(motorCaseInfo(1));
+		if (hasMotorInfo(2))
+			output.push(motorCaseInfo(2));
+		if (hasMotorInfo(3))
+			output.push(motorCaseInfo(3));
+		return output;
 	});
-	const motorCaseInfo1 = computed(() => {
-		return motorCaseInfo(1);
-	});
-	const motorCaseInfo2 = computed(() => {
-		return motorCaseInfo(1);
-	});
-	const motorInfo0 = computed(() => {
-		return motorInfo(0);
-	});
-	const motorInfo1 = computed(() => {
-		return motorInfo(1);
-	});
-	const motorInfo2 = computed(() => {
-		return motorInfo(1);
+	const motors = computed(() => {
+		const output = [];
+		if (hasMotorInfo(0))
+			output.push(motorInfo(0));
+		if (hasMotorInfo(1))
+			output.push(motorInfo(3));
+		if (hasMotorInfo(2))
+			output.push(motorInfo(2));
+		if (hasMotorInfo(3))
+			output.push(motorInfo(3));
+		return output;
 	});
 	const parachutes = computed(() => {
 		const temp = props.detailItem ? props.detailItem.parachutes : [];
@@ -425,20 +435,25 @@ export function useRocketSetupStageComponent(props, context, options) {
 		dialogPartsEditId.value = item.id;
 		dialogPartsEditTrackerManager.value.open();
 	};
-	const getMotor = (index) => {
-		if (!displayItem.value || !displayItem.value.motors || (index >= displayItem.value.motors.length))
-			return null;
-
-		return displayItem.value.motors[index];
-	};
-	const generateTitle = (id, name) => {
+	const generateMotorInfo = (id, name) => {
 		if (String.isNullOrEmpty(name))
 			return '';
 		let manufacturer = null;
 		if (props.manufacturers)
 			manufacturer = props.manufacturers.find(l => l.id === id);
 
-		return `${manufacturer ? manufacturer.abbrev : ''} ${name}`.trim();
+		return {
+			value: `${manufacturer ? manufacturer.abbrev : ''} ${name}`.trim(),
+			name: `${name}`.trim(),
+			manufacturer: manufacturer.abbrev,
+			manufacturerId: manufacturer.id
+		};
+	};
+	const getMotor = (index) => {
+		if (!displayItem.value || !displayItem.value.motors || (index >= displayItem.value.motors.length))
+			return null;
+
+		return displayItem.value.motors[index];
 	};
 	const getParts = (correlationId, item, type) => {
 		if (type === partsKeyAltimeters)
@@ -467,18 +482,27 @@ export function useRocketSetupStageComponent(props, context, options) {
 		if (!motor)
 			return { value: '' };
 
-		const output = generateTitle(motor.motorCaseManufacturerId, motor.motorCaseName);
-		return { value: output.trim() };
+		// const output = generateMotorInfo(motor.motorCaseManufacturerId, motor.motorCaseName);
+		// return { index: index, value: output.full, name: output.name, manufacturer: output.manufacturer, manufacturerId: output.manufacturerId, typeId: AppCommonConstants.Rocketry.PartTypes.motorCase };
+		const output = generateMotorInfo(motor.motorCaseManufacturerId, motor.motorCaseName);
+		output.typeId = AppCommonConstants.Rocketry.PartTypes.motorCase;
+		return output;
 	};
 	const motorInfo = (index) => {
 		const motor = getMotor(index);
 		if (!motor)
 			return { value: '' };
 
-		let output = generateTitle(motor.motorManufacturerId, motor.motorName);
-		if (!String.isNullOrEmpty(motor.motorDelay))
-			output += '-' + motor.motorDelay;
-		return { value: output.trim() };
+		let output = generateMotorInfo(motor.motorManufacturerId, motor.motorName);
+		if (!String.isNullOrEmpty(motor.motorDelay)) {
+			output.value += '-' + motor.motorDelay;
+			output.name += '-' + motor.motorDelay;
+		}
+		// return { index: index, value: output.full, name: output.name, manufacturer: output.manufacturer, typeId: AppCommonConstants.Rocketry.PartTypes.motor };
+		output.typeId = AppCommonConstants.Rocketry.PartTypes.motor;
+		output.motor = fromRocketStageMotor(index).value;
+		output.motorCase = motorCaseInfo(index).value;
+		return output;
 	};
 	const panelsKey = (type) => {
 		return displayItem.value.id + '-stage-';
@@ -674,6 +698,9 @@ export function useRocketSetupStageComponent(props, context, options) {
 		hasParachutes,
 		hasStreamers,
 		hasTrackers,
+		isEditablePart,
+		motors,
+		motorCases,
 		parachutes,
 		stageIndex,
 		streamers,
