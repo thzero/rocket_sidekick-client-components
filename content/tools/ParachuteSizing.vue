@@ -35,7 +35,7 @@
 										<td>
 											<span class="text-h7 text-bold">{{ $t('forms.content.tools.parachuteSizing.output') + ' ' + $t('forms.content.tools.parachuteSizing.diameterMeasurementUnits') }}</span>&nbsp;&nbsp;
 										</td>
-										<td class="measurementUnits">
+										<!-- <td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="diameterLengthMeasurementUnitsIdRef"
 												v-model="diameterLengthMeasurementUnitsId"
@@ -54,6 +54,16 @@
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.length')"
 											/>
+										</td> -->
+										<td class="measurementUnit3">
+											<MeasurementUnitSelect2
+												ref="diameterLengthMeasurementUnitIdRef"
+												v-model="diameterLengthMeasurementUnitId"
+												vid="diameterLengthMeasurementUnitId"
+												:measurementUnitsType="measurementUnitsLengthType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.length')"
+											/>
 										</td>
 									</tr>
 									<tr
@@ -62,7 +72,7 @@
 										<td>
 											<span class="text-h7 text-bold">{{ $t('forms.content.tools.parachuteSizing.output') + ' ' + $t('forms.content.tools.parachuteSizing.velocityMeasurementUnits') }}</span>&nbsp;&nbsp;
 										</td>
-										<td class="measurementUnits">
+										<!-- <td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="velocityMeasurementUnitsIdRef"
 												v-model="velocityMeasurementUnitsId"
@@ -77,6 +87,16 @@
 												v-model="velocityMeasurementUnitId"
 												vid="velocityMeasurementUnitId"
 												:measurementUnitsId="velocityMeasurementUnitsId"
+												:measurementUnitsType="measurementUnitsVelocityType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.velocity')"
+											/>
+										</td> -->
+										<td class="measurementUnit3">
+											<MeasurementUnitSelect2
+												ref="velocityMeasurementUnitIdRef"
+												v-model="velocityMeasurementUnitId"
+												vid="velocityMeasurementUnitId"
 												:measurementUnitsType="measurementUnitsVelocityType"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.velocity')"
@@ -99,7 +119,7 @@
 												:label="$t('forms.content.rockets.name') + ' ' + $t('forms.content.tools.parachuteSizing.mass')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<!-- <td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="massWeightMeasurementUnitsIdRef"
 												v-model="massWeightMeasurementUnitsId"
@@ -114,6 +134,16 @@
 												v-model="massWeightMeasurementUnitId"
 												vid="massWeightMeasurementUnitId"
 												:measurementUnitsId="massWeightMeasurementUnitsId"
+												:measurementUnitsType="measurementUnitsWeightType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.weight')"
+											/>
+										</td> -->
+										<td class="measurementUnit3">
+											<MeasurementUnitSelect2
+												ref="massWeightMeasurementUnitIdRef"
+												v-model="massWeightMeasurementUnitId"
+												vid="massWeightMeasurementUnitId"
 												:measurementUnitsType="measurementUnitsWeightType"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.weight')"
@@ -135,7 +165,7 @@
 												:hint="$t('forms.content.tools.parachuteSizing.airDensity_hint')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<!-- <td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="airDensityMeasurementUnitsIdRef"
 												v-model="airDensityMeasurementUnitsId"
@@ -150,6 +180,16 @@
 												v-model="airDensityMeasurementUnitId"
 												vid="airDensityMeasurementUnitId"
 												:measurementUnitsId="airDensityMeasurementUnitsId"
+												:measurementUnitsType="measurementUnitsDensityType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.density')"
+											/>
+										</td> -->
+										<td class="measurementUnit3">
+											<MeasurementUnitSelect2
+												ref="airDensityMeasurementUnitIdRef"
+												v-model="airDensityMeasurementUnitId"
+												vid="airDensityMeasurementUnitId"
 												:measurementUnitsType="measurementUnitsDensityType"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.density')"
@@ -186,7 +226,7 @@
 												:hint="$t('forms.content.tools.parachuteSizing.desiredVelocity_hint')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<!-- <td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="desiredVelocityMeasurementUnitsIdRef"
 												v-model="desiredVelocityMeasurementUnitsId"
@@ -205,12 +245,22 @@
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.velocity')"
 											/>
+										</td> -->
+										<td class="measurementUnit3">
+											<MeasurementUnitSelect2
+												ref="desiredVelocityMeasurementUnitIdRef"
+												v-model="desiredVelocityMeasurementUnitId"
+												vid="desiredVelocityMeasurementUnitId"
+												:measurementUnitsType="measurementUnitsVelocityType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.velocity')"
+											/>
 										</td>
 									</tr>
 								</table>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<!-- <v-row dense>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%;">
 									<tr
@@ -247,10 +297,22 @@
 												:label="$t('forms.settings.measurementUnits.length')"
 											/>
 										</td>
+										<td class="measurementUnit3">
+											<MeasurementUnitSelect2
+												ref="diameterLengthMeasurementUnitIdRef"
+												v-model="diameterLengthMeasurementUnitId"
+												vid="diameterLengthMeasurementUnitId"
+												:measurementUnitsType="measurementUnitsLengthType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.length')"
+											/>
+										</td>
 									</tr>
 								</table>
 							</v-col>
-							<v-col cols="12" sm="6" >
+						</v-row> -->
+						<v-row dense>
+							<v-col cols="12" sm="6">
 								<VSelectWithValidation
 									ref="parachuteShapeRef"
 									v-model="parachuteShape"
@@ -261,29 +323,7 @@
 									:hint="$t('forms.content.tools.parachuteSizing.parachuteShape_hint')"
 								/>
 							</v-col>
-						</v-row>
-						<v-row dense>
-							<v-col cols="6" sn="6">
-								<VNumberFieldWithValidation
-									ref="spillHoleDiameterRef"
-									v-model="spillHoleDiameter"
-									vid="spillHoleDiameter"
-									:validation="validation"
-									:label="$t('forms.content.tools.parachuteSizing.spillHole.diameter')"
-									:hint="$t('forms.content.tools.parachuteSizing.spillHole.diameter_hint')"
-								/>
-							</v-col>
-							<!-- <v-col cols="4" sn="4">
-								<VNumberFieldWithValidation
-									ref="spillHolePctRef"
-									v-model="spillHolePct"
-									vid="spillHolePct"
-									:validation="validation"
-									:label="$t('forms.content.tools.parachuteSizing.spillHole.pct')"
-									:hint="$t('forms.content.tools.parachuteSizing.spillHole.pCt_hint')"
-								/>
-							</v-col> -->
-							<v-col cols="6" sn="6">
+							<v-col cols="12" sm="6">
 								<VSelectWithValidation
 									ref="spillHoleShapeRef"
 									v-model="spillHoleShape"
@@ -296,6 +336,135 @@
 							</v-col>
 						</v-row>
 						<v-row dense>
+							<v-col cols="12" sm="6" >
+								<table style="width: 100%;">
+									<tr
+										v-if="calculationType==='velocity'"
+									>
+										<td
+										>
+											<VNumberFieldWithValidation
+												ref="parachuteDiameterRef"
+												v-model="parachuteDiameter"
+												vid="parachuteDiameter"
+												:validation="validation"
+												:label="$t('forms.content.tools.parachuteSizing.diameter')"
+												:hint="$t('forms.content.tools.parachuteSizing.diameter_hint')"
+											/>
+										</td>
+										<!-- <td class="measurementUnits">
+											<MeasurementUnitsSelect
+												ref="diameterLengthMeasurementUnitsIdRef"
+												v-model="diameterLengthMeasurementUnitsId"
+												vid="diameterLengthMeasurementUnitsId"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.title')"
+											/>
+										</td>
+										<td class="measurementUnit">
+											<MeasurementUnitSelect
+												ref="diameterLengthMeasurementUnitIdRef"
+												v-model="diameterLengthMeasurementUnitId"
+												vid="diameterLengthMeasurementUnitId"
+												:measurementUnitsId="diameterLengthMeasurementUnitsId"
+												:measurementUnitsType="measurementUnitsLengthType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.length')"
+											/>
+										</td> -->
+										<td class="measurementUnit3">
+											<MeasurementUnitSelect2
+												ref="diameterLengthMeasurementUnitIdRef"
+												v-model="diameterLengthMeasurementUnitId"
+												vid="diameterLengthMeasurementUnitId"
+												:measurementUnitsType="measurementUnitsLengthType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.length')"
+											/>
+										</td>
+									</tr>
+								</table>
+							</v-col>
+							<v-col cols="12" sm="6">
+								<!-- <VNumberFieldWithValidation
+									ref="spillHoleDiameterRef"
+									v-model="spillHoleDiameter"
+									vid="spillHoleDiameter"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.spillHole.diameter')"
+									:hint="$t('forms.content.tools.parachuteSizing.spillHole.diameter_hint')"
+								/> -->
+								<table style="width: 100%;">
+									<tr
+										v-if="calculationType==='diameter'"
+									>
+										<td
+										>
+											<VNumberFieldWithValidation
+												ref="spillHoleDiameterRef"
+												v-model="spillHoleDiameter"
+												vid="spillHoleDiameter"
+												:validation="validation"
+												:label="$t('forms.content.tools.parachuteSizing.spillHole.diameter')"
+												:hint="$t('forms.content.tools.parachuteSizing.spillHole.diameter_hint')"
+											/>
+										</td>
+										<!-- <td class="measurementUnits">
+											<MeasurementUnitsSelect
+												ref="desiredVelocityMeasurementUnitsIdRef"
+												v-model="desiredVelocityMeasurementUnitsId"
+												vid="desiredVelocityMeasurementUnitsId"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.title')"
+											/>
+										</td>
+										<td class="measurementUnit">
+											<MeasurementUnitSelect
+												ref="desiredVelocityMeasurementUnitIdRef"
+												v-model="desiredVelocityMeasurementUnitId"
+												vid="desiredVelocityMeasurementUnitId"
+												:measurementUnitsId="desiredVelocityMeasurementUnitsId"
+												:measurementUnitsType="measurementUnitsVelocityType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.velocity')"
+											/>
+										</td> -->
+										<td class="measurementUnit3">
+											<MeasurementUnitSelect2
+												ref="desiredVelocityMeasurementUnitIdRef"
+												v-model="desiredVelocityMeasurementUnitId"
+												vid="desiredVelocityMeasurementUnitId"
+												:measurementUnitsType="measurementUnitsVelocityType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.velocity')"
+											/>
+										</td>
+									</tr>
+								</table>
+							</v-col>
+							<!-- <v-col cols="4" sn="4">
+								<VNumberFieldWithValidation
+									ref="spillHolePctRef"
+									v-model="spillHolePct"
+									vid="spillHolePct"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.spillHole.pct')"
+									:hint="$t('forms.content.tools.parachuteSizing.spillHole.pCt_hint')"
+								/>
+							</v-col> -->
+							<!-- <v-col cols="6" sn="6">
+								<VSelectWithValidation
+									ref="spillHoleShapeRef"
+									v-model="spillHoleShape"
+									vid="spillHoleShape"
+									:items="spillHoleShapes"
+									:validation="validation"
+									:label="$t('forms.content.tools.parachuteSizing.spillHole.shape')"
+									:hint="$t('forms.content.tools.parachuteSizing.spillHole.shape_hint')"
+								/>
+							</v-col> -->
+						</v-row>
+						<!-- <v-row dense>
 							<v-col cols="12" sm="6">
 							</v-col>
 							<v-col cols="12" sm="6" >
@@ -303,7 +472,7 @@
 									
 								</table>
 							</v-col>
-							<!-- <v-col
+							<v-col
 								v-if="$vuetify.display.smAndUp"
 								cols="12" sm="6"
 							>
@@ -316,8 +485,8 @@
 									:label="$t('forms.content.tools.parachuteSizing.parachuteShape')"
 									:hint="$t('forms.content.tools.parachuteSizing.parachuteShape_hint')"
 								/>
-							</v-col> -->
-						</v-row>
+							</v-col>
+						</v-row> -->
 					</template>
 				</VFormControl>
 			</v-col>
@@ -397,6 +566,7 @@ import CalculatedOuput from '@/components/content/tools//CalculatedOuput';
 import ContentDescription from '@/components/content/Description';
 import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
@@ -412,6 +582,7 @@ export default {
 		ContentDescription,
 		ContentHeader,
 		MeasurementUnitSelect,
+		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		VFormControl,
 		VMarkdown,

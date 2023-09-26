@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
+import AppCommonConstants from 'rocket_sidekick_common/constants';
 import AppSharedConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -71,6 +72,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
+		// measurementUnitsIdSettings,
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
@@ -88,7 +90,11 @@ export function useParachuteSizingBaseComponent(props, context) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const serviceToolsParachuteSizing = LibraryClientUtility.$injector.getService(AppSharedConstants.InjectorKeys.SERVICE_TOOLS_PARACHUTE_SIZING);
@@ -168,24 +174,29 @@ export function useParachuteSizingBaseComponent(props, context) {
 	const initCalculationData = (correlationId) => {
 		calculationData.value.airDensity = airDensity.value;
 		calculationData.value.airDensityMeasurementUnitId = airDensityMeasurementUnitId.value;
-		calculationData.value.airDensityMeasurementUnitsId = airDensityMeasurementUnitsId.value;
+		// calculationData.value.airDensityMeasurementUnitsId = airDensityMeasurementUnitsId.value;
+		calculationData.value.airDensityMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.density.id, airDensityMeasurementUnitId.value);
 		calculationData.value.calculationType = calculationType.value;
 		calculationData.value.coeffDrag = coeffDrag.value;
 		calculationData.value.desiredVelocity = desiredVelocity.value;
 		calculationData.value.desiredVelocityMeasurementUnitId = desiredVelocityMeasurementUnitId.value;
-		calculationData.value.desiredVelocityMeasurementUnitsId = desiredVelocityMeasurementUnitsId.value;
+		// calculationData.value.desiredVelocityMeasurementUnitsId = desiredVelocityMeasurementUnitsId.value;
+		calculationData.value.desiredVelocityMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, desiredVelocityMeasurementUnitId.value);
 		calculationData.value.diameterLengthMeasurementUnitId = diameterLengthMeasurementUnitId.value;
-		calculationData.value.diameterLengthMeasurementUnitsId = diameterLengthMeasurementUnitsId.value;
+		// calculationData.value.diameterLengthMeasurementUnitsId = diameterLengthMeasurementUnitsId.value;
+		calculationData.value.diameterLengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, diameterLengthMeasurementUnitId.value);
 		calculationData.value.mass = mass.value;
 		calculationData.value.massWeightMeasurementUnitId = massWeightMeasurementUnitId.value;
-		calculationData.value.massWeightMeasurementUnitsId = massWeightMeasurementUnitsId.value;
+		// calculationData.value.massWeightMeasurementUnitsId = massWeightMeasurementUnitsId.value;
+		calculationData.value.massWeightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, massWeightMeasurementUnitId.value);
 		calculationData.value.parachuteDiameter = parachuteDiameter.value;
 		calculationData.value.parachuteShape = parachuteShape.value;
 		calculationData.value.spillHoleDiameter = spillHoleDiameter.value;
 		calculationData.value.spillHolePct = spillHolePct.value;
 		calculationData.value.spillHoleShape = spillHoleShape.value;
 		calculationData.value.velocityMeasurementUnitId = velocityMeasurementUnitId.value;
-		calculationData.value.velocityMeasurementUnitsId = velocityMeasurementUnitsId.value;
+		// calculationData.value.velocityMeasurementUnitsId = velocityMeasurementUnitsId.value;
+		calculationData.value.velocityMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, velocityMeasurementUnitId.value);
 	};
 	const reset = async (correlationId) => {
 		await parachuteSizingFormRef.value.reset(correlationId, false);

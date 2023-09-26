@@ -36,7 +36,7 @@
 												:label="$t('forms.content.tools.thrust2Weight.mass')"
 											/>
 										</td>
-										<td
+										<!-- <td
 											v-if="$vuetify.display.mdAndUp"
 											class="measurementUnits"
 										>
@@ -61,9 +61,21 @@
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.weight')"
 											/>
+										</td> -->
+										<td
+											class="measurementUnits3"
+										>
+											<MeasurementUnitSelect2
+												ref="massMeasurementUnitRef"
+												v-model="massMeasurementUnitId"
+												vid="massMeasurementUnitId"
+												:measurementUnitsType="measurementUnitsWeightType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.weight')"
+											/>
 										</td>
 									</tr>
-									<tr
+									<!-- <tr
 										v-if="$vuetify.display.smAndDown"
 									>
 										<td class="measurementUnits">
@@ -86,7 +98,7 @@
 												:label="$t('forms.settings.measurementUnits.weight')"
 											/>
 										</td>
-									</tr>
+									</tr> -->
 								</table>
 							</v-col>
 							<v-col cols="12" md="6">
@@ -507,6 +519,7 @@ import CalculatedOuput from '@/components/content/tools/CalculatedOuput';
 import ContentDescription from '@/components/content/Description';
 import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import MotorLookupDialog from '@/components/external/MotorLookupDialog';
 import VCheckboxWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VCheckboxWithValidation';
@@ -523,6 +536,7 @@ export default {
 		ContentDescription,
 		ContentHeader,
 		MeasurementUnitSelect,
+		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		MotorLookupDialog,
 		VCheckboxWithValidation,

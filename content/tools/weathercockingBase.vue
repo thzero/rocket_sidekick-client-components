@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
+import AppCommonConstants from 'rocket_sidekick_common/constants';
 import AppSharedConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -66,6 +67,7 @@ export function useWeathercockingBaseComponent(props, context) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
+		// measurementUnitsIdSettings,
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
@@ -83,7 +85,11 @@ export function useWeathercockingBaseComponent(props, context) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const serviceToolsWeathercocking = LibraryClientUtility.$injector.getService(AppSharedConstants.InjectorKeys.SERVICE_TOOLS_WEATHERCOCKING);
@@ -120,10 +126,12 @@ export function useWeathercockingBaseComponent(props, context) {
 	const initCalculationData = (correlationId) => {
 		calculationData.value.exitVelocity = exitVelocity.value;
 		calculationData.value.exitVelocityMeasurementUnitId = exitVelocityMeasurementUnitId.value;
-		calculationData.value.exitVelocityMeasurementUnitsId = exitVelocityMeasurementUnitsId.value;
+		calculationData.value.exitVelocityMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, exitVelocityMeasurementUnitId.value);
+		// calculationData.value.exitVelocityMeasurementUnitsId = exitVelocityMeasurementUnitsId.value;
 		calculationData.value.windVelocity = windVelocity.value;
 		calculationData.value.windVelocityMeasurementUnitId = windVelocityMeasurementUnitId.value;
-		calculationData.value.windVelocityMeasurementUnitsId = windVelocityMeasurementUnitsId.value;
+		calculationData.value.windVelocityMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, windVelocityMeasurementUnitId.value);
+		// calculationData.value.windVelocityMeasurementUnitsId = windVelocityMeasurementUnitsId.value;
 	};
 	const reset = async (correlationId) => {
 		await weathercockingFormRef.value.reset(correlationId, false);

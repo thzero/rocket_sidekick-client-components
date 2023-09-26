@@ -29,7 +29,7 @@
 												:label="$t('forms.content.tools.weathercocking.windVelocity')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<!-- <td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="windVelocityMeasurementUnitsIdRef"
 												v-model="windVelocityMeasurementUnitsId"
@@ -37,13 +37,21 @@
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
-										</td>
-										<td class="measurementUnit">
-											<MeasurementUnitSelect
+										</td> -->
+										<td class="measurementUnit3">
+											<!-- <MeasurementUnitSelect
 												ref="windVelocityMeasurementUnitIdRef"
 												v-model="windVelocityMeasurementUnitId"
 												vid="windVelocityMeasurementUnitId"
 												:measurementUnitsId="windVelocityMeasurementUnitsId"
+												:measurementUnitsType="measurementUnitsVelocityType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.velocity')"
+											/> -->
+											<MeasurementUnitSelect2
+												ref="windVelocityMeasurementUnitIdRef"
+												v-model="windVelocityMeasurementUnitId"
+												vid="windVelocityMeasurementUnitId"
 												:measurementUnitsType="measurementUnitsVelocityType"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.velocity')"
@@ -64,7 +72,7 @@
 												:label="$t('forms.content.tools.weathercocking.exitVelocity')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<!-- <td class="measurementUnits">
 											<MeasurementUnitsSelect
 												ref="exitVelocityMeasurementUnitsIdRef"
 												v-model="exitVelocityMeasurementUnitsId"
@@ -72,13 +80,21 @@
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
-										</td>
-										<td class="measurementUnit">
-											<MeasurementUnitSelect
+										</td> -->
+										<td class="measurementUnit3">
+											<!-- <MeasurementUnitSelect
 												ref="exitVelocityMeasurementUnitIdRef"
 												v-model="exitVelocityMeasurementUnitId"
 												vid="exitVelocityMeasurementUnitId"
 												:measurementUnitsId="exitVelocityMeasurementUnitsId"
+												:measurementUnitsType="measurementUnitsVelocityType"
+												:validation="validation"
+												:label="$t('forms.settings.measurementUnits.velocity')"
+											/> -->
+											<MeasurementUnitSelect2
+												ref="exitVelocityMeasurementUnitIdRef"
+												v-model="exitVelocityMeasurementUnitId"
+												vid="exitVelocityMeasurementUnitId"
 												:measurementUnitsType="measurementUnitsVelocityType"
 												:validation="validation"
 												:label="$t('forms.settings.measurementUnits.velocity')"
@@ -156,6 +172,7 @@ import CalculatedOuput from '@/components/content/tools//CalculatedOuput';
 import ContentDescription from '@/components/content/Description';
 import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
@@ -169,6 +186,7 @@ export default {
 		ContentDescription,
 		ContentHeader,
 		MeasurementUnitSelect,
+		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		VFormControl,
 		VNumberFieldWithValidation,

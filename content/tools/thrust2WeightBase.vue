@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
+import AppCommonConstants from 'rocket_sidekick_common/constants';
 import AppSharedConstants from '@/utility/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -85,6 +86,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
+		// measurementUnitsIdSettings,
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
@@ -102,7 +104,11 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const serviceToolsThrust2Weight = LibraryClientUtility.$injector.getService(AppSharedConstants.InjectorKeys.SERVICE_TOOLS_THRUST2WEIGHT);
@@ -232,7 +238,8 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 	const initCalculationData = (correlationId) => {
 		for (let item of motorRef) {
 			item.calculationData.mass = mass.value;
-			item.calculationData.unitId = massMeasurementUnitId.value;
+			// item.calculationData.unitId = massMeasurementUnitId.value;
+			item.calculationData.unitId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, massMeasurementUnitId.value);
 			item.calculationData.maxLaunchRodTime = maxLaunchRodTime.value;
 			item.calculationData.thrustAverage = item.thrustAverage.value;
 			item.calculationData.thrustInitial =item. thrustInitial.value;

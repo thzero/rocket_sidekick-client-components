@@ -6,6 +6,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import AppUtility from '@/utility/app';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
+import { unit } from 'mathjs';
 
 export function useToolsMeasurementBaseComponent(props, context, options) {
 	const {
@@ -65,6 +66,21 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		
 		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateWeight(correlationId, func1(value), func2(value)));
 	};
+	const measurementUnitsFromUnitId = (correlationId, measurementType, unitId) => {
+		let temp = AppCommonConstants.MeasurementUnits.english[measurementType];
+		if (temp) {
+			temp = temp[unitId];
+			if (temp)
+				return AppCommonConstants.MeasurementUnits.english.id;
+		}
+		temp = AppCommonConstants.MeasurementUnits.metrics[measurementType];
+		if (temp) {
+			temp = temp[unitId];
+			if (temp)
+				return AppCommonConstants.MeasurementUnits.metrics.id;
+		}
+		return null;
+	};
 
 	onMounted(async () => {
 		const settings = serviceStore.getters.user.getUserSettings();
@@ -102,7 +118,8 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsWeightType,
 		displayItemMeasurement,
 		displayItemMeasurementLength,
-		displayItemMeasurementWeight
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	};
 };
 </script>
