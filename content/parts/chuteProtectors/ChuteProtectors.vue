@@ -35,12 +35,10 @@
 						:validation="validation"
 					/>
 				</v-col>
-				<v-col cols="6" sm="6">
-					<PartsPublicComponent
-						v-model="filterItemIsPublic"
-					>
-					</PartsPublicComponent>
-				</v-col>
+				<PartsPublicComponent
+					v-model="filterItemIsPublic"
+				>
+				</PartsPublicComponent>
 			</v-row>
 			<v-row dense>
 				<v-col cols="12" sm="6">
@@ -96,6 +94,7 @@ import Parts from '@/components/content/parts/Parts';
 import PartsPublicComponent from '@/components/content/parts/PartsPublicComponent';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
 import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
@@ -109,6 +108,7 @@ export default {
 		ChuteProtector,
 		ChuteProtectorPanelTitle,
 		MeasurementUnitSelect,
+		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		Parts,
 		PartsPublicComponent,

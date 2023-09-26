@@ -30,7 +30,7 @@
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
-			<v-col cols="10">
+			<v-col cols="9" sm="10">
 				<VTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
@@ -41,7 +41,7 @@
 					:counter="30"
 				/>
 			</v-col>
-			<v-col cols="2">
+			<v-col cols="3" sm="2">
 				<VSwitchWithValidation
 					v-if="!isEditable || hasAdmin"
 					ref="isPublicRef"
@@ -54,7 +54,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col>
+			<v-col cols="12">
 				<VTextAreaWithValidation
 					ref="descriptionRef"
 					v-model="detailItemDescription"
@@ -69,20 +69,20 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemDimensionRef"
-					v-model="detailItemDimension"
-					vid="detailItemDimension"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.chuteProtector.dimension')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
-				<table>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
 					<tr>
-						<td class="measurementUnits">
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemDimensionRef"
+								v-model="detailItemDimension"
+								vid="detailItemDimension"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.parts.chuteProtector.dimension')"
+							/>
+						</td>
+						<!-- <td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemDimensionMeasurementUnitsIdRef"
 								v-model="detailItemDimensionMeasurementUnitsId"
@@ -92,7 +92,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemDimensionMeasurementUnitIdRef"
 								v-model="detailItemDimensionMeasurementUnitId"
@@ -103,24 +103,35 @@
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.length')"
 							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemDimensionMeasurementUnitIdRef"
+								v-model="detailItemDimensionMeasurementUnitId"
+								vid="detailItemDimensionMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
 						</td>
 					</tr>
 				</table>
 			</v-col>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemDiameterRef"
-					v-model="detailItemDiameter"
-					vid="detailItemDiameter"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.chuteProtector.maxTubeSize')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
-				<table>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
 					<tr>
-						<td class="measurementUnits">
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemDiameterRef"
+								v-model="detailItemDiameter"
+								vid="detailItemDiameter"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.parts.chuteProtector.maxTubeSize')"
+							/>
+						</td>
+					<!-- <td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemDiameterMeasurementUnitsIdRef"
 								v-model="detailItemDiameterMeasurementUnitsId"
@@ -130,12 +141,23 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemDiameterMeasurementUnitIdRef"
 								v-model="detailItemDiameterMeasurementUnitId"
 								vid="detailItemDiameterMeasurementUnitId"
 								:measurementUnitsId="detailItemDiameterMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemDiameterMeasurementUnitIdRef"
+								v-model="detailItemDiameterMeasurementUnitId"
+								vid="detailItemDiameterMeasurementUnitId"
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -147,20 +169,20 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemWeightRef"
-					v-model="detailItemWeight"
-					vid="detailItemWeight"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.weight')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
-				<table>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
 					<tr>
-						<td class="measurementUnits">
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemWeightRef"
+								v-model="detailItemWeight"
+								vid="detailItemWeight"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.parts.weight')"
+							/>
+						</td>
+					<!-- <td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemWeightMeasurementUnitsIdRef"
 								v-model="detailItemWeightMeasurementUnitsId"
@@ -170,12 +192,23 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemWeightMeasurementUnitIdRef"
 								v-model="detailItemWeightMeasurementUnitId"
 								vid="detailItemWeightMeasurementUnitId"
 								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.weight')"
+							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemWeightMeasurementUnitIdRef"
+								v-model="detailItemWeightMeasurementUnitId"
+								vid="detailItemWeightMeasurementUnitId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -223,6 +256,7 @@ import { usePartComponentProps } from '@/components/content/parts/part/partCompo
 import { usePartValidation } from '@/components/content/parts/part/partValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
@@ -235,6 +269,7 @@ export default {
 	name: 'ChuteProtectorPartControl',
 	components: {
 		MeasurementUnitSelect,
+		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		VFormControl,
 		VNumberFieldWithValidation,
@@ -294,12 +329,15 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			measurementUnitsFromUnitId,
 			detailItemDescription,
 			detailItemIsPublic,
 			detailItemManufacturer,
@@ -370,12 +408,15 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			measurementUnitsFromUnitId,
 			detailItemDescription,
 			detailItemIsPublic,
 			detailItemManufacturer,

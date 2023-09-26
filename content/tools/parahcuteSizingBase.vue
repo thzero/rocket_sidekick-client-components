@@ -129,6 +129,8 @@ export function useParachuteSizingBaseComponent(props, context) {
 	const parachuteShapes = ref(shapes);
 	const parachuteSizingFormRef = ref(null);
 	const spillHoleDiameter = ref(null);
+	const spillHoleDiameterLengthMeasurementUnitId = ref(null);
+	const spillHoleDiameterLengthMeasurementUnitsId = ref(null);
 	const spillHoleShape = ref(AppSharedConstants.Tools.ParachuteSizing.shapes.circle);
 	const spillHolePct = ref(null);
 	const spillHoleShapes = ref(shapes);
@@ -192,6 +194,9 @@ export function useParachuteSizingBaseComponent(props, context) {
 		calculationData.value.parachuteDiameter = parachuteDiameter.value;
 		calculationData.value.parachuteShape = parachuteShape.value;
 		calculationData.value.spillHoleDiameter = spillHoleDiameter.value;
+		calculationData.value.spillHoleDiameterLengthMeasurementUnitId = spillHoleDiameterLengthMeasurementUnitId.value;
+		// calculationData.value.spillHoleDiameterLengthMeasurementUnitsId = spillHoleDiameterLengthMeasurementUnitsId.value;
+		calculationData.value.spillHoleDiameterLengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, spillHoleDiameterLengthMeasurementUnitId.value);
 		calculationData.value.spillHolePct = spillHolePct.value;
 		calculationData.value.spillHoleShape = spillHoleShape.value;
 		calculationData.value.velocityMeasurementUnitId = velocityMeasurementUnitId.value;
@@ -219,12 +224,14 @@ export function useParachuteSizingBaseComponent(props, context) {
 		desiredVelocityMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 		diameterLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 		massWeightMeasurementUnitsId.value = measurementUnitsIdSettings.value;
+		spillHoleDiameterLengthMeasurementUnitsId.value = measurementUnitsIdSettings.value;
 		velocityMeasurementUnitsId.value = measurementUnitsIdSettings.value;
-		
+
 		airDensityMeasurementUnitId.value = measurementUnitsDensityDefaultId.value;
 		desiredVelocityMeasurementUnitId.value = measurementUnitsVelocityDefaultId.value;
 		diameterLengthMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
 		massWeightMeasurementUnitId.value = measurementUnitsWeightDefaultId.value;
+		spillHoleDiameterLengthMeasurementUnitId.value = measurementUnitsWeightDefaultId.value;
 		velocityMeasurementUnitId.value = measurementUnitsVelocityDefaultId.value;
 	});
 
@@ -291,6 +298,8 @@ export function useParachuteSizingBaseComponent(props, context) {
 		parachuteShape,
 		parachuteShapes,
 		spillHoleDiameter,
+		spillHoleDiameterLengthMeasurementUnitId,
+		spillHoleDiameterLengthMeasurementUnitsId,
 		spillHolePct,
 		spillHoleShape,
 		spillHoleShapes,

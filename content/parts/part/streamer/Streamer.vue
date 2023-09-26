@@ -69,20 +69,20 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemWeightRef"
-					v-model="detailItemWeight"
-					vid="detailItemWeight"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.weight')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="12" sm="6">
 				<table>
 					<tr>
-						<td class="measurementUnits">
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemWeightRef"
+								v-model="detailItemWeight"
+								vid="detailItemWeight"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.parts.weight')"
+							/>
+						</td>
+						<!-- <td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemWeightMeasurementUnitsIdRef"
 								v-model="detailItemWeightMeasurementUnitsId"
@@ -92,12 +92,23 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemWeightMeasurementUnitIdRef"
 								v-model="detailItemWeightMeasurementUnitId"
 								vid="detailItemWeightMeasurementUnitId"
 								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.weight')"
+							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemWeightMeasurementUnitIdRef"
+								v-model="detailItemWeightMeasurementUnitId"
+								vid="detailItemWeightMeasurementUnitId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -145,6 +156,7 @@ import { useStreamerPartComponent } from '@/components/content/parts/part/stream
 import { useStreamerPartValidation } from '@/components/content/parts/part/streamer/streamerPartValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
@@ -157,6 +169,7 @@ export default {
 	name: 'StreamerPartControl',
 	components: {
 		MeasurementUnitSelect,
+		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		VFormControl,
 		VNumberFieldWithValidation,
@@ -216,12 +229,15 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			measurementUnitsFromUnitId,
 			detailItemDescription,
 			detailItemIsPublic,
 			detailItemManufacturer,
@@ -285,12 +301,15 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			measurementUnitsFromUnitId,
 			detailItemDescription,
 			detailItemIsPublic,
 			detailItemManufacturer,
