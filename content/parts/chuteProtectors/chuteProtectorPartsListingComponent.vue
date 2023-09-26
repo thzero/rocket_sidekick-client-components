@@ -38,7 +38,7 @@ export function useChuteProtectorPartsListingComponent(props, context, options) 
 			// params.diameterMeasurementUnitsId = diameterMeasurementUnitsId.value;
 			params.dimension = filterItemDimension.value;
 			// params.dimensionMeasurementUnitId = dimensionMeasurementUnitId.value;
-			// params.dimensionMeasurementUnistId = dimensionMeasurementUnistId.value;
+			// params.dimensionMeasurementUnitsId = dimensionMeasurementUnitsId.value;
 			return params;
 		},
 		resetAdditionalFilter: (correlationId, data) => {

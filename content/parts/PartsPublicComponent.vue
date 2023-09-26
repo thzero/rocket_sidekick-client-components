@@ -1,5 +1,5 @@
 <template>
-    <v-col cols="6" sm="6">
+    <v-col cols="12" sm="6">
         <v-radio-group
             v-model="innerValue"
             inline

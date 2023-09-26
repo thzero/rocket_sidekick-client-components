@@ -64,7 +64,7 @@
 								<v-col cols="6">
 									<table>
 										<tr>
-											<td class="measurementUnits">
+											<td class="measurementUnitsMedium">
 												<MeasurementUnitsSelect
 													ref="filterItemDiameterMeasurementUnitsIdRef"
 													v-model="filterItemDiameterMeasurementUnitsId"
@@ -73,7 +73,7 @@
 													:label="$t('forms.settings.measurementUnits.title')"
 												/>
 											</td>
-											<td class="measurementUnit">
+											<td class="measurementUnitMedium">
 												<MeasurementUnitSelect
 													ref="filterItemDiameterMeasurementUnitIdRef"
 													v-model="filterItemDiameterMeasurementUnitId"

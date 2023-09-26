@@ -56,12 +56,15 @@ export function useParachutePartComponent(props, context, options) {
 		handleOk,
 		preCompleteOk,
 		resetAdditional,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		measurementUnitsFromUnitId,
 		detailItemDescription,
 		detailItemIsPublic,
 		detailItemManufacturer,
@@ -90,12 +93,15 @@ export function useParachutePartComponent(props, context, options) {
 
 			data.diameter = AppUtility.convertNumber(detailItemDiameter.value);
 			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUnitId.value;
-			data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
+			// data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
+			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, diameterMeasurementUnitId.value);
 			
 			data.loadMaxWeightMeasurementUnitId = detailItemLoadMaxWeightMeasurementUnitId.value;
-			data.loadMaxWeightMeasurementUnitsId = detailItemLoadMaxWeightMeasurementUnitsId.value;
+			// data.loadMaxWeightMeasurementUnitsId = detailItemLoadMaxWeightMeasurementUnitsId.value;
+			data.loadMaxWeightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, loadMaxWeightMeasurementUnitId.value);
 			data.loadMinWeightMeasurementUnitId = detailItemLoadMinWeightMeasurementUnitId.value;
-			data.loadMinWeightMeasurementUnitsId = detailItemLoadMinWeightMeasurementUnitsId.value;
+			// data.loadMinWeightMeasurementUnitsId = detailItemLoadMinWeightMeasurementUnitsId.value;
+			data.loadMinWeightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, loadMinWeightMeasurementUnitId.value);
 
 			const temp = AppUtility.measurementUnitTranslateLength(correlationId, diameterMeasurementUnitsId.value, diameterMeasurementUnitId.value);
 			data.sortName = String(data.diameter ?? '').padStart(4, '0') + temp + (data.thinMill ? 'TM' : '') + data.name;
@@ -182,12 +188,15 @@ export function useParachutePartComponent(props, context, options) {
 		handleOk,
 		preCompleteOk,
 		resetAdditional,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		measurementUnitsFromUnitId,
 		detailItemDescription,
 		detailItemIsPublic,
 		detailItemManufacturer,

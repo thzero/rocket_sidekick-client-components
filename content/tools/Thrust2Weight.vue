@@ -25,9 +25,7 @@
 							<v-col cols="12" md="6">
 								<table style="width: 100%">
 									<tr>
-										<td
-											colspan="2"
-										>
+										<td>
 											<VNumberFieldWithValidation
 												ref="massRef"
 												v-model="mass"
@@ -38,7 +36,7 @@
 										</td>
 										<!-- <td
 											v-if="$vuetify.display.mdAndUp"
-											class="measurementUnits"
+											class="measurementUnitsMedium"
 										>
 											<MeasurementUnitsSelect
 												ref="massMeasurementUnitsIdRef"
@@ -50,7 +48,7 @@
 										</td>
 										<td
 											v-if="$vuetify.display.mdAndUp"
-											class="measurementUnits"
+											class="measurementUnitMedium"
 										>
 											<MeasurementUnitSelect
 												ref="massMeasurementUnitRef"
@@ -78,7 +76,7 @@
 									<!-- <tr
 										v-if="$vuetify.display.smAndDown"
 									>
-										<td class="measurementUnits">
+										<td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="massMeasurementUnitsIdRef"
 												v-model="massMeasurementUnitsId"
@@ -87,7 +85,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect
 												ref="massMeasurementUnitRef"
 												v-model="massMeasurementUnitId"

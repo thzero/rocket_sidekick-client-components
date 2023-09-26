@@ -56,12 +56,15 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		handleOk,
 		preCompleteOk,
 		resetAdditional,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		measurementUnitsFromUnitId,
 		detailItemDescription,
 		detailItemIsPublic,
 		detailItemManufacturer,
@@ -85,18 +88,21 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		preCompleteOkPart: (correlationId, data) => {
 			data.diameter = AppUtility.convertNumber(detailItemDiameter.value);
 			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUnitId.value;
-			data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
+			// data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
+			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, diameterMeasurementUnitId.value);
 
 			data.length = AppUtility.convertNumber(detailItemLength.value);
 			data.lengthMeasurementUnitId = detailItemLengthMeasurementUnitId.value;
-			data.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
+			// data.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
+			data.lengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, lengthMeasurementUnitId.value);
 
 			data.pilotChute = detailItemPilotChute.value ?? false;
 			data.pilotChuteCd = AppUtility.convertNumber(detailItemPilotChuteCd.value);
 			data.pilotChuteDiameter = AppUtility.convertNumber(detailItemPilotChuteDiameter.value);
 
 			data.pilotChuteDiameterMeasurementUnitId = detailItemPilotChuteMeasurementUnitId.value;
-			data.pilotChuteDiameterMeasurementUnitsId = detailItemPilotChuteMeasurementUnitsId.value;
+			// data.pilotChuteDiameterMeasurementUnitsId = detailItemPilotChuteMeasurementUnitsId.value;
+			data.pilotChuteDiameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, pilotChuteDiameterMeasurementUnitId.value);
 
 			if (!data.pilotChute) {
 				data.pilotChuteCd = null;
@@ -193,12 +199,15 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		handleOk,
 		preCompleteOk,
 		resetAdditional,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		measurementUnitsFromUnitId,
 		detailItemDescription,
 		detailItemIsPublic,
 		detailItemManufacturer,

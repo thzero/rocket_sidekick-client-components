@@ -69,20 +69,20 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemDiameterRef"
-					v-model="detailItemDiameter"
-					vid="detailItemDiameter"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.diameter')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="12" sm="6">
 				<table>
 					<tr>
-						<td class="measurementUnits">
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemDiameterRef"
+								v-model="detailItemDiameter"
+								vid="detailItemDiameter"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.parts.diameter')"
+							/>
+						</td>
+						<!-- <td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemDiameterMeasurementUnitsIdRef"
 								v-model="detailItemDiameterMeasurementUnitsId"
@@ -92,7 +92,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemDiameterMeasurementUnitIdRef"
 								v-model="detailItemDiameterMeasurementUnitId"
@@ -103,24 +103,35 @@
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.length')"
 							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect
+								ref="detailItemDiameterMeasurementUnitIdRef"
+								v-model="detailItemDiameterMeasurementUnitId"
+								vid="detailItemDiameterMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
 						</td>
 					</tr>
 				</table>
 			</v-col>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemWeightRef"
-					v-model="detailItemWeight"
-					vid="detailItemWeight"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.weight')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="12" sm="6">
 				<table>
 					<tr>
-						<td class="measurementUnits">
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemWeightRef"
+								v-model="detailItemWeight"
+								vid="detailItemWeight"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.parts.weight')"
+							/>
+						</td>
+						<!-- <td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemWeightMeasurementUnitsIdRef"
 								v-model="detailItemWeightMeasurementUnitsId"
@@ -130,12 +141,23 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemWeightMeasurementUnitIdRef"
 								v-model="detailItemWeightMeasurementUnitId"
 								vid="detailItemWeightMeasurementUnitId"
 								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.weight')"
+							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemWeightMeasurementUnitIdRef"
+								v-model="detailItemWeightMeasurementUnitId"
+								vid="detailItemWeightMeasurementUnitId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -170,20 +192,20 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemLoadMaxRef"
-					v-model="detailItemLoadMax"
-					vid="detailItemLoadMax"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.parachute.loadMax')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="12" sm="6">
 				<table>
 					<tr>
-						<td class="measurementUnits">
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemLoadMaxRef"
+								v-model="detailItemLoadMax"
+								vid="detailItemLoadMax"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.parts.parachute.loadMax')"
+							/>
+						</td>
+						<!-- <td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemLoadMaxWeightMeasurementUnitsIdRef"
 								v-model="detailItemLoadMaxWeightMeasurementUnitsId"
@@ -193,7 +215,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemLoadMaxWeightMeasurementUnitIdRef"
 								v-model="detailItemLoadMaxWeightMeasurementUnitId"
@@ -204,24 +226,35 @@
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.weight')"
 							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemLoadMaxWeightMeasurementUnitIdRef"
+								v-model="detailItemLoadMaxWeightMeasurementUnitId"
+								vid="detailItemLoadMaxWeightMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.weight')"
+							/>
 						</td>
 					</tr>
 				</table>
 			</v-col>
-			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
-					ref="detailItemLoadMinRef"
-					v-model="detailItemLoadMin"
-					vid="detailItemLoadMin"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.parachute.loadMin')"
-				/>
-			</v-col>
-			<v-col cols="7" md="4">
+			<v-col cols="12" sm="6">
 				<table>
 					<tr>
-						<td class="measurementUnits">
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemLoadMinRef"
+								v-model="detailItemLoadMin"
+								vid="detailItemLoadMin"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.parts.parachute.loadMin')"
+							/>
+						</td>
+						<!-- <td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemLoadMinWeightMeasurementUnitsIdRef"
 								v-model="detailItemLoadMinWeightMeasurementUnitsId"
@@ -231,12 +264,23 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemLoadMinWeightMeasurementUnitIdRef"
 								v-model="detailItemLoadMinWeightMeasurementUnitId"
 								vid="detailItemLoadMinWeightMeasurementUnitId"
 								:measurementUnitsId="detailItemLoadMinWeightMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.weight')"
+							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemLoadMinWeightMeasurementUnitIdRef"
+								v-model="detailItemLoadMinWeightMeasurementUnitId"
+								vid="detailItemLoadMinWeightMeasurementUnitId"
 								:measurementUnitsType="measurementUnitsWeightType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -284,6 +328,7 @@ import { usePartValidation } from '@/components/content/parts/part/partValidatio
 import { useParachutePartValidation } from '@/components/content/parts/part/parachute/parachutePartValidation';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
 import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
@@ -296,6 +341,7 @@ export default {
 	name: 'ParchutePartControl',
 	components: {
 		MeasurementUnitSelect,
+		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		VFormControl,
 		VNumberFieldWithValidation,
@@ -355,12 +401,15 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			measurementUnitsFromUnitId,
 			detailItemDescription,
 			detailItemIsPublic,
 			detailItemManufacturer,
@@ -435,12 +484,15 @@ export default {
 			handleOk,
 			preCompleteOk,
 			resetAdditional,
+			buttonsDialog,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			measurementUnitsFromUnitId,
 			detailItemDescription,
 			detailItemIsPublic,
 			detailItemManufacturer,

@@ -56,12 +56,15 @@ export function useChuteProtectorPartComponent(props, context, options) {
 		handleOk,
 		preCompleteOk,
 		resetAdditional,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		measurementUnitsFromUnitId,
 		detailItemDescription,
 		detailItemIsPublic,
 		detailItemManufacturer,
@@ -87,11 +90,13 @@ export function useChuteProtectorPartComponent(props, context, options) {
 
 			data.diameter = AppUtility.convertNumber(detailItemDiameter.value);
 			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUniId.value;
-			data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnisId.value;
+			// data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnisId.value;
+			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMeasurementUniId.value);
 			
 			data.dimension = AppUtility.convertNumber(detailItemDimension.value);
 			data.dimensionMeasurementUnitId = detailItemDimensionMeasurementUnitId.value;
-			data.dimensionMeasurementUnitsId = detailItemDimensionMeasurementUnitsId.value;
+			// data.dimensionMeasurementUnitsId = detailItemDimensionMeasurementUnitsId.value;
+			data.dimensionMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDimensionMeasurementUnitId.value);
 
 			const temp = AppUtility.measurementUnitTranslateLength(correlationId, detailItemDimensionMeasurementUnitsId.value, detailItemDimensionMeasurementUnitId.value);
 			data.sortName = String(data.dimension ?? '').padStart(4, '0') + temp + data.name;
@@ -170,12 +175,15 @@ export function useChuteProtectorPartComponent(props, context, options) {
 		handleOk,
 		preCompleteOk,
 		resetAdditional,
+		buttonsDialog,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		measurementUnitsFromUnitId,
 		detailItemDescription,
 		detailItemIsPublic,
 		detailItemManufacturer,

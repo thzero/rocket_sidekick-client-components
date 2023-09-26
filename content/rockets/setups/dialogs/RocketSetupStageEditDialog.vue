@@ -44,7 +44,7 @@
 			<v-col cols="7" md="4">
 				<table>
 					<tr>
-						<td class="measurementUnits">
+						<td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemWeightMeasurementUnitsIdRef"
 								v-model="detailItemWeightMeasurementUnitsId"
@@ -54,7 +54,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemWeightMeasurementUnitIdRef"
 								v-model="detailItemWeightMeasurementUnitId"
@@ -82,7 +82,7 @@
 			<v-col cols="7" md="4">
 				<table>
 					<tr>
-						<td class="measurementUnits">
+						<td class="measurementUnitsMedium">
 							<MeasurementUnitsSelect
 								ref="detailItemCgMeasurementUnitsIdRef"
 								v-model="detailItemCgMeasurementUnitsId"
@@ -92,7 +92,7 @@
 								:label="$t('forms.settings.measurementUnits.title')"
 							/>
 						</td>
-						<td class="measurementUnits">
+						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect
 								ref="detailItemCgMeasurementUnitIdRef"
 								v-model="detailItemCgMeasurementUnitId"

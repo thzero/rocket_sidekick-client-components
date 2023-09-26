@@ -1,6 +1,8 @@
 <script>
 import { computed, ref } from 'vue';
 
+import AppCommonConstants from 'rocket_sidekick_common/constants';
+
 import AppUtility from '@/utility/app';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
@@ -77,7 +79,8 @@ export function usePartComponent(props, context, options) {
 			
 			detailItemData.value.weight = AppUtility.convertNumber(detailItemWeight.value);
 			detailItemData.value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
-			detailItemData.value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
+			// detailItemData.value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
+			detailItemData.value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);
 
 			if (options.preCompleteOkPart)
 			detailItemData.value = options.preCompleteOkPart(correlationId, detailItemData.value);
@@ -105,6 +108,7 @@ export function usePartComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
+		// measurementUnitsIdSettings,
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
@@ -122,7 +126,11 @@ export function usePartComponent(props, context, options) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const detailItemDescription = ref(null);
@@ -227,6 +235,7 @@ export function usePartComponent(props, context, options) {
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		measurementUnitsFromUnitId,
 		detailItemDescription,
 		detailItemIsPublic,
 		detailItemManufacturer,

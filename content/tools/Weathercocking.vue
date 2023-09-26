@@ -29,7 +29,7 @@
 												:label="$t('forms.content.tools.weathercocking.windVelocity')"
 											/>
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="windVelocityMeasurementUnitsIdRef"
 												v-model="windVelocityMeasurementUnitsId"
@@ -38,7 +38,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<!-- <MeasurementUnitSelect
 												ref="windVelocityMeasurementUnitIdRef"
 												v-model="windVelocityMeasurementUnitId"
@@ -72,7 +72,7 @@
 												:label="$t('forms.content.tools.weathercocking.exitVelocity')"
 											/>
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="exitVelocityMeasurementUnitsIdRef"
 												v-model="exitVelocityMeasurementUnitsId"
@@ -81,7 +81,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<!-- <MeasurementUnitSelect
 												ref="exitVelocityMeasurementUnitIdRef"
 												v-model="exitVelocityMeasurementUnitId"

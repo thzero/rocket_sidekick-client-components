@@ -35,7 +35,7 @@
 										<td>
 											<span class="text-h7 text-bold">{{ $t('forms.content.tools.parachuteSizing.output') + ' ' + $t('forms.content.tools.parachuteSizing.diameterMeasurementUnits') }}</span>&nbsp;&nbsp;
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="diameterLengthMeasurementUnitsIdRef"
 												v-model="diameterLengthMeasurementUnitsId"
@@ -44,7 +44,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect
 												ref="diameterLengthMeasurementUnitIdRef"
 												v-model="diameterLengthMeasurementUnitId"
@@ -55,14 +55,14 @@
 												:label="$t('forms.settings.measurementUnits.length')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect2
 												ref="diameterLengthMeasurementUnitIdRef"
 												v-model="diameterLengthMeasurementUnitId"
 												vid="diameterLengthMeasurementUnitId"
 												:measurementUnitsType="measurementUnitsLengthType"
 												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.length')"
+												:label="$t('forms.settings.measurementUnits.diameter')"
 											/>
 										</td>
 									</tr>
@@ -72,7 +72,7 @@
 										<td>
 											<span class="text-h7 text-bold">{{ $t('forms.content.tools.parachuteSizing.output') + ' ' + $t('forms.content.tools.parachuteSizing.velocityMeasurementUnits') }}</span>&nbsp;&nbsp;
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="velocityMeasurementUnitsIdRef"
 												v-model="velocityMeasurementUnitsId"
@@ -81,7 +81,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect
 												ref="velocityMeasurementUnitIdRef"
 												v-model="velocityMeasurementUnitId"
@@ -92,7 +92,7 @@
 												:label="$t('forms.settings.measurementUnits.velocity')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect2
 												ref="velocityMeasurementUnitIdRef"
 												v-model="velocityMeasurementUnitId"
@@ -119,7 +119,7 @@
 												:label="$t('forms.content.rockets.name') + ' ' + $t('forms.content.tools.parachuteSizing.mass')"
 											/>
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="massWeightMeasurementUnitsIdRef"
 												v-model="massWeightMeasurementUnitsId"
@@ -128,7 +128,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect
 												ref="massWeightMeasurementUnitIdRef"
 												v-model="massWeightMeasurementUnitId"
@@ -139,7 +139,7 @@
 												:label="$t('forms.settings.measurementUnits.weight')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect2
 												ref="massWeightMeasurementUnitIdRef"
 												v-model="massWeightMeasurementUnitId"
@@ -165,7 +165,7 @@
 												:hint="$t('forms.content.tools.parachuteSizing.airDensity_hint')"
 											/>
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="airDensityMeasurementUnitsIdRef"
 												v-model="airDensityMeasurementUnitsId"
@@ -174,7 +174,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit2">
+										<td class="measurementUnitExtraLong">
 											<MeasurementUnitSelect
 												ref="airDensityMeasurementUnitIdRef"
 												v-model="airDensityMeasurementUnitId"
@@ -185,7 +185,7 @@
 												:label="$t('forms.settings.measurementUnits.density')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitExtraLong">
 											<MeasurementUnitSelect2
 												ref="airDensityMeasurementUnitIdRef"
 												v-model="airDensityMeasurementUnitId"
@@ -226,7 +226,7 @@
 												:hint="$t('forms.content.tools.parachuteSizing.desiredVelocity_hint')"
 											/>
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="desiredVelocityMeasurementUnitsIdRef"
 												v-model="desiredVelocityMeasurementUnitsId"
@@ -235,7 +235,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect
 												ref="desiredVelocityMeasurementUnitIdRef"
 												v-model="desiredVelocityMeasurementUnitId"
@@ -246,7 +246,7 @@
 												:label="$t('forms.settings.measurementUnits.velocity')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect2
 												ref="desiredVelocityMeasurementUnitIdRef"
 												v-model="desiredVelocityMeasurementUnitId"
@@ -277,7 +277,7 @@
 												:hint="$t('forms.content.tools.parachuteSizing.diameter_hint')"
 											/>
 										</td>
-										<td class="measurementUnits">
+										<td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="diameterLengthMeasurementUnitsIdRef"
 												v-model="diameterLengthMeasurementUnitsId"
@@ -286,7 +286,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect
 												ref="diameterLengthMeasurementUnitIdRef"
 												v-model="diameterLengthMeasurementUnitId"
@@ -297,7 +297,7 @@
 												:label="$t('forms.settings.measurementUnits.length')"
 											/>
 										</td>
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect2
 												ref="diameterLengthMeasurementUnitIdRef"
 												v-model="diameterLengthMeasurementUnitId"
@@ -352,7 +352,7 @@
 												:hint="$t('forms.content.tools.parachuteSizing.diameter_hint')"
 											/>
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="diameterLengthMeasurementUnitsIdRef"
 												v-model="diameterLengthMeasurementUnitsId"
@@ -361,7 +361,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect
 												ref="diameterLengthMeasurementUnitIdRef"
 												v-model="diameterLengthMeasurementUnitId"
@@ -372,7 +372,7 @@
 												:label="$t('forms.settings.measurementUnits.length')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect2
 												ref="diameterLengthMeasurementUnitIdRef"
 												v-model="diameterLengthMeasurementUnitId"
@@ -409,7 +409,7 @@
 												:hint="$t('forms.content.tools.parachuteSizing.spillHole.diameter_hint')"
 											/>
 										</td>
-										<!-- <td class="measurementUnits">
+										<!-- <td class="measurementUnitsMedium">
 											<MeasurementUnitsSelect
 												ref="desiredVelocityMeasurementUnitsIdRef"
 												v-model="desiredVelocityMeasurementUnitsId"
@@ -418,7 +418,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnit">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect
 												ref="desiredVelocityMeasurementUnitIdRef"
 												v-model="desiredVelocityMeasurementUnitId"
@@ -429,14 +429,14 @@
 												:label="$t('forms.settings.measurementUnits.velocity')"
 											/>
 										</td> -->
-										<td class="measurementUnit3">
+										<td class="measurementUnitMedium">
 											<MeasurementUnitSelect2
-												ref="desiredVelocityMeasurementUnitIdRef"
-												v-model="desiredVelocityMeasurementUnitId"
-												vid="desiredVelocityMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsVelocityType"
+												ref="spillHoleDiameterLengthMeasurementUnitIdRef"
+												v-model="spillHoleDiameterLengthMeasurementUnitId"
+												vid="spillHoleDiameterLengthMeasurementUnitId"
+												:measurementUnitsType="measurementUnitsLengthType"
 												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
+												:label="$t('forms.settings.measurementUnits.diameter')"
 											/>
 										</td>
 									</tr>
@@ -653,6 +653,8 @@ export default {
 			parachuteShape,
 			parachuteShapes,
 			spillHoleDiameter,
+			spillHoleDiameterLengthMeasurementUnitId,
+			spillHoleDiameterLengthMeasurementUnitsId,
 			spillHolePct,
 			spillHoleShape,
 			spillHoleShapes,
@@ -731,6 +733,8 @@ export default {
 			parachuteShape,
 			parachuteShapes,
 			spillHoleDiameter,
+			spillHoleDiameterLengthMeasurementUnitId,
+			spillHoleDiameterLengthMeasurementUnitsId,
 			spillHolePct,
 			spillHoleShape,
 			spillHoleShapes,
