@@ -109,7 +109,7 @@
 			</v-col>
 		</v-row>
 		<v-row 
-			v-if="detailItemMotorInfo0"
+			v-if="hasMotor(0)"
 			dense
 		>
 			<v-col 
@@ -193,7 +193,7 @@
 			</v-col>
 		</v-row>
 		<v-row 
-			v-if="detailItemMotorInfo1"
+			v-if="hasMotor(1)"
 			dense
 		>
 			<v-col 
@@ -277,7 +277,7 @@
 			</v-col>
 		</v-row>
 		<v-row 
-			v-if="detailItemMotorInfo2"
+			v-if="hasMotor(2)"
 			dense
 		>
 			<v-col 
@@ -467,6 +467,7 @@ export default {
 			stageNumber,
 			clickMotorsSearch,
 			clickMotorCasesSearch,
+			hasMotor,
 			preCompleteOk,
 			resetAdditional,
 			selectMotor,
@@ -528,6 +529,7 @@ export default {
 			stageNumber,
 			clickMotorsSearch,
 			clickMotorCasesSearch,
+			hasMotor,
 			preCompleteOk,
 			resetAdditional,
 			selectMotor,

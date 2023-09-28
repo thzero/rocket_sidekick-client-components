@@ -105,6 +105,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const dialogPartsSearchMotorIndex = ref(null);
 	const dialogPartsSearchMotorsManager = ref(new DialogSupport());
 	const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
+	const hasMotorsI = ref([]);
 	const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
 	const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
 	
@@ -137,6 +138,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			manufacturer = props.manufacturers.find(l => l.id === id);
 
 		return `${manufacturer ? manufacturer.abbrev : ''} ${name}`.trim();
+	};
+	const hasMotor = (index) => {
+		return hasMotorsI.value ? hasMotorsI.value.includes(index) : false;
 	};
 	const preCompleteOk = async (correlationId) => {
 		await setAdditional(correlationId);
@@ -180,6 +184,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemMotorInfo0.value = null;
 		detailItemMotorInfo1.value = null;
 		detailItemMotorInfo2.value = null;
+		hasMotorsI.value = [];
 		const fromRocket = value && value.fromRocket ? value.fromRocket : null;
 		if (fromRocket) {
 			let temp;
@@ -194,18 +199,20 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 
 				if (index > 2)
 					break;
+				
+				hasMotorsI.value.push(index);
 
 				temp = selectMotorByIndex(index);
 				if (!temp)
 					continue;
 
-				temp2 = (value.motors ?? [])[index];
-				if (!temp2)
-					continue;
-
 				diameter = item.diameter ? motorDiameter(item.diameter) : null;
 				count = item.count ? item.count : null;
 				temp.motorInfo.value = `${diameter}${diameter ? ' x ' : ''}${count}`;
+
+				temp2 = (value.motors ?? [])[index];
+				if (!temp2)
+					continue;
 
 				temp.motorCase.value = generateTitle(temp2.motorCaseManufacturerId, temp2.motorCaseName);
 				temp.motorCaseId.value = temp2.motorCaseId;
@@ -377,6 +384,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		stageNumber,
 		clickMotorsSearch,
 		clickMotorCasesSearch,
+		hasMotor,
 		preCompleteOk,
 		resetAdditional,
 		selectMotor,
