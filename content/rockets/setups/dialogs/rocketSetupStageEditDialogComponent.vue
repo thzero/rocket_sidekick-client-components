@@ -35,6 +35,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	} = useToolsMeasurementSettingsComponent(props, context);
 	
 	const {
+		// measurementUnitsIdSettings,
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
@@ -52,7 +53,11 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const {
@@ -310,7 +315,8 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		value.cg = AppUtility.convertNumber(detailItemCg.value);
 		value.cgFrom = detailItemCgFrom.value;
 		value.cgMeasurementUnitId = detailItemCgMeasurementUnitId.value;
-		value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
+		// value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
+		value.cgMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCgMeasurementUnitId.value);
 
 		value.motors = value.motors ?? [];
 
@@ -331,7 +337,8 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 
 		value.weight = AppUtility.convertNumber(detailItemWeight.value);
 		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
-		value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
+		// value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
+		value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);
 	};
 
 	return {
