@@ -33,6 +33,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 	
 	const {
+		// measurementUnitsIdSettings,
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
@@ -50,7 +51,11 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const {
@@ -161,19 +166,23 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		value.cp = AppUtility.convertNumber(detailItemCp.value);
 		value.cpFrom = detailItemCpFrom.value;
 		value.cpMeasurementUnitId = detailItemCpMeasurementUnitId.value;
-		value.cpMeasurementUnitsId = detailItemCpMeasurementUnitsId.value;
+		// value.cpMeasurementUnitsId = detailItemCpMeasurementUnitsId.value;
+		value.cpMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCpMeasurementUnitsId.value);
 		
 		value.diameterMajor = AppUtility.convertNumber(detailItemDiameterMajor.value);
 		value.diameterMajorMeasurementUnitId = detailItemDiameterMajorMeasurementUnitId.value;
-		value.diameterMajorMeasurementUnitsId = detailItemDiameterMajorMeasurementUnitsId.value;
+		// value.diameterMajorMeasurementUnitsId = detailItemDiameterMajorMeasurementUnitsId.value;
+		value.diameterMajorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMajorMeasurementUnitsId.value);
 		
 		value.diameterMinor = AppUtility.convertNumber(detailItemDiameterMinor.value);
 		value.diameterMinorMeasurementUnitId = detailItemDiameterMinorMeasurementUnitId.value;
-		value.diameterMinorMeasurementUnitsId = detailItemDiameterMinorMeasurementUnitsId.value;
+		// value.diameterMinorMeasurementUnitsId = detailItemDiameterMinorMeasurementUnitsId.value;
+		value.diameterMinorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMinorMeasurementUnitsId.value);
 
 		value.length = AppUtility.convertNumber(detailItemLength.value);
 		value.lengthMeasurementUnitId = detailItemLengthMeasurementUnitId.value;
-		value.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
+		// value.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
+		value.lengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemLengthMeasurementUnitsId.value);
 		
 		value.manufacturerId = detailItemManufacturer.value;
 		value.manufacturerStockId = detailItemManufacturerStockId.value;
@@ -188,7 +197,8 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		
 		value.weight = AppUtility.convertNumber(detailItemWeight.value);
 		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
-		value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
+		// value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
+		value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitsId.value);
 	};
 	const resetAdditional = async (correlationId, previous) => {
 		resetEditData(correlationId, detailItem.value);
