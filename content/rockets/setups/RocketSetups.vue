@@ -163,11 +163,11 @@
 									</slot>
 									<div class="float-right">{{ manufacturer(item) }}</div>
 								</v-card-title>
-								<v-card-text
-									>
+								<v-card-text>
 										<!-- v-if="item.description" -->
 										<slot name="panelText" :item="item">
 											{{ item.description }}
+											{{ item.stages ? item.stages.length : '' }}
 										</slot>
 										<div
 											v-if="debug"
