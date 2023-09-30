@@ -211,11 +211,6 @@ import { useRocketSetupEditValidation } from '@/components/content/rockets/setup
 import { useRocketSetupComponent } from '@/components/content/rockets/setups/setup/rocketSetupComponent';
 import { useRocketSetupComponentProps } from '@/components/content/rockets/setups/setup/rocketSetupComponentProps';
 
-import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
-import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
-import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
-import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
-
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
@@ -230,17 +225,13 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RocketControl',
+	name: 'RocketSetupControl',
 	components: {
-		ChuteProtectorPanelTitle,
-		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		ParachutePanelTitle,
 		RocketLookupDialog,
 		RocketSetupStage,
 		RocketSetupStageEditDialog,
-		StreamerPanelTitle,
 		VConfirmationDialog,
 		VFormControl,
 		VNumberFieldWithValidation,

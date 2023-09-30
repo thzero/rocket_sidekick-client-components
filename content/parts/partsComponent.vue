@@ -89,7 +89,7 @@ export function usePartsBaseComponent(props, context, options) {
 		buttonsForms
 	} = useButtonComponent(props, context);
 
-	const dialogPartsLookupRef = ref(null);
+	const partsRef = ref(null);
 	const manufacturers = ref(null);
 	const params = ref({
 		type: null
@@ -118,7 +118,7 @@ export function usePartsBaseComponent(props, context, options) {
 		await fetch(correlationId);
 	};
 	const clickSearchClear = async (correlationId) => {
-		await dialogPartsLookupRef.value.reset(correlationId, true);
+		await partsRef.value.reset(correlationId, true);
 		await fetch(correlationId);
 	};
 	const deleteItemI = async (correlationId, id) => {
@@ -266,7 +266,7 @@ export function usePartsBaseComponent(props, context, options) {
 		display,
 		buttonsDialog,
 		buttonsForms,
-		dialogPartsLookupRef,
+		partsRef,
 		manufacturers,
 		params,
 		title,

@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<VFormListing
-		ref="dialogRocketSetupsRef"
+		ref="rocketSetupsRef"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -375,10 +375,10 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			debug,
+			rocketSetupsRef,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
 			dialogRocketLookupManager,
-			dialogRocketSetupsRef,
 			filterItemDiameter,
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
@@ -388,15 +388,12 @@ export default {
 			filterItemRocketTypes,
 			manufacturers,
 			title,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
 			clickSearchRockets,
 			fetchManufacturers,
 			manufacturer,
-			measurementUnitTranslateWeight,
 			resetAdditional,
 			selectRocket,
 			scope,
@@ -466,10 +463,10 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			debug,
+			rocketSetupsRef,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
 			dialogRocketLookupManager,
-			dialogRocketSetupsRef,
 			filterItemDiameter,
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
@@ -479,15 +476,12 @@ export default {
 			filterItemRocketTypes,
 			manufacturers,
 			title,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
 			clickSearchRockets,
 			fetchManufacturers,
 			manufacturer,
-			measurementUnitTranslateWeight,
 			resetAdditional,
 			selectRocket,
 			scope,

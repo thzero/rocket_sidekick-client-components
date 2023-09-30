@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<VFormListing
-		ref="dialogPartsLookupRef"
+		ref="partsRef"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -262,7 +262,7 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
-			dialogPartsLookupRef,
+			partsRef,
 			manufacturers,
 			params,
 			title,
@@ -336,7 +336,7 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
-			dialogPartsLookupRef,
+			partsRef,
 			manufacturers,
 			params,
 			title,

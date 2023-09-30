@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<VFormListing
-		ref="dialogRocketsLookupRef"
+		ref="rocketsref"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -339,9 +339,9 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			debug,
+			rocketsref,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
-			dialogRocketsLookupRef,
 			filterItemDiameter,
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
@@ -426,9 +426,9 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			debug,
+			rocketsref,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
-			dialogRocketsLookupRef,
 			filterItemDiameter,
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
