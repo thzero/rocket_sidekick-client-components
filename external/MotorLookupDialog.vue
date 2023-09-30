@@ -183,10 +183,9 @@
 </template>
 
 <script>
-import { helpers, minLength, requiredUnless } from '@vuelidate/validators';
-
 import { useMotorLookupDialogComponent } from '@/components/external/motorLookupDialogComponent';
 import { useMotorLookupDialogProps } from '@/components/external/motorLookupDialogProps';
+import { useMotorLookupDialogValidation } from '@/components/external/motorLookupDialogValidation';
 
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormListingDialog';
@@ -297,19 +296,9 @@ export default {
 		};
 	},
 	validations () {
-		return {
-			filterItemImpulseClass: { requiredIfMotor: requiredUnless(this.filterItemMotor), $autoDirty: true },
-			filterItemMotor: {
-				requiredIfImpulseClass: requiredUnless(this.filterItemImpulseClass),
-				minLength: minLength(3),
-				validatorMotor,
-				$autoDirty: true
-			}
-		};
+		return useMotorLookupDialogValidation(this);
 	}
 };
-
-const validatorMotor = helpers.regex(/^[a-zA-Z0-9-']{3}/, /\d/);
 </script>
 
 <style scoped>
