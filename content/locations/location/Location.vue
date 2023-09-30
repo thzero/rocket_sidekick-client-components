@@ -58,6 +58,28 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col>
+				<VSelectWithValidation
+					ref="detailItemAddressCountryRef"
+					v-model="detailItemAddressCountry"
+					vid="detailItemAddressCountry"
+					:items="countries"
+					:validation="validation"
+					:label="$t('forms.address.country.title')"
+				/>
+			</v-col>
+			<v-col>
+				<VSelectWithValidation
+					ref="detailItemAddressStateProvinceRef"
+					v-model="detailItemAddressStateProvince"
+					vid="detailItemAddressStateProvince"
+					:items="states"
+					:validation="validation"
+					:label="$t('forms.address.stateProvince.title')"
+				/>
+			</v-col>
+		</v-row>
 		<template v-slot:buttons_pre>
 		</template>
 		<template v-slot:buttons_post>
@@ -80,6 +102,7 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useDetailComponentProps } from '@/components/content/detailComponentProps';
+import { useLocationAddressEditValidation } from '@/components/content/locations/location/locationAddressEditValidation';
 import { useLocationEditValidation } from '@/components/content/locations/location/locationEditValidation';
 import { useLocationComponent } from '@/components/content/locations/location/locationComponent';
 import { useLocationComponentProps } from '@/components/content/locations/location/locationComponentProps';
@@ -186,10 +209,16 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			detailItemAddressCity,
+			detailItemAddressCountry,
+			detailItemAddressPostalCode,
+			detailItemAddressStateProvince,
 			detailItemDescription,
 			detailItemName,
 			detailItemRocketTypes,
+			countries,
 			hasAdmin,
+			states,
 			scope,
 			validation
 		} = useLocationComponent(props, context, options);
@@ -264,16 +293,22 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			detailItemAddressCity,
+			detailItemAddressCountry,
+			detailItemAddressPostalCode,
+			detailItemAddressStateProvince,
 			detailItemDescription,
 			detailItemName,
 			detailItemRocketTypes,
+			countries,
 			hasAdmin,
+			states,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useLocationEditValidation(true)), {});
+		return Object.assign(LibraryCommonUtility.cloneDeep(useLocationEditValidation(true)), LibraryCommonUtility.cloneDeep(useLocationAddressEditValidation));
 	}
 };
 </script>

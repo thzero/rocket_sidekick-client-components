@@ -116,17 +116,34 @@ export function useLocationsBaseComponent(props, context, options) {
 	const buttonSearchResetDisabled = computed(() => {
 		return false;
 	});
+	
+	const addressDisplay = (item) => {
+		if (!item || !item.address) 
+			return '';
+
+		const temp2 = [];
+		if (!String.isNullOrEmpty(item.address.name))
+			temp2.push(item.address.name);
+		if (!String.isNullOrEmpty(item.address.city))
+			temp2.push(item.address.city);
+		if (!String.isNullOrEmpty(item.address.stateProvince))
+			temp2.push(item.address.stateProvince);
+		if (!String.isNullOrEmpty(item.address.country))
+			temp2.push(item.address.country);
+		return temp2.join(', ').trim();
+	};
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item);
+		// no copying
+		return false;
 	};
 	const canDeleteI = (correlationId, item) => {
-		return isOwner(correlationId, item);
+		return isOwner(correlationId, item); // TODO: SECURITY: Admin can delete a public
 	};
 	const canEditI = (correlationId, item) => {
-		return isOwner(correlationId, item);
+		return isOwner(correlationId, item); // TODO: SECURITY: Admin can edit a public
 	};
 	const canViewI = (correlationId, item) => {
-		return isOwner(correlationId, item);
+		return isOwner(correlationId, item) || isPublic(correlationId, item);
 	};
 	const clickSearch = async (correlationId) => {
 		await fetch(correlationId);
@@ -175,6 +192,12 @@ export function useLocationsBaseComponent(props, context, options) {
 	const initNewI = async (correlationId, data) => {
 		data = data ? data : new LocationData();
 		return success(correlationId, data);
+	};
+	const isPublic = (correlationId, item) => {
+		return item ? item.public ?? false : false;
+	};
+	const isPublicDisplay = (item) => {
+		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
 	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
@@ -251,6 +274,8 @@ export function useLocationsBaseComponent(props, context, options) {
 		buttonSearchResetDisabled,
 		clickSearch,
 		clickSearchClear,
+		addressDisplay,
+		isPublicDisplay,
 		resetAdditional,
 		scope: 'LocationsFilterControl',
 		validation: useVuelidate({ $scope: 'LocationsilterControl' })

@@ -107,14 +107,15 @@
 									class="bg-primary"
 								>
 									{{ item.name }}
-									<div class="float-right">{{ manufacturer(item) }}</div>
+									<div class="float-right">
+										{{ addressDisplay(item) }} {{ isPublicDisplay(item) }}
+									</div>
 								</v-card-title>
 								<v-card-text>
 									<VMarkdown v-model="item.description" :use-github=false />
 									<div
 										v-if="debug"
 									>
-										canCopy [[ {{ canCopy(item) }}]]
 										canDelete [[ {{ canDelete(item) }}]]
 										canEdit [[ {{ canEdit(item) }}]]
 										canView [[ {{ canView(item) }}]]
@@ -122,15 +123,6 @@
 								</v-card-text>
 								<v-card-actions>
 									<v-spacer></v-spacer>
-									<v-btn
-										v-if="canCopy(item)"
-										:variant="buttonsForms.variant.copy"
-										:color="buttonsForms.color.copy"
-										:disabled="isCopying(item)"
-										@click="dialogCopyOpen(item)"
-									>
-										{{ $t('buttons.copy') }}
-									</v-btn>
 									<v-btn
 										v-if="canDelete(item)"
 										:variant="buttonsForms.variant.delete"
@@ -302,6 +294,8 @@ export default {
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
+			addressDisplay,
+			isPublicDisplay,
 			resetAdditional,
 			scope,
 			validation
@@ -377,6 +371,8 @@ export default {
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
+			addressDisplay,
+			isPublicDisplay,
 			resetAdditional,
 			scope,
 			validation
