@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
@@ -139,10 +139,10 @@ export function useLocationComponent(props, context, options) {
 	const resetData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		
-		detailItemAddressCity.value = value ? value.city : null;
-		detailItemAddressCountry.value = value ? value.country : null;
-		detailItemAddressPostalCode.value = value ? value.postalCode : null;
-		detailItemAddressStateProvince.value = value ? value.stateProvince : null;
+		detailItemAddressCity.value = value && value.address ? value.address.city : null;
+		detailItemAddressCountry.value = value && value.address ? value.address.country : null;
+		detailItemAddressPostalCode.value = value && value.address ? value.address.postalCode : null;
+		detailItemAddressStateProvince.value = value && value.address ? value.address.stateProvince : null;
 
 		detailItemName.value = value ? value.name : null;
 
@@ -151,10 +151,11 @@ export function useLocationComponent(props, context, options) {
 	const setData = (correlationId) => {
 		detailItemData.value.description = detailItemDescription.value;
 
-		detailItemData.value.city = detailItemAddressCity.value;
-		detailItemData.value.country = detailItemAddressCountry.value;
-		detailItemData.value.postalCode = detailItemAddressPostalCode.value;
-		detailItemData.value.stateProvince = detailItemAddressStateProvince.value;
+		detailItemData.value.address = detailItemData.value.address ?? {};
+		detailItemData.value.address.city = detailItemAddressCity.value;
+		detailItemData.value.address.country = detailItemAddressCountry.value;
+		detailItemData.value.address.postalCode = detailItemAddressPostalCode.value;
+		detailItemData.value.address.stateProvince = detailItemAddressStateProvince.value;
 		
 		detailItemData.value.name = detailItemName.value;
 
@@ -169,9 +170,18 @@ export function useLocationComponent(props, context, options) {
 			if (hasFailed(response))
 				return;
 				
-			countriesI.value = response.results.map((item) => { return { id: item.id, name: item.name, states: item.states}; });
+			countriesI.value = response.results.map((item) => { return { id: item.iso3, name: item.name, states: item.states}; });
 		}		
 	});
+
+	watch(() => detailItemAddressCountry.value,
+		(value, prev) => {
+			if (value === prev)
+				return;
+
+			detailItemAddressStateProvince.value = null;
+		}
+	);
 	
 	return {
 		correlationId,
