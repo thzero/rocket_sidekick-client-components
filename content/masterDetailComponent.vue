@@ -257,7 +257,7 @@ export function useMasterDetailComponent(props, context, options) {
 	};
 	const isOwner = (correlationId, item) => {
 		const ownerId = (user.value ?? {}).id;
-		return item ? item.ownerId == ownerId : false;
+		return item ? item.ownerId == ownerId : false; // TODO: allow admin
 	};
 
 	onMounted(async () => {

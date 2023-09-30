@@ -103,10 +103,10 @@ export function usePartsBaseComponent(props, context, options) {
 	});
 
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isPublic(correlationId, item);
+		return isOwner(correlationId, item) || isPublic(correlationId, item); // TODO: SECURITY: Admin can copy a public
 	};
 	const canDeleteI = (correlationId, item) => {
-		return isOwner(correlationId, item) || !isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
+		return isOwner(correlationId, item) || !isPublic(correlationId, item); // TODO: SECURITY: Admin can delete a public
 	};
 	const canEditI = (correlationId, item) => {
 		return isOwner(correlationId, item); // TODO: SECURITY: Admin can edit a public
@@ -181,6 +181,9 @@ export function usePartsBaseComponent(props, context, options) {
 	};
 	const isPublic = (correlationId, item) => {
 		return item ? item.public ?? false : false;
+	};
+	const isPublicDisplay = (item) => {
+		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
 	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
@@ -274,6 +277,7 @@ export function usePartsBaseComponent(props, context, options) {
 		clickSearch,
 		clickSearchClear,
 		isPublic,
+		isPublicDisplay,
 		manufacturer,
 		measurementUnitTranslateWeight,
 		resetAdditional

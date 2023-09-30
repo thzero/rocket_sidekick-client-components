@@ -157,7 +157,9 @@
 							:key="item.id"
 						>
 							<v-card>
-								<v-card-title>
+								<v-card-title
+									class="bg-primary"
+								>
 									<slot name="panelTitle" :item="item">
 										{{ item.name }}
 									</slot>

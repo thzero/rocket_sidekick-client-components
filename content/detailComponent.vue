@@ -71,7 +71,7 @@ export function useDetailComponent(props, context, options) {
 	});
 	const isOwner = (correlationId, item) => {
 		const ownerId = (user.value ?? {}).id;
-		return item ? item.ownerId == ownerId : false;
+		return item ? item.ownerId == ownerId : false; // TODO: allow admin
 	};
 
 	const dialogDeleteCancel = async (item) => {
