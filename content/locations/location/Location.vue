@@ -349,6 +349,8 @@
 		:pre-complete-ok="dialogEditSecondaryPreCompleteOk"
 		:value="dialogEditSecondaryParams"
 		:signal="dialogEditSecondaryManager.signal"
+		:countries="countries"
+		:states="states"
 		@close="dialogEditSecondaryCancel"
 		@ok="dialogEditSecondaryOk"
 		width="90%"
