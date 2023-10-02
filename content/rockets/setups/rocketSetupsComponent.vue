@@ -6,7 +6,6 @@ import useVuelidate from '@vuelidate/core';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
@@ -105,10 +104,10 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);
+	const rocketSetupsRef = ref(null);
 	const diameterMeasurementUnitId = ref(null);
 	const diameterMeasurementUnitsId = ref(null);
 	const dialogRocketLookupManager = ref(new DialogSupport());
-	const dialogRocketSetupsRef = ref(null);
 	const filterItemDiameter = ref(null);
 	const filterItemManufacturers = ref(null);
 	const filterItemManufacturerStockId = ref(null);
@@ -118,8 +117,6 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	const filterItemRocketTypes = ref(null);
 	const manufacturers = ref(null);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.rocketSetups.title`));
-	const weightMeasurementUnitId = ref(null);
-	const weightMeasurementUnitsId = ref(null);
 
 	if (LibraryCommonUtility.isDev) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
@@ -147,7 +144,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		await fetch(correlationId);
 	};
 	const clickSearchClear = async (correlationId) => {
-		await dialogRocketSetupsRef.value.reset(correlationId, true);
+		await rocketSetupsRef.value.reset(correlationId, true);
 		await fetch(correlationId);
 	};
 	const clickSearchRockets = async (correlationId) => {
@@ -207,8 +204,6 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		params.manufacturerStockId = filterItemManufacturerStockId.value;
 		params.rocketId = filterItemRocketId.value;
 		params.rocketTypes = filterItemRocketTypes.value;
-		// params.weightMeasurementUnitId = weightMeasurementUnitId.value;
-		// params.weightMeasurementUnitsId = weightMeasurementUnitsId.value;
 		return params;
 	};
 	const initI = async (correlationId) => {
@@ -231,9 +226,6 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 
 		const temp = manufacturers.value.find(l => l.id === id);
 		return temp ? temp.name : null;
-	};
-	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
-		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
 	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
@@ -334,10 +326,10 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		buttonsForms,
 		rocketTypes,
 		debug,
+		rocketSetupsRef,
 		diameterMeasurementUnitId,
 		diameterMeasurementUnitsId,
 		dialogRocketLookupManager,
-		dialogRocketSetupsRef,
 		filterItemDiameter,
 		filterItemManufacturers,
 		filterItemManufacturerStockId,
@@ -347,15 +339,12 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		filterItemRocketTypes,
 		manufacturers,
 		title,
-		weightMeasurementUnitId,
-		weightMeasurementUnitsId,
 		buttonSearchResetDisabled,
 		clickSearch,
 		clickSearchClear,
 		clickSearchRockets,
 		fetchManufacturers,
 		manufacturer,
-		measurementUnitTranslateWeight,
 		selectRocket,
 		resetAdditional,
 		scope: 'RocketsFilterControl',

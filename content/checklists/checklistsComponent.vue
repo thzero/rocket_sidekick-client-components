@@ -112,19 +112,19 @@ export function useChecklistsBaseComponent(props, context, options) {
 	}
 
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item) && isDefault(item) || isShared(item) || !isInProgress(item); // TODO: SECURITY: Admin can edit a default
+		return isOwner(correlationId, item) && isDefault(item) || !isInProgress(item); // TODO: SECURITY: Admin can edit a default
 	};
 	const canDeleteI = (correlationId, item) => {
-		return isOwner(correlationId, item) && !isDefault(item) && !isShared(item) && !isInProgress(item); // TODO: SECURITY: Admin can edit a default
+		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item); // TODO: SECURITY: Admin can edit a default
 	};
 	const canEditI = (correlationId, item) => {
-		return isOwner(correlationId, item) && !isDefault(item) && !isShared(item) && !isInProgress(item) && !isCompleted(item); // TODO: SECURITY: Admin can edit a default
+		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item); // TODO: SECURITY: Admin can edit a default
 	};
 	const canStart = (item) => {
-		return isOwner(correlationId, item) && !isDefault(item) && !isShared(item) && !isInProgress(item) && !isCompleted(item);
+		return isOwner(correlationId, item) && !isDefault(item) && !!isInProgress(item) && !isCompleted(item);
 	};
 	const canViewI = (correlationId, item) => {
-		return isOwner(correlationId, item) && isDefault(item) || isShared(item);
+		return isOwner(correlationId, item) && isDefault(item);
 	};
 	const checklistTypeIcon = (item) => {
 		const icon = checklistTypeIconDetermine(item);
@@ -229,9 +229,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const isInProgress = (item) => {
 		return item ? item.type === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
 	};
-	const isShared = (item) => {
-		return item ? item.isShared ?? false : false;
-	};
 	const isStarting = (item) => {
 		if (!dialogStartParams.value || !item)
 			return false;
@@ -332,7 +329,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isCompleted,
 		isDefault,
 		isInProgress,
-		isShared,
 		isStarting,
 		resetAdditional,
 		scope: 'RocketsFilterControl',

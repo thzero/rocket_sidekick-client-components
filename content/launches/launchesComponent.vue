@@ -1,16 +1,23 @@
 <script>
 import { computed, onMounted, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
+import useVuelidate from '@vuelidate/core';
 
-import AppUtility from '@/utility/app';
+import AppCommonConstants from 'rocket_sidekick_common/constants';
+import LibraryClientConstants from '@thzero/library_client/constants.js';
+
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
+
+import LaunchData from 'rocket_sidekick_common/data/launches/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
-import PartData from 'rocket_sidekick_common/data/parts/index';
-
-export function usePartsBaseComponent(props, context, options) {
+export function useLaunchesBaseComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -71,7 +78,7 @@ export function usePartsBaseComponent(props, context, options) {
 		isOwner,
 		display
 	} = useMasterDetailComponent(props, context, {
-			dialogDeleteMessage : 'checklists',
+			dialogDeleteMessage : 'launches',
 			canCopy: (correlationId, item) => { return canCopyI(correlationId, item); },
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
@@ -80,7 +87,7 @@ export function usePartsBaseComponent(props, context, options) {
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
 			init: async (correlationId) => { return await initI(correlationId); },
-			initNew: async (correlationId, data) => { return initNewI(correlationId, data); }
+			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
 	);
 
@@ -89,57 +96,77 @@ export function usePartsBaseComponent(props, context, options) {
 		buttonsForms
 	} = useButtonComponent(props, context);
 
-	const partsRef = ref(null);
+	const {
+		rocketTypes,
+		hasCoverUrl,
+		rocketTypeIcon,
+		rocketTypeIconDetermine
+	} = useRocketsUtilityComponent(props, context, options);
+
+	const debug = ref(false);
+	const dialogRocketLookupManager = ref(new DialogSupport());
+	const diameterMeasurementUnitId = ref(null);
+	const diameterMeasurementUnitsId = ref(null);
+	const LaunchesRef = ref(null);
+	const filterItemDiameter = ref(null);
+	const filterItemManufacturers = ref(null);
+	const filterItemManufacturerStockId = ref(null);
+	const filterItemName = ref(null);
+	const filterItemRocketId = ref(null);
+	const filterItemRocketName = ref(null);
+	const filterItemRocketTypes = ref(null);
 	const manufacturers = ref(null);
-	const params = ref({
-		type: null
-	});
-	const title = ref(
-		 LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.parts.${props.title}.title`)
-	);
+	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.launches.title`));
+
+	if (LibraryCommonUtility.isDev) {
+		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
+		const config = serviceConfig.get('debug');
+		if (config)
+			debug.value = config['Launches'] ?? false;
+	}
 
 	const buttonSearchResetDisabled = computed(() => {
 		return false;
 	});
-
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isPublic(correlationId, item); // TODO: SECURITY: Admin can copy a public
+		return isOwner(correlationId, item);
 	};
 	const canDeleteI = (correlationId, item) => {
-		return isOwner(correlationId, item) || !isPublic(correlationId, item); // TODO: SECURITY: Admin can delete a public
+		return isOwner(correlationId, item);
 	};
 	const canEditI = (correlationId, item) => {
-		return isOwner(correlationId, item); // TODO: SECURITY: Admin can edit a public
+		return isOwner(correlationId, item);
 	};
 	const canViewI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
+		return isOwner(correlationId, item);
 	};
 	const clickSearch = async (correlationId) => {
 		await fetch(correlationId);
 	};
 	const clickSearchClear = async (correlationId) => {
-		await partsRef.value.reset(correlationId, true);
+		await LaunchesRef.value.reset(correlationId, true);
 		await fetch(correlationId);
 	};
+	const clickSearchRockets = async (correlationId) => {
+		dialogRocketLookupManager.value.open();
+	};
 	const deleteItemI = async (correlationId, id) => {
-		return await serviceStore.dispatcher.deletePartById(correlationId, id);
+		return await serviceStore.dispatcher.deleteLaunchById(correlationId, id);
 	};
 	const fetchI = async (correlationId) => {
-		params.value = { typeId: props.type };
-		if (props.fetchParams)
-			params.value = await props.fetchParams(correlationId, params.value);
+		await fetchManufacturers(correlationId);
+
+		const params = fetchParams(correlationId, {});
 		if (!params)
-			return error('usePartsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+			return error('useLaunchesBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+
+		serviceStore.dispatcher.setLaunchesSearchCriteria(correlationId, params);
 			
-		const response = await serviceStore.dispatcher.requestParts(correlationId, params.value);
+		const response = await serviceStore.dispatcher.requestLaunches(correlationId, params);
 		if (hasFailed(response))
 			return response;
 
-		serviceStore.dispatcher.setPartsSearchCriteria(correlationId, { params: params.value, type: props.type });
-
-		await fetchManufacturers(correlationId);
-
-		let results = response.results.filter(l => l.typeId === props.type);
+		let results = response.results;
 		results.forEach((item) => {
 			const temp = manufacturers.value.find(l => l.id === item.manufacturerId);
 			if (temp)
@@ -158,7 +185,7 @@ export function usePartsBaseComponent(props, context, options) {
 		return response;
 	};
 	const fetchItemI = async (correlationId, id) => {
-		return await serviceStore.dispatcher.requestPartById(correlationId, id);
+		return await serviceStore.dispatcher.requestLocationById(correlationId, id);
 	};
 	const fetchManufacturers = async (correlationId) => {
 		if (manufacturers.value)
@@ -170,20 +197,23 @@ export function usePartsBaseComponent(props, context, options) {
 
 		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
 	};
+	const fetchParams = (correlationId, params) => {
+		params.name = filterItemName.value;
+		params.manufacturers = filterItemManufacturers.value;
+		params.manufacturerStockId = filterItemManufacturerStockId.value;
+		params.rocketId = filterItemRocketId.value;
+		params.rocketTypes = filterItemRocketTypes.value;
+		return params;
+	};
 	const initI = async (correlationId) => {
-		const params = await serviceStore.getters.getPartsSearchCriteria(correlationId);
-		if (params) 
-			resetAdditional(correlationId, params[props.type]);
+		const params = await serviceStore.getters.getLaunchesSearchCriteria(correlationId);
+		if (params)
+			resetAdditional(correlationId, params);
+		return success(correlationId);
 	};
 	const initNewI = async (correlationId, data) => {
-		data = data ? data : new PartData();
+		data = data ? data : new LaunchData();
 		return success(correlationId, data);
-	};
-	const isPublic = (correlationId, item) => {
-		return item ? item.public ?? false : false;
-	};
-	const isPublicDisplay = (item) => {
-		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
 	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
@@ -196,16 +226,40 @@ export function usePartsBaseComponent(props, context, options) {
 		const temp = manufacturers.value.find(l => l.id === id);
 		return temp ? temp.name : null;
 	};
-	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
-		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
-	};
 	const resetAdditional = async (correlationId, data) => {
-		if (props.resetAdditionalFilter)
-			await props.resetAdditionalFilter(correlationId, data);
+		filterItemName.value = data ? data.name : null;
+		filterItemDiameter.value = data ? data.diameter : null;
+		filterItemManufacturers.value = data ? data.manufacturers : null;
+		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
+		filterItemRocketId.value = data ? data.rocketId : null;
+		filterItemRocketName.value = data ? data.rocketName : null;
+		filterItemRocketTypes.value = data ? data.rocketTypes : null;
+	};
+	const selectRocket = async (item) => {
+		try {
+			if (!item)
+				return error('useRocketSetupsBaseComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
+			
+			filterItemRocketId.value = item.id;
+			filterItemRocketName.value = item.name;
+		}
+		finally {
+			dialogRocketLookupManager.value.ok();
+		}
 	};
 
 	onMounted(async () => {
-		// fetchManufacturers(correlationId());
+		const correlationIdI = correlationId();
+
+		if (!manufacturers.value) {
+			const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
+			if (hasFailed(response))
+				return;
+				
+			let temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket));
+			temp2 = temp2.map((item) => { return { id: item.id, name: item.name, types: item.types}; });
+			manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
+		}		
 	});
 
 	return {
@@ -269,18 +323,31 @@ export function usePartsBaseComponent(props, context, options) {
 		display,
 		buttonsDialog,
 		buttonsForms,
-		partsRef,
+		rocketTypes,
+		debug,
+		diameterMeasurementUnitId,
+		diameterMeasurementUnitsId,
+		dialogRocketLookupManager,
+		LaunchesRef,
+		filterItemDiameter,
+		filterItemManufacturers,
+		filterItemManufacturerStockId,
+		filterItemName,
+		filterItemRocketId,
+		filterItemRocketName,
+		filterItemRocketTypes,
 		manufacturers,
-		params,
 		title,
 		buttonSearchResetDisabled,
 		clickSearch,
 		clickSearchClear,
-		isPublic,
-		isPublicDisplay,
+		clickSearchRockets,
+		fetchManufacturers,
 		manufacturer,
-		measurementUnitTranslateWeight,
-		resetAdditional
+		resetAdditional,
+		selectRocket,
+		scope: 'LaunchesFilterControl',
+		validation: useVuelidate({ $scope: 'LaunchesilterControl' })
 	};
 };
 </script>

@@ -30,8 +30,9 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		notImplementedError,
 		success
 	} = useBaseComponent(props, context, options);
-	
+
 	const {
+		// measurementUnitsIdSettings,
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
@@ -49,7 +50,11 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		measurementUnitsVolumeDefaultId,
 		measurementUnitsVolumeType,
 		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsWeightType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const {
@@ -159,12 +164,14 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 	const preCompleteOk = async (correlationId) => {
 		results.value = null;
 
+		const diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, filterItemDiameterMeasurementUnitsId.value);
+
 		const request = {
 			diameterMax: filterItemDiameterMax.value,
 			diameterMin: filterItemDiameterMin.value,
 			diameterMeasurementUnitId: filterItemDiameterMeasurementUnitId.value,
-			diameterMeasurementUnitsId: filterItemDiameterMeasurementUnitsId.value,
-			manufacturer: filterItemManufacturers.value,
+			diameterMeasurementUnitsId: diameterMeasurementUnitsId,
+			manufacturers: filterItemManufacturers.value,
 			manufacturerStockId: filterItemManufacturerStockId.value,
 			name: filterItemName.value,
 			rocketTypes: filterItemRocketTypes.value
@@ -225,6 +232,7 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 		success,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
+		measurementUnitsFromUnitId,
 		buttonsDialog,
 		buttonsForms,
 		measurementUnitsIdOutput,

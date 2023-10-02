@@ -103,9 +103,9 @@ export function useRocketsBaseComponent(props, context, options) {
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);
+	const rocketsref = ref(null);
 	const diameterMeasurementUnitId = ref(null);
 	const diameterMeasurementUnitsId = ref(null);
-	const dialogRocketsLookupRef = ref(null);
 	const filterItemDiameter = ref(null);
 	const filterItemManufacturers = ref(null);
 	const filterItemManufacturerStockId = ref(null);
@@ -143,7 +143,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		await fetch(correlationId);
 	};
 	const clickSearchClear = async (correlationId) => {
-		await dialogRocketsLookupRef.value.reset(correlationId, true);
+		await rocketsref.value.reset(correlationId, true);
 		await fetch(correlationId);
 	};
 	const deleteItemI = async (correlationId, id) => {
@@ -314,9 +314,9 @@ export function useRocketsBaseComponent(props, context, options) {
 		buttonsForms,
 		rocketTypes,
 		debug,
+		rocketsref,
 		diameterMeasurementUnitId,
 		diameterMeasurementUnitsId,
-		dialogRocketsLookupRef,
 		filterItemDiameter,
 		filterItemManufacturers,
 		filterItemManufacturerStockId,

@@ -43,7 +43,7 @@
 								</v-col>
 							</v-row>
 							<v-row dense>
-								<v-col cols="3">
+								<!-- <v-col cols="3">
 									<VNumberFieldWithValidation
 										ref="filterItemDiameterMinRef"
 										v-model="filterItemDiameterMin"
@@ -51,8 +51,8 @@
 										:validation="validation"
 										:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.min.abbr')"
 									/>
-								</v-col>
-								<v-col cols="3">
+								</v-col> -->
+								<!-- <v-col cols="3">
 									<VNumberFieldWithValidation
 										ref="filterItemDiameterMaxRef"
 										v-model="filterItemDiameterMax"
@@ -60,11 +60,29 @@
 										:validation="validation"
 										:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.max.abbr')"
 									/>
-								</v-col>
-								<v-col cols="6">
-									<table>
+								</v-col> -->
+								<v-col cols="12" sm="6">
+									<table style="width:100%;">
 										<tr>
-											<td class="measurementUnitsMedium">
+											<td>
+												<VNumberFieldWithValidation
+													ref="filterItemDiameterMinRef"
+													v-model="filterItemDiameterMin"
+													vid="filterItemDiameterMin"
+													:validation="validation"
+													:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.min.abbr')"
+												/>
+											</td>
+											<td>
+												<VNumberFieldWithValidation
+													ref="filterItemDiameterMaxRef"
+													v-model="filterItemDiameterMax"
+													vid="filterItemDiameterMax"
+													:validation="validation"
+													:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.max.abbr')"
+												/>
+											</td>
+											<!-- <td class="measurementUnitsMedium">
 												<MeasurementUnitsSelect
 													ref="filterItemDiameterMeasurementUnitsIdRef"
 													v-model="filterItemDiameterMeasurementUnitsId"
@@ -83,7 +101,17 @@
 													:validation="validation"
 													:label="$t('forms.settings.measurementUnits.length')"
 												/>
-											</td>
+											</td> -->
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect2
+													ref="filterItemDiameterMeasurementUnitIdRef"
+													v-model="filterItemDiameterMeasurementUnitId"
+													vid="filterItemDiameterMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.length')"
+												/>
+											</td> 
 										</tr>
 									</table>
 								</v-col>
@@ -202,6 +230,7 @@ import { useRocketLookupDialogProps } from '@/components/content/rockets/dialogs
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
@@ -219,6 +248,7 @@ export default {
 		ChuteProtectorPanelTitle,
 		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
+		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		ParachutePanelTitle,
 		RocketParts,
@@ -248,6 +278,7 @@ export default {
 			success,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
+			measurementUnitsFromUnitId,
 			buttonsDialog,
 			buttonsForms,
 			measurementUnitsIdOutput,
@@ -298,6 +329,7 @@ export default {
 			success,
 			measurementUnitsLengthDefaultId,
 			measurementUnitsLengthType,
+			measurementUnitsFromUnitId,
 			buttonsDialog,
 			buttonsForms,
 			measurementUnitsIdOutput,

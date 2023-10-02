@@ -1,16 +1,21 @@
 <script>
-import { computed, onMounted, ref} from 'vue';
+import { computed, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
+import useVuelidate from '@vuelidate/core';
 
-import AppUtility from '@/utility/app';
+import LibraryClientConstants from '@thzero/library_client/constants.js';
+
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
+import LocationData from 'rocket_sidekick_common/data/locations/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useLocationsUtilityComponent } from '@/components/content/locations/locationsUtilityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
-import PartData from 'rocket_sidekick_common/data/parts/index';
-
-export function usePartsBaseComponent(props, context, options) {
+export function useLocationsBaseComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -71,7 +76,7 @@ export function usePartsBaseComponent(props, context, options) {
 		isOwner,
 		display
 	} = useMasterDetailComponent(props, context, {
-			dialogDeleteMessage : 'checklists',
+			dialogDeleteMessage : 'locations',
 			canCopy: (correlationId, item) => { return canCopyI(correlationId, item); },
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
@@ -80,7 +85,7 @@ export function usePartsBaseComponent(props, context, options) {
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
 			init: async (correlationId) => { return await initI(correlationId); },
-			initNew: async (correlationId, data) => { return initNewI(correlationId, data); }
+			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
 	);
 
@@ -89,94 +94,112 @@ export function usePartsBaseComponent(props, context, options) {
 		buttonsForms
 	} = useButtonComponent(props, context);
 
-	const partsRef = ref(null);
-	const manufacturers = ref(null);
-	const params = ref({
-		type: null
-	});
-	const title = ref(
-		 LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.parts.${props.title}.title`)
-	);
+	const {
+		rocketTypes,
+		hasCoverUrl,
+		rocketTypeIcon,
+		rocketTypeIconDetermine
+	} = useRocketsUtilityComponent(props, context, options);
+
+	const {
+		organizations,
+		organizationName,
+		organizationNames
+	} = useLocationsUtilityComponent(props, context);
+
+	const debug = ref(false);
+	const LocationsRef = ref(null);
+	const filterItemName = ref(null);
+	const filterItemOrganizations = ref([]);
+	const filterItemRocketTypes = ref([]);
+	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.locations.title`));
+
+	if (LibraryCommonUtility.isDev) {
+		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
+		const config = serviceConfig.get('debug');
+		if (config)
+			debug.value = config['locations'] ?? false;
+	}
 
 	const buttonSearchResetDisabled = computed(() => {
 		return false;
 	});
+	
+	const addressDisplay = (item) => {
+		if (!item || !item.address) 
+			return '';
 
+		const temp2 = [];
+		if (!String.isNullOrEmpty(item.address.name))
+			temp2.push(item.address.name);
+		if (!String.isNullOrEmpty(item.address.city))
+			temp2.push(item.address.city);
+		if (!String.isNullOrEmpty(item.address.stateProvince))
+			temp2.push(item.address.stateProvince);
+		if (!String.isNullOrEmpty(item.address.country))
+			temp2.push(item.address.country);
+		return temp2.join(', ').trim();
+	};
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isPublic(correlationId, item); // TODO: SECURITY: Admin can copy a public
+		// no copying
+		return false;
 	};
 	const canDeleteI = (correlationId, item) => {
-		return isOwner(correlationId, item) || !isPublic(correlationId, item); // TODO: SECURITY: Admin can delete a public
+		return isOwner(correlationId, item); // TODO: SECURITY: Admin can delete a public
 	};
 	const canEditI = (correlationId, item) => {
 		return isOwner(correlationId, item); // TODO: SECURITY: Admin can edit a public
 	};
 	const canViewI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
+		return isOwner(correlationId, item) || isPublic(correlationId, item);
 	};
 	const clickSearch = async (correlationId) => {
 		await fetch(correlationId);
 	};
 	const clickSearchClear = async (correlationId) => {
-		await partsRef.value.reset(correlationId, true);
+		await LocationsRef.value.reset(correlationId, true);
 		await fetch(correlationId);
 	};
 	const deleteItemI = async (correlationId, id) => {
-		return await serviceStore.dispatcher.deletePartById(correlationId, id);
+		return await serviceStore.dispatcher.deleteLocationById(correlationId, id);
 	};
 	const fetchI = async (correlationId) => {
-		params.value = { typeId: props.type };
-		if (props.fetchParams)
-			params.value = await props.fetchParams(correlationId, params.value);
+		const params = fetchParams(correlationId, {});
 		if (!params)
-			return error('usePartsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+			return error('useLocationsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+
+		serviceStore.dispatcher.setLocationsSearchCriteria(correlationId, params);
 			
-		const response = await serviceStore.dispatcher.requestParts(correlationId, params.value);
+		const response = await serviceStore.dispatcher.requestLocations(correlationId, params);
 		if (hasFailed(response))
 			return response;
 
-		serviceStore.dispatcher.setPartsSearchCriteria(correlationId, { params: params.value, type: props.type });
-
-		await fetchManufacturers(correlationId);
-
-		let results = response.results.filter(l => l.typeId === props.type);
-		results.forEach((item) => {
-			const temp = manufacturers.value.find(l => l.id === item.manufacturerId);
-			if (temp)
-				item.manufacturerName = temp.name;
-		});
+		let results = response.results;
 	 	results = results.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
-			.thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
 		);
-		// results = results.sort(
-		// 	firstBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
-		// );
 
 		response.results = results;
 		return response;
 	};
 	const fetchItemI = async (correlationId, id) => {
-		return await serviceStore.dispatcher.requestPartById(correlationId, id);
+		return await serviceStore.dispatcher.requestLocationById(correlationId, id);
 	};
-	const fetchManufacturers = async (correlationId) => {
-		if (manufacturers.value)
-			return;
-
-		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
-		if (hasFailed(response))
-			return;
-
-		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
+	const fetchParams = (correlationId, params) => {
+		params.name = filterItemName.value;
+		params.organizations = filterItemOrganizations.value;
+		params.rocketTypes = filterItemRocketTypes.value;
+		return params;
 	};
 	const initI = async (correlationId) => {
-		const params = await serviceStore.getters.getPartsSearchCriteria(correlationId);
-		if (params) 
-			resetAdditional(correlationId, params[props.type]);
+		const params = await serviceStore.getters.getLocationsSearchCriteria(correlationId);
+		if (params)
+			resetAdditional(correlationId, params);
+		return success(correlationId);
 	};
 	const initNewI = async (correlationId, data) => {
-		data = data ? data : new PartData();
+		data = data ? data : new LocationData();
 		return success(correlationId, data);
 	};
 	const isPublic = (correlationId, item) => {
@@ -185,28 +208,11 @@ export function usePartsBaseComponent(props, context, options) {
 	const isPublicDisplay = (item) => {
 		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
 	};
-	const manufacturer = (item) => {
-		const id = item ? item.manufacturerId ?? null : null;
-		if (!id)
-			return null;
-
-		if (!manufacturers.value)
-			return null;
-
-		const temp = manufacturers.value.find(l => l.id === id);
-		return temp ? temp.name : null;
-	};
-	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
-		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
-	};
 	const resetAdditional = async (correlationId, data) => {
-		if (props.resetAdditionalFilter)
-			await props.resetAdditionalFilter(correlationId, data);
+		filterItemName.value = data ? data.name : null;
+		filterItemOrganizations.value = data ? data.organizations : null;
+		filterItemRocketTypes.value = data ? data.rocketTypes : null;
 	};
-
-	onMounted(async () => {
-		// fetchManufacturers(correlationId());
-	});
 
 	return {
 		correlationId,
@@ -269,18 +275,23 @@ export function usePartsBaseComponent(props, context, options) {
 		display,
 		buttonsDialog,
 		buttonsForms,
-		partsRef,
-		manufacturers,
-		params,
+		rocketTypes,
+		organizations,
+		organizationNames,
+		debug,
+		LocationsRef,
+		filterItemName,
+		filterItemOrganizations,
+		filterItemRocketTypes,
 		title,
 		buttonSearchResetDisabled,
 		clickSearch,
 		clickSearchClear,
-		isPublic,
+		addressDisplay,
 		isPublicDisplay,
-		manufacturer,
-		measurementUnitTranslateWeight,
-		resetAdditional
+		resetAdditional,
+		scope: 'LocationsFilterControl',
+		validation: useVuelidate({ $scope: 'LocationsilterControl' })
 	};
 };
 </script>

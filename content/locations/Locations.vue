@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<VFormListing
-		ref="rocketsref"
+		ref="locationsRef"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -40,35 +40,29 @@
 								<v-row dense>
 									<v-col cols="12" sm="6">
 										<VSelectWithValidation
-											ref="filterItemManufacturersRef"
-											v-model="filterItemManufacturers"
-											vid="filterItemManufacturers"
+											ref="detailItemRocketTypesRef"
+											v-model="detailItemRocketTypes"
+											vid="detailItemRocketTypes"
 											multiple
-											:max-values="3"
-											:items="manufacturers"
+											:max-values="2"
+											:items="rocketTypes"
 											:validation="validation"
-											:label="$t('forms.content.manufacturer.plural')"
-											:hint="$t('forms.content.manufacturer.plural_hint')"
+											:label="$t('forms.content.rockets.level')"
+											:hint="$t('forms.content.rockets.level')"
 										/>
 									</v-col>
 									<v-col cols="12" sm="6">
-										<VTextFieldWithValidation
-											ref="filterItemManufacturerStockIdRef"
-											v-model="filterItemManufacturerStockId"
-											vid="filterItemManufacturerStockId"
-											:label="$t('forms.content.parts.manufacturerId')"
+										<VSelectWithValidation
+											ref="filterItemOrganizationsRef"
+											v-model="filterItemOrganizations"
+											vid="filterItemOrganizations"
+											multiple
+											:max-values="5"
+											:items="organizations"
 											:validation="validation"
+											:label="$t('forms.content.organizations.plural')"
 										/>
 									</v-col>
-									<!-- <v-col cols="12" sm="6">
-										<VTextFieldWithValidation
-											ref="filterItemDiameterRef"
-											v-model="filterItemDiameter"
-											vid="filterItemDiameter"
-											:label="$t('forms.content.parts.diameter')"
-											:validation="validation"
-										/>
-									</v-col> -->
 								</v-row>
 							</slot>
 						</v-card-text>
@@ -140,14 +134,18 @@
 									class="bg-primary"
 								>
 									{{ item.name }}
-									<div class="float-right">{{ manufacturer(item) }}</div>
+									<div class="float-right">
+										{{ addressDisplay(item) }} {{ isPublicDisplay(item) }}
+									</div>
 								</v-card-title>
 								<v-card-text>
 									<VMarkdown v-model="item.description" :use-github=false />
+									<div>
+										{{ organizationNames(item.organizations) }}
+									</div>
 									<div
 										v-if="debug"
 									>
-										canCopy [[ {{ canCopy(item) }}]]
 										canDelete [[ {{ canDelete(item) }}]]
 										canEdit [[ {{ canEdit(item) }}]]
 										canView [[ {{ canView(item) }}]]
@@ -155,15 +153,6 @@
 								</v-card-text>
 								<v-card-actions>
 									<v-spacer></v-spacer>
-									<v-btn
-										v-if="canCopy(item)"
-										:variant="buttonsForms.variant.copy"
-										:color="buttonsForms.color.copy"
-										:disabled="isCopying(item)"
-										@click="dialogCopyOpen(item)"
-									>
-										{{ $t('buttons.copy') }}
-									</v-btn>
 									<v-btn
 										v-if="canDelete(item)"
 										:variant="buttonsForms.variant.delete"
@@ -199,28 +188,19 @@
 					v-show="colsEditPanel"
 					:cols="colsEditPanel"
 				>
-					<Rocket
+					<Location
 						:model-value="detailItem"
-						:manufacturers="manufacturers"
 						@cancel="detailClose"
 						@close="detailClose"
 						@error="detailError"
 						@ok="detailOk"
 						:debug="debug"
 					>
-					</Rocket>
+					</Location>
 				</v-col>
 			</v-row>
 		</template>
 	</VFormListing>
-	<RocketCopyDialog
-		ref="dialogCopyRef"
-		:params="dialogCopyParams"
-		:signal="dialogCopyManager.signal"
-		@close="dialogCopyCancel"
-		@error="dialogCopyError"
-		@ok="dialogCopyOk"
-	/>
 	<VConfirmationDialog
 		ref="dialogDeleteRef"
 		:message="dialogDeleteMessage"
@@ -236,15 +216,14 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
-import { useRocketsBaseComponent } from '@/components/content/rockets/library/rocketsComponent';
-import { useRocketsBaseComponentProps } from '@/components/content/rockets/library/rocketsComponentProps';
-import { useRocketsFilterValidation } from '@/components/content/rockets/library/rocketsFilterValidation';
+import { useLocationsBaseComponent } from '@/components/content/Locations/locationsComponent';
+import { useLocationsBaseComponentProps } from '@/components/content/locations/locationsComponentProps';
+import { useLocationsFilterValidation } from '@/components/content/locations/locationsFilterValidation';
 
 import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import Rocket from '@/components/content/rockets/library/rocket/Rocket';
-import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
+import Location from '@/components/content/locations/location/Location';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
@@ -255,13 +234,12 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RocketsUserControl',
+	name: 'LocationsUserControl',
 	components: {
 		ContentHeader,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		Rocket,
-		RocketCopyDialog,
+		Location,
 		VConfirmationDialog,
 		VFormListing,
 		VMarkdown,
@@ -273,7 +251,7 @@ export default {
 	},
 	props: {
 		...useMasterDetailComponentProps,
-		...useRocketsBaseComponentProps
+		...useLocationsBaseComponentProps
 	},
 	setup(props, context) {
 		const {
@@ -338,30 +316,23 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			organizations,
+			organizationNames,
 			debug,
-			rocketsref,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
-			filterItemDiameter,
-			filterItemManufacturers,
-			filterItemManufacturerStockId,
+			LocationsRef,
 			filterItemName,
+			filterItemOrganizations,
 			filterItemRocketTypes,
-			filterItemWeight,
-			manufacturers,
 			title,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
-			fetchManufacturers,
-			manufacturer,
-			measurementUnitTranslateWeight,
+			addressDisplay,
+			isPublicDisplay,
 			resetAdditional,
 			scope,
 			validation
-		} = useRocketsBaseComponent(props, context);
+		} = useLocationsBaseComponent(props, context);
 
 		return {
 			correlationId,
@@ -425,33 +396,26 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			organizations,
+			organizationNames,
 			debug,
-			rocketsref,
-			diameterMeasurementUnitId,
-			diameterMeasurementUnitsId,
-			filterItemDiameter,
-			filterItemManufacturers,
-			filterItemManufacturerStockId,
+			LocationsRef,
 			filterItemName,
+			filterItemOrganizations,
 			filterItemRocketTypes,
-			filterItemWeight,
-			manufacturers,
 			title,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
-			fetchManufacturers,
-			manufacturer,
-			measurementUnitTranslateWeight,
+			addressDisplay,
+			isPublicDisplay,
 			resetAdditional,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketsFilterValidation), {
+		return Object.assign(LibraryCommonUtility.cloneDeep(useLocationsFilterValidation), {
 		});
 	}
 };

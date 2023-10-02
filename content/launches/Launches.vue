@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<VFormListing
-		ref="rocketsref"
+		ref="launchesRef"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -35,6 +35,27 @@
 											:label="$t('forms.content.rockets.level')"
 											:hint="$t('forms.content.rockets.level')"
 										/>
+									</v-col>
+								</v-row>
+								<v-row dense>
+									<v-col cols="12">
+										<div class="d-flex">
+											<VTextField
+												ref="filterItemRocketNameRef"
+												v-model="filterItemRocketName"
+												vid="filterItemRocketName"
+												:label="$t('forms.content.rockets.name')"
+												:readonly="true"
+											/>
+											<v-btn
+												class="ml-4 text-right"
+												:variant="buttonsForms.variant.add"
+												:color="buttonsForms.color.add"
+												@click="clickSearchRockets(item)"
+											>
+												{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+											</v-btn>
+										</div>
 									</v-col>
 								</v-row>
 								<v-row dense>
@@ -199,27 +220,24 @@
 					v-show="colsEditPanel"
 					:cols="colsEditPanel"
 				>
-					<Rocket
+					<Launch
 						:model-value="detailItem"
-						:manufacturers="manufacturers"
 						@cancel="detailClose"
 						@close="detailClose"
 						@error="detailError"
 						@ok="detailOk"
 						:debug="debug"
 					>
-					</Rocket>
+					</Launch>
 				</v-col>
 			</v-row>
 		</template>
 	</VFormListing>
-	<RocketCopyDialog
-		ref="dialogCopyRef"
-		:params="dialogCopyParams"
-		:signal="dialogCopyManager.signal"
-		@close="dialogCopyCancel"
-		@error="dialogCopyError"
-		@ok="dialogCopyOk"
+	<RocketLookupDialog
+		ref="dialogRocketLookupManagerRef"
+		:signal="dialogRocketLookupManager.signal"
+		@close="dialogRocketLookupManager.cancel()"
+		@select="selectRocket"
 	/>
 	<VConfirmationDialog
 		ref="dialogDeleteRef"
@@ -236,15 +254,15 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
-import { useRocketsBaseComponent } from '@/components/content/rockets/library/rocketsComponent';
-import { useRocketsBaseComponentProps } from '@/components/content/rockets/library/rocketsComponentProps';
-import { useRocketsFilterValidation } from '@/components/content/rockets/library/rocketsFilterValidation';
+import { useLaunchesBaseComponent } from '@/components/content/Launches/launchesComponent';
+import { useLaunchesBaseComponentProps } from '@/components/content/launches/launchesComponentProps';
+import { useLaunchesFilterValidation } from '@/components/content/launches/launchesFilterValidation';
 
 import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import Rocket from '@/components/content/rockets/library/rocket/Rocket';
-import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
+import Launch from '@/components/content/launches/Launch/Launch';
+import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
@@ -255,13 +273,13 @@ import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compon
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
-	name: 'RocketsUserControl',
+	name: 'LaunchesUserControl',
 	components: {
 		ContentHeader,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		Rocket,
-		RocketCopyDialog,
+		Launch,
+		RocketLookupDialog,
 		VConfirmationDialog,
 		VFormListing,
 		VMarkdown,
@@ -273,7 +291,7 @@ export default {
 	},
 	props: {
 		...useMasterDetailComponentProps,
-		...useRocketsBaseComponentProps
+		...useLaunchesBaseComponentProps
 	},
 	setup(props, context) {
 		const {
@@ -339,29 +357,30 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			debug,
-			rocketsref,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			dialogRocketLookupManager,
+			LaunchesRef,
 			filterItemDiameter,
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemName,
+			filterItemRocketId,
+			filterItemRocketName,
 			filterItemRocketTypes,
-			filterItemWeight,
 			manufacturers,
 			title,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
+			clickSearchRockets,
 			fetchManufacturers,
 			manufacturer,
-			measurementUnitTranslateWeight,
 			resetAdditional,
+			selectRocket,
 			scope,
 			validation
-		} = useRocketsBaseComponent(props, context);
+		} = useLaunchesBaseComponent(props, context);
 
 		return {
 			correlationId,
@@ -426,32 +445,33 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			debug,
-			rocketsref,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			dialogRocketLookupManager,
+			LaunchesRef,
 			filterItemDiameter,
 			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemName,
+			filterItemRocketId,
+			filterItemRocketName,
 			filterItemRocketTypes,
-			filterItemWeight,
 			manufacturers,
 			title,
-			weightMeasurementUnitId,
-			weightMeasurementUnitsId,
 			buttonSearchResetDisabled,
 			clickSearch,
 			clickSearchClear,
+			clickSearchRockets,
 			fetchManufacturers,
 			manufacturer,
-			measurementUnitTranslateWeight,
 			resetAdditional,
+			selectRocket,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketsFilterValidation), {
+		return Object.assign(LibraryCommonUtility.cloneDeep(useLaunchesFilterValidation), {
 		});
 	}
 };

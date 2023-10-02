@@ -1,5 +1,5 @@
 <script>
-import { computed } from 'vue';
+import { ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
@@ -20,10 +20,8 @@ export function useRocketsUtilityComponent(props, context, options) {
 		success
 	} = useBaseComponent(props, context, options);
 
-	const rocketTypes = computed(() => {
-		const object = AppCommonConstants.Rocketry.RocketTypes;
-		return Object.getOwnPropertyNames(object).filter(l => l !== 'high').map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.rockets.levels.' + item) }; });
-	});
+	const object = AppCommonConstants.Rocketry.RocketTypes;
+	const rocketTypes = ref(Object.getOwnPropertyNames(object).filter(l => l !== 'high').map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.rockets.levels.' + item) }; }));
 
 	const hasCoverUrl = (item) => {
 		if (!item)

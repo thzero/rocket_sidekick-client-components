@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<VFormListing
-		ref="dialogPartsLookupRef"
+		ref="partsRef"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -78,7 +78,9 @@
 							:key="item.id"
 						>
 							<v-card>
-								<v-card-title>
+								<v-card-title
+									class="bg-primary"
+								>
 									<slot name="panelTitle" :item="item">
 										{{ item.name }}
 									</slot>
@@ -87,7 +89,7 @@
 									>
 										({{item.weight}} {{ measurementUnitTranslateWeight(item.weightMeasurementUnitsId, item.weightMeasurementUnitId) }})
 									</span>
-									<div class="float-right">{{ manufacturer(item) }}</div>
+									<div class="float-right">{{ manufacturer(item) }} {{ isPublicDisplay(item) }}</div>
 								</v-card-title>
 								<v-card-text
 									>
@@ -262,7 +264,7 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
-			dialogPartsLookupRef,
+			partsRef,
 			manufacturers,
 			params,
 			title,
@@ -270,6 +272,7 @@ export default {
 			clickSearch,
 			clickSearchClear,
 			isPublic,
+			isPublicDisplay,
 			manufacturer,
 			measurementUnitTranslateWeight,
 			resetAdditional
@@ -336,7 +339,7 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
-			dialogPartsLookupRef,
+			partsRef,
 			manufacturers,
 			params,
 			title,
@@ -344,6 +347,7 @@ export default {
 			clickSearch,
 			clickSearchClear,
 			isPublic,
+			isPublicDisplay,
 			manufacturer,
 			measurementUnitTranslateWeight,
 			resetAdditional

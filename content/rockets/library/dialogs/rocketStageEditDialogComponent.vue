@@ -253,8 +253,8 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		preCompleteOk,
 		resetAdditional,
 		setAdditional,
-		scope: 'RocketEditDialog',
-		validation: useVuelidate({ $scope: 'RocketEditDialog' })
+		scope: 'RocketStageEditDialog',
+		validation: useVuelidate({ $scope: 'RocketStageEditDialog' })
 	};
 };
 </script>
