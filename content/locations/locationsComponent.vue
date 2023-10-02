@@ -11,6 +11,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import LocationData from 'rocket_sidekick_common/data/locations/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useLocationsUtilityComponent } from '@/components/content/locations/locationsUtilityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
@@ -100,9 +101,16 @@ export function useLocationsBaseComponent(props, context, options) {
 		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 
+	const {
+		organizations,
+		organizationName,
+		organizationNames
+	} = useLocationsUtilityComponent(props, context);
+
 	const debug = ref(false);
 	const LocationsRef = ref(null);
 	const filterItemName = ref(null);
+	const filterItemOrganizations = ref([]);
 	const filterItemRocketTypes = ref([]);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.locations.title`));
 
@@ -180,6 +188,7 @@ export function useLocationsBaseComponent(props, context, options) {
 	};
 	const fetchParams = (correlationId, params) => {
 		params.name = filterItemName.value;
+		params.organizations = filterItemOrganizations.value;
 		params.rocketTypes = filterItemRocketTypes.value;
 		return params;
 	};
@@ -201,6 +210,7 @@ export function useLocationsBaseComponent(props, context, options) {
 	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
+		filterItemOrganizations.value = data ? data.organizations : null;
 		filterItemRocketTypes.value = data ? data.rocketTypes : null;
 	};
 
@@ -266,9 +276,12 @@ export function useLocationsBaseComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms,
 		rocketTypes,
+		organizations,
+		organizationNames,
 		debug,
 		LocationsRef,
 		filterItemName,
+		filterItemOrganizations,
 		filterItemRocketTypes,
 		title,
 		buttonSearchResetDisabled,

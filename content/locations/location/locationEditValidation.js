@@ -3,7 +3,9 @@ import { between, decimal, maxLength, minLength, required } from '@vuelidate/val
 export function useLocationEditValidation(nameRequired) { 
 	const validation = {
 		detailItemDescription: { $autoDirty: true },
-		detailItemRocket: { $autoDirty: true }
+		detailItemExperimental: { $autoDirty: true },
+		detailItemOrganizations: { $autoDirty: true },
+		detailItemRocketTypes: { $autoDirty: true }
 	};
 	validation['detailItemName'] =  (nameRequired === true ?
 		{

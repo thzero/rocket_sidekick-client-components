@@ -37,6 +37,22 @@
 										/>
 									</v-col>
 								</v-row>
+								<v-row dense>
+									<v-col cols="12" sm="6">
+									</v-col>
+									<v-col cols="12" sm="6">
+										<VSelectWithValidation
+											ref="filterItemOrganizationsRef"
+											v-model="filterItemOrganizations"
+											vid="filterItemOrganizations"
+											multiple
+											:max-values="3"
+											:items="organizations"
+											:validation="validation"
+											:label="$t('forms.content.organizations.plural')"
+										/>
+									</v-col>
+								</v-row>
 							</slot>
 						</v-card-text>
 						<v-card-actions>
@@ -113,6 +129,9 @@
 								</v-card-title>
 								<v-card-text>
 									<VMarkdown v-model="item.description" :use-github=false />
+									<div>
+										{{ organizationNames(item.organizations) }}
+									</div>
 									<div
 										v-if="debug"
 									>
@@ -286,9 +305,12 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			organizations,
+			organizationNames,
 			debug,
 			LocationsRef,
 			filterItemName,
+			filterItemOrganizations,
 			filterItemRocketTypes,
 			title,
 			buttonSearchResetDisabled,
@@ -363,9 +385,12 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			organizations,
+			organizationNames,
 			debug,
 			LocationsRef,
 			filterItemName,
+			filterItemOrganizations,
 			filterItemRocketTypes,
 			title,
 			buttonSearchResetDisabled,
