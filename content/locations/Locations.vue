@@ -39,6 +39,17 @@
 								</v-row>
 								<v-row dense>
 									<v-col cols="12" sm="6">
+										<VSelectWithValidation
+											ref="detailItemRocketTypesRef"
+											v-model="detailItemRocketTypes"
+											vid="detailItemRocketTypes"
+											multiple
+											:max-values="2"
+											:items="rocketTypes"
+											:validation="validation"
+											:label="$t('forms.content.rockets.level')"
+											:hint="$t('forms.content.rockets.level')"
+										/>
 									</v-col>
 									<v-col cols="12" sm="6">
 										<VSelectWithValidation
@@ -46,7 +57,7 @@
 											v-model="filterItemOrganizations"
 											vid="filterItemOrganizations"
 											multiple
-											:max-values="3"
+											:max-values="5"
 											:items="organizations"
 											:validation="validation"
 											:label="$t('forms.content.organizations.plural')"

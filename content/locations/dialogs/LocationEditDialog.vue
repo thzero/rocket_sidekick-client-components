@@ -39,7 +39,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="12" sm="6">
+			<v-col cols="12">
 				<VSelectWithValidation
 					ref="detailItemOrganizationsRef"
 					v-model="detailItemOrganizations"
@@ -54,20 +54,19 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="12" sm="6">
+			<v-col cols="12" sm="8">12
 				<VSelectWithValidation
 					ref="detailItemRocketTypesRef"
 					v-model="detailItemRocketTypes"
 					vid="detailItemRocketTypes"
 					multiple
-					:max-values="3"
 					:items="rocketTypes"
 					:validation="validation"
 					:label="$t('forms.content.rockets.level')"
 					:hint="$t('forms.content.rockets.level')"
 				/>
 			</v-col>
-			<v-col>
+			<v-col cols="12" sm="4">
 				<VSwitch
 					ref="detailItemExperimentalRef"
 					v-model="detailItemExperimental"
@@ -76,7 +75,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col>
+			<v-col cols="12" sm="6">
 				<VTextFieldWithValidation
 					ref="detailItemAddressCityRef"
 					vid="detailItemAddressCity"
@@ -85,7 +84,7 @@
 					:label="$t('forms.address.city')"
 				/>
 			</v-col>
-			<v-col>
+			<v-col cols="12" sm="6">
 				<VTextFieldWithValidation
 					ref="detailItemAddressPostalCodeRef"
 					vid="detailItemAddressPostalCode"
@@ -96,7 +95,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col>
+			<v-col cols="12" sm="6">
 				<VSelectWithValidation
 					ref="detailItemAddressCountryRef"
 					v-model="detailItemAddressCountry"
@@ -106,7 +105,7 @@
 					:label="$t('forms.address.country.title')"
 				/>
 			</v-col>
-			<v-col>
+			<v-col cols="12" sm="6">
 				<VSelectWithValidation
 					ref="detailItemAddressStateProvinceRef"
 					v-model="detailItemAddressStateProvince"

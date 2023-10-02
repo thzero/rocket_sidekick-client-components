@@ -153,6 +153,7 @@ export function useLocationComponent(props, context, options) {
 	const detailItemAddressPostalCode = ref(null);
 	const detailItemAddressStateProvince = ref(null);
 	const detailItemExperimental = ref(false);
+	const detailItemIsPublic = ref(false);
 	const detailItemName = ref(null);
 	const detailItemOrganizations = ref([]);
 	const detailItemRocketTypes = ref([]);
@@ -164,7 +165,7 @@ export function useLocationComponent(props, context, options) {
 		return countriesI.value.map(l => { return { id: l.id, name: l.name }; });
 	});
 	const hasAdmin = computed(() => {
-		return false;
+		return true; // TODO: SECURITY: Admin can...
 	});
 	const iterations = computed(() => {
 		let temp = detailItemData.value ? detailItemData.value.iterations : [];
@@ -203,7 +204,8 @@ export function useLocationComponent(props, context, options) {
 		detailItemAddressPostalCode.value = value && value.address ? value.address.postalCode : null;
 		detailItemAddressStateProvince.value = value && value.address ? value.address.stateProvince : null;
 
-		detailItemExperimental.value = value ? value.experimental : null;
+		detailItemExperimental.value = value ? value.experimental : false;
+		detailItemIsPublic.value = value ? value.public : false;
 		detailItemName.value = value ? value.name : null;
 		detailItemOrganizations.value = value ? value.organizations : null;
 		detailItemRocketTypes.value = value ? value.rocketTypes : null;
@@ -218,6 +220,7 @@ export function useLocationComponent(props, context, options) {
 		detailItemData.value.address.stateProvince = detailItemAddressStateProvince.value;
 
 		detailItemData.value.experimental = detailItemExperimental.value;
+		detailItemData.value.public = detailItemIsPublic.value;
 		detailItemData.value.name = detailItemName.value;
 		detailItemData.value.organizations = detailItemOrganizations.value;
 		detailItemData.value.rocketTypes = detailItemRocketTypes.value;
@@ -334,6 +337,7 @@ export function useLocationComponent(props, context, options) {
 		detailItemAddressStateProvince,
 		detailItemDescription,
 		detailItemExperimental,
+		detailItemIsPublic,
 		detailItemName,
 		detailItemOrganizations,
 		detailItemRocketTypes,

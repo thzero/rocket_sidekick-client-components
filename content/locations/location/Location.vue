@@ -43,16 +43,14 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="4">
-				<VSelectWithValidation
-					ref="detailItemOrganizationsRef"
-					v-model="detailItemOrganizations"
-					vid="detailItemOrganizations"
-					multiple
-					:max-values="3"
-					:items="organizations"
+				<VSwitchWithValidation
+					v-if="!isEditable || hasAdmin"
+					ref="isPublicRef"
+					v-model="detailItemIsPublic"
+					vid="detailItemIsPublic"
 					:validation="validation"
-					:label="$t('forms.content.organizations.plural')"
-					:hint="$t('forms.content.organizations.hint')"
+					:readonly="!isEditable || !hasAdmin"
+					:label="$t('forms.content.parts.public')"
 				/>
 			</v-col>
 		</v-row>
@@ -72,20 +70,34 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col>
+			<v-col cols="12">
+				<VSelectWithValidation
+					ref="detailItemOrganizationsRef"
+					v-model="detailItemOrganizations"
+					vid="detailItemOrganizations"
+					multiple
+					:max-values="3"
+					:items="organizations"
+					:validation="validation"
+					:label="$t('forms.content.organizations.plural')"
+					:hint="$t('forms.content.organizations.hint')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="8">
 				<VSelectWithValidation
 					ref="detailItemRocketTypesRef"
 					v-model="detailItemRocketTypes"
 					vid="detailItemRocketTypes"
 					multiple
-					:max-values="3"
 					:items="rocketTypes"
 					:validation="validation"
 					:label="$t('forms.content.rockets.level')"
 					:hint="$t('forms.content.rockets.level')"
 				/>
 			</v-col>
-			<v-col>
+			<v-col cols="12" sm="4">
 				<VSwitchWithValidation
 					ref="detailItemExperimentalRef"
 					v-model="detailItemExperimental"
@@ -95,7 +107,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col>
+			<v-col cols="12" sm="6">
 				<VTextFieldWithValidation
 					ref="detailItemAddressCityRef"
 					vid="detailItemAddressCity"
@@ -104,7 +116,7 @@
 					:label="$t('forms.address.city')"
 				/>
 			</v-col>
-			<v-col>
+			<v-col cols="12" sm="6">
 				<VTextFieldWithValidation
 					ref="detailItemAddressPostalCodeRef"
 					vid="detailItemAddressPostalCode"
@@ -115,7 +127,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col>
+			<v-col cols="12" sm="6">
 				<VSelectWithValidation
 					ref="detailItemAddressCountryRef"
 					v-model="detailItemAddressCountry"
@@ -125,7 +137,7 @@
 					:label="$t('forms.address.country.title')"
 				/>
 			</v-col>
-			<v-col>
+			<v-col cols="12" sm="6">
 				<VSelectWithValidation
 					ref="detailItemAddressStateProvinceRef"
 					v-model="detailItemAddressStateProvince"
@@ -460,6 +472,7 @@ export default {
 			detailItemAddressStateProvince,
 			detailItemDescription,
 			detailItemExperimental,
+			detailItemIsPublic,
 			detailItemName,
 			detailItemOrganizations,
 			detailItemRocketTypes,
@@ -552,6 +565,7 @@ export default {
 			detailItemAddressStateProvince,
 			detailItemDescription,
 			detailItemExperimental,
+			detailItemIsPublic,
 			detailItemName,
 			detailItemOrganizations,
 			detailItemRocketTypes,

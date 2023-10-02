@@ -4,6 +4,7 @@ export function useLocationEditValidation(nameRequired) {
 	const validation = {
 		detailItemDescription: { $autoDirty: true },
 		detailItemExperimental: { $autoDirty: true },
+		detailItemIsPublic: { $autoDirty: true },
 		detailItemOrganizations: { $autoDirty: true },
 		detailItemRocketTypes: { $autoDirty: true }
 	};
