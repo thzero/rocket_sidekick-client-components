@@ -93,7 +93,7 @@ export function useRocketComponent(props, context, options) {
 			// detailItemData.value.stages = stages;
 			
 			const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
-			logger.debug('rocketComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
+			logger.debug('useRocketComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
 			return response;
 		},
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
@@ -101,7 +101,7 @@ export function useRocketComponent(props, context, options) {
 			temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
 			
 			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
-			logger.debug('rocketComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);
+			logger.debug('useRocketComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);
 			
 			// detailItem.value.data = response.results;
 			return response;
@@ -170,7 +170,6 @@ export function useRocketComponent(props, context, options) {
 	const detailItemName = ref(null);
 	const detailItemRocketType = ref(null);
 	const manufacturerDefault = ref(null);
-	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
 	const panels = ref([]);
 	const panelsId = ref([ 
 		{ id: 'altimeters', text: 'forms.content.parts.altimeter.plural' },

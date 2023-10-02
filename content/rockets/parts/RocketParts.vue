@@ -266,8 +266,4 @@ export default {
 </script>
 
 <style>
-.v-expansion-panel-text__wrapper {
-	padding-bottom: 0px !important;
-	padding-right: 0px !important;
-}
 </style>
