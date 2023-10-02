@@ -58,6 +58,11 @@ export function useLocationEditDialogComponent(props, context, options) {
 	const detailItemRocketTypes = ref([]);
 	const detailItemYear = ref(null);
 	
+	const countries = computed(() => {
+		if (!props.countries)
+			return [];
+		return props.countries.map(l => { return { id: l.id, name: l.name }; });
+	});
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.locations.iterations.name') + ' ' + 
 		numberOrYear.value;
@@ -68,6 +73,17 @@ export function useLocationEditDialogComponent(props, context, options) {
 		if (detailItemYear.value)
 			return detailItemYear.value;
 		return '';
+	});
+	const states = computed(() => {
+		if (!props.countries)
+			return [];
+		const id = detailItemAddressCountry.value;
+		if (String.isNullOrEmpty(id))
+			return [];
+		const temp = props.countries.find(l => l.id === id);
+		if (!temp)
+			return [];
+		return temp.states.map(l => { return { id: l.state_code, name: l.name }; });
 	});
 
 	const preCompleteOk = async (correlationId) => {
@@ -133,8 +149,10 @@ export function useLocationEditDialogComponent(props, context, options) {
 		detailItemYear,
 		resetEditData,
 		setEditData,
+		countries,
 		displayName,
 		numberOrYear,
+		states,
 		preCompleteOk,
 		resetAdditional,
 		setAdditional,

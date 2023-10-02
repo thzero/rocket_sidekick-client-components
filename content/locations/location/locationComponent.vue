@@ -248,7 +248,7 @@ export function useLocationComponent(props, context, options) {
 				return;
 				
 			countriesI.value = response.results.map((item) => { return { id: item.iso3, name: item.name, states: item.states}; });
-		}		
+		}
 	});
 
 	watch(() => detailItemAddressCountry.value,

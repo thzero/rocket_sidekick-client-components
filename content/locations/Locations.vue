@@ -40,9 +40,9 @@
 								<v-row dense>
 									<v-col cols="12" sm="6">
 										<VSelectWithValidation
-											ref="detailItemRocketTypesRef"
-											v-model="detailItemRocketTypes"
-											vid="detailItemRocketTypes"
+											ref="filterItemRocketTypesRef"
+											v-model="filterItemRocketTypes"
+											vid="filterItemRocketTypes"
 											multiple
 											:max-values="2"
 											:items="rocketTypes"
