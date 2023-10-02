@@ -150,7 +150,7 @@ export function usePartComponent(props, context, options) {
 		return !isNew.value && !dirty.value;
 	});
 	const hasAdmin = computed(() => {
-		return true;
+		return true; // TODO: SECURITY: Admin can...
 	});
 	const isPublic = computed(() => {
 		return detailItemData.value ? detailItemData.value.public ?? false : false;
