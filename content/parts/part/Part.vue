@@ -4,6 +4,8 @@
 	[[ isEditable {{ isEditable }} ]]
 	[[ isNew {{ isNew }} ]]
 	[[ canAdd {{ canAdd }} ]]
+	[[ hasAdminDelete {{ hasAdminDelete }} ]]
+	[[ hasAdminEdit {{ hasAdminEdit }} ]]
 	[[ isDefault {{ isDefault }} ]]
 	[[ isInProgress {{ isInProgress }} ]]
 	[[ isShared {{ isShared }} ]]
@@ -13,8 +15,8 @@
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
-		:button-cancel="true"
-		button-cancel-name="buttons.close"
+		:button-cancel="isEditable"
+		:button-close="true"
 		:button-clear="isEditable"
 		button-clear-name="buttons.reset"
 		:button-delete="false"
@@ -209,7 +211,8 @@ export default {
 			detailItemWeightMeasurementUnitsId,
 			manufacturers,
 			canAdd,
-			hasAdmin,
+			hasAdminDelete,
+			hasAdminEdit,
 			isPublic,
 			handleAdd,
 			requestManufacturers,
@@ -280,7 +283,8 @@ export default {
 			detailItemWeightMeasurementUnitsId,
 			manufacturers,
 			canAdd,
-			hasAdmin,
+			hasAdminDelete,
+			hasAdminEdit,
 			isPublic,
 			handleAdd,
 			requestManufacturers,

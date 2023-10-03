@@ -9,6 +9,10 @@
 		[[ canAddSecondary {{ canAddSecondary }} ]]
 		[[ canDeleteSecondary {{ canDeleteSecondary }} ]]
 		[[ canEditSecondary {{ canEditSecondary }} ]]
+		[[ hasAdminDelete {{ hasAdminDelete }} ]]
+		[[ hasAdminEdit {{ hasAdminEdit }} ]]
+		[[ hasAdminRoles {{ hasAdminRoles }} ]]
+		[[ isLoggedIn {{ isLoggedIn }} ]]
 		<!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
@@ -16,6 +20,7 @@
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
+		:button-cancel="isEditable"
 		:button-close="true"
 		:button-clear="isEditable"
 		button-clear-name="buttons.reset"
@@ -44,12 +49,11 @@
 			</v-col>
 			<v-col cols="12" sm="4">
 				<VSwitchWithValidation
-					v-if="!isEditable || hasAdmin"
 					ref="isPublicRef"
 					v-model="detailItemIsPublic"
 					vid="detailItemIsPublic"
 					:validation="validation"
-					:readonly="!isEditable || !hasAdmin"
+					:readonly="!isEditable || !hasAdminEdit"
 					:label="$t('forms.content.parts.public')"
 				/>
 			</v-col>
@@ -468,6 +472,10 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			organizations,
+			hasAdminDelete,
+			hasAdminEdit,
+			hasAdminRoles,
+			isLoggedIn,
 			detailItemAddressCity,
 			detailItemAddressCountry,
 			detailItemAddressPostalCode,
@@ -561,6 +569,10 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			organizations,
+			hasAdminDelete,
+			hasAdminEdit,
+			hasAdminRoles,
+			isLoggedIn,
 			detailItemAddressCity,
 			detailItemAddressCountry,
 			detailItemAddressPostalCode,
