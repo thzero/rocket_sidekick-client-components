@@ -1,12 +1,15 @@
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
+import AppSharedConstants from '@/utility/constants';
 
 import AppUtility from '@/utility/app';
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailComponent } from '@/components/content/detailComponent';
+import { useAdminComponent } from '@/components/content/adminComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -133,6 +136,15 @@ export function usePartComponent(props, context, options) {
 		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
+	const {
+		hasAdminDelete,
+		hasAdminEdit,
+		hasAdminRoles,
+		isLoggedIn
+	} = useAdminComponent(props, context, { role: 'parts:public'});
+
+	const serviceParts = LibraryClientUtility.$injector.getService(AppSharedConstants.InjectorKeys.SERVICE_PARTS);
+
 	const detailItemDescription = ref(null);
 	const detailItemIsPublic = ref(null);
 	const detailItemManufacturer = ref(null);
@@ -148,9 +160,6 @@ export function usePartComponent(props, context, options) {
 	});
 	const canAdd = computed(() => {
 		return !isNew.value && !dirty.value;
-	});
-	const hasAdmin = computed(() => {
-		return true; // TODO: SECURITY: Admin can...
 	});
 	const isPublic = computed(() => {
 		return detailItemData.value ? detailItemData.value.public ?? false : false;
@@ -246,7 +255,9 @@ export function usePartComponent(props, context, options) {
 		detailItemWeightMeasurementUnitsId,
 		manufacturers,
 		canAdd,
-		hasAdmin,
+		hasAdminDelete,
+		hasAdminEdit,
+		hasAdminRoles,
 		isPublic,
 		handleAdd,
 		requestManufacturers

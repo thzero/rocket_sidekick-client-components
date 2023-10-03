@@ -14,8 +14,8 @@
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
-		:button-cancel="true"
-		button-cancel-name="buttons.close"
+		:button-cancel="isEditable"
+		:button-close="true"
 		:button-clear="isEditable"
 		button-clear-name="buttons.reset"
 		:button-delete="false"
@@ -43,12 +43,12 @@
 			</v-col>
 			<v-col cols="3" sm="2">
 				<VSwitchWithValidation
-					v-if="!isEditable || hasAdmin"
+					v-if="!isEditable || hasAdminEdit"
 					ref="isPublicRef"
 					v-model="detailItemIsPublic"
 					vid="detailItemIsPublic"
 					:validation="validation"
-					:readonly="!isEditable || !hasAdmin"
+					:readonly="!isEditable || !hasAdminEdit"
 					:label="$t('forms.content.parts.public')"
 				/>
 			</v-col>
@@ -348,7 +348,8 @@ export default {
 			detailItemWeightMeasurementUnitsId,
 			manufacturers,
 			canAdd,
-			hasAdmin,
+			hasAdminDelete,
+			hasAdminEdit,
 			isPublic,
 			handleAdd,
 			requestManufacturers,
@@ -427,7 +428,8 @@ export default {
 			detailItemWeightMeasurementUnitsId,
 			manufacturers,
 			canAdd,
-			hasAdmin,
+			hasAdminDelete,
+			hasAdminEdit,
 			isPublic,
 			handleAdd,
 			requestManufacturers,

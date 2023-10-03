@@ -6,6 +6,7 @@ import useVuelidate from '@vuelidate/core';
 
 import LocationIterationData from 'rocket_sidekick_common/data/locations/iteration';
 
+import { useAdminComponent } from '@/components/content/adminComponent';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
 import { useLocationsUtilityComponent } from '@/components/content/locations/locationsUtilityComponent';
@@ -146,12 +147,19 @@ export function useLocationComponent(props, context, options) {
 		organizationNames
 	} = useLocationsUtilityComponent(props, context);
 
+	const {
+		hasAdminDelete,
+		hasAdminEdit,
+		hasAdminRoles,
+		isLoggedIn
+	} = useAdminComponent(props, context, { role: 'locations:public'});
+
 	const countriesI = ref(null);
-	const detailItemDescription = ref(null);
 	const detailItemAddressCity = ref(null);
 	const detailItemAddressCountry = ref(null);
 	const detailItemAddressPostalCode = ref(null);
 	const detailItemAddressStateProvince = ref(null);
+	const detailItemDescription = ref(null);
 	const detailItemExperimental = ref(false);
 	const detailItemIsPublic = ref(false);
 	const detailItemName = ref(null);
@@ -331,6 +339,10 @@ export function useLocationComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		organizations,
+		hasAdminDelete,
+		hasAdminEdit,
+		hasAdminRoles,
+		isLoggedIn,
 		detailItemAddressCity,
 		detailItemAddressCountry,
 		detailItemAddressPostalCode,

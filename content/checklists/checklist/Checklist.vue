@@ -19,8 +19,8 @@
 	<VFormControl
 		ref="formControlRef"
 		:validation="validation"
-		:button-cancel="true"
-		button-cancel-name="buttons.close"
+		:button-cancel="isEditable"
+		:button-close="true"
 		:button-clear="isEditable"
 		button-clear-name="buttons.reset"
 		:button-delete="false"
