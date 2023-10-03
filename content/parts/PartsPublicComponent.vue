@@ -3,6 +3,7 @@
         <v-radio-group
             v-model="innerValue"
             inline
+			:hide-details="true"
 			@update:modelValue="innerValueUpdate"
         >
             <v-radio
