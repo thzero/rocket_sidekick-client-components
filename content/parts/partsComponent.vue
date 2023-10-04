@@ -47,7 +47,11 @@ export function usePartsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -113,13 +117,6 @@ export function usePartsBaseComponent(props, context, options) {
 	};
 	const canViewI = (correlationId, item) => {
 		return isOwner(correlationId, item) || isPublic(correlationId, item); // TODO: SECURITY: Admin can edit a public
-	};
-	const clickSearch = async (correlationId) => {
-		await fetch(correlationId);
-	};
-	const clickSearchClear = async (correlationId) => {
-		await partsRef.value.reset(correlationId, true);
-		await fetch(correlationId);
 	};
 	const deleteItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.deletePartById(correlationId, id);
@@ -244,7 +241,11 @@ export function usePartsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -274,8 +275,6 @@ export function usePartsBaseComponent(props, context, options) {
 		params,
 		title,
 		buttonSearchResetDisabled,
-		clickSearch,
-		clickSearchClear,
 		isPublic,
 		isPublicDisplay,
 		manufacturer,

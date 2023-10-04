@@ -282,7 +282,6 @@ export default {
 		...useDetailComponentProps,
 		...usePartComponentProps
 	},
-	emits: ['cancel', 'close', 'error', 'ok'],
 	setup (props, context, options) {
 		const {
 			correlationId,

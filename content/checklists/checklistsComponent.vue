@@ -52,7 +52,11 @@ export function useChecklistsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -146,13 +150,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.mid)
 			return 'rocket_mid.png';
 		return null;
-	};
-	const clickSearch = async (correlationId) => {
-		await fetch(correlationId);
-	};
-	const clickSearchClear = async (correlationId) => {
-		await dialogRocketsLookupRef.value.reset(correlationId, true);
-		await fetch(correlationId);
 	};
 	const dialogStartCancel = async (item) => {
 		try {
@@ -283,7 +280,11 @@ export function useChecklistsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -317,8 +318,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		checklistTypeIcon,
 		checklistTypeIconDetermine,
 		dialogStartCancel,
-		clickSearch,
-		clickSearchClear,
 		dialogStartParams,
 		filterItemName,
 		filterItemIsDefault,

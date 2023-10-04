@@ -105,6 +105,7 @@ export function useRocketRocketLookupDialogComponent(props, context, options) {
 	};
 	const clickRocketSearchClear = async () => {
 		await dialogRocketLookup.value.reset(correlationId(), null, true);
+		await dialogRocketLookup.value.submit(correlationId());
 	};
 	const clickRocketSelect = async (item) => {
 		if (props.rocketId) {

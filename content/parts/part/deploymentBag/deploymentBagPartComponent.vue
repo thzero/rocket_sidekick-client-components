@@ -101,8 +101,8 @@ export function useDeploymentBagPartComponent(props, context, options) {
 			data.pilotChuteCd = AppUtility.convertNumber(detailItemPilotChuteCd.value);
 			data.pilotChuteDiameter = AppUtility.convertNumber(detailItemPilotChuteDiameter.value);
 
-			data.pilotChuteDiameterMeasurementUnitId = detailItemPilotChuteMeasurementUnitId.value;
-			// data.pilotChuteDiameterMeasurementUnitsId = detailItemPilotChuteMeasurementUnitsId.value;
+			data.pilotChuteDiameterMeasurementUnitId = detailItemPilotChuteDiameterMeasurementUnitId.value;
+			// data.pilotChuteDiameterMeasurementUnitsId = detailItemPilotChuteDiameterMeasurementUnitsId.value;
 			data.pilotChuteDiameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, pilotChuteDiameterMeasurementUnitId.value);
 
 			if (!data.pilotChute) {
@@ -133,8 +133,8 @@ export function useDeploymentBagPartComponent(props, context, options) {
 	const detailItemPilotChute = ref(false);
 	const detailItemPilotChuteCd = ref(null);
 	const detailItemPilotChuteDiameter = ref(null);
-	const detailItemPilotChuteMeasurementUnitId = ref(null);
-	const detailItemPilotChuteMeasurementUnitsId = ref(null);
+	const detailItemPilotChuteDiameterMeasurementUnitId = ref(null);
+	const detailItemPilotChuteDiameterMeasurementUnitsId = ref(null);
 
 	const resetData = (correlationId, value) => {
 		detailItemName.value = value ? value.name : LibraryClientUtility.$trans.t('forms.content.parts.blnaket.name');
@@ -143,8 +143,8 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		detailItemPilotChuteCd.value = value ? value.pilotChuteCd : null;
 
 		detailItemPilotChuteDiameter.value = value ? value.pilotChuteDiameter : null;
-		detailItemPilotChuteMeasurementUnitId.value = value ? value.pilotChuteDiameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		detailItemPilotChuteMeasurementUnitsId.value = value ? value.pilotChuteDiameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemPilotChuteDiameterMeasurementUnitId.value = value ? value.pilotChuteDiameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		detailItemPilotChuteDiameterMeasurementUnitsId.value = value ? value.pilotChuteDiameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	
 		detailItemDiameter.value = value ? value.diameter : null;
 		detailItemDiameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
@@ -233,8 +233,8 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		detailItemPilotChute,
 		detailItemPilotChuteCd,
 		detailItemPilotChuteDiameter,
-		detailItemPilotChuteMeasurementUnitId,
-		detailItemPilotChuteMeasurementUnitsId,
+		detailItemPilotChuteDiameterMeasurementUnitId,
+		detailItemPilotChuteDiameterMeasurementUnitsId,
 		scope: 'DeploymentBagPartControl',
 		validation: useVuelidate({ $scope: 'DeploymentBagPartControl' })
 	};

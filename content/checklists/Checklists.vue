@@ -2,27 +2,30 @@
 	<ContentHeader :value="title" />
 	<VFormListing
 		ref="dialogChecklistsLookupRef"
+		:pre-complete-ok="fetch"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
 		:visible="!showDetailItem || showList"
+		:filter-drawer="true"
+		:filter-disabled="detailDirty"
 	>
-		<template #default="{ buttonOkDisabled, isLoading }">
-			<v-row dense>
-				<v-col cols="12">
-					<v-card>
-						<v-card-text>
-							<slot name="filters">
+		<template #default="{ buttonOkDisabled, filterDrawer, isLoading, reset, submit }">
+			<v-card>
+				<v-card-text>
+					<slot name="filters">
+						<v-row dense>
+							<v-col cols="12" :sm="filterDrawer ? 12: 6">
+								<VTextFieldWithValidation
+									ref="filterItemNameRef"
+									v-model="filterItemName"
+									vid="filterItemName"
+									:label="$t('forms.name')"
+									:validation="validation"
+								/>
+							</v-col>
+							<v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<v-row dense>
-									<v-col cols="12" md="6">
-										<VTextFieldWithValidation
-											ref="filterItemNameRef"
-											v-model="filterItemName"
-											vid="filterItemName"
-											:label="$t('forms.name')"
-											:validation="validation"
-										/>
-									</v-col>
 									<v-col cols="4" md="2">
 										<v-checkbox
 											v-model="filterItemYours"
@@ -45,35 +48,46 @@
 										/>
 									</v-col>
 								</v-row>
-							</slot>
-						</v-card-text>
-						<v-card-actions>
-							<v-spacer />
-							<v-btn
-								v-if="!showDetailItem"
-								:variant="buttonsForms.variant.add"
-								:color="buttonsForms.color.add"
-								@click="handleAdd(item)"
-							>
-								{{ $t('buttons.add') }}
-							</v-btn>
-							<v-btn
-								:variant="buttonsForms.variant.clear"
-								:color="buttonsForms.color.clear"
-								:loading="isLoading"
-								@click="clickSearchClear"
-							>{{ $t('buttons.clear') }}</v-btn>
-							<v-btn
-								:variant="buttonsForms.variant.ok"
-								:color="buttonsForms.color.ok"
-								:disabled="buttonOkDisabled"
-								:loading="isLoading"
-								@click="clickSearch"
-							>{{ $t('buttons.search') }}</v-btn>
-						</v-card-actions>
-					</v-card>
-				</v-col>
-			</v-row>
+							</v-col>
+						</v-row>
+					</slot>
+				</v-card-text>
+				<v-card-actions>
+					<v-spacer />
+					<v-btn
+						v-if="!showDetailItem && !filterDrawer"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
+						@click="handleAdd(item)"
+					>
+						{{ $t('buttons.add') }}
+					</v-btn>
+					<v-btn
+						:variant="buttonsForms.variant.clear"
+						:color="buttonsForms.color.clear"
+						:loading="isLoading"
+						@click="clickSearchClear(reset, submit)"
+					>{{ $t('buttons.clear') }}</v-btn>
+					<v-btn
+						:variant="buttonsForms.variant.ok"
+						:color="buttonsForms.color.ok"
+						:disabled="buttonOkDisabled"
+						:loading="isLoading"
+						@click="clickSearch(submit)"
+					>{{ $t('buttons.search') }}</v-btn>
+				</v-card-actions>
+			</v-card>
+		</template>
+		<template #preActions=" { filterDrawer, isLoading }">
+			<v-btn
+				v-if="!showDetailItem && filterDrawer"
+				:variant="buttonsForms.variant.add"
+				:color="buttonsForms.color.add"
+				:disabled="isLoading"
+				@click="handleAdd(item)"
+			>
+				{{ $t('buttons.add') }}
+			</v-btn>
 		</template>
 		<template v-slot:listing>
 			<v-row dense>
@@ -256,7 +270,11 @@ export default {
 			canDelete,
 			canEdit,
 			canView,
+			clickSearch,
+			clickSearchClear,
 			detailClose,
+			detailDirty,
+			detailDirtyCallback,
 			detailError,
 			detailOk,
 			dialogCopyCancel,
@@ -290,8 +308,6 @@ export default {
 			checklistTypeIcon,
 			checklistTypeIconDetermine,
 			dialogStartCancel,
-			clickSearch,
-			clickSearchClear,
 			dialogStartParams,
 			filterItemName,
 			filterItemIsDefault,
@@ -345,7 +361,11 @@ export default {
 			canDelete,
 			canEdit,
 			canView,
+			clickSearch,
+			clickSearchClear,
 			detailClose,
+			detailDirty,
+			detailDirtyCallback,
 			detailError,
 			detailOk,
 			dialogCopyCancel,
@@ -379,8 +399,6 @@ export default {
 			checklistTypeIcon,
 			checklistTypeIconDetermine,
 			dialogStartCancel,
-			clickSearch,
-			clickSearchClear,
 			dialogStartParams,
 			filterItemName,
 			filterItemIsDefault,

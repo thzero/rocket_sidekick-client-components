@@ -7,13 +7,14 @@
 		:validation="validation"
 		:debug="debug"
 	>
-		<template #default="{ detailItem, detailClose, detailError, detailOk, debug }">
+		<template #default="{ detailItem, detailClose, detailDirtyCallback, detailError, detailOk, debug }">
 			<ChuteRelease
 				:model-value="detailItem"
 				@cancel="detailClose"
 				@close="detailClose"
 				@error="detailError"
 				@ok="detailOk"
+				@dirty="detailDirtyCallback"
 				:debug="debug"
 			>s
 			</ChuteRelease>
@@ -25,9 +26,9 @@
 			>
 			</ChuteReleasePanelTitle>
 		</template> 
-		<template #filters>
+		<template #filters="{ filterDrawer }">
 			<v-row dense>
-				<v-col cols="12" sm="6">
+				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
 					<VTextFieldWithValidation
 						ref="filterItemNameRef"
 						v-model="filterItemName"
@@ -36,13 +37,15 @@
 						:validation="validation"
 					/>
 				</v-col>
-				<PartsPublicComponent
-					v-model="filterItemIsPublic"
-				>
-				</PartsPublicComponent>
+				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
+					<PartsPublicComponent
+						v-model="filterItemIsPublic"
+					>
+					</PartsPublicComponent>
+				</v-col>
 			</v-row>
 			<v-row dense>
-				<v-col cols="12" sm="6">
+				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
 					<VSelectWithValidation
 						ref="filterItemManufacturersRef"
 						v-model="filterItemManufacturers"
@@ -55,7 +58,7 @@
 						:hint="$t('forms.content.manufacturer.plural_hint')"
 					/>
 				</v-col>
-				<v-col cols="12" sm="6">
+				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
 					<VTextFieldWithValidation
 						ref="filterItemManufacturerStockIdRef"
 						v-model="filterItemManufacturerStockId"
@@ -66,7 +69,8 @@
 				</v-col>
 			</v-row>
 			<v-row dense>
-				<!-- <v-col cols="12" sm="6">
+				<!--
+				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
 					<VTextFieldWithValidation
 						ref="filterItemDiameterRef"
 						v-model="filterItemDiameter"

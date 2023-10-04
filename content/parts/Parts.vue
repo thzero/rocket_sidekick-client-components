@@ -2,22 +2,25 @@
 	<ContentHeader :value="title" />
 	<VFormListing
 		ref="partsRef"
+		:pre-complete-ok="fetch"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
 		:visible="!showDetailItem || showList"
+		:filter-drawer="true"
+		:filter-disabled="detailDirty"
 	>
-		<template #default="{ buttonOkDisabled, isLoading }">
-			<v-row dense>
+		<template #default="{ buttonOkDisabled, filterDrawer, isLoading, reset, submit }">
+			<v-row >
 				<v-col cols="12">
 					<v-card>
 						<v-card-text>
-							<slot name="filters"></slot>
+							<slot name="filters" :filterDrawer="filterDrawer"></slot>
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer />
 							<v-btn
-								v-if="!showDetailItem"
+								v-if="!showDetailItem && !filterDrawer"
 								:variant="buttonsForms.variant.add"
 								:color="buttonsForms.color.add"
 								@click="handleAdd(item)"
@@ -28,7 +31,7 @@
 								:variant="buttonsForms.variant.clear"
 								:color="buttonsForms.color.clear"
 								:loading="isLoading"
-								@click="clickSearchClear"
+								@click="clickSearchClear(reset, submit)"
 							>
 								{{ $t('buttons.clear') }}
 							</v-btn>
@@ -37,7 +40,7 @@
 								:color="buttonsForms.color.ok"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
-								@click="clickSearch"
+								@click="clickSearch(submit)"
 							>
 								{{ $t('buttons.search') }}
 							</v-btn>
@@ -46,9 +49,21 @@
 				</v-col>
 			</v-row>
 		</template>
+		<template #preActions=" { filterDrawer, isLoading }">
+			<v-btn
+				v-if="!showDetailItem && filterDrawer"
+				:variant="buttonsForms.variant.add"
+				:color="buttonsForms.color.add"
+				:disabled="isLoading"
+				@click="handleAdd(item)"
+			>
+				{{ $t('buttons.add') }}
+			</v-btn>
+		</template>
 		<template v-slot:listing>
 			<v-row dense>
 				<v-col cols="12">
+					asdsadfsd
 					<v-snackbar
 						ref="notifyRef"
 						v-model="notifySignal"
@@ -157,7 +172,7 @@
 					v-show="colsEditPanel"
 					:cols="colsEditPanel"
 				>
-					<slot :detailItem="detailItem" :detailClose="detailClose" :detailError="detailError" :detailOk="detailOk" :debug="debug" />
+					<slot :detailItem="detailItem" :detailClose="detailClose" :detailDirtyCallback="detailDirtyCallback" :detailError="detailError" :detailOk="detailOk" :debug="debug" />
 				</v-col>
 			</v-row>
 		</template>
@@ -204,7 +219,8 @@ export default {
 		...usePartsBaseComponentProps
 	},
 	setup(props, context) {
-		const {	correlationId,
+		const {	
+			correlationId,
 			error,
 			hasFailed,
 			hasSucceeded,
@@ -239,7 +255,11 @@ export default {
 			canDelete,
 			canEdit,
 			canView,
+			clickSearch,
+			clickSearchClear,
 			detailClose,
+			detailDirty,
+			detailDirtyCallback,
 			detailError,
 			detailOk,
 			dialogCopyCancel,
@@ -269,8 +289,6 @@ export default {
 			params,
 			title,
 			buttonSearchResetDisabled,
-			clickSearch,
-			clickSearchClear,
 			isPublic,
 			isPublicDisplay,
 			manufacturer,
@@ -314,7 +332,11 @@ export default {
 			canDelete,
 			canEdit,
 			canView,
+			clickSearch,
+			clickSearchClear,
 			detailClose,
+			detailDirty,
+			detailDirtyCallback,
 			detailError,
 			detailOk,
 			dialogCopyCancel,
@@ -344,8 +366,6 @@ export default {
 			params,
 			title,
 			buttonSearchResetDisabled,
-			clickSearch,
-			clickSearchClear,
 			isPublic,
 			isPublicDisplay,
 			manufacturer,

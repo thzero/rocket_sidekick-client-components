@@ -119,6 +119,7 @@ export function useDetailComponent(props, context, options) {
 	};
 	const dirtyCallback = (correlationId, value) => {
 		dirty.value = value.value;
+		context.emit('dirty', dirty.value);
 	};
 	const invalidCallback = (correlationId, value) => {
 		invalid.value = value.value;

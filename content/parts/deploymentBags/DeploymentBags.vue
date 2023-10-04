@@ -7,13 +7,14 @@
 		:validation="validation"
 		:debug="debug"
 	>
-		<template #default="{ detailItem, detailClose, detailError, detailOk, debug }">
+		<template #default="{ detailItem, detailClose, detailDirtyCallback, detailError, detailOk, debug }">
 			<DeploymentBag
 				:model-value="detailItem"
 				@cancel="detailClose"
 				@close="detailClose"
 				@error="detailError"
 				@ok="detailOk"
+				@dirty="detailDirtyCallback"
 				:debug="debug"
 			>
 			</DeploymentBag>
@@ -24,7 +25,7 @@
 			>
 			</DeploymentBagPanelTitle>
 		</template> 
-		<template #filters>
+		<template #filters="{ filterDrawer }">
 			<v-row dense>
 				<v-col cols="12" sm="6">
 					<VTextFieldWithValidation
@@ -35,10 +36,12 @@
 						:validation="validation"
 					/>
 				</v-col>
-				<PartsPublicComponent
-					v-model="filterItemIsPublic"
-				>
-				</PartsPublicComponent>
+				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
+					<PartsPublicComponent
+						v-model="filterItemIsPublic"
+					>
+					</PartsPublicComponent>
+				</v-col>
 			</v-row>
 			<v-row dense>
 				<v-col cols="12" sm="6">

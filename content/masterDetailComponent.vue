@@ -45,6 +45,7 @@ export function useMasterDetailComponent(props, context, options) {
 	const dialogDeleteManager = ref(new DialogSupport());
 	const dialogDeleteMessage = ref(LibraryClientUtility.$trans.t(`messages.${options.dialogDeleteMessage ? options.dialogDeleteMessage : 'items'}.delete_confirm`));
 	const dialogDeleteParams = ref(null);
+	const detailDirty = ref(false);
 	const detailItem = ref(null);
 	const items = ref([]);
 	const user = ref(null);
@@ -89,8 +90,19 @@ export function useMasterDetailComponent(props, context, options) {
 	const canView = (item) => {
 		return item && (options.canView ? options.canView(correlationId(), item) : true);
 	};
+	const clickSearch = async (submit) => {
+		await submit(correlationId());
+	};
+	const clickSearchClear = async (reset, submit) => {
+		const correlationIdI = correlationId();
+		await reset(correlationIdI, true);
+		await submit(correlationIdI);
+	};
 	const detailClose = async () => {
 		detailItem.value = null;
+	};
+	const detailDirtyCallback = async (value) => {
+		detailDirty.value = value;
 	};
 	const detailError = async () => {
 		detailItem.value = null;
@@ -189,6 +201,8 @@ export function useMasterDetailComponent(props, context, options) {
 		dialogDeleteManager.value.open();
 	};
 	const fetch = async (correlationId) => {
+		detailItem.value = null;
+
 		const response = await options.fetch(correlationId);
 		if (hasFailed(response))
 			return [];
@@ -199,7 +213,7 @@ export function useMasterDetailComponent(props, context, options) {
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 		);
 		items.value = results;
-		return results;
+		return response;
 	};
 	const handleAdd = async () => {
 		detailItem.value = await initNew();
@@ -305,7 +319,11 @@ export function useMasterDetailComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,

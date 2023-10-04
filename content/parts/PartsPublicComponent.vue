@@ -1,25 +1,23 @@
 <template>
-    <v-col cols="12" sm="6">
-        <v-radio-group
-            v-model="innerValue"
-            inline
-			:hide-details="true"
-			@update:modelValue="innerValueUpdate"
-        >
-            <v-radio
-                :label="$t('forms.content.parts.all')"
-                :value="1"
-            ></v-radio>
-            <v-radio
-                :label="$t('forms.content.parts.yours')"
-                :value="2"
-            ></v-radio>
-            <v-radio
-                :label="$t('forms.content.parts.public')"
-                :value="3"
-            ></v-radio>
-        </v-radio-group>
-    </v-col>
+	<v-radio-group
+		v-model="innerValue"
+		inline
+		:hide-details="true"
+		@update:modelValue="innerValueUpdate"
+	>
+		<v-radio
+			:label="$t('forms.content.parts.all')"
+			:value="1"
+		></v-radio>
+		<v-radio
+			:label="$t('forms.content.parts.yours')"
+			:value="2"
+		></v-radio>
+		<v-radio
+			:label="$t('forms.content.parts.public')"
+			:value="3"
+		></v-radio>
+	</v-radio-group>
 </template>
 
 <script>

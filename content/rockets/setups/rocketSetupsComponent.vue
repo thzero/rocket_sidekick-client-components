@@ -54,7 +54,11 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -139,13 +143,6 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	};
 	const canViewI = (correlationId, item) => {
 		return isOwner(correlationId, item);
-	};
-	const clickSearch = async (correlationId) => {
-		await fetch(correlationId);
-	};
-	const clickSearchClear = async (correlationId) => {
-		await rocketSetupsRef.value.reset(correlationId, true);
-		await fetch(correlationId);
 	};
 	const clickSearchRockets = async (correlationId) => {
 		dialogRocketLookupManager.value.open();
@@ -299,7 +296,11 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -340,8 +341,6 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		manufacturers,
 		title,
 		buttonSearchResetDisabled,
-		clickSearch,
-		clickSearchClear,
 		clickSearchRockets,
 		fetchManufacturers,
 		manufacturer,
