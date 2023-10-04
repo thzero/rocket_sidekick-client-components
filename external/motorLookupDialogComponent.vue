@@ -75,32 +75,10 @@ export function useMotorLookupDialogComponent(props, context, options) {
 	};
 	const clickMotorSearch = async () => {
 		await dialogMotorLookup.value.submit(correlationId());
-		// const correlationId = this.correlationId();
-
-		// const result = await this.validation.$validate();
-		// this.logger.debug('FormDialog', 'submit', 'result', result, correlationId);
-		// if (!result)
-		// 	return;
-
-		// this.results = null;
-
-		// const request = {
-		// 	diameter: this.diameter,
-		// 	impulseClass: this.impulseClass,
-		// 	manufacturer: this.manufacturer,
-		// 	singleUse: this.singleUse,
-		// 	sparky: this.sparky
-		// };
-
-		// this.serviceStore.dispatcher.setMotorSearchCriteria(this.correlationId(), request);
-
-		// // const response = await this.serviceExternalMotorSearch.search(correlationId, request);
-		// const response = await this.serviceStore.dispatcher.requestMotorSearch(correlationId, request);
-		// console.log(response);
-		// this.results = response || [];
 	};
 	const clickMotorSearchClear = async () => {
 		await dialogMotorLookup.value.reset(correlationId(), null, true);
+		await dialogMotorLookup.value.submit(correlationId());
 	};
 	const clickMotorSearchReset = async () => {
 		const last = serviceStore.state.motorSearchResults ? serviceStore.state.motorSearchResults.last : 0;

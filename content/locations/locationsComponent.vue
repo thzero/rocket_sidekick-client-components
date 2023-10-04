@@ -52,7 +52,11 @@ export function useLocationsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -108,7 +112,7 @@ export function useLocationsBaseComponent(props, context, options) {
 	} = useLocationsUtilityComponent(props, context);
 
 	const debug = ref(false);
-	const LocationsRef = ref(null);
+	const locationsListing = ref(null);
 	const filterItemName = ref(null);
 	const filterItemOrganizations = ref([]);
 	const filterItemRocketTypes = ref([]);
@@ -152,13 +156,6 @@ export function useLocationsBaseComponent(props, context, options) {
 	};
 	const canViewI = (correlationId, item) => {
 		return isOwner(correlationId, item) || isPublic(correlationId, item);
-	};
-	const clickSearch = async (correlationId) => {
-		await fetch(correlationId);
-	};
-	const clickSearchClear = async (correlationId) => {
-		await LocationsRef.value.reset(correlationId, true);
-		await fetch(correlationId);
 	};
 	const deleteItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.deleteLocationById(correlationId, id);
@@ -250,7 +247,11 @@ export function useLocationsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -279,14 +280,12 @@ export function useLocationsBaseComponent(props, context, options) {
 		organizations,
 		organizationNames,
 		debug,
-		LocationsRef,
+		locationsListing,
 		filterItemName,
 		filterItemOrganizations,
 		filterItemRocketTypes,
 		title,
 		buttonSearchResetDisabled,
-		clickSearch,
-		clickSearchClear,
 		addressDisplay,
 		isPublicDisplay,
 		resetAdditional,

@@ -2,128 +2,139 @@
 	<ContentHeader :value="title" />
 	<VFormListing
 		ref="rocketSetupsRef"
+		:pre-complete-ok="fetch"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
 		:visible="!showDetailItem || showList"
+		:filter-drawer="true"
+		:filter-disabled="detailDirty"
 	>
-		<template #default="{ buttonOkDisabled, isLoading }">
-			<v-row dense>
-				<v-col cols="12">
-					<v-card>
-						<v-card-text>
-							<slot name="filters">
-								<v-row dense>
-									<v-col cols="12" sm="6">
-										<VTextFieldWithValidation
-											ref="filterItemNameRef"
-											v-model="filterItemName"
-											vid="filterItemName"
-											:label="$t('forms.name')"
-											:validation="validation"
-										/>
-									</v-col>
-									<v-col cols="12" sm="6">
-										<VSelectWithValidation
-											ref="filterItemRocketTypesRef"
-											v-model="filterItemRocketTypes"
-											vid="filterItemRocketTypes"
-											multiple
-											:max-values="3"
-											:items="rocketTypes"
-											:validation="validation"
-											:label="$t('forms.content.rockets.level')"
-											:hint="$t('forms.content.rockets.level')"
-										/>
-									</v-col>
-								</v-row>
-								<v-row dense>
-									<v-col cols="12">
-										<div class="d-flex">
-											<VTextField
-												ref="filterItemRocketNameRef"
-												v-model="filterItemRocketName"
-												vid="filterItemRocketName"
-												:label="$t('forms.content.rockets.name')"
-												:readonly="true"
-											/>
-											<v-btn
-												class="ml-4 text-right"
-												:variant="buttonsForms.variant.add"
-												:color="buttonsForms.color.add"
-												@click="clickSearchRockets(item)"
-											>
-												{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
-											</v-btn>
-										</div>
-									</v-col>
-								</v-row>
-								<v-row dense>
-									<v-col cols="12" sm="6">
-										<VSelectWithValidation
-											ref="filterItemManufacturersRef"
-											v-model="filterItemManufacturers"
-											vid="filterItemManufacturers"
-											multiple
-											:max-values="3"
-											:items="manufacturers"
-											:validation="validation"
-											:label="$t('forms.content.manufacturer.plural')"
-											:hint="$t('forms.content.manufacturer.plural_hint')"
-										/>
-									</v-col>
-									<v-col cols="12" sm="6">
-										<VTextFieldWithValidation
-											ref="filterItemManufacturerStockIdRef"
-											v-model="filterItemManufacturerStockId"
-											vid="filterItemManufacturerStockId"
-											:label="$t('forms.content.parts.manufacturerId')"
-											:validation="validation"
-										/>
-									</v-col>
-									<!-- <v-col cols="12" sm="6">
-										<VTextFieldWithValidation
-											ref="filterItemDiameterRef"
-											v-model="filterItemDiameter"
-											vid="filterItemDiameter"
-											:label="$t('forms.content.parts.diameter')"
-											:validation="validation"
-										/>
-									</v-col> -->
-								</v-row>
-							</slot>
-						</v-card-text>
-						<v-card-actions>
-							<v-spacer />
-							<v-btn
-								v-if="!showDetailItem"
-								:variant="buttonsForms.variant.add"
-								:color="buttonsForms.color.add"
-								@click="handleAdd(item)"
-							>
-								{{ $t('buttons.add') }}
-							</v-btn>
-							<v-btn
-								:variant="buttonsForms.variant.clear"
-								:color="buttonsForms.color.clear"
-								:loading="isLoading"
-								@click="clickSearchClear"
-							>
-								{{ $t('buttons.clear') }}
-							</v-btn>
-							<v-btn
-								:variant="buttonsForms.variant.ok"
-								:color="buttonsForms.color.ok"
-								:disabled="buttonOkDisabled"
-								:loading="isLoading"
-								@click="clickSearch"
-							>
-								{{ $t('buttons.search') }}
-							</v-btn>
-						</v-card-actions>
-					</v-card>
-				</v-col>
-			</v-row>
+		<template #default="{ buttonOkDisabled, filterDrawer, isLoading, reset, submit }">
+			<v-card>
+				<v-card-text>
+					<slot name="filters">
+						<v-row dense>
+							<v-col cols="12" :sm="filterDrawer ? 12: 6">
+								<VTextFieldWithValidation
+									ref="filterItemNameRef"
+									v-model="filterItemName"
+									vid="filterItemName"
+									:label="$t('forms.name')"
+									:validation="validation"
+								/>
+							</v-col>
+							<v-col cols="12" :sm="filterDrawer ? 12: 6">
+								<VSelectWithValidation
+									ref="filterItemRocketTypesRef"
+									v-model="filterItemRocketTypes"
+									vid="filterItemRocketTypes"
+									multiple
+									:max-values="3"
+									:items="rocketTypes"
+									:validation="validation"
+									:label="$t('forms.content.rockets.level')"
+									:hint="$t('forms.content.rockets.level')"
+								/>
+							</v-col>
+						</v-row>
+						<v-row dense>
+							<v-col cols="12">
+								<div class="d-flex">
+									<VTextField
+										ref="filterItemRocketNameRef"
+										v-model="filterItemRocketName"
+										vid="filterItemRocketName"
+										:label="$t('forms.content.rockets.name')"
+										:readonly="true"
+									/>
+									<v-btn
+										class="ml-4 text-right"
+										:variant="buttonsForms.variant.add"
+										:color="buttonsForms.color.add"
+										@click="clickSearchRockets(item)"
+									>
+										{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+									</v-btn>
+								</div>
+							</v-col>
+						</v-row>
+						<v-row dense>
+							<v-col cols="12" :sm="filterDrawer ? 12: 6">
+								<VSelectWithValidation
+									ref="filterItemManufacturersRef"
+									v-model="filterItemManufacturers"
+									vid="filterItemManufacturers"
+									multiple
+									:max-values="3"
+									:items="manufacturers"
+									:validation="validation"
+									:label="$t('forms.content.manufacturer.plural')"
+									:hint="$t('forms.content.manufacturer.plural_hint')"
+								/>
+							</v-col>
+							<v-col cols="12" :sm="filterDrawer ? 12: 6">
+								<VTextFieldWithValidation
+									ref="filterItemManufacturerStockIdRef"
+									v-model="filterItemManufacturerStockId"
+									vid="filterItemManufacturerStockId"
+									:label="$t('forms.content.parts.manufacturerId')"
+									:validation="validation"
+								/>
+							</v-col>
+							<!-- 
+							<v-col cols="12" :sm="filterDrawer ? 12: 6">
+								<VTextFieldWithValidation
+									ref="filterItemDiameterRef"
+									v-model="filterItemDiameter"
+									vid="filterItemDiameter"
+									:label="$t('forms.content.parts.diameter')"
+									:validation="validation"
+								/>
+							</v-col> -->
+						</v-row>
+					</slot>
+				</v-card-text>
+				<v-card-actions>
+					<v-spacer />
+					<v-btn
+						v-if="!showDetailItem && !filterDrawer"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
+						@click="handleAdd(item)"
+					>
+						{{ $t('buttons.add') }}
+					</v-btn>
+					<v-btn
+						:variant="buttonsForms.variant.clear"
+						:color="buttonsForms.color.clear"
+						:loading="isLoading"
+						@click="clickSearchClear(reset, submit)"
+					>
+						{{ $t('buttons.clear') }}
+					</v-btn>
+					<v-btn
+						:variant="buttonsForms.variant.ok"
+						:color="buttonsForms.color.ok"
+						:disabled="buttonOkDisabled"
+						:loading="isLoading"
+						@click="clickSearch(submit)"
+					>
+						{{ $t('buttons.search') }}
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</template>
+		<template #preActions=" { filterDrawer, isLoading }">
+			<v-btn
+				v-if="!showDetailItem && filterDrawer"
+				:variant="buttonsForms.variant.add"
+				:color="buttonsForms.color.add"
+				:disabled="isLoading"
+				@click="handleAdd(item)"
+			>
+				{{ $t('buttons.add') }}
+			</v-btn>
 		</template>
 		<template v-slot:listing>
 			<v-row dense>
@@ -234,6 +245,7 @@
 							@close="detailClose"
 							@error="detailError"
 							@ok="detailOk"
+							@dirty="detailDirtyCallback"
 							:debug="debug"
 						>
 						</RocketSetup>
@@ -350,7 +362,11 @@ export default {
 			canDelete,
 			canEdit,
 			canView,
+			clickSearch,
+			clickSearchClear,
 			detailClose,
+			detailDirty,
+			detailDirtyCallback,
 			detailError,
 			detailOk,
 			dialogCopyCancel,
@@ -391,8 +407,6 @@ export default {
 			manufacturers,
 			title,
 			buttonSearchResetDisabled,
-			clickSearch,
-			clickSearchClear,
 			clickSearchRockets,
 			fetchManufacturers,
 			manufacturer,
@@ -438,7 +452,11 @@ export default {
 			canDelete,
 			canEdit,
 			canView,
+			clickSearch,
+			clickSearchClear,
 			detailClose,
+			detailDirty,
+			detailDirtyCallback,
 			detailError,
 			detailOk,
 			dialogCopyCancel,
@@ -479,8 +497,6 @@ export default {
 			manufacturers,
 			title,
 			buttonSearchResetDisabled,
-			clickSearch,
-			clickSearchClear,
 			clickSearchRockets,
 			fetchManufacturers,
 			manufacturer,

@@ -245,7 +245,6 @@ export default {
 		...useDetailComponentProps,
 		...useRocketSetupComponentProps
 	},
-	emits: ['cancel', 'close', 'error', 'ok'],
 	setup (props, context, options) {
 		const {
 			correlationId,

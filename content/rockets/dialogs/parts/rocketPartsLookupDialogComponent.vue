@@ -113,6 +113,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 	};
 	const clickRocketPartsSearchClear = async () => {
 		await dialogRocketPartsLookup.value.reset(correlationId(), null, true);
+		await dialogRocketPartsLookup.value.submit(correlationId());
 	};
 	const clickRocketPartSelect = async (item) => {
 		context.emit('select', item);

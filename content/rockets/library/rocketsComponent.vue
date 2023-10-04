@@ -53,7 +53,11 @@ export function useRocketsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -138,13 +142,6 @@ export function useRocketsBaseComponent(props, context, options) {
 	};
 	const canViewI = (correlationId, item) => {
 		return isOwner(correlationId, item);
-	};
-	const clickSearch = async (correlationId) => {
-		await fetch(correlationId);
-	};
-	const clickSearchClear = async (correlationId) => {
-		await rocketsref.value.reset(correlationId, true);
-		await fetch(correlationId);
 	};
 	const deleteItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.deleteRocketById(correlationId, id);
@@ -287,7 +284,11 @@ export function useRocketsBaseComponent(props, context, options) {
 		canDelete,
 		canEdit,
 		canView,
+		clickSearch,
+		clickSearchClear,
 		detailClose,
+		detailDirty,
+		detailDirtyCallback,
 		detailError,
 		detailOk,
 		dialogCopyCancel,
@@ -328,8 +329,6 @@ export function useRocketsBaseComponent(props, context, options) {
 		weightMeasurementUnitId,
 		weightMeasurementUnitsId,
 		buttonSearchResetDisabled,
-		clickSearch,
-		clickSearchClear,
 		fetchManufacturers,
 		manufacturer,
 		measurementUnitTranslateWeight,

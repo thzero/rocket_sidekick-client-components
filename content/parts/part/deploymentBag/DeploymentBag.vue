@@ -164,7 +164,7 @@
 							/>
 						</td> -->
 						<td class="measurementUnitMedium">
-							<measurement-unit-select-base-2
+							<MeasurementUnitSelect2
 								ref="detailItemLengthMeasurementUnitIdRef"
 								v-model="detailItemLengthMeasurementUnitId"
 								vid="detailItemLengthMeasurementUnitId"
@@ -273,7 +273,7 @@
 						<td>
 							<VNumberFieldWithValidation
 								ref="detailItemPilotChuteDiameterRef"
-								vid="detailItemPilotChuteDiameter"
+								vid=""
 								v-model="detailItemPilotChuteDiameter"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -366,7 +366,6 @@ export default {
 		...useDetailComponentProps,
 		...usePartComponentProps
 	},
-	emits: ['cancel', 'close', 'error', 'ok'],
 	setup (props, context, options) {
 		const {
 			correlationId,
@@ -446,8 +445,8 @@ export default {
 			detailItemPilotChute,
 			detailItemPilotChuteCd,
 			detailItemPilotChuteDiameter,
-			detailItemPilotChuteMeasurementUnitId,
-			detailItemPilotChuteMeasurementUnitsId,
+			detailItemPilotChuteDiameterMeasurementUnitId,
+			detailItemPilotChuteDiameterMeasurementUnitsId,
 			scope,
 			validation
 		} = useDeploymentBagPartComponent(props, context, options);
@@ -530,8 +529,8 @@ export default {
 			detailItemPilotChute,
 			detailItemPilotChuteCd,
 			detailItemPilotChuteDiameter,
-			detailItemPilotChuteMeasurementUnitId,
-			detailItemPilotChuteMeasurementUnitsId,
+			detailItemPilotChuteDiameterMeasurementUnitId,
+			detailItemPilotChuteDiameterMeasurementUnitsId,
 			scope,
 			validation
 		};
