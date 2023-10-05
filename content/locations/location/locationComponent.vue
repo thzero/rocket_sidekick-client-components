@@ -4,6 +4,8 @@ import { firstBy, thenBy } from 'thenby';
 
 import useVuelidate from '@vuelidate/core';
 
+import LibraryCommonUtility from '@thzero/library_common/utility';
+
 import LocationIterationData from 'rocket_sidekick_common/data/locations/iteration';
 
 import { useAdminComponent } from '@/components/content/adminComponent';
@@ -106,7 +108,7 @@ export function useLocationComponent(props, context, options) {
 			resetData(correlationId, value);
 		},
 		initNewSecondary: async (correlationId) => {
-			detailItemData.value.stages = detailItemData.value.iterations ?? [];
+			detailItemData.value.iterations = detailItemData.value.iterations ?? [];
 			const iteration = new LocationIterationData();
 
 			// Open the dialog...
@@ -154,7 +156,7 @@ export function useLocationComponent(props, context, options) {
 		isLoggedIn
 	} = useAdminComponent(props, context, { role: 'locations:public'});
 
-	const countriesI = ref(null);
+	const countriesAndStates = ref(null);
 	const detailItemAddressCity = ref(null);
 	const detailItemAddressCountry = ref(null);
 	const detailItemAddressPostalCode = ref(null);
@@ -168,9 +170,11 @@ export function useLocationComponent(props, context, options) {
 	const panels = ref([]);
 
 	const countries = computed(() => {
-		if (!countriesI.value)
-			return [];
-		return countriesI.value.map(l => { return { id: l.id, name: l.name }; });
+		let temp = [];
+		if (props.countriesAndStates)
+			temp = props.countriesAndStates.map(l => { return { id: l.id, name: l.name }; });
+		temp.unshift({ id: null, name: ''});
+		return temp;
 	});
 	const hasAdmin = computed(() => {
 		return true; // TODO: SECURITY: Admin can...
@@ -184,12 +188,12 @@ export function useLocationComponent(props, context, options) {
 		return temp;
 	});
 	const states = computed(() => {
-		if (!countriesI.value)
+		if (!countriesAndStates.value)
 			return [];
 		const id = detailItemAddressCountry.value;
 		if (String.isNullOrEmpty(id))
 			return [];
-		const temp = countriesI.value.find(l => l.id === id);
+		const temp = countriesAndStates.value.find(l => l.id === id);
 		if (!temp)
 			return [];
 		return temp.states.map(l => { return { id: l.state_code, name: l.name }; });
@@ -221,7 +225,6 @@ export function useLocationComponent(props, context, options) {
 	const setData = (correlationId) => {
 		detailItemData.value.description = detailItemDescription.value;
 
-		detailItemData.value.address = detailItemData.value.address ?? {};
 		detailItemData.value.address.city = detailItemAddressCity.value;
 		detailItemData.value.address.country = detailItemAddressCountry.value;
 		detailItemData.value.address.postalCode = detailItemAddressPostalCode.value;
@@ -231,7 +234,9 @@ export function useLocationComponent(props, context, options) {
 		detailItemData.value.public = detailItemIsPublic.value;
 		detailItemData.value.name = detailItemName.value;
 		detailItemData.value.organizations = detailItemOrganizations.value;
+		detailItemData.value.organizations = detailItemData.value.organizations && detailItemData.value.organizations.length > 0 ? detailItemData.value.organizations : null;
 		detailItemData.value.rocketTypes = detailItemRocketTypes.value;
+		detailItemData.value.rocketTypes = detailItemData.value.rocketTypes && detailItemData.value.rocketTypes.length > 0 ? detailItemData.value.rocketTypes : null;
 	};
 	const updateIteration = async(correlationId, stage) => {
 		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
@@ -250,12 +255,12 @@ export function useLocationComponent(props, context, options) {
 	onMounted(async () => {
 		const correlationIdI = correlationId();
 
-		if (!countriesI.value) {
+		if (!countriesAndStates.value) {
 			const response = await serviceStore.dispatcher.requestCountries(correlationIdI);
 			if (hasFailed(response))
 				return;
 				
-			countriesI.value = response.results.map((item) => { return { id: item.iso3, name: item.name, states: item.states}; });
+			countriesAndStates.value = response.results.map((item) => { return { id: item.iso3, name: item.name, states: item.states}; });
 		}
 	});
 
@@ -354,6 +359,7 @@ export function useLocationComponent(props, context, options) {
 		detailItemOrganizations,
 		detailItemRocketTypes,
 		countries,
+		countriesAndStates,
 		hasAdmin,
 		iterations,
 		states,

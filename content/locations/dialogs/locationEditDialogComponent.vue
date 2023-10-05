@@ -1,11 +1,8 @@
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
-import AppCommonConstants from 'rocket_sidekick_common/constants';
-
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
@@ -59,9 +56,11 @@ export function useLocationEditDialogComponent(props, context, options) {
 	const detailItemYear = ref(null);
 	
 	const countries = computed(() => {
-		if (!props.countries)
-			return [];
-		return props.countries.map(l => { return { id: l.id, name: l.name }; });
+		let temp = [];
+		if (props.countriesAndStates)
+			temp = props.countriesAndStates.map(l => { return { id: l.id, name: l.name }; });
+		temp.unshift({ id: null, name: ''});
+		return temp;
 	});
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.locations.iterations.name') + ' ' + 
@@ -75,12 +74,12 @@ export function useLocationEditDialogComponent(props, context, options) {
 		return '';
 	});
 	const states = computed(() => {
-		if (!props.countries)
+		if (!props.countriesAndStates)
 			return [];
 		const id = detailItemAddressCountry.value;
 		if (String.isNullOrEmpty(id))
 			return [];
-		const temp = props.countries.find(l => l.id === id);
+		const temp = props.countriesAndStates.find(l => l.id === id);
 		if (!temp)
 			return [];
 		return temp.states.map(l => { return { id: l.state_code, name: l.name }; });
@@ -117,7 +116,9 @@ export function useLocationEditDialogComponent(props, context, options) {
 		value.experimental = detailItemExperimental.value;
 		value.number = detailItemNumber.value;
 		value.organizations = detailItemOrganizations.value;
+		value.organizations = value.organizations && value.organizations.length > 0 ? value.organizations : null;
 		value.rocketTypes = detailItemRocketTypes.value;
+		value.rocketTypes = value.rocketTypes && value.rocketTypes.length > 0 ? value.rocketTypes : null;
 		value.year = detailItemYear.value;
 	};
 	const resetAdditional = async (correlationId, previous) => {
@@ -126,6 +127,15 @@ export function useLocationEditDialogComponent(props, context, options) {
 	const setAdditional = async (correlationId) => {
 		setEditData(correlationId, detailItem.value);
 	};
+
+	watch(() => detailItemAddressCountry.value,
+		(value, prev) => {
+			if (value === prev)
+				return;
+
+			detailItemAddressStateProvince.value = null;
+		}
+	);
 
 	return {
 		detailItem,

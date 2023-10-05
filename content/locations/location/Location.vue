@@ -83,6 +83,7 @@
 					:max-values="3"
 					:items="organizations"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.content.organizations.plural')"
 					:hint="$t('forms.content.organizations.hint')"
 				/>
@@ -91,12 +92,14 @@
 		<v-row dense>
 			<v-col cols="12" sm="8">
 				<VSelectWithValidation
+					class="mr-2"
 					ref="detailItemRocketTypesRef"
 					v-model="detailItemRocketTypes"
 					vid="detailItemRocketTypes"
 					multiple
 					:items="rocketTypes"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.content.rockets.level')"
 					:hint="$t('forms.content.rockets.level')"
 				/>
@@ -105,7 +108,9 @@
 				<VSwitchWithValidation
 					ref="detailItemExperimentalRef"
 					v-model="detailItemExperimental"
+					vid="detailItemExperimental"
 					:validation="validation"
+					:readonly="!isEditable || !hasAdminEdit"
 					:label="$t('forms.content.locations.experimental')"
 				/>
 			</v-col>
@@ -113,19 +118,23 @@
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<VTextFieldWithValidation
+					v-if="isEditable || (!isEditable && detailItemAddressCity)"
 					ref="detailItemAddressCityRef"
-					vid="detailItemAddressCity"
 					v-model="detailItemAddressCity"
+					vid="detailItemAddressCity"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.address.city')"
 				/>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<VTextFieldWithValidation
+					v-if="isEditable || (!isEditable && detailItemAddressPostalCode)"
 					ref="detailItemAddressPostalCodeRef"
-					vid="detailItemAddressPostalCode"
 					v-model="detailItemAddressPostalCode"
+					vid="detailItemAddressPostalCode"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.address.postalCode')"
 				/>
 			</v-col>
@@ -133,21 +142,25 @@
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<VSelectWithValidation
+					v-if="isEditable || (!isEditable && detailItemAddressCountry)"
 					ref="detailItemAddressCountryRef"
 					v-model="detailItemAddressCountry"
 					vid="detailItemAddressCountry"
 					:items="countries"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.address.country.title')"
 				/>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<VSelectWithValidation
+					v-if="isEditable || (!isEditable && detailItemAddressStateProvince)"
 					ref="detailItemAddressStateProvinceRef"
 					v-model="detailItemAddressStateProvince"
 					vid="detailItemAddressStateProvince"
 					:items="states"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.address.stateProvince.title')"
 				/>
 			</v-col>
@@ -263,6 +276,45 @@
 								/>
 							</v-col>
 						</v-row>
+						<v-row
+							v-if="item.address"
+							dense
+						>
+							<v-col cols="6" sm="4">
+								<VTextField
+									v-if="item.address.city"
+									v-model="item.address.city"
+									:readonly="true"
+									:label="$t('forms.address.city')"
+								/>
+							</v-col>
+							<v-col cols="6" sm="4">
+								<VSelect
+									v-if="item.address.state"
+									v-model="item.address.state"
+									:items="states"
+									:readonly="true"
+									:label="$t('forms.address.stateProvince.title')"
+								/>
+							</v-col>
+							<v-col cols="6" sm="4">
+								<VSelect
+									v-if="item.address.country"
+									v-model="item.address.country"
+									:items="countries"
+									:readonly="true"
+									:label="$t('forms.address.country.title')"
+								/>
+							</v-col>
+							<v-col cols="6" sm="4">
+								<VTextField
+									v-if="item.address.postalCode"
+									v-model="item.address.postalCode"
+									:readonly="true"
+									:label="$t('forms.address.postalCode')"
+								/>
+							</v-col>
+						</v-row>
 						<v-row dense>
 							<v-col>
 								<div
@@ -297,41 +349,6 @@
 								</div>
 							</v-col>
 						</v-row>
-						<v-row
-							v-if="item.address"
-							dense
-						>
-							<v-col cols="6" sm="4">
-								<VTextField
-									v-model="item.address.city"
-									:readonly="true"
-									:label="$t('forms.address.city')"
-								/>
-							</v-col>
-							<v-col cols="6" sm="4">
-								<VSelect
-									v-model="item.address.state"
-									:items="states"
-									:readonly="true"
-									:label="$t('forms.address.stateProvince.title')"
-								/>
-							</v-col>
-							<v-col cols="6" sm="4">
-								<VSelect
-									v-model="item.address.country"
-									:items="countries"
-									:readonly="true"
-									:label="$t('forms.address.country.title')"
-								/>
-							</v-col>
-							<v-col cols="6" sm="4">
-								<VTextField
-									v-model="item.address.postalCode"
-									:readonly="true"
-									:label="$t('forms.address.postalCode')"
-								/>
-							</v-col>
-						</v-row>
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 			</v-expansion-panels>
@@ -349,12 +366,11 @@
 	<LocationEditDialog
 		v-if="!readonly"
 		ref="dialogEditSecondaryRef"
-		:debug="debug"
+		:debug="true"
 		:pre-complete-ok="dialogEditSecondaryPreCompleteOk"
 		:value="dialogEditSecondaryParams"
 		:signal="dialogEditSecondaryManager.signal"
-		:countries="countries"
-		:states="states"
+		:countriesAndStates="countriesAndStates"
 		@close="dialogEditSecondaryCancel"
 		@ok="dialogEditSecondaryOk"
 		width="90%"
@@ -486,6 +502,7 @@ export default {
 			detailItemOrganizations,
 			detailItemRocketTypes,
 			countries,
+			countriesAndStates,
 			hasAdmin,
 			iterations,
 			states,
@@ -583,6 +600,7 @@ export default {
 			detailItemOrganizations,
 			detailItemRocketTypes,
 			countries,
+			countriesAndStates,
 			hasAdmin,
 			iterations,
 			states,
