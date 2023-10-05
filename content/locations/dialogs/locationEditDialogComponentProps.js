@@ -1,9 +1,5 @@
 export const useLocationEditDialogComponentProps = {
-	countries: {
-		type: Array,
-		value: []
-	},
-	states: {
+	countriesAndStates: {
 		type: Array,
 		value: []
 	}

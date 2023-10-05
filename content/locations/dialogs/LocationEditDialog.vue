@@ -25,7 +25,9 @@
 				<VNumberFieldWithValidation
 					ref="detailItemNumberRef"
 					v-model="detailItemNumber"
+					vid="detailItemNumber"
 					:readonly="!isEditable"
+					:validation="validation"
 					:label="$t('forms.content.locations.number')"
 				/>
 			</v-col>
@@ -33,6 +35,8 @@
 				<VNumberFieldWithValidation
 					ref="detailItemYearRef"
 					v-model="detailItemYear"
+					vid="detailItemYear"
+					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.locations.year')"
 				/>
@@ -54,8 +58,9 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="12" sm="8">12
+			<v-col cols="12" sm="8">
 				<VSelectWithValidation
+					class="mr-2"
 					ref="detailItemRocketTypesRef"
 					v-model="detailItemRocketTypes"
 					vid="detailItemRocketTypes"
@@ -67,9 +72,11 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="4">
-				<VSwitch
+				<VSwitchWithValidation
 					ref="detailItemExperimentalRef"
 					v-model="detailItemExperimental"
+					vid="detailItemExperimental"
+					:validation="validation"
 					:label="$t('forms.content.locations.experimental')"
 				/>
 			</v-col>
@@ -78,8 +85,8 @@
 			<v-col cols="12" sm="6">
 				<VTextFieldWithValidation
 					ref="detailItemAddressCityRef"
-					vid="detailItemAddressCity"
 					v-model="detailItemAddressCity"
+					vid="detailItemAddressCity"
 					:validation="validation"
 					:label="$t('forms.address.city')"
 				/>
@@ -87,8 +94,8 @@
 			<v-col cols="12" sm="6">
 				<VTextFieldWithValidation
 					ref="detailItemAddressPostalCodeRef"
-					vid="detailItemAddressPostalCode"
 					v-model="detailItemAddressPostalCode"
+					vid="detailItemAddressPostalCode"
 					:validation="validation"
 					:label="$t('forms.address.postalCode')"
 				/>
