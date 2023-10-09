@@ -5,5 +5,7 @@ export const useLocationsFilterValidation = {
 		minLength: minLength(3),
 		maxLength: maxLength(50),
 		$autoDirty: true
-	}
+	},
+	filterItemOrganizations: { $autoDirty: true },
+	filterItemRocketTypes: { $autoDirty: true }
 };

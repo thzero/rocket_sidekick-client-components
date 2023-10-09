@@ -20,8 +20,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 		success
 	} = useBaseComponent(props, context, options);
 
-	const object = AppCommonConstants.Rocketry.RocketTypes;
-	const rocketTypes = ref(Object.getOwnPropertyNames(object).filter(l => l !== 'high').map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.rockets.levels.' + item) }; }));
+	const rocketTypes = ref(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.RocketTypes).filter(l => l !== 'high').map((item) => { return { id: item.toLowerCase(), name: LibraryClientUtility.$trans.t('strings.content.rockets.levels.' + item.toLowerCase()) }; }));
 
 	const hasCoverUrl = (item) => {
 		if (!item)

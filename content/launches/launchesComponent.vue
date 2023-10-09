@@ -1,9 +1,8 @@
 <script>
-import { computed, onMounted, ref} from 'vue';
+import { computed, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
-import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -15,6 +14,7 @@ import LaunchData from 'rocket_sidekick_common/data/launches/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
+import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useLaunchesBaseComponent(props, context, options) {
@@ -101,6 +101,12 @@ export function useLaunchesBaseComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
+		organizations,
+		organizationName,
+		organizationNames
+	} = useOrganizationsUtilityComponent(props, context);
+
+	const {
 		rocketTypes,
 		hasCoverUrl,
 		rocketTypeIcon,
@@ -108,25 +114,26 @@ export function useLaunchesBaseComponent(props, context, options) {
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);
+	const dialogLocationLookupManager = ref(new DialogSupport());
 	const dialogRocketLookupManager = ref(new DialogSupport());
 	const diameterMeasurementUnitId = ref(null);
 	const diameterMeasurementUnitsId = ref(null);
 	const LaunchesRef = ref(null);
 	const filterItemDiameter = ref(null);
-	const filterItemManufacturers = ref(null);
-	const filterItemManufacturerStockId = ref(null);
+	const filterItemLocationId = ref(null);
+	const filterItemLocationName = ref(null);
 	const filterItemName = ref(null);
+	const filterItemOrganizations = ref(null);
 	const filterItemRocketId = ref(null);
 	const filterItemRocketName = ref(null);
 	const filterItemRocketTypes = ref(null);
-	const manufacturers = ref(null);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.launches.title`));
-
+	
 	if (LibraryCommonUtility.isDev) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
 		const config = serviceConfig.get('debug');
 		if (config)
-			debug.value = config['Launches'] ?? false;
+			debug.value = config['launches'] ?? false;
 	}
 
 	const buttonSearchResetDisabled = computed(() => {
@@ -144,6 +151,9 @@ export function useLaunchesBaseComponent(props, context, options) {
 	const canViewI = (correlationId, item) => {
 		return isOwner(correlationId, item);
 	};
+	const clickSearchLocations = async (correlationId) => {
+		dialogLocationLookupManager.value.open();
+	};
 	const clickSearchRockets = async (correlationId) => {
 		dialogRocketLookupManager.value.open();
 	};
@@ -151,8 +161,6 @@ export function useLaunchesBaseComponent(props, context, options) {
 		return await serviceStore.dispatcher.deleteLaunchById(correlationId, id);
 	};
 	const fetchI = async (correlationId) => {
-		await fetchManufacturers(correlationId);
-
 		const params = fetchParams(correlationId, {});
 		if (!params)
 			return error('useLaunchesBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
@@ -164,40 +172,22 @@ export function useLaunchesBaseComponent(props, context, options) {
 			return response;
 
 		let results = response.results;
-		results.forEach((item) => {
-			const temp = manufacturers.value.find(l => l.id === item.manufacturerId);
-			if (temp)
-				item.manufacturerName = temp.name;
-		});
 	 	results = results.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
-			.thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
 		);
-		// results = results.sort(
-		// 	firstBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
-		// );
 
 		response.results = results;
 		return response;
 	};
 	const fetchItemI = async (correlationId, id) => {
-		return await serviceStore.dispatcher.requestLocationById(correlationId, id);
-	};
-	const fetchManufacturers = async (correlationId) => {
-		if (manufacturers.value)
-			return;
-
-		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
-		if (hasFailed(response))
-			return;
-
-		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
+		return await serviceStore.dispatcher.requestLaunchById(correlationId, id);
 	};
 	const fetchParams = (correlationId, params) => {
 		params.name = filterItemName.value;
-		params.manufacturers = filterItemManufacturers.value;
-		params.manufacturerStockId = filterItemManufacturerStockId.value;
+
+		params.locationId = filterItemLocationId.value;
+		params.organizations = filterItemOrganizations.value;
 		params.rocketId = filterItemRocketId.value;
 		params.rocketTypes = filterItemRocketTypes.value;
 		return params;
@@ -212,30 +202,59 @@ export function useLaunchesBaseComponent(props, context, options) {
 		data = data ? data : new LaunchData();
 		return success(correlationId, data);
 	};
-	const manufacturer = (item) => {
-		const id = item ? item.manufacturerId ?? null : null;
-		if (!id)
-			return null;
+	const launchDate = (item) => {
+		return LibraryCommonUtility.getDateHuman(item.date);
+	};
+	const launchTitle = (item) => {
+		let output = '';
+		if (!String.isNullOrEmpty(item.name))
+			output += item.name;
+		else if (item.rocket && !String.isNullOrEmpty(item.rocket.name))
+			output += item.rocket.name;
 
-		if (!manufacturers.value)
-			return null;
-
-		const temp = manufacturers.value.find(l => l.id === id);
-		return temp ? temp.name : null;
+		// let date = LibraryCommonUtility.getDateHuman(item.date);
+		let location = '';
+		if (item.location) {
+			location = item.location.name;
+			if (item.location.iteration) {
+				let iteration = '';
+				if (item.location.iteration.number)
+					iteration += item.location.iteration.number;
+				if (item.location.iteration.year)
+					iteration += item.location.iteration.year;
+					location += ' ' + iteration;
+			}
+		}
+		
+		// return `${output} ${date} @ ${location}`;
+		return `${output} ${location}`;
 	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
-		filterItemDiameter.value = data ? data.diameter : null;
-		filterItemManufacturers.value = data ? data.manufacturers : null;
-		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
+
+		filterItemLocationId.value = data ? data.locationId : null;
+		filterItemLocationName.value = data ? data.locationName : null;
+		filterItemOrganizations.value = data ? data.organizations : null;
 		filterItemRocketId.value = data ? data.rocketId : null;
 		filterItemRocketName.value = data ? data.rocketName : null;
 		filterItemRocketTypes.value = data ? data.rocketTypes : null;
 	};
+	const selectLocation = async (item) => {
+		try {
+			if (!item)
+				return error('useLaunchesBaseComponent', 'selectLocation', 'Invalid item.', null, null, null, correlationId);
+			
+			filterItemLocationId.value = item.id;
+			filterItemLocationName.value = item.name;
+		}
+		finally {
+			dialogLocationLookupManager.value.ok();
+		}
+	};
 	const selectRocket = async (item) => {
 		try {
 			if (!item)
-				return error('useRocketSetupsBaseComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
+				return error('useLaunchesBaseComponent', 'selectRocket', 'Invalid item.', null, null, null, correlationId);
 			
 			filterItemRocketId.value = item.id;
 			filterItemRocketName.value = item.name;
@@ -244,20 +263,6 @@ export function useLaunchesBaseComponent(props, context, options) {
 			dialogRocketLookupManager.value.ok();
 		}
 	};
-
-	onMounted(async () => {
-		const correlationIdI = correlationId();
-
-		if (!manufacturers.value) {
-			const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
-			if (hasFailed(response))
-				return;
-				
-			let temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket));
-			temp2 = temp2.map((item) => { return { id: item.id, name: item.name, types: item.types}; });
-			manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
-		}		
-	});
 
 	return {
 		correlationId,
@@ -324,26 +329,30 @@ export function useLaunchesBaseComponent(props, context, options) {
 		display,
 		buttonsDialog,
 		buttonsForms,
+		organizations,
 		rocketTypes,
 		debug,
 		diameterMeasurementUnitId,
 		diameterMeasurementUnitsId,
+		dialogLocationLookupManager,
 		dialogRocketLookupManager,
 		LaunchesRef,
 		filterItemDiameter,
-		filterItemManufacturers,
-		filterItemManufacturerStockId,
+		filterItemLocationId,
+		filterItemLocationName,
 		filterItemName,
+		filterItemOrganizations,
 		filterItemRocketId,
 		filterItemRocketName,
 		filterItemRocketTypes,
-		manufacturers,
 		title,
 		buttonSearchResetDisabled,
+		clickSearchLocations,
 		clickSearchRockets,
-		fetchManufacturers,
-		manufacturer,
+		launchDate,
+		launchTitle,
 		resetAdditional,
+		selectLocation,
 		selectRocket,
 		scope: 'LaunchesFilterControl',
 		validation: useVuelidate({ $scope: 'LaunchesilterControl' })

@@ -24,17 +24,31 @@
 									:validation="validation"
 								/>
 							</v-col>
+						</v-row>
+						<v-row dense>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<VSelectWithValidation
 									ref="filterItemRocketTypesRef"
 									v-model="filterItemRocketTypes"
 									vid="filterItemRocketTypes"
 									multiple
-									:max-values="3"
+									:max-values="2"
 									:items="rocketTypes"
 									:validation="validation"
 									:label="$t('forms.content.rockets.level')"
 									:hint="$t('forms.content.rockets.level')"
+								/>
+							</v-col>
+							<v-col cols="12" :sm="filterDrawer ? 12: 6">
+								<VSelectWithValidation
+									ref="filterItemOrganizationsRef"
+									v-model="filterItemOrganizations"
+									vid="filterItemOrganizations"
+									multiple
+									:max-values="5"
+									:items="organizations"
+									:validation="validation"
+									:label="$t('forms.content.organizations.plural')"
 								/>
 							</v-col>
 						</v-row>
@@ -54,44 +68,31 @@
 										:color="buttonsForms.color.add"
 										@click="clickSearchRockets(item)"
 									>
-										{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+										{{ $t('buttons.select') }}
 									</v-btn>
 								</div>
 							</v-col>
 						</v-row>
 						<v-row dense>
-							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VSelectWithValidation
-									ref="filterItemManufacturersRef"
-									v-model="filterItemManufacturers"
-									vid="filterItemManufacturers"
-									multiple
-									:max-values="3"
-									:items="manufacturers"
-									:validation="validation"
-									:label="$t('forms.content.manufacturer.plural')"
-									:hint="$t('forms.content.manufacturer.plural_hint')"
-								/>
+							<v-col cols="12">
+								<div class="d-flex">
+									<VTextField
+										ref="filterItemLocationNameRef"
+										v-model="filterItemLocationName"
+										vid="filterItemLocationName"
+										:label="$t('forms.content.locations.name')"
+										:readonly="true"
+									/>
+									<v-btn
+										class="ml-4 text-right"
+										:variant="buttonsForms.variant.add"
+										:color="buttonsForms.color.add"
+										@click="clickSearchLocations(item)"
+									>
+										{{ $t('buttons.select') }}
+									</v-btn>
+								</div>
 							</v-col>
-							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VTextFieldWithValidation
-									ref="filterItemManufacturerStockIdRef"
-									v-model="filterItemManufacturerStockId"
-									vid="filterItemManufacturerStockId"
-									:label="$t('forms.content.parts.manufacturerId')"
-									:validation="validation"
-								/>
-							</v-col>
-							<!-- 
-							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VTextFieldWithValidation
-									ref="filterItemDiameterRef"
-									v-model="filterItemDiameter"
-									vid="filterItemDiameter"
-									:label="$t('forms.content.parts.diameter')"
-									:validation="validation"
-								/>
-							</v-col> -->
 						</v-row>
 					</slot>
 				</v-card-text>
@@ -171,8 +172,8 @@
 								<v-card-title
 									class="bg-primary"
 								>
-									{{ item.name }}
-									<div class="float-right">{{ manufacturer(item) }}</div>
+									{{ launchTitle(item) }}
+									<div class="float-right">{{ launchDate(item) }}</div>
 								</v-card-title>
 								<v-card-text>
 									<VMarkdown v-model="item.description" :use-github=false />
@@ -245,6 +246,12 @@
 			</v-row>
 		</template>
 	</VFormListing>
+	<LocationLookupDialog
+		ref="dialogLocationLookupManagerRef"
+		:signal="dialogLocationLookupManager.signal"
+		@close="dialogLocationLookupManager.cancel()"
+		@select="selectLocation"
+	/>
 	<RocketLookupDialog
 		ref="dialogRocketLookupManagerRef"
 		:signal="dialogRocketLookupManager.signal"
@@ -271,9 +278,10 @@ import { useLaunchesBaseComponentProps } from '@/components/content/launches/lau
 import { useLaunchesFilterValidation } from '@/components/content/launches/launchesFilterValidation';
 
 import ContentHeader from '@/components/content/Header';
+import Launch from '@/components/content/launches/Launch/Launch';
+import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import Launch from '@/components/content/launches/Launch/Launch';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
@@ -288,9 +296,10 @@ export default {
 	name: 'LaunchesUserControl',
 	components: {
 		ContentHeader,
+		Launch,
+		LocationLookupDialog,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		Launch,
 		RocketLookupDialog,
 		VConfirmationDialog,
 		VFormListing,
@@ -371,26 +380,30 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
+			organizations,
 			rocketTypes,
 			debug,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			dialogLocationLookupManager,
 			dialogRocketLookupManager,
 			LaunchesRef,
 			filterItemDiameter,
-			filterItemManufacturers,
-			filterItemManufacturerStockId,
+			filterItemLocationId,
+			filterItemLocationName,
 			filterItemName,
+			filterItemOrganizations,
 			filterItemRocketId,
 			filterItemRocketName,
 			filterItemRocketTypes,
-			manufacturers,
 			title,
 			buttonSearchResetDisabled,
+			clickSearchLocations,
 			clickSearchRockets,
-			fetchManufacturers,
-			manufacturer,
+			launchDate,
+			launchTitle,
 			resetAdditional,
+			selectLocation,
 			selectRocket,
 			scope,
 			validation
@@ -461,26 +474,30 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
+			organizations,
 			rocketTypes,
 			debug,
 			diameterMeasurementUnitId,
 			diameterMeasurementUnitsId,
+			dialogLocationLookupManager,
 			dialogRocketLookupManager,
 			LaunchesRef,
 			filterItemDiameter,
-			filterItemManufacturers,
-			filterItemManufacturerStockId,
+			filterItemLocationId,
+			filterItemLocationName,
 			filterItemName,
+			filterItemOrganizations,
 			filterItemRocketId,
 			filterItemRocketName,
 			filterItemRocketTypes,
-			manufacturers,
 			title,
 			buttonSearchResetDisabled,
+			clickSearchLocations,
 			clickSearchRockets,
-			fetchManufacturers,
-			manufacturer,
+			launchDate,
+			launchTitle,
 			resetAdditional,
+			selectLocation,
 			selectRocket,
 			scope,
 			validation

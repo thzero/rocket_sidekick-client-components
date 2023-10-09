@@ -5,13 +5,14 @@ import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
 import LibraryCommonUtility from '@thzero/library_common/utility';
+import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
 import LocationIterationData from 'rocket_sidekick_common/data/locations/iteration';
 
 import { useAdminComponent } from '@/components/content/adminComponent';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
-import { useLocationsUtilityComponent } from '@/components/content/locations/locationsUtilityComponent';
+import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -132,13 +133,6 @@ export function useLocationComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketTypeIcon,
-		rocketTypeIconDetermine
-	} = useRocketsUtilityComponent(props, context, options);
-
-	const {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings
 	} = useToolsMeasurementSettingsComponent(props, context);
@@ -147,7 +141,14 @@ export function useLocationComponent(props, context, options) {
 		organizations,
 		organizationName,
 		organizationNames
-	} = useLocationsUtilityComponent(props, context);
+	} = useOrganizationsUtilityComponent(props, context);
+
+	const {
+		rocketTypes,
+		hasCoverUrl,
+		rocketTypeIcon,
+		rocketTypeIconDetermine
+	} = useRocketsUtilityComponent(props, context, options);
 
 	const {
 		hasAdminDelete,
@@ -173,8 +174,7 @@ export function useLocationComponent(props, context, options) {
 		let temp = [];
 		if (props.countriesAndStates)
 			temp = props.countriesAndStates.map(l => { return { id: l.id, name: l.name }; });
-		temp.unshift({ id: null, name: ''});
-		return temp;
+		return LibraryClientVueUtility.selectBlank(temp, '');
 	});
 	const hasAdmin = computed(() => {
 		return true; // TODO: SECURITY: Admin can...

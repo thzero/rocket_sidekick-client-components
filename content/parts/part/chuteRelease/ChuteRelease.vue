@@ -62,7 +62,7 @@
 					:label="$t('forms.description')"
 					:validation="validation"
 					:readonly="!isEditable"
-					:counter="30"
+					:counter="300"
 					:clearable="isEditable"
 					:rows="detailItemTextRows"
 				/>

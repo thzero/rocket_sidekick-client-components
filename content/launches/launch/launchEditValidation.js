@@ -2,8 +2,23 @@ import { between, decimal, maxLength, minLength, required } from '@vuelidate/val
 
 export function useLaunchEditValidation(nameRequired) { 
 	const validation = {
+		detailItemDate: { 
+			required,
+			$autoDirty: true 
+		},
 		detailItemDescription: { $autoDirty: true },
-		detailItemRocket: { $autoDirty: true }
+		detailItemLocationName: { $autoDirty: true },
+		detailItemLocationId: { 
+			required,
+			$autoDirty: true 
+		},
+		detailItemLocationIterationId: { 
+			$autoDirty: true 
+		},
+		detailItemRocketId: { 
+			required,
+			$autoDirty: true 
+		}
 	};
 	validation['detailItemName'] =  (nameRequired === true ?
 		{

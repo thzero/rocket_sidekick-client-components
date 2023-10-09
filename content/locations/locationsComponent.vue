@@ -11,8 +11,8 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import LocationData from 'rocket_sidekick_common/data/locations/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useLocationsUtilityComponent } from '@/components/content/locations/locationsUtilityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
+import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useLocationsBaseComponent(props, context, options) {
@@ -109,7 +109,7 @@ export function useLocationsBaseComponent(props, context, options) {
 		organizations,
 		organizationName,
 		organizationNames
-	} = useLocationsUtilityComponent(props, context);
+	} = useOrganizationsUtilityComponent(props, context);
 
 	const debug = ref(false);
 	const locationsListing = ref(null);

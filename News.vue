@@ -21,7 +21,7 @@
 								justify="end"
 								class="mr-1"
 							>
-								<span class="caption">{{ getDateHuman(item.timestamp) }}</span>
+								<span class="caption">{{ getDateTimeHuman(item.timestamp) }}</span>
 							</v-row>
 						</v-card-subtitle>
 					</v-card-item>
@@ -66,8 +66,8 @@ export default {
 
 		const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
-		const getDateHuman = computed(() => {
-			return LibraryCommonUtility.getDateHuman(date);
+		const getDateTimeHuman = computed(() => {
+			return LibraryCommonUtility.getDateTimeHuman(date);
 		});
 		const news = computed(() => {
 			if (!serviceStore.news.latest)
@@ -87,7 +87,7 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			getDateHuman,
+			getDateTimeHuman,
 			news
 		};
 	}

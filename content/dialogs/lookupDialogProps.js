@@ -1,4 +1,4 @@
-export const useRocketLookupDialogProps = {
+export const useLookupDialogProps = {
 	selectable: {
 		type: Boolean,
 		default: true
