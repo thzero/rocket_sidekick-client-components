@@ -56,7 +56,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col>
+			<v-col cols="12">
 				<VTextAreaWithValidation
 					ref="descriptionRef"
 					v-model="detailItemDescription"
@@ -64,10 +64,11 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.description')"
-					:counter="30"
+					:counter="500"
 					:clearable="isEditable"
 					:rows="detailItemTextRows"
 				/>
+<div v-html="markupHint"></div>
 			</v-col>
 		</v-row>
 		<v-row dense>
@@ -304,6 +305,7 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			markupHint,
 			detailItemDescription,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
@@ -393,6 +395,7 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			markupHint,
 			detailItemDescription,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,

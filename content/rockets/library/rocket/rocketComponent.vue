@@ -10,6 +10,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility';
 import RocketStageData from 'rocket_sidekick_common/data/rockets/stage';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useContentMarkupComponent } from '@/components/content/contentMarkup';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
@@ -163,6 +164,10 @@ export function useRocketComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings
 	} = useToolsMeasurementSettingsComponent(props, context);
+
+	const {
+		markupHint
+	} = useContentMarkupComponent(props, context);
 	
 	const detailItemDescription = ref(null);
 	const detailItemManufacturer = ref(null);
@@ -199,7 +204,7 @@ export function useRocketComponent(props, context, options) {
 		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
 	const resetData = (correlationId, value) => {
-		detailItemRocketType.value = value? value.typeId : AppCommonConstants.Rocketry.RocketTypes.highone;	
+		detailItemRocketType.value = value ? value.typeId : AppCommonConstants.Rocketry.RocketTypes.highone;	
 
 		detailItemDescription.value = value ? value.description : null;
 		
@@ -331,6 +336,7 @@ export function useRocketComponent(props, context, options) {
 		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
+		markupHint,
 		detailItemDescription,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,

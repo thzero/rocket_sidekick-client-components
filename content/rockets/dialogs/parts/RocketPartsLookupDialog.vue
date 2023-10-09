@@ -254,7 +254,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import { useRocketPartsLookupDialogComponent } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogComponent';
 import { useRocketPartsLookupDialogComponentProps } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogComponentProps';
 import { useRocketPartsLookupDialogValidation } from '@/components/content/rockets/dialogs/parts/rocketPartsLookupDialogValidation';
-import { useRocketLookupDialogProps } from '@/components/content/rockets/dialogs/lookupDialogProps';
+import { useLookupDialogProps } from '@/components/content/dialogs/lookupDialogProps';
 
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
 
@@ -279,7 +279,7 @@ export default {
 		VTextFieldWithValidation
 	},
 	props: {
-		...useRocketLookupDialogProps,
+		...useLookupDialogProps,
 		...useRocketPartsLookupDialogComponentProps
 	},
 	emits: ['close', 'ok', 'select'],

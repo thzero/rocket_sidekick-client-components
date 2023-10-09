@@ -53,7 +53,7 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.description')"
-					:counter="30"
+					:counter="300"
 					:clearable="isEditable"
 					:rows="detailItemTextRows"
 				/>
@@ -74,9 +74,9 @@
 						v-model="detailItemRocketName"
 						vid="detailItemRocketName"
 						:validation="validation"
+						:errorsReadonly="validation.detailItemRocketId.$silentErrors"
 						:label="$t('forms.content.rockets.name')"
 						:readonly="true"
-						:errorsReadonly="validation.detailItemRocketId.$silentErrors"
 					/>
 					<v-btn
 						class="ml-4 text-right"
@@ -84,7 +84,7 @@
 						:color="buttonsForms.color.add"
 						@click="clickSearchRockets(item)"
 					>
-						{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+						{{ $t('buttons.select') }}
 					</v-btn>
 				</div>
 			</v-col>

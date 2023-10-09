@@ -14,11 +14,12 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
-export function useRocketLookupDialogComponent(props, context, options) {
+export function useLocationLookupDialogComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -68,6 +69,12 @@ export function useRocketLookupDialogComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
+		organizations,
+		organizationName,
+		organizationNames
+	} = useOrganizationsUtilityComponent(props, context);
+
+	const {
 		rocketTypes,
 		hasCoverUrl,
 		rocketTypeIcon,
@@ -76,41 +83,33 @@ export function useRocketLookupDialogComponent(props, context, options) {
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 	
-	const dialogSelectRocketConfirmManager = ref(new DialogSupport());
-	const dialogSelectRocketConfirmMessage = ref(LibraryClientUtility.$trans.t(`messages.rocketSetups.rocket.replace_confirm`));
-	const dialogSelectRocketConfirmParams = ref(null);
-	const filterItemDiameterMax = ref(null);
-	const filterItemDiameterMin = ref(null);
-	const filterItemDiameterMeasurementUnitId = ref(null);
-	const filterItemDiameterMeasurementUnitsId = ref(null);
-	const filterItemManufacturers = ref(null);
-	const filterItemManufacturerStockId = ref(null);
+	const dialogSelectLocationConfirmManager = ref(new DialogSupport());
+	const dialogSelectLocationConfirmMessage = ref(LibraryClientUtility.$trans.t(`messages.locations.replace_confirm`));
+	const dialogSelectLocationConfirmParams = ref(null);
+	const filterItemCity = ref(null);
 	const filterItemName = ref(null);
+	const filterItemOrganizations = ref(null);
+	const filterItemPostalCode = ref(null);
 	const filterItemRocketTypes = ref(false);
-	const dialogRocketLookup = ref(null);
+	const dialogLocationLookup = ref(null);
 	const dialogResetManager = ref(new DialogSupport());
 	const dialogResetMessage = ref(null);
-	const manufacturersI = ref(null);
 	const results = ref([]);
 	
-	const manufacturers = computed(() => {
-		return manufacturersI.value ? manufacturersI.value : [];
-	});
-
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
 		return invalid;
 	};
-	const clickRocketSearch = async () => {
-		await dialogRocketLookup.value.submit(correlationId());
+	const clickLocationSearch = async () => {
+		await dialogLocationLookup.value.submit(correlationId());
 	};
-	const clickRocketSearchClear = async () => {
-		await dialogRocketLookup.value.reset(correlationId(), null, true);
-		await dialogRocketLookup.value.submit(correlationId());
+	const clickLocationSearchClear = async () => {
+		await dialogLocationLookup.value.reset(correlationId(), null, true);
+		await dialogLocationLookup.value.submit(correlationId());
 	};
-	const clickRocketSelect = async (item) => {
-		if (props.rocketId) {
-			dialogSelectRocketConfirmParams.value = item;
-			dialogSelectRocketConfirmManager.value.open();
+	const clickLocationSelect = async (item) => {
+		if (props.locationId) {
+			dialogSelectLocationConfirmParams.value = item;
+			dialogSelectLocationConfirmManager.value.open();
 			return;
 		}
 		
@@ -122,63 +121,47 @@ export function useRocketLookupDialogComponent(props, context, options) {
 	const dialogResetOk = async () => {
 		dialogResetManager.value.ok();
 		const correlationIdI = correlationId();
-		await serviceStore.dispatcher.requestPartsRocketSearchReset(correlationIdI);
+		await serviceStore.dispatcher.requestPartsLocationSearchReset(correlationIdI);
 		await preCompleteOk(correlationIdI);
 	};
-	const dialogSelectRocketConfirmCancel = async () => {
+	const dialogSelectLocationConfirmCancel = async () => {
 		try {
-			dialogSelectRocketConfirmManager.value.cancel();
+			dialogSelectLocationConfirmManager.value.cancel();
 		}
 		finally {
-			dialogSelectRocketConfirmParams.value = null;
+			dialogSelectLocationConfirmParams.value = null;
 		}
 	};
-	const dialogSelectRocketConfirmError = async () => {
+	const dialogSelectLocationConfirmError = async () => {
 		try {
-			dialogSelectRocketConfirmManager.value.cancel();
+			dialogSelectLocationConfirmManager.value.cancel();
 		}
 		finally {
-			dialogSelectRocketConfirmParams.value = null;
+			dialogSelectLocationConfirmParams.value = null;
 		}
 	};
-	const dialogSelectRocketConfirmOk = async () => {
+	const dialogSelectLocationConfirmOk = async () => {
 		try {
-			context.emit('select', dialogSelectRocketConfirmParams.value);
-			dialogSelectRocketConfirmManager.value.ok();
+			context.emit('select', dialogSelectLocationConfirmParams.value);
+			dialogSelectLocationConfirmManager.value.ok();
 			return success(correlationId());
 		}
 		finally {
-			dialogSelectRocketConfirmParams.value = null;
+			dialogSelectLocationConfirmParams.value = null;
 		}
-	};
-	const manufacturer = (item) => {
-		const id = item ? item.manufacturerId ?? null : null;
-		if (!id)
-			return null;
-
-		if (!manufacturers.value)
-			return null;
-
-		const temp = manufacturers.value.find(l => l.id === id);
-		return temp ? temp.name : null;
 	};
 	const preCompleteOk = async (correlationId) => {
 		results.value = null;
 
-		const diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, filterItemDiameterMeasurementUnitsId.value);
-
 		const request = {
-			diameterMax: filterItemDiameterMax.value,
-			diameterMin: filterItemDiameterMin.value,
-			diameterMeasurementUnitId: filterItemDiameterMeasurementUnitId.value,
-			diameterMeasurementUnitsId: diameterMeasurementUnitsId,
-			manufacturers: filterItemManufacturers.value,
-			manufacturerStockId: filterItemManufacturerStockId.value,
+			city: filterItemCity.value,
 			name: filterItemName.value,
+			organizations: filterItemOrganizations.value,
+			postalCode: filterItemPostalCode.value,
 			rocketTypes: filterItemRocketTypes.value
 		};
 
-		const response = await serviceStore.dispatcher.requestRockets(correlationId, request);
+		const response = await serviceStore.dispatcher.requestLocations(correlationId, request);
 		if (hasFailed(response))
 			return response;
 
@@ -189,15 +172,9 @@ export function useRocketLookupDialogComponent(props, context, options) {
 		return success(correlationId);
 	};
 	const resetAdditional = async (correlationId, previous, loaded) => {
-		filterItemManufacturers.value = null;
-		filterItemManufacturerStockId.value = null;
 		filterItemName.value = null;
 
-		filterItemDiameterMax.value = null;
-		filterItemDiameterMin.value = null;
-		filterItemDiameterMeasurementUnitId.value = measurementUnitsLengthDefaultId.value;
-		filterItemDiameterMeasurementUnitsId.value =  measurementUnitsIdSettings.value;
-
+		filterItemOrganizations.value = null;
 		filterItemRocketTypes.value = null;
 
 		if (loaded)
@@ -207,18 +184,6 @@ export function useRocketLookupDialogComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		if (manufacturersI.value)
-			return;
-
-		const response = await serviceStore.dispatcher.requestManufacturers(correlationId());
-		if (hasFailed(response))
-			return;
-
-		let temp2 = response.results.filter(l => l.types.find(j => 
-			(j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket)
-		));
-		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
-		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
 	});
 
 	return {
@@ -238,38 +203,34 @@ export function useRocketLookupDialogComponent(props, context, options) {
 		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
+		organizations,
 		rocketTypes,
 		serviceStore,
-		dialogSelectRocketConfirmManager,
-		dialogSelectRocketConfirmMessage,
-		dialogSelectRocketConfirmParams,
-		filterItemDiameterMax,
-		filterItemDiameterMin,
-		filterItemDiameterMeasurementUnitId,
-		filterItemDiameterMeasurementUnitsId,
-		filterItemManufacturers,
-		filterItemManufacturerStockId,
+		dialogSelectLocationConfirmManager,
+		dialogSelectLocationConfirmMessage,
+		dialogSelectLocationConfirmParams,
+		filterItemCity,
 		filterItemName,
+		filterItemOrganizations,
+		filterItemPostalCode,
 		filterItemRocketTypes,
-		dialogRocketLookup,
+		dialogLocationLookup,
 		dialogResetManager,
 		dialogResetMessage,
 		results,
-		manufacturers,
 		buttonOkDisabledOverride,
-		clickRocketSearch,
-		clickRocketSearchClear,
-		clickRocketSelect,
+		clickLocationSearch,
+		clickLocationSearchClear,
+		clickLocationSelect,
 		close,
 		dialogResetOk,
-		dialogSelectRocketConfirmCancel,
-		dialogSelectRocketConfirmError,
-		dialogSelectRocketConfirmOk,
-		manufacturer,
+		dialogSelectLocationConfirmCancel,
+		dialogSelectLocationConfirmError,
+		dialogSelectLocationConfirmOk,
 		preCompleteOk,
 		resetAdditional,
-		scope: 'RocketLookupDialog',
-		validation: useVuelidate({ $scope: 'RocketLookupDialog' })
+		scope: 'LocationLookupDialog',
+		validation: useVuelidate({ $scope: 'LocationLookupDialog' })
 	};
 };
 </script>

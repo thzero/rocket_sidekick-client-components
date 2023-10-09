@@ -54,7 +54,7 @@
 										:color="buttonsForms.color.add"
 										@click="clickSearchRockets(item)"
 									>
-										{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+										{{ $t('buttons.select') }}
 									</v-btn>
 								</div>
 							</v-col>
@@ -178,9 +178,11 @@
 								</v-card-title>
 								<v-card-text>
 										<!-- v-if="item.description" -->
+											{{ item.rocket }}
 										<slot name="panelText" :item="item">
 											{{ item.description }}
 											{{ item.stages ? item.stages.length : '' }}
+											{{ item.rocket }}
 										</slot>
 										<div
 											v-if="debug"

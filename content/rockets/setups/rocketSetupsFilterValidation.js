@@ -12,6 +12,8 @@ export const useRocketSetupsFilterValidation = {
 		maxLength: maxLength(50),
 		$autoDirty: true
 	},
-	filterItemRocket: { $autoDirty: true },
+	filterItemRocketId: { 
+		$autoDirty: true
+	},
 	filterItemRocketTypes: { $autoDirty: true }
 };

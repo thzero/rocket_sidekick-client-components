@@ -5,7 +5,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
-export function useLocationsUtilityComponent(props, context, options) {
+export function useOrganizationsUtilityComponent(props, context, options) {
 	const {
 		correlationId,
 		error,

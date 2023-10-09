@@ -169,7 +169,6 @@ export function useRocketSetupComponent(props, context, options) {
 	const detailItemRocketName = ref(null);
 	const detailItemType = ref(null);
 	const manufacturerDefault = ref(null);
-	const manufacturerType = ref(AppCommonConstants.Rocketry.ManufacturerTypes.rocket);
 	const panels = ref([]);
 	const panelsId = ref([ 
 		{ id: 'altimeters', text: 'forms.content.parts.altimeter.plural' },

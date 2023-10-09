@@ -222,19 +222,14 @@
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useRocketRocketLookupDialogComponent } from '@/components/content/rockets/dialogs/rocketLookupDialogComponent';
+import { useRocketLookupDialogComponent } from '@/components/content/rockets/dialogs/rocketLookupDialogComponent';
 import { useRocketLookupDialogComponentProps } from '@/components/content/rockets/dialogs/rocketLookupDialogComponentProps';
-import { useRocketRocketLookupDialogValidation } from '@/components/content/rockets/dialogs/rocketLookupDialogValidation';
-import { useRocketLookupDialogProps } from '@/components/content/rockets/dialogs/lookupDialogProps';
+import { useRocketLookupDialogValidation } from '@/components/content/rockets/dialogs/rocketLookupDialogValidation';
+import { useLookupDialogProps } from '@/components/content/dialogs/lookupDialogProps';
 
-import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
-import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
-import RocketParts from '@/components/content/rockets/parts/RocketParts';
-import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
 import VFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormListingDialog';
 import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
@@ -245,14 +240,9 @@ import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/compo
 export default {
 	name: 'RocketLookupDialog',
 	components: {
-		ChuteProtectorPanelTitle,
-		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
-		ParachutePanelTitle,
-		RocketParts,
-		StreamerPanelTitle,
 		VConfirmationDialog,
 		VFormListingDialog,
 		VMarkdown,
@@ -261,7 +251,7 @@ export default {
 		VTextFieldWithValidation
 	},
 	props: {
-		...useRocketLookupDialogProps,
+		...useLookupDialogProps,
 		...useRocketLookupDialogComponentProps
 	},
 	emits: ['close', 'ok', 'select'],
@@ -315,7 +305,7 @@ export default {
 			resetAdditional,
 			scope,
 			validation
-		} = useRocketRocketLookupDialogComponent(props, context);
+		} = useRocketLookupDialogComponent(props, context);
 
 		return {
 			correlationId,
@@ -369,7 +359,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(LibraryCommonUtility.cloneDeep(useRocketRocketLookupDialogValidation)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(LibraryCommonUtility.cloneDeep(useRocketLookupDialogValidation)));
 	}
 };
 </script>

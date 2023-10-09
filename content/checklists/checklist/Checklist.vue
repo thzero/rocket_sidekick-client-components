@@ -62,7 +62,7 @@
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
 					:label="$t('forms.description')"
-					:counter="30"
+					:counter="300"
 					:validation="validation"
 					:readonly="!isEditable"
 					:clearable="isEditable"

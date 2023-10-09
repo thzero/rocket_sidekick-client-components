@@ -126,7 +126,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
 		const config = serviceConfig.get('debug');
 		if (config)
-			debug.value = config['rockets'] ?? false;
+			debug.value = config['rocketSetups'] ?? false;
 	}
 
 	const buttonSearchResetDisabled = computed(() => {
@@ -236,7 +236,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	const selectRocket = async (item) => {
 		try {
 			if (!item)
-				return error('useRocketSetupsBaseComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
+				return error('useRocketSetupsBaseComponent', 'selectRocket', 'Invalid item.', null, null, null, correlationId);
 			
 			filterItemRocketId.value = item.id;
 			filterItemRocketName.value = item.name;

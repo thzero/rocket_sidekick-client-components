@@ -4,10 +4,11 @@ import { computed, ref, watch } from 'vue';
 import useVuelidate from '@vuelidate/core';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
-import { useLocationsUtilityComponent } from '@/components/content/locations/locationsUtilityComponent';
+import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useLocationEditDialogComponent(props, context, options) {
@@ -43,7 +44,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 		organizations,
 		organizationName,
 		organizationNames
-	} = useLocationsUtilityComponent(props, context);
+	} = useOrganizationsUtilityComponent(props, context);
 	
 	const detailItemAddressCity = ref(null);
 	const detailItemAddressCountry = ref(null);
@@ -59,8 +60,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 		let temp = [];
 		if (props.countriesAndStates)
 			temp = props.countriesAndStates.map(l => { return { id: l.id, name: l.name }; });
-		temp.unshift({ id: null, name: ''});
-		return temp;
+		return LibraryClientVueUtility.selectBlank(temp, '');
 	});
 	const displayName = computed(() => {
 		return LibraryClientUtility.$trans.t('forms.content.locations.iterations.name') + ' ' + 
