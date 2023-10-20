@@ -243,14 +243,19 @@
 				<RocketParts
 					:items="altimeters"
 					:deletable="isEditable"
+					:editable="isEditable"
+					:pre-complete-ok="preCompleteOkRocketParts"
 					:manufacturers="manufacturers"
 					:stage-id="displayItem.id"
 					@delete="handleAltimeterDelete"
 				>
+				<!-- appogee, main alt, delays, amounts -->
 				</RocketParts>
 				<RocketParts
 					:items="chuteProtectors"
 					:deletable="isEditable"
+					:editable="isEditable"
+					:pre-complete-ok="preCompleteOkRocketParts"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleChuteProtectorsDelete"
@@ -259,22 +264,29 @@
 				<RocketParts
 					:items="chuteReleases"
 					:deletable="isEditable"
+					:editable="isEditable"
+					:pre-complete-ok="preCompleteOkRocketParts"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleChuteReleasesDelete"
 				>
+				<!-- alt -->
 				</RocketParts>
 				<RocketParts
 					:items="deploymentBags"
-					:deletable="isEditable"
+					:editable="isEditable"
+					:pre-complete-ok="preCompleteOkRocketParts"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleDeploymentBagsDelete"
 				>
+				<!-- reefing -->
 				</RocketParts>
 				<RocketParts
 					:items="parachutes"
 					:deletable="isEditable"
+					:editable="isEditable"
+					:pre-complete-ok="preCompleteOkRocketParts"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleParachutesDelete"
@@ -284,6 +296,8 @@
 					:items="streamers"
 					:manufacturers="manufacturers"
 					:deletable="isEditable"
+					:editable="isEditable"
+					:pre-complete-ok="preCompleteOkRocketParts"
 					:stageId="displayItem.id"
 					@delete="handleStreamersDelete"
 				>
@@ -291,6 +305,8 @@
 				<RocketParts
 					:items="trackers"
 					:deletable="isEditable"
+					:editable="isEditable"
+					:pre-complete-ok="preCompleteOkRocketParts"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleTrackerDelete"
@@ -468,6 +484,7 @@ export default {
 			hasMotor,
 			motor,
 			panelsUpdated,
+			preCompleteOkRocketParts,
 			selectAltimeter,
 			selectChuteProtector,
 			selectChuteRelease,
@@ -553,7 +570,7 @@ export default {
 			hasMotor,
 			motor,
 			panelsUpdated,
-			motor,
+			preCompleteOkRocketParts,
 			selectAltimeter,
 			selectChuteProtector,
 			selectChuteRelease,

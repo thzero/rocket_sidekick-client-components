@@ -73,6 +73,7 @@ export function usePartsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display
 	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'checklists',
@@ -267,6 +268,7 @@ export function usePartsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display,
 		buttonsDialog,
 		buttonsForms,

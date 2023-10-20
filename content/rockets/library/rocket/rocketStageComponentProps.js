@@ -15,6 +15,10 @@ export const useRocketStageComponentProps = {
 		type: Array,
 		value: []
 	},
+	preCompleteOkRocketPart: {
+		type: Function,
+		value: null
+	},
 	updateStage: {
 		type: Function,
 		value: null

@@ -2,7 +2,7 @@
 	<ContentHeader :value="title" />
 	<VFormListing
 		ref="rocketSetupsRef"
-		:pre-complete-ok="fetch"
+		:pre-complete-ok="search"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -390,6 +390,7 @@ export default {
 			isCopying,
 			isDeleting,
 			isOwner,
+			search,
 			display,
 			buttonsDialog,
 			buttonsForms,
@@ -480,6 +481,7 @@ export default {
 			isCopying,
 			isDeleting,
 			isOwner,
+			search,
 			display,
 			buttonsDialog,
 			buttonsForms,

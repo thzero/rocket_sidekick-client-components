@@ -3,8 +3,6 @@ import { computed, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
-import AppCommonConstants from 'rocket_sidekick_common/constants';
-
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import RocketSetupStageData from 'rocket_sidekick_common/data/rockets/setups/stage';
@@ -12,6 +10,7 @@ import RocketSetupStageData from 'rocket_sidekick_common/data/rockets/setups/sta
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useContentMarkupComponent } from '@/components/content/contentMarkup';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
@@ -160,11 +159,16 @@ export function useRocketSetupComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings
 	} = useToolsMeasurementSettingsComponent(props, context);
+
+	const {
+		markupHint
+	} = useContentMarkupComponent(props, context);
 	
 	const dialogRocketLookupManager = ref(new DialogSupport());
 
 	const detailItemDescription = ref(null);
 	const detailItemName = ref(null);
+	const detailItemNotes = ref(null);
 	const detailItemRocketId = ref(null);
 	const detailItemRocketName = ref(null);
 	const detailItemType = ref(null);
@@ -204,6 +208,7 @@ export function useRocketSetupComponent(props, context, options) {
 	const resetData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemName.value = value ? value.name : null;
+		detailItemNotes.value = value ? value.notes : nulll;
 
 		if (value && value.rocket) {
 			detailItemRocketId.value = value.rocket.id;
@@ -243,6 +248,7 @@ export function useRocketSetupComponent(props, context, options) {
 	const setData = (correlationId) => {
 		detailItemData.value.description = detailItemDescription.value;
 		detailItemData.value.name = detailItemName.value;
+		detailItemData.value.notes = detailItemNotes.value;
 
 		detailItemData.value.rocketId = detailItemRocketId.value;
 		detailItemData.value.typeId = detailItemType.value;		
@@ -340,9 +346,11 @@ export function useRocketSetupComponent(props, context, options) {
 		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
+		markupHint,
 		dialogRocketLookupManager,
 		detailItemDescription,
 		detailItemName,
+		detailItemNotes,
 		detailItemRocketId,
 		detailItemRocketName,
 		detailItemType,

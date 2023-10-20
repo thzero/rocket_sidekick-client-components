@@ -184,7 +184,7 @@ export function useMasterDetailComponent(props, context, options) {
 				setNotify(correlationIdI, 'messages.error');
 				return;
 			}
-			await fetch(correlationId());
+			await fetch(correlationId()), true;
 		}
 		finally {
 			dialogDeleteParams.id = null;
@@ -200,8 +200,9 @@ export function useMasterDetailComponent(props, context, options) {
 		dialogDeleteParams.id = item.id;
 		dialogDeleteManager.value.open();
 	};
-	const fetch = async (correlationId) => {
-		detailItem.value = null;
+	const fetch = async (correlationId, force) => {
+		if (force === true)
+			detailItem.value = null; // reset to so that the detail doesn't display
 
 		const response = await options.fetch(correlationId);
 		if (hasFailed(response))
@@ -273,6 +274,10 @@ export function useMasterDetailComponent(props, context, options) {
 		const ownerId = (user.value ?? {}).id;
 		return item ? item.ownerId == ownerId : false; // TODO: allow admin
 	};
+	const search = async () => {
+		// TODO: Should probably check and see if things are dirty, and raise a confirmation dialog
+		return fetch(correlationId(), true);
+	};
 
 	onMounted(async () => {
 		user.value = await serviceStore.user;
@@ -281,7 +286,7 @@ export function useMasterDetailComponent(props, context, options) {
 		if (options.init)
 			await options.init(correlationIdI);
 
-		await fetch(correlationIdI);
+		await fetch(correlationIdI, true);
 	});
 
 	return {
@@ -346,6 +351,7 @@ export function useMasterDetailComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display
 	};
 };

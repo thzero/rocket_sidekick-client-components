@@ -31,6 +31,10 @@ export const useRocketPartsComponentProps = {
 		type: String,
 		value: null
 	},
+	preCompleteOk: {
+		type: Function,
+		value: null
+	},
 	search: {
 		type: Boolean,
 		value: false

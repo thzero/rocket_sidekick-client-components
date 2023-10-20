@@ -52,7 +52,7 @@
 								vid="detailItemWeight"
 								:validation="validation"
 								:readonly="!isEditable"
-								:label="$t('forms.content.parts.weight')"
+								:label="$t('forms.content.rockets.weight.name')"
 							/>
 						</td>
 						<!-- <td class="measurementUnitsMedium">
@@ -146,6 +146,57 @@
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<VNumberFieldWithValidation
+								ref="detailItemWeightNoseRef"
+								v-model="detailItemWeightNose"
+								vid="detailItemWeightNose"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.rockets.weight.nose') + ' ' + $t('forms.content.rockets.weight.name')"
+							/>
+						</td>
+						<!-- <td class="measurementUnitsMedium">
+							<MeasurementUnitsSelect
+								ref="detailItemWeightNoseMeasurementUnitsIdRef"
+								v-model="detailItemWeightNoseMeasurementUnitsId"
+								vid="detailItemWeightNoseMeasurementUnitsId"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.title')"
+							/>
+						</td>
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect
+								ref="detailItemWeightNoseMeasurementUnitIdRef"
+								v-model="detailItemWeightNoseMeasurementUnitId"
+								vid="detailItemWeightNoseMeasurementUnitId"
+								:measurementUnitsId="detailItemWeightNoseMeasurementUnitsId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.weight')"
+							/>
+						</td> -->
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemWeightNoseMeasurementUnitIdRef"
+								v-model="detailItemWeightNoseMeasurementUnitId"
+								vid="detailItemWeightNoseMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsWeightType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.weight')"
 							/>
 						</td>
 					</tr>
@@ -503,6 +554,9 @@ export default {
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
+			detailItemWeightNose,
+			detailItemWeightNoseMeasurementUnitId,
+			detailItemWeightNoseMeasurementUnitsId,
 			dialogPartsSearchMotorsDiameter,
 			dialogPartsSearchMotorsManager,
 			dialogPartsSearchMotorCasesManager,
@@ -518,8 +572,6 @@ export default {
 			selectMotor,
 			selectMotorCase,
 			setAdditional,
-			resetEditData,
-			setEditData,
 			scope,
 			validation
 		} = useRocketSetupStageEditDialogComponent(props, context);
@@ -565,6 +617,9 @@ export default {
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
+			detailItemWeightNose,
+			detailItemWeightNoseMeasurementUnitId,
+			detailItemWeightNoseMeasurementUnitsId,
 			dialogPartsSearchMotorsDiameter,
 			dialogPartsSearchMotorsManager,
 			dialogPartsSearchMotorCasesManager,
@@ -580,8 +635,6 @@ export default {
 			selectMotor,
 			selectMotorCase,
 			setAdditional,
-			resetEditData,
-			setEditData,
 			scope,
 			validation
 		};

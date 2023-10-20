@@ -106,6 +106,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
+	const detailItemWeightNose = ref(null);
+	const detailItemWeightNoseMeasurementUnitId = ref(null);
+	const detailItemWeightNoseMeasurementUnitsId = ref(null);
 	const dialogPartsSearchMotorsDiameter = ref(null);
 	const dialogPartsSearchMotorIndex = ref(null);
 	const dialogPartsSearchMotorsManager = ref(new DialogSupport());
@@ -156,17 +159,13 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		// call the parent to tell them to save off the detail item
 		return await props.preCompleteOk(correlationId, detailItem.value);
 	};
-
 	const resetAdditional = async (correlationId, previous) => {
-		resetEditData(correlationId, detailItem.value);
-	};
-	const resetEditData = (correlationId, value) => {
-		detailItemNotes.value = value ? value.name : null;
+		detailItemNotes.value = detailItem.value ? detailItem.value.name : null;
 		
-		detailItemCg.value = value ? value.cg : null;
-		detailItemCgFrom.value = value ? value.cgFrom : AppCommonConstants.Rocketry.Direction.Tip;
-		detailItemCgMeasurementUnitId.value = value ? value.cgMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		detailItemCgMeasurementUnitsId.value = value ? value.cgMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemCg.value = detailItem.value ? detailItem.value.cg : null;
+		detailItemCgFrom.value = detailItem.value ? detailItem.value.cgFrom : AppCommonConstants.Rocketry.Direction.Tip;
+		detailItemCgMeasurementUnitId.value = detailItem.value ? detailItem.value.cgMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		detailItemCgMeasurementUnitsId.value = detailItem.value ? detailItem.value.cgMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 		
 		detailItemMotor0.value = null;
 		detailItemMotor1.value = null;
@@ -190,7 +189,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemMotorInfo1.value = null;
 		detailItemMotorInfo2.value = null;
 		hasMotorsI.value = [];
-		const fromRocket = value && value.fromRocket ? value.fromRocket : null;
+		const fromRocket = detailItem.value && detailItem.value.fromRocket ? detailItem.value.fromRocket : null;
 		if (fromRocket) {
 			let temp;
 			let temp2;
@@ -228,9 +227,13 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			}
 		}
 		
-		detailItemWeight.value = value ? value.weight : null;
-		detailItemWeightMeasurementUnitId.value = value ? value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
-		detailItemWeightMeasurementUnitsId.value = value ? value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		detailItemWeight.value = detailItem.value ? detailItem.value.weight : null;
+		detailItemWeightMeasurementUnitId.value = detailItem.value ? detailItem.value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
+		detailItemWeightMeasurementUnitsId.value = detailItem.value ? detailItem.value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		
+		detailItemWeightNose.value = detailItem.value ? detailItem.value.weightNose : null;
+		detailItemWeightNoseMeasurementUnitId.value = detailItem.value ? detailItem.value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
+		detailItemWeightNoseMeasurementUnitsId.value = detailItem.value ? detailItem.value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	const selectMotor = async (item) => {
 		try {
@@ -307,18 +310,15 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		}
 	};
 	const setAdditional = async (correlationId) => {
-		setEditData(correlationId, detailItem.value);
-	};
-	const setEditData = (correlationId, value) => {
-		value.notes = String.trim(detailItemNotes.value);
+		detailItem.value.notes = String.trim(detailItemNotes.value);
 
-		value.cg = AppUtility.convertNumber(detailItemCg.value);
-		value.cgFrom = detailItemCgFrom.value;
-		value.cgMeasurementUnitId = detailItemCgMeasurementUnitId.value;
-		// value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
-		value.cgMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCgMeasurementUnitId.value);
+		detailItem.value.cg = AppUtility.convertNumber(detailItemCg.value);
+		detailItem.value.cgFrom = detailItemCgFrom.value;
+		detailItem.value.cgMeasurementUnitId = detailItemCgMeasurementUnitId.value;
+		// detailItem.value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
+		detailItem.value.cgMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCgMeasurementUnitId.value);
 
-		value.motors = value.motors ?? [];
+		detailItem.value.motors = value.motors ?? [];
 
 		let temp;
 		let index = -1;
@@ -328,17 +328,22 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			if (!temp)
 				continue;
 
-			value.motors[index] = value.motors[index] ?? {};
-			value.motors[index].index = item.index;
-			value.motors[index].motorCaseId = temp.motorCaseId.value;
-			value.motors[index].motorDelay = temp.motorDelay.value;
-			value.motors[index].motorId = temp.motorId.value;
+			detailItem.value.motors[index] = value.motors[index] ?? {};
+			detailItem.value.motors[index].index = item.index;
+			detailItem.value.motors[index].motorCaseId = temp.motorCaseId.value;
+			detailItem.value.motors[index].motorDelay = temp.motorDelay.value;
+			detailItem.value.motors[index].motorId = temp.motorId.value;
 		}
 
-		value.weight = AppUtility.convertNumber(detailItemWeight.value);
-		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
-		// value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
-		value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);
+		detailItem.value.weight = AppUtility.convertNumber(detailItemWeight.value);
+		detailItem.value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
+		// detailItem.value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
+		detailItem.value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);
+	
+		detailItem.value.weightNose = AppUtility.convertNumber(detailItemWeightNose.value);
+		detailItem.value.weightNoseMeasurementUnitId = detailItemWeightNoseMeasurementUnitId.value;
+		// detailItem.value.weightNoseMeasurementUnitsId = detailItemWeightNoseMeasurementUnitsId.value;
+		detailItem.value.weightNoseMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightNoseMeasurementUnitId.value);
 	};
 
 	return {
@@ -382,6 +387,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
+		detailItemWeightNose,
+		detailItemWeightNoseMeasurementUnitId,
+		detailItemWeightNoseMeasurementUnitsId,
 		dialogPartsSearchMotorsManager,
 		dialogPartsSearchMotorCasesManager,
 		dialogPartsSearchMotorsDiameter,
@@ -397,8 +405,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		selectMotor,
 		selectMotorCase,
 		setAdditional,
-		resetEditData,
-		setEditData,
 		scope: 'RocketStageEditDialog',
 		validation: useVuelidate({ $scope: 'RocketStageEditDialog' })
 	};

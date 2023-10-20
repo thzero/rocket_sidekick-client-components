@@ -1,7 +1,7 @@
 import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
 
 export const useRocketSetupStageEditDialogValidation = {
-	detailItemCg: {  decimal, between: between(0, 2004), $autoDirty: true }, // TODO: max of length
+	detailItemCg: { decimal, between: between(0, 2004), $autoDirty: true }, // TODO: max of length
 	detailItemCgFrom: { minLength: minLength(3), maxLength: maxLength(50), $autoDirty: true },
 	detailItemCgMeasurementUnitId: { $autoDirty: true },
 	detailItemCgMeasurementUnitsId: { $autoDirty: true },
@@ -19,5 +19,8 @@ export const useRocketSetupStageEditDialogValidation = {
 	detailItemMotorId2: { $autoDirty: true },
 	detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 	detailItemWeightMeasurementUnitId: { $autoDirty: true },
-	detailItemWeightMeasurementUnitsId: { $autoDirty: true }
+	detailItemWeightMeasurementUnitsId: { $autoDirty: true },
+	detailItemWeightNose: { decimal, between: between(0, 2004), $autoDirty: true },
+	detailItemWeightNoseMeasurementUnitId: { $autoDirty: true },
+	detailItemWeightNoseMeasurementUnitsId: { $autoDirty: true }
 };

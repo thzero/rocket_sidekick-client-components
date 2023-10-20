@@ -330,6 +330,11 @@ export function useRocketStageComponent(props, context, options) {
 	const panelsUpdated = async (value) => {
 		 await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
+	const preCompleteOkRocketParts = async(correlationId, item) => {
+		if (!props.preCompleteOkRocketPart)
+			return error('useRocketStageComponent', 'preCompleteOkRocketParts', 'Invalid dialogEditPreCompleteOkRocketParts method.', null, null, null, correlationId);
+		return await props.preCompleteOkRocketPart(correlationId, item);
+	};
 	const selectPart = async(correlationId, item, type, stageId) => {
 		if (!item || String.isNullOrEmpty(type) || String.isNullOrEmpty(stageId))
 			return error('useRocketStageComponent', 'selectPart', 'Invalid item, type or stageId.', null, null, null, correlationId);
@@ -560,6 +565,7 @@ export function useRocketStageComponent(props, context, options) {
 		panelsUpdated,
 		hasMotor,
 		motor,
+		preCompleteOkRocketParts,
 		selectAltimeter,
 		selectChuteProtector,
 		selectChuteRelease,

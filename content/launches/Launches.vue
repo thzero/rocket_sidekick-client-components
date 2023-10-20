@@ -2,7 +2,7 @@
 	<ContentHeader :value="title" />
 	<VFormListing
 		ref="launchesRef"
-		:pre-complete-ok="fetch"
+		:pre-complete-ok="search"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -170,8 +170,13 @@
 						>
 							<v-card>
 								<v-card-title
-									class="bg-primary"
+									:class="launchStatusColor(item)"
 								>
+									<v-icon
+										v-if="launchStatusIcon(item)"
+									>
+										{{ launchStatusIcon(item) }}
+									</v-icon>
 									{{ launchTitle(item) }}
 									<div class="float-right">{{ launchDate(item) }}</div>
 								</v-card-title>
@@ -377,6 +382,7 @@ export default {
 			isCopying,
 			isDeleting,
 			isOwner,
+			search,
 			display,
 			buttonsDialog,
 			buttonsForms,
@@ -401,6 +407,8 @@ export default {
 			clickSearchLocations,
 			clickSearchRockets,
 			launchDate,
+			launchStatusColor,
+			launchStatusIcon,
 			launchTitle,
 			resetAdditional,
 			selectLocation,
@@ -471,6 +479,7 @@ export default {
 			isCopying,
 			isDeleting,
 			isOwner,
+			search,
 			display,
 			buttonsDialog,
 			buttonsForms,
@@ -495,6 +504,8 @@ export default {
 			clickSearchLocations,
 			clickSearchRockets,
 			launchDate,
+			launchStatusColor,
+			launchStatusIcon,
 			launchTitle,
 			resetAdditional,
 			selectLocation,

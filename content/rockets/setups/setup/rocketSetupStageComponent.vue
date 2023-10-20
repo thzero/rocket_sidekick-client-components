@@ -100,7 +100,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	
 	const altimeters = computed(() => {
 		const temp = props.detailItem ? props.detailItem.altimeters : [];
-		if (fromRocketStage.value.altimeters) {
+		if (fromRocketStage.value && fromRocketStage.value.altimeters) {
 			fromRocketStage.value.altimeters.forEach(l => l.fromRocket = true);
 			temp.push(...fromRocketStage.value.altimeters);
 		}
@@ -108,7 +108,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	});
 	const chuteProtectors = computed(() => {
 		const temp = props.detailItem ? props.detailItem.chuteProtectors : [];
-		if (fromRocketStage.value.chuteProtectors) {
+		if (fromRocketStage.value && fromRocketStage.value.chuteProtectors) {
 			fromRocketStage.value.altimeters.forEach(l => l.fromRocket = true);
 			temp.push(...fromRocketStage.value.altimeters);
 		}
@@ -116,7 +116,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	});
 	const chuteReleases = computed(() => {
 		const temp = props.detailItem ? props.detailItem.chuteReleases : [];
-		if (fromRocketStage.value.chuteReleases) {
+		if (fromRocketStage.value && fromRocketStage.value.chuteReleases) {
 			fromRocketStage.value.chuteReleases.forEach(l => l.fromRocket = true);
 			temp.push(...fromRocketStage.value.chuteReleases);
 		}
@@ -124,7 +124,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	});
 	const deploymentBags = computed(() => {
 		const temp = props.detailItem ? props.detailItem.deploymentBags : [];
-		if (fromRocketStage.value.deploymentBags) {
+		if (fromRocketStage.value && fromRocketStage.value.deploymentBags) {
 			fromRocketStage.value.deploymentBags.forEach(l => l.fromRocket = true);
 			temp.push(...fromRocketStage.value.deploymentBags);
 		}
@@ -140,6 +140,11 @@ export function useRocketSetupStageComponent(props, context, options) {
 		if (displayItem.value && displayItem.value.weight)
 			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
 		return fromRocketStageWeight.value;
+	});
+	const displayItemWeightNose = computed(() => {
+		if (displayItem.value && displayItem.value.weightNose)
+			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weightNose; }, (value) => { return value.weightNoseMeasurementUnitsId; }, (value) => { return value.weightNoseMeasurementUnitId; });
+		return null;
 	});
 	const hasAltimeters = computed(() => {
 		const temp = altimeters.value;
@@ -243,7 +248,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	});
 	const parachutes = computed(() => {
 		const temp = props.detailItem ? props.detailItem.parachutes : [];
-		if (fromRocketStage.value.parachutes) {
+		if (fromRocketStage.value && fromRocketStage.value.parachutes) {
 			fromRocketStage.value.parachutes.forEach(l => l.fromRocket = true);
 			temp.push(...fromRocketStage.value.parachutes);
 		}
@@ -257,7 +262,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	});
 	const streamers = computed(() => {
 		const temp = props.detailItem ? props.detailItem.streamers : [];
-		if (fromRocketStage.value.streamers) {
+		if (fromRocketStage.value && fromRocketStage.value.streamers) {
 			fromRocketStage.value.streamers.forEach(l => l.fromRocket = true);
 			temp.push(...fromRocketStage.value.streamers);
 		}
@@ -265,7 +270,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	});
 	const trackers = computed(() => {
 		const temp = props.detailItem ? props.detailItem.trackers : [];
-		if (fromRocketStage.value.trackers) {
+		if (fromRocketStage.value && fromRocketStage.value.trackers) {
 			fromRocketStage.value.trackers.forEach(l => l.fromRocket = true);
 			temp.push(...fromRocketStage.value.trackers);
 		}
@@ -437,7 +442,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 	};
 	const generateMotorInfo = (id, name) => {
 		if (String.isNullOrEmpty(name))
-			return '';
+			return {};
 		let manufacturer = null;
 		if (props.manufacturers)
 			manufacturer = props.manufacturers.find(l => l.id === id);
@@ -691,6 +696,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		displayItem,
 		displayItemCg,
 		displayItemWeight,
+		displayItemWeightNose,
 		hasAltimeters,
 		hasChuteProtectors,
 		hasChuteReleases,

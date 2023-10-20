@@ -95,7 +95,9 @@
 				/>
 			</v-col>
 		</v-row>
-		<template v-slot:buttons_pre>
+		<template v-slot:buttons_pre
+			v-if="$vuetify.display.smAndUp"
+		>
 			<v-btn
 				v-if="canAddSecondary"
 				class="mr-2"
@@ -109,7 +111,18 @@
 				class="mr-2"
 			>|</span>
 		</template>
-		<template v-slot:buttons_post>
+		<template v-slot:buttons_post
+			v-if="$vuetify.display.xs"
+		>
+			<br>
+			<v-btn
+				v-if="canAddSecondary"
+				class="mt-2"
+				color="primary"
+				@click="handleAddSecondary"
+			>
+				{{ $t('buttons.add') }} {{ $t('forms.content.rockets.stage.name') }}
+			</v-btn>
 		</template>
 		<template v-slot:after>	
 		[[ {{ panels }} ]] 
@@ -136,6 +149,7 @@
 							:detail-item="item"
 							:is-editable="isEditable"
 							:manufacturers="manufacturers"
+							:pre-complete-ok-rocket-part="dialogEditPreCompleteOkRocketParts"
 							:update-stage="updateStage"
 							:debug="debug"
 						>
@@ -203,7 +217,6 @@ import { useRocketComponentProps } from '@/components/content/rockets/library/ro
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RocketStage from '@/components/content/rockets/library/rocket/RocketStage';
 import RocketStageEditDialog from '@/components/content/rockets/library/dialogs/RocketStageEditDialog';
 import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
@@ -219,7 +232,6 @@ export default {
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		RocketParts,
 		RocketStage,
 		RocketStageEditDialog,
 		VConfirmationDialog,
@@ -318,6 +330,7 @@ export default {
 			hasAdmin,
 			rocketId,
 			stages,
+			dialogEditPreCompleteOkRocketParts,
 			panelsUpdated,
 			stagesPanelsUpdated,
 			updateStage,
@@ -408,6 +421,7 @@ export default {
 			hasAdmin,
 			rocketId,
 			stages,
+			dialogEditPreCompleteOkRocketParts,
 			panelsUpdated,
 			stagesPanelsUpdated,
 			updateStage,
