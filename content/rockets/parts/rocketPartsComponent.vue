@@ -40,8 +40,7 @@ export function useRocketPartsComponent(props, context, options) {
 	const dialogRocketParts = ref([
 		AppCommonConstants.Rocketry.PartTypes.altimeter, 
 		AppCommonConstants.Rocketry.PartTypes.chuteRelease,
-		AppCommonConstants.Rocketry.PartTypes.parachute,
-		AppCommonConstants.Rocketry.PartTypes.tracker
+		AppCommonConstants.Rocketry.PartTypes.parachute
 	]);
 	const dialogEditRocketPartsManager = ref({});
 	for(let part of dialogRocketParts.value)
@@ -109,6 +108,11 @@ export function useRocketPartsComponent(props, context, options) {
 
 		return await props.preCompleteOk(correlationId, dialogEditRocketPartParams.value);
 	};
+	const editablePart = (item) => {
+		if (!dialogRocketParts.value.find (l => l === item.typeId))
+			return false;
+		return props.editable;
+	}
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;
 	};
@@ -197,6 +201,7 @@ export function useRocketPartsComponent(props, context, options) {
 		dialogEditRocketPartCancel,
 		dialogEditRocketPartOk,
 		dialogEditRocketPartPreCompleteOk,
+		editablePart,
 		isPartType,
 		manufacturer,
 		partTypeName,

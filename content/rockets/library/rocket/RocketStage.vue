@@ -270,7 +270,6 @@
 					:stageId="displayItem.id"
 					@delete="handleChuteReleasesDelete"
 				>
-				<!-- alt -->
 				</RocketParts>
 				<RocketParts
 					:items="deploymentBags"
@@ -280,7 +279,6 @@
 					:stageId="displayItem.id"
 					@delete="handleDeploymentBagsDelete"
 				>
-				<!-- reefing -->
 				</RocketParts>
 				<RocketParts
 					:items="parachutes"

@@ -43,6 +43,7 @@
 							v-if="isPartType(item2, partTypes.motorCase)"
 							:item="item2"
 						/>
+				<!-- reefing -->
 						<ParachutePanelTitle
 							v-if="isPartType(item2, partTypes.parachute)"
 							:item="item2"
@@ -156,7 +157,7 @@
 							@click="clickDeleteRocketPart(item2, stageId)"
 						>{{ $t('buttons.delete') }}</v-btn>
 						<v-btn
-							v-if="editable"
+							v-if="editablePart(item)"
 							:variant="buttonsForms.variant.edit"
 							:color="buttonsForms.color.edit"
 							@click="clickEditRocketPart(item2, stageId, item2.typeId)"
@@ -182,6 +183,26 @@
 		@close="dialogEditRocketPartCancel"
 		@ok="dialogEditRocketPartOk"
 	/>
+	<ChuteReleaseRocketPartDialog
+		ref="dialogRocketPartChuteReleaseRef"
+		:debug="debug"
+		:pre-complete-ok="dialogEditRocketPartPreCompleteOk"
+		:editable="editable"
+		:value="dialogEditRocketPartParams"
+		:signal="dialogEditRocketPartsManager[appCommonConstants.Rocketry.PartTypes.chuteRelease].signal"
+		@close="dialogEditRocketPartCancel"
+		@ok="dialogEditRocketPartOk"
+	/>
+	<ParachuteRocketPartDialog
+		ref="dialogRocketPartParachuteRef"
+		:debug="debug"
+		:pre-complete-ok="dialogEditRocketPartPreCompleteOk"
+		:editable="editable"
+		:value="dialogEditRocketPartParams"
+		:signal="dialogEditRocketPartsManager[appCommonConstants.Rocketry.PartTypes.parachute].signal"
+		@close="dialogEditRocketPartCancel"
+		@ok="dialogEditRocketPartOk"
+	/>
 </template>
 
 <script>
@@ -191,10 +212,12 @@ import { useRocketPartsComponentProps } from '@/components/content/rockets/parts
 import AltimeterPanelTitle from '@/components/content/parts/altimeters/AltimeterPanelTitle';
 import AltimeterRocketPartDialog from '@/components/content/rockets/parts/dialogs/altimeter/AltimeterRocketPartDialog';
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
+import ChuteReleaseRocketPartDialog from '@/components/content/rockets/parts/dialogs/chuteRelease/ChuteReleaseRocketPartDialog';
 import ChuteReleasePanelTitle from '@/components/content/parts/chuteReleases/ChuteReleasePanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import MotorPanelTitle from '@/components/content/parts/motors/MotorPanelTitle';
 import MotorCasePanelTitle from '@/components/content/parts/motorCases/MotorCasePanelTitle';
+import ParachuteRocketPartDialog from '@/components/content/rockets/parts/dialogs/parachute/ParachuteRocketPartDialog';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 import TrackerPanelTitle from '@/components/content/parts/trackers/TrackerPanelTitle';
@@ -205,11 +228,13 @@ export default {
 		AltimeterPanelTitle,
 		AltimeterRocketPartDialog,
 		ChuteProtectorPanelTitle,
+		ChuteReleaseRocketPartDialog,
 		ChuteReleasePanelTitle,
 		DeploymentBagPanelTitle,
 		MotorPanelTitle,
 		MotorCasePanelTitle,
 		ParachutePanelTitle,
+		ParachuteRocketPartDialog,
 		StreamerPanelTitle,
 		TrackerPanelTitle
 	},
@@ -246,6 +271,7 @@ export default {
 			dialogEditRocketPartCancel,
 			dialogEditRocketPartOk,
 			dialogEditRocketPartPreCompleteOk,
+			editablePart,
 			isPartType,
 			manufacturer,
 			partTypeName,
@@ -280,6 +306,7 @@ export default {
 			dialogEditRocketPartCancel,
 			dialogEditRocketPartOk,
 			dialogEditRocketPartPreCompleteOk,
+			editablePart,
 			isPartType,
 			manufacturer,
 			partTypeName,
