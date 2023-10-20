@@ -15,6 +15,10 @@ export function useLaunchEditValidation(nameRequired) {
 		detailItemLocationIterationId: { 
 			$autoDirty: true 
 		},
+		detailItemNotes: {
+			maxLength: maxLength(1000),
+			$autoDirty: true
+		},
 		detailItemRocketId: { 
 			required,
 			$autoDirty: true 

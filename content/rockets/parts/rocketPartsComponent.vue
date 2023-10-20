@@ -7,6 +7,8 @@ import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
+
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
@@ -34,6 +36,17 @@ export function useRocketPartsComponent(props, context, options) {
 	
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
+	const appCommonConstants = ref(AppCommonConstants);
+	const dialogRocketParts = ref([
+		AppCommonConstants.Rocketry.PartTypes.altimeter, 
+		AppCommonConstants.Rocketry.PartTypes.chuteRelease,
+		AppCommonConstants.Rocketry.PartTypes.parachute,
+		AppCommonConstants.Rocketry.PartTypes.tracker
+	]);
+	const dialogEditRocketPartsManager = ref({});
+	for(let part of dialogRocketParts.value)
+		dialogEditRocketPartsManager.value[part] = new DialogSupport();
+	const dialogEditRocketPartParams = ref(null);
 	const panels = ref([]);
 	const partTypes = ref(AppCommonConstants.Rocketry.PartTypes);
 
@@ -64,11 +77,37 @@ export function useRocketPartsComponent(props, context, options) {
 		return output;
 	});
 
-	const clickDelete = async (item, stageId) => {
+	const clickDeleteRocketPart = async (item, stageId) => {
 		context.emit('delete', item, stageId);
 	};
-	const clickSelect = async (item, stageId) => {
+	const clickEditRocketPart = async (item, stageId, typeId) => {
+		dialogEditRocketPartParams.value = { item: item, stageId: stageId, typeId: typeId };
+		dialogEditRocketPartsManager.value[typeId].signal = true;
+	};
+	const clickSelectRocketPart = async (item, stageId) => {
 		context.emit('select', item, stageId);
+	};
+	const dialogEditRocketPartCancel = async () => {
+		if (!dialogEditRocketPartParams.value)
+			return;
+
+		dialogEditRocketPartsManager.value[dialogEditRocketPartParams.value.typeId].signal = false;
+	};
+	const dialogEditRocketPartOk = async () => {
+		if (!dialogEditRocketPartParams.value)
+			return;
+
+		dialogEditRocketPartsManager.value[dialogEditRocketPartParams.value.typeId].signal = false;
+	};
+	const dialogEditRocketPartPreCompleteOk = async (correlationId, item) => {
+		if (!dialogEditRocketPartParams.value)
+			return error('useRocketPartsComponent', 'dialogEditRocketPartParams', 'Invalid dialogEditRocketPartParams value.', null, null, null, correlationId);
+
+		dialogEditRocketPartParams.value.item = item;
+		if (!props.preCompleteOk)
+			return error('useRocketPartsComponent', 'preCompleteOkRocketParts', 'Invalid preCompleteOk method.', null, null, null, correlationId);
+
+		return await props.preCompleteOk(correlationId, dialogEditRocketPartParams.value);
 	};
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;
@@ -146,11 +185,18 @@ export function useRocketPartsComponent(props, context, options) {
 		setErrors,
 		buttonsDialog,
 		buttonsForms,
+		appCommonConstants,
+		dialogEditRocketPartsManager,
+		dialogEditRocketPartParams,
 		panels,
 		partTypes,
 		results,
-		clickDelete,
-		clickSelect,
+		clickDeleteRocketPart,
+		clickEditRocketPart,
+		clickSelectRocketPart,
+		dialogEditRocketPartCancel,
+		dialogEditRocketPartOk,
+		dialogEditRocketPartPreCompleteOk,
 		isPartType,
 		manufacturer,
 		partTypeName,

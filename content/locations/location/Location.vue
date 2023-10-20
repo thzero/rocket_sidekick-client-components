@@ -165,7 +165,9 @@
 				/>
 			</v-col>
 		</v-row>
-		<template v-slot:buttons_pre>
+		<template v-slot:buttons_pre
+			v-if="$vuetify.display.smAndUp"
+		>
 			<v-btn
 				v-if="canAddSecondary"
 				class="mr-2"
@@ -179,7 +181,18 @@
 				class="mr-2"
 			>|</span>
 		</template>
-		<template v-slot:buttons_post>
+		<template v-slot:buttons_post
+			v-if="$vuetify.display.xs"
+		>
+			<br>
+			<v-btn
+				v-if="canAddSecondary"
+				class="mt-2"
+				color="primary"
+				@click="handleAddSecondary"
+			>
+				{{ $t('buttons.add') }} {{ $t('forms.content.locations.iterations.name') }}
+			</v-btn>
 		</template>
 		<template v-slot:after>	
 		[[ {{ panels }} ]] 

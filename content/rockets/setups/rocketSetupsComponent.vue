@@ -80,6 +80,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display
 	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'rocketSetups',
@@ -322,6 +323,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display,
 		buttonsDialog,
 		buttonsForms,

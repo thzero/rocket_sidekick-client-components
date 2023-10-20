@@ -153,25 +153,35 @@
 							v-if="deletable && !item2.fromRocket"
 							:variant="buttonsForms.variant.delete"
 							:color="buttonsForms.color.delete"
-							@click="clickDelete(item2, stageId)"
+							@click="clickDeleteRocketPart(item2, stageId)"
 						>{{ $t('buttons.delete') }}</v-btn>
 						<v-btn
 							v-if="editable"
 							:variant="buttonsForms.variant.edit"
 							:color="buttonsForms.color.edit"
-							@click="clickEdit(item2, stageId)"
+							@click="clickEditRocketPart(item2, stageId, item2.typeId)"
 						>{{ $t('buttons.edit') }}</v-btn>
 						<v-btn
 							v-if="selectable && !item2.fromRocket"
 							:variant="buttonsForms.variant.default"
 							:color="buttonsForms.color.default"
-							@click="clickSelect(item2, stageId)"
+							@click="clickSelectRocketPart(item2, stageId)"
 						>{{ $t('buttons.select') }}</v-btn>
 					</v-card-actions>
 				</v-card>
 			</div>
 		</v-expansion-panel-text>
 	</v-expansion-panel>
+	<AltimeterRocketPartDialog
+		ref="dialogRocketPartAltimeterRef"
+		:debug="debug"
+		:pre-complete-ok="dialogEditRocketPartPreCompleteOk"
+		:editable="editable"
+		:value="dialogEditRocketPartParams"
+		:signal="dialogEditRocketPartsManager[appCommonConstants.Rocketry.PartTypes.altimeter].signal"
+		@close="dialogEditRocketPartCancel"
+		@ok="dialogEditRocketPartOk"
+	/>
 </template>
 
 <script>
@@ -179,6 +189,7 @@ import { useRocketPartsComponent } from '@/components/content/rockets/parts/rock
 import { useRocketPartsComponentProps } from '@/components/content/rockets/parts/rocketPartsComponentProps';
 
 import AltimeterPanelTitle from '@/components/content/parts/altimeters/AltimeterPanelTitle';
+import AltimeterRocketPartDialog from '@/components/content/rockets/parts/dialogs/altimeter/AltimeterRocketPartDialog';
 import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
 import ChuteReleasePanelTitle from '@/components/content/parts/chuteReleases/ChuteReleasePanelTitle';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
@@ -192,6 +203,7 @@ export default {
 	name: 'RocketPartsControl',
 	components: {
 		AltimeterPanelTitle,
+		AltimeterRocketPartDialog,
 		ChuteProtectorPanelTitle,
 		ChuteReleasePanelTitle,
 		DeploymentBagPanelTitle,
@@ -222,12 +234,18 @@ export default {
 			setErrors,
 			buttonsDialog,
 			buttonsForms,
+			appCommonConstants,
+			dialogEditRocketPartsManager,
+			dialogEditRocketPartParams,
 			panels,
 			partTypes,
 			results,
-			clickDelete,
-			clickEdit,
-			clickSelect,
+			clickDeleteRocketPart,
+			clickEditRocketPart,
+			clickSelectRocketPart,
+			dialogEditRocketPartCancel,
+			dialogEditRocketPartOk,
+			dialogEditRocketPartPreCompleteOk,
 			isPartType,
 			manufacturer,
 			partTypeName,
@@ -250,12 +268,18 @@ export default {
 			setErrors,
 			buttonsDialog,
 			buttonsForms,
+			appCommonConstants,
+			dialogEditRocketPartsManager,
+			dialogEditRocketPartParams,
 			panels,
 			partTypes,
 			results,
-			clickDelete,
-			clickEdit,
-			clickSelect,
+			clickDeleteRocketPart,
+			clickEditRocketPart,
+			clickSelectRocketPart,
+			dialogEditRocketPartCancel,
+			dialogEditRocketPartOk,
+			dialogEditRocketPartPreCompleteOk,
 			isPartType,
 			manufacturer,
 			partTypeName,

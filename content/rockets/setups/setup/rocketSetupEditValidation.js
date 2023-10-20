@@ -3,6 +3,10 @@ import { between, decimal, maxLength, minLength, required } from '@vuelidate/val
 export function useRocketSetupEditValidation(nameRequired) { 
 	const validation = {
 		detailItemDescription: { $autoDirty: true },
+		detailItemNotes: {
+			maxLength: maxLength(1000),
+			$autoDirty: true
+		},
 		detailItemRocketId: { 
 			required,
 			$autoDirty: true 

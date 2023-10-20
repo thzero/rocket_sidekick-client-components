@@ -101,6 +101,22 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="12">
+				<VTextAreaWithValidation
+					ref="detailItemNotesRef"
+					v-model="detailItemNotes"
+					vid="detailItemNotes"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.launches.notes')"
+					:counter="1000"
+					:clearable="isEditable"
+					:rows="detailItemTextRows"
+				/>
+<div v-html="markupHint"></div>
+			</v-col>
+		</v-row>
 		<template v-slot:buttons_pre>
 			<!-- <v-btn
 				v-if="canAddSecondary"
@@ -316,9 +332,11 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			markupHint,
 			dialogRocketLookupManager,
 			detailItemDescription,
 			detailItemName,
+			detailItemNotes,
 			detailItemRocketId,
 			detailItemRocketName,
 			detailItemType,
@@ -409,9 +427,11 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
+			markupHint,
 			dialogRocketLookupManager,
 			detailItemDescription,
 			detailItemName,
+			detailItemNotes,
 			detailItemRocketId,
 			detailItemRocketName,
 			detailItemType,

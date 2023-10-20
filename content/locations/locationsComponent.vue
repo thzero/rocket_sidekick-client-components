@@ -78,6 +78,7 @@ export function useLocationsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display
 	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'locations',
@@ -273,6 +274,7 @@ export function useLocationsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display,
 		buttonsDialog,
 		buttonsForms,

@@ -75,6 +75,17 @@
 				/>
 			</v-col>
 			<v-col
+				v-if="displayItemWeightNose"
+				cols="6" sm="4"
+			>
+				<VTextField
+					v-model="displayItemWeightNose"
+					:hide-details="true"
+					:readonly="true"
+					:label="$t('forms.content.rockets.weight.nose') + ' ' + $t('forms.content.rockets.weight.name')"
+				/>
+			</v-col>
+			<v-col
 				v-if="displayItemWeight"
 				cols="6" sm="4"
 			>
@@ -82,7 +93,7 @@
 					v-model="displayItemWeight"
 					:hide-details="true"
 					:readonly="true"
-					:label="$t('forms.content.parts.weight')"
+					:label="$t('forms.content.rockets.weight.name')"
 				/>
 			</v-col>
 		</v-row>
@@ -566,6 +577,7 @@ export default {
 			displayItem,
 			displayItemCg,
 			displayItemWeight,
+			displayItemWeightNose,
 			hasAltimeters,
 			hasChuteProtectors,
 			hasChuteReleases,
@@ -677,6 +689,7 @@ export default {
 			displayItem,
 			displayItemCg,
 			displayItemWeight,
+			displayItemWeightNose,
 			hasAltimeters,
 			hasChuteProtectors,
 			hasChuteReleases,

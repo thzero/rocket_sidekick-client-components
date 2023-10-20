@@ -84,24 +84,25 @@ export function useRocketComponent(props, context, options) {
 	} = useDetailSecondaryComponent(props, context, {
 		dialogDeleteMessage: 'rockets.stage',
 		dialogDeleteSecondaryOk: async (correlationId, id) => {
-			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
-			LibraryCommonUtility.deleteArrayById(temp.stages, id);
+			// const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+			// LibraryCommonUtility.deleteArrayById(temp.stages, id);
 
-			temp.stages = temp.stages.sort((a, b) => a.index >= b.index);
-			let index = 0;
-			for (const item of temp.stages)
-				item.index = index++;
-			// detailItemData.value.stages = stages;
+			// temp.stages = temp.stages.sort((a, b) => a.index >= b.index);
+			// let index = 0;
+			// for (const item of temp.stages)
+			// 	item.index = index++;
+			// // detailItemData.value.stages = stages;
 			
-			const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
+			// const response = await serviceStore.dispatcher.saveRocketStageDelete(correlationId, detailItemData.value);
+			const response = await serviceStore.dispatcher.saveRocketStageDelete(correlationId, detailItemData.value, id);
 			logger.debug('useRocketComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
 			return response;
 		},
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
-			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
-			temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
+			// const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+			// temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
 			
-			const response = await serviceStore.dispatcher.saveRocket(correlationId, detailItemData.value);
+			const response = await serviceStore.dispatcher.saveRocketStage(correlationId, detailItemData.value, item);
 			logger.debug('useRocketComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);
 			
 			// detailItem.value.data = response.results;
@@ -197,6 +198,32 @@ export function useRocketComponent(props, context, options) {
 		return detailItemData.value ? detailItemData.value.stages : [];
 	});
 	
+	const dialogEditPreCompleteOkRocketParts = async (correlationId, item) => {
+		// const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+		// const stage = temp.stages.find(l => l.id === item.stageId);
+		// if (!stage)
+		// 	return error('useRocketComponent', 'dialogEditPreCompleteOkRocketParts', `Invalid stage for '${item.stageId}'.`, null, null, null, correlationId);
+
+		// if (item.typeId === AppCommonConstants.Rocketry.PartTypes.altimeter)
+		// 	stage.altimeters = LibraryCommonUtility.updateArrayByObject(stage.altimeters, item.item);
+		// else if (item.typeId === AppCommonConstants.Rocketry.PartTypes.chuteProtector)
+		// 	stage.chuteProtectors = LibraryCommonUtility.updateArrayByObject(stage.chuteProtectors, item.item);
+		// else if (item.typeId === AppCommonConstants.Rocketry.PartTypes.chuteRelease)
+		// 	stage.chuteReleases = LibraryCommonUtility.updateArrayByObject(stage.chuteReleases, item.item);
+		// else if (item.typeId === AppCommonConstants.Rocketry.PartTypes.deploymentBag)
+		// 	stage.deploymentBags = LibraryCommonUtility.updateArrayByObject(stage.deploymentBags, item.item);
+		// else if (item.typeId === AppCommonConstants.Rocketry.PartTypes.parachute)
+		// 	stage.parachutes = LibraryCommonUtility.updateArrayByObject(stage.parachutes, item.item);
+		// else if (item.typeId === AppCommonConstants.Rocketry.PartTypes.streamer)
+		// 	stage.streamers = LibraryCommonUtility.updateArrayByObject(stage.streamers, item.item);
+		// else if (item.typeId === AppCommonConstants.Rocketry.PartTypes.tracker)
+		// 	stage.trackers = LibraryCommonUtility.updateArrayByObject(stage.trackers, item.item);
+
+		const response = await serviceStore.dispatcher.saveRocketStagePart(correlationId, detailItemData.value, item);
+		logger.debug('useRocketComponent', 'dialogEditPreCompleteOkRocketParts', 'response', response, correlationId);
+		detailItem.value.data = response.results;
+		return response;
+	};
 	const panelsKey = (value) => {
 		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;
 	};
@@ -257,7 +284,7 @@ export function useRocketComponent(props, context, options) {
 			element.index = index++;
 		});
 
-		const response = await serviceStore.dispatcher.saveRocket(correlationId, temp);
+		const response = await serviceStore.dispatcher.saveRocketStage(correlationId, temp);
 		logger.debug('useRocketComponent', 'updateStage', 'response', response, correlationId);
 		if (hasFailed(response))
 			return response;
@@ -349,6 +376,7 @@ export function useRocketComponent(props, context, options) {
 		hasAdmin,
 		rocketId,
 		stages,
+		dialogEditPreCompleteOkRocketParts,
 		panelsUpdated,
 		stagesPanelsUpdated,
 		updateStage,

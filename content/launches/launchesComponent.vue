@@ -80,6 +80,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display
 	} = useMasterDetailComponent(props, context, {
 			dialogDeleteMessage : 'launches',
@@ -205,6 +206,12 @@ export function useLaunchesBaseComponent(props, context, options) {
 	const launchDate = (item) => {
 		return LibraryCommonUtility.getDateHuman(item.date);
 	};
+	const launchStatusColor = (item) => {
+		return item ? (item.success === true ? 'bg-success' : item.success === false ? 'bg-red' : 'bg-primary') : 'bg-primary';
+	};
+	const launchStatusIcon = (item) => {
+		return item ? (item.success === true ? 'mdi-thumb-up' : item.success === false ? 'mdi-thumb-down' : null) : null;
+	};
 	const launchTitle = (item) => {
 		let output = '';
 		if (!String.isNullOrEmpty(item.name))
@@ -227,7 +234,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		}
 		
 		// return `${output} ${date} @ ${location}`;
-		return `${output} ${location}`;
+		return `${output} @ ${location}`;
 	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
@@ -326,6 +333,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		search,
 		display,
 		buttonsDialog,
 		buttonsForms,
@@ -350,6 +358,8 @@ export function useLaunchesBaseComponent(props, context, options) {
 		clickSearchLocations,
 		clickSearchRockets,
 		launchDate,
+		launchStatusColor,
+		launchStatusIcon,
 		launchTitle,
 		resetAdditional,
 		selectLocation,
