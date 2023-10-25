@@ -4,23 +4,6 @@
 	>
 		[[ displayItem {{ displayItem }} ]]
 	</div>
-	<v-row dense>
-		<v-col cols="12" sm="8">
-				<VtTextField
-					v-model="displayItem.name"
-					:label="$t('forms.name')"
-					:counter="30"
-				/>
-		</v-col>
-		<v-col cols="sm" sm="4">
-			<VtDateTimePickerField
-				v-model="displayItem.date"
-				:default-date="false"
-				:readonly="true"
-				:label="$t('forms.date')"
-			/>
-		</v-col>
-	</v-row>
 	<v-row dense
 		v-if="displayItem.description"
 	>
@@ -41,22 +24,21 @@
 			/>
 		</v-col>
 		<v-col cols="12" sm="4">
-			<VtSelect
+			<VtTextField
 				v-model="displayItemLocationIteration"
 				:label="$t('forms.content.locations.iterations.name')"
+				:readonly="true"
 			/>
 		</v-col>
 	</v-row>
 	<v-row dense>
-		<v-col cols="12">
+		<v-col cols="12" sm="6">
 			<VtTextField
 				v-model="displayItemRocketMame"
 				:label="$t('forms.content.rockets.name')"
 				:readonly="true"
 			/>
 		</v-col>
-	</v-row>
-	<v-row dense>
 		<v-col cols="12" sm="6">
 			<VtSelect
 				v-model="displayItem.success"

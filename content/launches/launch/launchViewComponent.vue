@@ -9,8 +9,6 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
-// import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
-// import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useLaunchViewComponent(props, context, options) {
 	const {
@@ -44,24 +42,24 @@ export function useLaunchViewComponent(props, context, options) {
 		successReasons
 	} = useLaunchComponent(props, context);
 
-	const {
-		motorDiameters,
-		motorImpulseClasses,
-		// motorCaseInfo,
-		motorDiameter,
-		motorUrl
-	} = useMotorLookupComponent(props, context);
-
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
 	});
-	const displayItemLocationIteration= computed(() => {
-		return displayItem.value ? displayItem.value.name : '';
+	const displayItemLocationIteration = computed(() => {
+		if (!displayItem.value || !displayItem.value.location || !displayItem.value.location.iteration)
+			return '';
+		if (displayItem.value.location.iteration.name)
+			return displayItem.value.location.iteration.name;
+		if (displayItem.value.location.iteration.year)
+			return displayItem.value.location.iteration.year;
+		if (displayItem.value.location.iteration.number)
+			return displayItem.value.location.iteration.number;
+		return '';
 	});
 	const displayItemLocationMame = computed(() => {
-		return displayItem.value ? displayItem.value.name : '';
+		return displayItem.value && displayItem.value.location ? displayItem.value.location.name : '';
 	});
 	const displayItemResultsAltitudeDrogue = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDrogue)
@@ -122,7 +120,7 @@ export function useLaunchViewComponent(props, context, options) {
 		return null;
 	});
 	const displayItemRocketMame = computed(() => {
-		return displayItem.value ? displayItem.value.name : '';
+		return displayItem.value && displayItem.value.rocket ? displayItem.value.rocket.name : '';
 	});
 	const hasCoords = computed(() => {
 		return hasCoordsLaunch.value || hasCoordsRecovery.value;
