@@ -31,7 +31,7 @@
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
 			<v-col>
-				<VTextFieldWithValidation
+				<VtTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
 					vid="detailItemName"
@@ -54,7 +54,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col>
-				<VTextAreaWithValidation
+				<VtTextAreaWithValidation
 					ref="descriptionRef"
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
@@ -132,16 +132,16 @@ import { usePartComponentProps } from '@/components/content/parts/part/partCompo
 
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'PartControl',
 	components: {
 		VtFormControl,
 		VtSwitchWithValidation,
-		VTextAreaWithValidation,
-		VTextFieldWithValidation
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...usePartComponentProps

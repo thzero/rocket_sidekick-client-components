@@ -11,7 +11,7 @@
 		@error="dialogError"
 		@ok="dialogOk"
 	>
-		<VTextFieldWithValidation
+		<VtTextFieldWithValidation
 			ref="nameRef"
 			v-model="name"
 			vid="name"
@@ -30,13 +30,13 @@ import { useRocketCopyDialogProps } from '@/components/content/rockets/library/d
 import { useRocketCopyDialogValidation } from '@/components/content/rockets/library/dialogs/rocketCopyDialogValidation';
 
 import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'RocketCopyDialog',
 	components: {
 		VtFormDialog,
-		VTextFieldWithValidation
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useRocketCopyDialogProps

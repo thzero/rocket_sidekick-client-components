@@ -78,7 +78,7 @@
 							</v-row>
 							<v-row dense>
 								<v-col col="12">
-									<VTextFieldWithValidation
+									<VtTextFieldWithValidation
 										ref="filterItemMotorRef"
 										v-model="filterItemMotor"
 										vid="filterItemMotor"
@@ -190,7 +190,7 @@ import { useMotorLookupDialogValidation } from '@/components/external/motorLooku
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListingDialog';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'MotorLookupDialog',
@@ -198,7 +198,7 @@ export default {
 		VtConfirmationDialog,
 		VtFormListingDialog,
 		VtSelectWithValidation,
-		VTextFieldWithValidation
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useMotorLookupDialogProps

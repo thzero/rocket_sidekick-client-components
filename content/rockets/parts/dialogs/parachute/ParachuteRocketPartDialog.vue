@@ -90,8 +90,8 @@ import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/V
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'ParachuteRocketPartDialog',
@@ -104,8 +104,8 @@ export default {
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
-		VTextAreaWithValidation,
-		VTextFieldWithValidation
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useDetailComponentProps,

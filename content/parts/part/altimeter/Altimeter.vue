@@ -34,7 +34,7 @@
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
 			<v-col cols="10">
-				<VTextFieldWithValidation
+				<VtTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
 					vid="detailItemName"
@@ -57,7 +57,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col>
-				<VTextAreaWithValidation
+				<VtTextAreaWithValidation
 					ref="descriptionRef"
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
@@ -134,7 +134,7 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="6">
-				<VTextFieldWithValidation
+				<VtTextFieldWithValidation
 					ref="detailItemManufacturerStockIdRef"
 					v-model="detailItemManufacturerStockId"
 					vid="detailItemManufacturerStockId"
@@ -164,8 +164,8 @@ import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'AltimeterPartControl',
@@ -177,8 +177,8 @@ export default {
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
-		VTextAreaWithValidation,
-		VTextFieldWithValidation
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useDetailComponentProps,

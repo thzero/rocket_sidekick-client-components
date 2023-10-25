@@ -17,7 +17,7 @@
 	>
 		<v-row dense>
 			<v-col cols="12">
-				<VTextArea2
+				<VtTextArea
 					v-model="fromRocketStageDescription"
 					:readonly="true"
 					:label="$t('forms.description')"
@@ -32,7 +32,7 @@
 				v-if="fromRocketStageDiameterMajor"
 				cols="6" xs="3"
 			>
-				<VTextField2
+				<VtTextField
 					v-model="fromRocketStageDiameterMajor"
 					:hide-details="true"
 					:readonly="true"
@@ -43,7 +43,7 @@
 				v-if="fromRocketStageLength"
 				cols="6" xs="3"
 			>
-				<VTextField2
+				<VtTextField
 					v-model="fromRocketStageLength"
 					:hide-details="true"
 					:readonly="true"
@@ -56,7 +56,7 @@
 				v-if="fromRocketStageCp"
 				cols="6" sm="4"
 			>
-				<VTextField2
+				<VtTextField
 					v-model="fromRocketStageCp"
 					:hide-details="true"
 					:readonly="true"
@@ -67,7 +67,7 @@
 				v-if="displayItemCg"
 				cols="6" sm="4"
 			>
-				<VTextField2
+				<VtTextField
 					v-model="displayItemCg"
 					:hide-details="true"
 					:readonly="true"
@@ -78,7 +78,7 @@
 				v-if="displayItemWeightNose"
 				cols="6" sm="4"
 			>
-				<VTextField2
+				<VtTextField
 					v-model="displayItemWeightNose"
 					:hide-details="true"
 					:readonly="true"
@@ -89,7 +89,7 @@
 				v-if="displayItemWeight"
 				cols="6" sm="4"
 			>
-				<VTextField2
+				<VtTextField
 					v-model="displayItemWeight"
 					:hide-details="true"
 					:readonly="true"
@@ -110,7 +110,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="fromRocketStageMotor(0).value"
 							:readonly="true"
 							:hide-details="true"
@@ -120,7 +120,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="motorInfo(0).value"
 							:readonly="true"
 							:hide-details="true"
@@ -130,7 +130,7 @@
 					<v-col 
 						cols="12" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="motorCaseInfo(0).value"
 							:readonly="true"
 							:hide-details="true"
@@ -153,7 +153,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="fromRocketStageMotor(1).value"
 							:readonly="true"
 							:hide-details="true"
@@ -163,7 +163,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="motorInfo(1).value"
 							:readonly="true"
 							:hide-details="true"
@@ -173,7 +173,7 @@
 					<v-col 
 						cols="12" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="motorCaseInfo(1).value"
 							:readonly="true"
 							:hide-details="true"
@@ -196,7 +196,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="fromRocketStageMotor(2).value"
 							:readonly="true"
 							:hide-details="true"
@@ -206,7 +206,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="motorInfo(2).value"
 							:readonly="true"
 							:hide-details="true"
@@ -216,7 +216,7 @@
 					<v-col 
 						cols="12" md="4"
 					>
-						<VTextField2
+						<VtTextField
 							v-model="motorCaseInfo(2).value"
 							:readonly="true"
 							:hide-details="true"
@@ -396,7 +396,7 @@
 							<v-col 
 								cols="12" sm="5"
 							>
-								<VTextField2
+								<VtTextField
 									v-model="item.motor"
 									:readonly="true"
 									:hide-details="true"
@@ -405,7 +405,7 @@
 							</v-col><v-col 
 								cols="12" sm="7"
 							>
-								<VTextField2
+								<VtTextField
 									v-model="item.motorCase"
 									:readonly="true"
 									:hide-details="true"
@@ -528,8 +528,8 @@ import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
-import VTextArea2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea2';
-import VTextField2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextField2';
+import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
+import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
 	name: 'RocketSetupStageControl',
@@ -542,8 +542,8 @@ export default {
 		StreamerPanelTitle,
 		VtConfirmationDialog,
 		VtSelect,
-		VTextArea2,
-		VTextField2
+		VtTextArea,
+		VtTextField
 	},
 	props: {
 		...useRocketSetupStageComponentProps
