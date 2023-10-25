@@ -11,7 +11,7 @@
 		@error="dialogError"
 		@ok="dialogOk"
 	>
-		<VTextFieldWithValidation
+		<VtTextFieldWithValidation
 			ref="nameRef"
 			v-model="name"
 			vid="name"
@@ -28,13 +28,13 @@ import { useChecklistCopyDialogProps } from '@/components/content/checklists/dia
 import { useChecklistCopyDialogValidation } from '@/components/content/checklists/dialogs/checklistCopyDialogValidation';
 
 import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'ChecklistCopyDialog',
 	components: {
 		VtFormDialog,
-		VTextFieldWithValidation
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useChecklistCopyDialogProps

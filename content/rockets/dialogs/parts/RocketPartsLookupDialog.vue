@@ -19,7 +19,7 @@
 						<v-card-text>
 							<v-row dense>
 								<v-col cols="8">
-									<VTextFieldWithValidation
+									<VtTextFieldWithValidation
 										ref="filterItemNameRef"
 										v-model="filterItemName"
 										vid="filterItemName"
@@ -181,7 +181,7 @@
 									/>
 								</v-col>
 								<v-col col="4">
-									<VTextFieldWithValidation
+									<VtTextFieldWithValidation
 										ref="filterItemManufacturerStockIdRef"
 										v-model="filterItemManufacturerStockId"
 										vid="filterItemManufacturerStockId"
@@ -264,7 +264,7 @@ import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/component
 import VtFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListingDialog';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'RocketPartsLookupDialog',
@@ -276,7 +276,7 @@ export default {
 		VtFormListingDialog,
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
-		VTextFieldWithValidation
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useLookupDialogProps,

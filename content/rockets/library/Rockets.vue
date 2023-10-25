@@ -16,7 +16,7 @@
 					<slot name="filters">
 						<v-row dense>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VTextFieldWithValidation
+								<VtTextFieldWithValidation
 									ref="filterItemNameRef"
 									v-model="filterItemName"
 									vid="filterItemName"
@@ -53,7 +53,7 @@
 								/>
 							</v-col>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VTextFieldWithValidation
+								<VtTextFieldWithValidation
 									ref="filterItemManufacturerStockIdRef"
 									v-model="filterItemManufacturerStockId"
 									vid="filterItemManufacturerStockId"
@@ -63,7 +63,7 @@
 							</v-col>
 							<!-- 
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VTextFieldWithValidation
+								<VtTextFieldWithValidation
 									ref="filterItemDiameterRef"
 									v-model="filterItemDiameter"
 									vid="filterItemDiameter"
@@ -263,8 +263,8 @@ import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/V
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'RocketsUserControl',
@@ -280,8 +280,8 @@ export default {
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
-		VTextAreaWithValidation,
-		VTextFieldWithValidation
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useMasterDetailComponentProps,

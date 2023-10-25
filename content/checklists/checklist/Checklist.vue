@@ -35,7 +35,7 @@
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
 			<v-col cols="10">
-				<VTextFieldWithValidation
+				<VtTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
 					vid="detailItemName"
@@ -57,7 +57,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col>
-				<VTextAreaWithValidation
+				<VtTextAreaWithValidation
 					ref="descriptionRef"
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
@@ -153,8 +153,8 @@ import { useChecklistValidation } from '@/components/content/checklists/checklis
 import ChecklistSteps from '@/components/content/checklists/checklist/ChecklistSteps';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'ChecklistControl',
@@ -162,8 +162,8 @@ export default {
 		ChecklistSteps,
 		VtFormControl,
 		VtSwitchWithValidation,
-		VTextAreaWithValidation,
-		VTextFieldWithValidation
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useChecklistComponentProps

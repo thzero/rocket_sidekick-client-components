@@ -23,7 +23,7 @@
 		</div>
 		<!-- <v-row dense>
 			<v-col cols="3">
-				<VTextField
+				<VtTextField
 					v-model="stageNumber"
 					:readonly="!isEditable"
 					:label="$t('forms.content.rockets.stage.name')"
@@ -214,7 +214,7 @@
 					<v-col 
 						cols="6" md="2"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							v-model="detailItemMotorInfo0"
 							:readonly="true"
 							:hide-details="true"
@@ -224,7 +224,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotor0Ref"
 							v-model="detailItemMotor0"
 							vid="detailItemMotor0"
@@ -236,7 +236,7 @@
 					<v-col 
 						cols="8" md="4"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotorCase0Ref"
 							v-model="detailItemMotorCase0"
 							vid="detailItemMotorCase0"
@@ -248,7 +248,7 @@
 					<v-col 
 						cols="4" md="2"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotorDelay0Ref"
 							v-model="detailItemMotorDelay0"
 							vid="detailItemMotorDelay0"
@@ -298,7 +298,7 @@
 					<v-col 
 						cols="6" md="2"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							v-model="detailItemMotorInfo1"
 							:readonly="true"
 							:hide-details="true"
@@ -308,7 +308,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotor1Ref"
 							v-model="detailItemMotor1"
 							vid="detailItemMotor1"
@@ -320,7 +320,7 @@
 					<v-col 
 						cols="8" md="4"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotorCase1Ref"
 							v-model="detailItemMotorCase1"
 							vid="detailItemMotorCase1"
@@ -332,7 +332,7 @@
 					<v-col 
 						cols="4" md="2"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotorDelay1Ref"
 							v-model="detailItemMotorDelay1"
 							vid="detailItemMotorDelay1"
@@ -382,7 +382,7 @@
 					<v-col 
 						cols="6" md="2"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							v-model="detailItemMotorInfo2"
 							:readonly="true"
 							:hide-details="true"
@@ -392,7 +392,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotor2Ref"
 							v-model="detailItemMotor2"
 							vid="detailItemMotor2"
@@ -404,7 +404,7 @@
 					<v-col 
 						cols="8" md="4"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotorCase2Ref"
 							v-model="detailItemMotorCase2"
 							vid="detailItemMotorCase2"
@@ -416,7 +416,7 @@
 					<v-col 
 						cols="4" md="2"
 					>
-						<VTextFieldWithValidation
+						<VtTextFieldWithValidation
 							ref="detailItemMotorDelay2Ref"
 							v-model="detailItemMotorDelay2"
 							vid="detailItemMotorDelay2"
@@ -490,8 +490,8 @@ import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/V
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'RocketSetupStageEditDialog',
@@ -504,8 +504,8 @@ export default {
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
-		VTextAreaWithValidation,
-		VTextFieldWithValidation
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useDetailFormDialogProps,

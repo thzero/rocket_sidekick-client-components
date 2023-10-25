@@ -30,7 +30,7 @@
 	>
 		<v-row dense>
 			<v-col cols="12" sm="8">
-				<VTextFieldWithValidation
+				<VtTextFieldWithValidation
 					ref="detailItemNameRef"
 					v-model="detailItemName"
 					vid="detailItemName"
@@ -54,7 +54,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col>
-				<VTextAreaWithValidation
+				<VtTextAreaWithValidation
 					ref="descriptionRef"
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
@@ -70,7 +70,7 @@
 		<v-row dense>
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
-					<VTextFieldWithValidation
+					<VtTextFieldWithValidation
 						ref="detailItemLocationNameRef"
 						v-model="detailItemLocationName"
 						vid="detailItemLocationName"
@@ -103,7 +103,7 @@
 		<v-row dense>
 			<v-col cols="12">
 				<div class="d-flex">
-					<VTextFieldWithValidation
+					<VtTextFieldWithValidation
 						ref="detailItemRocketNameRef"
 						v-model="detailItemRocketName"
 						vid="detailItemRocketName"
@@ -151,7 +151,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12">
-				<VTextAreaWithValidation
+				<VtTextAreaWithValidation
 					ref="detailItemNotesRef"
 					v-model="detailItemNotes"
 					vid="detailItemNotes"
@@ -391,8 +391,8 @@ import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'LaunchControl',
@@ -409,8 +409,8 @@ export default {
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
-		VTextAreaWithValidation,
-		VTextFieldWithValidation
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useDetailComponentProps,

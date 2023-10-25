@@ -19,7 +19,7 @@
 						<v-card-text>
 							<v-row dense>
 								<v-col cols="12" sm="6">
-									<VTextFieldWithValidation
+									<VtTextFieldWithValidation
 										ref="filterItemNameRef"
 										v-model="filterItemName"
 										vid="filterItemName"
@@ -157,7 +157,7 @@ import VtFormListingDialog from '@thzero/library_client_vue3_vuetify3/components
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'LocationLookupDialog',
@@ -170,7 +170,7 @@ export default {
 		VtMarkdown,
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
-		VTextFieldWithValidation
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useLookupDialogProps,

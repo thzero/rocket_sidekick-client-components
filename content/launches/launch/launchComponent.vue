@@ -34,8 +34,10 @@ export function useLaunchComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		displayItemMeasurement,
+		displayItemMeasurementAcceleration,
 		displayItemMeasurementLength,
 		displayItemMeasurementWeight,
+		displayItemMeasurementVelocity,
 	 	measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
@@ -61,8 +63,10 @@ export function useLaunchComponent(props, context, options) {
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
 		displayItemMeasurement,
+		displayItemMeasurementAcceleration,
 		displayItemMeasurementLength,
 		displayItemMeasurementWeight,
+		displayItemMeasurementVelocity,
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,

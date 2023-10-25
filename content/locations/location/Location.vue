@@ -37,7 +37,7 @@
 	>
 		<v-row dense>
 			<v-col cols="12" sm="8">
-				<VTextFieldWithValidation
+				<VtTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
 					vid="detailItemName"
@@ -60,7 +60,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col>
-				<VTextAreaWithValidation
+				<VtTextAreaWithValidation
 					ref="descriptionRef"
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
@@ -117,7 +117,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12" sm="6">
-				<VTextFieldWithValidation
+				<VtTextFieldWithValidation
 					v-if="isEditable || (!isEditable && detailItemAddressCity)"
 					ref="detailItemAddressCityRef"
 					v-model="detailItemAddressCity"
@@ -128,7 +128,7 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="6">
-				<VTextFieldWithValidation
+				<VtTextFieldWithValidation
 					v-if="isEditable || (!isEditable && detailItemAddressPostalCode)"
 					ref="detailItemAddressPostalCodeRef"
 					v-model="detailItemAddressPostalCode"
@@ -220,7 +220,7 @@
 								v-if="item.number"
 								cols="6"
 							>
-								<VTextField
+								<VtTextField
 									v-model="item.number"
 									:readonly="true"
 									:label="$t('forms.content.locations.number')"
@@ -238,7 +238,7 @@
 								v-if="item.year"
 								cols="6"
 							>
-								<VTextField
+								<VtTextField
 									v-model="item.year"
 									:readonly="true"
 									:label="$t('forms.content.locations.year')"
@@ -294,7 +294,7 @@
 							dense
 						>
 							<v-col cols="6" sm="4">
-								<VTextField
+								<VtTextField
 									v-if="item.address.city"
 									v-model="item.address.city"
 									:readonly="true"
@@ -320,7 +320,7 @@
 								/>
 							</v-col>
 							<v-col cols="6" sm="4">
-								<VTextField
+								<VtTextField
 									v-if="item.address.postalCode"
 									v-model="item.address.postalCode"
 									:readonly="true"
@@ -406,8 +406,8 @@ import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/component
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'LocationControl',
@@ -419,8 +419,8 @@ export default {
 		VtFormControl,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
-		VTextAreaWithValidation,
-		VTextFieldWithValidation
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useDetailComponentProps,

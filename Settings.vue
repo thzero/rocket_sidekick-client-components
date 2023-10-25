@@ -76,7 +76,7 @@
 									>
 										<v-card>
 											<v-card-text>
-												<VTextFieldWithValidation
+												<VtTextFieldWithValidation
 													ref="gamerTagRef"
 													vid="gamerTag"
 													v-model="gamerTag"
@@ -229,7 +229,7 @@ import { maxLength, minLength, required } from '@vuelidate/validators';
 
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
-import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 import { useAppSettingsComponent } from '@/components/appSettings';
 
@@ -238,7 +238,7 @@ export default {
 	components: {
 		VtFormControl,
 		VtSelectWithValidation,
-		VTextFieldWithValidation
+		VtTextFieldWithValidation
 	},
 	setup(props, context) {
 		const formSettingsRef = ref(null);

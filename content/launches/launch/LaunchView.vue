@@ -25,7 +25,7 @@
 		v-if="displayItem.description"
 	>
 		<v-col>
-			<VTextArea2
+			<VtTextArea
 				v-model="displayItem.description"
 				:readonly="true"
 				:label="$t('forms.description')"
@@ -47,7 +47,7 @@
 			/>
 		</v-col>
 	</v-row>
-	<!-- <v-row dense>
+	<v-row dense>
 		<v-col cols="12">
 			<VtTextField
 				v-model="displayItemRocketMame"
@@ -80,7 +80,7 @@
 		dense
 	>
 		<v-col cols="12">
-			<VTextArea2
+			<VtTextArea
 				v-model="displayItem.notes"
 				:readonly="true"
 				:label="$t('forms.content.launches.notes')"
@@ -89,149 +89,119 @@
 <div v-html="markupHint"></div>
 		</v-col>
 	</v-row>
-	<v-row dense>
+	<v-row dense
+		v-if="displayItem.results"
+	>
 		<v-col cols="12">
 			<h3 class="mt-6">{{ $t('forms.content.launches.results.title') }}</h3>
 		</v-col>
-	</v-row> -->
-	<!-- <v-row dense>
-		<v-col cols="12" sm="6">
-			<table style="width: 100%;">
-				<tr>
-					<td>
-						<VtNumberField
-							v-model="detailitemResultsAccelerationMax"
-							:readonly="true"
-							:label="$t('forms.content.launches.results.acceleration.max')"
-						/>
-					</td>
-					<td class="measurementUnitMedium">
-						<MeasurementUnitSelect2
-							v-model="detailItemResultsAccelerationMaxMeasurementUnitId"
-							vid="detailItemResultsAccelerationMaxMeasurementUnitId"
-							:measurementUnitsType="measurementUnitsAccelerationType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.length')"
-						/>
-					</td>
-				</tr>
-			</table>
+	</v-row>
+	<v-row dense
+		v-if="displayItem.results"
+	>
+		<v-col
+			v-if="displayItemResultsAccelerationMax"
+			cols="12" sm="6"
+		>
+			<VtTextField
+				v-model="displayItemResultsAccelerationMax"
+				:label="$t('forms.content.launches.results.acceleration.max')"
+			/>
 		</v-col>
-		<v-col cols="12" sm="6">
-			<table style="width: 100%;">
-				<tr>
-					<td>
-						<VtNumberField
-							v-model="detailitemResultsVelocityMax"
-							:readonly="true"
-							:label="$t('forms.content.launches.results.velocity.max')"
-						/>
-					</td>
-					<td class="measurementUnitLong">
-						<MeasurementUnitSelect2
-							v-model="detailItemResultsVelocityMaxMeasurementUnitId"
-							:measurementUnitsType="measurementUnitsVelocityType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.velocity')"
-						/>
-					</td>
-				</tr>
-			</table>
+		<v-col
+			v-if="displayItemResultsVelocityMax"
+			cols="12" sm="6"
+		>
+			<VtTextField
+				v-model="displayItemResultsVelocityMax"
+				:label="$t('forms.content.launches.results.velocity.max')"
+			/>
 		</v-col>
-		<v-col cols="12" sm="6">
-			<table style="width: 100%;">
-				<tr>
-					<td>
-						<VtNumberField
-							v-model="detailitemResultsAltitudeMax"
-							:readonly="true"
-							:label="$t('forms.content.launches.results.altitude.max')"
-						/>
-					</td>
-					<td class="measurementUnitLong">
-						<MeasurementUnitSelect2
-							v-model="detailItemResultsAltitudeMaxMeasurementUnitId"
-							:measurementUnitsType="measurementUnitsDistanceType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.altitude')"
-						/>
-					</td>
-				</tr>
-			</table>
+		<v-col
+			v-if="displayItemResultsAltitudeMax"
+			cols="12" sm="6"
+		>
+			<VtTextField
+				v-model="displayItemResultsAltitudeMax"
+				:label="$t('forms.content.launches.results.altitude.max')"
+			/>
 		</v-col>
-		<v-col cols="12" sm="6">
-			<table style="width: 100%;">
-				<tr>
-					<td>
-						<VtNumberField
-							v-model="detailitemResultsAltitudeDeployMain"
-							:readonly="true"
-							:label="$t('forms.content.launches.results.altitude.main')"
-						/>
-					</td>
-					<td class="measurementUnitLong">
-						<MeasurementUnitSelect2
-							v-model="detailItemResultsAltitudeDeployMainMeasurementUnitId"
-							:measurementUnitsType="measurementUnitsDistanceType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.altitude')"
-						/>
-					</td>
-				</tr>
-			</table>
+		<v-col
+			v-if="displayItemResultsAltitudeMain"
+			cols="12" sm="6"
+		>
+			<VtTextField
+				v-model="displayItemResultsAltitudeMain"
+				:label="$t('forms.content.launches.results.altitude.main')"
+			/>
 		</v-col>
-		<v-col cols="12" sm="6">
-			<table style="width: 100%;">
-				<tr>
-					<td>
-						<VtNumberField
-							v-model="detailitemResultsAltitudeDeployDrogue"
-							:readonly="true"
-							:label="$t('forms.content.launches.results.altitude.drogue')"
-						/>
-					</td>
-					<td class="measurementUnitLong">
-						<MeasurementUnitSelect2
-							v-model="detailItemResultsAltitudeDeployDrogueMeasurementUnitId"
-							:measurementUnitsType="measurementUnitsDistanceType"
-							:readonly="true"
-							:label="$t('forms.settings.measurementUnits.altitude')"
-						/>
-					</td>
-				</tr>
-			</table>
+		<v-col
+			v-if="displayItemResultsAltitudeDrogue"
+			cols="12" sm="6"
+		>
+			<VtTextField
+				v-model="displayItemResultsAltitudeDrogue"
+				:label="$t('forms.content.launches.results.altitude.drogue')"
+			/>
 		</v-col>
 	</v-row>
-	<v-row dense>
-		<v-col cols="6" sm="3">
+	<v-row dense
+		v-if="displayItem.hasCoords"
+	>
+		<v-col
+			v-if="displayItemResultsCoordsLatLaunch"
+			cols="6" sm="3"
+		>
 			<VtNumberField
-				v-model="detailitemResultsCoordsLatLaunch"
+				v-model="displayItemResultsCoordsLatLaunch"
 				:readonly="true"
 				:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.launch')"
 			/>
 		</v-col>
-		<v-col cols="6" sm="3">
+		<v-col
+			v-if="displayItemResultsCoordsLongLaunch"
+			cols="6" sm="3"
+		>
 			<VtNumberField
-				v-model="detailitemResultsCoordsLongLaunch"
+				v-model="displayItemResultsCoordsLongLaunch"
 				:readonly="true"
 				:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.launch')"
 			/>
 		</v-col>
-		<v-col cols="6" sm="3">
+		<v-col
+			v-if="displayItemResultsCoordsLatRecovery"
+			cols="6" sm="3"
+		>
 			<VtNumberField
-				v-model="detailitemResultsCoordsLatRecovery"
+				v-model="displayItemResultsCoordsLatRecovery"
 				:readonly="true"
 				:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.recovery')"
 			/>
 		</v-col>
-		<v-col cols="6" sm="3">
+		<v-col
+			v-if="displayItemResultsCoordsLongRecovery"
+			cols="6" sm="3"
+		>
 			<VtNumberField
-				v-model="detailitemResultsCoordsLongRecovery"
+				v-model="displayItemResultsCoordsLongRecovery"
 				:readonly="true"
 				:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.recovery')"
 			/>
 		</v-col>
-	</v-row> -->
+	</v-row>
+	<v-row>
+	<!-- <v-row dense
+		v-if="displayItem.hasCoords"
+	> -->
+		<v-col>
+			<LocationMapping
+				:id="displayItem.id"
+				type="recovery"
+				:coordsLaunch="displayItemResultsCoordsLaunch"
+				:coordsRecovery="displayItemResultsCoordsRecovery"
+			></LocationMapping>
+		</v-col>
+	</v-row>
 </template>
 
 <script>
@@ -242,8 +212,9 @@ import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2'
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
 import VtDateTimePickerField from '@thzero/library_client_vue3_vuetify3/components/form/VtDateTimePickerFieldTemp';
 import VtNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberField';
-import VTextArea2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea2';
+import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
+import LocationMapping from '@/components/content/launches/launch/LaunchMap';
 
 export default {
 	name: 'LaunchViewControl',
@@ -252,8 +223,9 @@ export default {
 		VtDateTimePickerField,
 		VtNumberField,
 		VtSelect,
-		VTextArea2,
-		VtTextField
+		VtTextArea,
+		VtTextField,
+		LocationMapping
 	},
 	props: {
 		...useLaunchViewComponentProps
@@ -287,7 +259,24 @@ export default {
 			displayItem,
 			displayItemLocationIteration,
 			displayItemLocationMame,
+			displayItemResultsAccelerationDrogue,
+			displayItemResultsAccelerationMain,
+			displayItemResultsAccelerationMax,
+			displayItemResultsAltitudeDrogue,
+			displayItemResultsAltitudeMain,
+			displayItemResultsAltitudeMax,
+			displayItemResultsCoordsLatLaunch,
+			displayItemResultsCoordsLongLaunch,
+			displayItemResultsCoordsLatRecovery,
+			displayItemResultsCoordsLongRecovery,
+			displayItemResultsCoordsLaunch,
+			displayItemResultsCoordsRecovery,
+			displayItemResultsVelocityMax,
+			displayItemResultsVelocityRecovery,
 			displayItemRocketMame,
+			hasCoords,
+			hasCoordsLaunch,
+			hasCoordsRecovery,
 			isFailure,
 			isSuccess
 		} = useLaunchViewComponent(props, context, options);
@@ -319,7 +308,24 @@ export default {
 			displayItem,
 			displayItemLocationIteration,
 			displayItemLocationMame,
+			displayItemResultsAccelerationDrogue,
+			displayItemResultsAccelerationMain,
+			displayItemResultsAccelerationMax,
+			displayItemResultsAltitudeDrogue,
+			displayItemResultsAltitudeMain,
+			displayItemResultsAltitudeMax,
+			displayItemResultsCoordsLatLaunch,
+			displayItemResultsCoordsLongLaunch,
+			displayItemResultsCoordsLatRecovery,
+			displayItemResultsCoordsLongRecovery,
+			displayItemResultsCoordsLaunch,
+			displayItemResultsCoordsRecovery,
+			displayItemResultsVelocityMax,
+			displayItemResultsVelocityRecovery,
 			displayItemRocketMame,
+			hasCoords,
+			hasCoordsLaunch,
+			hasCoordsRecovery,
 			isFailure,
 			isSuccess
 		};

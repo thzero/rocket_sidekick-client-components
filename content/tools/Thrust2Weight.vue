@@ -157,7 +157,7 @@
 										<table>
 											<tr>
 												<td style="width: 100%;">
-													<VTextField2
+													<VtTextField
 														ref="motorLookup1Ref"
 														v-model="motorLookup1"
 														vid="motorLookup1"
@@ -231,7 +231,7 @@
 										<table>
 											<tr>
 												<td style="width: 100%;">
-													<VTextField2
+													<VtTextField
 														ref="motorLookup2Ref"
 														v-model="motorLookup2"
 														vid="motorLookup2"
@@ -306,7 +306,7 @@
 										<table>
 											<tr>
 												<td style="width: 100%;">
-													<VTextField2
+													<VtTextField
 														ref="motorLookup3Ref"
 														v-model="motorLookup3"
 														vid="motorLookup3"
@@ -381,7 +381,7 @@
 										<table>
 											<tr>
 												<td style="width: 100%;">
-													<VTextField2
+													<VtTextField
 														ref="motorLookup4Ref"
 														v-model="motorLookup4"
 														vid="motorLookup4"
@@ -524,7 +524,7 @@ import VtCheckboxWithValidation from '@thzero/library_client_vue3_vuetify3/compo
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
-import VTextField2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextField2';
+import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
 	name: 'Thrust2Weight',
@@ -541,7 +541,7 @@ export default {
 		VtFormControl,
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
-		VTextField2
+		VtTextField
 	},
 	setup (props, context) {
 		const formThrust2WeightRef = ref(null);

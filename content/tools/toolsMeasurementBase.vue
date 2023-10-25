@@ -54,6 +54,12 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		const unit = func(value);
 		return (!String.isNullOrEmpty(unit) ? unit + ' ' + units : '');
 	};
+	const displayItemMeasurementAcceleration = (correlationId, value, func, func1, func2) => {
+		if (!value)
+			return '';
+		
+		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateAcceleration(correlationId, func1(value), func2(value)));
+	};
 	const displayItemMeasurementLength = (correlationId, value, func, func1, func2) => {
 		if (!value)
 			return '';
@@ -65,6 +71,12 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 			return '';
 		
 		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateWeight(correlationId, func1(value), func2(value)));
+	};
+	const displayItemMeasurementVelocity = (correlationId, value, func, func1, func2) => {
+		if (!value)
+			return '';
+		
+		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateVelocity(correlationId, func1(value), func2(value)));
 	};
 	const measurementUnitsFromUnitId = (correlationId, measurementType, unitId) => {
 		let temp = AppCommonConstants.MeasurementUnits.english[measurementType];
@@ -117,8 +129,10 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		displayItemMeasurement,
+		displayItemMeasurementAcceleration,
 		displayItemMeasurementLength,
 		displayItemMeasurementWeight,
+		displayItemMeasurementVelocity,
 		measurementUnitsFromUnitId
 	};
 };
