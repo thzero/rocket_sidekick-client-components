@@ -79,7 +79,69 @@
 		</v-col>
 	</v-row>
 	<v-row dense
-		v-if="displayItem.results"
+		v-if="displayItem.results && $vuetify.display.mdndUp"
+	>
+		<v-col cols="6">
+			<LocationMapping
+				:id="displayItem.id"
+				type="recovery"
+				:coordsLaunch="displayItemResultsCoordsLaunch"
+				:coordsRecovery="displayItemResultsCoordsRecovery"
+			></LocationMapping>
+		</v-col>
+		<v-col cols="6">
+			<v-row dense>
+				<v-col
+					v-if="displayItemResultsAccelerationMax"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsAccelerationMax"
+						:label="$t('forms.content.launches.results.acceleration.max')"
+					/>
+				</v-col>
+				<v-col
+					v-if="displayItemResultsVelocityMax"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsVelocityMax"
+						:label="$t('forms.content.launches.results.velocity.max')"
+					/>
+				</v-col>
+				<v-col
+					v-if="displayItemResultsAltitudeMax"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsAltitudeMax"
+						:label="$t('forms.content.launches.results.altitude.max')"
+					/>
+				</v-col>
+				<v-col
+					v-if="displayItemResultsAltitudeMain"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsAltitudeMain"
+						:label="$t('forms.content.launches.results.altitude.main')"
+					/>
+				</v-col>
+				<v-col
+					v-if="displayItemResultsAltitudeDrogue"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsAltitudeDrogue"
+						:label="$t('forms.content.launches.results.altitude.drogue')"
+					/>
+				</v-col>
+			</v-row>
+		</v-col>
+	</v-row>
+	<v-row
+		v-if="displayItem.results && $vuetify.display.smAndDown"
+		dense
 	>
 		<v-col
 			v-if="displayItemResultsAccelerationMax"
@@ -127,54 +189,10 @@
 			/>
 		</v-col>
 	</v-row>
-	<v-row dense
-		v-if="displayItem.hasCoords"
+	<v-row
+		v-if="displayItem.hasCoords && $vuetify.display.smAndDown"
+		dense
 	>
-		<v-col
-			v-if="displayItemResultsCoordsLatLaunch"
-			cols="6" sm="3"
-		>
-			<VtNumberField
-				v-model="displayItemResultsCoordsLatLaunch"
-				:readonly="true"
-				:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.launch')"
-			/>
-		</v-col>
-		<v-col
-			v-if="displayItemResultsCoordsLongLaunch"
-			cols="6" sm="3"
-		>
-			<VtNumberField
-				v-model="displayItemResultsCoordsLongLaunch"
-				:readonly="true"
-				:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.launch')"
-			/>
-		</v-col>
-		<v-col
-			v-if="displayItemResultsCoordsLatRecovery"
-			cols="6" sm="3"
-		>
-			<VtNumberField
-				v-model="displayItemResultsCoordsLatRecovery"
-				:readonly="true"
-				:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.recovery')"
-			/>
-		</v-col>
-		<v-col
-			v-if="displayItemResultsCoordsLongRecovery"
-			cols="6" sm="3"
-		>
-			<VtNumberField
-				v-model="displayItemResultsCoordsLongRecovery"
-				:readonly="true"
-				:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.recovery')"
-			/>
-		</v-col>
-	</v-row>
-	<v-row>
-	<!-- <v-row dense
-		v-if="displayItem.hasCoords"
-	> -->
 		<v-col>
 			<LocationMapping
 				:id="displayItem.id"

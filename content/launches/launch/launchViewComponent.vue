@@ -59,37 +59,44 @@ export function useLaunchViewComponent(props, context, options) {
 		return '';
 	});
 	const displayItemLocationMame = computed(() => {
-		return displayItem.value && displayItem.value.location ? displayItem.value.location.name : '';
+		return 1;
+		// return displayItem.value && displayItem.value.location ? displayItem.value.location.name : '';
 	});
 	const displayItemResultsAltitudeDrogue = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDrogue)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeDrogue; }, (value) => { return value.altitudeDrogueMeasurementUnitsId; }, (value) => { return value.altitudeDrogueMeasurementUnitId; });
-		return null;
+		return 2;
+		// if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDrogue)
+		// 	return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeDrogue; }, (value) => { return value.altitudeDrogueMeasurementUnitsId; }, (value) => { return value.altitudeDrogueMeasurementUnitId; });
+		// return null;
 	});
 	const displayItemResultsAltitudeMain = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMain)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeMain; }, (value) => { return value.altitudeMainMeasurementUnitsId; }, (value) => { return value.altitudeMainMeasurementUnitId; });
-		return null;
+		return 3;
+		// if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMain)
+		// 	return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeMain; }, (value) => { return value.altitudeMainMeasurementUnitsId; }, (value) => { return value.altitudeMainMeasurementUnitId; });
+		// return null;
 	});
 	const displayItemResultsAltitudeMax = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMax)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeMax; }, (value) => { return value.altitudeMaxMeasurementUnitsId; }, (value) => { return value.altitudeMaxMeasurementUnitId; });
-		return null;
+		return 4;
+		// if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMax)
+		// 	return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeMax; }, (value) => { return value.altitudeMaxMeasurementUnitsId; }, (value) => { return value.altitudeMaxMeasurementUnitId; });
+		// return null;
 	});
 	const displayItemResultsAccelerationDrogue = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationDrogue)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationDrogue; }, (value) => { return value.accelerationDrogueMeasurementUnitsId; }, (value) => { return value.accelerationDrogueMeasurementUnitId; });
-		return null;
+		return 5;
+		// if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationDrogue)
+		// 	return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationDrogue; }, (value) => { return value.accelerationDrogueMeasurementUnitsId; }, (value) => { return value.accelerationDrogueMeasurementUnitId; });
+		// return null;
 	});
 	const displayItemResultsAccelerationMain = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationMain)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationMain; }, (value) => { return value.accelerationMainMeasurementUnitsId; }, (value) => { return value.accelerationMainMeasurementUnitId; });
-		return null;
+		return 6;
+		// if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationMain)
+		// 	return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationMain; }, (value) => { return value.accelerationMainMeasurementUnitsId; }, (value) => { return value.accelerationMainMeasurementUnitId; });
+		// return null;
 	});
 	const displayItemResultsAccelerationMax = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationMax)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationMax; }, (value) => { return value.accelerationMaxMeasurementUnitsId; }, (value) => { return value.accelerationMaxMeasurementUnitId; });
-		return null;
+		return 7;
+		// if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationMax)
+		// 	return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationMax; }, (value) => { return value.accelerationMaxMeasurementUnitsId; }, (value) => { return value.accelerationMaxMeasurementUnitId; });
+		// return null;
 	});
 	const displayItemResultsCoordsLatLaunch = computed(() => {
 		return displayItem.value ? displayItem.value.coordsLatLaunch : '';
