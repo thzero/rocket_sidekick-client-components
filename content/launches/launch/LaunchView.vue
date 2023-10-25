@@ -208,20 +208,16 @@
 import { useLaunchViewComponent } from '@/components/content/launches/launch/launchViewComponent';
 import { useLaunchViewComponentProps } from '@/components/content/launches/launch/launchViewComponentProps';
 
+import LocationMapping from '@/components/content/launches/launch/LaunchMap';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
-import VtDateTimePickerField from '@thzero/library_client_vue3_vuetify3/components/form/VtDateTimePickerFieldTemp';
-import VtNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberField';
 import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
-import LocationMapping from '@/components/content/launches/launch/LaunchMap';
 
 export default {
 	name: 'LaunchViewControl',
 	components: {
 		MeasurementUnitSelect2,
-		VtDateTimePickerField,
-		VtNumberField,
 		VtSelect,
 		VtTextArea,
 		VtTextField,
