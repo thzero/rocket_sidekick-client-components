@@ -14,7 +14,7 @@
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
 	</div>
-	<VFormDialog
+	<VtFormDialog
 		:label="$t('titles.edit')"
 		:signal="signal"
 		:pre-complete-ok="preCompleteOk"
@@ -32,7 +32,7 @@
 		<!-- :readonly="!editable" -->
 		<v-row dense>
 			<v-col cols="6">
-				<VSwitchWithValidation
+				<VtSwitchWithValidation
 					class="ml-2"
 					ref="detailItemReefedRef"
 					v-model="detailItemReefed"
@@ -46,7 +46,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemReefedLengthRef"
 								v-model="detailItemReefedLength"
 								vid="detailItemReefedLength"
@@ -70,7 +70,7 @@
 				</table>
 			</v-col>
 		</v-row>
-	</VFormDialog>
+	</VtFormDialog>
 </template>
 
 <script>
@@ -85,11 +85,11 @@ import { useRocketPartDialogValidation } from '@/components/content/rockets/part
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -99,11 +99,11 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
-		VFormControl,
-		VFormDialog,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtFormControl,
+		VtFormDialog,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

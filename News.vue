@@ -26,7 +26,7 @@
 						</v-card-subtitle>
 					</v-card-item>
 					<v-card-text class="body-1">
-						<VMarkdown v-model="item.article" />
+						<VtMarkdown v-model="item.article" />
 					</v-card-text>
 				</v-card>
 			</v-col>
@@ -44,12 +44,12 @@ import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 
 export default {
 	name: 'AppNews',
 	components: {
-		VMarkdown
+		VtMarkdown
 	},
 	setup(props, context) {
 		const {

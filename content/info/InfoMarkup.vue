@@ -32,7 +32,7 @@
 				<v-col cols="12" class="pb-2">
 					<v-card>
 						<v-card-text>
-<VMarkdown v-model="item.markup" :use-github=false />
+<VtMarkdown v-model="item.markup" :use-github=false />
 						</v-card-text>
 						<LoadingOverlay
 							:signal="contentLoadSignal"
@@ -63,7 +63,7 @@ import { useInfoMarkupBaseComponent } from '@/components/content/info/infoMarkup
 import Attribution from '@/components/content/Attribution';
 import ContentHeader from '@/components/content/Header';
 import LoadingOverlay from '@/components/LoadingOverlay';
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 
 export default {
 	name: 'InfoMarkup',
@@ -71,7 +71,7 @@ export default {
 		Attribution,
 		ContentHeader,
 		LoadingOverlay,
-		VMarkdown
+		VtMarkdown
 	},
 	setup(props, context) {
 		const {

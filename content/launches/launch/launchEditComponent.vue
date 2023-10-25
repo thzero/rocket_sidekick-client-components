@@ -1,0 +1,402 @@
+<script>
+import { computed, ref, watch } from 'vue';
+
+import useVuelidate from '@vuelidate/core';
+
+import AppCommonConstants from 'rocket_sidekick_common/constants';
+
+import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
+
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useContentMarkupComponent } from '@/components/content/contentMarkup';
+import { useDetailComponent } from '@/components/content/detailComponent';
+import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
+// import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+// import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
+
+export function useLaunchEditComponent(props, context, options) {
+	const {
+		correlationId,
+		error,
+		hasFailed,
+		hasSucceeded,
+		initialize,
+		logger,
+		noBreakingSpaces,
+		notImplementedError,
+		success,
+		successResponse,
+		isSaving,
+		serverErrors,
+		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
+		serviceStore,
+		formControlRef,
+		dirty,
+		detailItem,
+		dialogDeleteManager,
+		dialogDeleteMessage,
+		dialogDeleteParams,
+		invalid,
+		canDelete,
+		detailItemData,
+		detailItemTextRows,
+		isDeleting,
+		isEditable,
+		isNew,
+		isOwner,
+		dialogDeleteCancel,
+		dialogDeleteError,
+		dialogDeleteOk,
+		dialogDeleteOpen,
+		dirtyCallback,
+		invalidCallback,
+		handleCancel,
+		handleClose,
+		handleOk,
+		preCompleteOk,
+		resetAdditional
+	} = useDetailComponent(props, context, {
+		init: async (correlationId, value) => {
+			resetData(correlationId, value);
+		},
+		preCompleteOk : async (correlationId) => {
+			setData(correlationId);
+
+			const response = await serviceStore.dispatcher.saveLaunch(correlationId, detailItemData.value);
+			logger.debug('useLaunchEditComponent', 'preCompleteOk', 'response', response, correlationId);
+			return response;
+		},
+		resetAdditional: (correlationId, orig) => {
+			resetData(correlationId, orig);
+		}
+	});
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
+
+	// const {
+	// 	measurementUnitsIdOutput,
+	// 	measurementUnitsIdSettings
+	// } = useToolsMeasurementSettingsComponent(props, context);
+	
+	// const {
+	// 	// measurementUnitsIdSettings,
+	// 	measurementUnitsAccelerationDefaultId,
+	// 	measurementUnitsAccelerationType,
+	// 	measurementUnitsAreaDefaultId,
+	// 	measurementUnitsAreaType,
+	// 	measurementUnitsDensityDefaultId,
+	// 	measurementUnitsDensityType,
+	// 	measurementUnitsDistanceType,
+	// 	measurementUnitsDistanceDefaultId,
+	// 	measurementUnitsFluidDefaultId,
+	// 	measurementUnitsFluidType,
+	// 	measurementUnitsLengthDefaultId,
+	// 	measurementUnitsLengthType,
+	// 	measurementUnitsVelocityDefaultId,
+	// 	measurementUnitsVelocityType,
+	// 	measurementUnitsVolumeDefaultId,
+	// 	measurementUnitsVolumeType,
+	// 	measurementUnitsWeightDefaultId,
+	// 	measurementUnitsWeightType,
+	// 	displayItemMeasurement,
+	// 	displayItemMeasurementLength,
+	// 	displayItemMeasurementWeight,
+	// 	measurementUnitsFromUnitId
+	1
+	// } = useToolsMeasurementBaseComponent(props, context);
+	const {
+		measurementUnitsIdOutput,
+		measurementUnitsIdSettings,
+		measurementUnitsAccelerationDefaultId,
+		measurementUnitsAccelerationType,
+		measurementUnitsDistanceType,
+		measurementUnitsDistanceDefaultId,
+		measurementUnitsVelocityDefaultId,
+		measurementUnitsVelocityType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId,
+		failureReasons,
+		successReasons,
+		locationIterationName
+	} = useLaunchComponent(props, context);
+	
+	const {
+		markupHint
+	} = useContentMarkupComponent(props, context);
+	
+	const dialogLocationLookupManager = ref(new DialogSupport());
+	const dialogRocketLookupManager = ref(new DialogSupport());
+	const detailItemDate = ref(null);
+	const detailItemDescription = ref(null);
+	const detailItemFailureReasons = ref(null);
+	const detailItemName = ref(null);
+	const detailItemLocationId = ref(null);
+	const detailItemLocationIterationId = ref(null);
+	const detailItemLocationName = ref(null);
+	const detailItemNotes = ref(null);
+	const detailitemResultsAccelerationMax = ref(null);
+	const detailItemResultsAccelerationMaxMeasurementUnitId = ref(null);
+	const detailItemResultsAccelerationMaxMeasurementUnitsId = ref(null);
+	const detailitemResultsAltitudeMax = ref(null);
+	const detailItemResultsAltitudeMaxMeasurementUnitId = ref(null);
+	const detailItemResultsAltitudeMaxMeasurementUnitsId = ref(null);
+	const detailitemResultsAltitudeDeployDrogue = ref(null);
+	const detailItemResultsAltitudeDeployDrogueMeasurementUnitId = ref(null);
+	const detailItemResultsAltitudeDeployDrogueMeasurementUnitsId = ref(null);
+	const detailitemResultsAltitudeDeployMain = ref(null);
+	const detailItemResultsAltitudeDeployMainMeasurementUnitId = ref(null);
+	const detailItemResultsAltitudeDeployMainMeasurementUnitsId = ref(null);
+	const detailitemResultsCoordsLatLaunch = ref(null);
+	const detailitemResultsCoordsLongLaunch = ref(null);
+	const detailitemResultsCoordsLatRecovery = ref(null);
+	const detailitemResultsCoordsLongRecovery = ref(null);
+	const detailitemResultsVelocityMax = ref(null);
+	const detailItemResultsVelocityMaxMeasurementUnitId = ref(null);
+	const detailItemResultsVelocityMaxMeasurementUnitsId = ref(null);
+	const detailitemResultsVelocityRecovery = ref(null);
+	const detailItemVelocityRecoveryMeasurementUnitId = ref(null);
+	const detailItemVelocityRecoveryMeasurementUnitsId = ref(null);
+	const detailItemRocketId = ref(null);
+	const detailItemRocketName = ref(null);
+	const detailItemSuccess = ref(null);
+	
+	const location = ref(null);
+	
+	const hasAdmin = computed(() => {
+		return false;
+	});
+	const isSuccess = computed(() => {
+		return detailItemSuccess.value === AppCommonConstants.Rocketry.Launches.Reasons.Success.success;
+	});
+	const locationIterations = computed(() => {
+		if (location.value)
+			return LibraryClientVueUtility.selectBlank(location.value.iterations.map(l => { return { id : l.id, name: locationIterationName(l) }; }), '');
+
+		return [];
+	});
+
+	const clickSearchLocations = async (correlationId) => {
+		dialogLocationLookupManager.value.open();
+	};
+	const clickSearchRockets = async (correlationId) => {
+		dialogRocketLookupManager.value.open();
+	};
+	// const locationIterationName = (item) => {
+	// 	let output = '';
+	// 	if (item.number)
+	// 		output += item.number + ' ';
+	// 	if (item.year)
+	// 		output += item.year + ' ';
+	// 	return output.trim();
+	// };
+	const requestLocation = async (correlationId, id) => {
+		const response = await serviceStore.dispatcher.requestLocationById(correlationId, id);
+		return hasSucceeded(response) ? response.results : null;
+	};
+	const resetData = (correlationId, value) => {
+		detailItemDate.value = value ? value.date : null;
+		detailItemDescription.value = value ? value.description : null;
+		
+		detailItemName.value = value ? value.name : null;
+		detailItemNotes.value = value ? value.notes : false;
+
+		if (value && value.location) {
+			detailItemLocationId.value = value.location.id;
+			detailItemLocationIterationId.value = value.locationIterationId;
+			detailItemLocationName.value = value.location.name;
+			location.value = value.location;
+			// (async () => {
+			// 	location.value = await requestLocation(correlationId, value.location.id);
+			// })();
+		}
+		else {
+			detailItemLocationId.value = null;
+			detailItemLocationIterationId.value = null;
+			detailItemLocationName.value = null;
+			location.value = null;
+		}
+		if (value && value.rocket) {
+			detailItemRocketId.value = value.rocket.id;
+			detailItemRocketName.value = value.rocket.name;
+		}
+		else {
+			detailItemRocketId.value = null;
+			detailItemRocketName.value = null;
+		}
+
+		detailItemSuccess.value = value ? value.success : false;
+		detailItemFailureReasons.value = value  ? value.failureReasons : null;
+	};
+	const selectLocation = async (item) => {
+		try {
+			if (!item)
+				return error('useLaunchEditComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
+			
+			detailItemLocationId.value = item.id;
+			detailItemLocationName.value = item.name;
+			location.value = await requestLocation(correlationId(), item.id);
+		}
+		finally {
+			dialogLocationLookupManager.value.ok();
+		}
+	};
+	const selectRocket = async (item) => {
+		try {
+			if (!item)
+				return error('useuseLaunchEditComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
+			
+			detailItemRocketId.value = item.id;
+			detailItemRocketName.value = item.name;
+		}
+		finally {
+			dialogRocketLookupManager.value.ok();
+		}
+	};
+	const setData = (correlationId) => {
+		detailItemData.value.date = detailItemDate.value;
+		detailItemData.value.description = detailItemDescription.value;
+		
+		detailItemData.value.name = detailItemName.value;
+		detailItemData.value.notes = detailItemNotes.value;
+
+		detailItemData.value.locationId = detailItemLocationId.value;
+		detailItemData.value.locationIterationId = detailItemLocationIterationId.value;
+		detailItemData.value.rocketId = detailItemRocketId.value;
+		
+		detailItemData.value.success = detailItemSuccess.value;
+		detailItemData.value.failureReasons = detailItemFailureReasons.value;
+	};
+
+	watch(() => detailItemSuccess.value,
+		(value, prev) => {
+			if (prev === value)
+				return;
+
+			if (value !== AppCommonConstants.Rocketry.Launches.Reasons.Success.failed)
+				detailItemFailureReasons.value = null;
+		}
+	);
+	
+	return {
+		correlationId,
+		error,
+		hasFailed,
+		hasSucceeded,
+		initialize,
+		logger,
+		noBreakingSpaces,
+		notImplementedError,
+		success,
+		successResponse,
+		isSaving,
+		serverErrors,
+		setErrors,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
+		serviceStore,
+		formControlRef,
+		dirty,
+		detailItem,
+		dialogDeleteManager,
+		dialogDeleteMessage,
+		dialogDeleteParams,
+		invalid,
+		canDelete,
+		detailItemData,
+		detailItemTextRows,
+		isDeleting,
+		isEditable,
+		isNew,
+		isOwner,
+		dialogDeleteCancel,
+		dialogDeleteError,
+		dialogDeleteOk,
+		dialogDeleteOpen,
+		dirtyCallback,
+		invalidCallback,
+		handleCancel,
+		handleClose,
+		handleOk,
+		preCompleteOk,
+		resetAdditional,
+		buttonsDialog,
+		buttonsForms,
+		measurementUnitsIdOutput,
+		measurementUnitsIdSettings,
+		measurementUnitsAccelerationDefaultId,
+		measurementUnitsAccelerationType,
+		measurementUnitsDistanceType,
+		measurementUnitsDistanceDefaultId,
+		measurementUnitsVelocityDefaultId,
+		measurementUnitsVelocityType,
+		displayItemMeasurement,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId,
+		failureReasons,
+		successReasons,
+		locationIterationName,
+		markupHint,
+		dialogLocationLookupManager,
+		dialogRocketLookupManager,
+		detailItemDate,
+		detailItemDescription,
+		detailItemFailureReasons,
+		detailItemName,
+		detailItemNotes,
+		detailItemLocationId,
+		detailItemLocationIterationId,
+		detailItemLocationName,
+		detailitemResultsAccelerationMax,
+		detailItemResultsAccelerationMaxMeasurementUnitId,
+		detailItemResultsAccelerationMaxMeasurementUnitsId,
+		detailitemResultsAltitudeMax,
+		detailItemResultsAltitudeMaxMeasurementUnitId,
+		detailItemResultsAltitudeMaxMeasurementUnitsId,
+		detailitemResultsAltitudeDeployDrogue,
+		detailItemResultsAltitudeDeployDrogueMeasurementUnitId,
+		detailItemResultsAltitudeDeployDrogueMeasurementUnitsId,
+		detailitemResultsAltitudeDeployMain,
+		detailItemResultsAltitudeDeployMainMeasurementUnitId,
+		detailItemResultsAltitudeDeployMainMeasurementUnitsId,
+		detailitemResultsCoordsLatLaunch,
+		detailitemResultsCoordsLongLaunch,
+		detailitemResultsCoordsLatRecovery,
+		detailitemResultsCoordsLongRecovery,
+		detailitemResultsVelocityMax,
+		detailItemResultsVelocityMaxMeasurementUnitId,
+		detailItemResultsVelocityMaxMeasurementUnitsId,
+		detailitemResultsVelocityRecovery,
+		detailItemVelocityRecoveryMeasurementUnitId,
+		detailItemVelocityRecoveryMeasurementUnitsId,
+		detailItemRocketId,
+		detailItemRocketName,
+		detailItemSuccess,
+		hasAdmin,
+		isSuccess,
+		locationIterations,
+		clickSearchLocations,
+		clickSearchRockets,
+		selectLocation,
+		selectRocket,
+		scope: 'LaunchControl',
+		validation: useVuelidate({ $scope: 'LaunchControl' })
+	};
+};
+</script>

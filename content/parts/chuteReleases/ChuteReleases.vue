@@ -46,7 +46,7 @@
 			</v-row>
 			<v-row dense>
 				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
-					<VSelectWithValidation
+					<VtSelectWithValidation
 						ref="filterItemManufacturersRef"
 						v-model="filterItemManufacturers"
 						vid="filterItemManufacturers"
@@ -101,9 +101,9 @@ import PartsPublicComponent from '@/components/content/parts/PartsPublicComponen
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -117,9 +117,9 @@ export default {
 		MeasurementUnitsSelect,
 		Parts,
 		PartsPublicComponent,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

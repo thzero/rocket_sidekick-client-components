@@ -244,14 +244,14 @@ import { useHomeBaseComponent } from '@/components/homeBase';
 
 import News from '@/components/News';
 import LoadingOverlay from '@/components/LoadingOverlay';
-import VLoadingOverlay from '@thzero/library_client_vue3_vuetify3/components/VLoadingOverlay';
+import VtLoadingOverlay from '@thzero/library_client_vue3_vuetify3/components/VtLoadingOverlay';
 
 export default {
 	name: 'AppHome',
 	components: {
 		LoadingOverlay,
 		News,
-		VLoadingOverlay
+		VtLoadingOverlay
 	},
 	setup(props, context) {
 		const {

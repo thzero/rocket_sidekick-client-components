@@ -7,6 +7,7 @@ export function useLaunchEditValidation(nameRequired) {
 			$autoDirty: true 
 		},
 		detailItemDescription: { $autoDirty: true },
+		detailItemFailureReasons: { $autoDirty: true },
 		detailItemLocationName: { $autoDirty: true },
 		detailItemLocationId: { 
 			required,
@@ -19,8 +20,33 @@ export function useLaunchEditValidation(nameRequired) {
 			maxLength: maxLength(1000),
 			$autoDirty: true
 		},
+
+		detailitemResultsAccelerationMax: { $autoDirty: true },
+		detailItemResultsAccelerationMaxMeasurementUnitId: { $autoDirty: true },
+		detailItemResultsAccelerationMaxMeasurementUnitsId: { $autoDirty: true },
+		detailitemResultsAltitudeMax: { $autoDirty: true },
+		detailItemResultsAltitudeMaxMeasurementUnitId: { $autoDirty: true },
+		detailItemResultsAltitudeMaxMeasurementUnitsId: { $autoDirty: true },
+		detailitemResultsAltitudeDeployDrogue: { $autoDirty: true },
+		detailItemResultsAltitudeDeployDrogueMeasurementUnitId: { $autoDirty: true },
+		detailItemResultsAltitudeDeployDrogueMeasurementUnitsId: { $autoDirty: true },
+		detailitemResultsAltitudeDeployMMain: { $autoDirty: true },
+		detailItemResultsAltitudeDeployMMainMeasurementUnitId: { $autoDirty: true },
+		detailItemResultsAltitudeDeployMMainMeasurementUnitsId: { $autoDirty: true },
+		detailitemResultsCoordsLatRecovery: { $autoDirty: true },
+		detailitemResultsCoordsLongRecovery: { $autoDirty: true },
+		detailitemResultsCoordsLatLanding: { $autoDirty: true },
+		detailitemResultsVelocityMax: { $autoDirty: true },
+		detailItemResultsVelocityMaxMeasurementUnitId: { $autoDirty: true },
+		detailItemResultsVelocityMaxMeasurementUnitsId: { $autoDirty: true },
+		detailitemResultsVelocityRecovery: { $autoDirty: true },
+		detailItemVelocityRecoveryMeasurementUnitId: { $autoDirty: true },
+		detailItemVelocityRecoveryMeasurementUnitsId: { $autoDirty: true },
 		detailItemRocketId: { 
 			required,
+			$autoDirty: true 
+		},
+		detailItemSuccess: { 
 			$autoDirty: true 
 		}
 	};

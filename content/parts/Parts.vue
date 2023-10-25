@@ -1,6 +1,6 @@
 <template>
 	<ContentHeader :value="title" />
-	<VFormListing
+	<VtFormListing
 		ref="partsRef"
 		:pre-complete-ok="search"
 		:reset-additional="resetAdditional"
@@ -176,7 +176,7 @@
 				</v-col>
 			</v-row>
 		</template>
-	</VFormListing>
+	</VtFormListing>
 	<PartCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
@@ -185,7 +185,7 @@
 		@error="dialogCopyError"
 		@ok="dialogCopyOk"
 	/>
-	<VConfirmationDialog
+	<VtConfirmationDialog
 		ref="dialogDeleteRef"
 		:message="dialogDeleteMessage"
 		:messageRaw=true
@@ -203,16 +203,16 @@ import { usePartsBaseComponentProps } from '@/components/content/parts/partsComp
 
 import PartCopyDialog from '@/components/content/parts/dialogs/PartCopyDialog';
 import ContentHeader from '@/components/content/Header';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
 
 export default {
 	name: 'Parts',
 	components: {
 		PartCopyDialog,
 		ContentHeader,
-		VConfirmationDialog,
-		VFormListing
+		VtConfirmationDialog,
+		VtFormListing
 	},
 	props: {
 		...useMasterDetailComponentProps,

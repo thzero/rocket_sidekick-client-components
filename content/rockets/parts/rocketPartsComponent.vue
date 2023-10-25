@@ -109,9 +109,10 @@ export function useRocketPartsComponent(props, context, options) {
 		return await props.preCompleteOk(correlationId, dialogEditRocketPartParams.value);
 	};
 	const editablePart = (item) => {
-		if (!dialogRocketParts.value.find (l => l === item.typeId))
+		const temp = dialogRocketParts.value.find (l => l === item.typeId)
+		if (!temp)
 			return false;
-		return props.editable;
+		return props.editable && !item.fromRocket;
 	}
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;

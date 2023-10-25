@@ -11,7 +11,7 @@
 		<ContentDescription id="strings.content.tools.thrust2Weight" />
 		<v-row dense>
 			<v-col cols="12">
-				<VFormControl
+				<VtFormControl
 					ref="formThrust2WeightRef"
 					:validation="validation"
 					:reset-additional="resetAdditional"
@@ -26,7 +26,7 @@
 								<table style="width: 100%">
 									<tr>
 										<td>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="massRef"
 												v-model="mass"
 												vid="mass"
@@ -100,7 +100,7 @@
 								</table>
 							</v-col>
 							<v-col cols="12" md="6">
-								<VNumberFieldWithValidation
+								<VtNumberFieldWithValidation
 									ref="maxLaunchRodTimeRef"
 									v-model="maxLaunchRodTime"
 									vid="maxLaunchRodTime"
@@ -112,7 +112,7 @@
 							<v-col cols="12" md="6">
 								<v-row dense>
 									<v-col cols="12">
-										<VCheckboxWithValidation
+										<VtCheckboxWithValidation
 											ref="motorSelected1Ref"
 											v-model="motorSelected1"
 											vid="motorSelected1"
@@ -124,7 +124,7 @@
 								</v-row>
 								<v-row dense>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustInitial1Ref"
 											v-model="thrustInitial1"
 											vid="thrustInitial1"
@@ -134,7 +134,7 @@
 										/>
 									</v-col>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustPeak1Ref"
 											v-model="thrustPeak1"
 											vid="thrustPeak1"
@@ -144,7 +144,7 @@
 										/>
 									</v-col>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustAverage1Ref"
 											v-model="thrustAverage1"
 											vid="thrustAverage1"
@@ -157,7 +157,7 @@
 										<table>
 											<tr>
 												<td style="width: 100%;">
-													<VTextField
+													<VTextField2
 														ref="motorLookup1Ref"
 														v-model="motorLookup1"
 														vid="motorLookup1"
@@ -184,7 +184,7 @@
 							<v-col cols="12" md="6">
 								<v-row dense>
 									<v-col cols="12">
-										<VCheckboxWithValidation
+										<VtCheckboxWithValidation
 											ref="motorSelected2Ref"
 											v-model="motorSelected2"
 											vid="motorSelected2"
@@ -195,7 +195,7 @@
 								</v-row>
 								<v-row dense>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustInitial2Ref"
 											v-model="thrustInitial2"
 											vid="thrustInitial2"
@@ -206,7 +206,7 @@
 										/>
 									</v-col>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustPeak2Ref"
 											v-model="thrustPeak2"
 											vid="thrustPeak2"
@@ -217,7 +217,7 @@
 										/>
 									</v-col>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustAverage2Ref"
 											v-model="thrustAverage2"
 											vid="thrustAverage2"
@@ -231,7 +231,7 @@
 										<table>
 											<tr>
 												<td style="width: 100%;">
-													<VTextField
+													<VTextField2
 														ref="motorLookup2Ref"
 														v-model="motorLookup2"
 														vid="motorLookup2"
@@ -259,7 +259,7 @@
 							<v-col cols="12" md="6">
 								<v-row dense>
 									<v-col cols="12">
-										<VCheckboxWithValidation
+										<VtCheckboxWithValidation
 											ref="motorSelected3Ref"
 											v-model="motorSelected3"
 											vid="motorSelected3"
@@ -270,7 +270,7 @@
 								</v-row>
 								<v-row dense>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustInitial3Ref"
 											v-model="thrustInitial3"
 											vid="thrustInitial3"
@@ -281,7 +281,7 @@
 										/>
 									</v-col>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustPeak3Ref"
 											v-model="thrustPeak3"
 											vid="thrustPeak3"
@@ -292,7 +292,7 @@
 										/>
 									</v-col>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustAverage3Ref"
 											v-model="thrustAverage3"
 											vid="thrustAverage3"
@@ -306,7 +306,7 @@
 										<table>
 											<tr>
 												<td style="width: 100%;">
-													<VTextField
+													<VTextField2
 														ref="motorLookup3Ref"
 														v-model="motorLookup3"
 														vid="motorLookup3"
@@ -334,7 +334,7 @@
 							<v-col cols="12" md="6">
 								<v-row dense>
 									<v-col cols="12">
-										<VCheckboxWithValidation
+										<VtCheckboxWithValidation
 											ref="motorSelected4Ref"
 											v-model="motorSelected4"
 											vid="motorSelected4"
@@ -345,7 +345,7 @@
 								</v-row>
 								<v-row dense>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustInitial4Ref"
 											v-model="thrustInitial4"
 											vid="thrustInitial4"
@@ -356,7 +356,7 @@
 										/>
 									</v-col>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustPeak4Ref"
 											v-model="thrustPeak4"
 											vid="thrustPeak4"
@@ -367,7 +367,7 @@
 										/>
 									</v-col>
 									<v-col cols="12" md="6">
-										<VNumberFieldWithValidation
+										<VtNumberFieldWithValidation
 											ref="thrustAverage4Ref"
 											v-model="thrustAverage4"
 											vid="thrustAverage4"
@@ -381,7 +381,7 @@
 										<table>
 											<tr>
 												<td style="width: 100%;">
-													<VTextField
+													<VTextField2
 														ref="motorLookup4Ref"
 														v-model="motorLookup4"
 														vid="motorLookup4"
@@ -418,7 +418,7 @@
 							{{ $t('buttons.search') }}
 						</v-btn>
 					</template> -->
-				</VFormControl>
+				</VtFormControl>
 			</v-col>
 		</v-row>
 		<v-row class="pt-4" dense>
@@ -520,11 +520,11 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import MotorLookupDialog from '@/components/external/MotorLookupDialog';
-import VCheckboxWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VCheckboxWithValidation';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
+import VtCheckboxWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtCheckboxWithValidation';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VTextField2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextField2';
 
 export default {
 	name: 'Thrust2Weight',
@@ -537,11 +537,11 @@ export default {
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		MotorLookupDialog,
-		VCheckboxWithValidation,
-		VFormControl,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VTextField
+		VtCheckboxWithValidation,
+		VtFormControl,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VTextField2
 	},
 	setup (props, context) {
 		const formThrust2WeightRef = ref(null);

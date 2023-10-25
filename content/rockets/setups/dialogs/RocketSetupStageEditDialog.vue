@@ -1,5 +1,5 @@
 <template>
-	<VFormDialog
+	<VtFormDialog
 		:label="$t('titles.edit') + ' ' + displayName"
 		:signal="signal"
 		:pre-complete-ok="preCompleteOk"
@@ -32,7 +32,7 @@
 		</v-row> -->
 		<v-row dense>
 			<!-- <v-col cols="5" md="2">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemWeightRef"
 					v-model="detailItemWeight"
 					vid="detailItemWeight"
@@ -46,7 +46,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemWeightRef"
 								v-model="detailItemWeight"
 								vid="detailItemWeight"
@@ -92,7 +92,7 @@
 				</table>
 			</v-col>
 			<!-- <v-col cols="5" md="2">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemCgRef"
 					v-model="detailItemCg"
 					vid="detailItemCg"
@@ -106,7 +106,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemCgRef"
 								v-model="detailItemCg"
 								vid="detailItemCg"
@@ -157,7 +157,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemWeightNoseRef"
 								v-model="detailItemWeightNose"
 								vid="detailItemWeightNose"
@@ -471,7 +471,7 @@
 			@close="dialogPartsSearchMotorCasesManager.cancel()"
 			@select="selectMotorCase"
 		/>
-	</VFormDialog>
+	</VtFormDialog>
 </template>
 
 <script>
@@ -486,10 +486,10 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
-import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -500,10 +500,10 @@ export default {
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		RocketPartsLookupDialog,
-		VFormDialog,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtFormDialog,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

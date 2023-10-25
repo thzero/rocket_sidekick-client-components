@@ -3,6 +3,7 @@ import { computed, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
+import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -175,7 +176,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		let results = response.results;
 	 	results = results.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
+			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
 		);
 
 		response.results = results;
@@ -207,10 +208,10 @@ export function useLaunchesBaseComponent(props, context, options) {
 		return LibraryCommonUtility.getDateHuman(item.date);
 	};
 	const launchStatusColor = (item) => {
-		return item ? (item.success === true ? 'bg-success' : item.success === false ? 'bg-red' : 'bg-primary') : 'bg-primary';
+		return item ? (item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.success ? 'bg-success' : item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.failed ? 'bg-red' : 'bg-primary') : 'bg-primary';
 	};
 	const launchStatusIcon = (item) => {
-		return item ? (item.success === true ? 'mdi-thumb-up' : item.success === false ? 'mdi-thumb-down' : null) : null;
+		return item ? (item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.success ? 'mdi-thumb-up' : item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.failed ? 'mdi-thumb-down' : null) : null;
 	};
 	const launchTitle = (item) => {
 		let output = '';

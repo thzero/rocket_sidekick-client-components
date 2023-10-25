@@ -150,6 +150,14 @@
 						v-if="deletable || editable || selectable"
 					>
 						<v-spacer></v-spacer>
+						<v-chip
+							v-if="item2.fromRocket"
+							class="ma-2"
+							variant="elevated"
+							:color="buttonsForms.color.select"
+						>
+							{{ $t('forms.content.rockets.from')}}
+						</v-chip>
 						<v-btn
 							v-if="deletable && !item2.fromRocket"
 							:variant="buttonsForms.variant.delete"
@@ -157,7 +165,7 @@
 							@click="clickDeleteRocketPart(item2, stageId)"
 						>{{ $t('buttons.delete') }}</v-btn>
 						<v-btn
-							v-if="editablePart(item)"
+							v-if="editablePart(item2)"
 							:variant="buttonsForms.variant.edit"
 							:color="buttonsForms.color.edit"
 							@click="clickEditRocketPart(item2, stageId, item2.typeId)"

@@ -17,7 +17,7 @@
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
 	</div>
-	<VFormControl
+	<VtFormControl
 		ref="formControlRef"
 		:validation="validation"
 		:button-cancel="isEditable"
@@ -48,7 +48,7 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="4">
-				<VSwitchWithValidation
+				<VtSwitchWithValidation
 					ref="isPublicRef"
 					v-model="detailItemIsPublic"
 					vid="detailItemIsPublic"
@@ -75,7 +75,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="detailItemOrganizationsRef"
 					v-model="detailItemOrganizations"
 					vid="detailItemOrganizations"
@@ -91,7 +91,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12" sm="8">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					class="mr-2"
 					ref="detailItemRocketTypesRef"
 					v-model="detailItemRocketTypes"
@@ -105,7 +105,7 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="4">
-				<VSwitchWithValidation
+				<VtSwitchWithValidation
 					ref="detailItemExperimentalRef"
 					v-model="detailItemExperimental"
 					vid="detailItemExperimental"
@@ -141,7 +141,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12" sm="6">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					v-if="isEditable || (!isEditable && detailItemAddressCountry)"
 					ref="detailItemAddressCountryRef"
 					v-model="detailItemAddressCountry"
@@ -153,7 +153,7 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="6">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					v-if="isEditable || (!isEditable && detailItemAddressStateProvince)"
 					ref="detailItemAddressStateProvinceRef"
 					v-model="detailItemAddressStateProvince"
@@ -268,7 +268,7 @@
 								v-if="item.rocketTypes"
 								cols="6"
 							>
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									v-model="item.rocketTypes"
 									:items="rocketTypes"
 									:readonly="true"
@@ -281,7 +281,7 @@
 								v-if="item.organizations"
 								cols="6"
 							>
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									v-model="item.organizations"
 									:items="organizations"
 									:readonly="true"
@@ -302,7 +302,7 @@
 								/>
 							</v-col>
 							<v-col cols="6" sm="4">
-								<VSelect
+								<VtSelect
 									v-if="item.address.state"
 									v-model="item.address.state"
 									:items="states"
@@ -311,7 +311,7 @@
 								/>
 							</v-col>
 							<v-col cols="6" sm="4">
-								<VSelect
+								<VtSelect
 									v-if="item.address.country"
 									v-model="item.address.country"
 									:items="countries"
@@ -366,8 +366,8 @@
 				</v-expansion-panel>
 			</v-expansion-panels>
 		</template>
-	</VFormControl>
-	<VConfirmationDialog
+	</VtFormControl>
+	<VtConfirmationDialog
 		ref="dialogDeleteSecondaryRef"
 		:message="dialogDeleteSecondaryMessage"
 		:messageRaw=true
@@ -402,12 +402,11 @@ import { useLocationComponentProps } from '@/components/content/locations/locati
 import LocationEditDialog from '@/components/content/locations/dialogs/LocationEditDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
@@ -416,12 +415,11 @@ export default {
 		LocationEditDialog,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
-		VConfirmationDialog,
-		VFormControl,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtConfirmationDialog,
+		VtFormControl,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
-		VTextField,
 		VTextFieldWithValidation
 	},
 	props: {

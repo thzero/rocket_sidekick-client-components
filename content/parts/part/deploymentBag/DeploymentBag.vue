@@ -11,7 +11,7 @@
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
 	</div>
-	<VFormControl
+	<VtFormControl
 		ref="formControlRef"
 		:validation="validation"
 		:button-cancel="isEditable"
@@ -42,7 +42,7 @@
 				/>
 			</v-col>
 			<v-col cols="2">
-				<VSwitchWithValidation
+				<VtSwitchWithValidation
 					v-if="!isEditable || hasAdminEdit"
 					ref="isPublicRef"
 					v-model="detailItemIsPublic"
@@ -73,7 +73,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemDiameterRef"
 								v-model="detailItemDiameter"
 								vid="detailItemDiameter"
@@ -119,7 +119,7 @@
 				</table>
 			</v-col>
 			<v-col cols="5" md="2">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemLengthRef"
 					v-model="detailItemLength"
 					vid="detailItemLength"
@@ -132,7 +132,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemLengthRef"
 								v-model="detailItemLength"
 								vid="detailItemLength"
@@ -183,7 +183,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemWeightRef"
 								v-model="detailItemWeight"
 								vid="detailItemWeight"
@@ -231,7 +231,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="8">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="manufacturerRef"
 					v-model="detailItemManufacturer"
 					vid="detailItemManufacturer"
@@ -255,7 +255,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="6">
-				<VSwitchWithValidation
+				<VtSwitchWithValidation
 					class="ml-2 mr-2"
 					ref="detailItemPilotChuteRef"
 					v-model="detailItemPilotChute"
@@ -271,7 +271,7 @@
 				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemPilotChuteDiameterRef"
 								vid=""
 								v-model="detailItemPilotChuteDiameter"
@@ -317,7 +317,7 @@
 				</table>
 			</v-col>
 			<v-col cols="6">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemPilotChuteCdRef"
 					vid="detailItemPilotChuteCd"
 					v-model="detailItemPilotChuteCd"
@@ -327,7 +327,7 @@
 				/>
 			</v-col>
 		</v-row>
-	</VFormControl>
+	</VtFormControl>
 </template>
 
 <script>
@@ -342,10 +342,10 @@ import { usePartValidation } from '@/components/content/parts/part/partValidatio
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -355,10 +355,10 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
-		VFormControl,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtFormControl,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

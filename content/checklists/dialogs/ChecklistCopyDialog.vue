@@ -1,5 +1,5 @@
 <template>
-	<VFormDialog
+	<VtFormDialog
 		:label="$t('titles.copy') + ' ' + $t('forms.name')"
 		:signal="signal"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
@@ -19,7 +19,7 @@
 			:counter="30"
 			:validation="validation"
 		/>
-	</VFormDialog>
+	</VtFormDialog>
 </template>
 
 <script>
@@ -27,13 +27,13 @@ import { useChecklistCopyDialogComponent } from '@/components/content/checklists
 import { useChecklistCopyDialogProps } from '@/components/content/checklists/dialogs/checklistCopyDialogProps';
 import { useChecklistCopyDialogValidation } from '@/components/content/checklists/dialogs/checklistCopyDialogValidation';
 
-import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
+import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
 	name: 'ChecklistCopyDialog',
 	components: {
-		VFormDialog,
+		VtFormDialog,
 		VTextFieldWithValidation
 	},
 	props: {

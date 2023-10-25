@@ -214,7 +214,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 				count = item.count ? item.count : null;
 				temp.motorInfo.value = `${diameter}${diameter ? ' x ' : ''}${count}`;
 
-				temp2 = (value.motors ?? [])[index];
+				temp2 = (item.motors ?? [])[index];
 				if (!temp2)
 					continue;
 
