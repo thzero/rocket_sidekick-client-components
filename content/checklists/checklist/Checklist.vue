@@ -16,7 +16,7 @@
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- [[ detailItemData {{ JSON.stringify(detailItemData) }}]]  -->
 	</div>
-	<VFormControl
+	<VtFormControl
 		ref="formControlRef"
 		:validation="validation"
 		:button-cancel="isEditable"
@@ -140,7 +140,7 @@
 				</v-col>
 			</v-row>
 		</template>
-	</VFormControl>
+	</VtFormControl>
 </template>
 
 <script>
@@ -151,8 +151,8 @@ import { useChecklistComponentProps } from '@/components/content/checklists/chec
 import { useChecklistValidation } from '@/components/content/checklists/checklist/checklistValidation';
 
 import ChecklistSteps from '@/components/content/checklists/checklist/ChecklistSteps';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -160,8 +160,8 @@ export default {
 	name: 'ChecklistControl',
 	components: {
 		ChecklistSteps,
-		VFormControl,
-		VSwitchWithValidation,
+		VtFormControl,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

@@ -6,7 +6,7 @@
 		<ContentDescription id="strings.content.tools.weathercocking" />
 		<v-row dense>
 			<v-col cols="12">
-				<VFormControl
+				<VtFormControl
 					ref="weathercockingFormRef"
 					:validation="validation"
 					:reset-additional="resetAdditional"
@@ -21,7 +21,7 @@
 								<table style="width: 100%">
 									<tr>
 										<td>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="windVelocityRef"
 												v-model="windVelocity"
 												vid="windVelocity"
@@ -38,7 +38,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td> -->
-										<td class="measurementUnitMedium">
+										<td class="measurementUnitLong">
 											<!-- <MeasurementUnitSelect
 												ref="windVelocityMeasurementUnitIdRef"
 												v-model="windVelocityMeasurementUnitId"
@@ -64,7 +64,7 @@
 								<table style="width: 100%">
 									<tr>
 										<td>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="exitVelocityRef"
 												v-model="exitVelocity"
 												vid="exitVelocity"
@@ -81,7 +81,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td> -->
-										<td class="measurementUnitMedium">
+										<td class="measurementUnitLong">
 											<!-- <MeasurementUnitSelect
 												ref="exitVelocityMeasurementUnitIdRef"
 												v-model="exitVelocityMeasurementUnitId"
@@ -105,7 +105,7 @@
 							</v-col>
 						</v-row>
 					</template>
-				</VFormControl>
+				</VtFormControl>
 			</v-col>
 		</v-row>
 		<v-row class="pt-4" dense>
@@ -174,9 +174,9 @@ import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 
 export default {
 	name: 'Weathercocking',
@@ -188,9 +188,9 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
-		VFormControl,
-		VNumberFieldWithValidation,
-		VSelectWithValidation
+		VtFormControl,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation
 	},
 	setup (props, context) {
 		const {

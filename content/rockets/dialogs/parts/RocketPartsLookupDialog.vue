@@ -1,5 +1,5 @@
 <template>
-	<VFormListingDialog
+	<VtFormListingDialog
 		ref="dialogRocketPartsLookup"
 		:label="$t(partTypeName)"
 		:signal="signal"
@@ -46,7 +46,7 @@
 									v-if="isMotors()"
 									cols="12" sm="6"
 								>
-									<VSelectWithValidation
+									<VtSelectWithValidation
 										ref="filterItemMotorImpulseClassRef"
 										v-model="filterItemMotorImpulseClass"
 										vid="filterItemMotorImpulseClass"
@@ -59,7 +59,7 @@
 									v-if="isMotors() || isMotorCases()"
 									cols="12" sm="6"
 								>
-									<VSelectWithValidation
+									<VtSelectWithValidation
 										ref="filterItemMotorDiameterRef"
 										v-model="filterItemMotorDiameter"
 										vid="filterItemMotorDiameter"
@@ -74,7 +74,7 @@
 								dense
 							>
 								<v-col cols="3">
-									<VNumberFieldWithValidation
+									<VtNumberFieldWithValidation
 										ref="filterItemDiameterMinRef"
 										v-model="filterItemDiameterMin"
 										vid="filterItemDiameterMin"
@@ -83,7 +83,7 @@
 									/>
 								</v-col>
 								<v-col cols="3">
-									<VNumberFieldWithValidation
+									<VtNumberFieldWithValidation
 										ref="filterItemDiameterMaxRef"
 										v-model="filterItemDiameterMax"
 										vid="filterItemDiameterMax"
@@ -123,7 +123,7 @@
 								dense
 							>
 								<v-col cols="3">
-									<VNumberFieldWithValidation
+									<VtNumberFieldWithValidation
 										ref="filterItemLengthMinRef"
 										v-model="filterItemLengthMin"
 										vid="filterItemLengthMin"
@@ -132,7 +132,7 @@
 									/>
 								</v-col>
 								<v-col cols="3">
-									<VNumberFieldWithValidation
+									<VtNumberFieldWithValidation
 										ref="filterItemLengthMaxRef"
 										v-model="filterItemLengthMax"
 										vid="filterItemLengthMax"
@@ -169,7 +169,7 @@
 							</v-row>
 							<v-row dense>
 								<v-col cols="8">
-									<VSelectWithValidation
+									<VtSelectWithValidation
 										ref="filterItemManufacturerRef"
 										v-model="filterItemManufacturer"
 										vid="filterItemManufacturer"
@@ -238,8 +238,8 @@
 				</v-expansion-panels>
 			</div>
 		</template>
-	</VFormListingDialog>
-	<VConfirmationDialog
+	</VtFormListingDialog>
+	<VtConfirmationDialog
 		:message="dialogResetMessage"
 		:messageRaw=true
 		:signal="dialogResetManager.signal"
@@ -260,10 +260,10 @@ import RocketParts from '@/components/content/rockets/parts/RocketParts';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormListingDialog';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListingDialog';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
@@ -272,10 +272,10 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
 		RocketParts,
-		VConfirmationDialog,
-		VFormListingDialog,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
+		VtConfirmationDialog,
+		VtFormListingDialog,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
 		VTextFieldWithValidation
 	},
 	props: {

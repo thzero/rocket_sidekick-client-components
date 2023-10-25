@@ -6,7 +6,7 @@
 		<ContentDescription id="strings.content.tools.parachuteSizing" />
 		<v-row dense>
 			<v-col cols="12">
-				<VFormControl
+				<VtFormControl
 					ref="parachuteSizingFormRef"
 					:validation="validation"
 					:reset-additional="resetAdditional"
@@ -18,7 +18,7 @@
 					<template v-slot:default>
 						<v-row dense>
 							<v-col cols="12" sm="6">
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="calculationTypeRef"
 									v-model="calculationType"
 									vid="calculationType"
@@ -81,7 +81,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnitMedium">
+										<td class="measurementUnitLong">
 											<MeasurementUnitSelect
 												ref="velocityMeasurementUnitIdRef"
 												v-model="velocityMeasurementUnitId"
@@ -92,7 +92,7 @@
 												:label="$t('forms.settings.measurementUnits.velocity')"
 											/>
 										</td> -->
-										<td class="measurementUnitMedium">
+										<td class="measurementUnitLong">
 											<MeasurementUnitSelect2
 												ref="velocityMeasurementUnitIdRef"
 												v-model="velocityMeasurementUnitId"
@@ -111,7 +111,7 @@
 								<table style="width: 100%">
 									<tr>
 										<td>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="massRef"
 												v-model="mass"
 												vid="mass"
@@ -156,7 +156,7 @@
 								<table style="width: 100%">
 									<tr>
 										<td>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="airDensityRef"
 												v-model="airDensity"
 												vid="airDensity"
@@ -201,7 +201,7 @@
 						</v-row>
 						<v-row dense>
 							<v-col cols="12" sm="6" >
-								<VNumberFieldWithValidation
+								<VtNumberFieldWithValidation
 									ref="coeffDragRef"
 									v-model="coeffDrag"
 									vid="coeffDrag"
@@ -217,7 +217,7 @@
 									>
 										<td
 										>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="desiredVelocityRef"
 												v-model="desiredVelocity"
 												vid="desiredVelocity"
@@ -235,7 +235,7 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnitMedium">
+										<td class="measurementUnitLong">
 											<MeasurementUnitSelect
 												ref="desiredVelocityMeasurementUnitIdRef"
 												v-model="desiredVelocityMeasurementUnitId"
@@ -246,7 +246,7 @@
 												:label="$t('forms.settings.measurementUnits.velocity')"
 											/>
 										</td> -->
-										<td class="measurementUnitMedium">
+										<td class="measurementUnitLong">
 											<MeasurementUnitSelect2
 												ref="desiredVelocityMeasurementUnitIdRef"
 												v-model="desiredVelocityMeasurementUnitId"
@@ -268,7 +268,7 @@
 									>
 										<td
 										>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="parachuteDiameterRef"
 												v-model="parachuteDiameter"
 												vid="parachuteDiameter"
@@ -313,7 +313,7 @@
 						</v-row> -->
 						<v-row dense>
 							<v-col cols="12" sm="6">
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="parachuteShapeRef"
 									v-model="parachuteShape"
 									vid="parachuteShape"
@@ -324,7 +324,7 @@
 								/>
 							</v-col>
 							<v-col cols="12" sm="6">
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="spillHoleShapeRef"
 									v-model="spillHoleShape"
 									vid="spillHoleShape"
@@ -343,7 +343,7 @@
 									>
 										<td
 										>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="parachuteDiameterRef"
 												v-model="parachuteDiameter"
 												vid="parachuteDiameter"
@@ -386,7 +386,7 @@
 								</table>
 							</v-col>
 							<v-col cols="12" sm="6">
-								<!-- <VNumberFieldWithValidation
+								<!-- <VtNumberFieldWithValidation
 									ref="spillHoleDiameterRef"
 									v-model="spillHoleDiameter"
 									vid="spillHoleDiameter"
@@ -400,7 +400,7 @@
 									>
 										<td
 										>
-											<VNumberFieldWithValidation
+											<VtNumberFieldWithValidation
 												ref="spillHoleDiameterRef"
 												v-model="spillHoleDiameter"
 												vid="spillHoleDiameter"
@@ -418,15 +418,15 @@
 												:label="$t('forms.settings.measurementUnits.title')"
 											/>
 										</td>
-										<td class="measurementUnitMedium">
+										<td class="measurementUnitLong">
 											<MeasurementUnitSelect
-												ref="desiredVelocityMeasurementUnitIdRef"
-												v-model="desiredVelocityMeasurementUnitId"
-												vid="desiredVelocityMeasurementUnitId"
+												ref="spillHoleDiameterLengthMeasurementUnitIdRef"
+												v-model="spillHoleDiameterLengthMeasurementUnitId"
+												vid="spillHoleDiameterLengthMeasurementUnitId"
 												:measurementUnitsId="desiredVelocityMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsVelocityType"
+												:measurementUnitsType="measurementUnitsLengthType"
 												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
+												:label="$t('forms.settings.measurementUnits.diameter')"
 											/>
 										</td> -->
 										<td class="measurementUnitMedium">
@@ -443,7 +443,7 @@
 								</table>
 							</v-col>
 							<!-- <v-col cols="4" sn="4">
-								<VNumberFieldWithValidation
+								<VtNumberFieldWithValidation
 									ref="spillHolePctRef"
 									v-model="spillHolePct"
 									vid="spillHolePct"
@@ -453,7 +453,7 @@
 								/>
 							</v-col> -->
 							<!-- <v-col cols="6" sn="6">
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="spillHoleShapeRef"
 									v-model="spillHoleShape"
 									vid="spillHoleShape"
@@ -476,7 +476,7 @@
 								v-if="$vuetify.display.smAndUp"
 								cols="12" sm="6"
 							>
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="parachuteShapeRef"
 									v-model="parachuteShape"
 									vid="parachuteShape"
@@ -488,7 +488,7 @@
 							</v-col>
 						</v-row> -->
 					</template>
-				</VFormControl>
+				</VtFormControl>
 			</v-col>
 		</v-row>
 		<v-row class="pt-4" dense>
@@ -502,7 +502,7 @@
 						</v-row>
 						<v-row dense class="pb-2">
 							<v-col cols="12">
-								<VMarkdown v-model="contentMarkup" :use-github=false />
+								<VtMarkdown v-model="contentMarkup" :use-github=false />
 							</v-col>
 						</v-row>
 						<v-row dense v-if="calculationResults.calculated">
@@ -568,10 +568,10 @@ import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 
 export default {
 	name: 'ParachuteSizing',
@@ -584,10 +584,10 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
-		VFormControl,
-		VMarkdown,
-		VNumberFieldWithValidation,
-		VSelectWithValidation
+		VtFormControl,
+		VtMarkdown,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation
 	},
 	setup (props, context) {
 		const {

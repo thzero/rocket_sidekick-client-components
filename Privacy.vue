@@ -18,7 +18,7 @@
 				<v-card-text>
 <div class="mt-4">
 	<p>
-<VMarkdown v-model="privacyMarkup" :use-github=false />
+<VtMarkdown v-model="privacyMarkup" :use-github=false />
 	</p>
 </div>
 				</v-card-text>
@@ -30,12 +30,12 @@
 <script>
 import { useAppPrivacyComponent } from '@/components/appPrivacy';
 
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 
 export default {
 	name: 'Support',
 	components: {
-		VMarkdown
+		VtMarkdown
 	},
 	setup(props, context) {
 		const {

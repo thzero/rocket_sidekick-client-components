@@ -1,5 +1,5 @@
 <template>
-	<VFormDialog
+	<VtFormDialog
 		:label="$t('titles.copy') + ' ' + $t('forms.name')"
 		:signal="signal"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
@@ -19,7 +19,7 @@
 			:counter="30"
 			:validation="validation"
 		/>
-	</VFormDialog>
+	</VtFormDialog>
 </template>
 
 <script>
@@ -29,13 +29,13 @@ import { usePartCopyDialogComponent } from '@/components/content/parts/dialogs/p
 import { usePartCopyDialogProps } from '@/components/content/parts/dialogs/partCopyDialogProps';
 import { usePartCopyDialogValidation } from '@/components/content/parts/dialogs/partCopyDialogValidation';
 
-import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
+import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
 	name: 'PartCopyDialog',
 	components: {
-		VFormDialog,
+		VtFormDialog,
 		VTextFieldWithValidation
 	},
 	props: {

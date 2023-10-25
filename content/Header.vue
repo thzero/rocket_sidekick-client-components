@@ -26,7 +26,7 @@
 			</v-card>
 		</v-col>
 	</v-row>
-	<VDisplayDialog
+	<VtDisplayDialog
 		:signal="dialogHelpSignal.signal"
 	>
 		<!--eslint-disable vue/no-v-html -->
@@ -36,14 +36,14 @@
 			v-html="helpMarkup"
 		/>
 		<!--eslint-enable-->
-	</VDisplayDialog>
+	</VtDisplayDialog>
 </template>
 
 <script>
 import { useContentHeaderBaseComponent } from '@/components/content/headerBase';
 import { useContentHeaderBaseProps } from '@/components/content/headerBaseProps';
 
-import VDisplayDialog from '@thzero/library_client_vue3_vuetify3/components/VDisplayDialog';
+import VtDisplayDialog from '@thzero/library_client_vue3_vuetify3/components/VtDisplayDialog';
 
 export default {
 	name: 'ContentHeader',
@@ -51,7 +51,7 @@ export default {
 		...useContentHeaderBaseProps
 	},
 	components: {
-		VDisplayDialog
+		VtDisplayDialog
 	},
 	setup(props, context) {
 		const {

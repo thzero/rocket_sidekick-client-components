@@ -122,7 +122,7 @@ import { useChecklistStepsComponent } from '@/components/content/checklists/chec
 import { useChecklistStepsComponentProps } from '@/components/content/checklists/checklist/checklistStepsComponentProps';
 
 import ChecklistStepPanel from '@/components/content/checklists/checklist/ChecklistStepPanel';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -132,7 +132,7 @@ export default {
 		Container,
 		Draggable,
 		ChecklistStepPanel,
-		VSwitchWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

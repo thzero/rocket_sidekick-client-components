@@ -1,5 +1,5 @@
 <template>
-	<VFormListingDialog
+	<VtFormListingDialog
 		ref="dialogMotorLookup"
 		:label="$t('titles.external.motorSearch')"
 		:signal="signal"
@@ -23,7 +23,7 @@
 							</v-row>
 							<v-row dense>
 								<v-col cols="12" sm="6">
-									<VSelectWithValidation
+									<VtSelectWithValidation
 										ref="filterItemImpulseClassRef"
 										v-model="filterItemImpulseClass"
 										vid="filterItemImpulseClass"
@@ -33,7 +33,7 @@
 									/>
 								</v-col>
 								<v-col cols="12" sm="6">
-									<VSelectWithValidation
+									<VtSelectWithValidation
 										ref="filterItemDiameterRef"
 										v-model="filterItemDiameter"
 										vid="filterItemDiameter"
@@ -63,7 +63,7 @@
 							</v-row>
 							<v-row dense>
 								<v-col col="12">
-									<VSelectWithValidation
+									<VtSelectWithValidation
 										ref="filterItemManufacturersRef"
 										v-model="filterItemManufacturers"
 										vid="filterItemManufacturers"
@@ -172,8 +172,8 @@
 				</v-card>
 			</div>
 		</template>
-	</VFormListingDialog>
-	<VConfirmationDialog
+	</VtFormListingDialog>
+	<VtConfirmationDialog
 		:message="dialogResetMessage"
 		:messageRaw=true
 		:signal="dialogResetManager.signal"
@@ -187,17 +187,17 @@ import { useMotorLookupDialogComponent } from '@/components/external/motorLookup
 import { useMotorLookupDialogProps } from '@/components/external/motorLookupDialogProps';
 import { useMotorLookupDialogValidation } from '@/components/external/motorLookupDialogValidation';
 
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormListingDialog';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListingDialog';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
 	name: 'MotorLookupDialog',
 	components: {
-		VConfirmationDialog,
-		VFormListingDialog,
-		VSelectWithValidation,
+		VtConfirmationDialog,
+		VtFormListingDialog,
+		VtSelectWithValidation,
 		VTextFieldWithValidation
 	},
 	props: {

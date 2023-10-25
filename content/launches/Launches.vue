@@ -1,6 +1,6 @@
 <template>
 	<ContentHeader :value="title" />
-	<VFormListing
+	<VtFormListing
 		ref="launchesRef"
 		:pre-complete-ok="search"
 		:reset-additional="resetAdditional"
@@ -27,7 +27,7 @@
 						</v-row>
 						<v-row dense>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="filterItemRocketTypesRef"
 									v-model="filterItemRocketTypes"
 									vid="filterItemRocketTypes"
@@ -40,7 +40,7 @@
 								/>
 							</v-col>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="filterItemOrganizationsRef"
 									v-model="filterItemOrganizations"
 									vid="filterItemOrganizations"
@@ -181,7 +181,7 @@
 									<div class="float-right">{{ launchDate(item) }}</div>
 								</v-card-title>
 								<v-card-text>
-									<VMarkdown v-model="item.description" :use-github=false />
+									<VtMarkdown v-model="item.description" :use-github=false />
 									<div
 										v-if="debug"
 									>
@@ -190,6 +190,11 @@
 										canEdit [[ {{ canEdit(item) }}]]
 										canView [[ {{ canView(item) }}]]
 									</div>
+									<LaunchView
+										:detail-item="item"
+										:debug="debug"
+									>
+									</LaunchView>
 								</v-card-text>
 								<v-card-actions>
 									<v-spacer></v-spacer>
@@ -237,7 +242,7 @@
 					v-show="colsEditPanel"
 					:cols="colsEditPanel"
 				>
-					<Launch
+					<LaunchEdit
 						:model-value="detailItem"
 						@cancel="detailClose"
 						@close="detailClose"
@@ -246,11 +251,11 @@
 						:debug="debug"
 						@dirty="detailDirtyCallback"
 					>
-					</Launch>
+					</LaunchEdit>
 				</v-col>
 			</v-row>
 		</template>
-	</VFormListing>
+	</VtFormListing>
 	<LocationLookupDialog
 		ref="dialogLocationLookupManagerRef"
 		:signal="dialogLocationLookupManager.signal"
@@ -263,7 +268,7 @@
 		@close="dialogRocketLookupManager.cancel()"
 		@select="selectRocket"
 	/>
-	<VConfirmationDialog
+	<VtConfirmationDialog
 		ref="dialogDeleteRef"
 		:message="dialogDeleteMessage"
 		:messageRaw=true
@@ -283,17 +288,18 @@ import { useLaunchesBaseComponentProps } from '@/components/content/launches/lau
 import { useLaunchesFilterValidation } from '@/components/content/launches/launchesFilterValidation';
 
 import ContentHeader from '@/components/content/Header';
-import Launch from '@/components/content/launches/Launch/Launch';
+import LaunchEdit from '@/components/content/launches/Launch/LaunchEdit';
+import LaunchView from '@/components/content/launches/Launch/LaunchView';
 import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -301,17 +307,18 @@ export default {
 	name: 'LaunchesUserControl',
 	components: {
 		ContentHeader,
-		Launch,
+		LaunchEdit,
+		LaunchView,
 		LocationLookupDialog,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
 		RocketLookupDialog,
-		VConfirmationDialog,
-		VFormListing,
-		VMarkdown,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtConfirmationDialog,
+		VtFormListing,
+		VtMarkdown,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

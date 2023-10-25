@@ -1,11 +1,11 @@
 <script>
-import vAuth from '@thzero/library_client_vue3_vuetify3/components/VAuth';
+import VtAuth from '@thzero/library_client_vue3_vuetify3/components/VtAuth';
 
 export default {
 	name: 'Auth',
-	extends: vAuth,
+	extends: VtAuth,
 	setup(props, context) {
-		return vAuth.setup(props, context);
+		return VtAuth.setup(props, context);
 	}
 };
 </script>

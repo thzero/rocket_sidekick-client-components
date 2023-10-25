@@ -109,8 +109,8 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const chuteProtectors = computed(() => {
 		const temp = props.detailItem ? props.detailItem.chuteProtectors : [];
 		if (fromRocketStage.value && fromRocketStage.value.chuteProtectors) {
-			fromRocketStage.value.altimeters.forEach(l => l.fromRocket = true);
-			temp.push(...fromRocketStage.value.altimeters);
+			fromRocketStage.value.chuteProtectors.forEach(l => l.fromRocket = true);
+			temp.push(...fromRocketStage.value.chuteProtectors);
 		}
 		return temp;
 	});
@@ -173,10 +173,6 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const hasTrackers = computed(() => {
 		const temp = trackers.value;
 		return temp &&  Array.isArray(temp) && temp.length > 0;
-	});
-	const isEditablePart = computed(() => {
-		// return props.isEditable;
-		return false; // TODO
 	});
 	const fromRocketStage = computed(() => {
 		// if (!props.detailItemSetup)
@@ -657,7 +653,8 @@ export function useRocketSetupStageComponent(props, context, options) {
 
 	onMounted(async () => {
 		const temp3 = await serviceStore.getters.getRocketsExpanded();
-		const temp4 = temp3[panelsKey()];
+		// const temp4 = temp3[panelsKey()];
+		const temp4 = [...new Set(temp3[panelsKey()])];
 		panels.value = temp4 ?? [ 
 			partsKeyAltimeters,
 			partsKeyChuteProtectors,
@@ -704,7 +701,6 @@ export function useRocketSetupStageComponent(props, context, options) {
 		hasParachutes,
 		hasStreamers,
 		hasTrackers,
-		isEditablePart,
 		motors,
 		motorCases,
 		parachutes,

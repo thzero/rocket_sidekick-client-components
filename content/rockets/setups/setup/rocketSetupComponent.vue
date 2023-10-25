@@ -208,7 +208,7 @@ export function useRocketSetupComponent(props, context, options) {
 	const resetData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemName.value = value ? value.name : null;
-		detailItemNotes.value = value ? value.notes : nulll;
+		detailItemNotes.value = value ? value.notes : null;
 
 		if (value && value.rocket) {
 			detailItemRocketId.value = value.rocket.id;

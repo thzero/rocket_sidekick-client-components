@@ -1,5 +1,5 @@
 <template>
-    <VSelectWithValidation
+    <VtSelectWithValidation
         ref="innerValueRef"
         vid="innerValue"
 		v-model="innerValue"
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 
 import { useMeasurementUnitsSelectBaseComponent } from '@/components/content/measurementUnitsSelectBase';
 import { useMeasurementUnitsSelectBaseProps } from '@/components/content/measurementUnitsSelectBaseProps';
@@ -21,7 +21,7 @@ import { useMeasurementUnitsSelectBaseProps } from '@/components/content/measure
 export default {
 	name: 'MeasurementUnitsSelect',
 	components: {
-		VSelectWithValidation
+		VtSelectWithValidation
 	},
     props: {
 		...useMeasurementUnitsSelectBaseProps

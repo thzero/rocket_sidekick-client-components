@@ -14,7 +14,7 @@
 	<v-row dense>
 		<v-col cols="12" lg="2" />
 		<v-col cols="12" lg="8">
-			<VOpenSource
+			<VtOpenSource
 				:value="openSource"
 			/>
 		</v-col>
@@ -24,12 +24,12 @@
 <script>
 import { useAppOpenSourceComponent } from '@/components/appOpenSource';
 
-import VOpenSource from '@thzero/library_client_vue3_vuetify3/components/VOpenSource';
+import VtOpenSource from '@thzero/library_client_vue3_vuetify3/components/VtOpenSource';
 
 export default {
 	name: 'OpenSource',
 	components: {
-		VOpenSource
+		VtOpenSource
 	},
 	setup(props, context) {
 		const {

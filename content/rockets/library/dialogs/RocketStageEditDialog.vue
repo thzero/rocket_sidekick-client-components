@@ -1,5 +1,5 @@
 <template>
-	<VFormDialog
+	<VtFormDialog
 		:label="$t('titles.edit') + ' ' + displayName"
 		:signal="signal"
 		:pre-complete-ok="preCompleteOk"
@@ -44,7 +44,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="6">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="detailItemManufacturerRef"
 					v-model="detailItemManufacturer"
 					vid="detailItemManufacturer"
@@ -68,23 +68,23 @@
 		</v-row>
 		<v-row dense>
 			<!-- <v-col cols="5" md="2">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemDiameterMajorRef"
 					v-model="detailItemDiameterMajor"
-					vid="detailItemDiameterMajorr"
+					vid="detailItemDiameterMajor"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.rockets.diameter.name')"
 				/>
 			</v-col> -->
 			<v-col cols="12" sm="6">
-				<table class="width: 100%;">
+				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemDiameterMajorRef"
 								v-model="detailItemDiameterMajor"
-								vid="detailItemDiameterMajorr"
+								vid="detailItemDiameterMajor"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.rockets.diameter.name')"
@@ -127,7 +127,7 @@
 				</table>
 			</v-col>
 			<!-- <v-col cols="5" md="2">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemLengthRef"
 					v-model="detailItemLength"
 					vid="detailItemLength"
@@ -137,13 +137,13 @@
 				/>
 			</v-col> -->
 			<v-col cols="12" sm="6">
-				<table class="width: 100%;">
+				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemDiameterMajorRef"
 								v-model="detailItemDiameterMajor"
-								vid="detailItemDiameterMajorr"
+								vid="detailItemDiameterMajor"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.rockets.diameter.name')"
@@ -188,7 +188,7 @@
 		</v-row>
 		<v-row dense>
 			<!-- <v-col cols="5" md="2">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemWeightRef"
 					v-model="detailItemWeight"
 					vid="detailItemWeight"
@@ -198,10 +198,10 @@
 				/>
 			</v-col> -->
 			<v-col cols="12" sm="6">
-				<table class="width: 100%;">
+				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemWeightRef"
 								v-model="detailItemWeight"
 								vid="detailItemWeight"
@@ -247,7 +247,7 @@
 				</table>
 			</v-col>
 			<!-- <v-col cols="5" md="2">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemCpRef"
 					v-model="detailItemCp"
 					vid="detailItemCp"
@@ -257,10 +257,10 @@
 				/>
 			</v-col> -->
 			<v-col cols="12" sm="6">
-				<table class="width: 100%;">
+				<table style="width: 100%;">
 					<tr>
 						<td>
-							<VNumberFieldWithValidation
+							<VtNumberFieldWithValidation
 								ref="detailItemCpRef"
 								v-model="detailItemCp"
 								vid="detailItemCp"
@@ -308,7 +308,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="6" sm="3">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="detailItemMotorDiameter0Ref"
 					v-model="detailItemMotorDiameter0"
 					vid="detailItemMotorDiameter0"
@@ -327,7 +327,7 @@
 				/>
 			</v-col>
 			<v-col cols="6" sm="3">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="detailItemMotorDiameter1Ref"
 					v-model="detailItemMotorDiameter1"
 					vid="detailItemMotorDiameter1"
@@ -346,7 +346,7 @@
 				/>
 			</v-col>
 			<v-col cols="6" sm="3">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="detailItemMotorDiameter2Ref"
 					v-model="detailItemMotorDiameter2"
 					vid="detailItemMotorDiameter2"
@@ -365,7 +365,7 @@
 				/>
 			</v-col>
 		</v-row>
-	</VFormDialog>
+	</VtFormDialog>
 </template>
 
 <script>
@@ -380,10 +380,10 @@ import { useRocketEditValidation } from '@/components/content/rockets/library/ro
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -393,10 +393,10 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
-		VFormDialog,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtFormDialog,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

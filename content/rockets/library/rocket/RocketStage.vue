@@ -14,7 +14,7 @@
 	</div>
 	<v-row dense>
 		<v-col cols="9">
-			<VTextArea
+			<VTextArea2
 				v-model="displayItem.description"
 				:readonly="true"
 				:label="$t('forms.description')"
@@ -22,7 +22,7 @@
 			/>
 		</v-col>
 		<v-col cols="3">
-			<VTextField
+			<VTextField2
 				v-model="stageIndex"
 				:readonly="true"
 				:label="$t('forms.content.rockets.stage.name')"
@@ -30,11 +30,10 @@
 		</v-col>
 	</v-row>
 	<v-row
-		v-if="displayItem.manufacturerId"
 		dense
 	>
 		<v-col cols="6">
-			<VSelect2
+			<VtSelect
 				v-model="displayItem.manufacturerId"
 				:items="manufacturers"
 				:readonly="true"
@@ -42,7 +41,7 @@
 			/>
 		</v-col>
 		<v-col cols="6">
-			<VTextField
+			<VTextField2
 				v-model="displayItem.manufacturerStockId"
 				:readonly="true"
 				:label="$t('forms.content.parts.manufacturerId')"
@@ -56,7 +55,7 @@
 			v-if="displayItemDiameterMajor"
 			cols="6" xs="3"
 		>
-			<VTextField
+			<VTextField2
 				v-model="displayItemDiameterMajor"
 				:hide-details="true"
 				:readonly="true"
@@ -67,7 +66,7 @@
 			v-if="displayItemLength"
 			cols="6" xs="3"
 		>
-			<VTextField
+			<VTextField2
 				v-model="displayItemLength"
 				:hide-details="true"
 				:readonly="true"
@@ -78,7 +77,7 @@
 			v-if="displayItemWeight"
 			cols="6" xs="3"
 		>
-			<VTextField
+			<VTextField2
 				v-model="displayItemWeight"
 				:hide-details="true"
 				:readonly="true"
@@ -89,7 +88,7 @@
 			v-if="displayItemCp"
 			cols="6" xs="3"
 		>
-			<VTextField
+			<VTextField2
 				v-model="displayItemCp"
 				:hide-details="true"
 				:readonly="true"
@@ -104,7 +103,7 @@
 			v-if="hasMotor(0)"
 			cols="12" sm="4"
 		>
-			<VTextField
+			<VTextField2
 				v-model="motor(0).value"
 				:readonly="true"
 				:label="$t('forms.content.parts.motor.name')"
@@ -114,7 +113,7 @@
 			v-if="hasMotor(1)"
 			cols="12" sm="4"
 		>
-			<VTextField
+			<VTextField2
 				v-model="motor(1).value"
 				:readonly="true"
 				:label="$t('forms.content.parts.motor.name')"
@@ -124,7 +123,7 @@
 			v-if="hasMotor(2)"
 			cols="12" sm="4"
 		>
-			<VTextField
+			<VTextField2
 				v-model="motor(2).value"
 				:readonly="true"
 				:label="$t('forms.content.parts.motor.name')"
@@ -249,7 +248,6 @@
 					:stage-id="displayItem.id"
 					@delete="handleAltimeterDelete"
 				>
-				<!-- appogee, main alt, delays, amounts -->
 				</RocketParts>
 				<RocketParts
 					:items="chuteProtectors"
@@ -361,7 +359,7 @@
 		@close="dialogTrackersSearchManager.cancel()"
 		@ok="selectTracker"
 	/>
-	<VConfirmationDialog
+	<VtConfirmationDialog
 		ref="dialogPartsDeleteRef"
 		:message="dialogPartsDeleteMessage"
 		:messageRaw=true
@@ -382,10 +380,10 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VSelect2 from '@thzero/library_client_vue3_vuetify3/components/form/VSelect2';
-import VTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea';
-import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
+import VTextArea2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea2';
+import VTextField2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextField2';
 
 export default {
 	name: 'RocketStageControl',
@@ -396,10 +394,10 @@ export default {
 		RocketParts,
 		RocketPartsLookupDialog,
 		StreamerPanelTitle,
-		VConfirmationDialog,
-		VSelect2,
-		VTextArea,
-		VTextField
+		VtConfirmationDialog,
+		VtSelect,
+		VTextArea2,
+		VTextField2
 	},
 	props: {
 		...useRocketStageComponentProps

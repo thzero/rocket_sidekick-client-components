@@ -13,7 +13,7 @@
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
 	</div>
-	<VFormControl
+	<VtFormControl
 		ref="formControlRef"
 		:validation="validation"
 		:button-cancel="isEditable"
@@ -89,7 +89,7 @@
 				</div>
 			</v-col>
 			<v-col cols="12" sm="6">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					v-if="detailItemRocketId"
 					ref="detailItemTypeRef"
 					v-model="detailItemType"
@@ -189,8 +189,8 @@
 				</v-expansion-panel>
 			</v-expansion-panels>
 		</template>
-	</VFormControl>
-	<VConfirmationDialog
+	</VtFormControl>
+	<VtConfirmationDialog
 		ref="dialogDeleteSecondaryRef"
 		:message="dialogDeleteSecondaryMessage"
 		:messageRaw=true
@@ -233,11 +233,11 @@ import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect'
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import RocketSetupStage from '@/components/content/rockets/setups/setup/RocketSetupStage';
 import RocketSetupStageEditDialog from '@/components/content/rockets/setups/dialogs/RocketSetupStageEditDialog';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -249,11 +249,11 @@ export default {
 		RocketLookupDialog,
 		RocketSetupStage,
 		RocketSetupStageEditDialog,
-		VConfirmationDialog,
-		VFormControl,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtConfirmationDialog,
+		VtFormControl,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},

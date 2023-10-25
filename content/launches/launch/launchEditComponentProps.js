@@ -1,4 +1,4 @@
-export const useLaunchComponentProps = {
+export const useLaunchEditComponentProps = {
 	modelValue: {
 		type: Object,
 		default: { }

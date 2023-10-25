@@ -21,7 +21,7 @@
 					cols="12"
 				>
 					<div class="flex-form-wrapper">
-						<VFormControl
+						<VtFormControl
 							ref="formSettingsRef"
 							:validation="validation"
 							button-clear-name="buttons.reset"
@@ -102,7 +102,7 @@
 														sm="6"
 														md="3"
 													>
-														<VSelectWithValidation
+														<VtSelectWithValidation
 															ref="measurementUnitRef"
 															vid="measurementUnitsId"
 															v-model="measurementUnitsId"
@@ -116,7 +116,7 @@
 														sm="6"
 														md="3"
 													>
-														<VSelectWithValidation
+														<VtSelectWithValidation
 															ref="measurementUnitAccelerationRef"
 															vid="measurementUnitAccelerationId"
 															v-model="measurementUnitAccelerationId"
@@ -130,7 +130,7 @@
 														sm="6"
 														md="3"
 													>
-														<VSelectWithValidation
+														<VtSelectWithValidation
 															ref="measurementUnitAreaRef"
 															vid="measurementUnitAreaId"
 															v-model="measurementUnitAreaId"
@@ -144,7 +144,7 @@
 														sm="6"
 														md="3"
 													>
-														<VSelectWithValidation
+														<VtSelectWithValidation
 															ref="measurementUnitDistanceRef"
 															vid="measurementUnitDistanceId"
 															v-model="measurementUnitDistanceId"
@@ -158,7 +158,7 @@
 														sm="6"
 														md="3"
 													>
-														<VSelectWithValidation
+														<VtSelectWithValidation
 															ref="measurementUnitLengthRef"
 															vid="measurementUnitLengthId"
 															v-model="measurementUnitLengthId"
@@ -172,7 +172,7 @@
 														sm="6"
 														md="3"
 													>
-														<VSelectWithValidation
+														<VtSelectWithValidation
 															ref="measurementUnitVelocityRef"
 															vid="measurementUnitVelocityId"
 															v-model="measurementUnitVelocityId"
@@ -186,7 +186,7 @@
 														sm="6"
 														md="3"
 													>
-														<VSelectWithValidation
+														<VtSelectWithValidation
 															ref="measurementUnitVolumeRef"
 															vid="measurementUnitVolumeId"
 															v-model="measurementUnitVolumeId"
@@ -200,7 +200,7 @@
 														sm="6"
 														md="3"
 													>
-														<VSelectWithValidation
+														<VtSelectWithValidation
 															ref="measurementUnitWeightRef"
 															vid="measurementUnitWeightId"
 															v-model="measurementUnitWeightId"
@@ -215,7 +215,7 @@
 									</v-col>
 								</v-row>
 							</div>
-						</VFormControl>
+						</VtFormControl>
 					</div>
 				</v-col>
 			</v-row>
@@ -227,8 +227,8 @@
 import { ref } from 'vue';
 import { maxLength, minLength, required } from '@vuelidate/validators';
 
-import VFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VFormControl';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
+import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 import { useAppSettingsComponent } from '@/components/appSettings';
@@ -236,8 +236,8 @@ import { useAppSettingsComponent } from '@/components/appSettings';
 export default {
 	name: 'AppSettings',
 	components: {
-		VFormControl,
-		VSelectWithValidation,
+		VtFormControl,
+		VtSelectWithValidation,
 		VTextFieldWithValidation
 	},
 	setup(props, context) {

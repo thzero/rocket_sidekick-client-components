@@ -17,7 +17,7 @@
 	>
 		<v-row dense>
 			<v-col cols="12">
-				<VTextArea
+				<VTextArea2
 					v-model="fromRocketStageDescription"
 					:readonly="true"
 					:label="$t('forms.description')"
@@ -32,7 +32,7 @@
 				v-if="fromRocketStageDiameterMajor"
 				cols="6" xs="3"
 			>
-				<VTextField
+				<VTextField2
 					v-model="fromRocketStageDiameterMajor"
 					:hide-details="true"
 					:readonly="true"
@@ -43,7 +43,7 @@
 				v-if="fromRocketStageLength"
 				cols="6" xs="3"
 			>
-				<VTextField
+				<VTextField2
 					v-model="fromRocketStageLength"
 					:hide-details="true"
 					:readonly="true"
@@ -56,7 +56,7 @@
 				v-if="fromRocketStageCp"
 				cols="6" sm="4"
 			>
-				<VTextField
+				<VTextField2
 					v-model="fromRocketStageCp"
 					:hide-details="true"
 					:readonly="true"
@@ -67,7 +67,7 @@
 				v-if="displayItemCg"
 				cols="6" sm="4"
 			>
-				<VTextField
+				<VTextField2
 					v-model="displayItemCg"
 					:hide-details="true"
 					:readonly="true"
@@ -78,7 +78,7 @@
 				v-if="displayItemWeightNose"
 				cols="6" sm="4"
 			>
-				<VTextField
+				<VTextField2
 					v-model="displayItemWeightNose"
 					:hide-details="true"
 					:readonly="true"
@@ -89,7 +89,7 @@
 				v-if="displayItemWeight"
 				cols="6" sm="4"
 			>
-				<VTextField
+				<VTextField2
 					v-model="displayItemWeight"
 					:hide-details="true"
 					:readonly="true"
@@ -110,7 +110,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="fromRocketStageMotor(0).value"
 							:readonly="true"
 							:hide-details="true"
@@ -120,7 +120,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="motorInfo(0).value"
 							:readonly="true"
 							:hide-details="true"
@@ -130,7 +130,7 @@
 					<v-col 
 						cols="12" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="motorCaseInfo(0).value"
 							:readonly="true"
 							:hide-details="true"
@@ -153,7 +153,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="fromRocketStageMotor(1).value"
 							:readonly="true"
 							:hide-details="true"
@@ -163,7 +163,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="motorInfo(1).value"
 							:readonly="true"
 							:hide-details="true"
@@ -173,7 +173,7 @@
 					<v-col 
 						cols="12" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="motorCaseInfo(1).value"
 							:readonly="true"
 							:hide-details="true"
@@ -196,7 +196,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="fromRocketStageMotor(2).value"
 							:readonly="true"
 							:hide-details="true"
@@ -206,7 +206,7 @@
 					<v-col 
 						cols="6" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="motorInfo(2).value"
 							:readonly="true"
 							:hide-details="true"
@@ -216,7 +216,7 @@
 					<v-col 
 						cols="12" md="4"
 					>
-						<VTextField
+						<VTextField2
 							v-model="motorCaseInfo(2).value"
 							:readonly="true"
 							:hide-details="true"
@@ -343,7 +343,7 @@
 				<RocketParts
 					:items="altimeters"
 					:deletable="isEditable"
-					:editable="isEditablePart"
+					:editable="isEditable"
 					:manufacturers="manufacturers"
 					:stage-id="displayItem.id"
 					@delete="handleAltimeterDelete"
@@ -353,7 +353,7 @@
 				<RocketParts
 					:items="chuteProtectors"
 					:deletable="isEditable"
-					:editable="isEditablePart"
+					:editable="isEditable"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleChuteProtectorDelete"
@@ -363,7 +363,7 @@
 				<RocketParts
 					:items="chuteReleases"
 					:deletable="isEditable"
-					:editable="isEditablePart"
+					:editable="isEditable"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleChuteReleaseDelete"
@@ -373,7 +373,7 @@
 				<RocketParts
 					:items="deploymentBags"
 					:deletable="isEditable"
-					:editable="isEditablePart"
+					:editable="isEditable"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleDeploymentBagDelete"
@@ -396,7 +396,7 @@
 							<v-col 
 								cols="12" sm="5"
 							>
-								<VTextField
+								<VTextField2
 									v-model="item.motor"
 									:readonly="true"
 									:hide-details="true"
@@ -405,7 +405,7 @@
 							</v-col><v-col 
 								cols="12" sm="7"
 							>
-								<VTextField
+								<VTextField2
 									v-model="item.motorCase"
 									:readonly="true"
 									:hide-details="true"
@@ -427,7 +427,7 @@
 				<RocketParts
 					:items="parachutes"
 					:deletable="isEditable"
-					:editable="isEditablePart"
+					:editable="isEditable"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleParachuteDelete"
@@ -437,7 +437,7 @@
 				<RocketParts
 					:items="streamers"
 					:deletable="isEditable"
-					:editable="isEditablePart"
+					:editable="isEditable"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleStreamerDelete"
@@ -447,7 +447,7 @@
 				<RocketParts
 					:items="trackers"
 					:deletable="isEditable"
-					:editable="isEditablePart"
+					:editable="isEditable"
 					:manufacturers="manufacturers"
 					:stageId="displayItem.id"
 					@delete="handleTrackerDelete"
@@ -505,7 +505,7 @@
 		@close="dialogPartsSearchTrackersManager.cancel()"
 		@ok="selectTracker"
 	/>
-	<VConfirmationDialog
+	<VtConfirmationDialog
 		ref="dialogPartsDeleteRef"
 		:message="dialogPartsDeleteMessage"
 		:messageRaw=true
@@ -526,10 +526,10 @@ import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPan
 
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VSelect2 from '@thzero/library_client_vue3_vuetify3/components/form/VSelect2';
-import VTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea';
-import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
+import VTextArea2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextArea2';
+import VTextField2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextField2';
 
 export default {
 	name: 'RocketSetupStageControl',
@@ -540,10 +540,10 @@ export default {
 		RocketParts,
 		RocketPartsLookupDialog,
 		StreamerPanelTitle,
-		VConfirmationDialog,
-		VSelect2,
-		VTextArea,
-		VTextField
+		VtConfirmationDialog,
+		VtSelect,
+		VTextArea2,
+		VTextField2
 	},
 	props: {
 		...useRocketSetupStageComponentProps
@@ -585,7 +585,6 @@ export default {
 			hasParachutes,
 			hasStreamers,
 			hasTrackers,
-			isEditablePart,
 			motors,
 			motorCases,
 			parachutes,
@@ -697,7 +696,6 @@ export default {
 			hasParachutes,
 			hasStreamers,
 			hasTrackers,
-			isEditablePart,
 			motors,
 			motorCases,
 			parachutes,

@@ -1,6 +1,6 @@
 <template>
 	<ContentHeader :value="title" />
-	<VFormListing
+	<VtFormListing
 		ref="rocketSetupsRef"
 		:pre-complete-ok="search"
 		:reset-additional="resetAdditional"
@@ -25,7 +25,7 @@
 								/>
 							</v-col>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="filterItemRocketTypesRef"
 									v-model="filterItemRocketTypes"
 									vid="filterItemRocketTypes"
@@ -41,7 +41,7 @@
 						<v-row dense>
 							<v-col cols="12">
 								<div class="d-flex">
-									<VTextField
+									<VTextField2
 										ref="filterItemRocketNameRef"
 										v-model="filterItemRocketName"
 										vid="filterItemRocketName"
@@ -61,7 +61,7 @@
 						</v-row>
 						<v-row dense>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
-								<VSelectWithValidation
+								<VtSelectWithValidation
 									ref="filterItemManufacturersRef"
 									v-model="filterItemManufacturers"
 									vid="filterItemManufacturers"
@@ -255,7 +255,7 @@
 				</v-col>
 			</v-row>
 		</template>
-	</VFormListing>
+	</VtFormListing>
 	<RocketSetupCopyDialog
 		ref="dialogCopyRef"
 		:params="dialogCopyParams"
@@ -270,7 +270,7 @@
 		@close="dialogRocketLookupManager.cancel()"
 		@select="selectRocket"
 	/>
-	<VConfirmationDialog
+	<VtConfirmationDialog
 		ref="dialogDeleteRef"
 		:message="dialogDeleteMessage"
 		:messageRaw=true
@@ -293,16 +293,16 @@ import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLooku
 import RocketSetup from '@/components/content/rockets/setups/setup/RocketSetup';
 import RocketSetupCopyDialog from '@/components/content/rockets/setups/dialogs/RocketSetupCopyDialog';
 import ContentHeader from '@/components/content/Header';
-import VConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VConfirmationDialog';
-import VFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VFormListing';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
-import VTextField from '@thzero/library_client_vue3_vuetify3/components/form/VTextField';
+import VTextField2 from '@thzero/library_client_vue3_vuetify3/components/form/VTextField2';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
 export default {
@@ -314,13 +314,13 @@ export default {
 		RocketLookupDialog,
 		RocketSetup,
 		RocketSetupCopyDialog,
-		VConfirmationDialog,
-		VFormListing,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtConfirmationDialog,
+		VtFormListing,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
-		VTextField,
+		VTextField2,
 		VTextFieldWithValidation
 	},
 	props: {

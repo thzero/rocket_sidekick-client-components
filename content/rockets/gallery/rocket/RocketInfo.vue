@@ -46,7 +46,7 @@
 					</v-row>
 				</v-card-title>
 				<v-card-text class="pt-4">
-<VMarkdown v-model="rocket.description" :use-github=false />
+<VtMarkdown v-model="rocket.description" :use-github=false />
 				</v-card-text>
 			</v-card>
 		</v-col>
@@ -181,13 +181,13 @@ import { useRocketInfoBaseComponent } from '@/components/content/rockets/gallery
 import { useRocketInfoBaseProps } from '@/components/content/rockets/gallery/rocket/rocketInfoBaseProps';
 
 import ContentHeader from '@/components/content/Header';
-import VMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VMarkdown';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 
 export default {
 	name: 'RocketInfo',
 	components: {
 		ContentHeader,
-		VMarkdown
+		VtMarkdown
 	},
 	props: {
 		...useRocketInfoBaseProps

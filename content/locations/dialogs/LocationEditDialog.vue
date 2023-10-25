@@ -1,5 +1,5 @@
 <template>
-	<VFormDialog
+	<VtFormDialog
 		:label="$t('titles.edit') + ' ' + displayName"
 		:signal="signal"
 		:pre-complete-ok="preCompleteOk"
@@ -22,7 +22,7 @@
 		</div>
 		<v-row dense>
 			<v-col cols="12" sm="6">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemNumberRef"
 					v-model="detailItemNumber"
 					vid="detailItemNumber"
@@ -32,7 +32,7 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="6">
-				<VNumberFieldWithValidation
+				<VtNumberFieldWithValidation
 					ref="detailItemYearRef"
 					v-model="detailItemYear"
 					vid="detailItemYear"
@@ -44,7 +44,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="detailItemOrganizationsRef"
 					v-model="detailItemOrganizations"
 					vid="detailItemOrganizations"
@@ -59,7 +59,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12" sm="8">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					class="mr-2"
 					ref="detailItemRocketTypesRef"
 					v-model="detailItemRocketTypes"
@@ -72,7 +72,7 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="4">
-				<VSwitchWithValidation
+				<VtSwitchWithValidation
 					ref="detailItemExperimentalRef"
 					v-model="detailItemExperimental"
 					vid="detailItemExperimental"
@@ -103,7 +103,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12" sm="6">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="detailItemAddressCountryRef"
 					v-model="detailItemAddressCountry"
 					vid="detailItemAddressCountry"
@@ -113,7 +113,7 @@
 				/>
 			</v-col>
 			<v-col cols="12" sm="6">
-				<VSelectWithValidation
+				<VtSelectWithValidation
 					ref="detailItemAddressStateProvinceRef"
 					v-model="detailItemAddressStateProvince"
 					vid="detailItemAddressStateProvince"
@@ -123,7 +123,7 @@
 				/>
 			</v-col>
 		</v-row>
-	</VFormDialog>
+	</VtFormDialog>
 </template>
 
 <script>
@@ -138,10 +138,10 @@ import { useLocationEditDialogComponentProps } from '@/components/content/locati
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import VFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VFormDialog';
-import VNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VNumberFieldWithValidation';
-import VSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSelectWithValidation';
-import VSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VSwitchWithValidation';
+import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextAreaWithValidation';
 import VTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VTextFieldWithValidation';
 
@@ -151,10 +151,10 @@ export default {
 		MeasurementUnitSelect,
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
-		VFormDialog,
-		VNumberFieldWithValidation,
-		VSelectWithValidation,
-		VSwitchWithValidation,
+		VtFormDialog,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
 		VTextAreaWithValidation,
 		VTextFieldWithValidation
 	},
