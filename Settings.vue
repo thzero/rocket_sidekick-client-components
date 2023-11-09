@@ -145,6 +145,20 @@
 														md="3"
 													>
 														<VtSelectWithValidation
+															ref="measurementUnitAltitudeRef"
+															vid="measurementUnitAltitudeId"
+															v-model="measurementUnitAltitudeId"
+															:items="measurementUnitAltitude"
+															:validation="validation"
+															:label="$t('forms.settings.measurementUnits.altitude')"
+														/>
+													</v-col>
+													<v-col
+														cols="12"
+														sm="6"
+														md="3"
+													>
+														<VtSelectWithValidation
 															ref="measurementUnitDistanceRef"
 															vid="measurementUnitDistanceId"
 															v-model="measurementUnitDistanceId"
@@ -279,6 +293,7 @@ export default {
 			measurementUnitsId,
 			measurementUnitAccelerationId,
 			measurementUnitAreaId,
+			measurementUnitAltitudeId,
 			measurementUnitDistanceId,
 			measurementUnitLengthId,
 			measurementUnitVelocityId,
@@ -287,6 +302,7 @@ export default {
 			measurementUnitsSelect,
 			measurementUnitsAcceleration,
 			measurementUnitsArea,
+			measurementUnitsAltitude,
 			measurementUnitsDistance,
 			measurementUnitsLength,
 			measurementUnitsVelocity,
@@ -335,6 +351,7 @@ export default {
 			measurementUnitsId,
 			measurementUnitAccelerationId,
 			measurementUnitAreaId,
+			measurementUnitAltitudeId,
 			measurementUnitDistanceId,
 			measurementUnitLengthId,
 			measurementUnitVelocityId,
@@ -343,6 +360,7 @@ export default {
 			measurementUnitsSelect,
 			measurementUnitsAcceleration,
 			measurementUnitsArea,
+			measurementUnitsAltitude,
 			measurementUnitsDistance,
 			measurementUnitsLength,
 			measurementUnitsVelocity,
@@ -367,6 +385,7 @@ export default {
 			measurementUnitsId: { required, $autoDirty: true },
 			measurementUnitAccelerationId: { required, $autoDirty: true },
 			measurementUnitAreaId: { required, $autoDirty: true },
+			measurementUnitAltitudeId: { required, $autoDirty: true },
 			measurementUnitDistanceId: { required, $autoDirty: true },
 			measurementUnitLengthId: { required, $autoDirty: true },
 			measurementUnitVelocityId: { required, $autoDirty: true },

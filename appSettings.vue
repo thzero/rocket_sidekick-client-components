@@ -48,6 +48,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 	const measurementUnitsId = ref(null);
 	const measurementUnitAccelerationId = ref(null);
 	const measurementUnitAreaId = ref(null);
+	const measurementUnitAltitudeId = ref(null);
 	const measurementUnitDistanceId = ref(null);
 	const measurementUnitLengthId = ref(null);
 	const measurementUnitVelocityId = ref(null);
@@ -66,6 +67,11 @@ export function useAppSettingsComponent(props, context, formRef) {
 		if (measurementUnitsId.value === AppCommonConstants.MeasurementUnits.english.id)
 			return measurementUnitTrans(AppCommonConstants.MeasurementUnits.english.area, 'english', 'area');
 		return measurementUnitTrans(AppCommonConstants.MeasurementUnits.metrics.area, 'metrics', 'area');
+	});
+	const measurementUnitsAltitude = computed(() => {
+		if (measurementUnitsId.value === AppCommonConstants.MeasurementUnits.english.id)
+			return measurementUnitTrans(AppCommonConstants.MeasurementUnits.english.altitude, 'english', 'altitude');
+		return measurementUnitTrans(AppCommonConstants.MeasurementUnits.metrics.altitude, 'metrics', 'altitude');
 	});
 	const measurementUnitsDistance = computed(() => {
 		if (measurementUnitsId.value === AppCommonConstants.MeasurementUnits.english.id)
@@ -108,6 +114,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 			settings.measurementUnits.id = measurementUnitsId.value;
 			settings.measurementUnits.acceleration = measurementUnitAccelerationId.value;
 			settings.measurementUnits.area = measurementUnitAreaId.value;
+			settings.measurementUnits.altitude = measurementUnitAltitudeId.value;
 			settings.measurementUnits.distance = measurementUnitDistanceId.value;
 			settings.measurementUnits.length = measurementUnitLengthId.value;
 			settings.measurementUnits.velocity = measurementUnitVelocityId.value;
@@ -131,6 +138,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitsId.value = settings.measurementUnits.id;
 		measurementUnitAccelerationId.value = settings.measurementUnits.acceleration;
 		measurementUnitAreaId.value = settings.measurementUnits.area;
+		measurementUnitAltitudeId.value = settings.measurementUnits.altitude;
 		measurementUnitDistanceId.value = settings.measurementUnits.distance;
 		measurementUnitLengthId.value = settings.measurementUnits.length;
 		measurementUnitVelocityId.value = settings.measurementUnits.velocity;
@@ -142,6 +150,8 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitAccelerationId.value = resetIdCheck(measurementUnitAccelerationIdT, measurementUnitsAcceleration.value);
 		const measurementUnitAreaIdT = settings.measurementUnits.area ? settings.measurementUnits.area : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].area[keyword];
 		measurementUnitAreaId.value = resetIdCheck(measurementUnitAreaIdT, measurementUnitsArea.value);
+		const measurementUnitAltitudeIdT = settings.measurementUnits.altitude ? settings.measurementUnits.altitude : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].altitude[keyword];
+		measurementUnitAltitudeId.value = resetIdCheck(measurementUnitAltitudeIdT, measurementUnitsAltitude.value);
 		const measurementUnitDistanceIdT = settings.measurementUnits.distance ? settings.measurementUnits.distance : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].distance[keyword];
 		measurementUnitDistanceId.value = resetIdCheck(measurementUnitDistanceIdT, measurementUnitsDistance.value);
 		const measurementUnitLengthIdT = settings.measurementUnits.length ? settings.measurementUnits.length : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].length[keyword];
@@ -155,6 +165,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 
 		measurementUnitAccelerationId.value = settings.measurementUnits.acceleration ? settings.measurementUnits.acceleration : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].acceleration[keyword];
 		measurementUnitAreaId.value = settings.measurementUnits.area ? settings.measurementUnits.area : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].area[keyword];
+		measurementUnitAltitudeId.value = settings.measurementUnits.altitude ? settings.measurementUnits.araltitudeea : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].altitude[keyword];
 		measurementUnitDistanceId.value = settings.measurementUnits.distance ? settings.measurementUnits.distance : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].distance[keyword];
 		measurementUnitLengthId.value = settings.measurementUnits.length ? settings.measurementUnits.length : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].length[keyword];
 		measurementUnitVelocityId.value = settings.measurementUnits.velocity ? settings.measurementUnits.velocity : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].velocity[keyword];
@@ -174,6 +185,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 
 			measurementUnitAccelerationId.value = AppCommonConstants.MeasurementUnits[units].acceleration[keyword];
 			measurementUnitAreaId.value = AppCommonConstants.MeasurementUnits[units].area[keyword];
+			measurementUnitAltitudeId.value = AppCommonConstants.MeasurementUnits[units].altitude[keyword];
 			measurementUnitDistanceId.value = AppCommonConstants.MeasurementUnits[units].distance[keyword];
 			measurementUnitLengthId.value = AppCommonConstants.MeasurementUnits[units].length[keyword];
 			measurementUnitVelocityId.value = AppCommonConstants.MeasurementUnits[units].velocity[keyword];
@@ -224,6 +236,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitsId,
 		measurementUnitAccelerationId,
 		measurementUnitAreaId,
+		measurementUnitAltitudeId,
 		measurementUnitDistanceId,
 		measurementUnitLengthId,
 		measurementUnitVelocityId,
@@ -232,6 +245,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitsSelect,
 		measurementUnitsAcceleration,
 		measurementUnitsArea,
+		measurementUnitsAltitude,
 		measurementUnitsDistance,
 		measurementUnitsLength,
 		measurementUnitsVelocity,

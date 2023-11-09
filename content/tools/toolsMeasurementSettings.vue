@@ -26,8 +26,8 @@ export function useToolsMeasurementSettingsComponent(props, context, options) {
 
 	onMounted(async () => {
 		const settings = serviceStore.getters.user.getUserSettings();
-		measurementUnitsIdOutput.value = AppUtility.measurementUnitsId(correlationId, settings);
-		measurementUnitsIdSettings.value = AppUtility.measurementUnitsId(correlationId, settings);
+		measurementUnitsIdOutput.value = AppUtility.measurementUnitsIdDefault(correlationId, settings);
+		measurementUnitsIdSettings.value = AppUtility.measurementUnitsIdDefault(correlationId, settings);
 	});
 
 	return {

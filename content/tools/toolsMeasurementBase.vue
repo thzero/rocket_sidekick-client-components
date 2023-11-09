@@ -93,8 +93,8 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 
 	onMounted(async () => {
 		const settings = serviceStore.getters.user.getUserSettings();
-		measurementUnitsIdSettings.value = AppUtility.measurementUnitsId(correlationId, settings.value);
-		measurementUnitsAccelerationDefaultId.value = AppUtility.measurementUnitsAccelerationId(correlationId, settings.value);
+		measurementUnitsIdSettings.value = AppUtility.measurementUnitsIdDefault(correlationId, settings.value);
+		measurementUnitsAccelerationDefaultId.value = AppUtility.measurementUnitAccelerationId(correlationId, settings.value);
 		measurementUnitsAreaDefaultId.value = AppUtility.measurementUnitAreaId(correlationId, settings.value);
 		measurementUnitsDensityDefaultId.value = AppUtility.measurementUnitDensityId(correlationId, settings.value);
 		measurementUnitsDistanceDefaultId.value = AppUtility.measurementUnitDistanceId(correlationId, settings.value);
