@@ -119,6 +119,8 @@ export function useLaunchEditComponent(props, context, options) {
 		measurementUnitsIdSettings,
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
+		measurementUnitsAltitudeType,
+		measurementUnitsAltitudeDefaultId,
 		measurementUnitsDistanceType,
 		measurementUnitsDistanceDefaultId,
 		measurementUnitsVelocityDefaultId,

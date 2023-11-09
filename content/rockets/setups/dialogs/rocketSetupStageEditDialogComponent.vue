@@ -40,6 +40,8 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
 		measurementUnitsAreaType,
+		measurementUnitsAltitudeDefaultId,
+		measurementUnitsAltitudeType,
 		measurementUnitsDensityDefaultId,
 		measurementUnitsDensityType,
 		measurementUnitsDistanceType,
