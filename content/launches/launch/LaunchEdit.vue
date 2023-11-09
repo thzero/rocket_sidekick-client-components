@@ -252,7 +252,7 @@
 								ref="detailItemResultsAltitudeMaxMeasurementUnitIdRef"
 								v-model="detailItemResultsAltitudeMaxMeasurementUnitId"
 								vid="detailItemResultsAltitudeMaxMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsDistanceType"
+								:measurementUnitsType="measurementUnitsAltitudeType"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.altitude')"
@@ -279,7 +279,7 @@
 								ref="detailItemResultsAltitudeDeployMainMeasurementUnitIdRef"
 								v-model="detailItemResultsAltitudeDeployMainMeasurementUnitId"
 								vid="detailItemResultsAltitudeDeployMainMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsDistanceType"
+								:measurementUnitsType="measurementUnitsAltitudeType"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.altitude')"
@@ -306,7 +306,7 @@
 								ref="detailItemResultsAltitudeDeployDrogueMeasurementUnitIdRef"
 								v-model="detailItemResultsAltitudeDeployDrogueMeasurementUnitId"
 								vid="detailItemResultsAltitudeDeployDrogueMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsDistanceType"
+								:measurementUnitsType="measurementUnitsAltitudeType"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.settings.measurementUnits.altitude')"
@@ -479,6 +479,8 @@ export default {
 			measurementUnitsIdSettings,
 			measurementUnitsAccelerationDefaultId,
 			measurementUnitsAccelerationType,
+			measurementUnitsAltitudeType,
+			measurementUnitsAltitudeDefaultId,
 			measurementUnitsDistanceType,
 			measurementUnitsDistanceDefaultId,
 			measurementUnitsVelocityDefaultId,
@@ -588,6 +590,8 @@ export default {
 			measurementUnitsIdSettings,
 			measurementUnitsAccelerationDefaultId,
 			measurementUnitsAccelerationType,
+			measurementUnitsAltitudeType,
+			measurementUnitsAltitudeDefaultId,
 			measurementUnitsDistanceType,
 			measurementUnitsDistanceDefaultId,
 			measurementUnitsVelocityDefaultId,

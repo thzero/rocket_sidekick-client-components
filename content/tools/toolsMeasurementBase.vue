@@ -29,6 +29,8 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 	const measurementUnitsAccelerationType = ref(AppCommonConstants.MeasurementUnits.types.acceleration);
 	const measurementUnitsAreaDefaultId = ref(null);
 	const measurementUnitsAreaType = ref(AppCommonConstants.MeasurementUnits.types.area);
+	const measurementUnitsAltitudeDefaultId = ref(null);
+	const measurementUnitsAltitudeType = ref(AppCommonConstants.MeasurementUnits.types.altitude);
 	const measurementUnitsDensityDefaultId = ref(null);
 	const measurementUnitsDensityType = ref(AppCommonConstants.MeasurementUnits.types.density);
 	const measurementUnitsDistanceDefaultId = ref(null);
@@ -96,6 +98,7 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsIdSettings.value = AppUtility.measurementUnitsIdDefault(correlationId, settings.value);
 		measurementUnitsAccelerationDefaultId.value = AppUtility.measurementUnitAccelerationId(correlationId, settings.value);
 		measurementUnitsAreaDefaultId.value = AppUtility.measurementUnitAreaId(correlationId, settings.value);
+		measurementUnitsAltitudeDefaultId.value = AppUtility.measurementUnitAltitudeId(correlationId, settings.value);
 		measurementUnitsDensityDefaultId.value = AppUtility.measurementUnitDensityId(correlationId, settings.value);
 		measurementUnitsDistanceDefaultId.value = AppUtility.measurementUnitDistanceId(correlationId, settings.value);
 		measurementUnitsFluidDefaultId.value = AppUtility.measurementUnitFluidId(correlationId, settings.value);
@@ -111,6 +114,8 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsAccelerationType,
 		measurementUnitsAreaDefaultId,
 		measurementUnitsAreaType,
+		measurementUnitsAltitudeDefaultId,
+		measurementUnitsAltitudeType,
 		measurementUnitsDensityDefaultId,
 		measurementUnitsDensityType,
 		measurementUnitsDistanceType,
