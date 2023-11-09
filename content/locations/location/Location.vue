@@ -59,7 +59,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col>
+			<v-col cols="12">
 				<VtTextAreaWithValidation
 					ref="descriptionRef"
 					v-model="detailItemDescription"
@@ -70,6 +70,19 @@
 					:counter="300"
 					:clearable="isEditable"
 					:rows="detailItemTextRows"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12">
+				<VtTextFieldWithValidation
+					ref="detailItemLinkRef"
+					v-model="detailItemLink"
+					vid="detailItemLink"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.locations.link')"
+					:counter="100"
 				/>
 			</v-col>
 		</v-row>
@@ -162,6 +175,28 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.address.stateProvince.title')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="6" sm="3">
+				<VtNumberFieldWithValidation
+					ref="detailItemCoordsLatRef"
+					v-model="detailItemCoordsLat"
+					vid="detailItemCoordsLat"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.launch')"
+				/>
+			</v-col>
+			<v-col cols="6" sm="3">
+				<VtNumberFieldWithValidation
+					ref="detailItemCoordsLongRef"
+					v-model="detailItemCoordsLong"
+					vid="detailItemCoordsLong"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.launch')"
 				/>
 			</v-col>
 		</v-row>
@@ -404,9 +439,12 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
@@ -417,9 +455,12 @@ export default {
 		MeasurementUnitsSelect,
 		VtConfirmationDialog,
 		VtFormControl,
+		VtNumberFieldWithValidation,
+		VtSelect,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
 		VtTextAreaWithValidation,
+		VtTextField,
 		VtTextFieldWithValidation
 	},
 	props: {
@@ -495,8 +536,6 @@ export default {
 			rocketTypes,
 			buttonsDialog,
 			buttonsForms,
-			measurementUnitsIdOutput,
-			measurementUnitsIdSettings,
 			organizations,
 			hasAdminDelete,
 			hasAdminEdit,
@@ -506,9 +545,12 @@ export default {
 			detailItemAddressCountry,
 			detailItemAddressPostalCode,
 			detailItemAddressStateProvince,
+			detailItemCoordsLat,
+			detailItemCoordsLong,
 			detailItemDescription,
 			detailItemExperimental,
 			detailItemIsPublic,
+			detailItemLink,
 			detailItemName,
 			detailItemOrganizations,
 			detailItemRocketTypes,
@@ -593,8 +635,6 @@ export default {
 			rocketTypes,
 			buttonsDialog,
 			buttonsForms,
-			measurementUnitsIdOutput,
-			measurementUnitsIdSettings,
 			organizations,
 			hasAdminDelete,
 			hasAdminEdit,
@@ -604,9 +644,12 @@ export default {
 			detailItemAddressCountry,
 			detailItemAddressPostalCode,
 			detailItemAddressStateProvince,
+			detailItemCoordsLat,
+			detailItemCoordsLong,
 			detailItemDescription,
 			detailItemExperimental,
 			detailItemIsPublic,
+			detailItemLink,
 			detailItemName,
 			detailItemOrganizations,
 			detailItemRocketTypes,

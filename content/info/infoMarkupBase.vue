@@ -69,9 +69,9 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 	});
 
 	onMounted(async () => {
-		contentLoadStart();
-
 		try {
+			contentLoadStart();
+
 			const correlationIdI = correlationId();
 
 			const response = await serviceStore.dispatcher.requestContentMarkup(correlationIdI, contentId.value);

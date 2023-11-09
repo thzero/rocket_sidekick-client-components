@@ -125,7 +125,7 @@
 </template>
 
 <script>
-import { maxLength, minLength, required } from '@vuelidate/validators';
+import { helpers, maxLength, minLength, required } from '@vuelidate/validators';
 
 import { usePartComponent } from '@/components/content/parts/part/partComponent';
 import { usePartComponentProps } from '@/components/content/parts/part/partComponentProps';
@@ -296,11 +296,15 @@ export default {
 		return {
 			detailItemName: {
 				required,
+				characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 				minLength: minLength(3),
 				maxLength: maxLength(50),
 				$autoDirty: true
 			},
-			detailItemDescription: { $autoDirty: true },
+			detailItemDescription: { 
+				characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
+				$autoDirty: true 
+			},
 			detailItemReorder: { $autoDirty: true }
 		}
 	}

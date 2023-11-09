@@ -14,10 +14,7 @@ export function useAdditionalLinksComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
-		contentLoadStart,
-		contentLoadStop,
 		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
@@ -36,10 +33,7 @@ export function useAdditionalLinksComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
-		contentLoadStart,
-		contentLoadStop,
 		sortByOrder,
 		target,
 		hasTitle

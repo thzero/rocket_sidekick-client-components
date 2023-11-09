@@ -37,15 +37,6 @@ export function useContentLoadSignalComponent(props, context, options) {
 	};
 
 	return {
-		correlationId,
-		error,
-		hasFailed,
-		hasSucceeded,
-		initialize,
-		logger,
-		noBreakingSpaces,
-		notImplementedError,
-		success,
 		contentLoadSignal,
 		contentLoadStart,
 		contentLoadStop

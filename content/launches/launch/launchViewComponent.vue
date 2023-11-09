@@ -7,10 +7,7 @@ import LibraryClientConstants from '@thzero/library_client/constants';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
-import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
-// import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
-// import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useLaunchViewComponent(props, context, options) {
 	const {
@@ -44,24 +41,41 @@ export function useLaunchViewComponent(props, context, options) {
 		successReasons
 	} = useLaunchComponent(props, context);
 
-	const {
-		motorDiameters,
-		motorImpulseClasses,
-		// motorCaseInfo,
-		motorDiameter,
-		motorUrl
-	} = useMotorLookupComponent(props, context);
-
-	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
-
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
 	});
-	const displayItemLocationIteration= computed(() => {
-		return displayItem.value ? displayItem.value.name : '';
+	const displayItemLocationLink = computed(() => {
+		if (!displayItem.value || !displayItem.value.location)
+			return null;
+		return '/user/locations/' + displayItem.value.location.id + (displayItem.value.location.iteration ? ('/' + displayItem.value.location.iteration.id) : '');
 	});
-	const displayItemLocationMame = computed(() => {
-		return displayItem.value ? displayItem.value.name : '';
+	const displayItemLocationIteration = computed(() => {
+		if (!displayItem.value || !displayItem.value.location || !displayItem.value.location.iteration)
+			return '';
+		let temp = [];
+		if (displayItem.value.location.iteration.name)
+			temp.push(displayItem.value.location.iteration.name);
+		if (displayItem.value.location.iteration.number)
+			temp.push('#'+displayItem.value.location.iteration.number);
+		if (displayItem.value.location.iteration.year)
+			temp.push(displayItem.value.location.iteration.year);
+		if (!temp)
+			return '';
+		return ` (${temp.join(', ')})`;
+	});
+	const displayItemLocationIterationAddress = computed(() => {
+		if (!displayItem.value || !displayItem.value.location)
+			return '';
+
+		let temp = '';
+		if (displayItem.value.location.iteration && displayItem.value.location.iteration.address)
+			temp = displayItem.value.location.iteration.address.city + ', ' + displayItem.value.location.iteration.address.stateProvince + ' ' + displayItem.value.location.iteration.address.country;
+		if (displayItem.value.location.address)
+			temp = displayItem.value.location.address.city + ', ' + displayItem.value.location.address.stateProvince + ' ' + displayItem.value.location.address.country;
+		return temp;
+	});
+	const displayItemLocationName = computed(() => {
+		return displayItem.value && displayItem.value.location ? displayItem.value.location.name + displayItemLocationIteration.value : '';
 	});
 	const displayItemResultsAltitudeDrogue = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDrogue)
@@ -122,7 +136,7 @@ export function useLaunchViewComponent(props, context, options) {
 		return null;
 	});
 	const displayItemRocketMame = computed(() => {
-		return displayItem.value ? displayItem.value.name : '';
+		return displayItem.value && displayItem.value.rocket ? displayItem.value.rocket.name : '';
 	});
 	const hasCoords = computed(() => {
 		return hasCoordsLaunch.value || hasCoordsRecovery.value;
@@ -177,8 +191,10 @@ export function useLaunchViewComponent(props, context, options) {
 		failureReasons,
 		successReasons,
 		displayItem,
+		displayItemLocationLink,
 		displayItemLocationIteration,
-		displayItemLocationMame,
+		displayItemLocationIterationAddress,
+		displayItemLocationName,
 		displayItemResultsAccelerationDrogue,
 		displayItemResultsAccelerationMain,
 		displayItemResultsAccelerationMax,

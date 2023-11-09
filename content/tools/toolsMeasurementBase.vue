@@ -19,10 +19,7 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
-		contentLoadStart,
-		contentLoadStop,
 		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);

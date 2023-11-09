@@ -5,6 +5,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
+import { useContentLoadSignalComponent } from '@/components/content/contentLoadSignal';
 
 export function useToolsBaseComponent(props, context, options) {
 	const {
@@ -17,13 +18,16 @@ export function useToolsBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
-		contentLoadStart,
-		contentLoadStop,
 		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
+
+	const {
+		contentLoadSignal,
+		contentLoadStart,
+		contentLoadStop
+	} = useContentLoadSignalComponent(props, context, options);
 
 	const contentId = options ? options.id : null;
 
@@ -138,12 +142,12 @@ export function useToolsBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
-		contentLoadStart,
-		contentLoadStop,
 		sortByOrder,
 		target,
+		contentLoadSignal,
+		contentLoadStart,
+		contentLoadStop,
 		calculationOutput,
 		content,
 		contentTitle,

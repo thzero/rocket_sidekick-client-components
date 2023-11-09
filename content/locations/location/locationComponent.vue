@@ -14,7 +14,6 @@ import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/compone
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
 import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
-import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useLocationComponent(props, context, options) {
 	const {
@@ -133,11 +132,6 @@ export function useLocationComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings
-	} = useToolsMeasurementSettingsComponent(props, context);
-
-	const {
 		organizations,
 		organizationName,
 		organizationNames
@@ -162,9 +156,12 @@ export function useLocationComponent(props, context, options) {
 	const detailItemAddressCountry = ref(null);
 	const detailItemAddressPostalCode = ref(null);
 	const detailItemAddressStateProvince = ref(null);
+	const detailItemCoordsLat = ref(null);
+	const detailItemCoordsLong = ref(null);
 	const detailItemDescription = ref(null);
 	const detailItemExperimental = ref(false);
 	const detailItemIsPublic = ref(false);
+	const detailItemLink = ref(null);
 	const detailItemName = ref(null);
 	const detailItemOrganizations = ref([]);
 	const detailItemRocketTypes = ref([]);
@@ -180,7 +177,7 @@ export function useLocationComponent(props, context, options) {
 		return true; // TODO: SECURITY: Admin can...
 	});
 	const iterations = computed(() => {
-		let temp = detailItemData.value ? detailItemData.value.iterations : [];
+		let temp = detailItemData.value && detailItemData.value.iterations ? detailItemData.value.iterations : [];
 		temp = temp.sort(
 			firstBy((v1, v2) => { return (v1.number && v2.number) && v1.number.localeCompare(v2.number); })
 			.thenBy((v1, v2) => { return (v1.year && v2.year) && v1.year.localeCompare(v2.year); })
@@ -216,8 +213,12 @@ export function useLocationComponent(props, context, options) {
 		detailItemAddressPostalCode.value = value && value.address ? value.address.postalCode : null;
 		detailItemAddressStateProvince.value = value && value.address ? value.address.stateProvince : null;
 
+		detailItemCoordsLat.value = value ? value.coordsLat : null;
+		detailItemCoordsLong.value = value ? value.coordsLong : null;
+
 		detailItemExperimental.value = value ? value.experimental : false;
 		detailItemIsPublic.value = value ? value.public : false;
+		detailItemLink.value = value ? value.link : null;
 		detailItemName.value = value ? value.name : null;
 		detailItemOrganizations.value = value ? value.organizations : null;
 		detailItemRocketTypes.value = value ? value.rocketTypes : null;
@@ -230,13 +231,18 @@ export function useLocationComponent(props, context, options) {
 		detailItemData.value.address.postalCode = detailItemAddressPostalCode.value;
 		detailItemData.value.address.stateProvince = detailItemAddressStateProvince.value;
 
+		detailItemData.value.coordsLat = detailItemCoordsLat.value;
+		detailItemData.value.coordsLong = detailItemCoordsLong.value;
+
 		detailItemData.value.experimental = detailItemExperimental.value;
 		detailItemData.value.public = detailItemIsPublic.value;
+		detailItemData.value.link = detailItemLink.value;
 		detailItemData.value.name = detailItemName.value;
 		detailItemData.value.organizations = detailItemOrganizations.value;
 		detailItemData.value.organizations = detailItemData.value.organizations && detailItemData.value.organizations.length > 0 ? detailItemData.value.organizations : null;
 		detailItemData.value.rocketTypes = detailItemRocketTypes.value;
 		detailItemData.value.rocketTypes = detailItemData.value.rocketTypes && detailItemData.value.rocketTypes.length > 0 ? detailItemData.value.rocketTypes : null;
+		
 	};
 	const updateIteration = async(correlationId, stage) => {
 		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
@@ -341,8 +347,6 @@ export function useLocationComponent(props, context, options) {
 		rocketTypes,
 		buttonsDialog,
 		buttonsForms,
-		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
 		organizations,
 		hasAdminDelete,
 		hasAdminEdit,
@@ -352,9 +356,12 @@ export function useLocationComponent(props, context, options) {
 		detailItemAddressCountry,
 		detailItemAddressPostalCode,
 		detailItemAddressStateProvince,
+		detailItemCoordsLat,
+		detailItemCoordsLong,
 		detailItemDescription,
 		detailItemExperimental,
 		detailItemIsPublic,
+		detailItemLink,
 		detailItemName,
 		detailItemOrganizations,
 		detailItemRocketTypes,

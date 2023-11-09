@@ -16,7 +16,6 @@ export function usePartsPanelComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
 		sort,
 		target
@@ -53,7 +52,6 @@ export function usePartsPanelComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
 		sort,
 		target,

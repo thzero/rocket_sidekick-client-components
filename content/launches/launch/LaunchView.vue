@@ -4,23 +4,6 @@
 	>
 		[[ displayItem {{ displayItem }} ]]
 	</div>
-	<v-row dense>
-		<v-col cols="12" sm="8">
-				<VtTextField
-					v-model="displayItem.name"
-					:label="$t('forms.name')"
-					:counter="30"
-				/>
-		</v-col>
-		<v-col cols="sm" sm="4">
-			<VtDateTimePickerField
-				v-model="displayItem.date"
-				:default-date="false"
-				:readonly="true"
-				:label="$t('forms.date')"
-			/>
-		</v-col>
-	</v-row>
 	<v-row dense
 		v-if="displayItem.description"
 	>
@@ -33,22 +16,26 @@
 		</v-col>
 	</v-row>
 	<v-row dense>
-		<v-col cols="12" sm="8">
+		<v-col cols="12" sm="6">
 			<VtTextField
-				v-model="displayItemLocationMame"
+				v-model="displayItemLocationName"
 				:label="$t('forms.content.locations.name')"
 				:readonly="true"
 			/>
 		</v-col>
-		<v-col cols="12" sm="4">
-			<VtSelect
-				v-model="displayItemLocationIteration"
-				:label="$t('forms.content.locations.iterations.name')"
+		<v-col 
+			v-if="displayItemLocationIterationAddress"
+			cols="12" sm="6"
+		>
+			<VtTextField
+				v-model="displayItemLocationIterationAddress"
+				:label="$t('forms.content.locations.address')"
+				:readonly="true"
 			/>
 		</v-col>
 	</v-row>
 	<v-row dense>
-		<v-col cols="12">
+		<v-col cols="12" sm="6">
 			<VtTextField
 				v-model="displayItemRocketMame"
 				:label="$t('forms.content.rockets.name')"
@@ -70,6 +57,7 @@
 				v-if="isFailure"
 				v-model="displayItem.failureReasons"
 				:items="failureReasons"
+				:chips="true"
 				:readonly="true"
 				:label="$t('forms.content.launches.failureReasons')"
 			/>
@@ -96,8 +84,70 @@
 			<h3 class="mt-6">{{ $t('forms.content.launches.results.title') }}</h3>
 		</v-col>
 	</v-row>
-	<v-row dense
-		v-if="displayItem.results"
+	<v-row densemdAndUp
+		v-if="hasCoords && $vuetify.display.mdAndUp"
+	>
+		<v-col cols="6">
+			<LaunchMapping
+				:id="displayItem.id"
+				type="recovery"
+				:coordsLaunch="displayItemResultsCoordsLaunch"
+				:coordsRecovery="displayItemResultsCoordsRecovery"
+			></LaunchMapping>
+		</v-col>
+		<v-col cols="6">
+			<v-row dense>
+				<v-col
+					v-if="displayItemResultsAccelerationMax"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsAccelerationMax"
+						:label="$t('forms.content.launches.results.acceleration.max')"
+					/>
+				</v-col>
+				<v-col
+					v-if="displayItemResultsVelocityMax"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsVelocityMax"
+						:label="$t('forms.content.launches.results.velocity.max')"
+					/>
+				</v-col>
+				<v-col
+					v-if="displayItemResultsAltitudeMax"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsAltitudeMax"
+						:label="$t('forms.content.launches.results.altitude.max')"
+					/>
+				</v-col>
+				<v-col
+					v-if="displayItemResultsAltitudeMain"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsAltitudeMain"
+						:label="$t('forms.content.launches.results.altitude.main')"
+					/>
+				</v-col>
+				<v-col
+					v-if="displayItemResultsAltitudeDrogue"
+					cols="12" sm="6"
+				>
+					<VtTextField
+						v-model="displayItemResultsAltitudeDrogue"
+						:label="$t('forms.content.launches.results.altitude.drogue')"
+					/>
+				</v-col>
+			</v-row>
+		</v-col>
+	</v-row>
+	<v-row
+		v-if="displayItem.results && $vuetify.display.smAndDown"
+		dense
 	>
 		<v-col
 			v-if="displayItemResultsAccelerationMax"
@@ -145,61 +195,17 @@
 			/>
 		</v-col>
 	</v-row>
-	<v-row dense
-		v-if="displayItem.hasCoords"
+	<v-row
+		v-if="hasCoords && $vuetify.display.smAndDown"
+		dense
 	>
-		<v-col
-			v-if="displayItemResultsCoordsLatLaunch"
-			cols="6" sm="3"
-		>
-			<VtNumberField
-				v-model="displayItemResultsCoordsLatLaunch"
-				:readonly="true"
-				:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.launch')"
-			/>
-		</v-col>
-		<v-col
-			v-if="displayItemResultsCoordsLongLaunch"
-			cols="6" sm="3"
-		>
-			<VtNumberField
-				v-model="displayItemResultsCoordsLongLaunch"
-				:readonly="true"
-				:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.launch')"
-			/>
-		</v-col>
-		<v-col
-			v-if="displayItemResultsCoordsLatRecovery"
-			cols="6" sm="3"
-		>
-			<VtNumberField
-				v-model="displayItemResultsCoordsLatRecovery"
-				:readonly="true"
-				:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.recovery')"
-			/>
-		</v-col>
-		<v-col
-			v-if="displayItemResultsCoordsLongRecovery"
-			cols="6" sm="3"
-		>
-			<VtNumberField
-				v-model="displayItemResultsCoordsLongRecovery"
-				:readonly="true"
-				:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.recovery')"
-			/>
-		</v-col>
-	</v-row>
-	<v-row>
-	<!-- <v-row dense
-		v-if="displayItem.hasCoords"
-	> -->
 		<v-col>
-			<LocationMapping
+			<LaunchMapping
 				:id="displayItem.id"
 				type="recovery"
 				:coordsLaunch="displayItemResultsCoordsLaunch"
 				:coordsRecovery="displayItemResultsCoordsRecovery"
-			></LocationMapping>
+			></LaunchMapping>
 		</v-col>
 	</v-row>
 </template>
@@ -208,24 +214,20 @@
 import { useLaunchViewComponent } from '@/components/content/launches/launch/launchViewComponent';
 import { useLaunchViewComponentProps } from '@/components/content/launches/launch/launchViewComponentProps';
 
+import LaunchMapping from '@/components/content/launches/launch/LaunchMap';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
-import VtDateTimePickerField from '@thzero/library_client_vue3_vuetify3/components/form/VtDateTimePickerFieldTemp';
-import VtNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberField';
 import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
-import LocationMapping from '@/components/content/launches/launch/LaunchMap';
 
 export default {
 	name: 'LaunchViewControl',
 	components: {
 		MeasurementUnitSelect2,
-		VtDateTimePickerField,
-		VtNumberField,
 		VtSelect,
 		VtTextArea,
 		VtTextField,
-		LocationMapping
+		LaunchMapping
 	},
 	props: {
 		...useLaunchViewComponentProps
@@ -257,8 +259,10 @@ export default {
 			failureReasons,
 			successReasons,
 			displayItem,
+			displayItemLocationLink,
 			displayItemLocationIteration,
-			displayItemLocationMame,
+			displayItemLocationIterationAddress,
+			displayItemLocationName,
 			displayItemResultsAccelerationDrogue,
 			displayItemResultsAccelerationMain,
 			displayItemResultsAccelerationMax,
@@ -306,8 +310,10 @@ export default {
 			failureReasons,
 			successReasons,
 			displayItem,
+			displayItemLocationLink,
 			displayItemLocationIteration,
-			displayItemLocationMame,
+			displayItemLocationIterationAddress,
+			displayItemLocationName,
 			displayItemResultsAccelerationDrogue,
 			displayItemResultsAccelerationMain,
 			displayItemResultsAccelerationMax,

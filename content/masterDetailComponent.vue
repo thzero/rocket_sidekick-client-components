@@ -23,7 +23,6 @@ export function useMasterDetailComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
 		sort,
 		target
@@ -299,7 +298,6 @@ export function useMasterDetailComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
 		sort,
 		target,

@@ -1,4 +1,4 @@
-import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required } from '@vuelidate/validators';
 
 export function useRocketEditValidation(nameRequired) { 
 	const validation = {
@@ -10,7 +10,10 @@ export function useRocketEditValidation(nameRequired) {
 		detailItemCpFrom: { minLength: minLength(3), maxLength: maxLength(50), $autoDirty: true },
 		detailItemCpMeasurementUnitId: { $autoDirty: true },
 		detailItemCpMeasurementUnitsId: { $autoDirty: true },
-		detailItemDescription: { $autoDirty: true },
+		detailItemDescription: { 
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
+			$autoDirty: true 
+		},
 		detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
 		detailItemDiameterMeasurementUnitId: { $autoDirty: true },
 		detailItemDiameterMeasurementUnitsId: { $autoDirty: true },
