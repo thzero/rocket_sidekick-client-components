@@ -283,7 +283,7 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
-import { useLaunchesBaseComponent } from '@/components/content/Launches/launchesComponent';
+import { useLaunchesBaseComponent } from '@/components/content/launches/launchesComponent';
 import { useLaunchesBaseComponentProps } from '@/components/content/launches/launchesComponentProps';
 import { useLaunchesFilterValidation } from '@/components/content/launches/launchesFilterValidation';
 
