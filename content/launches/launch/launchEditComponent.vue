@@ -5,7 +5,6 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
@@ -147,26 +146,26 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemLocationIterationId = ref(null);
 	const detailItemLocationName = ref(null);
 	const detailItemNotes = ref(null);
-	const detailitemResultsAccelerationMax = ref(null);
+	const detailItemResultsAccelerationMax = ref(null);
 	const detailItemResultsAccelerationMaxMeasurementUnitId = ref(null);
 	const detailItemResultsAccelerationMaxMeasurementUnitsId = ref(null);
-	const detailitemResultsAltitudeMax = ref(null);
+	const detailItemResultsAltitudeMax = ref(null);
 	const detailItemResultsAltitudeMaxMeasurementUnitId = ref(null);
 	const detailItemResultsAltitudeMaxMeasurementUnitsId = ref(null);
-	const detailitemResultsAltitudeDeployDrogue = ref(null);
+	const detailItemResultsAltitudeDeployDrogue = ref(null);
 	const detailItemResultsAltitudeDeployDrogueMeasurementUnitId = ref(null);
 	const detailItemResultsAltitudeDeployDrogueMeasurementUnitsId = ref(null);
-	const detailitemResultsAltitudeDeployMain = ref(null);
+	const detailItemResultsAltitudeDeployMain = ref(null);
 	const detailItemResultsAltitudeDeployMainMeasurementUnitId = ref(null);
 	const detailItemResultsAltitudeDeployMainMeasurementUnitsId = ref(null);
-	const detailitemResultsCoordsLatLaunch = ref(null);
-	const detailitemResultsCoordsLongLaunch = ref(null);
-	const detailitemResultsCoordsLatRecovery = ref(null);
-	const detailitemResultsCoordsLongRecovery = ref(null);
-	const detailitemResultsVelocityMax = ref(null);
+	const detailItemResultsCoordsLatLaunch = ref(null);
+	const detailItemResultsCoordsLongLaunch = ref(null);
+	const detailItemResultsCoordsLatRecovery = ref(null);
+	const detailItemResultsCoordsLongRecovery = ref(null);
+	const detailItemResultsVelocityMax = ref(null);
 	const detailItemResultsVelocityMaxMeasurementUnitId = ref(null);
 	const detailItemResultsVelocityMaxMeasurementUnitsId = ref(null);
-	const detailitemResultsVelocityRecovery = ref(null);
+	const detailItemResultsVelocityRecovery = ref(null);
 	const detailItemVelocityRecoveryMeasurementUnitId = ref(null);
 	const detailItemVelocityRecoveryMeasurementUnitsId = ref(null);
 	const detailItemRocketId = ref(null);
@@ -239,6 +238,12 @@ export function useLaunchEditComponent(props, context, options) {
 
 		detailItemSuccess.value = value ? value.success : false;
 		detailItemFailureReasons.value = value  ? value.failureReasons : null;
+
+		value.results = value.results ?? {};
+		detailItemResultsCoordsLatLaunch.value = value ? value.results.coordsLatLaunch : false;
+		detailItemResultsCoordsLongLaunch.value = value ? value.results.coordsLongLaunch : false;
+		detailItemResultsCoordsLatRecovery.value = value ? value.results.coordsLatRecovery : false;
+		detailItemResultsCoordsLongRecovery.value = value ? value.results.coordsLongRecovery : false;
 	};
 	const selectLocation = async (item) => {
 		try {
@@ -278,6 +283,13 @@ export function useLaunchEditComponent(props, context, options) {
 		
 		detailItemData.value.success = detailItemSuccess.value;
 		detailItemData.value.failureReasons = detailItemFailureReasons.value;
+
+		detailItemData.value.results = detailItemData.results ?? {};
+
+		detailItemData.value.results.coordsLatLaunch = detailItemResultsCoordsLatLaunch.value;
+		detailItemData.value.results.coordsLongLaunch = detailItemResultsCoordsLongLaunch.value;
+		detailItemData.value.results.coordsLatRecovery = detailItemResultsCoordsLatRecovery.value;
+		detailItemData.value.results.coordsLongRecovery = detailItemResultsCoordsLongRecovery.value;
 	};
 
 	watch(() => detailItemSuccess.value,
@@ -363,26 +375,26 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemLocationId,
 		detailItemLocationIterationId,
 		detailItemLocationName,
-		detailitemResultsAccelerationMax,
+		detailItemResultsAccelerationMax,
 		detailItemResultsAccelerationMaxMeasurementUnitId,
 		detailItemResultsAccelerationMaxMeasurementUnitsId,
-		detailitemResultsAltitudeMax,
+		detailItemResultsAltitudeMax,
 		detailItemResultsAltitudeMaxMeasurementUnitId,
 		detailItemResultsAltitudeMaxMeasurementUnitsId,
-		detailitemResultsAltitudeDeployDrogue,
+		detailItemResultsAltitudeDeployDrogue,
 		detailItemResultsAltitudeDeployDrogueMeasurementUnitId,
 		detailItemResultsAltitudeDeployDrogueMeasurementUnitsId,
-		detailitemResultsAltitudeDeployMain,
+		detailItemResultsAltitudeDeployMain,
 		detailItemResultsAltitudeDeployMainMeasurementUnitId,
 		detailItemResultsAltitudeDeployMainMeasurementUnitsId,
-		detailitemResultsCoordsLatLaunch,
-		detailitemResultsCoordsLongLaunch,
-		detailitemResultsCoordsLatRecovery,
-		detailitemResultsCoordsLongRecovery,
-		detailitemResultsVelocityMax,
+		detailItemResultsCoordsLatLaunch,
+		detailItemResultsCoordsLongLaunch,
+		detailItemResultsCoordsLatRecovery,
+		detailItemResultsCoordsLongRecovery,
+		detailItemResultsVelocityMax,
 		detailItemResultsVelocityMaxMeasurementUnitId,
 		detailItemResultsVelocityMaxMeasurementUnitsId,
-		detailitemResultsVelocityRecovery,
+		detailItemResultsVelocityRecovery,
 		detailItemVelocityRecoveryMeasurementUnitId,
 		detailItemVelocityRecoveryMeasurementUnitsId,
 		detailItemRocketId,

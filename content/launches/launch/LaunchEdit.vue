@@ -70,7 +70,7 @@
 		<v-row dense>
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
-					<VtTextFieldWithValidation
+					<VtTextField
 						ref="detailItemLocationNameRef"
 						v-model="detailItemLocationName"
 						vid="detailItemLocationName"
@@ -80,6 +80,7 @@
 						:readonly="true"
 					/>
 					<v-btn
+						v-if="isEditable"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.add"
 						:color="buttonsForms.color.add"
@@ -96,6 +97,7 @@
 					vid="detailItemLocationIterationId"
 					:items="locationIterations"
 					:validation="validation"
+					:readonly="!isEditable"
 					:label="$t('forms.content.locations.iterations.name')"
 				/>
 			</v-col>
@@ -103,7 +105,7 @@
 		<v-row dense>
 			<v-col cols="12">
 				<div class="d-flex">
-					<VtTextFieldWithValidation
+					<VtTextField
 						ref="detailItemRocketNameRef"
 						v-model="detailItemRocketName"
 						vid="detailItemRocketName"
@@ -113,6 +115,7 @@
 						:readonly="true"
 					/>
 					<v-btn
+						v-if="isEditable"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.add"
 						:color="buttonsForms.color.add"
@@ -162,11 +165,17 @@
 					:clearable="isEditable"
 					:rows="detailItemTextRows"
 				/>
-<div v-html="markupHint"></div>
+<div 
+	v-if="isEditable"
+	v-html="markupHint"
+></div>
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="12">
+			<v-col 
+				cols="12"
+				class="mt-4"
+			>
 				{{ $t('forms.content.launches.results.title') }}
 			</v-col>
 		</v-row>
@@ -176,9 +185,9 @@
 					<tr>
 						<td>
 							<VtNumberFieldWithValidation
-								ref="detailitemResultsAccelerationMaxRef"
-								v-model="detailitemResultsAccelerationMax"
-								vid="detailitemResultsAccelerationMax"
+								ref="detailItemResultsAccelerationMaxRef"
+								v-model="detailItemResultsAccelerationMax"
+								vid="detailItemResultsAccelerationMax"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.launches.results.acceleration.max')"
@@ -203,9 +212,9 @@
 					<tr>
 						<td>
 							<VtNumberFieldWithValidation
-								ref="detailitemResultsVelocityMaxRef"
-								v-model="detailitemResultsVelocityMax"
-								vid="detailitemResultsVelocityMax"
+								ref="detailItemResultsVelocityMaxRef"
+								v-model="detailItemResultsVelocityMax"
+								vid="detailItemResultsVelocityMax"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.launches.results.velocity.max')"
@@ -230,9 +239,9 @@
 					<tr>
 						<td>
 							<VtNumberFieldWithValidation
-								ref="detailitemResultsAltitudeMaxRef"
-								v-model="detailitemResultsAltitudeMax"
-								vid="detailitemResultsAltitudeMax"
+								ref="detailItemResultsAltitudeMaxRef"
+								v-model="detailItemResultsAltitudeMax"
+								vid="detailItemResultsAltitudeMax"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.launches.results.altitude.max')"
@@ -257,9 +266,9 @@
 					<tr>
 						<td>
 							<VtNumberFieldWithValidation
-								ref="detailitemResultsAltitudeDeployMainRef"
-								v-model="detailitemResultsAltitudeDeployMain"
-								vid="detailitemResultsAltitudeDeployMain"
+								ref="detailItemResultsAltitudeDeployMainRef"
+								v-model="detailItemResultsAltitudeDeployMain"
+								vid="detailItemResultsAltitudeDeployMain"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.launches.results.altitude.main')"
@@ -284,9 +293,9 @@
 					<tr>
 						<td>
 							<VtNumberFieldWithValidation
-								ref="detailitemResultsAltitudeDeployDrogueRef"
-								v-model="detailitemResultsAltitudeDeployDrogue"
-								vid="detailitemResultsAltitudeDeployDrogue"
+								ref="detailItemResultsAltitudeDeployDrogueRef"
+								v-model="detailItemResultsAltitudeDeployDrogue"
+								vid="detailItemResultsAltitudeDeployDrogue"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.launches.results.altitude.drogue')"
@@ -310,9 +319,9 @@
 		<v-row dense>
 			<v-col cols="6" sm="3">
 				<VtNumberFieldWithValidation
-					ref="detailitemResultsCoordsLatLaunchRef"
-					v-model="detailitemResultsCoordsLatLaunch"
-					vid="detailitemResultsCoordsLatLaunch"
+					ref="detailItemResultsCoordsLatLaunchRef"
+					v-model="detailItemResultsCoordsLatLaunch"
+					vid="detailItemResultsCoordsLatLaunch"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.launch')"
@@ -320,9 +329,9 @@
 			</v-col>
 			<v-col cols="6" sm="3">
 				<VtNumberFieldWithValidation
-					ref="detailitemResultsCoordsLongLaunchRef"
-					v-model="detailitemResultsCoordsLongLaunch"
-					vid="detailitemResultsCoordsLongLaunch"
+					ref="detailItemResultsCoordsLongLaunchRef"
+					v-model="detailItemResultsCoordsLongLaunch"
+					vid="detailItemResultsCoordsLongLaunch"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.launch')"
@@ -330,9 +339,9 @@
 			</v-col>
 			<v-col cols="6" sm="3">
 				<VtNumberFieldWithValidation
-					ref="detailitemResultsCoordsLatRecoveryRef"
-					v-model="detailitemResultsCoordsLatRecovery"
-					vid="detailitemResultsCoordsLatRecovery"
+					ref="detailItemResultsCoordsLatRecoveryRef"
+					v-model="detailItemResultsCoordsLatRecovery"
+					vid="detailItemResultsCoordsLatRecovery"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.recovery')"
@@ -340,9 +349,9 @@
 			</v-col>
 			<v-col cols="6" sm="3">
 				<VtNumberFieldWithValidation
-					ref="detailitemResultsCoordsLongRecoveryRef"
-					v-model="detailitemResultsCoordsLongRecovery"
-					vid="detailitemResultsCoordsLongRecovery"
+					ref="detailItemResultsCoordsLongRecoveryRef"
+					v-model="detailItemResultsCoordsLongRecovery"
+					vid="detailItemResultsCoordsLongRecovery"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.recovery')"
@@ -392,6 +401,7 @@ import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/co
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
@@ -410,6 +420,7 @@ export default {
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
 		VtTextAreaWithValidation,
+		VtTextField,
 		VtTextFieldWithValidation
 	},
 	props: {
@@ -490,26 +501,26 @@ export default {
 			detailItemLocationId,
 			detailItemLocationIterationId,
 			detailItemLocationName,
-			detailitemResultsAccelerationMax,
+			detailItemResultsAccelerationMax,
 			detailItemResultsAccelerationMaxMeasurementUnitId,
 			detailItemResultsAccelerationMaxMeasurementUnitsId,
-			detailitemResultsAltitudeMax,
+			detailItemResultsAltitudeMax,
 			detailItemResultsAltitudeMaxMeasurementUnitId,
 			detailItemResultsAltitudeMaxMeasurementUnitsId,
-			detailitemResultsAltitudeDeployDrogue,
+			detailItemResultsAltitudeDeployDrogue,
 			detailItemResultsAltitudeDeployDrogueMeasurementUnitId,
 			detailItemResultsAltitudeDeployDrogueMeasurementUnitsId,
-			detailitemResultsAltitudeDeployMain,
+			detailItemResultsAltitudeDeployMain,
 			detailItemResultsAltitudeDeployMainMeasurementUnitId,
 			detailItemResultsAltitudeDeployMainMeasurementUnitsId,
-			detailitemResultsCoordsLatLaunch,
-			detailitemResultsCoordsLongLaunch,
-			detailitemResultsCoordsLatRecovery,
-			detailitemResultsCoordsLongRecovery,
-			detailitemResultsVelocityMax,
+			detailItemResultsCoordsLatLaunch,
+			detailItemResultsCoordsLongLaunch,
+			detailItemResultsCoordsLatRecovery,
+			detailItemResultsCoordsLongRecovery,
+			detailItemResultsVelocityMax,
 			detailItemResultsVelocityMaxMeasurementUnitId,
 			detailItemResultsVelocityMaxMeasurementUnitsId,
-			detailitemResultsVelocityRecovery,
+			detailItemResultsVelocityRecovery,
 			detailItemVelocityRecoveryMeasurementUnitId,
 			detailItemVelocityRecoveryMeasurementUnitsId,
 			detailItemRocketId,
@@ -599,26 +610,26 @@ export default {
 			detailItemLocationId,
 			detailItemLocationIterationId,
 			detailItemLocationName,
-			detailitemResultsAccelerationMax,
+			detailItemResultsAccelerationMax,
 			detailItemResultsAccelerationMaxMeasurementUnitId,
 			detailItemResultsAccelerationMaxMeasurementUnitsId,
-			detailitemResultsAltitudeMax,
+			detailItemResultsAltitudeMax,
 			detailItemResultsAltitudeMaxMeasurementUnitId,
 			detailItemResultsAltitudeMaxMeasurementUnitsId,
-			detailitemResultsAltitudeDeployDrogue,
+			detailItemResultsAltitudeDeployDrogue,
 			detailItemResultsAltitudeDeployDrogueMeasurementUnitId,
 			detailItemResultsAltitudeDeployDrogueMeasurementUnitsId,
-			detailitemResultsAltitudeDeployMain,
+			detailItemResultsAltitudeDeployMain,
 			detailItemResultsAltitudeDeployMainMeasurementUnitId,
 			detailItemResultsAltitudeDeployMainMeasurementUnitsId,
-			detailitemResultsCoordsLatLaunch,
-			detailitemResultsCoordsLongLaunch,
-			detailitemResultsCoordsLatRecovery,
-			detailitemResultsCoordsLongRecovery,
-			detailitemResultsVelocityMax,
+			detailItemResultsCoordsLatLaunch,
+			detailItemResultsCoordsLongLaunch,
+			detailItemResultsCoordsLatRecovery,
+			detailItemResultsCoordsLongRecovery,
+			detailItemResultsVelocityMax,
 			detailItemResultsVelocityMaxMeasurementUnitId,
 			detailItemResultsVelocityMaxMeasurementUnitsId,
-			detailitemResultsVelocityRecovery,
+			detailItemResultsVelocityRecovery,
 			detailItemVelocityRecoveryMeasurementUnitId,
 			detailItemVelocityRecoveryMeasurementUnitsId,
 			detailItemRocketId,

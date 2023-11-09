@@ -1,7 +1,8 @@
-import { between, decimal, maxLength, minLength, required, requiredUnless } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required, requiredUnless } from '@vuelidate/validators';
 
 export const useChecklistsFilterValidation = {
 	filterItemName: {
+		characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 		minLength: minLength(3),
 		maxLength: maxLength(50),
 		$autoDirty: true

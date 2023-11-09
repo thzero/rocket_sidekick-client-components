@@ -1,9 +1,13 @@
-import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required } from '@vuelidate/validators';
 
 export function useRocketSetupEditValidation(nameRequired) { 
 	const validation = {
-		detailItemDescription: { $autoDirty: true },
+		detailItemDescription: { 
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
+			$autoDirty: true 
+		},
 		detailItemNotes: {
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
 			maxLength: maxLength(1000),
 			$autoDirty: true
 		},

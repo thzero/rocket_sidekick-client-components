@@ -19,7 +19,6 @@ export function usePartsListingComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
 		sort,
 		target
@@ -90,7 +89,6 @@ export function usePartsListingComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		contentLoadSignal,
 		serviceStore,
 		sort,
 		target,

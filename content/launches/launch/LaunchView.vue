@@ -16,17 +16,20 @@
 		</v-col>
 	</v-row>
 	<v-row dense>
-		<v-col cols="12" sm="8">
+		<v-col cols="12" sm="6">
 			<VtTextField
-				v-model="displayItemLocationMame"
+				v-model="displayItemLocationName"
 				:label="$t('forms.content.locations.name')"
 				:readonly="true"
 			/>
 		</v-col>
-		<v-col cols="12" sm="4">
+		<v-col 
+			v-if="displayItemLocationIterationAddress"
+			cols="12" sm="6"
+		>
 			<VtTextField
-				v-model="displayItemLocationIteration"
-				:label="$t('forms.content.locations.iterations.name')"
+				v-model="displayItemLocationIterationAddress"
+				:label="$t('forms.content.locations.address')"
 				:readonly="true"
 			/>
 		</v-col>
@@ -39,6 +42,8 @@
 				:readonly="true"
 			/>
 		</v-col>
+	</v-row>
+	<v-row dense>
 		<v-col cols="12" sm="6">
 			<VtSelect
 				v-model="displayItem.success"
@@ -52,6 +57,7 @@
 				v-if="isFailure"
 				v-model="displayItem.failureReasons"
 				:items="failureReasons"
+				:chips="true"
 				:readonly="true"
 				:label="$t('forms.content.launches.failureReasons')"
 			/>
@@ -78,16 +84,16 @@
 			<h3 class="mt-6">{{ $t('forms.content.launches.results.title') }}</h3>
 		</v-col>
 	</v-row>
-	<v-row dense
-		v-if="displayItem.results && $vuetify.display.mdndUp"
+	<v-row densemdAndUp
+		v-if="hasCoords && $vuetify.display.mdAndUp"
 	>
 		<v-col cols="6">
-			<LocationMapping
+			<LaunchMapping
 				:id="displayItem.id"
 				type="recovery"
 				:coordsLaunch="displayItemResultsCoordsLaunch"
 				:coordsRecovery="displayItemResultsCoordsRecovery"
-			></LocationMapping>
+			></LaunchMapping>
 		</v-col>
 		<v-col cols="6">
 			<v-row dense>
@@ -190,16 +196,16 @@
 		</v-col>
 	</v-row>
 	<v-row
-		v-if="displayItem.hasCoords && $vuetify.display.smAndDown"
+		v-if="hasCoords && $vuetify.display.smAndDown"
 		dense
 	>
 		<v-col>
-			<LocationMapping
+			<LaunchMapping
 				:id="displayItem.id"
 				type="recovery"
 				:coordsLaunch="displayItemResultsCoordsLaunch"
 				:coordsRecovery="displayItemResultsCoordsRecovery"
-			></LocationMapping>
+			></LaunchMapping>
 		</v-col>
 	</v-row>
 </template>
@@ -208,7 +214,7 @@
 import { useLaunchViewComponent } from '@/components/content/launches/launch/launchViewComponent';
 import { useLaunchViewComponentProps } from '@/components/content/launches/launch/launchViewComponentProps';
 
-import LocationMapping from '@/components/content/launches/launch/LaunchMap';
+import LaunchMapping from '@/components/content/launches/launch/LaunchMap';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
 import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
@@ -221,7 +227,7 @@ export default {
 		VtSelect,
 		VtTextArea,
 		VtTextField,
-		LocationMapping
+		LaunchMapping
 	},
 	props: {
 		...useLaunchViewComponentProps
@@ -253,8 +259,10 @@ export default {
 			failureReasons,
 			successReasons,
 			displayItem,
+			displayItemLocationLink,
 			displayItemLocationIteration,
-			displayItemLocationMame,
+			displayItemLocationIterationAddress,
+			displayItemLocationName,
 			displayItemResultsAccelerationDrogue,
 			displayItemResultsAccelerationMain,
 			displayItemResultsAccelerationMax,
@@ -302,8 +310,10 @@ export default {
 			failureReasons,
 			successReasons,
 			displayItem,
+			displayItemLocationLink,
 			displayItemLocationIteration,
-			displayItemLocationMame,
+			displayItemLocationIterationAddress,
+			displayItemLocationName,
 			displayItemResultsAccelerationDrogue,
 			displayItemResultsAccelerationMain,
 			displayItemResultsAccelerationMax,

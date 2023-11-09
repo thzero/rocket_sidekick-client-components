@@ -1,10 +1,17 @@
-import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required } from '@vuelidate/validators';
 
 export function useLocationEditValidation(nameRequired) { 
 	const validation = {
-		detailItemDescription: { $autoDirty: true },
+		detailItemDescription: { 
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
+			$autoDirty: true 
+		},
 		detailItemExperimental: { $autoDirty: true },
 		detailItemIsPublic: { $autoDirty: true },
+		detailItemLink: {
+			maxLength: maxLength(100),
+			$autoDirty: true
+		},
 		detailItemOrganizations: { $autoDirty: true },
 		detailItemRocketTypes: { $autoDirty: true }
 	};

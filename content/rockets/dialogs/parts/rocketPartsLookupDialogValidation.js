@@ -1,4 +1,4 @@
-import { between, decimal, required, requiredUnless, minLength, maxLength } from '@vuelidate/validators';
+import { between, decimal, helpers, required, requiredUnless, minLength, maxLength } from '@vuelidate/validators';
 
 export const useRocketPartsLookupDialogValidation = {
 	filterItemDiameterMax: { decimal, between: between(0, 2004), $autoDirty: true },
@@ -15,6 +15,7 @@ export const useRocketPartsLookupDialogValidation = {
 	filterItemMotorImpulseClass: { requiredIfIsMotors: requiredUnless(self.validationIsMotors === false), $autoDirty: true },
 	filterItemMotorDiameter: { $autoDirty: true },
 	filterItemName: {
+		characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 		minLength: minLength(3),
 		maxLength: maxLength(50),
 		$autoDirty: true

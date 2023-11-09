@@ -145,6 +145,11 @@
 										canEdit [[ {{ canEdit(item) }}]]
 										canView [[ {{ canView(item) }}]]
 									</div>
+									<LocationView
+										:detail-item="item"
+										:debug="debug"
+									>
+									</LocationView>
 								</v-card-text>
 								<v-card-actions>
 									<v-spacer></v-spacer>
@@ -217,6 +222,7 @@ import { useLocationsBaseComponentProps } from '@/components/content/locations/l
 import { useLocationsFilterValidation } from '@/components/content/locations/locationsFilterValidation';
 
 import ContentHeader from '@/components/content/Header';
+import LocationView from '@/components/content/locations/location/LocationView';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import Location from '@/components/content/locations/location/Location';
@@ -233,6 +239,7 @@ export default {
 	name: 'LocationsUserControl',
 	components: {
 		ContentHeader,
+		LocationView,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
 		Location,
@@ -260,7 +267,6 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			contentLoadSignal,
 			serviceStore,
 			sort,
 			target,
@@ -343,7 +349,6 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			contentLoadSignal,
 			serviceStore,
 			sort,
 			target,
