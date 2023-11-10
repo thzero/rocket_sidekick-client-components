@@ -217,7 +217,7 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
-import { useLocationsBaseComponent } from '@/components/content/Locations/locationsComponent';
+import { useLocationsBaseComponent } from '@/components/content/locations/locationsComponent';
 import { useLocationsBaseComponentProps } from '@/components/content/locations/locationsComponentProps';
 import { useLocationsFilterValidation } from '@/components/content/locations/locationsFilterValidation';
 
