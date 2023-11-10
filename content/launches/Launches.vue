@@ -288,8 +288,8 @@ import { useLaunchesBaseComponentProps } from '@/components/content/launches/lau
 import { useLaunchesFilterValidation } from '@/components/content/launches/launchesFilterValidation';
 
 import ContentHeader from '@/components/content/Header';
-import LaunchEdit from '@/components/content/launches/Launch/LaunchEdit';
-import LaunchView from '@/components/content/launches/Launch/LaunchView';
+import LaunchEdit from '@/components/content/launches/launch/LaunchEdit';
+import LaunchView from '@/components/content/launches/launch/LaunchView';
 import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
