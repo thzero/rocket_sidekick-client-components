@@ -312,7 +312,7 @@
 					ref="detailItemMotorDiameter0Ref"
 					v-model="detailItemMotorDiameter0"
 					vid="detailItemMotorDiameter0"
-					:items="motorDiameters"
+					:items="motorDiameters0"
 					:validation="validation"
 					:label="$t('forms.external.motorSearch.diameter')"
 				/>
@@ -385,6 +385,7 @@ import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/co
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
@@ -398,6 +399,7 @@ export default {
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
 		VtTextAreaWithValidation,
+		VtTextField,
 		VtTextFieldWithValidation
 	},
 	props: {
@@ -447,6 +449,7 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
+			motorDiameters0,
 			stageIndex,
 			motorCount,
 			preCompleteOk,
@@ -497,6 +500,7 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
+			motorDiameters0,
 			stageIndex,
 			motorCount,
 			preCompleteOk,

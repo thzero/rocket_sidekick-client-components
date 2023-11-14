@@ -14,6 +14,7 @@ import RocketData from 'rocket_sidekick_common/data/rockets/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
+import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useRocketsBaseComponent(props, context, options) {
@@ -105,6 +106,15 @@ export function useRocketsBaseComponent(props, context, options) {
 		rocketTypeIcon,
 		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
+
+	const {
+		motorDiameters,
+		motorImpulseClasses,
+		motorCaseInfo,
+		motorDiameter,
+		motorName,
+		motorUrl
+	} = useMotorLookupComponent(props, context);
 
 	const debug = ref(false);
 	const rocketsref = ref(null);
@@ -225,6 +235,24 @@ export function useRocketsBaseComponent(props, context, options) {
 	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
 		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
 	};
+	const motors = (item) => {
+		if (!item)
+			return null;
+		let output = [];
+		if (item.motors) {
+			for (const motor of item.motors) 
+				output.push(motorName(motor));
+		}
+		if (item.stages) {
+			for (const stage of item.stages) {
+				for (const motor of stage.motors) {
+					if (motor.diameter)
+						output.push(motorName(motor));
+				}
+			}
+		}
+		return output.join(', ');
+	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
 		filterItemDiameter.value = data ? data.diameter : null;
@@ -332,6 +360,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		fetchManufacturers,
 		manufacturer,
 		measurementUnitTranslateWeight,
+		motors,
 		resetAdditional,
 		scope: 'RocketsFilterControl',
 		validation: useVuelidate({ $scope: 'RocketsFilterControl' })

@@ -63,6 +63,7 @@ export function useRocketStageComponent(props, context, options) {
 		motorImpulseClasses,
 		motorCaseInfo,
 		motorDiameter,
+		motorName,
 		motorUrl
 	} = useMotorLookupComponent(props, context);
 
@@ -322,9 +323,7 @@ export function useRocketStageComponent(props, context, options) {
 		if (!displayItem.value || !displayItem.value.motors)
 			return { value: null };
 		const temp = displayItem.value.motors.find(l => l.index === index);
-		const diameter = temp.diameter ? motorDiameter(temp.diameter) : null;
-		const count = temp.count ? temp.count : null;
-		return { value: `${diameter}${diameter ? ' x ' : ''}${count}` };
+		return { value: motorName(temp) };
 	};
 	const panelsKey = (type) => {
 		return displayItem.value ? displayItem.value.id + '-stage-' : '';

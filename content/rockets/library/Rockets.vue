@@ -151,7 +151,8 @@
 									class="bg-primary"
 								>
 									{{ item.name }}
-									<div class="float-right">{{ manufacturer(item) }}</div>
+									<!-- <div class="float-right">{{ manufacturer(item) }}</div> -->
+									<div class="float-right">{{ motors(item) }}</div>
 								</v-card-title>
 								<v-card-text>
 									<VtMarkdown v-model="item.description" :use-github=false />
@@ -372,6 +373,7 @@ export default {
 			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
+			motors,
 			resetAdditional,
 			scope,
 			validation
@@ -461,6 +463,7 @@ export default {
 			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
+			motors,
 			resetAdditional,
 			scope,
 			validation

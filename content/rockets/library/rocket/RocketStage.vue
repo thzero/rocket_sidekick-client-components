@@ -13,7 +13,9 @@
 		[[ trackers {{ trackers }} ]] -->
 	</div>
 	<v-row dense>
-		<v-col cols="9">
+		<v-col
+			cols="9"
+		>
 			<VtTextArea
 				v-model="displayItem.description"
 				:readonly="true"
@@ -32,7 +34,10 @@
 	<v-row
 		dense
 	>
-		<v-col cols="6">
+		<v-col 
+			v-if="displayItem.manufacturerId"
+			cols="6"
+		>
 			<VtSelect
 				v-model="displayItem.manufacturerId"
 				:items="manufacturers"
@@ -40,7 +45,10 @@
 				:label="$t('forms.content.manufacturer.name')"
 			/>
 		</v-col>
-		<v-col cols="6">
+		<v-col 
+			v-if="displayItem.manufacturerStockId"
+			cols="6"
+		>
 			<VtTextField
 				v-model="displayItem.manufacturerStockId"
 				:readonly="true"
