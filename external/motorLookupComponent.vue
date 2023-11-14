@@ -23,7 +23,7 @@ export function useMotorLookupComponent(props, context, options) {
 	const serviceExternalMotorSearch = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_EXTERNAL_MOTOR_SEARCH);
 
 	const motorDiameters = computed(() => {
-		return ['', '13', '18', '24', '29', '38', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
+		return ['', '13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
 	});
 	const motorImpulseClasses = computed(() => {
 		return ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'].map((item) => { return { id: item, name: item }; });
@@ -45,6 +45,13 @@ export function useMotorLookupComponent(props, context, options) {
 	const motorDiameter = (diameter) => {
 		return `${diameter}${LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement')}`;
 	};
+	const motorName = (item) => {
+		if (!item)
+			return null;
+		const diameter = item.diameter ? motorDiameter(item.diameter) : '';
+		const count = item.count ? item.count : null;
+		return `${diameter}${diameter ? ' x ' : ''}${count}`;
+	};
 	const motorUrl = (motor) => {
 		return serviceExternalMotorSearch.urlMotor(motor);
 	};
@@ -54,6 +61,7 @@ export function useMotorLookupComponent(props, context, options) {
 		motorImpulseClasses,
 		motorCaseInfo,
 		motorDiameter,
+		motorName,
 		motorUrl
 	};
 };
