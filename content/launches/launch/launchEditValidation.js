@@ -1,9 +1,15 @@
-import { between, decimal, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required, url } from '@vuelidate/validators';
 
 export function useLaunchEditValidation(nameRequired) { 
 	const validation = {
 		detailItemDate: { 
 			required,
+			$autoDirty: true 
+		},
+		detailItemAlbumUrl: { 
+			url,
+			maxLength: maxLength(255),
+			minLength: minLength(6),
 			$autoDirty: true 
 		},
 		detailItemDescription: { 
@@ -54,6 +60,13 @@ export function useLaunchEditValidation(nameRequired) {
 			$autoDirty: true 
 		},
 		detailItemSuccess: { 
+			required,
+			$autoDirty: true 
+		},
+		detailItemVideoUrl: { 
+			url,
+			maxLength: maxLength(255),
+			minLength: minLength(6),
 			$autoDirty: true 
 		}
 	};

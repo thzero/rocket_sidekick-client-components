@@ -140,6 +140,7 @@ export function useLaunchEditComponent(props, context, options) {
 	
 	const dialogLocationLookupManager = ref(new DialogSupport());
 	const dialogRocketLookupManager = ref(new DialogSupport());
+	const detailItemAlbumUrl = ref(null);
 	const detailItemDate = ref(null);
 	const detailItemDescription = ref(null);
 	const detailItemFailureReasons = ref(null);
@@ -173,6 +174,7 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemRocketId = ref(null);
 	const detailItemRocketName = ref(null);
 	const detailItemSuccess = ref(null);
+	const detailItemVideoUrl = ref(null);
 	
 	const location = ref(null);
 	
@@ -208,6 +210,7 @@ export function useLaunchEditComponent(props, context, options) {
 		return hasSucceeded(response) ? response.results : null;
 	};
 	const resetData = (correlationId, value) => {
+		detailItemAlbumUrl.value = value ? value.albumUrl : null;
 		detailItemDate.value = value ? value.date : null;
 		detailItemDescription.value = value ? value.description : null;
 		
@@ -240,6 +243,8 @@ export function useLaunchEditComponent(props, context, options) {
 
 		detailItemSuccess.value = value ? value.success : false;
 		detailItemFailureReasons.value = value  ? value.failureReasons : null;
+		
+		detailItemVideoUrl.value = value ? value.videoUrl : null;
 
 		value.results = value.results ?? {};
 		detailItemResultsCoordsLatLaunch.value = value ? value.results.coordsLatLaunch : false;
@@ -273,6 +278,7 @@ export function useLaunchEditComponent(props, context, options) {
 		}
 	};
 	const setData = (correlationId) => {
+		detailItemData.value.albumUrl = detailItemAlbumUrl.value;
 		detailItemData.value.date = detailItemDate.value;
 		detailItemData.value.description = detailItemDescription.value;
 		
@@ -285,13 +291,15 @@ export function useLaunchEditComponent(props, context, options) {
 		
 		detailItemData.value.success = detailItemSuccess.value;
 		detailItemData.value.failureReasons = detailItemFailureReasons.value;
+		
+		detailItemData.value.videoUrl = detailItemVideoUrl.value;
 
 		detailItemData.value.results = detailItemData.results ?? {};
 
-		detailItemData.value.results.coordsLatLaunch = detailItemResultsCoordsLatLaunch.value;
-		detailItemData.value.results.coordsLongLaunch = detailItemResultsCoordsLongLaunch.value;
-		detailItemData.value.results.coordsLatRecovery = detailItemResultsCoordsLatRecovery.value;
-		detailItemData.value.results.coordsLongRecovery = detailItemResultsCoordsLongRecovery.value;
+		detailItemData.value.results.coordsLatLaunch = detailItemResultsCoordsLatLaunch.value ? detailItemResultsCoordsLatLaunch.value : null;
+		detailItemData.value.results.coordsLongLaunch = detailItemResultsCoordsLongLaunch.value ? detailItemResultsCoordsLongLaunch.value : null;
+		detailItemData.value.results.coordsLatRecovery = detailItemResultsCoordsLatRecovery.value ? detailItemResultsCoordsLatRecovery.value : null;
+		detailItemData.value.results.coordsLongRecovery = detailItemResultsCoordsLongRecovery.value ? detailItemResultsCoordsLongRecovery.value : null;
 	};
 
 	watch(() => detailItemSuccess.value,
@@ -369,6 +377,7 @@ export function useLaunchEditComponent(props, context, options) {
 		markupHint,
 		dialogLocationLookupManager,
 		dialogRocketLookupManager,
+		detailItemAlbumUrl,
 		detailItemDate,
 		detailItemDescription,
 		detailItemFailureReasons,
@@ -402,6 +411,7 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemRocketId,
 		detailItemRocketName,
 		detailItemSuccess,
+		detailItemVideoUrl,
 		hasAdmin,
 		isSuccess,
 		locationIterations,

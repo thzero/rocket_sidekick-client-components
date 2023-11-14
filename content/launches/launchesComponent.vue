@@ -226,15 +226,14 @@ export function useLaunchesBaseComponent(props, context, options) {
 			if (item.location.iteration) {
 				let iteration = '';
 				if (item.location.iteration.number)
-					iteration += item.location.iteration.number;
+					iteration += '#' + item.location.iteration.number + ' ';
 				if (item.location.iteration.year)
-					iteration += item.location.iteration.year;
+					iteration += '(' + item.location.iteration.year + ')';
 					location += ' ' + iteration;
 			}
 		}
 		
-		// return `${output} ${date} @ ${location}`;
-		return `${output} @ ${location}`;
+		return `${output} @ ${location.trim()}`;
 	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;

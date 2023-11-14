@@ -42,16 +42,16 @@
 				:readonly="true"
 			/>
 		</v-col>
-	</v-row>
-	<v-row dense>
-		<v-col cols="12" sm="6">
+	<!-- </v-row>
+	<v-row dense> -->
+		<!-- <v-col cols="12" sm="6">
 			<VtSelect
 				v-model="displayItem.success"
 				:items="successReasons"
 				:readonly="true"
 				:label="$t('forms.content.launches.success')"
 			/>
-		</v-col>
+		</v-col> -->
 		<v-col cols="12" sm="6">
 			<VtSelect
 				v-if="isFailure"
@@ -61,6 +61,22 @@
 				:readonly="true"
 				:label="$t('forms.content.launches.failureReasons')"
 			/>
+		</v-col>
+	</v-row>
+	<v-row
+		dense
+	>
+		<v-col 
+			v-if="displayItem.albumUrl"
+			cols="12" md="6"
+		>
+			<a :href="displayItem.albumUrl" target="_blank">{{ displayItem.albumUrl }}</a>
+		</v-col>
+		<v-col 
+			v-if="displayItem.videoUrl"
+			cols="12" md="6"
+		>
+			<a :href="displayItem.videoUrl" target="_blank">{{ displayItem.videoUrl }}</a>
 		</v-col>
 	</v-row>
 	<v-row

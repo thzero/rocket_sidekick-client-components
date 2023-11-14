@@ -2,9 +2,6 @@
 import { computed, ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
-import LibraryClientConstants from '@thzero/library_client/constants';
-
-import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
