@@ -70,7 +70,7 @@
 		<v-row dense>
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
-					<VtTextField
+					<VtTextFieldWithValidation
 						ref="detailItemLocationNameRef"
 						v-model="detailItemLocationName"
 						vid="detailItemLocationName"
@@ -105,7 +105,7 @@
 		<v-row dense>
 			<v-col cols="12">
 				<div class="d-flex">
-					<VtTextField
+					<VtTextFieldWithValidation
 						ref="detailItemRocketNameRef"
 						v-model="detailItemRocketName"
 						vid="detailItemRocketName"
@@ -140,6 +140,7 @@
 			</v-col>
 			<v-col cols="12" sm="6">
 				<VtSelectWithValidation
+					v-if="!isSuccess"
 					ref="detailItemFailureReasonsRef"
 					v-model="detailItemFailureReasons"
 					vid="detailItemFailureReasons"
@@ -147,8 +148,30 @@
 					:max-values="4"
 					:items="failureReasons"
 					:validation="validation"
-					:readonly="!isEditable || isSuccess"
+					:readonly="(!isEditable || isSuccess)"
 					:label="$t('forms.content.launches.failureReasons')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12">
+				<VtTextFieldWithValidation
+					ref="detailItemAlbumUrlRef"
+					v-model="detailItemAlbumUrl"
+					vid="detailItemAlbumUrl"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.launches.album')"
+				/>
+			</v-col>
+			<v-col cols="12">
+				<VtTextFieldWithValidation
+					ref="detailItemVideoUrlRef"
+					v-model="detailItemVideoUrl"
+					vid="detailItemVideoUrl"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.launches.video')"
 				/>
 			</v-col>
 		</v-row>
@@ -401,7 +424,6 @@ import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/co
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
-import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
@@ -420,7 +442,6 @@ export default {
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
 		VtTextAreaWithValidation,
-		VtTextField,
 		VtTextFieldWithValidation
 	},
 	props: {
@@ -479,8 +500,6 @@ export default {
 			measurementUnitsIdSettings,
 			measurementUnitsAccelerationDefaultId,
 			measurementUnitsAccelerationType,
-			measurementUnitsAltitudeType,
-			measurementUnitsAltitudeDefaultId,
 			measurementUnitsDistanceType,
 			measurementUnitsDistanceDefaultId,
 			measurementUnitsVelocityDefaultId,
@@ -495,6 +514,7 @@ export default {
 			markupHint,
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
+			detailItemAlbumUrl,
 			detailItemDate,
 			detailItemDescription,
 			detailItemFailureReasons,
@@ -528,6 +548,7 @@ export default {
 			detailItemRocketId,
 			detailItemRocketName,
 			detailItemSuccess,
+			detailItemVideoUrl,
 			hasAdmin,
 			isSuccess,
 			locationIterations,
@@ -590,8 +611,6 @@ export default {
 			measurementUnitsIdSettings,
 			measurementUnitsAccelerationDefaultId,
 			measurementUnitsAccelerationType,
-			measurementUnitsAltitudeType,
-			measurementUnitsAltitudeDefaultId,
 			measurementUnitsDistanceType,
 			measurementUnitsDistanceDefaultId,
 			measurementUnitsVelocityDefaultId,
@@ -606,6 +625,7 @@ export default {
 			markupHint,
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
+			detailItemAlbumUrl,
 			detailItemDate,
 			detailItemDescription,
 			detailItemFailureReasons,
@@ -639,6 +659,7 @@ export default {
 			detailItemRocketId,
 			detailItemRocketName,
 			detailItemSuccess,
+			detailItemVideoUrl,
 			hasAdmin,
 			isSuccess,
 			locationIterations,

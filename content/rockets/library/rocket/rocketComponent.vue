@@ -7,7 +7,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
-import RocketStageData from 'rocket_sidekick_common/data/rockets/stage';
+import RocketStage from 'rocket_sidekick_common/data/rockets/stage';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useContentMarkupComponent } from '@/components/content/contentMarkup';
@@ -124,7 +124,7 @@ export function useRocketComponent(props, context, options) {
 		},
 		initNewSecondary: async (correlationId) => {
 			detailItemData.value.stages = detailItemData.value.stages ?? [];
-			const rocketStage = new RocketStageData();
+			const rocketStage = new RocketStage(detailItemData.value.stages.length);
 			rocketStage.rocketId = detailItemData.value.id;
 
 			// Instead of adding immediately, just open the dialog...
