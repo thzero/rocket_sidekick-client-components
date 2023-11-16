@@ -5,6 +5,7 @@ import useVuelidate from '@vuelidate/core';
 
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
@@ -133,16 +134,17 @@ export function useLocationsBaseComponent(props, context, options) {
 		if (!item || !item.address) 
 			return '';
 
-		const temp2 = [];
-		if (!String.isNullOrEmpty(item.address.name))
-			temp2.push(item.address.name);
-		if (!String.isNullOrEmpty(item.address.city))
-			temp2.push(item.address.city);
-		if (!String.isNullOrEmpty(item.address.stateProvince))
-			temp2.push(item.address.stateProvince);
-		if (!String.isNullOrEmpty(item.address.country))
-			temp2.push(item.address.country);
-		return temp2.join(', ').trim();
+		// const temp2 = [];
+		// if (!String.isNullOrEmpty(item.address.name))
+		// 	temp2.push(item.address.name);
+		// if (!String.isNullOrEmpty(item.address.city))
+		// 	temp2.push(item.address.city);
+		// if (!String.isNullOrEmpty(item.address.stateProvince))
+		// 	temp2.push(item.address.stateProvince);
+		// if (!String.isNullOrEmpty(item.address.country))
+		// 	temp2.push(item.address.country);
+		// return temp2.join(', ').trim();
+		return AppUtility.address(item.address);
 	};
 	const canCopyI = (correlationId, item) => {
 		// no copying

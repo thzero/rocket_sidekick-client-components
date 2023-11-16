@@ -19,6 +19,9 @@
 			class="text-center"
 		>
 			isEditable: {{ isEditable }} readonly: {{ readonly }}
+			<!-- {{  countries }}
+			{{  states }} -->
+			detailItemAddressStateProvince {{  detailItemAddressStateProvince }}
 		</div>
 		<v-row dense>
 			<v-col cols="12" sm="6">

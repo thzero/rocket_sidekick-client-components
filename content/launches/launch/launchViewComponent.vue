@@ -3,6 +3,8 @@ import { computed, ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import AppUtility from '@/utility/app';
+
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
 
@@ -68,9 +70,11 @@ export function useLaunchViewComponent(props, context, options) {
 
 		let temp = '';
 		if (displayItem.value.location.iteration && displayItem.value.location.iteration.address)
-			temp = displayItem.value.location.iteration.address.city + ', ' + displayItem.value.location.iteration.address.stateProvince + ' ' + displayItem.value.location.iteration.address.country;
+			// temp = displayItem.value.location.iteration.address.city + ', ' + displayItem.value.location.iteration.address.stateProvince + ' ' + displayItem.value.location.iteration.address.country;
+			temp = AppUtility.address(displayItem.value.location.iteration.address);
 		if (displayItem.value.location.address)
-			temp = displayItem.value.location.address.city + ', ' + displayItem.value.location.address.stateProvince + ' ' + displayItem.value.location.address.country;
+			// temp = displayItem.value.location.address.city + ', ' + displayItem.value.location.address.stateProvince + ' ' + displayItem.value.location.address.country;
+			temp = AppUtility.address(displayItem.value.location.address);
 		return temp;
 	});
 	const displayItemLocationName = computed(() => {

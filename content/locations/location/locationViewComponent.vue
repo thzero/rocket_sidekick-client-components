@@ -1,10 +1,7 @@
 <script>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
-import AppCommonConstants from 'rocket_sidekick_common/constants';
-import LibraryClientConstants from '@thzero/library_client/constants';
-
-import LibraryClientUtility from '@thzero/library_client/utility/index';
+import AppUtility from '@/utility/app';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
@@ -43,20 +40,21 @@ export function useLocationViewComponent(props, context, options) {
 		if (!displayItem.value)
 			return '';
 
-		let temp = '';
-		if (displayItem.value.address) {
-			if (!String.isNullOrEmpty(displayItem.value.address.city))
-				temp += displayItem.value.address.city;
-			if (!String.isNullOrEmpty(temp))
-				temp += ', ';
-			if (!String.isNullOrEmpty(displayItem.value.address.stateProvince))
-				temp += displayItem.value.address.stateProvince;
-			if (!String.isNullOrEmpty(temp))
-				temp += ' ';
-			if (!String.isNullOrEmpty(displayItem.value.address.country))
-				temp += displayItem.value.address.country;
-		}
-		return temp;
+		// let temp = '';
+		// if (displayItem.value.address) {
+		// 	if (!String.isNullOrEmpty(displayItem.value.address.city))
+		// 		temp += displayItem.value.address.city;
+		// 	if (!String.isNullOrEmpty(temp))
+		// 		temp += ', ';
+		// 	if (!String.isNullOrEmpty(displayItem.value.address.stateProvince))
+		// 		temp += displayItem.value.address.stateProvince;
+		// 	if (!String.isNullOrEmpty(temp))
+		// 		temp += ' ';
+		// 	if (!String.isNullOrEmpty(displayItem.value.address.country))
+		// 		temp += displayItem.value.address.country;
+		// }
+		// return temp;
+		return AppUtility.address(displayItem.value.address);
 	});
 	const hasCoords = computed(() => {
 		if (!displayItem.value || !displayItem.value.results)
