@@ -151,7 +151,7 @@ export function useLocationComponent(props, context, options) {
 		isLoggedIn
 	} = useAdminComponent(props, context, { role: 'locations:public'});
 
-	const countriesAndStates = ref(null);
+	const countriesAndStateProvinces = ref(null);
 	const detailItemAddressCity = ref(null);
 	const detailItemAddressCountry = ref(null);
 	const detailItemAddressPostalCode = ref(null);
@@ -169,8 +169,8 @@ export function useLocationComponent(props, context, options) {
 
 	const countries = computed(() => {
 		let temp = [];
-		if (props.countriesAndStates)
-			temp = props.countriesAndStates.map(l => { return { id: l.id, name: l.name }; });
+		if (countriesAndStateProvinces.value)
+			temp = countriesAndStateProvinces.value.map(l => { return { id: l.id, name: l.name }; });
 		return LibraryClientVueUtility.selectBlank(temp, '');
 	});
 	const hasAdmin = computed(() => {
@@ -184,16 +184,16 @@ export function useLocationComponent(props, context, options) {
 		);
 		return temp;
 	});
-	const states = computed(() => {
-		if (!countriesAndStates.value)
+	const stateProvinces = computed(() => {
+		if (!countriesAndStateProvinces.value)
 			return [];
 		const id = detailItemAddressCountry.value;
 		if (String.isNullOrEmpty(id))
 			return [];
-		const temp = countriesAndStates.value.find(l => l.id === id);
+		const temp = countriesAndStateProvinces.value.find(l => l.id === id);
 		if (!temp)
 			return [];
-		return temp.states.map(l => { return { id: l.state_code, name: l.name }; });
+		return temp.stateProvinces.map(l => { return { id: l.state_code, name: l.name }; });
 	});
 
 	const numberOrYear = (item) => {
@@ -205,23 +205,40 @@ export function useLocationComponent(props, context, options) {
 	const panelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setLocationsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
+	let countryWatcher = null;
 	const resetData = (correlationId, value) => {
-		detailItemDescription.value = value ? value.description : null;
-		
-		detailItemAddressCity.value = value && value.address ? value.address.city : null;
-		detailItemAddressCountry.value = value && value.address ? value.address.country : null;
-		detailItemAddressPostalCode.value = value && value.address ? value.address.postalCode : null;
-		detailItemAddressStateProvince.value = value && value.address ? value.address.stateProvince : null;
+		try {
+			if (countryWatcher)
+				countryWatcher();
+			countryWatcher = null;
 
-		detailItemCoordsLat.value = value ? value.coordsLat : null;
-		detailItemCoordsLong.value = value ? value.coordsLong : null;
+			detailItemDescription.value = value ? value.description : null;
+			
+			detailItemAddressCity.value = value && value.address ? value.address.city : null;
+			detailItemAddressCountry.value = value && value.address ? value.address.country : null;
+			detailItemAddressPostalCode.value = value && value.address ? value.address.postalCode : null;
+			detailItemAddressStateProvince.value = value && value.address ? value.address.stateProvince : null;
 
-		detailItemExperimental.value = value ? value.experimental : false;
-		detailItemIsPublic.value = value ? value.public : false;
-		detailItemLink.value = value ? value.link : null;
-		detailItemName.value = value ? value.name : null;
-		detailItemOrganizations.value = value ? value.organizations : null;
-		detailItemRocketTypes.value = value ? value.rocketTypes : null;
+			detailItemCoordsLat.value = value ? value.coordsLat : null;
+			detailItemCoordsLong.value = value ? value.coordsLong : null;
+
+			detailItemExperimental.value = value ? value.experimental : false;
+			detailItemIsPublic.value = value ? value.public : false;
+			detailItemLink.value = value ? value.link : null;
+			detailItemName.value = value ? value.name : null;
+			detailItemOrganizations.value = value ? value.organizations : null;
+			detailItemRocketTypes.value = value ? value.rocketTypes : null;
+		}
+		finally {
+			countryWatcher = watch(() => detailItemAddressCountry.value,
+				(value, prev) => {
+					if (value === prev)
+						return;
+
+					detailItemAddressStateProvince.value = null;
+				}
+			);
+		}
 	};
 	const setData = (correlationId) => {
 		detailItemData.value.description = detailItemDescription.value;
@@ -261,23 +278,23 @@ export function useLocationComponent(props, context, options) {
 	onMounted(async () => {
 		const correlationIdI = correlationId();
 
-		if (!countriesAndStates.value) {
+		if (!countriesAndStateProvinces.value) {
 			const response = await serviceStore.dispatcher.requestCountries(correlationIdI);
 			if (hasFailed(response))
 				return;
 				
-			countriesAndStates.value = response.results.map((item) => { return { id: item.iso3, name: item.name, states: item.states}; });
+			countriesAndStateProvinces.value = response.results.map((item) => { return { id: item.iso3, name: item.name, stateProvinces: item.states}; });
 		}
 	});
 
-	watch(() => detailItemAddressCountry.value,
-		(value, prev) => {
-			if (value === prev)
-				return;
+	// watch(() => detailItemAddressCountry.value,
+	// 	(value, prev) => {
+	// 		if (value === prev)
+	// 			return;
 
-			detailItemAddressStateProvince.value = null;
-		}
-	);
+	// 		detailItemAddressStateProvince.value = null;
+	// 	}
+	// );
 	
 	return {
 		correlationId,
@@ -366,10 +383,10 @@ export function useLocationComponent(props, context, options) {
 		detailItemOrganizations,
 		detailItemRocketTypes,
 		countries,
-		countriesAndStates,
+		countriesAndStateProvinces,
 		hasAdmin,
 		iterations,
-		states,
+		stateProvinces,
 		panels,
 		numberOrYear,
 		panelsUpdated,

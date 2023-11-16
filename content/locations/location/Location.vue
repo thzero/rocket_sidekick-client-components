@@ -171,7 +171,7 @@
 					ref="detailItemAddressStateProvinceRef"
 					v-model="detailItemAddressStateProvince"
 					vid="detailItemAddressStateProvince"
-					:items="states"
+					:items="stateProvinces"
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.address.stateProvince.title')"
@@ -340,7 +340,7 @@
 								<VtSelect
 									v-if="item.address.state"
 									v-model="item.address.state"
-									:items="states"
+									:items="stateProvinces"
 									:readonly="true"
 									:label="$t('forms.address.stateProvince.title')"
 								/>
@@ -418,7 +418,7 @@
 		:pre-complete-ok="dialogEditSecondaryPreCompleteOk"
 		:value="dialogEditSecondaryParams"
 		:signal="dialogEditSecondaryManager.signal"
-		:countriesAndStates="countriesAndStates"
+		:countriesAndStateProvinces="countriesAndStateProvinces"
 		@close="dialogEditSecondaryCancel"
 		@ok="dialogEditSecondaryOk"
 		width="90%"
@@ -555,10 +555,10 @@ export default {
 			detailItemOrganizations,
 			detailItemRocketTypes,
 			countries,
-			countriesAndStates,
+			countriesAndStateProvinces,
 			hasAdmin,
 			iterations,
-			states,
+			stateProvinces,
 			panels,
 			numberOrYear,
 			panelsUpdated,
@@ -654,10 +654,10 @@ export default {
 			detailItemOrganizations,
 			detailItemRocketTypes,
 			countries,
-			countriesAndStates,
+			countriesAndStateProvinces,
 			hasAdmin,
 			iterations,
-			states,
+			stateProvinces,
 			panels,
 			numberOrYear,
 			panelsUpdated,

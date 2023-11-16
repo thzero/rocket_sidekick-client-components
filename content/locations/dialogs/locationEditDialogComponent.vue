@@ -58,8 +58,8 @@ export function useLocationEditDialogComponent(props, context, options) {
 	
 	const countries = computed(() => {
 		let temp = [];
-		if (props.countriesAndStates)
-			temp = props.countriesAndStates.map(l => { return { id: l.id, name: l.name }; });
+		if (props.countriesAndStateProvinces)
+			temp = props.countriesAndStateProvinces.map(l => { return { id: l.id, name: l.name }; });
 		return LibraryClientVueUtility.selectBlank(temp, '');
 	});
 	const displayName = computed(() => {
@@ -73,16 +73,16 @@ export function useLocationEditDialogComponent(props, context, options) {
 			return detailItemYear.value;
 		return '';
 	});
-	const states = computed(() => {
-		if (!props.countriesAndStates)
+	const stateProvinces = computed(() => {
+		if (!props.countriesAndStateProvinces)
 			return [];
 		const id = detailItemAddressCountry.value;
 		if (String.isNullOrEmpty(id))
 			return [];
-		const temp = props.countriesAndStates.find(l => l.id === id);
+		const temp = props.countriesAndStateProvinces.find(l => l.id === id);
 		if (!temp)
 			return [];
-		return temp.states.map(l => { return { id: l.state_code, name: l.name }; });
+		return temp.stateProvinces.map(l => { return { id: l.state_code, name: l.name }; });
 	});
 
 	const preCompleteOk = async (correlationId) => {
@@ -94,17 +94,34 @@ export function useLocationEditDialogComponent(props, context, options) {
 		// call the parent to tell them to save off the detail item
 		return await props.preCompleteOk(correlationId, detailItem.value);
 	};
+	let countryWatcher = null;
 	const resetEditData = (correlationId, value) => {
-		detailItemAddressCity.value = value && value.address ? value.address.city : null;
-		detailItemAddressCountry.value = value && value.address ? value.address.country : null;
-		detailItemAddressPostalCode.value = value && value.address ? value.address.postalCode : null;
-		detailItemAddressStateProvince.value = value && value.address ? value.address.stateProvince : null;
+		try {
+			if (countryWatcher)
+				countryWatcher();
+			countryWatcher = null;
 
-		detailItemExperimental.value = value ? value.experimental : null;
-		detailItemNumber.value = value ? value.number : null;
-		detailItemOrganizations.value = value ? value.organizations : null;
-		detailItemRocketTypes.value = value ? value.rocketTypes : null;
-		detailItemYear.value = value ? value.year : null;
+			detailItemAddressCity.value = value && value.address ? value.address.city : null;
+			detailItemAddressCountry.value = value && value.address ? value.address.country : null;
+			detailItemAddressPostalCode.value = value && value.address ? value.address.postalCode : null;
+			detailItemAddressStateProvince.value = value && value.address ? value.address.stateProvince : null;
+
+			detailItemExperimental.value = value ? value.experimental : null;
+			detailItemNumber.value = value ? value.number : null;
+			detailItemOrganizations.value = value ? value.organizations : null;
+			detailItemRocketTypes.value = value ? value.rocketTypes : null;
+			detailItemYear.value = value ? value.year : null;
+		}
+		finally {
+			countryWatcher = watch(() => detailItemAddressCountry.value,
+				(value, prev) => {
+					if (value === prev)
+						return;
+
+					detailItemAddressStateProvince.value = null;
+				}
+			);
+		}
 	};
 	const setEditData = (correlationId, value) => {
 		value.address = value.address ?? {};
@@ -128,14 +145,14 @@ export function useLocationEditDialogComponent(props, context, options) {
 		setEditData(correlationId, detailItem.value);
 	};
 
-	watch(() => detailItemAddressCountry.value,
-		(value, prev) => {
-			if (value === prev)
-				return;
+	// watch(() => detailItemAddressCountry.value,
+	// 	(value, prev) => {
+	// 		if (value === prev)
+	// 			return;
 
-			detailItemAddressStateProvince.value = null;
-		}
-	);
+	// 		detailItemAddressStateProvince.value = null;
+	// 	}
+	// );
 
 	return {
 		detailItem,
@@ -162,7 +179,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 		countries,
 		displayName,
 		numberOrYear,
-		states,
+		stateProvinces,
 		preCompleteOk,
 		resetAdditional,
 		setAdditional,
