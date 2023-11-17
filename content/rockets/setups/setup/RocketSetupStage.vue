@@ -3,7 +3,7 @@
 		v-if="debug"
 	>
 		[[ isEditable {{ isEditable }} ]]
-		[[ displayItem {{ displayItem }} ]]
+		[[ displayItem <pre> {{ displayItem }} </pre> ]]
 		<!-- [[ altimeters {{ altimeters }} ]]
 		[[ chuteProtectors {{ chuteProtectors }} ]]
 		[[ chuteReleases {{ chuteReleases }} ]]

@@ -10,7 +10,7 @@ export const useRocketPartsLookupDialogValidation = {
 	filterItemLengthMeasurementUnitId: { $autoDirty: true },
 	filterItemLengthMeasurementUnitsId: { $autoDirty: true },
 	filterItemRocketTypes: { $autoDirty: true },
-	filterItemManufacturer: { $autoDirty: true },
+	filterItemManufacturers: { $autoDirty: true },
 	filterItemManufacturerStockId: { $autoDirty: true },
 	filterItemMotorImpulseClass: { requiredIfIsMotors: requiredUnless(self.validationIsMotors === false), $autoDirty: true },
 	filterItemMotorDiameter: { $autoDirty: true },

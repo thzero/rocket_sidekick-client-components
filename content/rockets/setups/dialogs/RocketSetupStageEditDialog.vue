@@ -221,32 +221,69 @@
 							:label="$t('forms.content.parts.motor.name')"
 						/>
 					</v-col>
+					<v-col
+						v-if="$vuetify.display.smAndDown"
+						cols="6"
+					>
+						<VtTextFieldWithValidation
+							ref="detailItemMotorDelay0Ref"
+							v-model="detailItemMotorDelay0"
+							vid="detailItemMotorDelay0"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.delay')"
+						/>
+					</v-col>
 					<v-col 
+						cols="12" md="6"
+					>
+						<table style="width: 100%;">
+							<tr>
+								<td style="width: 100%;">
+									<VtTextFieldWithValidation
+										ref="detailItemMotor0Ref"
+										v-model="detailItemMotor0"
+										vid="detailItemMotor0"
+										:validation="validation"
+										:readonly="!isEditable"
+										:label="$t('forms.content.parts.motor.name')"
+									/>
+								</td>
+								<td class="pr-2">
+									<v-btn style="width: 100%;"
+										color="green ml-2"
+										@click="clickMotorsSearch(0, detailItemMotorDiameter0)"
+									>
+										{{ $t('forms.content.parts.motor.name') }}
+									</v-btn>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 100%;">
+									<VtTextFieldWithValidation
+										ref="detailItemMotorCase0Ref"
+										v-model="detailItemMotorCase0"
+										vid="detailItemMotorCase0"
+										:validation="validation"
+										:readonly="!isEditable"
+										:label="$t('forms.content.parts.motorCase.name2')"
+									/>
+								</td>
+								<td class="pr-2">
+									<v-btn style="width: 100%;"
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorCasesSearch(0, detailItemMotorDiameter0)"
+									>
+										{{ $t('forms.content.parts.motorCase.name2') }}
+									</v-btn>
+								</td>
+							</tr>
+						</table>
+					</v-col>
+					<v-col 
+						v-if="$vuetify.display.mdAndUp"
 						cols="6" md="4"
-					>
-						<VtTextFieldWithValidation
-							ref="detailItemMotor0Ref"
-							v-model="detailItemMotor0"
-							vid="detailItemMotor0"
-							:validation="validation"
-							:readonly="!isEditable"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="8" md="4"
-					>
-						<VtTextFieldWithValidation
-							ref="detailItemMotorCase0Ref"
-							v-model="detailItemMotorCase0"
-							vid="detailItemMotorCase0"
-							:validation="validation"
-							:readonly="!isEditable"
-							:label="$t('forms.content.parts.motorCase.name2')"
-						/>
-					</v-col>
-					<v-col 
-						cols="4" md="2"
 					>
 						<VtTextFieldWithValidation
 							ref="detailItemMotorDelay0Ref"
@@ -258,33 +295,6 @@
 						/>
 					</v-col>
 				</v-row>
-			</v-col>
-			<v-col 
-				cols="12"
-				class="text-right"
-			>
-				<table class="float-right">
-					<tr>
-						<td>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorsSearch(0, detailItemMotorDiameter0)"
-							>
-								{{ $t('forms.content.parts.motor.name') }}
-							</v-btn>
-						</td>
-						<td>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorCasesSearch(0, detailItemMotorDiameter0)"
-							>
-								{{ $t('forms.content.parts.motorCase.name2') }}
-							</v-btn>
-						</td>
-					</tr>
-				</table>
 			</v-col>
 		</v-row>
 		<v-row 
@@ -305,32 +315,69 @@
 							:label="$t('forms.content.parts.motor.name')"
 						/>
 					</v-col>
+					<v-col
+						v-if="$vuetify.display.smAndDown"
+						cols="6"
+					>
+						<VtTextFieldWithValidation
+							ref="detailItemMotorDelay1Ref"
+							v-model="detailItemMotorDelay1"
+							vid="detailItemMotorDelay1"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.delay')"
+						/>
+					</v-col>
 					<v-col 
+						cols="12" md="6"
+					>
+						<table style="width: 100%;">
+							<tr>
+								<td style="width: 100%;">
+									<VtTextFieldWithValidation
+										ref="detailItemMotor1Ref"
+										v-model="detailItemMotor1"
+										vid="detailItemMotor1"
+										:validation="validation"
+										:readonly="!isEditable"
+										:label="$t('forms.content.parts.motor.name')"
+									/>
+								</td>
+								<td class="pr-2">
+									<v-btn style="width: 100%;"
+										color="green ml-2"
+										@click="clickMotorsSearch(1, detailItemMotorDiameter1)"
+									>
+										{{ $t('forms.content.parts.motor.name') }}
+									</v-btn>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 100%;">
+									<VtTextFieldWithValidation
+										ref="detailItemMotorCase1Ref"
+										v-model="detailItemMotorCase1"
+										vid="detailItemMotorCase1"
+										:validation="validation"
+										:readonly="!isEditable"
+										:label="$t('forms.content.parts.motorCase.name2')"
+									/>
+								</td>
+								<td class="pr-2">
+									<v-btn style="width: 100%;"
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorCasesSearch(1, detailItemMotorDiameter1)"
+									>
+										{{ $t('forms.content.parts.motorCase.name2') }}
+									</v-btn>
+								</td>
+							</tr>
+						</table>
+					</v-col>
+					<v-col 
+						v-if="$vuetify.display.mdAndUp"
 						cols="6" md="4"
-					>
-						<VtTextFieldWithValidation
-							ref="detailItemMotor1Ref"
-							v-model="detailItemMotor1"
-							vid="detailItemMotor1"
-							:validation="validation"
-							:readonly="!isEditable"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="8" md="4"
-					>
-						<VtTextFieldWithValidation
-							ref="detailItemMotorCase1Ref"
-							v-model="detailItemMotorCase1"
-							vid="detailItemMotorCase1"
-							:validation="validation"
-							:readonly="!isEditable"
-							:label="$t('forms.content.parts.motorCase.name2')"
-						/>
-					</v-col>
-					<v-col 
-						cols="4" md="2"
 					>
 						<VtTextFieldWithValidation
 							ref="detailItemMotorDelay1Ref"
@@ -342,33 +389,6 @@
 						/>
 					</v-col>
 				</v-row>
-			</v-col>
-			<v-col 
-				cols="12"
-				class="text-right"
-			>
-				<table class="float-right">
-					<tr>
-						<td>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorsSearch(1, detailItemMotorDiameter1)"
-							>
-								{{ $t('forms.content.parts.motor.name') }}
-							</v-btn>
-						</td>
-						<td>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorCasesSearch(1, detailItemMotorDiameter1)"
-							>
-								{{ $t('forms.content.parts.motorCase.name2') }}
-							</v-btn>
-						</td>
-					</tr>
-				</table>
 			</v-col>
 		</v-row>
 		<v-row 
@@ -389,32 +409,69 @@
 							:label="$t('forms.content.parts.motor.name')"
 						/>
 					</v-col>
+					<v-col
+						v-if="$vuetify.display.smAndDown"
+						cols="6"
+					>
+						<VtTextFieldWithValidation
+							ref="detailItemMotorDelay2Ref"
+							v-model="detailItemMotorDelay2"
+							vid="detailItemMotorDelay2"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.content.parts.motor.delay')"
+						/>
+					</v-col>
 					<v-col 
+						cols="12" md="6"
+					>
+						<table style="width: 100%;">
+							<tr>
+								<td style="width: 100%;">
+									<VtTextFieldWithValidation
+										ref="detailItemMotor2Ref"
+										v-model="detailItemMotor2"
+										vid="detailItemMotor2"
+										:validation="validation"
+										:readonly="!isEditable"
+										:label="$t('forms.content.parts.motor.name')"
+									/>
+								</td>
+								<td class="pr-2">
+									<v-btn style="width: 100%;"
+										color="green ml-2"
+										@click="clickMotorsSearch(2, detailItemMotorDiameter2)"
+									>
+										{{ $t('forms.content.parts.motor.name') }}
+									</v-btn>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 100%;">
+									<VtTextFieldWithValidation
+										ref="detailItemMotorCase2Ref"
+										v-model="detailItemMotorCase2"
+										vid="detailItemMotorCase2"
+										:validation="validation"
+										:readonly="!isEditable"
+										:label="$t('forms.content.parts.motorCase.name2')"
+									/>
+								</td>
+								<td class="pr-2">
+									<v-btn style="width: 100%;"
+										variant="flat"
+										color="green ml-2"
+										@click="clickMotorCasesSearch(2, detailItemMotorDiameter2)"
+									>
+										{{ $t('forms.content.parts.motorCase.name2') }}
+									</v-btn>
+								</td>
+							</tr>
+						</table>
+					</v-col>
+					<v-col 
+						v-if="$vuetify.display.mdAndUp"
 						cols="6" md="4"
-					>
-						<VtTextFieldWithValidation
-							ref="detailItemMotor2Ref"
-							v-model="detailItemMotor2"
-							vid="detailItemMotor2"
-							:validation="validation"
-							:readonly="!isEditable"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="8" md="4"
-					>
-						<VtTextFieldWithValidation
-							ref="detailItemMotorCase2Ref"
-							v-model="detailItemMotorCase2"
-							vid="detailItemMotorCase2"
-							:validation="validation"
-							:readonly="!isEditable"
-							:label="$t('forms.content.parts.motorCase.name2')"
-						/>
-					</v-col>
-					<v-col 
-						cols="4" md="2"
 					>
 						<VtTextFieldWithValidation
 							ref="detailItemMotorDelay2Ref"
@@ -426,33 +483,6 @@
 						/>
 					</v-col>
 				</v-row>
-			</v-col>
-			<v-col 
-				cols="12"
-				class="text-right"
-			>
-				<table class="float-right">
-					<tr>
-						<td>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorsSearch(2, detailItemMotorDiameter2)"
-							>
-								{{ $t('forms.content.parts.motor.name') }}
-							</v-btn>
-						</td>
-						<td>
-							<v-btn
-								variant="flat"
-								color="green ml-2"
-								@click="clickMotorCasesSearch(2, detailItemMotorDiameter2)"
-							>
-								{{ $t('forms.content.parts.motorCase.name2') }}
-							</v-btn>
-						</td>
-					</tr>
-				</table>
 			</v-col>
 		</v-row>
 		<RocketPartsLookupDialog

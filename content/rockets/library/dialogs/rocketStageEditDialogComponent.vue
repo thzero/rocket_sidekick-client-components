@@ -1,5 +1,5 @@
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
@@ -172,29 +172,29 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		value.cpFrom = detailItemCpFrom.value;
 		value.cpMeasurementUnitId = detailItemCpMeasurementUnitId.value;
 		// value.cpMeasurementUnitsId = detailItemCpMeasurementUnitsId.value;
-		value.cpMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCpMeasurementUnitsId.value);
+		value.cpMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCpMeasurementUnitId.value);
 		
 		value.diameterMajor = AppUtility.convertNumber(detailItemDiameterMajor.value);
 		value.diameterMajorMeasurementUnitId = detailItemDiameterMajorMeasurementUnitId.value;
 		// value.diameterMajorMeasurementUnitsId = detailItemDiameterMajorMeasurementUnitsId.value;
-		value.diameterMajorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMajorMeasurementUnitsId.value);
+		value.diameterMajorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMajorMeasurementUnitId.value);
 		
 		value.diameterMinor = AppUtility.convertNumber(detailItemDiameterMinor.value);
 		value.diameterMinorMeasurementUnitId = detailItemDiameterMinorMeasurementUnitId.value;
 		// value.diameterMinorMeasurementUnitsId = detailItemDiameterMinorMeasurementUnitsId.value;
-		value.diameterMinorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMinorMeasurementUnitsId.value);
+		value.diameterMinorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMinorMeasurementUnitId.value);
 
 		value.length = AppUtility.convertNumber(detailItemLength.value);
 		value.lengthMeasurementUnitId = detailItemLengthMeasurementUnitId.value;
 		// value.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
-		value.lengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemLengthMeasurementUnitsId.value);
+		value.lengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemLengthMeasurementUnitId.value);
 		
 		value.manufacturerId = detailItemManufacturer.value;
 		value.manufacturerStockId = detailItemManufacturerStockId.value;
 
-		value.motors[0].count = detailItemMotorCount0.value;
-		value.motors[1].count = detailItemMotorCount1.value;
-		value.motors[2].count = detailItemMotorCount2.value;
+		value.motors[0].count = detailItemMotorCount0.value ? Number(detailItemMotorCount0.value) : null;
+		value.motors[1].count = detailItemMotorCount1.value ? Number(detailItemMotorCount1.value) : null;
+		value.motors[2].count = detailItemMotorCount2.value ? Number(detailItemMotorCount2.value) : null;
 
 		value.motors[0].diameter = detailItemMotorDiameter0.value;
 		value.motors[1].diameter = detailItemMotorDiameter1.value;
@@ -211,6 +211,31 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	const setAdditional = async (correlationId) => {
 		setEditData(correlationId, detailItem.value);
 	};
+
+	watch(() => detailItemMotorDiameter0.value,
+		(value) => {
+			if (value)
+				return;
+
+			detailItemMotorCount0.value = null;
+		}
+	);
+	watch(() => detailItemMotorDiameter1.value,
+		(value) => {
+			if (value)
+				return;
+
+			detailItemMotorCount1.value = null;
+		}
+	);
+	watch(() => detailItemMotorDiameter2.value,
+		(value) => {
+			if (value)
+				return;
+
+			detailItemMotorCount2.value = null;
+		}
+	);
 
 	return {
 		detailItem,

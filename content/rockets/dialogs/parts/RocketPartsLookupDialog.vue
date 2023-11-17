@@ -170,9 +170,9 @@
 							<v-row dense>
 								<v-col cols="8">
 									<VtSelectWithValidation
-										ref="filterItemManufacturerRef"
-										v-model="filterItemManufacturer"
-										vid="filterItemManufacturer"
+										ref="filterItemManufacturersRef"
+										v-model="filterItemManufacturers"
+										vid="filterItemManufacturers"
 										multiple
 										:max-values="2"
 										:items="manufacturers"
@@ -313,7 +313,7 @@ export default {
 			filterItemLengthMin,
 			filterItemLengthMeasurementUnitId,
 			filterItemLengthMeasurementUnitsId,
-			filterItemManufacturer,
+			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemMotorDiameter,
 			filterItemMotorImpulseClass,
@@ -377,7 +377,7 @@ export default {
 			filterItemLengthMin,
 			filterItemLengthMeasurementUnitId,
 			filterItemLengthMeasurementUnitsId,
-			filterItemManufacturer,
+			filterItemManufacturers,
 			filterItemManufacturerStockId,
 			filterItemMotorDiameter,
 			filterItemMotorImpulseClass,

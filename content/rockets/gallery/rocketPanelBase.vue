@@ -29,8 +29,15 @@ export function useRocketPanelBaseComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCp,
+		rocketDiameter,
+		rocketLength,
+		rocketMotors,
+		rocketStagePrimary,
+		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine
+		rocketTypeIconDetermine,
+		rocketWeight
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const rocketUrl = (item) => {
