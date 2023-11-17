@@ -216,13 +216,13 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 				count = item.count ? item.count : null;
 				temp.motorInfo.value = `${diameter}${diameter ? ' x ' : ''}${count}`;
 
-				temp2 = (item.motors ?? [])[index];
+				temp2 = (detailItem.value.motors ?? []).find(l => l.index === item.index);
 				if (!temp2)
 					continue;
 
 				temp.motorCase.value = generateTitle(temp2.motorCaseManufacturerId, temp2.motorCaseName);
 				temp.motorCaseId.value = temp2.motorCaseId;
-				temp.motorDelay.value = temp2.delay;
+				temp.motorDelay.value = temp2.motorDelay;
 				temp.motorDiameter.value = item.diameter;
 				temp.motor.value = generateTitle(temp2.motorManufacturerId, temp2.motorName);
 				temp.motorId.value = temp2.motorId;
@@ -320,17 +320,17 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		// detailItem.value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
 		detailItem.value.cgMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCgMeasurementUnitId.value);
 
-		detailItem.value.motors = value.motors ?? [];
+		detailItem.value.motors = detailItem.value.motors ?? [];
 
 		let temp;
 		let index = -1;
-		for (const item of value.fromRocket.motors) {
+		for (const item of detailItem.value.fromRocket.motors) {
 			index++;
 			temp = selectMotorByIndex(index);
 			if (!temp)
 				continue;
 
-			detailItem.value.motors[index] = value.motors[index] ?? {};
+			detailItem.value.motors[index] = detailItem.value.motors[index] ?? {};
 			detailItem.value.motors[index].index = item.index;
 			detailItem.value.motors[index].motorCaseId = temp.motorCaseId.value;
 			detailItem.value.motors[index].motorDelay = temp.motorDelay.value;

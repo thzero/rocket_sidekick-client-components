@@ -67,110 +67,19 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<!-- <v-col cols="5" md="2">
-				<VtNumberFieldWithValidation
-					ref="detailItemDiameterMajorRef"
-					v-model="detailItemDiameterMajor"
-					vid="detailItemDiameterMajor"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.diameter.name')"
-				/>
-			</v-col> -->
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tr>
 						<td>
 							<VtNumberFieldWithValidation
-								ref="detailItemDiameterMajorRef"
-								v-model="detailItemDiameterMajor"
-								vid="detailItemDiameterMajor"
+								ref="detailItemLengthRef"
+								v-model="detailItemLength"
+								vid="detailItemLength"
 								:validation="validation"
 								:readonly="!isEditable"
-								:label="$t('forms.content.rockets.diameter.name')"
+								:label="$t('forms.content.rockets.length')"
 							/>
 						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemDiameterMajorMeasurementUnitsIdRef"
-								v-model="detailItemDiameterMajorMeasurementUnitsId"
-								vid="detailItemDiameterMajorMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemDiameterMajorMeasurementUnitIdRef"
-								v-model="detailItemDiameterMajorMeasurementUnitId"
-								vid="detailItemDiameterMajorMeasurementUnitId"
-								:measurementUnitsId="detailItemDiameterMajorMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td> -->
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemDiameterMajorMeasurementUnitIdRef"
-								v-model="detailItemDiameterMajorMeasurementUnitId"
-								vid="detailItemDiameterMajorMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td>
-					</tr>
-				</table>
-			</v-col>
-			<!-- <v-col cols="5" md="2">
-				<VtNumberFieldWithValidation
-					ref="detailItemLengthRef"
-					v-model="detailItemLength"
-					vid="detailItemLength"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.length')"
-				/>
-			</v-col> -->
-			<v-col cols="12" sm="6">
-				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemDiameterMajorRef"
-								v-model="detailItemDiameterMajor"
-								vid="detailItemDiameterMajor"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.rockets.diameter.name')"
-							/>
-						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemLengthMeasurementUnitsIdRef"
-								v-model="detailItemLengthMeasurementUnitsId"
-								vid="detailItemLengthMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemLengthMeasurementUnitIdRef"
-								v-model="detailItemLengthMeasurementUnitId"
-								vid="detailItemLengthMeasurementUnitId"
-								:measurementUnitsId="detailItemLengthMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td> -->
 						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect2
 								ref="detailItemLengthMeasurementUnitIdRef"
@@ -185,18 +94,62 @@
 					</tr>
 				</table>
 			</v-col>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<VtNumberFieldWithValidation
+								ref="detailItemDiameterMajorRef"
+								v-model="detailItemDiameterMajor"
+								vid="detailItemDiameterMajor"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.rockets.diameter.name')"
+							/>
+						</td>
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemDiameterMajorMeasurementUnitIdRef"
+								v-model="detailItemDiameterMajorMeasurementUnitId"
+								vid="detailItemDiameterMajorMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+			<!-- <v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<VtNumberFieldWithValidation
+								ref="detailItemDiameterMinorRef"
+								v-model="detailItemDiameterMinor"
+								vid="detailItemDiameterMinor"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.rockets.diameter.name')"
+							/>
+						</td>
+						<td class="measurementUnitMedium">
+							<MeasurementUnitSelect2
+								ref="detailItemDiameterMinorMeasurementUnitIdRef"
+								v-model="detailItemDiameterMinorMeasurementUnitId"
+								vid="detailItemDiameterMinorMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col> -->
 		</v-row>
 		<v-row dense>
-			<!-- <v-col cols="5" md="2">
-				<VtNumberFieldWithValidation
-					ref="detailItemWeightRef"
-					v-model="detailItemWeight"
-					vid="detailItemWeight"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.weight')"
-				/>
-			</v-col> -->
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tr>
@@ -210,28 +163,6 @@
 								:label="$t('forms.content.parts.weight')"
 							/>
 						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemWeightMeasurementUnitsIdRef"
-								v-model="detailItemWeightMeasurementUnitsId"
-								vid="detailItemWeightMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemWeightMeasurementUnitIdRef"
-								v-model="detailItemWeightMeasurementUnitId"
-								vid="detailItemWeightMeasurementUnitId"
-								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td> -->
 						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect2
 								ref="detailItemWeightMeasurementUnitIdRef"
@@ -246,16 +177,6 @@
 					</tr>
 				</table>
 			</v-col>
-			<!-- <v-col cols="5" md="2">
-				<VtNumberFieldWithValidation
-					ref="detailItemCpRef"
-					v-model="detailItemCp"
-					vid="detailItemCp"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.cp')"
-				/>
-			</v-col> -->
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tr>
@@ -269,28 +190,6 @@
 								:label="$t('forms.content.rockets.cp')"
 							/>
 						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemCpMeasurementUnitsIdRef"
-								v-model="detailItemCpMeasurementUnitsId"
-								vid="detailItemCpMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemCpMeasurementUnitIdRef"
-								v-model="detailItemCpMeasurementUnitId"
-								vid="detailItemCpMeasurementUnitId"
-								:measurementUnitsId="detailItemCpMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td> -->
 						<td class="measurementUnitMedium">
 							<MeasurementUnitSelect2
 								ref="detailItemCpMeasurementUnitIdRef"
@@ -314,7 +213,7 @@
 					vid="detailItemMotorDiameter0"
 					:items="motorDiameters0"
 					:validation="validation"
-					:label="$t('forms.external.motorSearch.diameter')"
+					:label="$t('forms.content.rockets.motor.diameter') + ' #1'"
 				/>
 			</v-col>
 			<v-col cols="6" sm="3">
@@ -323,7 +222,7 @@
 					v-model="detailItemMotorCount0"
 					vid="detailItemMotorCount0"
 					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.count')"
+					:label="$t('forms.content.rockets.motor.count') + ' #1'"
 				/>
 			</v-col>
 			<v-col cols="6" sm="3">
@@ -333,7 +232,7 @@
 					vid="detailItemMotorDiameter1"
 					:items="motorDiameters"
 					:validation="validation"
-					:label="$t('forms.content.rockets.diameter.motor')"
+					:label="$t('forms.content.rockets.motor.diameter') + ' #2'"
 				/>
 			</v-col>
 			<v-col cols="6" sm="3">
@@ -342,7 +241,7 @@
 					v-model="detailItemMotorCount1"
 					vid="detailItemMotorCount1"
 					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.count')"
+					:label="$t('forms.content.rockets.motor.count') + ' #2'"
 				/>
 			</v-col>
 			<v-col cols="6" sm="3">
@@ -352,7 +251,7 @@
 					vid="detailItemMotorDiameter2"
 					:items="motorDiameters"
 					:validation="validation"
-					:label="$t('forms.content.rockets.diameter.motor')"
+					:label="$t('forms.content.rockets.motor.diameter') + ' #3'"
 				/>
 			</v-col>
 			<v-col cols="6" sm="3">
@@ -361,7 +260,7 @@
 					v-model="detailItemMotorCount2"
 					vid="detailItemMotorCount2"
 					:readonly="!isEditable"
-					:label="$t('forms.content.rockets.count')"
+					:label="$t('forms.content.rockets.motor.count') + ' #3'"
 				/>
 			</v-col>
 		</v-row>

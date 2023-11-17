@@ -157,8 +157,15 @@ export function useRocketComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCp,
+		rocketDiameter,
+		rocketLength,
+		rocketMotors,
+		rocketStagePrimary,
+		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine
+		rocketTypeIconDetermine,
+		rocketWeight
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const {
@@ -231,7 +238,7 @@ export function useRocketComponent(props, context, options) {
 		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
 	const resetData = (correlationId, value) => {
-		detailItemRocketType.value = value ? value.typeId : AppCommonConstants.Rocketry.RocketTypes.highone;	
+		detailItemRocketType.value = value ? value.rocketTypes : null;	
 
 		detailItemDescription.value = value ? value.description : null;
 		
@@ -241,7 +248,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemName.value = value ? value.name : null;
 	};
 	const setData = (correlationId) => {
-		detailItemData.value.typeId = detailItemRocketType.value;
+		detailItemData.value.rocketTypes = detailItemRocketType.value;
 
 		detailItemData.value.description = detailItemDescription.value;
 		

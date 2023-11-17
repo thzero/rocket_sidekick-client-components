@@ -79,8 +79,15 @@ export function useLocationLookupDialogComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCp,
+		rocketDiameter,
+		rocketLength,
+		rocketMotors,
+		rocketStagePrimary,
+		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine
+		rocketTypeIconDetermine,
+		rocketWeight
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);

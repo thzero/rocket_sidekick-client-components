@@ -172,17 +172,19 @@
 									class="bg-primary"
 								>
 									<slot name="panelTitle" :item="item">
-										{{ item.name }}
+										&nbsp;{{ item.rocket.name }}
 									</slot>
-									<div class="float-right">{{ manufacturer(item) }}</div>
+									<!-- <div class="float-right">{{ manufacturer(item) }}</div> -->
+									<div class="float-right">{{ rocketMotors(item.rocket) }}</div>
+									<img :src="rocketTypeIcon(item.rocket)" style="height: 48px; float: left;" />
 								</v-card-title>
 								<v-card-text>
 										<!-- v-if="item.description" -->
-											{{ item.rocket }}
 										<slot name="panelText" :item="item">
-											{{ item.description }}
-											{{ item.stages ? item.stages.length : '' }}
-											{{ item.rocket }}
+											<RocketSetupView
+												:detailItem="item"
+												:manufacturers="manufacturers"
+											/>
 										</slot>
 										<div
 											v-if="debug"
@@ -298,6 +300,7 @@ import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/
 
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import RocketSetupView from '@/components/content/rockets/setups/setup/RocketSetupView';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
@@ -314,6 +317,7 @@ export default {
 		RocketLookupDialog,
 		RocketSetup,
 		RocketSetupCopyDialog,
+		RocketSetupView,
 		VtConfirmationDialog,
 		VtFormListing,
 		VtNumberFieldWithValidation,
@@ -394,6 +398,9 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			rocketMotors,
+			rocketTypeIcon,
+			rocketTypeIconDetermine,
 			debug,
 			rocketSetupsRef,
 			diameterMeasurementUnitId,
@@ -484,6 +491,9 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			rocketMotors,
+			rocketTypeIcon,
+			rocketTypeIconDetermine,
 			debug,
 			rocketSetupsRef,
 			diameterMeasurementUnitId,

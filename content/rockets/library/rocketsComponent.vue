@@ -14,7 +14,6 @@ import RocketData from 'rocket_sidekick_common/data/rockets/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
-import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useRocketsBaseComponent(props, context, options) {
@@ -103,18 +102,16 @@ export function useRocketsBaseComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCp,
+		rocketDiameter,
+		rocketLength,
+		rocketMotors,
+		rocketStagePrimary,
+		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine
+		rocketTypeIconDetermine,
+		rocketWeight
 	} = useRocketsUtilityComponent(props, context, options);
-
-	const {
-		motorDiameters,
-		motorImpulseClasses,
-		motorCaseInfo,
-		motorDiameter,
-		motorName,
-		motorUrl
-	} = useMotorLookupComponent(props, context);
 
 	const debug = ref(false);
 	const rocketsref = ref(null);
@@ -239,10 +236,6 @@ export function useRocketsBaseComponent(props, context, options) {
 		if (!item)
 			return null;
 		let output = [];
-		if (item.motors) {
-			for (const motor of item.motors) 
-				output.push(motorName(motor));
-		}
 		if (item.stages) {
 			for (const stage of item.stages) {
 				for (const motor of stage.motors) {
@@ -342,6 +335,9 @@ export function useRocketsBaseComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms,
 		rocketTypes,
+		rocketMotors,
+		rocketTypeIcon,
+		rocketTypeIconDetermine,
 		debug,
 		rocketsref,
 		diameterMeasurementUnitId,
@@ -360,7 +356,6 @@ export function useRocketsBaseComponent(props, context, options) {
 		fetchManufacturers,
 		manufacturer,
 		measurementUnitTranslateWeight,
-		motors,
 		resetAdditional,
 		scope: 'RocketsFilterControl',
 		validation: useVuelidate({ $scope: 'RocketsFilterControl' })

@@ -51,6 +51,8 @@
 					:items="rocketTypes"
 					:validation="validation"
 					:readonly="!isEditable"
+					multiple
+					:max-values="2"
 					:label="$t('forms.content.rockets.type')"
 				/>
 			</v-col>

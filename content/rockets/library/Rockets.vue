@@ -150,12 +150,16 @@
 								<v-card-title
 									class="bg-primary"
 								>
-									{{ item.name }}
+									&nbsp;{{ item.name }}
 									<!-- <div class="float-right">{{ manufacturer(item) }}</div> -->
-									<div class="float-right">{{ motors(item) }}</div>
+									<div class="float-right">{{ rocketMotors(item) }}</div>
+									<img :src="rocketTypeIcon(item)" style="height: 48px; float: left;" />
 								</v-card-title>
 								<v-card-text>
-									<VtMarkdown v-model="item.description" :use-github=false />
+									<RocketView
+										:detailItem="item"
+										:manufacturers="manufacturers"
+									/>
 									<div
 										v-if="debug"
 									>
@@ -258,6 +262,7 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import Rocket from '@/components/content/rockets/library/rocket/Rocket';
 import RocketCopyDialog from '@/components/content/rockets/library/dialogs/RocketCopyDialog';
+import RocketView from '@/components/content/rockets/library/rocket/RocketView';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
@@ -275,6 +280,7 @@ export default {
 		MeasurementUnitsSelect,
 		Rocket,
 		RocketCopyDialog,
+		RocketView,
 		VtConfirmationDialog,
 		VtFormListing,
 		VtMarkdown,
@@ -355,6 +361,9 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			rocketMotors,
+			rocketTypeIcon,
+			rocketTypeIconDetermine,
 			debug,
 			rocketsref,
 			diameterMeasurementUnitId,
@@ -373,7 +382,6 @@ export default {
 			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
-			motors,
 			resetAdditional,
 			scope,
 			validation
@@ -445,6 +453,9 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			rocketMotors,
+			rocketTypeIcon,
+			rocketTypeIconDetermine,
 			debug,
 			rocketsref,
 			diameterMeasurementUnitId,
@@ -463,7 +474,6 @@ export default {
 			fetchManufacturers,
 			manufacturer,
 			measurementUnitTranslateWeight,
-			motors,
 			resetAdditional,
 			scope,
 			validation

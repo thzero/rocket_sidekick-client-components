@@ -103,8 +103,15 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCp,
+		rocketDiameter,
+		rocketLength,
+		rocketMotors,
+		rocketStagePrimary,
+		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine
+		rocketTypeIconDetermine,
+		rocketWeight
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);
@@ -326,6 +333,9 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms,
 		rocketTypes,
+		rocketMotors,
+		rocketTypeIcon,
+		rocketTypeIconDetermine,
 		debug,
 		rocketSetupsRef,
 		diameterMeasurementUnitId,
@@ -344,8 +354,8 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		clickSearchRockets,
 		fetchManufacturers,
 		manufacturer,
-		selectRocket,
 		resetAdditional,
+		selectRocket,
 		scope: 'RocketsFilterControl',
 		validation: useVuelidate({ $scope: 'RocketsFilterControl' })
 	};
