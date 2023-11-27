@@ -1,5 +1,5 @@
 <template>
-	<pre>{{ displayItem }}</pre>
+	<!-- <pre>{{ displayItem }}</pre> -->
 	<!-- {{ stagePrimary }} -->
 	<!-- length {{ length }} -->
 	<v-row dense
@@ -10,9 +10,9 @@
 		</v-col>
 	</v-row>
 	<v-row dense>
-		<v-col cols="12">
+		<!-- <v-col cols="12">
 			<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
-		</v-col>
+		</v-col> -->
 		<!-- <v-col 
 			v-if="stages"
 			cols="12" sm="6"
@@ -60,8 +60,18 @@
 			cols="12" sm="6"
 		>
 			<VtTextField
+				v-model="manufacturer"
+				:label="$t('forms.content.parts.manufacturer')"
+				:readonly="true"
+			/>
+		</v-col>
+		<v-col 
+			v-if="stagePrimary.manufacturerStockId"
+			cols="12" sm="6"
+		>
+			<VtTextField
 				v-model="stagePrimary.manufacturerStockId"
-				:label="$t('forms.content.locations.address')"
+				:label="$t('forms.content.parts.manufacturerId')"
 				:readonly="true"
 			/>
 		</v-col>
