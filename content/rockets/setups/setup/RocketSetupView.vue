@@ -23,19 +23,19 @@
 				:readonly="true"
 			/>
 		</v-col> -->
-		<v-col 
+		<!-- <v-col 
 			v-if="diameter"
-			cols="12" sm="6"
+			cols="4" sm="3"
 		>
 			<VtTextField
 				v-model="diameter"
 				:label="$t('strings.rockets.diameterMajor')"
 				:readonly="true"
 			/>
-		</v-col>
+		</v-col> -->
 		<v-col 
 			v-if="length"
-			cols="12" sm="6"
+			cols="4" sm="3"
 		>
 			<VtTextField
 				v-model="length"
@@ -44,8 +44,28 @@
 			/>
 		</v-col>
 		<v-col 
+			v-if="weight"
+			cols="4" sm="3"
+		>
+			<VtTextField
+				v-model="weight"
+				:label="$t('strings.rockets.weight')"
+				:readonly="true"
+			/>
+		</v-col>
+		<v-col 
+			v-if="cg"
+			cols="4" sm="3"
+		>
+			<VtTextField
+				v-model="cg"
+				:label="$t('strings.rockets.cg')"
+				:readonly="true"
+			/>
+		</v-col>
+		<v-col 
 			v-if="cp"
-			cols="12" sm="6"
+			cols="4" sm="3"
 		>
 			<VtTextField
 				v-model="cp"
@@ -114,6 +134,7 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			cg,
 			cp,
 			diameter,
 			displayItem,
@@ -137,6 +158,7 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			cg,
 			cp,
 			diameter,
 			displayItem,

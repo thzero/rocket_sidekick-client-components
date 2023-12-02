@@ -50,7 +50,9 @@ export function useMotorLookupComponent(props, context, options) {
 			return null;
 		const diameter = item.diameter ? motorDiameter(item.diameter) : '';
 		const count = item.count ? item.count : null;
-		return `${diameter}${diameter ? ' x ' : ''}${count}`;
+		if (count > 1)
+			return `${diameter}${diameter ? ' x ' : ''}${count}`;
+		return diameter;
 	};
 	const motorUrl = (motor) => {
 		return serviceExternalMotorSearch.urlMotor(motor);

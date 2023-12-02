@@ -152,7 +152,10 @@
 								>
 									&nbsp;{{ item.name }}
 									<!-- <div class="float-right">{{ manufacturer(item) }}</div> -->
-									<div class="float-right">{{ rocketMotors(item) }}</div>
+									<div class="float-right">
+										{{ rocketDiameter(item.stages) }},
+										{{ rocketMotors(item) }}
+									</div>
 									<img :src="rocketTypeIcon(item)" style="height: 48px; float: left;" />
 								</v-card-title>
 								<v-card-text>
@@ -361,6 +364,8 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			rocketDiameter,
+			rocketLength,
 			rocketMotors,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
@@ -453,6 +458,8 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
+			rocketDiameter,
+			rocketLength,
 			rocketMotors,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,

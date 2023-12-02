@@ -103,6 +103,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,
@@ -333,6 +334,8 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms,
 		rocketTypes,
+		rocketDiameter,
+		rocketLength,
 		rocketMotors,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
