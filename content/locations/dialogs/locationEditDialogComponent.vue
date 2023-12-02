@@ -36,6 +36,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,

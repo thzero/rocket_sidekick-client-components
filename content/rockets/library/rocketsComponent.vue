@@ -102,6 +102,7 @@ export function useRocketsBaseComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,
@@ -335,6 +336,8 @@ export function useRocketsBaseComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms,
 		rocketTypes,
+		rocketDiameter,
+		rocketLength,
 		rocketMotors,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,

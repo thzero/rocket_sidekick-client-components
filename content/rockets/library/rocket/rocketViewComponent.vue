@@ -23,6 +23,7 @@ export function useRocketViewComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,

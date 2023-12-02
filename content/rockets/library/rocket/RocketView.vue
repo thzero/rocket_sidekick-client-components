@@ -24,19 +24,19 @@
 				:readonly="true"
 			/>
 		</v-col> -->
-		<v-col 
+		<!-- <v-col 
 			v-if="diameter"
-			cols="6" sm="4"
+			cols="4" sm="3"
 		>
 			<VtTextField
 				v-model="diameter"
 				:label="$t('strings.rockets.diameterMajor')"
 				:readonly="true"
 			/>
-		</v-col>
+		</v-col> -->
 		<v-col 
 			v-if="length"
-			cols="6" sm="4"
+			cols="4" sm="3"
 		>
 			<VtTextField
 				v-model="length"
@@ -45,8 +45,18 @@
 			/>
 		</v-col>
 		<v-col 
+			v-if="weight"
+			cols="4" sm="3"
+		>
+			<VtTextField
+				v-model="weight"
+				:label="$t('strings.rockets.weight')"
+				:readonly="true"
+			/>
+		</v-col>
+		<v-col 
 			v-if="cp"
-			cols="6" sm="4"
+			cols="4" sm="3"
 		>
 			<VtTextField
 				v-model="cp"
@@ -121,7 +131,7 @@ export default {
 			length,
 			manufacturer,
 			stagePrimary,
-			sStages,
+			stages,
 			weight
 		} = useRocketViewComponent(props, context);
 
@@ -144,7 +154,7 @@ export default {
 			length,
 			manufacturer,
 			stagePrimary,
-			sStages,
+			stages,
 			weight
 		};
 	}

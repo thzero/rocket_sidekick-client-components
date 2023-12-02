@@ -38,6 +38,19 @@ export function useRocketsUtilityComponent(props, context, options) {
 			return null;
 		return !String.isNullOrEmpty(item.coverUrl);
 	};
+	const rocketCg = (stages) => {
+		if (!stages)
+			return null;
+		// TODO: assuming all the same units...?
+		const primary = rocketStagePrimary(stages);
+		if (!primary)
+			return null;
+		let cg = 0;
+		for (const stage of stages)
+			if (stage.cg > cg)
+				cg = stage.cg;
+		return cg ? cg + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cgMeasurementUnitsId, primary.cgMeasurementUnitId) : '';
+	};
 	const rocketCp = (stages) => {
 		if (!stages)
 			return null;
@@ -191,6 +204,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 	return {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,

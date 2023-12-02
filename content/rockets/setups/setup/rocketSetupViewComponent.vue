@@ -23,6 +23,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,
@@ -35,6 +36,11 @@ export function useRocketSetupViewComponent(props, context, options) {
 		rocketWeight
 	} = useRocketsUtilityComponent(props, context, options);
 
+	const cg = computed(() => {
+		if (!props.detailItem || !props.detailItem.rocket)
+			return null;
+		return rocketCg(props.detailItem.stages);
+	});
 	const cp = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
@@ -87,6 +93,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 		serviceStore,
 		sortByOrder,
 		target,
+		cg,
 		cp,
 		diameter,
 		displayItem,
