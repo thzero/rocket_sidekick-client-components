@@ -30,7 +30,6 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		rocketTypes,
 		hasCoverUrl,
 		rocketCg,
-		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,
