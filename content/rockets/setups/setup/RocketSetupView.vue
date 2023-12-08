@@ -176,7 +176,7 @@
 							{{ item2.caseName }}
 						</v-col>
 					</v-row> -->
-					{{ item2.name }} {{ $t('strings.content.rockets.in') }} {{ item2.caseName }}
+					<a style="color: white" :href="motorUrl(item2)" target="_blank">{{ item2.name }}</a> {{ $t('strings.content.rockets.in') }} {{ item2.caseName }}
 				</v-sheet>
 			</v-col>
 		</v-row>
@@ -228,7 +228,8 @@ export default {
 			stagePrimaryRocket,
 			stageRocketMotors,
 			stages,
-			weight
+			weight,
+			motorUrl
 		} = useRocketSetupViewComponent(props, context);
 
 		return {
@@ -254,7 +255,8 @@ export default {
 			stagePrimaryRocket,
 			stageRocketMotors,
 			stages,
-			weight
+			weight,
+			motorUrl
 		};
 	}
 };

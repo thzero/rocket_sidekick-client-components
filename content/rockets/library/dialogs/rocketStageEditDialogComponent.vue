@@ -10,7 +10,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
-import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
+import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -74,7 +74,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		motorImpulseClasses,
 		motorCaseInfo,
 		motorUrl
-	} = useMotorLookupComponent(props, context);
+	} = useMotorUtilityComponent(props, context);
 
 	const detailItemCp = ref(null);
 	const detailItemCpFrom = ref(null);
