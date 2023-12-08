@@ -86,7 +86,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
-			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
+			fetchItem: async (correlationId, id, editable) => { return await fetchItemI(correlationId, id, editable); },
 			init: async (correlationId) => { return await initI(correlationId); },
 			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
@@ -196,8 +196,8 @@ export function useChecklistsBaseComponent(props, context, options) {
 			
 		return await serviceStore.dispatcher.requestChecklists(correlationId, params);
 	};
-	const fetchItemI = async (correlationId, id) => {
-		return await serviceStore.dispatcher.requestChecklistById(correlationId, id);
+	const fetchItemI = async (correlationId, id, editable) => {
+		return await serviceStore.dispatcher.requestChecklistById(correlationId, id, editable);
 	};
 	const fetchParams = (correlationId, params) => {
 		params.name = filterItemName.value;

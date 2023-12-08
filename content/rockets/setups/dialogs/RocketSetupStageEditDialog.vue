@@ -496,7 +496,8 @@
 		<RocketPartsLookupDialog
 			ref="dialoSearchgMotorCasesRef"
 			:signal="dialogPartsSearchMotorCasesManager.signal"
-			:diameter="dialogPartsSearchMotorsDiameter"
+			:detail="dialogPartsSearchMotorCasesDetail"
+			:diameter="dialogPartsSearchMotorCasesDiameter"
 			:part-types="manufacturerTypeMotorCase"
 			@close="dialogPartsSearchMotorCasesManager.cancel()"
 			@select="selectMotorCase"
@@ -587,9 +588,11 @@ export default {
 			detailItemWeightNose,
 			detailItemWeightNoseMeasurementUnitId,
 			detailItemWeightNoseMeasurementUnitsId,
+			dialogPartsSearchMotorCasesDetail,
+			dialogPartsSearchMotorCasesDiameter,
+			dialogPartsSearchMotorCasesManager,
 			dialogPartsSearchMotorsDiameter,
 			dialogPartsSearchMotorsManager,
-			dialogPartsSearchMotorCasesManager,
 			manufacturerTypeMotor,
 			manufacturerTypeMotorCase,
 			displayName,
@@ -650,9 +653,11 @@ export default {
 			detailItemWeightNose,
 			detailItemWeightNoseMeasurementUnitId,
 			detailItemWeightNoseMeasurementUnitsId,
+			dialogPartsSearchMotorCasesDetail,
+			dialogPartsSearchMotorCasesDiameter,
+			dialogPartsSearchMotorCasesManager,
 			dialogPartsSearchMotorsDiameter,
 			dialogPartsSearchMotorsManager,
-			dialogPartsSearchMotorCasesManager,
 			manufacturerTypeMotor,
 			manufacturerTypeMotorCase,
 			displayName,

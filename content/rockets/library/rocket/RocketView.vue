@@ -35,8 +35,18 @@
 			/>
 		</v-col> -->
 		<v-col 
+			v-if="stages"
+			cols="2"
+		>
+			<VtTextField
+				v-model="stages"
+				:label="$t('strings.rockets.stages')"
+				:readonly="true"
+			/>
+		</v-col>
+		<v-col 
 			v-if="length"
-			cols="4" sm="3"
+			cols="3"
 		>
 			<VtTextField
 				v-model="length"
@@ -46,7 +56,7 @@
 		</v-col>
 		<v-col 
 			v-if="weight"
-			cols="4" sm="3"
+			cols="3"
 		>
 			<VtTextField
 				v-model="weight"
