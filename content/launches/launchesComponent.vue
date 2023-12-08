@@ -90,7 +90,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
 			deleteItem: async (correlationId, id) => { return await deleteItemI(correlationId, id); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
-			fetchItem: async (correlationId, id) => { return await fetchItemI(correlationId, id); },
+			fetchItem: async (correlationId, id, editable) => { return await fetchItemI(correlationId, id, editable); },
 			init: async (correlationId) => { return await initI(correlationId); },
 			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
@@ -189,8 +189,8 @@ export function useLaunchesBaseComponent(props, context, options) {
 		response.results = results;
 		return response;
 	};
-	const fetchItemI = async (correlationId, id) => {
-		return await serviceStore.dispatcher.requestLaunchById(correlationId, id);
+	const fetchItemI = async (correlationId, id, editable) => {
+		return await serviceStore.dispatcher.requestLaunchById(correlationId, id, editable);
 	};
 	const fetchParams = (correlationId, params) => {
 		params.name = filterItemName.value;

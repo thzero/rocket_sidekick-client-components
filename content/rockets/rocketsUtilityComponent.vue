@@ -104,6 +104,11 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const temp = options.manufacturers.find(l => l.id === primary.manufacturerId);
 		return temp ? temp.name : null;
 	};
+	const rocketMotor = (item) => {
+		if (!item)
+			return null;
+		return motorName(item);
+	};
 	const rocketMotors = (item) => {
 		if (!item || !item.stages)
 			return null;
@@ -116,7 +121,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 		}
 		return output.join(', ');
 	};
-	const rocketMotors2 = (item) => {
+	const rocketMotorsRocket = (item) => {
 		if (!item || !item.stages || !item.rocket || !item.rocket.stages)
 			return null;
 		let output = [];
@@ -209,8 +214,9 @@ export function useRocketsUtilityComponent(props, context, options) {
 		rocketDiameter,
 		rocketLength,
 		rocketManufacturer,
+		rocketMotor,
 		rocketMotors,
-		rocketMotors2,
+		rocketMotorsRocket,
 		rocketStagePrimary,
 		rocketStages,
 		rocketTypeIcon,

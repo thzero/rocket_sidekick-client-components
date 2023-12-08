@@ -361,6 +361,43 @@ export function useRocketSetupStageComponent(props, context, options) {
 		const count = temp.count ? temp.count : null;
 		return { value: `${diameter}${diameter ? ' x ' : ''}${count}` };
 	};
+	const generateMotorInfo = (id, name) => {
+		if (String.isNullOrEmpty(name))
+			return {};
+		let manufacturer = null;
+		if (props.manufacturers)
+			manufacturer = props.manufacturers.find(l => l.id === id);
+
+		return {
+			value: `${manufacturer ? manufacturer.abbrev : ''} ${name}`.trim(),
+			name: `${name}`.trim(),
+			manufacturer: manufacturer.abbrev,
+			manufacturerId: manufacturer.id
+		};
+	};
+	const getMotor = (index) => {
+		if (!displayItem.value || !displayItem.value.motors || (index >= displayItem.value.motors.length))
+			return null;
+
+		return displayItem.value.motors[index];
+	};
+	const getParts = (correlationId, item, type) => {
+		if (type === partsKeyAltimeters)
+			return item.altimeters;
+		if (type === partsKeyChuteProtectors)
+			return item.chuteProtectors;
+		if (type === partsKeyChuteReleases)
+			return item.chuteReleases;
+		if (type === partsKeyDeploymentBags)
+			return item.deploymentBags;
+		if (type === partsKeyParachutes)
+			return item.parachutes;
+		if (type === partsKeyStreamers)
+			return item.streamers;
+		if (type === partsKeyTrackers)
+			return item.trackers;
+		return null;
+	};
 	const handleAltimeterDelete = async (item) => {
 		dialogPartsDeleteMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyAltimeters}.delete_confirm`);
 		dialogPartsDeleteId.value = item.id;
@@ -437,43 +474,6 @@ export function useRocketSetupStageComponent(props, context, options) {
 		dialogPartsEditMessage.value = LibraryClientUtility.$trans.t(`messages.${partsKeyTrackers}.Edit_confirm`);
 		dialogPartsEditId.value = item.id;
 		dialogPartsEditTrackerManager.value.open();
-	};
-	const generateMotorInfo = (id, name) => {
-		if (String.isNullOrEmpty(name))
-			return {};
-		let manufacturer = null;
-		if (props.manufacturers)
-			manufacturer = props.manufacturers.find(l => l.id === id);
-
-		return {
-			value: `${manufacturer ? manufacturer.abbrev : ''} ${name}`.trim(),
-			name: `${name}`.trim(),
-			manufacturer: manufacturer.abbrev,
-			manufacturerId: manufacturer.id
-		};
-	};
-	const getMotor = (index) => {
-		if (!displayItem.value || !displayItem.value.motors || (index >= displayItem.value.motors.length))
-			return null;
-
-		return displayItem.value.motors[index];
-	};
-	const getParts = (correlationId, item, type) => {
-		if (type === partsKeyAltimeters)
-			return item.altimeters;
-		if (type === partsKeyChuteProtectors)
-			return item.chuteProtectors;
-		if (type === partsKeyChuteReleases)
-			return item.chuteReleases;
-		if (type === partsKeyDeploymentBags)
-			return item.deploymentBags;
-		if (type === partsKeyParachutes)
-			return item.parachutes;
-		if (type === partsKeyStreamers)
-			return item.streamers;
-		if (type === partsKeyTrackers)
-			return item.trackers;
-		return null;
 	};
 	const hasMotorInfo = (index) => {
 		const motor = getMotor(index);

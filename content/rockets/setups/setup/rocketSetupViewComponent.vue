@@ -28,6 +28,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 		rocketDiameter,
 		rocketLength,
 		rocketManufacturer,
+		rocketMotor,
 		rocketMotors,
 		rocketStagePrimary,
 		rocketStages,
@@ -69,6 +70,55 @@ export function useRocketSetupViewComponent(props, context, options) {
 			return {};
 		return rocketStagePrimary(props.detailItem.rocket.stages);
 	});
+	const stagePrimaryRocket = computed(() => {
+		if (!props.detailItem || !props.detailItem.rocket)
+			return {};
+		return rocketStagePrimary(props.detailItem.stages);
+	});
+	const stageRocketMotors = computed(() => {
+		if (!props.detailItem || !props.detailItem.stages || !props.detailItem.motors)
+			return null;
+		let output = [];
+		let motorCaseName;
+		let motorName;
+		let temp;
+		let temp1;
+		let temp2;
+		let temp3;
+		let temp4;
+		let count;
+		for (const stage of props.detailItem.stages) {
+			temp = {
+				index: stage.index + 1,
+				motors: []
+			}
+			output.push(temp);
+			for (const motor of stage.motors) {
+				temp1 = props.detailItem.motors.find(l => l.motorId === motor.motorId);
+				if (!temp1)
+					continue;
+
+				count = null;
+				temp3 = props.detailItem.rocket.stages.find(l => l.index === stage.index);
+				if (temp3) {
+					temp4 = temp3.motors.find(l => l.index === motor.index);
+					if (temp4)
+						count = temp4.count;
+				}
+				motorName = temp1.manufacturer + ' ' + temp1.designation;
+				if (count > 1)
+					motorName += ' x ' + count;
+				
+				temp2 = props.detailItem.motorCases.find(l => l.id === motor.motorCaseId);
+				motorCaseName = '';
+				if (temp2)
+					motorCaseName += temp2.manufacturer + ' ' + temp2.name;
+
+				temp.motors.push({ index: motor.index + 1, name: motorName, caseName: motorCaseName });
+			}
+		}
+		return output;
+	});
 	const stages = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return 0;
@@ -77,7 +127,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 	const weight = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
-		return rocketWeight(props.detailItem.rocket.stages);
+		return rocketWeight(props.detailItem.stages);
 	});
 
 	return {
@@ -100,6 +150,8 @@ export function useRocketSetupViewComponent(props, context, options) {
 		length,
 		manufacturer,
 		stagePrimary,
+		stagePrimaryRocket,
+		stageRocketMotors,
 		stages,
 		weight
 	};

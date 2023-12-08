@@ -1,6 +1,7 @@
 <template>
 	<!-- <pre>{{ displayItem }}</pre> -->
 	<!-- {{ stagePrimary }} -->
+	<!-- {{ stagePrimaryRocket }} -->
 	<!-- length {{ length }} -->
 	<v-row dense
 		v-if="displayItem.description"
@@ -33,9 +34,19 @@
 				:readonly="true"
 			/>
 		</v-col> -->
+		<!-- <v-col 
+			v-if="stages"
+			cols="2"
+		>
+			<VtTextField
+				v-model="stages"
+				:label="$t('strings.rockets.stages')"
+				:readonly="true"
+			/>
+		</v-col> -->
 		<v-col 
 			v-if="length"
-			cols="4" sm="3"
+			cols="3"
 		>
 			<VtTextField
 				v-model="length"
@@ -45,7 +56,7 @@
 		</v-col>
 		<v-col 
 			v-if="weight"
-			cols="4" sm="3"
+			cols="3"
 		>
 			<VtTextField
 				v-model="weight"
@@ -76,7 +87,7 @@
 	</v-row>
 	<v-row dense>
 		<v-col 
-			v-if="stagePrimary.manufacturerId"
+			v-if="stagePrimaryRocket.manufacturerId"
 			cols="12" sm="6"
 		>
 			<VtTextField
@@ -86,16 +97,89 @@
 			/>
 		</v-col>
 		<v-col 
-			v-if="stagePrimary.manufacturerStockId"
+			v-if="stagePrimaryRocket.manufacturerStockId"
 			cols="12" sm="6"
 		>
 			<VtTextField
-				v-model="stagePrimary.manufacturerStockId"
+				v-model="stagePrimaryRocket.manufacturerStockId"
 				:label="$t('forms.content.parts.manufacturerId')"
 				:readonly="true"
 			/>
 		</v-col>
 	</v-row>
+	<!-- <template
+		v-for="item in stageRocketMotors"
+		:key="item"
+	>
+		<v-row dense>
+			<v-col 
+				cols="12"
+			>
+				Stage {{ item.index }}
+			</v-col>
+		</v-row>
+		<v-row
+			v-for="item2 in item.motors"
+			:key="item2"
+			dense
+		>
+			<v-col 
+				cols="1"
+			>
+			</v-col>
+			<v-col 
+				cols="11"
+			>
+				{{ item2.name }}
+			</v-col>
+		</v-row>
+	</template> -->
+		<v-sheet
+			v-if="stageRocketMotors.length > 0"
+			class="pt-2 pb-2"
+		>
+			<span class="text-h6">{{ $t('strings.content.rockets.motors') }}</span>
+				<v-divider></v-divider>
+		</v-sheet>
+		<v-row 
+			v-for="item in stageRocketMotors"
+			:key="item"
+			dense
+		>
+			<v-col 
+				cols="12" md="6"
+			>
+				<v-sheet
+					v-if="stageRocketMotors.length > 1"
+					color="secondary"
+					class="ml-4 mt-2 pl-4 pr-4 pt-2 pb-2"
+					rounded
+				>
+					{{ $t('forms.content.rockets.stage.name') }}
+					{{ item.index }}
+				</v-sheet>
+				<v-sheet 
+					v-for="(item2, index) in item.motors"
+					:key="item2"
+					:color="index % 2 === 0 ? 'green' : 'green'"
+					:class="`ml-${(stageRocketMotors.length > 1 ? '8' : '4')} mt-2 pl-4 pr-4 pt-2 pb-2`"
+					rounded
+				>
+					<!-- <v-row
+						dense
+						class="pl-8"
+					>
+						<v-col>
+							{{ item2.name }}
+						</v-col>
+						<v-col>
+							{{ item2.caseName }}
+						</v-col>
+					</v-row> -->
+					{{ item2.name }} {{ $t('strings.content.rockets.in') }} {{ item2.caseName }}
+				</v-sheet>
+			</v-col>
+		</v-row>
 </template>
 
 <script>
@@ -141,7 +225,9 @@ export default {
 			length,
 			manufacturer,
 			stagePrimary,
-			sStages,
+			stagePrimaryRocket,
+			stageRocketMotors,
+			stages,
 			weight
 		} = useRocketSetupViewComponent(props, context);
 
@@ -165,7 +251,9 @@ export default {
 			length,
 			manufacturer,
 			stagePrimary,
-			sStages,
+			stagePrimaryRocket,
+			stageRocketMotors,
+			stages,
 			weight
 		};
 	}

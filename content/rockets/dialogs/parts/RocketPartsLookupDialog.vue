@@ -11,6 +11,7 @@
 		width="80vh"
 		max-width="90vh"
 		@close="close"
+		:debug="true"
 	>
 		<template #default="{ buttonOkDisabled, isLoading }">
 			<v-row dense>
@@ -344,6 +345,7 @@ export default {
 			preCompleteOk,
 			resetAdditional,
 			validationIsMotors,
+			validationIsMotorCases,
 			scope,
 			validation
 		} = useRocketPartsLookupDialogComponent(props, context);
@@ -408,12 +410,13 @@ export default {
 			preCompleteOk,
 			resetAdditional,
 			validationIsMotors,
+			validationIsMotorCases,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketPartsLookupDialogValidation, {}));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketPartsLookupDialogValidation(this), {}));
 	}
 };
 </script>

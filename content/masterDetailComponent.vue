@@ -99,6 +99,7 @@ export function useMasterDetailComponent(props, context, options) {
 	};
 	const detailClose = async () => {
 		detailItem.value = null;
+		// await fetch(correlationId());
 	};
 	const detailDirtyCallback = async (value) => {
 		detailDirty.value = value;
@@ -221,7 +222,7 @@ export function useMasterDetailComponent(props, context, options) {
 	const handleEdit = async (item) => {
 		const correlationIdI = correlationId();
 		detailItem.value = null;
-		const response = await options.fetchItem(correlationIdI, item.id);
+		const response = await options.fetchItem(correlationIdI, item.id, true);
 		if (hasFailed(response)) {
 			setNotify(correlationIdI, 'messages.error');
 			return;
@@ -232,7 +233,7 @@ export function useMasterDetailComponent(props, context, options) {
 	const handleView = async (item) => {
 		const correlationIdI = correlationId();
 		detailItem.value = null;
-		const response = await options.fetchItem(correlationIdI, item.id);
+		const response = await options.fetchItem(correlationIdI, item.id, false);
 		if (hasFailed(response)) {
 			setNotify(correlationIdI, 'messages.error');
 			return;

@@ -92,6 +92,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const detailItemMotorCaseId0 = ref(null);
 	const detailItemMotorCaseId1 = ref(null);
 	const detailItemMotorCaseId2 = ref(null);
+	const detailItemMotorCaseInfo0 = ref(null);
+	const detailItemMotorCaseInfo1 = ref(null);
+	const detailItemMotorCaseInfo2 = ref(null);
 	const detailItemMotorDelay0 = ref(null);
 	const detailItemMotorDelay1 = ref(null);
 	const detailItemMotorDelay2 = ref(null);
@@ -111,10 +114,12 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const detailItemWeightNose = ref(null);
 	const detailItemWeightNoseMeasurementUnitId = ref(null);
 	const detailItemWeightNoseMeasurementUnitsId = ref(null);
+	const dialogPartsSearchMotorCasesDetail = ref(null);
+	const dialogPartsSearchMotorCasesDiameter = ref(null);
+	const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
 	const dialogPartsSearchMotorsDiameter = ref(null);
 	const dialogPartsSearchMotorIndex = ref(null);
 	const dialogPartsSearchMotorsManager = ref(new DialogSupport());
-	const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
 	const hasMotorsI = ref([]);
 	const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
 	const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
@@ -136,7 +141,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		dialogPartsSearchMotorsManager.value.open();
 	};
 	const clickMotorCasesSearch = async (index, diameter) => {
-		dialogPartsSearchMotorsDiameter.value = diameter;
+		const temp = selectMotorByIndex(index);
+		dialogPartsSearchMotorCasesDiameter.value = diameter;
+		dialogPartsSearchMotorCasesDetail.value = temp ? temp.motorCaseInfo.value : null;
 		dialogPartsSearchMotorIndex.value = index;
 		dialogPartsSearchMotorCasesManager.value.open();
 	};
@@ -178,6 +185,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemMotorCaseId0.value = null;
 		detailItemMotorCaseId1.value = null;
 		detailItemMotorCaseId2.value = null;
+		detailItemMotorCaseInfo0.value = null;
+		detailItemMotorCaseInfo1.value = null;
+		detailItemMotorCaseInfo2.value = null;
 		detailItemMotorDelay0.value = null;
 		detailItemMotorDelay1.value = null;
 		detailItemMotorDelay2.value = null;
@@ -222,6 +232,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 
 				temp.motorCase.value = generateTitle(temp2.motorCaseManufacturerId, temp2.motorCaseName);
 				temp.motorCaseId.value = temp2.motorCaseId;
+				temp.motorCaseInfo.value = temp2.motorCaseInfo;
 				temp.motorDelay.value = temp2.motorDelay;
 				temp.motorDiameter.value = item.diameter;
 				temp.motor.value = generateTitle(temp2.motorManufacturerId, temp2.motorName);
@@ -257,6 +268,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			motor: null,
 			motorCase: null,
 			motorCaseId: null,
+			motorCaseInfo: null,
 			motorDiameter: null,
 			motorDelay: null,
 			motorId: null,
@@ -267,6 +279,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			temp.motor = detailItemMotor0;
 			temp.motorCase = detailItemMotorCase0;
 			temp.motorCaseId = detailItemMotorCaseId0;
+			temp.motorCaseInfo = detailItemMotorCaseInfo0;
 			temp.motorDelay = detailItemMotorDelay0;
 			temp.motorDiameter = detailItemMotorDiameter0;
 			temp.motorId = detailItemMotorId0;
@@ -277,6 +290,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			temp.motor = detailItemMotor1;
 			temp.motorCase = detailItemMotorCase1;
 			temp.motorCaseId = detailItemMotorCaseId1;
+			temp.motorCaseInfo = detailItemMotorCaseInfo1;
 			temp.motorDelay = detailItemMotorDelay1;
 			temp.motorDiameter = detailItemMotorDiameter1;
 			temp.motorId = detailItemMotorId1;
@@ -287,6 +301,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			temp.motor = detailItemMotor2;
 			temp.motorCase = detailItemMotorCase2;
 			temp.motorCaseId = detailItemMotorCaseId2;
+			temp.motorCaseInfo = detailItemMotorCaseInfo2;
 			temp.motorDelay = detailItemMotorDelay2;
 			temp.motorDiameter = detailItemMotorDiameter2;
 			temp.motorId = detailItemMotorId2;
@@ -373,6 +388,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemMotorCaseId0,
 		detailItemMotorCaseId1,
 		detailItemMotorCaseId2,
+		detailItemMotorCaseInfo0,
+		detailItemMotorCaseInfo1,
+		detailItemMotorCaseInfo2,
 		detailItemMotorDelay0,
 		detailItemMotorDelay1,
 		detailItemMotorDelay2,
@@ -392,8 +410,10 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemWeightNose,
 		detailItemWeightNoseMeasurementUnitId,
 		detailItemWeightNoseMeasurementUnitsId,
-		dialogPartsSearchMotorsManager,
+		dialogPartsSearchMotorCasesDetail,
+		dialogPartsSearchMotorCasesDiameter,
 		dialogPartsSearchMotorCasesManager,
+		dialogPartsSearchMotorsManager,
 		dialogPartsSearchMotorsDiameter,
 		manufacturerTypeMotor,
 		manufacturerTypeMotorCase,

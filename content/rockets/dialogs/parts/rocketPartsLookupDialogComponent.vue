@@ -229,7 +229,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		filterItemMotorDiameter.value = props.diameter ? props.diameter : data ? data.motorDiameter : null;
 		filterItemMotorImpulseClass.value = data ? data.motorImpulseClass : null;
 
-		filterItemName.value = data ? data.name : null;
+		filterItemName.value = data ? data.name : props.detail;
 
 		filterItemRocketTypes.value = data ? data.rocketTypes : null;
 
@@ -245,6 +245,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 	};
 
 	const validationIsMotors = ref(isMotors());
+	const validationIsMotorCases = ref(isMotorCases());
 
 	onMounted(async () => {
 		if (manufacturersI.value)
@@ -328,6 +329,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		preCompleteOk,
 		resetAdditional,
 		validationIsMotors,
+		validationIsMotorCases,
 		scope: 'RocketPartsLookupDialog',
 		validation: useVuelidate({ $scope: 'RocketPartsLookupDialog' })
 	};
