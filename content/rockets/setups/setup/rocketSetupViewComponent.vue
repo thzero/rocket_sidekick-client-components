@@ -1,7 +1,10 @@
 <script>
 import { computed } from 'vue';
 
+import AppUtilityConstants from '@/utility/constants';
+
 import { useContentBaseComponent } from '@/components/content/contentBase';
+import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useRocketSetupViewComponent(props, context, options) {
@@ -19,6 +22,15 @@ export function useRocketSetupViewComponent(props, context, options) {
 		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
+	
+	const {
+		motorDiameters,
+		motorImpulseClasses,
+		motorCaseInfo,
+		motorDiameter,
+		motorName,
+		motorUrl
+	} = useMotorUtilityComponent(props, context);
 
 	const {
 		rocketTypes,
@@ -114,7 +126,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 				if (temp2)
 					motorCaseName += temp2.manufacturer + ' ' + temp2.name;
 
-				temp.motors.push({ index: motor.index + 1, name: motorName, caseName: motorCaseName });
+				temp.motors.push({ index: motor.index + 1, name: motorName, designation: temp1.designation, manufacturerAbbrev: temp1.manufacturerAbbrev, caseName: motorCaseName });
 			}
 		}
 		return output;
@@ -129,6 +141,10 @@ export function useRocketSetupViewComponent(props, context, options) {
 			return null;
 		return rocketWeight(props.detailItem.stages);
 	});
+
+	// const motorUrl = (item) => {
+	// 	return AppUtilityConstants.External.thrustCurve + '/motors/' + item.manufacturer + '/' + item.designation
+	// };
 
 	return {
 		correlationId,
@@ -153,7 +169,8 @@ export function useRocketSetupViewComponent(props, context, options) {
 		stagePrimaryRocket,
 		stageRocketMotors,
 		stages,
-		weight
+		weight,
+		motorUrl
 	};
 };
 </script>

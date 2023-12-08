@@ -7,7 +7,7 @@ import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
-import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
+import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 
 export function useRocketsUtilityComponent(props, context, options) {
 	const {
@@ -29,7 +29,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 		motorDiameter,
 		motorName,
 		motorUrl
-	} = useMotorLookupComponent(props, context);
+	} = useMotorUtilityComponent(props, context);
 
 	const rocketTypes = ref(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.RocketTypes).filter(l => l !== 'high').map((item) => { return { id: item.toLowerCase(), name: LibraryClientUtility.$trans.t('strings.content.rockets.levels.' + item.toLowerCase()) }; }));
 	

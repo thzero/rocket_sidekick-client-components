@@ -14,7 +14,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useMotorLookupComponent } from '@/components/external/motorLookupComponent';
+import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -69,7 +69,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		motorImpulseClasses,
 		motorCaseInfo,
 		motorUrl
-	} = useMotorLookupComponent(props, context);
+	} = useMotorUtilityComponent(props, context);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
