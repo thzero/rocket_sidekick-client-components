@@ -13,8 +13,6 @@ import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/compone
 import { useContentMarkupComponent } from '@/components/content/contentMarkup';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
-// import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
-// import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useLaunchEditComponent(props, context, options) {
 	const {
