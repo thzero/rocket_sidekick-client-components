@@ -51,6 +51,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 	const measurementUnitAltitudeId = ref(null);
 	const measurementUnitDistanceId = ref(null);
 	const measurementUnitLengthId = ref(null);
+	const measurementUnitTemperatureId = ref(null);
 	const measurementUnitVelocityId = ref(null);
 	const measurementUnitVolumeId = ref(null);
 	const measurementUnitWeightId = ref(null);
@@ -82,6 +83,11 @@ export function useAppSettingsComponent(props, context, formRef) {
 		if (measurementUnitsId.value === AppCommonConstants.MeasurementUnits.english.id)
 			return measurementUnitTrans(AppCommonConstants.MeasurementUnits.english.length, 'english', 'length');
 		return measurementUnitTrans(AppCommonConstants.MeasurementUnits.metrics.length, 'metrics', 'length');
+	});
+	const measurementUnitsTemperature = computed(() => {
+		if (measurementUnitsId.value === AppCommonConstants.MeasurementUnits.english.id)
+			return measurementUnitTrans(AppCommonConstants.MeasurementUnits.english.temperature, 'english', 'temperature');
+		return measurementUnitTrans(AppCommonConstants.MeasurementUnits.metrics.temperature, 'metrics', 'temperature');
 	});
 	const measurementUnitsVelocity = computed(() => {
 		if (measurementUnitsId.value === AppCommonConstants.MeasurementUnits.english.id)
@@ -117,6 +123,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 			settings.measurementUnits.altitude = measurementUnitAltitudeId.value;
 			settings.measurementUnits.distance = measurementUnitDistanceId.value;
 			settings.measurementUnits.length = measurementUnitLengthId.value;
+			settings.measurementUnits.temperature = measurementUnitTemperatureId.value;
 			settings.measurementUnits.velocity = measurementUnitVelocityId.value;
 			settings.measurementUnits.volume = measurementUnitVolumeId.value;
 			settings.measurementUnits.weight = measurementUnitWeightId.value;
@@ -141,6 +148,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitAltitudeId.value = settings.measurementUnits.altitude;
 		measurementUnitDistanceId.value = settings.measurementUnits.distance;
 		measurementUnitLengthId.value = settings.measurementUnits.length;
+		measurementUnitTemperatureId.value = settings.measurementUnits.temperature;
 		measurementUnitVelocityId.value = settings.measurementUnits.velocity;
 		measurementUnitVolumeId.value = settings.measurementUnits.volume;
 		measurementUnitWeightId.value = settings.measurementUnits.weight;
@@ -156,6 +164,8 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitDistanceId.value = resetIdCheck(measurementUnitDistanceIdT, measurementUnitsDistance.value);
 		const measurementUnitLengthIdT = settings.measurementUnits.length ? settings.measurementUnits.length : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].length[keyword];
 		measurementUnitLengthId.value = resetIdCheck(measurementUnitLengthIdT, measurementUnitsLength.value);
+		const measurementUnitTemperatureIdT = settings.measurementUnits.temperature ? settings.measurementUnits.temperature : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].temperature[keyword];
+		measurementUnitTemperatureId.value = resetIdCheck(measurementUnitTemperatureIdT, measurementUnitsTemperature.value);
 		const measurementUnitVelocityIdT = settings.measurementUnits.velocity ? settings.measurementUnits.velocity : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].velocity[keyword];
 		measurementUnitVelocityId.value = resetIdCheck(measurementUnitVelocityIdT, measurementUnitsVelocity.value);
 		const measurementUnitVolumeIdT = settings.measurementUnits.volume ? settings.measurementUnits.volume : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].volume[keyword];
@@ -168,6 +178,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitAltitudeId.value = settings.measurementUnits.altitude ? settings.measurementUnits.araltitudeea : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].altitude[keyword];
 		measurementUnitDistanceId.value = settings.measurementUnits.distance ? settings.measurementUnits.distance : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].distance[keyword];
 		measurementUnitLengthId.value = settings.measurementUnits.length ? settings.measurementUnits.length : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].length[keyword];
+		measurementUnitTemperatureId.value = settings.measurementUnits.temperature ? settings.measurementUnits.temperature : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].temperature[keyword];
 		measurementUnitVelocityId.value = settings.measurementUnits.velocity ? settings.measurementUnits.velocity : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].velocity[keyword];
 		measurementUnitVolumeId.value = settings.measurementUnits.volume ? settings.measurementUnits.volume : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].volume[keyword];
 		measurementUnitWeightId.value = settings.measurementUnits.weight ? settings.measurementUnits.weight : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].weight[keyword];
@@ -188,6 +199,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 			measurementUnitAltitudeId.value = AppCommonConstants.MeasurementUnits[units].altitude[keyword];
 			measurementUnitDistanceId.value = AppCommonConstants.MeasurementUnits[units].distance[keyword];
 			measurementUnitLengthId.value = AppCommonConstants.MeasurementUnits[units].length[keyword];
+			measurementUnitTemperatureId.value = AppCommonConstants.MeasurementUnits[units].temperature[keyword];
 			measurementUnitVelocityId.value = AppCommonConstants.MeasurementUnits[units].velocity[keyword];
 			measurementUnitVolumeId.value = AppCommonConstants.MeasurementUnits[units].volume[keyword];
 			measurementUnitWeightId.value = AppCommonConstants.MeasurementUnits[units].weight[keyword];
@@ -240,6 +252,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitDistanceId,
 		measurementUnitLengthId,
 		measurementUnitVelocityId,
+		measurementUnitTemperatureId,
 		measurementUnitVolumeId,
 		measurementUnitWeightId,
 		measurementUnitsSelect,
@@ -248,6 +261,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		measurementUnitsAltitude,
 		measurementUnitsDistance,
 		measurementUnitsLength,
+		measurementUnitsTemperature,
 		measurementUnitsVelocity,
 		measurementUnitsVolume,
 		measurementUnitsWeight,

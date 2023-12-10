@@ -148,7 +148,7 @@
 															ref="measurementUnitAltitudeRef"
 															vid="measurementUnitAltitudeId"
 															v-model="measurementUnitAltitudeId"
-															:items="measurementUnitAltitude"
+															:items="measurementUnitsAltitude"
 															:validation="validation"
 															:label="$t('forms.settings.measurementUnits.altitude')"
 														/>
@@ -179,6 +179,20 @@
 															:items="measurementUnitsLength"
 															:validation="validation"
 															:label="$t('forms.settings.measurementUnits.length')"
+														/>
+													</v-col>
+													<v-col
+														cols="12"
+														sm="6"
+														md="3"
+													>
+														<VtSelectWithValidation
+															ref="measurementUnitTemperatureRef"
+															vid="measurementUnitTemperatureId"
+															v-model="measurementUnitTemperatureId"
+															:items="measurementUnitsTemperature"
+															:validation="validation"
+															:label="$t('forms.settings.measurementUnits.temperature')"
 														/>
 													</v-col>
 													<v-col
@@ -296,6 +310,7 @@ export default {
 			measurementUnitAltitudeId,
 			measurementUnitDistanceId,
 			measurementUnitLengthId,
+			measurementUnitTemperatureId,
 			measurementUnitVelocityId,
 			measurementUnitVolumeId,
 			measurementUnitWeightId,
@@ -305,6 +320,7 @@ export default {
 			measurementUnitsAltitude,
 			measurementUnitsDistance,
 			measurementUnitsLength,
+			measurementUnitsTemperature,
 			measurementUnitsVelocity,
 			measurementUnitsVolume,
 			measurementUnitsWeight,
@@ -354,6 +370,7 @@ export default {
 			measurementUnitAltitudeId,
 			measurementUnitDistanceId,
 			measurementUnitLengthId,
+			measurementUnitTemperatureId,
 			measurementUnitVelocityId,
 			measurementUnitVolumeId,
 			measurementUnitWeightId,
@@ -363,6 +380,7 @@ export default {
 			measurementUnitsAltitude,
 			measurementUnitsDistance,
 			measurementUnitsLength,
+			measurementUnitsTemperature,
 			measurementUnitsVelocity,
 			measurementUnitsVolume,
 			measurementUnitsWeight,
@@ -388,6 +406,7 @@ export default {
 			measurementUnitAltitudeId: { required, $autoDirty: true },
 			measurementUnitDistanceId: { required, $autoDirty: true },
 			measurementUnitLengthId: { required, $autoDirty: true },
+			measurementUnitTemperatureId: { required, $autoDirty: true },
 			measurementUnitVelocityId: { required, $autoDirty: true },
 			measurementUnitVolumeId: { required, $autoDirty: true },
 			measurementUnitWeightId: { required, $autoDirty: true },
