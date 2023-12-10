@@ -32,26 +32,8 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 	} = useBaseComponent(props, context, options);
 	
 	const {
-		measurementUnitsAccelerationDefaultId,
-		measurementUnitsAccelerationType,
-		measurementUnitsAreaDefaultId,
-		measurementUnitsAreaType,
-		measurementUnitsAltitudeDefaultId,
-		measurementUnitsAltitudeType,
-		measurementUnitsDensityDefaultId,
-		measurementUnitsDensityType,
-		measurementUnitsDistanceType,
-		measurementUnitsDistanceDefaultId,
-		measurementUnitsFluidDefaultId,
-		measurementUnitsFluidType,
 		measurementUnitsLengthDefaultId,
-		measurementUnitsLengthType,
-		measurementUnitsVelocityDefaultId,
-		measurementUnitsVelocityType,
-		measurementUnitsVolumeDefaultId,
-		measurementUnitsVolumeType,
-		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType
+		measurementUnitsLengthType
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const {
