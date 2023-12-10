@@ -3,8 +3,6 @@ import { between, decimal, helpers, maxLength, minLength, required, requiredIf, 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 const spillHoleCheck = (value, initial) => {
-	console.log(value);
-	console.log(initial);
 	if (!value)
 		return true;
 	return String.isNullOrEmpty(initial);
