@@ -39,6 +39,8 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 	const measurementUnitsFluidType = ref(AppCommonConstants.MeasurementUnits.types.fluid);
 	const measurementUnitsLengthDefaultId = ref(null);
 	const measurementUnitsLengthType = ref(AppCommonConstants.MeasurementUnits.types.length);
+	const measurementUnitsTemperatureDefaultId = ref(null);
+	const measurementUnitsTemperatureType = ref(AppCommonConstants.MeasurementUnits.types.temperature);
 	const measurementUnitsVelocityDefaultId = ref(null);
 	const measurementUnitsVelocityType = ref(AppCommonConstants.MeasurementUnits.types.velocity);
 	const measurementUnitsVolumeDefaultId = ref(null);
@@ -70,6 +72,12 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 			return '';
 		
 		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateWeight(correlationId, func1(value), func2(value)));
+	};
+	const displayItemMeasurementTemperature = (correlationId, value, func, func1, func2) => {
+		if (!value)
+			return '';
+		
+		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateTemperature(correlationId, func1(value), func2(value)));
 	};
 	const displayItemMeasurementVelocity = (correlationId, value, func, func1, func2) => {
 		if (!value)
@@ -103,6 +111,7 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsDistanceDefaultId.value = AppUtility.measurementUnitDistanceId(correlationId, settings.value);
 		measurementUnitsFluidDefaultId.value = AppUtility.measurementUnitFluidId(correlationId, settings.value);
 		measurementUnitsLengthDefaultId.value = AppUtility.measurementUnitLengthId(correlationId, settings.value);
+		measurementUnitsTemperatureDefaultId.value = AppUtility.measurementUnitTemperatureId(correlationId, settings.value);
 		measurementUnitsVelocityDefaultId.value = AppUtility.measurementUnitVelocityId(correlationId, settings.value);
 		measurementUnitsVolumeDefaultId.value = AppUtility.measurementUnitVolumeId(correlationId, settings.value);
 		measurementUnitsWeightDefaultId.value = AppUtility.measurementUnitWeightId(correlationId, settings.value);
@@ -124,6 +133,8 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsFluidType,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
+		measurementUnitsTemperatureDefaultId,
+		measurementUnitsTemperatureType,
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
 		measurementUnitsVolumeDefaultId,
@@ -134,6 +145,7 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		displayItemMeasurementAcceleration,
 		displayItemMeasurementLength,
 		displayItemMeasurementWeight,
+		displayItemMeasurementTemperature,
 		displayItemMeasurementVelocity,
 		measurementUnitsFromUnitId
 	};
