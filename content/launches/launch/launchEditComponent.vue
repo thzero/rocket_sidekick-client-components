@@ -13,8 +13,6 @@ import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/compone
 import { useContentMarkupComponent } from '@/components/content/contentMarkup';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
-// import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
-// import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useLaunchEditComponent(props, context, options) {
 	const {
@@ -83,37 +81,6 @@ export function useLaunchEditComponent(props, context, options) {
 		buttonsForms
 	} = useButtonComponent(props, context);
 
-	// const {
-	// 	measurementUnitsIdOutput,
-	// 	measurementUnitsIdSettings
-	// } = useToolsMeasurementSettingsComponent(props, context);
-	
-	// const {
-	// 	// measurementUnitsIdSettings,
-	// 	measurementUnitsAccelerationDefaultId,
-	// 	measurementUnitsAccelerationType,
-	// 	measurementUnitsAreaDefaultId,
-	// 	measurementUnitsAreaType,
-	// 	measurementUnitsDensityDefaultId,
-	// 	measurementUnitsDensityType,
-	// 	measurementUnitsDistanceType,
-	// 	measurementUnitsDistanceDefaultId,
-	// 	measurementUnitsFluidDefaultId,
-	// 	measurementUnitsFluidType,
-	// 	measurementUnitsLengthDefaultId,
-	// 	measurementUnitsLengthType,
-	// 	measurementUnitsVelocityDefaultId,
-	// 	measurementUnitsVelocityType,
-	// 	measurementUnitsVolumeDefaultId,
-	// 	measurementUnitsVolumeType,
-	// 	measurementUnitsWeightDefaultId,
-	// 	measurementUnitsWeightType,
-	// 	displayItemMeasurement,
-	// 	displayItemMeasurementLength,
-	// 	displayItemMeasurementWeight,
-	// 	measurementUnitsFromUnitId
-	1
-	// } = useToolsMeasurementBaseComponent(props, context);
 	const {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
@@ -174,7 +141,13 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemRocketId = ref(null);
 	const detailItemRocketName = ref(null);
 	const detailItemSuccess = ref(null);
+	const detailItemTemperature = ref(null);
+	const detailItemTemperatureMeasurementUnitId = ref(null);
+	const detailItemTemperatureMeasurementUnitsId = ref(null);
 	const detailItemVideoUrl = ref(null);
+	const detailItemWindSpeed = ref(null);
+	const detailItemWindSpeedMeasurementUnitId = ref(null);
+	const detailItemWindSpeedMeasurementUnitsId = ref(null);
 	
 	const location = ref(null);
 	
@@ -244,7 +217,11 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemSuccess.value = value ? value.success : false;
 		detailItemFailureReasons.value = value  ? value.failureReasons : null;
 		
+		detailItemTemperature.value = value ? value.temperature : null;
+
 		detailItemVideoUrl.value = value ? value.videoUrl : null;
+		
+		detailItemWindSpeed.value = value ? value.windSpeed : null;
 
 		value.results = value.results ?? {};
 		detailItemResultsCoordsLatLaunch.value = value ? value.results.coordsLatLaunch : false;
@@ -291,8 +268,12 @@ export function useLaunchEditComponent(props, context, options) {
 		
 		detailItemData.value.success = detailItemSuccess.value;
 		detailItemData.value.failureReasons = detailItemFailureReasons.value;
+
+		detailItemData.value.temperature = Number(detailItemTemperature.value);
 		
 		detailItemData.value.videoUrl = detailItemVideoUrl.value;
+
+		detailItemData.value.windSpeed =Number(detailItemWindSpeed.value);
 
 		detailItemData.value.results = detailItemData.results ?? {};
 
@@ -411,7 +392,13 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemRocketId,
 		detailItemRocketName,
 		detailItemSuccess,
+		detailItemTemperature,
+		detailItemTemperatureMeasurementUnitId,
+		detailItemTemperatureMeasurementUnitsId,
 		detailItemVideoUrl,
+		detailItemWindSpeed,
+		detailItemWindSpeedMeasurementUnitId,
+		detailItemWindSpeedMeasurementUnitsId,
 		hasAdmin,
 		isSuccess,
 		locationIterations,
