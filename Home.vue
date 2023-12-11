@@ -6,9 +6,8 @@
 			:pt-2="$vuetify.display.mdAndUp || newsCount === 0"
 		>
 			<v-col
-				md="6"
-				lg="4"
-				xl="4"
+				col="12"
+				md="4"
 				class="pb-4"
 				v-if="$vuetify.display.mdAndUp"
 			>
@@ -43,9 +42,7 @@
 			</v-col>
 			<v-col
 				col="12"
-				md="6"
-				lg="8"
-				xl="8"
+				md="8"
 				:pl-2="$vuetify.display.mdAndUp"
 			>
 				<v-card
