@@ -10,7 +10,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useAdminComponent } from '@/components/content/adminComponent';
-import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function usePartComponent(props, context, options) {
@@ -116,7 +116,7 @@ export function usePartComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		measurementUnitsFromUnitId
-	} = useToolsMeasurementBaseComponent(props, context);
+	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
 		hasAdminDelete,

@@ -7,7 +7,7 @@ import AppUtility from '@/utility/app';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
-export function useToolsMeasurementBaseComponent(props, context, options) {
+export function useToolsMeasurementUtilityComponent(props, context, options) {
 	const {
 		correlationId,
 		error,

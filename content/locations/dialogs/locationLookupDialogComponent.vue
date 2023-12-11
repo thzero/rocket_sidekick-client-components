@@ -16,7 +16,7 @@ import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
-import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useLocationLookupDialogComponent(props, context, options) {
@@ -33,12 +33,6 @@ export function useLocationLookupDialogComponent(props, context, options) {
 	} = useBaseComponent(props, context, options);
 
 	const {
-		measurementUnitsLengthDefaultId,
-		measurementUnitsLengthType,
-		measurementUnitsFromUnitId
-	} = useToolsMeasurementBaseComponent(props, context);
-
-	const {
 		buttonsDialog,
 		buttonsForms
 	} = useButtonComponent(props, context);
@@ -47,6 +41,12 @@ export function useLocationLookupDialogComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings
 	} = useToolsMeasurementSettingsComponent(props, context);
+
+	const {
+		measurementUnitsLengthDefaultId,
+		measurementUnitsLengthType,
+		measurementUnitsFromUnitId
+	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
 		organizations,

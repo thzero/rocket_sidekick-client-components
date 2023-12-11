@@ -6,7 +6,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
-import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useLaunchComponent(props, context, options) {
@@ -33,7 +33,7 @@ export function useLaunchComponent(props, context, options) {
 		displayItemMeasurementTemperature,
 		displayItemMeasurementVelocity,
 		measurementUnitsFromUnitId
-	} = useToolsMeasurementBaseComponent(props, context);
+	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const failureReasons = ref(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.Launches.Reasons.Failure).map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.launches.reasons.failure.' + item) }; }));
 	const successReasons = ref(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.Launches.Reasons.Success).map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.launches.reasons.success.' + item) }; }));

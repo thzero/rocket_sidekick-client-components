@@ -11,7 +11,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
 import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
-import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketStageEditDialogComponent(props, context, options) {
@@ -38,7 +38,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		measurementUnitsFromUnitId
-	} = useToolsMeasurementBaseComponent(props, context);
+	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
 		detailItem,
