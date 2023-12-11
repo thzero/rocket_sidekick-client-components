@@ -6,6 +6,7 @@ import useVuelidate from '@vuelidate/core';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import AppSharedConstants from '@/utility/constants';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
@@ -96,6 +97,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 	const calculationResults = initCalculationResults(correlationId(), ref({}));
 	const dialogMotorSearchRef = ref(null);
 	const dialogMotorSearchManager = ref(new DialogSupport());
+	const linkThrustCurve = ref(AppUtility.linkThrustCurve());
 	const mass = ref(null);
 	const massMeasurementUnitId = ref(null);
 	const massMeasurementUnitsId = ref(null);
@@ -387,6 +389,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		calculationResults,
 		dialogMotorSearchRef,
 		dialogMotorSearchManager,
+		linkThrustCurve,
 		mass,
 		massMeasurementUnitId,
 		massMeasurementUnitsId,

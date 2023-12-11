@@ -122,7 +122,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 	const spillHoleShapes = ref(shapes);
 	const velocityMeasurementUnitId = ref(null);
 	const velocityMeasurementUnitsId = ref(null);
-	const contentMarkup = ref(LibraryClientUtility.$trans.t('strings.content.tools.parachuteSizing.info', { url: 'http://www.rocketmime.com/rockets/descent.html', title: 'Parachute Descent Calculations' }));
+	const contentMarkup = ref(LibraryClientUtility.$trans.t('strings.content.tools.parachuteSizing.info', { link: '<a href="http://www.rocketmime.com/rockets/descent.html" target="_blank">Parachute Descent Calculations</a>' }));
 
 	const resultsTitleParachute = computed(() => {
 		let output = shapeTitle(parachuteShape.value) + ' ';

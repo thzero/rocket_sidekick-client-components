@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 export function useContentDescriptionBaseComponent(props, context, options) {
@@ -21,7 +22,7 @@ export function useContentDescriptionBaseComponent(props, context, options) {
 		target
 	} = useContentBaseComponent(props, context, options);
 
-	const description = ref(LibraryClientUtility.$trans.t(props.id + '.desc'));
+	const description = ref(LibraryClientUtility.$trans.t(props.id + '.desc', {thrustCurve: AppUtility.linkThrustCurve()}));
 	const descriptionAdditionalId = props.id + '.descAdditional';
 
 	const descriptionAdditional = computed(() => {
