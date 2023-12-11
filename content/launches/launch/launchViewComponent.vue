@@ -101,13 +101,13 @@ export function useLaunchViewComponent(props, context, options) {
 		return null;
 	});
 	const displayItemResultsAltitudeDrogue = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDrogue)
-			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeDrogue; }, (value) => { return value.altitudeDrogueMeasurementUnitsId; }, (value) => { return value.altitudeDrogueMeasurementUnitId; });
+		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDeployDrogue)
+			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeDeployDrogue; }, (value) => { return value.altitudeDeployDrogueMeasurementUnitsId; }, (value) => { return value.altitudeDrogueMeasurementUnitId; });
 		return null;
 	});
 	const displayItemResultsAltitudeMain = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMain)
-			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeMain; }, (value) => { return value.altitudeMainMeasurementUnitsId; }, (value) => { return value.altitudeMainMeasurementUnitId; });
+		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDeployMain)
+			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeDeployMain; }, (value) => { return value.altitudeDeployMainMeasurementUnitsId; }, (value) => { return value.altitudeMainMeasurementUnitId; });
 		return null;
 	});
 	const displayItemResultsAltitudeMax = computed(() => {
@@ -177,8 +177,21 @@ export function useLaunchViewComponent(props, context, options) {
 			displayItem.value.results.coordsLongRecovery
 		);
 	});
-	const hasWeather = computed(() => {
+	const hasResults = computed(() => {
 		if (!displayItem.value || !displayItem.value.results)
+			return false;
+
+		return (
+			displayItem.value.results.accelerationMax || 
+			displayItem.value.results.altitudeMax || 
+			displayItem.value.results.altitudeDeployDrogue || 
+			displayItem.value.results.altitudeDeployMain || 
+			displayItem.value.results.velocityMax || 
+			displayItem.value.results.velocityRecovery
+		);
+	});
+	const hasWeather = computed(() => {
+		if (!displayItem.value)
 			return false;
 
 		return (
@@ -244,6 +257,7 @@ export function useLaunchViewComponent(props, context, options) {
 		hasCoords,
 		hasCoordsLaunch,
 		hasCoordsRecovery,
+		hasResults,
 		hasWeather,
 		isFailure,
 		isSuccess
