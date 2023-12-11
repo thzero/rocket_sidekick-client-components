@@ -28,12 +28,7 @@ export default {
 			success,
 			center,
 			mapInstsance,
-			zoom,
-			zoomMax,
-			mapContainerName,
-			polygons,
-			setCircle,
-			setView
+			mapContainerName
 		} = useLaunchMapComponent(props, context, options);
 
 		return {
@@ -48,12 +43,7 @@ export default {
 			success,
 			center,
 			mapInstsance,
-			zoom,
-			zoomMax,
-			mapContainerName,
-			polygons,
-			setCircle,
-			setView
+			mapContainerName
 		};
 	}
 };
