@@ -468,7 +468,7 @@
 						</v-row>
 						<v-row dense class="pb-4">
 							<v-col>
-								{{ $t('strings.content.tools.thrust2Weight.guidance') }} <a class="external" href="https://www.thrustcurve.org" target="_blank">{{ $t('menu.thrustcurve') }}</a>.
+								<div v-html="$t('strings.content.tools.thrust2Weight.guidance', { thrustCurve: linkThrustCurve})"></div>
 								<div v-if="hasResults">
 									<br>
 									{{ $t('strings.content.tools.thrust2Weight.guidance2') }}
@@ -592,6 +592,7 @@ export default {
 			calculationResults,
 			dialogMotorSearchRef,
 			dialogMotorSearchManager,
+			linkThrustCurve,
 			mass,
 			massMeasurementUnitId,
 			massMeasurementUnitsId,
@@ -677,6 +678,7 @@ export default {
 			calculationResults,
 			dialogMotorSearchRef,
 			dialogMotorSearchManager,
+			linkThrustCurve,
 			mass,
 			massMeasurementUnitId,
 			massMeasurementUnitsId,

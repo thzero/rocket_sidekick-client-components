@@ -3,7 +3,7 @@
 		<v-col cols="12" class="pb-2">
 			<v-card>
 				<v-card-text>
-			<span>{{ description }}</span>
+			<span v-html="description"></span>
 			<span
 				v-if="hasAdditional"
 			>
