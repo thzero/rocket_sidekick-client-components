@@ -25,8 +25,12 @@ export function useOpenStreetMapComponent(props, context, options) {
 		zoom,
 		zoomMax,
 		mapContainerName,
+		markers,
 		polygons,
+		tooltips,
 		setCircle,
+		setMarker,
+		setTooltip,
 		setView
 	} = useMapComponent(props, context, {
 		initialize: (correlationId) => {
@@ -38,6 +42,31 @@ export function useOpenStreetMapComponent(props, context, options) {
 		},
 		setCircle: (correlationId, id, coords, style) => {
 			polygons.value[id] = L.circle(coords, style).addTo(mapInstsance.value);
+		},
+		setMarker: (correlationId, id, coords, style) => {
+			const marker = L.marker(coords, style).addTo(mapInstsance.value);
+			if (style.hueRotate)
+				marker.valueOf()._icon.style.filter = `hue-rotate(${style.hueRotate}deg)`;
+			if (style.tooltip) {
+				marker.bindTooltip(style.tooltip.content, {
+   					permanent: style.tooltip.permanent ?? false
+				}).openTooltip();
+			}
+			markers.value[id] = marker;
+		},
+		setTooltip: (correlationId, id, coords, content, style) => {
+			// const tooltip = L.tooltip()
+			// 	.setLatLng(coords)
+			// 	.setContent(content)
+			// 	.addTo(mapInstsance.value);
+			const tooltip = L.tooltip(coords, 
+					{
+						content: content,
+						offset: style && style.offset ? style.offset : [0,0]
+					}
+				)
+				.addTo(mapInstsance.value);
+			tooltips.value[id] = tooltip;
 		},
 		setView: (correlationId, coords) => {
 			mapInstsance.value.setView(coords, 13);
@@ -59,9 +88,17 @@ export function useOpenStreetMapComponent(props, context, options) {
 		zoom,
 		zoomMax,
 		mapContainerName,
+		markers,
 		polygons,
+		tooltips,
 		setCircle,
+		setMarker,
+		setTooltip,
 		setView
 	};
 };
 </script>
+
+<style>
+img.huechange { filter: hue-rotate(120deg); }
+</style>

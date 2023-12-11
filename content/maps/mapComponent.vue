@@ -18,7 +18,9 @@ export function useMapComponent(props, context, options) {
 
 	const center = ref([42.0280554 ,-91.5975513]);
 	const mapInstsance = ref(null);
+	const markers = ref({});
 	const polygons = ref({});
+	const tooltips = ref({});
 	const zoom = ref(13);
 	const zoomMax = ref(19);
 
@@ -27,6 +29,12 @@ export function useMapComponent(props, context, options) {
 	};
 	const setCircle = (correlationId, id, coords, style) => {
 		options.setCircle(correlationId, id, coords, style);
+	};
+	const setMarker = (correlationId, id, coords, style) => {
+		options.setMarker(correlationId, id, coords, style);
+	};
+	const setTooltip = (correlationId, id, coords, content, style) => {
+		options.setTooltip(correlationId, id, coords, content, style);
 	};
 	const setView = (correlationId, coords) => {
 		options.setView(correlationId, id, coords, style);
@@ -42,8 +50,12 @@ export function useMapComponent(props, context, options) {
 		zoom,
 		zoomMax,
 		mapContainerName,
+		markers,
 		polygons,
+		tooltips,
 		setCircle,
+		setMarker,
+		setTooltip,
 		setView
 	};
 };

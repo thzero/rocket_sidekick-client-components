@@ -128,19 +128,19 @@ export function useLaunchViewComponent(props, context, options) {
 		return displayItem.value ? displayItem.value.coordsLatLaunch : '';
 	});
 	const displayItemResultsCoordsLaunch = computed(() => {
-		return [ 51.505, -0.09 ]; //displayItem.value ? [ displayItem.value.coordsLatLaunch, displayItem.value.coordsLatLong ] : '';
+		return displayItem.value && displayItem.value.results ? [ displayItem.value.results.coordsLatLaunch, displayItem.value.results.coordsLongLaunch ] : '';
 	});
 	const displayItemResultsCoordsRecovery = computed(() => {
-		return [ 51.503, -0.11] ; // displayItem.value ? [ displayItem.value.coordsLatRecovery, displayItem.value.coordsLatRecovery ] : '';
+		return displayItem.value && displayItem.value.results ? [ displayItem.value.results.coordsLatRecovery, displayItem.value.results.coordsLongRecovery ] : '';
 	});
 	const displayItemResultsVelocityMax = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.velcoityMax)
-			return displayItemMeasurementVelocity(correlationId(), displayItem.value, (value) => { return value.velcoityMax; }, (value) => { return value.velcoityMaxMeasurementUnitsId; }, (value) => { return value.velcoityMaxMeasurementUnitId; });
+		if (displayItem.value && displayItem.value.results && displayItem.value.results.velocityMax)
+			return displayItemMeasurementVelocity(correlationId(), displayItem.value.results, (value) => { return value.velocityMax; }, (value) => { return value.velocityMaxMeasurementUnitsId; }, (value) => { return value.velocityMaxMeasurementUnitId; });
 		return null;
 	});
 	const displayItemResultsVelocityRecovery = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.velocityRecovery)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.velocityRecovery; }, (value) => { return value.velocityRecoveryMeasurementUnitsId; }, (value) => { return value.velocityRecoveryMeasurementUnitId; });
+			return displayItemMeasurementAcceleration(correlationId(), displayItem.value.results, (value) => { return value.velocityRecovery; }, (value) => { return value.velocityRecoveryMeasurementUnitsId; }, (value) => { return value.velocityRecoveryMeasurementUnitId; });
 		return null;
 	});
 	const displayItemRocketMame = computed(() => {

@@ -135,7 +135,10 @@
 								</v-card-title>
 								<v-card-text>
 									<VtMarkdown v-model="item.description" :use-github=false />
-									<div>
+									<div
+										v-if="item.organizations"
+										class="mt-2"
+									>
 										{{ organizationNames(item.organizations) }}
 									</div>
 									<div

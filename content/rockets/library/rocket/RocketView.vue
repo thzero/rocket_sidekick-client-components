@@ -1,102 +1,113 @@
 <template>
-	<!-- <pre>{{ detailItem }}</pre>
-	<pre>{{ displayItem }}</pre> -->
-	<!-- {{ stagePrimary }}
-	length {{ length }} -->
-	<v-row dense
-		v-if="displayItem.description"
+	<div
+		class="mt-2"
 	>
-		<v-col>
-			<VtMarkdown v-model="displayItem.description" :use-github=false />
-		</v-col>
-	</v-row>
-	<v-row dense>
-		<v-col cols="12">
-			<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
-		</v-col>
-		<!-- <v-col 
-			v-if="stages"
-			cols="6" sm="4"
+		<!-- <pre>{{ detailItem }}</pre>
+		<pre>{{ displayItem }}</pre> -->
+		<!-- {{ stagePrimary }}
+		length {{ length }} -->
+		<v-row dense
+			v-if="displayItem.description"
 		>
-			<VtTextField
-				v-model="stages"
-				:label="$t('strings.rockets.stages')"
-				:readonly="true"
-			/>
-		</v-col> -->
-		<!-- <v-col 
-			v-if="diameter"
-			cols="4" sm="3"
-		>
-			<VtTextField
-				v-model="diameter"
-				:label="$t('strings.rockets.diameterMajor')"
-				:readonly="true"
-			/>
-		</v-col> -->
-		<v-col 
-			v-if="stages"
-			cols="2"
-		>
-			<VtTextField
-				v-model="stages"
-				:label="$t('strings.rockets.stages')"
-				:readonly="true"
-			/>
-		</v-col>
-		<v-col 
-			v-if="length"
-			cols="3"
-		>
-			<VtTextField
-				v-model="length"
-				:label="$t('strings.rockets.length')"
-				:readonly="true"
-			/>
-		</v-col>
-		<v-col 
-			v-if="weight"
-			cols="3"
-		>
-			<VtTextField
-				v-model="weight"
-				:label="$t('strings.rockets.weight')"
-				:readonly="true"
-			/>
-		</v-col>
-		<v-col 
-			v-if="cp"
-			cols="4" sm="3"
-		>
-			<VtTextField
-				v-model="cp"
-				:label="$t('strings.rockets.cp')"
-				:readonly="true"
-			/>
-		</v-col>
-	</v-row>
-	<v-row dense>
-		<v-col 
-			v-if="stagePrimary.manufacturerId"
-			cols="12" sm="6"
-		>
-			<VtTextField
-				v-model="manufacturer"
-				:label="$t('forms.content.parts.manufacturer')"
-				:readonly="true"
-			/>
-		</v-col>
-		<v-col 
-			v-if="stagePrimary.manufacturerStockId"
-			cols="12" sm="6"
-		>
-			<VtTextField
-				v-model="stagePrimary.manufacturerStockId"
-				:label="$t('forms.content.parts.manufacturerId')"
-				:readonly="true"
-			/>
-		</v-col>
-	</v-row>
+			<v-col>
+				<VtMarkdown v-model="displayItem.description" :use-github=false />
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col 
+				cols="12"
+			>
+				<v-sheet
+					class="pt-2 pb-2 mt-2"
+				>
+					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
+					<v-divider></v-divider>
+				</v-sheet>
+			</v-col>
+			<!-- <v-col 
+				v-if="stages"
+				cols="6" sm="4"
+			>
+				<VtTextField
+					v-model="stages"
+					:label="$t('strings.rockets.stages')"
+					:readonly="true"
+				/>
+			</v-col> -->
+			<!-- <v-col 
+				v-if="diameter"
+				cols="4" sm="3"
+			>
+				<VtTextField
+					v-model="diameter"
+					:label="$t('strings.rockets.diameterMajor')"
+					:readonly="true"
+				/>
+			</v-col> -->
+			<v-col 
+				v-if="stages"
+				cols="2"
+			>
+				<VtTextField
+					v-model="stages"
+					:label="$t('strings.rockets.stages')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="length"
+				cols="3"
+			>
+				<VtTextField
+					v-model="length"
+					:label="$t('strings.rockets.length')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="weight"
+				cols="3"
+			>
+				<VtTextField
+					v-model="weight"
+					:label="$t('strings.rockets.weight')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="cp"
+				cols="4" sm="3"
+			>
+				<VtTextField
+					v-model="cp"
+					:label="$t('strings.rockets.cp')"
+					:readonly="true"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col 
+				v-if="stagePrimary.manufacturerId"
+				cols="12" sm="6"
+			>
+				<VtTextField
+					v-model="manufacturer"
+					:label="$t('forms.content.parts.manufacturer')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="stagePrimary.manufacturerStockId"
+				cols="12" sm="6"
+			>
+				<VtTextField
+					v-model="stagePrimary.manufacturerStockId"
+					:label="$t('forms.content.parts.manufacturerId')"
+					:readonly="true"
+				/>
+			</v-col>
+		</v-row>
+	</div>
 </template>
 
 <script>

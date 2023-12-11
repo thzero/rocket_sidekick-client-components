@@ -1,145 +1,129 @@
 <template>
-	<!-- <pre>{{ displayItem }}</pre> -->
-	<!-- {{ stagePrimary }} -->
-	<!-- {{ stagePrimaryRocket }} -->
-	<!-- length {{ length }} -->
-	<v-row dense
-		v-if="displayItem.description"
+	<div
+		class="mt-2"
 	>
-		<v-col>
-			<VtMarkdown v-model="displayItem.description" :use-github=false />
-		</v-col>
-	</v-row>
-	<v-row dense>
-		<!-- <v-col cols="12">
-			<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
-		</v-col> -->
-		<!-- <v-col 
-			v-if="stages"
-			cols="12" sm="6"
+		<!-- <pre>{{ displayItem }}</pre> -->
+		<!-- {{ stagePrimary }} -->
+		<!-- {{ stagePrimaryRocket }} -->
+		<!-- length {{ length }} -->
+		<v-row dense
+			v-if="displayItem.description"
 		>
-			<VtTextField
-				v-model="stages"
-				:label="$t('strings.rockets.stages')"
-				:readonly="true"
-			/>
-		</v-col> -->
-		<!-- <v-col 
-			v-if="diameter"
-			cols="4" sm="3"
-		>
-			<VtTextField
-				v-model="diameter"
-				:label="$t('strings.rockets.diameterMajor')"
-				:readonly="true"
-			/>
-		</v-col> -->
-		<!-- <v-col 
-			v-if="stages"
-			cols="2"
-		>
-			<VtTextField
-				v-model="stages"
-				:label="$t('strings.rockets.stages')"
-				:readonly="true"
-			/>
-		</v-col> -->
-		<v-col 
-			v-if="length"
-			cols="3"
-		>
-			<VtTextField
-				v-model="length"
-				:label="$t('strings.rockets.length')"
-				:readonly="true"
-			/>
-		</v-col>
-		<v-col 
-			v-if="weight"
-			cols="3"
-		>
-			<VtTextField
-				v-model="weight"
-				:label="$t('strings.rockets.weight')"
-				:readonly="true"
-			/>
-		</v-col>
-		<v-col 
-			v-if="cg"
-			cols="4" sm="3"
-		>
-			<VtTextField
-				v-model="cg"
-				:label="$t('strings.rockets.cg')"
-				:readonly="true"
-			/>
-		</v-col>
-		<v-col 
-			v-if="cp"
-			cols="4" sm="3"
-		>
-			<VtTextField
-				v-model="cp"
-				:label="$t('strings.rockets.cp')"
-				:readonly="true"
-			/>
-		</v-col>
-	</v-row>
-	<v-row dense>
-		<v-col 
-			v-if="stagePrimaryRocket.manufacturerId"
-			cols="12" sm="6"
-		>
-			<VtTextField
-				v-model="manufacturer"
-				:label="$t('forms.content.parts.manufacturer')"
-				:readonly="true"
-			/>
-		</v-col>
-		<v-col 
-			v-if="stagePrimaryRocket.manufacturerStockId"
-			cols="12" sm="6"
-		>
-			<VtTextField
-				v-model="stagePrimaryRocket.manufacturerStockId"
-				:label="$t('forms.content.parts.manufacturerId')"
-				:readonly="true"
-			/>
-		</v-col>
-	</v-row>
-	<!-- <template
-		v-for="item in stageRocketMotors"
-		:key="item"
-	>
-		<v-row dense>
+			<v-col cols="12">
+				<VtMarkdown v-model="displayItem.description" :use-github=false />
+			</v-col>
 			<v-col 
 				cols="12"
 			>
-				Stage {{ item.index }}
+				<v-sheet
+					class="pt-2 pb-2 mt-2"
+				>
+					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
+					<v-divider></v-divider>
+				</v-sheet>
+			</v-col>
+			<!-- <v-col cols="12">
+				<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
+			</v-col> -->
+			<!-- <v-col 
+				v-if="stages"
+				cols="12" sm="6"
+			>
+				<VtTextField
+					v-model="stages"
+					:label="$t('strings.rockets.stages')"
+					:readonly="true"
+				/>
+			</v-col> -->
+			<!-- <v-col 
+				v-if="diameter"
+				cols="4" sm="3"
+			>
+				<VtTextField
+					v-model="diameter"
+					:label="$t('strings.rockets.diameterMajor')"
+					:readonly="true"
+				/>
+			</v-col> -->
+			<!-- <v-col 
+				v-if="stages"
+				cols="2"
+			>
+				<VtTextField
+					v-model="stages"
+					:label="$t('strings.rockets.stages')"
+					:readonly="true"
+				/>
+			</v-col> -->
+			<v-col 
+				v-if="length"
+				cols="3"
+			>
+				<VtTextField
+					v-model="length"
+					:label="$t('strings.rockets.length')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="weight"
+				cols="3"
+			>
+				<VtTextField
+					v-model="weight"
+					:label="$t('strings.rockets.weight')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="cg"
+				cols="4" sm="3"
+			>
+				<VtTextField
+					v-model="cg"
+					:label="$t('strings.rockets.cg')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="cp"
+				cols="4" sm="3"
+			>
+				<VtTextField
+					v-model="cp"
+					:label="$t('strings.rockets.cp')"
+					:readonly="true"
+				/>
 			</v-col>
 		</v-row>
-		<v-row
-			v-for="item2 in item.motors"
-			:key="item2"
-			dense
-		>
+		<v-row dense>
 			<v-col 
-				cols="1"
+				v-if="stagePrimaryRocket.manufacturerId"
+				cols="12" sm="6"
 			>
+				<VtTextField
+					v-model="manufacturer"
+					:label="$t('forms.content.parts.manufacturer')"
+					:readonly="true"
+				/>
 			</v-col>
 			<v-col 
-				cols="11"
+				v-if="stagePrimaryRocket.manufacturerStockId"
+				cols="12" sm="6"
 			>
-				{{ item2.name }}
+				<VtTextField
+					v-model="stagePrimaryRocket.manufacturerStockId"
+					:label="$t('forms.content.parts.manufacturerId')"
+					:readonly="true"
+				/>
 			</v-col>
 		</v-row>
-	</template> -->
 		<v-sheet
 			v-if="stageRocketMotors.length > 0"
-			class="pt-2 pb-2"
+			class="pt-2 pb-2 mt-2"
 		>
-			<span class="text-h6">{{ $t('strings.content.rockets.motors') }}</span>
-				<v-divider></v-divider>
+			<h3>{{ $t('strings.content.rockets.motors') }}</h3>
+			<v-divider></v-divider>
 		</v-sheet>
 		<v-row 
 			v-for="item in stageRocketMotors"
@@ -180,6 +164,7 @@
 				</v-sheet>
 			</v-col>
 		</v-row>
+	</div>
 </template>
 
 <script>
