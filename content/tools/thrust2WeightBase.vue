@@ -12,7 +12,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
-import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useThrust2WeightBaseComponent(props, context, formRef) {
@@ -89,7 +89,7 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		measurementUnitsFromUnitId
-	} = useToolsMeasurementBaseComponent(props, context);
+	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const serviceToolsThrust2Weight = LibraryClientUtility.$injector.getService(AppSharedConstants.InjectorKeys.SERVICE_TOOLS_THRUST2WEIGHT);
 

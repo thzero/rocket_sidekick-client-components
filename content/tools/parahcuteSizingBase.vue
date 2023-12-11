@@ -9,7 +9,7 @@ import AppSharedConstants from '@/utility/constants';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
-import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useParachuteSizingBaseComponent(props, context) {
@@ -81,7 +81,7 @@ export function useParachuteSizingBaseComponent(props, context) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		measurementUnitsFromUnitId
-	} = useToolsMeasurementBaseComponent(props, context);
+	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const serviceToolsParachuteSizing = LibraryClientUtility.$injector.getService(AppSharedConstants.InjectorKeys.SERVICE_TOOLS_PARACHUTE_SIZING);
 

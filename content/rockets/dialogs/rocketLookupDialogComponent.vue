@@ -15,7 +15,7 @@ import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
-import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketLookupDialogComponent(props, context, options) {
@@ -35,7 +35,7 @@ export function useRocketLookupDialogComponent(props, context, options) {
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,
 		measurementUnitsFromUnitId
-	} = useToolsMeasurementBaseComponent(props, context);
+	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
 		buttonsDialog,

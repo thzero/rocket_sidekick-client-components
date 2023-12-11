@@ -11,7 +11,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
 import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
-import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketStageEditDialogComponent(props, context, options) {
@@ -38,7 +38,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		measurementUnitsFromUnitId
-	} = useToolsMeasurementBaseComponent(props, context);
+	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
 		detailItem,
@@ -172,9 +172,9 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		value.manufacturerId = detailItemManufacturer.value;
 		value.manufacturerStockId = detailItemManufacturerStockId.value;
 
-		value.motors[0].count = detailItemMotorCount0.value ? Number(detailItemMotorCount0.value) : null;
-		value.motors[1].count = detailItemMotorCount1.value ? Number(detailItemMotorCount1.value) : null;
-		value.motors[2].count = detailItemMotorCount2.value ? Number(detailItemMotorCount2.value) : null;
+		value.motors[0].count = AppUtility.convertNumber(detailItemMotorCount0.value);
+		value.motors[1].count = AppUtility.convertNumber(detailItemMotorCount1.value);
+		value.motors[2].count = AppUtility.convertNumber(detailItemMotorCount2.value);
 
 		value.motors[0].diameter = detailItemMotorDiameter0.value;
 		value.motors[1].diameter = detailItemMotorDiameter1.value;

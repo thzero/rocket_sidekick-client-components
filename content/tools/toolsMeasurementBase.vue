@@ -6,9 +6,8 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import AppUtility from '@/utility/app';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
-import { unit } from 'mathjs';
 
-export function useToolsMeasurementBaseComponent(props, context, options) {
+export function useToolsMeasurementUtilityComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -60,6 +59,12 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 			return '';
 		
 		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateAcceleration(correlationId, func1(value), func2(value)));
+	};
+	const displayItemMeasurementAltitude = (correlationId, value, func, func1, func2) => {
+		if (!value)
+			return '';
+		
+		return displayItemMeasurement(correlationId, value, func, AppUtility.measurementUnitTranslateAltitude(correlationId, func1(value), func2(value)));
 	};
 	const displayItemMeasurementLength = (correlationId, value, func, func1, func2) => {
 		if (!value)
@@ -143,6 +148,7 @@ export function useToolsMeasurementBaseComponent(props, context, options) {
 		measurementUnitsWeightType,
 		displayItemMeasurement,
 		displayItemMeasurementAcceleration,
+		displayItemMeasurementAltitude,
 		displayItemMeasurementLength,
 		displayItemMeasurementWeight,
 		displayItemMeasurementTemperature,

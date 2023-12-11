@@ -52,7 +52,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<!-- <v-row dense>
 			<v-col>
 				<VtTextAreaWithValidation
 					ref="descriptionRef"
@@ -66,8 +66,65 @@
 					:rows="detailItemTextRows"
 				/>
 			</v-col>
-		</v-row>
+		</v-row> -->
 		<v-row dense>
+			<v-col cols="12" sm="6">
+				<VtSelectWithValidation
+					ref="detailItemSuccessRef"
+					v-model="detailItemSuccess"
+					vid="detailItemSuccess"
+					:items="successReasons"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.launches.success')"
+				/>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<VtSelectWithValidation
+					v-if="!isSuccess"
+					ref="detailItemFailureReasonsRef"
+					v-model="detailItemFailureReasons"
+					vid="detailItemFailureReasons"
+					multiple
+					:max-values="4"
+					:items="failureReasons"
+					:validation="validation"
+					:readonly="(!isEditable || isSuccess)"
+					:label="$t('forms.content.launches.failureReasons')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row 
+			dense
+			class="mt-4"
+		>
+			<v-col cols="12">
+				<div class="d-flex">
+					<VtTextFieldWithValidation
+						ref="detailItemRocketNameRef"
+						v-model="detailItemRocketName"
+						vid="detailItemRocketName"
+						:validation="validation"
+						:errorsReadonly="validation.detailItemRocketId.$silentErrors"
+						:label="$t('forms.content.rockets.name')"
+						:readonly="true"
+					/>
+					<v-btn
+						v-if="isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
+						@click="clickSearchRockets(item)"
+					>
+						{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+					</v-btn>
+				</div>
+			</v-col>
+		</v-row>
+		<v-row 
+			dense
+			class="mt-4"
+		>
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
 					<VtTextFieldWithValidation
@@ -102,58 +159,10 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
-			<v-col cols="12">
-				<div class="d-flex">
-					<VtTextFieldWithValidation
-						ref="detailItemRocketNameRef"
-						v-model="detailItemRocketName"
-						vid="detailItemRocketName"
-						:validation="validation"
-						:errorsReadonly="validation.detailItemRocketId.$silentErrors"
-						:label="$t('forms.content.rockets.name')"
-						:readonly="true"
-					/>
-					<v-btn
-						v-if="isEditable"
-						class="ml-4 text-right"
-						:variant="buttonsForms.variant.add"
-						:color="buttonsForms.color.add"
-						@click="clickSearchRockets(item)"
-					>
-						{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
-					</v-btn>
-				</div>
-			</v-col>
-		</v-row>
-		<v-row dense>
-			<v-col cols="12" sm="6">
-				<VtSelectWithValidation
-					ref="detailItemSuccessRef"
-					v-model="detailItemSuccess"
-					vid="detailItemSuccess"
-					:items="successReasons"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.launches.success')"
-				/>
-			</v-col>
-			<v-col cols="12" sm="6">
-				<VtSelectWithValidation
-					v-if="!isSuccess"
-					ref="detailItemFailureReasonsRef"
-					v-model="detailItemFailureReasons"
-					vid="detailItemFailureReasons"
-					multiple
-					:max-values="4"
-					:items="failureReasons"
-					:validation="validation"
-					:readonly="(!isEditable || isSuccess)"
-					:label="$t('forms.content.launches.failureReasons')"
-				/>
-			</v-col>
-		</v-row>
-		<v-row dense>
+		<v-row 
+			dense
+			class="mt-4"
+		>
 			<v-col cols="12">
 				<VtTextFieldWithValidation
 					ref="detailItemAlbumUrlRef"
@@ -199,7 +208,84 @@
 				cols="12"
 				class="mt-4"
 			>
-				{{ $t('forms.content.launches.results.title') }}
+				<h3>{{ $t('forms.content.launches.weather.title') }}</h3>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<VtNumberFieldWithValidation
+								ref="detailItemTemperatureRef"
+								v-model="detailItemTemperature"
+								vid="detailItemTemperature"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.launches.weather.temperature')"
+							/>
+						</td>
+						<td class="measurementUnitExtraLong">
+							<MeasurementUnitSelect2
+								ref="detailItemTemperatureMeasurementUnitIdRef"
+								v-model="detailItemTemperatureMeasurementUnitId"
+								vid="detailItemTemperatureMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsTemperatureType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.temperature')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<VtNumberFieldWithValidation
+								ref="detailItemWindSpeedRef"
+								v-model="detailItemWindSpeed"
+								vid="detailItemWindSpeed"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.launches.weather.windspeed')"
+							/>
+						</td>
+						<td class="measurementUnitLong">
+							<MeasurementUnitSelect2
+								ref="detailItemWindSpeedMeasurementUnitIdRef"
+								v-model="detailItemWindSpeedMeasurementUnitId"
+								vid="detailItemWindSpeedMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsVelocityType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.velocity')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<VtSelectWithValidation
+					ref="detailItemWeatherRef"
+					v-model="detailItemWeather"
+					vid="detailItemWeather"
+					:items="weatherOptions"
+					multiple
+					:max-values="2"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.launches.weather.title')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col 
+				cols="12"
+				class="mt-4"
+			>
+				<h3>{{ $t('forms.content.launches.results.title') }}</h3>
 			</v-col>
 		</v-row>
 		<v-row dense>
@@ -216,7 +302,7 @@
 								:label="$t('forms.content.launches.results.acceleration.max')"
 							/>
 						</td>
-						<td class="measurementUnitMedium">
+						<td class="measurementUnitExtraLong">
 							<MeasurementUnitSelect2
 								ref="detailItemResultsAccelerationMaxMeasurementUnitIdRef"
 								v-model="detailItemResultsAccelerationMaxMeasurementUnitId"
@@ -224,7 +310,7 @@
 								:measurementUnitsType="measurementUnitsAccelerationType"
 								:validation="validation"
 								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
+								:label="$t('forms.settings.measurementUnits.acceleration')"
 							/>
 						</td>
 					</tr>
@@ -248,6 +334,33 @@
 								ref="detailItemResultsVelocityMaxMeasurementUnitIdRef"
 								v-model="detailItemResultsVelocityMaxMeasurementUnitId"
 								vid="detailItemResultsVelocityMaxMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsVelocityType"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.settings.measurementUnits.velocity')"
+							/>
+						</td>
+					</tr>
+				</table>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tr>
+						<td>
+							<VtNumberFieldWithValidation
+								ref="detailItemResultsVelocityRecoveryRef"
+								v-model="detailItemResultsVelocityRecovery"
+								vid="detailItemResultsVelocityRecovery"
+								:validation="validation"
+								:readonly="!isEditable"
+								:label="$t('forms.content.launches.results.velocity.recovery')"
+							/>
+						</td>
+						<td class="measurementUnitLong">
+							<MeasurementUnitSelect2
+								ref="detailItemResultsVelocityRecoveryMeasurementUnitIdRef"
+								v-model="detailItemResultsVelocityRecoveryMeasurementUnitId"
+								vid="detailItemResultsVelocityRecoveryMeasurementUnitId"
 								:measurementUnitsType="measurementUnitsVelocityType"
 								:validation="validation"
 								:readonly="!isEditable"
@@ -498,19 +611,15 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			measurementUnitsAccelerationDefaultId,
 			measurementUnitsAccelerationType,
-			measurementUnitsDistanceType,
-			measurementUnitsDistanceDefaultId,
-			measurementUnitsVelocityDefaultId,
+			measurementUnitsAltitudeType,
+			measurementUnitsTemperatureType,
 			measurementUnitsVelocityType,
 			displayItemMeasurement,
 			displayItemMeasurementLength,
-			displayItemMeasurementWeight,
 			measurementUnitsFromUnitId,
 			failureReasons,
 			successReasons,
-			locationIterationName,
 			markupHint,
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
@@ -543,12 +652,20 @@ export default {
 			detailItemResultsVelocityMaxMeasurementUnitId,
 			detailItemResultsVelocityMaxMeasurementUnitsId,
 			detailItemResultsVelocityRecovery,
-			detailItemVelocityRecoveryMeasurementUnitId,
-			detailItemVelocityRecoveryMeasurementUnitsId,
+			detailItemResultsVelocityRecoveryMeasurementUnitId,
+			detailItemResultsVelocityRecoveryMeasurementUnitsId,
 			detailItemRocketId,
 			detailItemRocketName,
 			detailItemSuccess,
+			detailItemTemperature,
+			detailItemTemperatureMeasurementUnitId,
+			detailItemTemperatureMeasurementUnitsId,
 			detailItemVideoUrl,
+			detailItemWeather,
+			detailItemWindSpeed,
+			detailItemWindSpeedMeasurementUnitId,
+			detailItemWindSpeedMeasurementUnitsId,
+			weatherOptions,
 			hasAdmin,
 			isSuccess,
 			locationIterations,
@@ -609,19 +726,15 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			measurementUnitsAccelerationDefaultId,
 			measurementUnitsAccelerationType,
-			measurementUnitsDistanceType,
-			measurementUnitsDistanceDefaultId,
-			measurementUnitsVelocityDefaultId,
+			measurementUnitsAltitudeType,
+			measurementUnitsTemperatureType,
 			measurementUnitsVelocityType,
 			displayItemMeasurement,
 			displayItemMeasurementLength,
-			displayItemMeasurementWeight,
 			measurementUnitsFromUnitId,
 			failureReasons,
 			successReasons,
-			locationIterationName,
 			markupHint,
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
@@ -654,12 +767,20 @@ export default {
 			detailItemResultsVelocityMaxMeasurementUnitId,
 			detailItemResultsVelocityMaxMeasurementUnitsId,
 			detailItemResultsVelocityRecovery,
-			detailItemVelocityRecoveryMeasurementUnitId,
-			detailItemVelocityRecoveryMeasurementUnitsId,
+			detailItemResultsVelocityRecoveryMeasurementUnitId,
+			detailItemResultsVelocityRecoveryMeasurementUnitsId,
 			detailItemRocketId,
 			detailItemRocketName,
 			detailItemSuccess,
+			detailItemTemperature,
+			detailItemTemperatureMeasurementUnitId,
+			detailItemTemperatureMeasurementUnitsId,
 			detailItemVideoUrl,
+			detailItemWeather,
+			detailItemWindSpeed,
+			detailItemWindSpeedMeasurementUnitId,
+			detailItemWindSpeedMeasurementUnitsId,
+			weatherOptions,
 			hasAdmin,
 			isSuccess,
 			locationIterations,

@@ -93,17 +93,69 @@
 <div v-html="markupHint"></div>
 		</v-col>
 	</v-row>
+	<v-row
+		v-if="hasWeather"
+		dense
+	>
+		<v-col 
+			cols="12"
+			class="mt-4"
+		>
+			<h3>{{ $t('forms.content.launches.weather.title') }}</h3>
+		</v-col>
+	</v-row>
+	<v-row dense>
+		<v-col
+			v-if="hasWeather && displayItem.temperature"
+			cols="12" sm="6"
+		>
+			<VtTextField
+				v-model="displayItemTemperature"
+				:readonly="true"
+				:label="$t('forms.content.launches.weather.temperature')"
+			/>
+		</v-col>
+		<v-col
+			v-if="hasWeather && displayItem.windSpeed"
+			cols="12" sm="6"
+		>
+			<VtTextField
+				v-model="displayItemTemperature"
+				:readonly="true"
+				:label="$t('forms.content.launches.weather.windspeed')"
+			/>
+		</v-col>
+		<v-col
+			v-if="hasWeather && displayItem.weather"
+			cols="12" sm="6"
+		>
+			<VtSelect
+				v-model="displayItem.weather"
+				:items="weatherOptions"
+				multiple
+				:readonly="true"
+				:label="$t('forms.content.launches.weather.title')"
+			/>
+		</v-col>
+	</v-row>
 	<v-row dense
 		v-if="displayItem.results"
 	>
-		<v-col cols="12">
-			<h3 class="mt-6">{{ $t('forms.content.launches.results.title') }}</h3>
+		<v-col 
+			cols="12"
+			class="mt-4"
+		>
+			<h3>{{ $t('forms.content.launches.results.title') }}</h3>
 		</v-col>
 	</v-row>
-	<v-row densemdAndUp
-		v-if="hasCoords && $vuetify.display.mdAndUp"
+	<v-row
+		v-if="$vuetify.display.mdAndUp"
+		dense
 	>
-		<v-col cols="6">
+		<v-col
+			v-if="hasCoords"
+			cols="6"
+		>
 			<LaunchMapping
 				:id="displayItem.id"
 				type="recovery"
@@ -272,10 +324,10 @@ export default {
 			measurementUnitsVelocityType,
 			displayItemMeasurement,
 			displayItemMeasurementLength,
-			displayItemMeasurementWeight,
 			measurementUnitsFromUnitId,
 			failureReasons,
 			successReasons,
+			weatherOptions,
 			displayItem,
 			displayItemLocationLink,
 			displayItemLocationIteration,
@@ -296,9 +348,12 @@ export default {
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
 			displayItemRocketMame,
+			displayItemTemperature,
+			displayItemWindSpeed,
 			hasCoords,
 			hasCoordsLaunch,
 			hasCoordsRecovery,
+			hasWeather,
 			isFailure,
 			isSuccess
 		} = useLaunchViewComponent(props, context, options);
@@ -325,10 +380,10 @@ export default {
 			measurementUnitsVelocityType,
 			displayItemMeasurement,
 			displayItemMeasurementLength,
-			displayItemMeasurementWeight,
 			measurementUnitsFromUnitId,
 			failureReasons,
 			successReasons,
+			weatherOptions,
 			displayItem,
 			displayItemLocationLink,
 			displayItemLocationIteration,
@@ -349,9 +404,12 @@ export default {
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
 			displayItemRocketMame,
+			displayItemTemperature,
+			displayItemWindSpeed,
 			hasCoords,
 			hasCoordsLaunch,
 			hasCoordsRecovery,
+			hasWeather,
 			isFailure,
 			isSuccess
 		};
