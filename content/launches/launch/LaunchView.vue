@@ -99,7 +99,7 @@
 	>
 		<v-col 
 			cols="12"
-			class="mt-4"
+			class="mt-2"
 		>
 			<h3>{{ $t('forms.content.launches.weather.title') }}</h3>
 		</v-col>
@@ -107,7 +107,7 @@
 	<v-row dense>
 		<v-col
 			v-if="hasWeather && displayItem.temperature"
-			cols="12" sm="6"
+			cols="4" sm="4"
 		>
 			<VtTextField
 				v-model="displayItemTemperature"
@@ -117,17 +117,17 @@
 		</v-col>
 		<v-col
 			v-if="hasWeather && displayItem.windSpeed"
-			cols="12" sm="6"
+			cols="4" sm="4"
 		>
 			<VtTextField
-				v-model="displayItemTemperature"
+				v-model="displayItemWindSpeed"
 				:readonly="true"
 				:label="$t('forms.content.launches.weather.windspeed')"
 			/>
 		</v-col>
 		<v-col
 			v-if="hasWeather && displayItem.weather"
-			cols="12" sm="6"
+			cols="12" sm="4"
 		>
 			<VtSelect
 				v-model="displayItem.weather"
@@ -139,11 +139,11 @@
 		</v-col>
 	</v-row>
 	<v-row dense
-		v-if="displayItem.results"
+		v-if="hasResults"
 	>
 		<v-col 
 			cols="12"
-			class="mt-4"
+			class="mt-2"
 		>
 			<h3>{{ $t('forms.content.launches.results.title') }}</h3>
 		</v-col>
@@ -219,7 +219,7 @@
 	>
 		<v-col
 			v-if="displayItemResultsAccelerationMax"
-			cols="12" sm="6"
+			cols="4"
 		>
 			<VtTextField
 				v-model="displayItemResultsAccelerationMax"
@@ -228,7 +228,7 @@
 		</v-col>
 		<v-col
 			v-if="displayItemResultsVelocityMax"
-			cols="12" sm="6"
+			cols="4"
 		>
 			<VtTextField
 				v-model="displayItemResultsVelocityMax"
@@ -237,7 +237,7 @@
 		</v-col>
 		<v-col
 			v-if="displayItemResultsAltitudeMax"
-			cols="12" sm="6"
+			cols="4"
 		>
 			<VtTextField
 				v-model="displayItemResultsAltitudeMax"
@@ -246,7 +246,7 @@
 		</v-col>
 		<v-col
 			v-if="displayItemResultsAltitudeMain"
-			cols="12" sm="6"
+			cols="6"
 		>
 			<VtTextField
 				v-model="displayItemResultsAltitudeMain"
@@ -255,7 +255,7 @@
 		</v-col>
 		<v-col
 			v-if="displayItemResultsAltitudeDrogue"
-			cols="12" sm="6"
+			cols="6"
 		>
 			<VtTextField
 				v-model="displayItemResultsAltitudeDrogue"
@@ -353,6 +353,7 @@ export default {
 			hasCoords,
 			hasCoordsLaunch,
 			hasCoordsRecovery,
+			hasResults,
 			hasWeather,
 			isFailure,
 			isSuccess
@@ -409,6 +410,7 @@ export default {
 			hasCoords,
 			hasCoordsLaunch,
 			hasCoordsRecovery,
+			hasResults,
 			hasWeather,
 			isFailure,
 			isSuccess
