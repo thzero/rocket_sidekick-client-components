@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
 import { useToolsMeasurementBaseComponent } from '@/components/content/tools/toolsMeasurementBase';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
@@ -17,34 +18,27 @@ export function useLaunchComponent(props, context, options) {
 	const {
 		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
-		measurementUnitsAreaDefaultId,
-		measurementUnitsAreaType,
 		measurementUnitsAltitudeDefaultId,
 		measurementUnitsAltitudeType,
-		measurementUnitsDensityDefaultId,
-		measurementUnitsDensityType,
 		measurementUnitsDistanceType,
 		measurementUnitsDistanceDefaultId,
-		measurementUnitsFluidDefaultId,
-		measurementUnitsFluidType,
-		measurementUnitsLengthDefaultId,
-		measurementUnitsLengthType,
+		measurementUnitsTemperatureDefaultId,
+		measurementUnitsTemperatureType,
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
-		measurementUnitsVolumeDefaultId,
-		measurementUnitsVolumeType,
-		measurementUnitsWeightDefaultId,
-		measurementUnitsWeightType,
 		displayItemMeasurement,
 		displayItemMeasurementAcceleration,
+		displayItemMeasurementAltitude,
 		displayItemMeasurementLength,
-		displayItemMeasurementWeight,
+		displayItemMeasurementTemperature,
 		displayItemMeasurementVelocity,
-	 	measurementUnitsFromUnitId
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementBaseComponent(props, context);
 
 	const failureReasons = ref(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.Launches.Reasons.Failure).map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.launches.reasons.failure.' + item) }; }));
 	const successReasons = ref(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.Launches.Reasons.Success).map((item) => { return { id: item, name: LibraryClientUtility.$trans.t('strings.content.launches.reasons.success.' + item) }; }));
+	
+	const weatherOptions = LibraryClientVueUtility.selectOptions(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.Launches.Weather), LibraryClientUtility.$trans.t, 'strings.content.launches.weather');
 
 	const locationIterationName = (item) => {
 		let output = '';
@@ -64,16 +58,20 @@ export function useLaunchComponent(props, context, options) {
 		measurementUnitsAltitudeDefaultId,
 		measurementUnitsDistanceType,
 		measurementUnitsDistanceDefaultId,
+		measurementUnitsTemperatureDefaultId,
+		measurementUnitsTemperatureType,
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
 		displayItemMeasurement,
 		displayItemMeasurementAcceleration,
+		displayItemMeasurementAltitude,
 		displayItemMeasurementLength,
-		displayItemMeasurementWeight,
+		displayItemMeasurementTemperature,
 		displayItemMeasurementVelocity,
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,
+		weatherOptions,
 		locationIterationName
 	};
 };

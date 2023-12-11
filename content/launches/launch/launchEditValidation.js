@@ -55,6 +55,7 @@ export function useLaunchEditValidation(nameRequired) {
 		detailItemResultsVelocityRecovery: { $autoDirty: true },
 		detailItemVelocityRecoveryMeasurementUnitId: { $autoDirty: true },
 		detailItemVelocityRecoveryMeasurementUnitsId: { $autoDirty: true },
+		detailItemTemperature: { $autoDirty: true },
 		detailItemRocketId: { 
 			required,
 			$autoDirty: true 
@@ -63,12 +64,18 @@ export function useLaunchEditValidation(nameRequired) {
 			required,
 			$autoDirty: true 
 		},
+		detailItemTemperatureMeasurementUnitId: { $autoDirty: true },
+		detailItemTemperatureMeasurementUnitsId: { $autoDirty: true },
 		detailItemVideoUrl: { 
 			url,
 			maxLength: maxLength(255),
 			minLength: minLength(6),
 			$autoDirty: true 
-		}
+		},
+		detailItemWeather: { $autoDirty: true },
+		detailItemWindSpeed: { $autoDirty: true },
+		detailItemWindSpeedMeasurementUnitId: { $autoDirty: true },
+		detailItemWindSpeedMeasurementUnitsId: { $autoDirty: true }
 	};
 	validation['detailItemName'] =  (nameRequired === true ?
 		{

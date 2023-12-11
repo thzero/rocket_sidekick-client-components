@@ -30,16 +30,21 @@ export function useLaunchViewComponent(props, context, options) {
 		measurementUnitsAltitudeDefaultId,
 		measurementUnitsDistanceType,
 		measurementUnitsDistanceDefaultId,
+		measurementUnitsTemperatureDefaultId,
+		measurementUnitsTemperatureType,
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
 		displayItemMeasurement,
 		displayItemMeasurementAcceleration,
+		displayItemMeasurementAltitude,
 		displayItemMeasurementLength,
-		displayItemMeasurementWeight,
+		displayItemMeasurementTemperature,
 		displayItemMeasurementVelocity,
 		measurementUnitsFromUnitId,
 		failureReasons,
-		successReasons
+		successReasons,
+		weatherOptions,
+		locationIterationName
 	} = useLaunchComponent(props, context);
 
 	const displayItem = computed(() => {
@@ -80,34 +85,34 @@ export function useLaunchViewComponent(props, context, options) {
 	const displayItemLocationName = computed(() => {
 		return displayItem.value && displayItem.value.location ? displayItem.value.location.name + displayItemLocationIteration.value : '';
 	});
-	const displayItemResultsAltitudeDrogue = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDrogue)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeDrogue; }, (value) => { return value.altitudeDrogueMeasurementUnitsId; }, (value) => { return value.altitudeDrogueMeasurementUnitId; });
-		return null;
-	});
-	const displayItemResultsAltitudeMain = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMain)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeMain; }, (value) => { return value.altitudeMainMeasurementUnitsId; }, (value) => { return value.altitudeMainMeasurementUnitId; });
-		return null;
-	});
-	const displayItemResultsAltitudeMax = computed(() => {
-		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMax)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.altitudeMax; }, (value) => { return value.altitudeMaxMeasurementUnitsId; }, (value) => { return value.altitudeMaxMeasurementUnitId; });
-		return null;
-	});
 	const displayItemResultsAccelerationDrogue = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationDrogue)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationDrogue; }, (value) => { return value.accelerationDrogueMeasurementUnitsId; }, (value) => { return value.accelerationDrogueMeasurementUnitId; });
+			return displayItemMeasurementAcceleration(correlationId(), displayItem.value.results, (value) => { return value.accelerationDrogue; }, (value) => { return value.accelerationDrogueMeasurementUnitsId; }, (value) => { return value.accelerationDrogueMeasurementUnitId; });
 		return null;
 	});
 	const displayItemResultsAccelerationMain = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationMain)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationMain; }, (value) => { return value.accelerationMainMeasurementUnitsId; }, (value) => { return value.accelerationMainMeasurementUnitId; });
+			return displayItemMeasurementAcceleration(correlationId(), displayItem.value.results, (value) => { return value.accelerationMain; }, (value) => { return value.accelerationMainMeasurementUnitsId; }, (value) => { return value.accelerationMainMeasurementUnitId; });
 		return null;
 	});
 	const displayItemResultsAccelerationMax = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.accelerationMax)
-			return displayItemMeasurementAcceleration(correlationId(), displayItem.value, (value) => { return value.accelerationMax; }, (value) => { return value.accelerationMaxMeasurementUnitsId; }, (value) => { return value.accelerationMaxMeasurementUnitId; });
+			return displayItemMeasurementAcceleration(correlationId(), displayItem.value.results, (value) => { return value.accelerationMax; }, (value) => { return value.accelerationMaxMeasurementUnitsId; }, (value) => { return value.accelerationMaxMeasurementUnitId; });
+		return null;
+	});
+	const displayItemResultsAltitudeDrogue = computed(() => {
+		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDrogue)
+			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeDrogue; }, (value) => { return value.altitudeDrogueMeasurementUnitsId; }, (value) => { return value.altitudeDrogueMeasurementUnitId; });
+		return null;
+	});
+	const displayItemResultsAltitudeMain = computed(() => {
+		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMain)
+			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeMain; }, (value) => { return value.altitudeMainMeasurementUnitsId; }, (value) => { return value.altitudeMainMeasurementUnitId; });
+		return null;
+	});
+	const displayItemResultsAltitudeMax = computed(() => {
+		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeMax)
+			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeMax; }, (value) => { return value.altitudeMaxMeasurementUnitsId; }, (value) => { return value.altitudeMaxMeasurementUnitId; });
 		return null;
 	});
 	const displayItemResultsCoordsLatLaunch = computed(() => {
@@ -141,6 +146,16 @@ export function useLaunchViewComponent(props, context, options) {
 	const displayItemRocketMame = computed(() => {
 		return displayItem.value && displayItem.value.rocket ? displayItem.value.rocket.name : '';
 	});
+	const displayItemTemperature = computed(() => {
+		if (displayItem.value && displayItem.value.temperature)
+			return displayItemMeasurementTemperature(correlationId(), displayItem.value, (value) => { return value.temperature; }, (value) => { return value.temperatureMeasurementUnitsId; }, (value) => { return value.temperatureMeasurementUnitId; });
+		return null;
+	});
+	const displayItemWindSpeed = computed(() => {
+		if (displayItem.value && displayItem.value.windSpeed)
+			return displayItemMeasurementVelocity(correlationId(), displayItem.value, (value) => { return value.windSpeed; }, (value) => { return value.windSpeedMeasurementUnitsId; }, (value) => { return value.windSpeedMeasurementUnitId; });
+		return null;
+	});
 	const hasCoords = computed(() => {
 		return hasCoordsLaunch.value || hasCoordsRecovery.value;
 	});
@@ -160,6 +175,15 @@ export function useLaunchViewComponent(props, context, options) {
 		return (
 			displayItem.value.results.coordsLatRecovery || 
 			displayItem.value.results.coordsLongRecovery
+		);
+	});
+	const hasWeather = computed(() => {
+		if (!displayItem.value || !displayItem.value.results)
+			return false;
+
+		return (
+			displayItem.value.temperature || 
+			displayItem.value.windSpeed
 		);
 	});
 	const isFailure = computed(() => {
@@ -191,10 +215,10 @@ export function useLaunchViewComponent(props, context, options) {
 		measurementUnitsVelocityType,
 		displayItemMeasurement,
 		displayItemMeasurementLength,
-		displayItemMeasurementWeight,
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,
+		weatherOptions,
 		displayItem,
 		displayItemLocationLink,
 		displayItemLocationIteration,
@@ -215,9 +239,12 @@ export function useLaunchViewComponent(props, context, options) {
 		displayItemResultsVelocityMax,
 		displayItemResultsVelocityRecovery,
 		displayItemRocketMame,
+		displayItemTemperature,
+		displayItemWindSpeed,
 		hasCoords,
 		hasCoordsLaunch,
 		hasCoordsRecovery,
+		hasWeather,
 		isFailure,
 		isSuccess
 	};

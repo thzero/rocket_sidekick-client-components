@@ -5,6 +5,7 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import AppUtility from '@/utility/app';
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
@@ -88,16 +89,20 @@ export function useLaunchEditComponent(props, context, options) {
 		measurementUnitsAccelerationType,
 		measurementUnitsAltitudeType,
 		measurementUnitsAltitudeDefaultId,
-		measurementUnitsDistanceType,
 		measurementUnitsDistanceDefaultId,
+		measurementUnitsTemperatureDefaultId,
+		measurementUnitsTemperatureType,
 		measurementUnitsVelocityDefaultId,
 		measurementUnitsVelocityType,
 		displayItemMeasurement,
+		displayItemMeasurementAcceleration,
 		displayItemMeasurementLength,
-		displayItemMeasurementWeight,
+		displayItemMeasurementTemperature,
+		displayItemMeasurementVelocity,
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,
+		weatherOptions,
 		locationIterationName
 	} = useLaunchComponent(props, context);
 	
@@ -136,8 +141,8 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemResultsVelocityMaxMeasurementUnitId = ref(null);
 	const detailItemResultsVelocityMaxMeasurementUnitsId = ref(null);
 	const detailItemResultsVelocityRecovery = ref(null);
-	const detailItemVelocityRecoveryMeasurementUnitId = ref(null);
-	const detailItemVelocityRecoveryMeasurementUnitsId = ref(null);
+	const detailItemResultsVelocityRecoveryMeasurementUnitId = ref(null);
+	const detailItemResultsVelocityRecoveryMeasurementUnitsId = ref(null);
 	const detailItemRocketId = ref(null);
 	const detailItemRocketName = ref(null);
 	const detailItemSuccess = ref(null);
@@ -145,11 +150,13 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemTemperatureMeasurementUnitId = ref(null);
 	const detailItemTemperatureMeasurementUnitsId = ref(null);
 	const detailItemVideoUrl = ref(null);
+	const detailItemWeather = ref(null);
 	const detailItemWindSpeed = ref(null);
 	const detailItemWindSpeedMeasurementUnitId = ref(null);
 	const detailItemWindSpeedMeasurementUnitsId = ref(null);
 	
 	const location = ref(null);
+	// const weatherOptionsBlank = ref(LibraryClientVueUtility.selectBlank(weatherOptions));
 	
 	const hasAdmin = computed(() => {
 		return false;
@@ -170,14 +177,6 @@ export function useLaunchEditComponent(props, context, options) {
 	const clickSearchRockets = async (correlationId) => {
 		dialogRocketLookupManager.value.open();
 	};
-	// const locationIterationName = (item) => {
-	// 	let output = '';
-	// 	if (item.number)
-	// 		output += item.number + ' ';
-	// 	if (item.year)
-	// 		output += item.year + ' ';
-	// 	return output.trim();
-	// };
 	const requestLocation = async (correlationId, id) => {
 		const response = await serviceStore.dispatcher.requestLocationById(correlationId, id);
 		return hasSucceeded(response) ? response.results : null;
@@ -218,16 +217,50 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemFailureReasons.value = value  ? value.failureReasons : null;
 		
 		detailItemTemperature.value = value ? value.temperature : null;
+		detailItemTemperatureMeasurementUnitId.value = value ? value.temperatureMeasurementUnitId ?? measurementUnitsTemperatureDefaultId.value : measurementUnitsTemperatureDefaultId.value;
+		detailItemTemperatureMeasurementUnitsId.value = value ? value.temperatureMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		detailItemVideoUrl.value = value ? value.videoUrl : null;
+
+		detailItemWeather.value = value ? value.weather : null;
 		
 		detailItemWindSpeed.value = value ? value.windSpeed : null;
+		detailItemWindSpeedMeasurementUnitId.value = value ? value.windSpeedMeasurementUnitId ?? measurementUnitsVelocityDefaultId.value : measurementUnitsVelocityDefaultId.value;
+		detailItemWindSpeedMeasurementUnitsId.value = value ? value.windSpeedMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
-		value.results = value.results ?? {};
-		detailItemResultsCoordsLatLaunch.value = value ? value.results.coordsLatLaunch : false;
-		detailItemResultsCoordsLongLaunch.value = value ? value.results.coordsLongLaunch : false;
-		detailItemResultsCoordsLatRecovery.value = value ? value.results.coordsLatRecovery : false;
-		detailItemResultsCoordsLongRecovery.value = value ? value.results.coordsLongRecovery : false;
+		let temp = value ?? {};
+		temp.results = temp.results ?? {};
+		detailItemResultsCoordsLatLaunch.value = temp ? temp.results.coordsLatLaunch : false;
+		detailItemResultsCoordsLongLaunch.value = temp ? temp.results.coordsLongLaunch : false;
+		detailItemResultsCoordsLatRecovery.value = temp ? temp.results.coordsLatRecovery : false;
+		detailItemResultsCoordsLongRecovery.value = temp ? temp.results.coordsLongRecovery : false;
+		
+		detailItemResultsAccelerationMax.value = temp ? temp.results.accelerationMax : false;
+		detailItemResultsAccelerationMaxMeasurementUnitId.value = temp ? temp.accelerationMaxMeasurementUnitId ?? measurementUnitsAccelerationDefaultId.value : measurementUnitsAccelerationDefaultId.value;
+		detailItemResultsAccelerationMaxMeasurementUnitsId.value = temp ? temp.accelerationMaxMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		detailItemResultsAltitudeMax.value = temp ? temp.results.altitudeMax : false;
+		detailItemResultsAltitudeMaxMeasurementUnitId.value = temp ? temp.altitudeMaxMeasurementUnitId ?? measurementUnitsAltitudeDefaultId.value : measurementUnitsAltitudeDefaultId.value;
+		detailItemResultsAltitudeMaxMeasurementUnitsId.value = temp ? temp.altitudeMaMeasurementxUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		detailItemResultsAltitudeDeployDrogue.value = temp ? temp.results.altitudeDeployDrogue : false;
+		detailItemResultsAltitudeDeployDrogueMeasurementUnitId.value = temp ? temp.altitudeDeployDrogueMeasurementUnitId ?? measurementUnitsAltitudeDefaultId.value : measurementUnitsAltitudeDefaultId.value;
+		detailItemResultsAltitudeDeployDrogueMeasurementUnitsId.value = temp ? temp.altitudeDeployDrogueMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		detailItemResultsAltitudeDeployMain.value = temp ? temp.results.altitudeDeployMain : false;
+		detailItemResultsAltitudeDeployMainMeasurementUnitId.value = temp ? temp.altitudeDeployMainMeasurementUnitId ?? measurementUnitsAltitudeDefaultId.value : measurementUnitsAltitudeDefaultId.value;
+		detailItemResultsAltitudeDeployMainMeasurementUnitsId.value = temp ? temp.altitudeDeployMainMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		detailItemResultsVelocityMax.value = temp ? temp.results.velocityMax : false;
+		detailItemResultsVelocityMaxMeasurementUnitId.value = temp ? temp.velocityMaxMeasurementUnitId ?? measurementUnitsVelocityDefaultId.value : measurementUnitsVelocityDefaultId.value;
+		detailItemResultsVelocityMaxMeasurementUnitsId.value = temp ? temp.velocityMaxMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		detailItemResultsVelocityRecovery.value = temp ? temp.results.velocityRecovery : false;
+		detailItemResultsVelocityRecoveryMeasurementUnitId.value = temp ? temp.velocityRecoveryMeasurementUnitId ?? measurementUnitsVelocityDefaultId.value : measurementUnitsVelocityDefaultId.value;
+		detailItemResultsVelocityRecoveryMeasurementUnitsId.value = temp ? temp.velocityRecoveryMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		if (value)
+			value.results = temp.results;
 	};
 	const selectLocation = async (item) => {
 		try {
@@ -269,11 +302,17 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemData.value.success = detailItemSuccess.value;
 		detailItemData.value.failureReasons = detailItemFailureReasons.value;
 
-		detailItemData.value.temperature = Number(detailItemTemperature.value);
+		detailItemData.value.temperature = AppUtility.convertNumber(detailItemTemperature.value);
+		detailItemData.value.temperatureMeasurementUnitId = detailItemTemperatureMeasurementUnitId.value;
+		detailItemData.value.temperatureMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.temperature.id, detailItemTemperatureMeasurementUnitId.value);
 		
 		detailItemData.value.videoUrl = detailItemVideoUrl.value;
 
-		detailItemData.value.windSpeed =Number(detailItemWindSpeed.value);
+		detailItemData.value.weather = detailItemWeather.value;
+
+		detailItemData.value.windSpeed = AppUtility.convertNumber(detailItemWindSpeed.value);
+		detailItemData.value.windSpeedMeasurementUnitId = detailItemWindSpeedMeasurementUnitId.value;
+		detailItemData.value.windSpeedMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, detailItemWindSpeedMeasurementUnitId.value);
 
 		detailItemData.value.results = detailItemData.results ?? {};
 
@@ -281,6 +320,30 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemData.value.results.coordsLongLaunch = detailItemResultsCoordsLongLaunch.value ? detailItemResultsCoordsLongLaunch.value : null;
 		detailItemData.value.results.coordsLatRecovery = detailItemResultsCoordsLatRecovery.value ? detailItemResultsCoordsLatRecovery.value : null;
 		detailItemData.value.results.coordsLongRecovery = detailItemResultsCoordsLongRecovery.value ? detailItemResultsCoordsLongRecovery.value : null;
+
+		detailItemData.value.results.accelerationMax = AppUtility.convertNumber(detailItemResultsAccelerationMax.value);
+		detailItemData.value.results.accelerationMaxMeasurementUnitId = detailItemResultsAccelerationMaxMeasurementUnitId.value;
+		detailItemData.value.results.accelerationMaxMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.acceleration.id, detailItemResultsAccelerationMaxMeasurementUnitId.value);
+		
+		detailItemData.value.results.altitudeMax = AppUtility.convertNumber(detailItemResultsAltitudeMax.value);
+		detailItemData.value.results.altitudeMaxMeasurementUnitId = detailItemResultsAltitudeMaxMeasurementUnitId.value;
+		detailItemData.value.results.altitudeMaxMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.altitude.id, detailItemResultsAltitudeMaxMeasurementUnitId.value);
+		
+		detailItemData.value.results.altitudeDeployDrogue = AppUtility.convertNumber(detailItemResultsAltitudeDeployDrogue.value);
+		detailItemData.value.results.altitudeDeployDrogueMeasurementUnitId = detailItemResultsAltitudeDeployDrogueMeasurementUnitId.value;
+		detailItemData.value.results.altitudeDeployDrogueMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.altitude.id, detailItemResultsAltitudeDeployDrogueMeasurementUnitId.value);
+		
+		detailItemData.value.results.altitudeDeployMain = AppUtility.convertNumber(detailItemResultsAltitudeDeployMain.value);
+		detailItemData.value.results.altitudeDeployMainMeasurementUnitId = detailItemResultsAltitudeDeployMainMeasurementUnitId.value;
+		detailItemData.value.results.altitudeDeployMainMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.altitude.id, detailItemResultsAltitudeDeployMainMeasurementUnitId.value);
+		
+		detailItemData.value.results.velocityMax = AppUtility.convertNumber(detailItemResultsVelocityMax.value);
+		detailItemData.value.results.velocityMaxMeasurementUnitId = detailItemResultsVelocityMaxMeasurementUnitId.value;
+		detailItemData.value.results.velocityMaxMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, detailItemResultsVelocityMaxMeasurementUnitId.value);
+		
+		detailItemData.value.results.velocityRecovery = AppUtility.convertNumber(detailItemResultsVelocityRecovery.value);
+		detailItemData.value.results.velocityRecoveryMeasurementUnitId = detailItemResultsVelocityRecoveryMeasurementUnitId.value;
+		detailItemData.value.results.velocityRecoveryMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, detailItemResultsVelocityRecoveryMeasurementUnitId.value);
 	};
 
 	watch(() => detailItemSuccess.value,
@@ -342,19 +405,15 @@ export function useLaunchEditComponent(props, context, options) {
 		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
-		measurementUnitsAccelerationDefaultId,
 		measurementUnitsAccelerationType,
-		measurementUnitsDistanceType,
-		measurementUnitsDistanceDefaultId,
-		measurementUnitsVelocityDefaultId,
+		measurementUnitsAltitudeType,
+		measurementUnitsTemperatureType,
 		measurementUnitsVelocityType,
 		displayItemMeasurement,
 		displayItemMeasurementLength,
-		displayItemMeasurementWeight,
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,
-		locationIterationName,
 		markupHint,
 		dialogLocationLookupManager,
 		dialogRocketLookupManager,
@@ -387,8 +446,8 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemResultsVelocityMaxMeasurementUnitId,
 		detailItemResultsVelocityMaxMeasurementUnitsId,
 		detailItemResultsVelocityRecovery,
-		detailItemVelocityRecoveryMeasurementUnitId,
-		detailItemVelocityRecoveryMeasurementUnitsId,
+		detailItemResultsVelocityRecoveryMeasurementUnitId,
+		detailItemResultsVelocityRecoveryMeasurementUnitsId,
 		detailItemRocketId,
 		detailItemRocketName,
 		detailItemSuccess,
@@ -396,9 +455,11 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemTemperatureMeasurementUnitId,
 		detailItemTemperatureMeasurementUnitsId,
 		detailItemVideoUrl,
+		detailItemWeather,
 		detailItemWindSpeed,
 		detailItemWindSpeedMeasurementUnitId,
 		detailItemWindSpeedMeasurementUnitsId,
+		weatherOptions,
 		hasAdmin,
 		isSuccess,
 		locationIterations,
