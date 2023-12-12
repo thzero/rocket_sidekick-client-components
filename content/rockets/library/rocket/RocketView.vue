@@ -18,7 +18,7 @@
 				cols="12"
 			>
 				<v-sheet
-					class="pt-2 pb-2 mt-2"
+					class="pt-2 pb-2"
 				>
 					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
 					<v-divider></v-divider>

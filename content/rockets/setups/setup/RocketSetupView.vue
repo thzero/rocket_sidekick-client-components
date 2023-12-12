@@ -12,11 +12,13 @@
 			<v-col cols="12">
 				<VtMarkdown v-model="displayItem.description" :use-github=false />
 			</v-col>
+		</v-row>
+		<v-row dense>
 			<v-col 
 				cols="12"
 			>
 				<v-sheet
-					class="pt-2 pb-2 mt-2"
+					class="pt-2 pb-2"
 				>
 					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
 					<v-divider></v-divider>
@@ -131,7 +133,7 @@
 			dense
 		>
 			<v-col 
-				cols="12" md="6"
+				cols="12"
 			>
 				<v-sheet
 					v-if="stageRocketMotors.length > 1"
@@ -147,6 +149,7 @@
 					:key="item2"
 					:color="index % 2 === 0 ? 'green' : 'green'"
 					:class="`ml-${(stageRocketMotors.length > 1 ? '8' : '4')} mt-2 pl-4 pr-4 pt-2 pb-2`"
+					style="width: 100%;"
 					rounded
 				>
 					<!-- <v-row
