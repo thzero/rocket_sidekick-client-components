@@ -1,8 +1,7 @@
 <template>
 	<div
-		v-if="debug"
 	>
-		[[ displayItem {{ displayItem }} ]]
+		[[ displayItem <pre>{{ displayItem }}</pre> ]]
 	</div>
 	<div
 		class="mt-4"
@@ -18,8 +17,13 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
-			<v-col cols="12" sm="6" lg="4">
+		<v-row 
+			dense
+		>
+			<v-col
+				v-if="$vuetify.display.lgAndUp"
+				cols="12" sm="6" lg="4"
+			>
 				<VtTextField
 					v-model="displayItemLocationName"
 					:label="$t('forms.content.locations.name')"
@@ -95,13 +99,32 @@
 			</v-col>
 		</v-row>
 		<v-row
+			dense
+		>
+			<v-col 
+				cols="12"
+			>
+				<v-sheet
+					class="pt-2 pb-2"
+				>
+					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
+					<v-divider></v-divider>
+				</v-sheet>
+			</v-col>
+		</v-row>
+		<v-row
 			v-if="hasWeather"
 			dense
 		>
 			<v-col 
 				cols="12"
 			>
-				<h3>{{ $t('forms.content.launches.weather.title') }}</h3>
+				<v-sheet
+					class="pt-2 pb-2"
+				>
+					<h3>{{ $t('forms.content.launches.weather.title') }}</h3>
+					<v-divider></v-divider>
+				</v-sheet>
 			</v-col>
 		</v-row>
 		<v-row dense>
@@ -144,7 +167,12 @@
 			<v-col 
 				cols="12"
 			>
-				<h3>{{ $t('forms.content.launches.results.title') }}</h3>
+				<v-sheet
+					class="pt-2 pb-2"
+				>
+					<h3>{{ $t('forms.content.launches.results.title') }}</h3>
+					<v-divider></v-divider>
+				</v-sheet>
 			</v-col>
 		</v-row>
 		<v-row
@@ -170,7 +198,7 @@
 				<v-row dense>
 					<v-col
 						v-if="displayItemResultsAccelerationMax"
-						:cols="hasCoords ? 4 : 2" :lg="hasCoords ? 2 : 2"
+						:cols="hasCoords ? 4 : 2" :lg="hasCoords ? 3 : 2" :xl="hasCoords ? 2 : 2"
 					>
 						<VtTextField
 							v-model="displayItemResultsAccelerationMax"
@@ -179,7 +207,7 @@
 					</v-col>
 					<v-col
 						v-if="displayItemResultsVelocityMax"
-						:cols="hasCoords ? 4 : 2" :lg="hasCoords ? 2 : 2"
+						:cols="hasCoords ? 4 : 2" :lg="hasCoords ? 3 : 2" :xl="hasCoords ? 2 : 2"
 					>
 						<VtTextField
 							v-model="displayItemResultsVelocityMax"
@@ -188,7 +216,7 @@
 					</v-col>
 					<v-col
 						v-if="displayItemResultsAltitudeMax"
-						:cols="hasCoords ? 4 : 2" :lg="hasCoords ? 2 : 2"
+						:cols="hasCoords ? 4 : 2" :lg="hasCoords ? 3 : 2" :xl="hasCoords ? 2 : 2"
 					>
 						<VtTextField
 							v-model="displayItemResultsAltitudeMax"
@@ -197,7 +225,7 @@
 					</v-col>
 					<v-col
 						v-if="displayItemResultsAltitudeMain"
-						:cols="hasCoords ? 6 : 3" :lg="hasCoords ? 3 : 2"
+						:cols="hasCoords ? 6 : 3" :lg="hasCoords ? 4 : 2" :xl="hasCoords ? 2 : 2"
 					>
 						<VtTextField
 							v-model="displayItemResultsAltitudeMain"
@@ -206,7 +234,7 @@
 					</v-col>
 					<v-col
 						v-if="displayItemResultsAltitudeDrogue"
-						:cols="hasCoords ? 6 : 3" :lg="hasCoords ? 3 : 2"
+						:cols="hasCoords ? 6 : 3" :lg="hasCoords ? 4 : 2" :xl="hasCoords ? 3 : 2"
 					>
 						<VtTextField
 							v-model="displayItemResultsAltitudeDrogue"
@@ -222,7 +250,7 @@
 		>
 			<v-col
 				v-if="displayItemResultsAccelerationMax"
-				cols="4"
+				cols="6" sm="3"
 			>
 				<VtTextField
 					v-model="displayItemResultsAccelerationMax"
@@ -231,7 +259,7 @@
 			</v-col>
 			<v-col
 				v-if="displayItemResultsVelocityMax"
-				cols="4"
+				cols="6" sm="3"
 			>
 				<VtTextField
 					v-model="displayItemResultsVelocityMax"
@@ -240,7 +268,7 @@
 			</v-col>
 			<v-col
 				v-if="displayItemResultsAltitudeMax"
-				cols="4"
+				cols="6" sm="3"
 			>
 				<VtTextField
 					v-model="displayItemResultsAltitudeMax"
@@ -249,7 +277,7 @@
 			</v-col>
 			<v-col
 				v-if="displayItemResultsAltitudeMain"
-				cols="6"
+				cols="6" sm="4"
 			>
 				<VtTextField
 					v-model="displayItemResultsAltitudeMain"
@@ -258,7 +286,7 @@
 			</v-col>
 			<v-col
 				v-if="displayItemResultsAltitudeDrogue"
-				cols="6"
+				cols="6" sm="4"
 			>
 				<VtTextField
 					v-model="displayItemResultsAltitudeDrogue"
