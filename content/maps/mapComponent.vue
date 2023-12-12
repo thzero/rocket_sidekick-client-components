@@ -36,8 +36,8 @@ export function useMapComponent(props, context, options) {
 	const setTooltip = (correlationId, id, coords, content, style) => {
 		options.setTooltip(correlationId, id, coords, content, style);
 	};
-	const setView = (correlationId, coords) => {
-		options.setView(correlationId, id, coords, style);
+	const setView = (correlationId, coords, zoom) => {
+		options.setView(correlationId, id, coords, zoom);
 	};
 
 	onMounted(async () => {

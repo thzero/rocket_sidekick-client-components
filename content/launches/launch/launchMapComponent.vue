@@ -27,7 +27,7 @@ export function useLaunchMapComponent(props, context, options) {
 		setMarker,
 		setTooltip,
 		setView
-	} = useOpenStreetMapComponent(props, context, options);
+	} = useOpenStreetMapComponent(props, context, { zoom: 17 });
 	
 	onMounted(async () => {
 		// setCircle(correlationId(), 'launch', props.coordsLaunch, {

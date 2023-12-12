@@ -1,6 +1,6 @@
 <template>
 	<div :id="mapContainerName()"
-		style="height: 250px; width: 500px;"
+		style="height: 250px; width: 100%;"
 	></div>
 </template>
 

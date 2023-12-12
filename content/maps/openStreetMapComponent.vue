@@ -34,11 +34,15 @@ export function useOpenStreetMapComponent(props, context, options) {
 		setView
 	} = useMapComponent(props, context, {
 		initialize: (correlationId) => {
-		mapInstsance.value = L.map(mapContainerName()).setView(props.coordsLaunch, zoom.value);
-		L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			maxZoom: zoomMax.value,
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-		}).addTo(mapInstsance.value);
+			let zoomI = zoom.value;
+			if (options && options.zoom)
+				zoomI = options.zoom;
+			zoomI = zoomI ?? zoom.value;
+			mapInstsance.value = L.map(mapContainerName()).setView(props.coordsLaunch, zoomI);
+			L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				maxZoom: zoomMax.value,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			}).addTo(mapInstsance.value);
 		},
 		setCircle: (correlationId, id, coords, style) => {
 			polygons.value[id] = L.circle(coords, style).addTo(mapInstsance.value);
@@ -68,8 +72,9 @@ export function useOpenStreetMapComponent(props, context, options) {
 				.addTo(mapInstsance.value);
 			tooltips.value[id] = tooltip;
 		},
-		setView: (correlationId, coords) => {
-			mapInstsance.value.setView(coords, 13);
+		setView: (correlationId, coords, zoom) => {
+			zoom = zoom ?? 13;
+			mapInstsance.value.setView(coords, zoom);
 		}
 	});
 
