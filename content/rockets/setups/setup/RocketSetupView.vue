@@ -24,9 +24,6 @@
 					<v-divider></v-divider>
 				</v-sheet>
 			</v-col>
-			<!-- <v-col cols="12">
-				<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
-			</v-col> -->
 			<!-- <v-col 
 				v-if="stages"
 				cols="12" sm="6"
@@ -59,7 +56,7 @@
 			</v-col> -->
 			<v-col 
 				v-if="length"
-				cols="3"
+				cols="3" md="2"
 			>
 				<VtTextField
 					v-model="length"
@@ -69,7 +66,7 @@
 			</v-col>
 			<v-col 
 				v-if="weight"
-				cols="3"
+				cols="3" md="2"
 			>
 				<VtTextField
 					v-model="weight"
@@ -79,7 +76,7 @@
 			</v-col>
 			<v-col 
 				v-if="cg"
-				cols="4" sm="3"
+				cols="4" sm="3" md="2"
 			>
 				<VtTextField
 					v-model="cg"
@@ -89,7 +86,7 @@
 			</v-col>
 			<v-col 
 				v-if="cp"
-				cols="4" sm="3"
+				cols="4" sm="3" md="2"
 			>
 				<VtTextField
 					v-model="cp"
