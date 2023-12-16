@@ -102,24 +102,11 @@ export function useLaunchesBaseComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
-		organizations,
-		organizationName,
-		organizationNames
+		organizations
 	} = useOrganizationsUtilityComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypes
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);
@@ -227,6 +214,25 @@ export function useLaunchesBaseComponent(props, context, options) {
 		else if (item.rocket && !String.isNullOrEmpty(item.rocket.name))
 			output += item.rocket.name;
 
+		// // let date = LibraryCommonUtility.getDateHuman(item.date);
+		// let location = '';
+		// if (item.location) {
+		// 	location = item.location.name;
+		// 	if (item.location.iteration) {
+		// 		let iteration = '';
+		// 		if (item.location.iteration.number)
+		// 			iteration += '#' + item.location.iteration.number + ' ';
+		// 		if (item.location.iteration.year)
+		// 			iteration += '(' + item.location.iteration.year + ')';
+		// 			location += ' ' + iteration;
+		// 	}
+		// }
+		
+		// return `${output} @ ${location.trim()}`;
+
+		return `${output}`
+	};
+	const launchTitleLocation = (item) => {
 		// let date = LibraryCommonUtility.getDateHuman(item.date);
 		let location = '';
 		if (item.location) {
@@ -241,7 +247,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 			}
 		}
 		
-		return `${output} @ ${location.trim()}`;
+		return location.trim();
 	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
@@ -367,6 +373,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		launchStatusColor,
 		launchStatusIcon,
 		launchTitle,
+		launchTitleLocation,
 		resetAdditional,
 		selectLocation,
 		selectRocket,

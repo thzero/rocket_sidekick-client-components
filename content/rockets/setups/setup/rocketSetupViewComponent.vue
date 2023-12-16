@@ -1,8 +1,6 @@
 <script>
 import { computed } from 'vue';
 
-import AppUtilityConstants from '@/utility/constants';
-
 import { useContentBaseComponent } from '@/components/content/contentBase';
 import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
@@ -24,28 +22,23 @@ export function useRocketSetupViewComponent(props, context, options) {
 	} = useContentBaseComponent(props, context, options);
 	
 	const {
-		motorDiameters,
 		motorImpulseClasses,
+		motorMountDiameters,
 		motorCaseInfo,
-		motorDiameter,
-		motorName,
+		motorMountDiameter,
+		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
 		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,
 		rocketManufacturer,
-		rocketMotor,
 		rocketMotors,
 		rocketStagePrimary,
 		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
 		rocketWeight
 	} = useRocketsUtilityComponent(props, context, options);
 
@@ -53,6 +46,9 @@ export function useRocketSetupViewComponent(props, context, options) {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
 		return rocketCg(props.detailItem.stages);
+	});
+	const coverUrl = computed(() => {
+		return displayItem.value && displayItem.value.rocket ? displayItem.value.rocket.coverUrl : '';
 	});
 	const cp = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
@@ -98,6 +94,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 		let temp2;
 		let temp3;
 		let temp4;
+		let temp5;
 		let count;
 		for (const stage of props.detailItem.stages) {
 			temp = {
@@ -108,6 +105,13 @@ export function useRocketSetupViewComponent(props, context, options) {
 			for (const motor of stage.motors) {
 				temp1 = props.detailItem.motors.find(l => l.motorId === motor.motorId);
 				if (!temp1)
+					continue;
+				
+				temp5 = props.detailItem.rocket.stages.find(l => l.index === stage.index);
+				if (!temp5)
+					continue;
+				temp5 = temp5.motors.find(l => l.index === motor.index);
+				if (!temp5)
 					continue;
 
 				count = null;
@@ -126,7 +130,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 				if (temp2)
 					motorCaseName += temp2.manufacturer + ' ' + temp2.name;
 
-				temp.motors.push({ index: motor.index + 1, name: motorName, designation: temp1.designation, manufacturerAbbrev: temp1.manufacturerAbbrev, caseName: motorCaseName });
+				temp.motors.push({ index: motor.index + 1, name: motorName, designation: temp5.designation, diameter: temp5.diameter + 'mm', manufacturerAbbrev: temp1.manufacturerAbbrev, caseName: motorCaseName });
 			}
 		}
 		return output;
@@ -160,6 +164,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 		sortByOrder,
 		target,
 		cg,
+		coverUrl,
 		cp,
 		diameter,
 		displayItem,
@@ -170,7 +175,8 @@ export function useRocketSetupViewComponent(props, context, options) {
 		stageRocketMotors,
 		stages,
 		weight,
-		motorUrl
+		motorUrl,
+		rocketMotors
 	};
 };
 </script>

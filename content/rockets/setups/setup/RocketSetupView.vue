@@ -6,11 +6,16 @@
 		<!-- {{ stagePrimary }} -->
 		<!-- {{ stagePrimaryRocket }} -->
 		<!-- length {{ length }} -->
-		<v-row dense
-			v-if="displayItem.description"
-		>
-			<v-col cols="12">
-				<VtMarkdown v-model="displayItem.description" :use-github=false />
+		<v-row dense>
+			<v-col>
+				<img
+					:src="coverUrl"
+					style="width: 150px;display: block;margin-left: auto; margin-right: auto; float: right;"
+				/>
+				<VtMarkdown 
+					v-if="displayItem.description"
+					v-model="displayItem.description" :use-github=false 
+				/>
 			</v-col>
 		</v-row>
 		<v-row dense>
@@ -160,7 +165,7 @@
 							{{ item2.caseName }}
 						</v-col>
 					</v-row> -->
-					<a style="color: white" :href="motorUrl(item2)" target="_blank">{{ item2.name }}</a> {{ $t('strings.content.rockets.in') }} {{ item2.caseName }}
+					{{ item2.diameter }} {{ $t('strings.content.rockets.with') }} <a style="color: white" :href="motorUrl(item2)" target="_blank">{{ item2.name }}</a> {{ $t('strings.content.rockets.in') }} {{ item2.caseName }}
 				</v-sheet>
 			</v-col>
 		</v-row>
@@ -174,7 +179,6 @@ import { useRocketSetupViewComponentProps } from '@/components/content/rockets/s
 import ContentHeader from '@/components/content/Header';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
-import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
@@ -183,7 +187,6 @@ export default {
 		ContentHeader,
 		VtMarkdown,
 		VtSelect,
-		VtTextArea,
 		VtTextField
 	},
 	props: {
@@ -204,6 +207,7 @@ export default {
 			sortByOrder,
 			target,
 			cg,
+			coverUrl,
 			cp,
 			diameter,
 			displayItem,
@@ -214,7 +218,8 @@ export default {
 			stageRocketMotors,
 			stages,
 			weight,
-			motorUrl
+			motorUrl,
+			rocketMotors
 		} = useRocketSetupViewComponent(props, context);
 
 		return {
@@ -231,6 +236,7 @@ export default {
 			sortByOrder,
 			target,
 			cg,
+			coverUrl,
 			cp,
 			diameter,
 			displayItem,
@@ -241,7 +247,8 @@ export default {
 			stageRocketMotors,
 			stages,
 			weight,
-			motorUrl
+			motorUrl,
+			rocketMotors
 		};
 	}
 };

@@ -21,21 +21,18 @@ export function useRocketViewComponent(props, context, options) {
 	} = useContentBaseComponent(props, context, options);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
 		rocketCp,
 		rocketDiameter,
 		rocketLength,
 		rocketManufacturer,
-		rocketMotors,
 		rocketStagePrimary,
 		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
 		rocketWeight
 	} = useRocketsUtilityComponent(props, context, { manufacturers: props.manufacturers });
 
+	const coverUrl = computed(() => {
+		return displayItem.value ? displayItem.value.coverUrl : '';
+	});
 	const cp = computed(() => {
 		if (!props.detailItem)
 			return null;
@@ -88,6 +85,7 @@ export function useRocketViewComponent(props, context, options) {
 		serviceStore,
 		sortByOrder,
 		target,
+		coverUrl,
 		cp,
 		diameter,
 		displayItem,

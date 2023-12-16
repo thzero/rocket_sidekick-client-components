@@ -36,9 +36,11 @@ export function useMotorLookupDialogComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
-		motorDiameters,
 		motorImpulseClasses,
+		motorMountDiameters,
 		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
@@ -210,7 +212,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		success,
 		buttonsDialog,
 		buttonsForms,
-		motorDiameters,
+		motorMountDiameters,
 		motorImpulseClasses,
 		motorCaseInfo,
 		motorUrl,

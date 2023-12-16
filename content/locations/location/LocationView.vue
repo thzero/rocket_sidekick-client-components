@@ -4,16 +4,33 @@
 	>
 		[[ displayItem {{ displayItem }} ]]
 	</div>
-	<div
-		class="mt-4">
+	<div>
 		<v-row dense
 			v-if="displayItem.description"
 		>
 			<v-col>
-				<VtTextArea
-					v-model="displayItem.description"
+				<VtMarkdown v-model="displayItem.description" :use-github=false />
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col
+				v-if="displayItem.organizations"
+				class="mt-2"
+			>
+				<VtTextField
+					v-model="displayItemOrganizations"
+					:label="$t('forms.content.organizations.plural')"
 					:readonly="true"
-					:label="$t('forms.description')"
+				/>
+			</v-col>
+			<v-col
+				v-if="displayItem.rocketTypes"
+				class="mt-2"
+			>
+				<VtTextField
+					v-model="displayItemRocketTypeNames"
+					:label="$t('forms.content.rockets.level')"
+					:readonly="true"
 				/>
 			</v-col>
 		</v-row>
@@ -21,6 +38,7 @@
 			<v-col 
 				v-if="displayItemAddress"
 				cols="12" sm="6"
+				class="mt-2"
 			>
 				<VtTextField
 					v-model="displayItemAddress"
@@ -57,15 +75,14 @@
 			</v-col>
 		</v-row>
 		<v-row
-			v-if="displayItem.hasCoords && $vuetify.display.smAndDown"
+			v-if="hasCoords"
 			dense
 		>
 			<v-col>
 				<LocationMapping
 					:id="displayItem.id"
 					type="recovery"
-					:coordsLaunch="displayItemResultsCoordsLaunch"
-					:coordsRecovery="displayItemResultsCoordsRecovery"
+					:coords="[ Number(displayItem.coordsLat),  Number(displayItem.coordsLong) ]"
 				></LocationMapping>
 			</v-col>
 		</v-row>
@@ -78,8 +95,8 @@ import { useLocationViewComponentProps } from '@/components/content/locations/lo
 
 import LocationMapping from '@/components/content/locations/location/LocationMap';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
-import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
@@ -87,8 +104,8 @@ export default {
 	components: {
 		LocationMapping,
 		MeasurementUnitSelect2,
+		VtMarkdown,
 		VtSelect,
-		VtTextArea,
 		VtTextField
 	},
 	props: {
@@ -106,10 +123,11 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			organizations,
-			rocketTypes,
+			organizationNames,
 			displayItem,
 			displayItemAddress,
+			displayItemOrganizations,
+			displayItemRocketTypeNames,
 			hasCoords
 		} = useLocationViewComponent(props, context, options);
 
@@ -123,10 +141,11 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			organizations,
-			rocketTypes,
+			organizationNames,
 			displayItem,
 			displayItemAddress,
+			displayItemOrganizations,
+			displayItemRocketTypeNames,
 			hasCoords
 		};
 	}

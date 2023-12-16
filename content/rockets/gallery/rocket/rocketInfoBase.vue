@@ -36,16 +36,8 @@ export function useRocketInfoBaseComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const rocket = ref([]);

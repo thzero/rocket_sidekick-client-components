@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import RocketSetupStageData from 'rocket_sidekick_common/data/rockets/setups/stage';
@@ -149,18 +150,7 @@ export function useRocketSetupComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypes
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const {
@@ -206,6 +196,11 @@ export function useRocketSetupComponent(props, context, options) {
 	
 	const clickSearchRockets = async (correlationId) => {
 		dialogRocketLookupManager.value.open();
+	};
+	const clickViewRocket = async (item) => {
+		if (!item)
+			return;
+		LibraryClientUtility.$navRouter.push('/user/rocket/' + item.id);
 	};
 	const panelsKey = (value) => {
 		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;
@@ -371,6 +366,7 @@ export function useRocketSetupComponent(props, context, options) {
 		rocketId,
 		stages,
 		clickSearchRockets,
+		clickViewRocket,
 		panelsUpdated,
 		stagesPanelsUpdated,
 		selectRocket,

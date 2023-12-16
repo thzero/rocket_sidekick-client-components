@@ -97,135 +97,6 @@
 				/>
 			</v-col>
 		</v-row>
-		<!-- <v-row
-			dense
-		>
-			<v-col 
-				v-if="hasMotorInfo(0)"
-				cols="12"
-			>
-				<v-row
-					dense
-				>
-					<v-col 
-						cols="6" md="4"
-					>
-						<VtTextField
-							v-model="fromRocketStageMotor(0).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="6" md="4"
-					>
-						<VtTextField
-							v-model="motorInfo(0).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="12" md="4"
-					>
-						<VtTextField
-							v-model="motorCaseInfo(0).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motorCase.name2')"
-						/>
-					</v-col>
-				</v-row>
-			</v-col>
-		</v-row>
-		<v-row
-			dense
-		>
-			<v-col 
-				v-if="hasMotorInfo(1)"
-				cols="12"
-			>
-				<v-row
-					dense
-				>
-					<v-col 
-						cols="6" md="4"
-					>
-						<VtTextField
-							v-model="fromRocketStageMotor(1).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="6" md="4"
-					>
-						<VtTextField
-							v-model="motorInfo(1).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="12" md="4"
-					>
-						<VtTextField
-							v-model="motorCaseInfo(1).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motorCase.name2')"
-						/>
-					</v-col>
-				</v-row>
-			</v-col>
-		</v-row>
-		<v-row
-			dense
-		>
-			<v-col 
-				v-if="hasMotorInfo(2)"
-				cols="12"
-			>
-				<v-row
-					dense
-				>
-					<v-col 
-						cols="6" md="4"
-					>
-						<VtTextField
-							v-model="fromRocketStageMotor(2).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="6" md="4"
-					>
-						<VtTextField
-							v-model="motorInfo(2).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motor.name')"
-						/>
-					</v-col>
-					<v-col 
-						cols="12" md="4"
-					>
-						<VtTextField
-							v-model="motorCaseInfo(2).value"
-							:readonly="true"
-							:hide-details="true"
-							:label="$t('forms.content.parts.motorCase.name2')"
-						/>
-					</v-col>
-				</v-row>
-			</v-col>
-		</v-row> -->
 	</div>
 	<v-row dense>
 		<v-col>
@@ -496,14 +367,14 @@
 		:signal="dialogPartsSearchStreamersManager.signal"
 		:part-types="manufacturerTypeStreamer"
 		@close="dialogPartsSearchStreamersManager.cancel()"
-		@ok="selectStreamer"
+		@select="selectStreamer"
 	/>
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchTrackersRef"
 		:signal="dialogPartsSearchTrackersManager.signal"
 		:part-types="manufacturerTypeTracker"
 		@close="dialogPartsSearchTrackersManager.cancel()"
-		@ok="selectTracker"
+		@select="selectTracker"
 	/>
 	<VtConfirmationDialog
 		ref="dialogPartsDeleteRef"
@@ -595,8 +466,8 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			motorDiameters,
-			motorDiameter,
+			motorMountDiameters,
+			motorMountDiameter,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogPartsEditMessage,
@@ -649,7 +520,6 @@ export default {
 			handleTrackerDelete,
 			handleTrackerEdit,
 			hasMotorInfo,
-			motorCaseInfo,
 			motorInfo,
 			panelsUpdated,
 			selectAltimeter,
@@ -706,8 +576,8 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			motorDiameters,
-			motorDiameter,
+			motorMountDiameters,
+			motorMountDiameter,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogPartsEditMessage,
@@ -766,7 +636,6 @@ export default {
 			handleTrackerDelete,
 			handleTrackerEdit,
 			hasMotorInfo,
-			motorCaseInfo,
 			motorInfo,
 			panelsUpdated,
 			selectAltimeter,

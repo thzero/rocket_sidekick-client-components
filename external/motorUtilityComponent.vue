@@ -22,11 +22,11 @@ export function useMotorUtilityComponent(props, context, options) {
 
 	const serviceExternalMotorSearch = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_EXTERNAL_MOTOR_SEARCH);
 
-	const motorDiameters = computed(() => {
-		return ['', '13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
-	});
 	const motorImpulseClasses = computed(() => {
 		return ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'].map((item) => { return { id: item, name: item }; });
+	});
+	const motorMountDiameters = computed(() => {
+		return ['', '13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
 	});
 
 	const motorCaseInfo = (motor) => {
@@ -42,13 +42,13 @@ export function useMotorUtilityComponent(props, context, options) {
 
 		return '';
 	};
-	const motorDiameter = (diameter) => {
+	const motorMountDiameter = (diameter) => {
 		return `${diameter}${LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement')}`;
 	};
-	const motorName = (item) => {
+	const motorMountName = (item) => {
 		if (!item)
 			return null;
-		const diameter = item.diameter ? motorDiameter(item.diameter) : '';
+		const diameter = item.diameter ? motorMountDiameter(item.diameter) : '';
 		const count = item.count ? item.count : null;
 		if (count > 1)
 			return `${diameter}${diameter ? ' x ' : ''}${count}`;
@@ -59,11 +59,11 @@ export function useMotorUtilityComponent(props, context, options) {
 	};
 
 	return {
-		motorDiameters,
 		motorImpulseClasses,
+		motorMountDiameters,
 		motorCaseInfo,
-		motorDiameter,
-		motorName,
+		motorMountDiameter,
+		motorMountName,
 		motorUrl
 	};
 };

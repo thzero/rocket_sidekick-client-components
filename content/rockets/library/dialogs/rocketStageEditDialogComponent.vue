@@ -50,9 +50,11 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	} = useDetailFormDialogComponent(props, context, options);
 
 	const {
-		motorDiameters,
 		motorImpulseClasses,
+		motorMountDiameters,
 		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
@@ -88,8 +90,8 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		return LibraryClientUtility.$trans.t('forms.content.rockets.name') + ' ' + LibraryClientUtility.$trans.t('forms.content.rockets.stage.name') + ' ' + 
 		stageIndex.value;
 	});
-	const motorDiameters0 = computed(() => {
-		return motorDiameters.value.filter(l => !(l.id === '' || l.id === null));
+	const motorMountDiameters0 = computed(() => {
+		return motorMountDiameters.value.filter(l => !(l.id === '' || l.id === null));
 	});
 	const stageIndex = computed(() => {
 		return detailItemIndex.value ? detailItemIndex.value + 1 : null;
@@ -224,7 +226,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		dialogClose,
 		dialogOk,
 		isEditable,
-		motorDiameters,
+		motorMountDiameters,
 		detailItemCp,
 		detailItemCpFrom,
 		detailItemCpMeasurementUnitId,
@@ -258,7 +260,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		resetEditData,
 		setEditData,
 		displayName,
-		motorDiameters0,
+		motorMountDiameters0,
 		stageIndex,
 		motorCount,
 		preCompleteOk,

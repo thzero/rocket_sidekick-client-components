@@ -100,18 +100,7 @@ export function useLocationsBaseComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypes
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const {
@@ -288,7 +277,6 @@ export function useLocationsBaseComponent(props, context, options) {
 		buttonsForms,
 		rocketTypes,
 		organizations,
-		organizationNames,
 		debug,
 		locationsListing,
 		filterItemName,

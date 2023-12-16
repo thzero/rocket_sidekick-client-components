@@ -64,7 +64,7 @@
 										ref="filterItemMotorDiameterRef"
 										v-model="filterItemMotorDiameter"
 										vid="filterItemMotorDiameter"
-										:items="motorDiameters"
+										:items="motorMountDiameters"
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.diameter')"
 									/>
@@ -301,7 +301,7 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			motorDiameters,
+			motorMountDiameters,
 			motorImpulseClasses,
 			motorCaseInfo,
 			motorUrl,
@@ -366,7 +366,7 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			motorDiameters,
+			motorMountDiameters,
 			motorImpulseClasses,
 			motorCaseInfo,
 			motorUrl,

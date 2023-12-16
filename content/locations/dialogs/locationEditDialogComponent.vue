@@ -34,18 +34,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 	} = useDetailFormDialogComponent(props, context, options);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypes
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const {

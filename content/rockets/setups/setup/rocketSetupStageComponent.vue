@@ -42,10 +42,11 @@ export function useRocketSetupStageComponent(props, context, options) {
 	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
-		motorDiameters,
 		motorImpulseClasses,
-		// motorCaseInfo,
-		motorDiameter,
+		motorMountDiameters,
+		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
@@ -206,13 +207,13 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const motorCases = computed(() => {
 		const output = [];
 		if (hasMotorInfo(0))
-			output.push(motorCaseInfo(0));
+			output.push(motorCaseInfoByIndex(0));
 		if (hasMotorInfo(1))
-			output.push(motorCaseInfo(1));
+			output.push(motorCaseInfoByIndex(1));
 		if (hasMotorInfo(2))
-			output.push(motorCaseInfo(2));
+			output.push(motorCaseInfoByIndex(2));
 		if (hasMotorInfo(3))
-			output.push(motorCaseInfo(3));
+			output.push(motorCaseInfoByIndex(3));
 		return output;
 	});
 	const motors = computed(() => {
@@ -340,7 +341,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		const temp = fromRocketStageMotorI(index);
 		if (!temp)
 			return { value: null };
-		const diameter = temp.diameter ? motorDiameter(temp.diameter) : null;
+		const diameter = temp.diameter ? motorMountDiameter(temp.diameter) : null;
 		const count = temp.count ? temp.count : null;
 		return { value: `${diameter}${diameter ? ' x ' : ''}${count}` };
 	};
@@ -463,7 +464,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		const fromRocket = fromRocketStageMotor(index);
 		return ((motor && motor.motorId) || (fromRocket && fromRocket.diameter));
 	};
-	const motorCaseInfo = (index) => {
+	const motorCaseInfoByIndex = (index) => {
 		const motor = getMotor(index);
 		if (!motor)
 			return { value: '' };
@@ -487,7 +488,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		// return { index: index, value: output.full, name: output.name, manufacturer: output.manufacturer, typeId: AppCommonConstants.Rocketry.PartTypes.motor };
 		output.typeId = AppCommonConstants.Rocketry.PartTypes.motor;
 		output.motor = fromRocketStageMotor(index).value;
-		output.motorCase = motorCaseInfo(index).value;
+		output.motorCase = motorCaseInfoByIndex(index).value;
 		return output;
 	};
 	const panelsKey = (type) => {
@@ -696,8 +697,8 @@ export function useRocketSetupStageComponent(props, context, options) {
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		motorDiameters,
-		motorDiameter,
+		motorMountDiameters,
+		motorMountDiameter,
 		dialogPartsDeleteManager,
 		dialogPartsDeleteMessage,
 		dialogPartsEditMessage,
@@ -750,7 +751,6 @@ export function useRocketSetupStageComponent(props, context, options) {
 		handleTrackerDelete,
 		handleTrackerEdit,
 		hasMotorInfo,
-		motorCaseInfo,
 		motorInfo,
 		panelsUpdated,
 		selectAltimeter,

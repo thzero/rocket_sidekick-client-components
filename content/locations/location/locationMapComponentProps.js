@@ -1,10 +1,5 @@
 export const useLocationMapComponentProps = {
-	coordsLaunch: {
-		type: Array,
-		required: true,
-		value: null
-	},
-	coordsRecovery: {
+	coords: {
 		type: Array,
 		required: true,
 		value: null

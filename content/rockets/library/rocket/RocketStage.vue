@@ -14,16 +14,15 @@
 	</div>
 	<v-row dense>
 		<v-col
-			cols="9"
+			cols="10" md="11"
 		>
-			<VtTextArea
-				v-model="displayItem.description"
-				:readonly="true"
-				:label="$t('forms.description')"
-				:rows="0"
+			<VtMarkdown 
+				v-model="displayItem.description" :use-github=false 
 			/>
 		</v-col>
-		<v-col cols="3">
+		<v-col 
+			cols="2" md="1"
+		>
 			<VtTextField
 				v-model="stageIndex"
 				:readonly="true"
@@ -387,10 +386,10 @@ import ParachutePanelTitle from '@/components/content/parts/parachutes/Parachute
 import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
 
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
-import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
@@ -403,8 +402,8 @@ export default {
 		RocketPartsLookupDialog,
 		StreamerPanelTitle,
 		VtConfirmationDialog,
+		VtMarkdown,
 		VtSelect,
-		VtTextArea,
 		VtTextField
 	},
 	props: {
@@ -449,8 +448,8 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			motorDiameters,
-			motorDiameter,
+			motorMountDiameters,
+			motorMountDiameter,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,
@@ -535,8 +534,8 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
-			motorDiameters,
-			motorDiameter,
+			motorMountDiameters,
+			motorMountDiameter,
 			dialogPartsDeleteManager,
 			dialogPartsDeleteMessage,
 			dialogAltimetersSearchManager,

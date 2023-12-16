@@ -138,18 +138,7 @@ export function useLocationComponent(props, context, options) {
 	} = useOrganizationsUtilityComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypes
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const {
@@ -256,8 +245,8 @@ export function useLocationComponent(props, context, options) {
 		detailItemData.value.address.postalCode = detailItemAddressPostalCode.value;
 		detailItemData.value.address.stateProvince = detailItemAddressStateProvince.value;
 
-		detailItemData.value.coordsLat = detailItemCoordsLat.value;
-		detailItemData.value.coordsLong = detailItemCoordsLong.value;
+		detailItemData.value.coordsLat = Number(detailItemCoordsLat.value);
+		detailItemData.value.coordsLong = Number(detailItemCoordsLong.value);
 
 		detailItemData.value.experimental = detailItemExperimental.value;
 		detailItemData.value.public = detailItemIsPublic.value;

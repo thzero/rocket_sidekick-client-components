@@ -52,10 +52,11 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	} = useDetailFormDialogComponent(props, context, options);
 
 	const {
-		motorDiameters,
 		motorImpulseClasses,
+		motorMountDiameters,
 		motorCaseInfo,
-		motorDiameter,
+		motorMountDiameter,
+		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
@@ -202,7 +203,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 				if (!temp)
 					continue;
 
-				diameter = item.diameter ? motorDiameter(item.diameter) : null;
+				diameter = item.diameter ? motorMountDiameter(item.diameter) : null;
 				count = item.count ? item.count : null;
 				temp.motorInfo.value = `${diameter}${diameter ? ' x ' : ''}${count}`;
 
@@ -349,7 +350,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		dialogError,
 		dialogClose,
 		dialogOk,
-		motorDiameters,
+		motorMountDiameters,
 		isEditable,
 		measurementUnitsLengthDefaultId,
 		measurementUnitsLengthType,

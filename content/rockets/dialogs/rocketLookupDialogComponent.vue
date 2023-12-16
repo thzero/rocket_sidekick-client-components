@@ -48,25 +48,14 @@ export function useRocketLookupDialogComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypes
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 	
-	const dialogSelectRocketConfirmManager = ref(new DialogSupport());
-	const dialogSelectRocketConfirmMessage = ref(LibraryClientUtility.$trans.t(`messages.rocketSetups.rocket.replace_confirm`));
-	const dialogSelectRocketConfirmParams = ref(null);
+	const dialogSelectConfirmManager = ref(new DialogSupport());
+	const dialogSelectConfirmMessage = ref(LibraryClientUtility.$trans.t(`messages.rocketSetups.rocket.replace_confirm`));
+	const dialogSelectConfirmParams = ref(null);
 	const filterItemDiameterMax = ref(null);
 	const filterItemDiameterMin = ref(null);
 	const filterItemDiameterMeasurementUnitId = ref(null);
@@ -88,17 +77,17 @@ export function useRocketLookupDialogComponent(props, context, options) {
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
 		return invalid;
 	};
-	const clickRocketSearch = async () => {
+	const clickSearch = async () => {
 		await dialogRocketLookup.value.submit(correlationId());
 	};
-	const clickRocketSearchClear = async () => {
+	const clickSearchClear = async () => {
 		await dialogRocketLookup.value.reset(correlationId(), null, true);
 		await dialogRocketLookup.value.submit(correlationId());
 	};
-	const clickRocketSelect = async (item) => {
+	const clickSelect = async (item) => {
 		if (props.rocketId) {
-			dialogSelectRocketConfirmParams.value = item;
-			dialogSelectRocketConfirmManager.value.open();
+			dialogSelectConfirmParams.value = item;
+			dialogSelectConfirmManager.value.open();
 			return;
 		}
 		
@@ -113,30 +102,30 @@ export function useRocketLookupDialogComponent(props, context, options) {
 		await serviceStore.dispatcher.requestPartsRocketSearchReset(correlationIdI);
 		await preCompleteOk(correlationIdI);
 	};
-	const dialogSelectRocketConfirmCancel = async () => {
+	const dialogSelectConfirmCancel = async () => {
 		try {
-			dialogSelectRocketConfirmManager.value.cancel();
+			dialogSelectConfirmManager.value.cancel();
 		}
 		finally {
-			dialogSelectRocketConfirmParams.value = null;
+			dialogSelectConfirmParams.value = null;
 		}
 	};
-	const dialogSelectRocketConfirmError = async () => {
+	const dialogSelectConfirmError = async () => {
 		try {
-			dialogSelectRocketConfirmManager.value.cancel();
+			dialogSelectConfirmManager.value.cancel();
 		}
 		finally {
-			dialogSelectRocketConfirmParams.value = null;
+			dialogSelectConfirmParams.value = null;
 		}
 	};
-	const dialogSelectRocketConfirmOk = async () => {
+	const dialogSelectConfirmOk = async () => {
 		try {
-			context.emit('select', dialogSelectRocketConfirmParams.value);
-			dialogSelectRocketConfirmManager.value.ok();
+			context.emit('select', dialogSelectConfirmParams.value);
+			dialogSelectConfirmManager.value.ok();
 			return success(correlationId());
 		}
 		finally {
-			dialogSelectRocketConfirmParams.value = null;
+			dialogSelectConfirmParams.value = null;
 		}
 	};
 	const manufacturer = (item) => {
@@ -227,10 +216,9 @@ export function useRocketLookupDialogComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		rocketTypes,
-		serviceStore,
-		dialogSelectRocketConfirmManager,
-		dialogSelectRocketConfirmMessage,
-		dialogSelectRocketConfirmParams,
+		dialogSelectConfirmManager,
+		dialogSelectConfirmMessage,
+		dialogSelectConfirmParams,
 		filterItemDiameterMax,
 		filterItemDiameterMin,
 		filterItemDiameterMeasurementUnitId,
@@ -245,14 +233,14 @@ export function useRocketLookupDialogComponent(props, context, options) {
 		results,
 		manufacturers,
 		buttonOkDisabledOverride,
-		clickRocketSearch,
-		clickRocketSearchClear,
-		clickRocketSelect,
+		clickSearch,
+		clickSearchClear,
+		clickSelect,
 		close,
 		dialogResetOk,
-		dialogSelectRocketConfirmCancel,
-		dialogSelectRocketConfirmError,
-		dialogSelectRocketConfirmOk,
+		dialogSelectConfirmCancel,
+		dialogSelectConfirmError,
+		dialogSelectConfirmOk,
 		manufacturer,
 		preCompleteOk,
 		resetAdditional,

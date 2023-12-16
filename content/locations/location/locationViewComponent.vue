@@ -21,24 +21,11 @@ export function useLocationViewComponent(props, context, options) {
 	} = useBaseComponent(props, context, options);
 
 	const {
-		organizations,
-		organizationName,
 		organizationNames
 	} = useOrganizationsUtilityComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypeNames
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const displayItem = computed(() => {
@@ -47,33 +34,24 @@ export function useLocationViewComponent(props, context, options) {
 	const displayItemAddress = computed(() => {
 		if (!displayItem.value)
 			return '';
-
-		// let temp = '';
-		// if (displayItem.value.address) {
-		// 	if (!String.isNullOrEmpty(displayItem.value.address.city))
-		// 		temp += displayItem.value.address.city;
-		// 	if (!String.isNullOrEmpty(temp))
-		// 		temp += ', ';
-		// 	if (!String.isNullOrEmpty(displayItem.value.address.stateProvince))
-		// 		temp += displayItem.value.address.stateProvince;
-		// 	if (!String.isNullOrEmpty(temp))
-		// 		temp += ' ';
-		// 	if (!String.isNullOrEmpty(displayItem.value.address.country))
-		// 		temp += displayItem.value.address.country;
-		// }
-		// return temp;
 		return AppUtility.address(displayItem.value.address);
 	});
+	const displayItemOrganizations = computed(() => {
+		return rocketTypeNames(displayItem.value.rocketTypes);
+	});
+	const displayItemRocketTypeNames = computed(() => {
+		return rocketTypeNames(displayItem.value.rocketTypes);
+	});
+
 	const hasCoords = computed(() => {
-		if (!displayItem.value || !displayItem.value.results)
+		if (!displayItem.value)
 			return false;
 
 		return (
-			displayItem.value.results.coordsLat || 
-			displayItem.value.results.coordsLong
+			displayItem.value.coordsLat &&
+			displayItem.value.coordsLong
 		);
 	});
-
 	return {
 		correlationId,
 		error,
@@ -84,10 +62,11 @@ export function useLocationViewComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
-		organizations,
-		rocketTypes,
+		organizationNames,
 		displayItem,
 		displayItemAddress,
+		displayItemOrganizations,
+		displayItemRocketTypeNames,
 		hasCoords
 	};
 };

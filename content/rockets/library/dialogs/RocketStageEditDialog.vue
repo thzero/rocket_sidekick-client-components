@@ -211,7 +211,7 @@
 					ref="detailItemMotorDiameter0Ref"
 					v-model="detailItemMotorDiameter0"
 					vid="detailItemMotorDiameter0"
-					:items="motorDiameters0"
+					:items="motorMountDiameters0"
 					:validation="validation"
 					:label="$t('forms.content.rockets.motor.diameter') + ' #1'"
 				/>
@@ -230,7 +230,7 @@
 					ref="detailItemMotorDiameter1Ref"
 					v-model="detailItemMotorDiameter1"
 					vid="detailItemMotorDiameter1"
-					:items="motorDiameters"
+					:items="motorMountDiameters"
 					:validation="validation"
 					:label="$t('forms.content.rockets.motor.diameter') + ' #2'"
 				/>
@@ -249,7 +249,7 @@
 					ref="detailItemMotorDiameter2Ref"
 					v-model="detailItemMotorDiameter2"
 					vid="detailItemMotorDiameter2"
-					:items="motorDiameters"
+					:items="motorMountDiameters"
 					:validation="validation"
 					:label="$t('forms.content.rockets.motor.diameter') + ' #3'"
 				/>
@@ -313,7 +313,7 @@ export default {
 			dialogError,
 			dialogClose,
 			dialogOk,
-			motorDiameters,
+			motorMountDiameters,
 			isEditable,
 			detailItemCp,
 			detailItemCpFrom,
@@ -348,7 +348,7 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
-			motorDiameters0,
+			motorMountDiameters0,
 			stageIndex,
 			motorCount,
 			preCompleteOk,
@@ -364,7 +364,7 @@ export default {
 			dialogError,
 			dialogClose,
 			dialogOk,
-			motorDiameters,
+			motorMountDiameters,
 			isEditable,
 			detailItemCp,
 			detailItemCpFrom,
@@ -399,7 +399,7 @@ export default {
 			resetEditData,
 			setEditData,
 			displayName,
-			motorDiameters0,
+			motorMountDiameters0,
 			stageIndex,
 			motorCount,
 			preCompleteOk,

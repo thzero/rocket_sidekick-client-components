@@ -7,10 +7,16 @@
 		<!-- {{ stagePrimary }}
 		length {{ length }} -->
 		<v-row dense
-			v-if="displayItem.description"
 		>
 			<v-col>
-				<VtMarkdown v-model="displayItem.description" :use-github=false />
+				<img
+					:src="coverUrl"
+					style="width: 150px;display: block;margin-left: auto; margin-right: auto; float: right;"
+				/>
+				<VtMarkdown 
+					v-if="displayItem.description"
+					v-model="displayItem.description" :use-github=false 
+				/>
 			</v-col>
 		</v-row>
 		<v-row dense>
@@ -117,7 +123,6 @@ import { useRocketViewComponentProps } from '@/components/content/rockets/librar
 import ContentHeader from '@/components/content/Header';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
-import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
@@ -126,7 +131,6 @@ export default {
 		ContentHeader,
 		VtMarkdown,
 		VtSelect,
-		VtTextArea,
 		VtTextField
 	},
 	props: {
@@ -146,6 +150,7 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			coverUrl,
 			cp,
 			diameter,
 			displayItem,
@@ -169,6 +174,7 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			coverUrl,
 			cp,
 			diameter,
 			displayItem,
