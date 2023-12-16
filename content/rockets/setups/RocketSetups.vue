@@ -172,12 +172,12 @@
 									class="bg-primary"
 								>
 									<slot name="panelTitle" :item="item">
-										&nbsp;{{ item.rocket.name }}
+										&nbsp;<a class="text-contrast" :href="'/user/rockets/' + item.rocket.id">{{ item.rocket.name }}</a>
 									</slot>
 									<!-- <div class="float-right">{{ manufacturer(item) }}</div> -->
 									<div class="float-right">
-										{{ rocketDiameter(item.rocket.stages) }},
-										{{ rocketMotors(item.rocket) }}
+										{{ rocketDiameter(item.rocket.stages) }}
+										<!-- {{ rocketMotors(item.rocket) }} -->
 									</div>
 									<img :src="rocketTypeIcon(item.rocket)" style="height: 48px; float: left;" />
 								</v-card-title>

@@ -1,6 +1,6 @@
-import { between, decimal, helpers, maxLength, minLength, required, url } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required, requiredIf, url } from '@vuelidate/validators';
 
-export function useLaunchEditValidation(nameRequired) { 
+export function useLaunchEditValidation(self, nameRequired) { 
 	const validation = {
 		detailItemDate: { 
 			required,
@@ -58,6 +58,12 @@ export function useLaunchEditValidation(nameRequired) {
 		detailItemTemperature: { $autoDirty: true },
 		detailItemRocketId: { 
 			required,
+			$autoDirty: true 
+		},
+		detailItemRocketSetupId: {
+			requiredIfRocket: requiredIf((value, siblings) => { 
+				return self.detailItemRocketId;
+			}),
 			$autoDirty: true 
 		},
 		detailItemSuccess: { 

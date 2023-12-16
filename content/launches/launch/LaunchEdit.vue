@@ -106,7 +106,7 @@
 						vid="detailItemRocketName"
 						:validation="validation"
 						:errorsReadonly="validation.detailItemRocketId.$silentErrors"
-						:label="$t('forms.content.rockets.name')"
+						:label="$t('forms.content.launches.rocket.title')"
 						:readonly="true"
 					/>
 					<v-btn
@@ -114,9 +114,52 @@
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.add"
 						:color="buttonsForms.color.add"
-						@click="clickSearchRockets(item)"
+						@click="clickSearchRockets()"
 					>
-						{{ $t('buttons.select') + ' ' + $t('forms.content.rockets.name') }}
+						{{ $t('buttons.select') + ' ' + $t('forms.content.launches.rocket.title') }}
+					</v-btn>
+					<v-btn
+						v-if="!isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						@click="clickViewRocket(detailItemData)"
+					>
+						{{ $t('buttons.link') }}
+					</v-btn>
+				</div>
+			</v-col>
+			<v-col 
+				v-if="detailItemRocketId"
+				cols="12"
+			>
+				<div class="d-flex">
+					<VtTextFieldWithValidation
+						ref="detailItemRocketSetupNameRef"
+						v-model="detailItemRocketSetupName"
+						vid="detailItemRocketSetupName"
+						:validation="validation"
+						:errorsReadonly="validation.detailItemRocketSetupId.$silentErrors"
+						:label="$t('forms.content.launches.rocketSetup.title')"
+						:readonly="true"
+					/>
+					<v-btn
+						v-if="isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
+						@click="clickSearchRocketSetups()"
+					>
+						{{ $t('buttons.select') + ' ' + $t('forms.content.launches.rocketSetup.title') }}
+					</v-btn>
+					<v-btn
+						v-if="!isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						@click="clickViewRocketSetup(detailItemData)"
+					>
+						{{ $t('buttons.link') }}
 					</v-btn>
 				</div>
 			</v-col>
@@ -513,6 +556,13 @@
 		@close="dialogRocketLookupManager.cancel()"
 		@select="selectRocket"
 	/>
+	<RocketSetupLookupDialog
+		ref="dialogRocketSetupLookupManagerRef"
+		:rocket-id="detailItemRocketId"
+		:signal="dialogRocketSetupLookupManager.signal"
+		@close="dialogRocketSetupLookupManager.cancel()"
+		@select="selectRocketSetup"
+	/>
 </template>
 
 <script>
@@ -530,6 +580,7 @@ import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2'
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
+import RocketSetupLookupDialog from '@/components/content/rockets/dialogs/RocketSetupLookupDialog';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtDateTimePickerFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtDatetimePickerFieldWithValidationTemp';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
@@ -548,6 +599,7 @@ export default {
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		RocketLookupDialog,
+		RocketSetupLookupDialog,
 		VtConfirmationDialog,
 		VtDateTimePickerFieldWithValidation,
 		VtFormControl,
@@ -623,6 +675,7 @@ export default {
 			markupHint,
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
+			dialogRocketSetupLookupManager,
 			detailItemAlbumUrl,
 			detailItemDate,
 			detailItemDescription,
@@ -656,6 +709,8 @@ export default {
 			detailItemResultsVelocityRecoveryMeasurementUnitsId,
 			detailItemRocketId,
 			detailItemRocketName,
+			detailItemRocketSetupId,
+			detailItemRocketSetupName,
 			detailItemSuccess,
 			detailItemTemperature,
 			detailItemTemperatureMeasurementUnitId,
@@ -671,8 +726,12 @@ export default {
 			locationIterations,
 			clickSearchLocations,
 			clickSearchRockets,
+			clickSearchRocketSetups,
+			clickViewRocket,
+			clickViewRocketSetup,
 			selectLocation,
 			selectRocket,
+			selectRocketSetup,
 			scope,
 			validation
 		} = useLaunchEditComponent(props, context, options);
@@ -738,6 +797,7 @@ export default {
 			markupHint,
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
+			dialogRocketSetupLookupManager,
 			detailItemAlbumUrl,
 			detailItemDate,
 			detailItemDescription,
@@ -771,6 +831,8 @@ export default {
 			detailItemResultsVelocityRecoveryMeasurementUnitsId,
 			detailItemRocketId,
 			detailItemRocketName,
+			detailItemRocketSetupId,
+			detailItemRocketSetupName,
 			detailItemSuccess,
 			detailItemTemperature,
 			detailItemTemperatureMeasurementUnitId,
@@ -786,14 +848,18 @@ export default {
 			locationIterations,
 			clickSearchLocations,
 			clickSearchRockets,
+			clickSearchRocketSetups,
+			clickViewRocket,
+			clickViewRocketSetup,
 			selectLocation,
 			selectRocket,
+			selectRocketSetup,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useLaunchEditValidation(false)), {});
+		return Object.assign(LibraryCommonUtility.cloneDeep(useLaunchEditValidation(this, false)), {});
 	}
 };
 </script>

@@ -146,14 +146,14 @@
 								:variant="buttonsForms.variant.clear"
 								:color="buttonsForms.color.clear"
 								:loading="isLoading"
-								@click="clickRocketSearchClear"
+								@click="clickSearchClear"
 							>{{ $t('buttons.clear') }}</v-btn>
 							<v-btn
 								:variant="buttonsForms.variant.ok"
 								:color="buttonsForms.color.ok"
 								:disabled="buttonOkDisabled"
 								:loading="isLoading"
-								@click="clickRocketSearch"
+								@click="clickSearch"
 							>{{ $t('buttons.search') }}</v-btn>
 						</v-card-actions>
 					</v-card>
@@ -191,7 +191,7 @@
 							<v-btn
 								:variant="buttonsForms.variant.default"
 								:color="buttonsForms.color.default"
-								@click="clickRocketSelect(item)"
+								@click="clickSelect(item)"
 							>
 								{{ $t('buttons.select') }}
 							</v-btn>
@@ -209,13 +209,13 @@
 		@ok="dialogResetOk"
 	/>
 	<VtConfirmationDialog
-		ref="dialogSelectRocketConfirmRef"
-		:message="dialogSelectRocketConfirmMessage"
+		ref="dialogSelectConfirmRef"
+		:message="dialogSelectConfirmMessage"
 		:messageRaw=true
-		:signal="dialogSelectRocketConfirmManager.signal"
-		@cancel="dialogSelectRocketConfirmCancel"
-		@error="dialogSelectRocketConfirmError"
-		@ok="dialogSelectRocketConfirmOk"
+		:signal="dialogSelectConfirmManager.signal"
+		@cancel="dialogSelectConfirmCancel"
+		@error="dialogSelectConfirmError"
+		@ok="dialogSelectConfirmOk"
 	/>
 </template>
 
@@ -274,10 +274,9 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			rocketTypes,
-			serviceStore,
-			dialogSelectRocketConfirmManager,
-			dialogSelectRocketConfirmMessage,
-			dialogSelectRocketConfirmParams,
+			dialogSelectConfirmManager,
+			dialogSelectConfirmMessage,
+			dialogSelectConfirmParams,
 			filterItemDiameterMax,
 			filterItemDiameterMin,
 			filterItemDiameterMeasurementUnitId,
@@ -292,14 +291,14 @@ export default {
 			results,
 			manufacturers,
 			buttonOkDisabledOverride,
-			clickRocketSearch,
-			clickRocketSearchClear,
-			clickRocketSelect,
+			clickSearch,
+			clickSearchClear,
+			clickSelect,
 			close,
 			dialogResetOk,
-			dialogSelectRocketConfirmCancel,
-			dialogSelectRocketConfirmError,
-			dialogSelectRocketConfirmOk,
+			dialogSelectConfirmCancel,
+			dialogSelectConfirmError,
+			dialogSelectConfirmOk,
 			manufacturer,
 			preCompleteOk,
 			resetAdditional,
@@ -325,10 +324,9 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			rocketTypes,
-			serviceStore,
-			dialogSelectRocketConfirmManager,
-			dialogSelectRocketConfirmMessage,
-			dialogSelectRocketConfirmParams,
+			dialogSelectConfirmManager,
+			dialogSelectConfirmMessage,
+			dialogSelectConfirmParams,
 			filterItemDiameterMax,
 			filterItemDiameterMin,
 			filterItemDiameterMeasurementUnitId,
@@ -343,14 +341,14 @@ export default {
 			results,
 			manufacturers,
 			buttonOkDisabledOverride,
-			clickRocketSearch,
-			clickRocketSearchClear,
-			clickRocketSelect,
+			clickSearch,
+			clickSearchClear,
+			clickSelect,
 			close,
 			dialogResetOk,
-			dialogSelectRocketConfirmCancel,
-			dialogSelectRocketConfirmError,
-			dialogSelectRocketConfirmOk,
+			dialogSelectConfirmCancel,
+			dialogSelectConfirmError,
+			dialogSelectConfirmOk,
 			manufacturer,
 			preCompleteOk,
 			resetAdditional,

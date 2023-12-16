@@ -8,6 +8,8 @@ export function useLocationEditValidation(nameRequired) {
 		},
 		detailItemExperimental: { $autoDirty: true },
 		detailItemIsPublic: { $autoDirty: true },
+		detailItemCoordsLat: { $autoDirty: true, decimal, between: between(-90, 90) },
+		detailItemCoordsLong: { $autoDirty: true, decimal, between: between(-180, 180)},
 		detailItemLink: {
 			maxLength: maxLength(100),
 			$autoDirty: true

@@ -31,8 +31,12 @@ export default {
 			zoom,
 			zoomMax,
 			mapContainerName,
+			markers,
 			polygons,
+			tooltips,
 			setCircle,
+			setMarker,
+			setTooltip,
 			setView
 		} = useLocationMapComponent(props, context, options);
 
@@ -51,8 +55,12 @@ export default {
 			zoom,
 			zoomMax,
 			mapContainerName,
+			markers,
 			polygons,
+			tooltips,
 			setCircle,
+			setMarker,
+			setTooltip,
 			setView
 		};
 	}

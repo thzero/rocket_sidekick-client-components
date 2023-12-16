@@ -34,11 +34,15 @@ export function useOpenStreetMapComponent(props, context, options) {
 		setView
 	} = useMapComponent(props, context, {
 		initialize: (correlationId) => {
+			let coordsI = [];
+			if (options && options.coords)
+				coordsI = options.coords;
+			coordsI = coordsI ?? [];
 			let zoomI = zoom.value;
 			if (options && options.zoom)
 				zoomI = options.zoom;
 			zoomI = zoomI ?? zoom.value;
-			mapInstsance.value = L.map(mapContainerName()).setView(props.coordsLaunch, zoomI);
+			mapInstsance.value = L.map(mapContainerName()).setView(coordsI, zoomI);
 			L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: zoomMax.value,
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

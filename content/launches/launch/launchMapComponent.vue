@@ -1,8 +1,9 @@
 <script>
 import { onMounted } from 'vue';
 
-import { useOpenStreetMapComponent } from '@/components/content/maps/openStreetMapComponent';
 import LibraryClientUtility from '@thzero/library_client/utility';
+
+import { useOpenStreetMapComponent } from '@/components/content/maps/openStreetMapComponent';
 
 export function useLaunchMapComponent(props, context, options) {
 	const {
@@ -27,7 +28,7 @@ export function useLaunchMapComponent(props, context, options) {
 		setMarker,
 		setTooltip,
 		setView
-	} = useOpenStreetMapComponent(props, context, { zoom: 17 });
+	} = useOpenStreetMapComponent(props, context, { coords: props.coordsLaunch, zoom: 17 });
 	
 	onMounted(async () => {
 		// setCircle(correlationId(), 'launch', props.coordsLaunch, {

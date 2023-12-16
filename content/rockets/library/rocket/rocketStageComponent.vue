@@ -42,11 +42,11 @@ export function useRocketStageComponent(props, context, options) {
 	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
-		motorDiameters,
 		motorImpulseClasses,
+		motorMountDiameters,
 		motorCaseInfo,
-		motorDiameter,
-		motorName,
+		motorMountDiameter,
+		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
@@ -306,7 +306,7 @@ export function useRocketStageComponent(props, context, options) {
 		if (!displayItem.value || !displayItem.value.motors)
 			return { value: null };
 		const temp = displayItem.value.motors.find(l => l.index === index);
-		return { value: motorName(temp) };
+		return { value: motorMountName(temp) };
 	};
 	const panelsKey = (type) => {
 		return displayItem.value ? displayItem.value.id + '-stage-' : '';
@@ -510,8 +510,8 @@ export function useRocketStageComponent(props, context, options) {
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
-		motorDiameters,
-		motorDiameter,
+		motorMountDiameters,
+		motorMountDiameter,
 		dialogPartsDeleteManager,
 		dialogPartsDeleteMessage,
 		dialogAltimetersSearchManager,

@@ -177,7 +177,12 @@
 									>
 										{{ launchStatusIcon(item) }}
 									</v-icon>
-									{{ launchTitle(item) }}
+									&nbsp;<a class="text-contrast" :href="'/user/rockets/' + item.rocket.id">{{ launchTitle(item) }}</a>
+									<span
+										v-if="$vuetify.display.mdAndUp"
+									>
+										@&nbsp;<a class="text-contrast" :href="'/user/locations/' + item.location.id">{{ launchTitleLocation(item) }}</a>
+									</span>
 									<div class="float-right">{{ launchDate(item) }}</div>
 								</v-card-title>
 								<v-card-text>
@@ -418,6 +423,7 @@ export default {
 			launchStatusColor,
 			launchStatusIcon,
 			launchTitle,
+			launchTitleLocation,
 			resetAdditional,
 			selectLocation,
 			selectRocket,
@@ -514,6 +520,7 @@ export default {
 			launchStatusColor,
 			launchStatusIcon,
 			launchTitle,
+			launchTitleLocation,
 			resetAdditional,
 			selectLocation,
 			selectRocket,

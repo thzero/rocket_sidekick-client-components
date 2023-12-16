@@ -7,6 +7,7 @@ import AppUtility from '@/utility/app';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useLaunchViewComponent(props, context, options) {
 	const {
@@ -46,6 +47,28 @@ export function useLaunchViewComponent(props, context, options) {
 		weatherOptions,
 		locationIterationName
 	} = useLaunchComponent(props, context);
+
+	const {
+		rocketTypes,
+		hasCoverUrl,
+		rocketCg,
+		rocketCp,
+		rocketDiameter,
+		rocketLength,
+		rocketManufacturer,
+		rocketMotorMountName,
+		rocketMotorMountNames,
+		rocketMotors,
+		rocketMotorNames,
+		rocketMotorNamesByStage,
+		rocketStagePrimary,
+		rocketStages,
+		rocketTypeIcon,
+		rocketTypeIconDetermine,
+		rocketTypeName,
+		rocketTypeNames,
+		rocketWeight
+	} = useRocketsUtilityComponent(props, context, options);
 
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
@@ -143,6 +166,9 @@ export function useLaunchViewComponent(props, context, options) {
 			return displayItemMeasurementAcceleration(correlationId(), displayItem.value.results, (value) => { return value.velocityRecovery; }, (value) => { return value.velocityRecoveryMeasurementUnitsId; }, (value) => { return value.velocityRecoveryMeasurementUnitId; });
 		return null;
 	});
+	const displayItemRocketCoverUrl = computed(() => {
+		return displayItem.value && displayItem.value.rocket ? displayItem.value.rocket.coverUrl : '';
+	});
 	const displayItemRocketMame = computed(() => {
 		return displayItem.value && displayItem.value.rocket ? displayItem.value.rocket.name : '';
 	});
@@ -157,7 +183,7 @@ export function useLaunchViewComponent(props, context, options) {
 		return null;
 	});
 	const hasCoords = computed(() => {
-		return hasCoordsLaunch.value || hasCoordsRecovery.value;
+		return hasCoordsLaunch.value && hasCoordsRecovery.value;
 	});
 	const hasCoordsLaunch = computed(() => {
 		if (!displayItem.value || !displayItem.value.results)
@@ -217,15 +243,6 @@ export function useLaunchViewComponent(props, context, options) {
 		notImplementedError,
 		success,
 		measurementUnitsIdOutput,
-		measurementUnitsIdSettings,
-		measurementUnitsAccelerationDefaultId,
-		measurementUnitsAccelerationType,
-		measurementUnitsAltitudeType,
-		measurementUnitsAltitudeDefaultId,
-		measurementUnitsDistanceType,
-		measurementUnitsDistanceDefaultId,
-		measurementUnitsVelocityDefaultId,
-		measurementUnitsVelocityType,
 		displayItemMeasurement,
 		displayItemMeasurementLength,
 		measurementUnitsFromUnitId,
@@ -251,6 +268,7 @@ export function useLaunchViewComponent(props, context, options) {
 		displayItemResultsCoordsRecovery,
 		displayItemResultsVelocityMax,
 		displayItemResultsVelocityRecovery,
+		displayItemRocketCoverUrl,
 		displayItemRocketMame,
 		displayItemTemperature,
 		displayItemWindSpeed,

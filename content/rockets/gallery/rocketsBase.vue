@@ -25,18 +25,9 @@ export function useRocketsBaseComponent(props, context, options) {
 	} = useContentBaseComponent(props, context, options);
 	
 	const {
-		rocketTypes,
 		hasCoverUrl,
-		rocketCg,
-		rocketCp,
-		rocketDiameter,
-		rocketLength,
-		rocketMotors,
-		rocketStagePrimary,
-		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketWeight
+		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const type = ref(options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);

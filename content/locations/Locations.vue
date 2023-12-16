@@ -134,20 +134,6 @@
 									</div>
 								</v-card-title>
 								<v-card-text>
-									<VtMarkdown v-model="item.description" :use-github=false />
-									<div
-										v-if="item.organizations"
-										class="mt-2"
-									>
-										{{ organizationNames(item.organizations) }}
-									</div>
-									<div
-										v-if="debug"
-									>
-										canDelete [[ {{ canDelete(item) }}]]
-										canEdit [[ {{ canEdit(item) }}]]
-										canView [[ {{ canView(item) }}]]
-									</div>
 									<LocationView
 										:detail-item="item"
 										:debug="debug"
@@ -231,7 +217,6 @@ import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect'
 import Location from '@/components/content/locations/location/Location';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
-import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
@@ -248,7 +233,6 @@ export default {
 		Location,
 		VtConfirmationDialog,
 		VtFormListing,
-		VtMarkdown,
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
@@ -327,7 +311,6 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			organizations,
-			organizationNames,
 			debug,
 			locationsListing,
 			filterItemName,
@@ -409,7 +392,6 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			organizations,
-			organizationNames,
 			debug,
 			locationsListing,
 			filterItemName,

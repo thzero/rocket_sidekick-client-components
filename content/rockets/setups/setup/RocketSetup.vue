@@ -79,12 +79,21 @@
 						:readonly="true"
 					/>
 					<v-btn
+						v-if="isEditable"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.add"
 						:color="buttonsForms.color.add"
-						@click="clickSearchRockets(item)"
+						@click="clickSearchRockets()"
 					>
-						{{ $t('buttons.select') }}
+					</v-btn>
+					<v-btn
+						v-if="!isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						@click="clickViewRocket(detailItemData)"
+					>
+						{{ $t('buttons.link') }}
 					</v-btn>
 				</div>
 			</v-col>
@@ -349,6 +358,7 @@ export default {
 			rocketId,
 			stages,
 			clickSearchRockets,
+			clickViewRocket,
 			panelsUpdated,
 			stagesPanelsUpdated,
 			selectRocket,
@@ -444,6 +454,7 @@ export default {
 			rocketId,
 			stages,
 			clickSearchRockets,
+			clickViewRocket,
 			panelsUpdated,
 			stagesPanelsUpdated,
 			selectRocket,

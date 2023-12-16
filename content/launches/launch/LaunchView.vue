@@ -1,27 +1,75 @@
 <template>
-	<div
+	<!-- <div
+		v-if="debug"
 	>
 		[[ displayItem <pre>{{ displayItem }}</pre> ]]
-	</div>
+	</div> -->
 	<div
 		class="mt-4"
 	>
-		<v-row dense
-			v-if="displayItem.description"
-		>
-			<v-col>
-				<VtTextArea
-					v-model="displayItem.description"
-					:readonly="true"
-					:label="$t('forms.description')"
-				/>
-			</v-col>
-		</v-row>
-		<v-row 
+		<v-row
+			v-if="displayItemRocketCoverUrl"
 			dense
 		>
 			<v-col
-				v-if="$vuetify.display.lgAndUp"
+				cols="7"
+			>
+				<v-row dense>
+					<v-col cols="12">
+						<VtTextField
+							v-model="displayItemLocationName"
+							:label="$t('forms.content.locations.name')"
+							:readonly="true"
+						/>
+					</v-col>
+					<v-col cols="12">
+						<VtTextField
+							v-model="displayItemLocationIterationAddress"
+							:label="$t('forms.content.locations.address')"
+							:readonly="true"
+						/>
+					</v-col>
+					<v-col cols="12">
+						<VtSelect
+							v-if="isFailure"
+							v-model="displayItem.failureReasons"
+							:items="failureReasons"
+							:chips="true"
+							:readonly="true"
+							:label="$t('forms.content.launches.failureReasons')"
+						/>
+					</v-col>
+					<v-col cols="12">
+						<VtMarkdown 
+							v-if="displayItem.description"
+							v-model="displayItem.description" :use-github=false 
+						/>
+					</v-col>
+				</v-row>
+			</v-col>
+			<v-col cols="5">
+				<img
+					:src="displayItemRocketCoverUrl"
+					style="width: 150px;display: block;margin-left: auto; margin-right: auto; float: right;"
+				/>
+			</v-col>
+		</v-row>
+		<v-row
+			v-if="!displayItemRocketCoverUrl"
+			dense
+		>
+			<v-col>
+				<VtMarkdown 
+					v-if="displayItem.description"
+					v-model="displayItem.description" :use-github=false 
+				/>
+			</v-col>
+		</v-row>
+		<v-row
+			v-if="!displayItemRocketCoverUrl"
+			dense
+		>
+			<v-col
 				cols="12" sm="6" lg="4"
 			>
 				<VtTextField
@@ -40,13 +88,13 @@
 					:readonly="true"
 				/>
 			</v-col>
-			<v-col cols="12" sm="6" lg="4">
+			<!-- <v-col cols="12" sm="6" lg="4">
 				<VtTextField
 					v-model="displayItemRocketMame"
 					:label="$t('forms.content.rockets.name')"
 					:readonly="true"
 				/>
-			</v-col>
+			</v-col> -->
 		<!-- </v-row>
 		<v-row dense> -->
 			<!-- <v-col cols="12" sm="6">
@@ -82,20 +130,6 @@
 				cols="12" md="6"
 			>
 				<a :href="displayItem.videoUrl" target="_blank">{{ displayItem.videoUrl }}</a>
-			</v-col>
-		</v-row>
-		<v-row
-			v-if="displayItem.notes"
-			dense
-		>
-			<v-col cols="12">
-				<VtTextArea
-					v-model="displayItem.notes"
-					:readonly="true"
-					:label="$t('forms.content.launches.notes')"
-					:rows="detailItemTextRows"
-				/>
-	<div v-html="markupHint"></div>
 			</v-col>
 		</v-row>
 		<v-row
@@ -316,16 +350,16 @@ import { useLaunchViewComponentProps } from '@/components/content/launches/launc
 
 import LaunchMapping from '@/components/content/launches/launch/LaunchMap';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
+import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
-import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
 	name: 'LaunchViewControl',
 	components: {
 		MeasurementUnitSelect2,
+		VtMarkdown,
 		VtSelect,
-		VtTextArea,
 		VtTextField,
 		LaunchMapping
 	},
@@ -344,16 +378,6 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			measurementUnitsIdOutput,
-			measurementUnitsIdSettings,
-			measurementUnitsAccelerationDefaultId,
-			measurementUnitsAccelerationType,
-			measurementUnitsAltitudeType,
-			measurementUnitsAltitudeDefaultId,
-			measurementUnitsDistanceType,
-			measurementUnitsDistanceDefaultId,
-			measurementUnitsVelocityDefaultId,
-			measurementUnitsVelocityType,
 			displayItemMeasurement,
 			displayItemMeasurementLength,
 			measurementUnitsFromUnitId,
@@ -379,6 +403,7 @@ export default {
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
+			displayItemRocketCoverUrl,
 			displayItemRocketMame,
 			displayItemTemperature,
 			displayItemWindSpeed,
@@ -401,16 +426,6 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			measurementUnitsIdOutput,
-			measurementUnitsIdSettings,
-			measurementUnitsAccelerationDefaultId,
-			measurementUnitsAccelerationType,
-			measurementUnitsAltitudeType,
-			measurementUnitsAltitudeDefaultId,
-			measurementUnitsDistanceType,
-			measurementUnitsDistanceDefaultId,
-			measurementUnitsVelocityDefaultId,
-			measurementUnitsVelocityType,
 			displayItemMeasurement,
 			displayItemMeasurementLength,
 			measurementUnitsFromUnitId,
@@ -436,6 +451,7 @@ export default {
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
+			displayItemRocketCoverUrl,
 			displayItemRocketMame,
 			displayItemTemperature,
 			displayItemWindSpeed,

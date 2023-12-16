@@ -47,9 +47,11 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
-		motorDiameters,
 		motorImpulseClasses,
+		motorMountDiameters,
 		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
@@ -76,7 +78,10 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 	const results = ref([]);
 
 	const manufacturers = computed(() => {
-		return manufacturersI.value ? manufacturersI.value : [];
+// alert(props.partTypes);
+		// return manufacturersI.value ? manufacturersI.value : [];
+		let temp2 = manufacturersI.value.filter(l => (props.partTypes.filter(x => l.types.includes(x))).length == 1);
+		return temp2 ? temp2 : [];
 	});
 	const partTypeName = computed(() => {
 		let partTypeId = null;
@@ -248,7 +253,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 			(j === AppCommonConstants.Rocketry.PartTypes.streamer)
 		));
 		temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
-		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
+		manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name, types: item.types }; });
 	});
 
 	return {
@@ -267,8 +272,8 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
-		motorDiameters,
 		motorImpulseClasses,
+		motorMountDiameters,
 		motorCaseInfo,
 		motorUrl,
 		serviceStore,

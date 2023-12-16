@@ -6,6 +6,7 @@ import useVuelidate from '@vuelidate/core';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
@@ -112,6 +113,7 @@ export function useLaunchEditComponent(props, context, options) {
 	
 	const dialogLocationLookupManager = ref(new DialogSupport());
 	const dialogRocketLookupManager = ref(new DialogSupport());
+	const dialogRocketSetupLookupManager = ref(new DialogSupport());
 	const detailItemAlbumUrl = ref(null);
 	const detailItemDate = ref(null);
 	const detailItemDescription = ref(null);
@@ -145,6 +147,8 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemResultsVelocityRecoveryMeasurementUnitsId = ref(null);
 	const detailItemRocketId = ref(null);
 	const detailItemRocketName = ref(null);
+	const detailItemRocketSetupId = ref(null);
+	const detailItemRocketSetupName  = ref(null);
 	const detailItemSuccess = ref(null);
 	const detailItemTemperature = ref(null);
 	const detailItemTemperatureMeasurementUnitId = ref(null);
@@ -176,6 +180,19 @@ export function useLaunchEditComponent(props, context, options) {
 	};
 	const clickSearchRockets = async (correlationId) => {
 		dialogRocketLookupManager.value.open();
+	};
+	const clickSearchRocketSetups = async (correlationId) => {
+		dialogRocketSetupLookupManager.value.open();
+	};
+	const clickViewRocket = async (item) => {
+		if (!item)
+			return;
+		LibraryClientUtility.$navRouter.push('/user/rockets/' + item.id);
+	};
+	const clickViewRocketSetup = async (item) => {
+		if (!item)
+			return;
+		LibraryClientUtility.$navRouter.push('/user/rocketsetups/' + item.id);
 	};
 	const requestLocation = async (correlationId, id) => {
 		const response = await serviceStore.dispatcher.requestLocationById(correlationId, id);
@@ -211,6 +228,14 @@ export function useLaunchEditComponent(props, context, options) {
 		else {
 			detailItemRocketId.value = null;
 			detailItemRocketName.value = null;
+		}
+		if (value && value.rocketSetup) {
+			detailItemRocketSetupId.value = value.rocketSetup.id;
+			detailItemRocketSetupName.value = value.rocketSetup.name;
+		}
+		else {
+			detailItemRocketSetupId.value = null;
+			detailItemRocketSetupName.value = null;
 		}
 
 		detailItemSuccess.value = value ? value.success : false;
@@ -278,13 +303,25 @@ export function useLaunchEditComponent(props, context, options) {
 	const selectRocket = async (item) => {
 		try {
 			if (!item)
-				return error('useuseLaunchEditComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
+				return error('useLaunchEditComponent', 'selectRocket', 'Invalid item.', null, null, null, correlationId);
 			
 			detailItemRocketId.value = item.id;
 			detailItemRocketName.value = item.name;
 		}
 		finally {
 			dialogRocketLookupManager.value.ok();
+		}
+	};
+	const selectRocketSetup = async (item) => {
+		try {
+			if (!item)
+				return error('useLaunchEditComponent', 'selectRocketSetup', 'Invalid item.', null, null, null, correlationId);
+			
+			detailItemRocketSetupId.value = item.id;
+			detailItemRocketSetupName.value = item.name;
+		}
+		finally {
+			dialogRocketSetupLookupManager.value.ok();
 		}
 	};
 	const setData = (correlationId) => {
@@ -298,6 +335,7 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemData.value.locationId = detailItemLocationId.value;
 		detailItemData.value.locationIterationId = detailItemLocationIterationId.value;
 		detailItemData.value.rocketId = detailItemRocketId.value;
+		detailItemData.value.rocketSetupId = detailItemRocketSetupId.value;
 		
 		detailItemData.value.success = detailItemSuccess.value;
 		detailItemData.value.failureReasons = detailItemFailureReasons.value;
@@ -417,6 +455,7 @@ export function useLaunchEditComponent(props, context, options) {
 		markupHint,
 		dialogLocationLookupManager,
 		dialogRocketLookupManager,
+		dialogRocketSetupLookupManager,
 		detailItemAlbumUrl,
 		detailItemDate,
 		detailItemDescription,
@@ -450,6 +489,8 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemResultsVelocityRecoveryMeasurementUnitsId,
 		detailItemRocketId,
 		detailItemRocketName,
+		detailItemRocketSetupId,
+		detailItemRocketSetupName,
 		detailItemSuccess,
 		detailItemTemperature,
 		detailItemTemperatureMeasurementUnitId,
@@ -465,8 +506,12 @@ export function useLaunchEditComponent(props, context, options) {
 		locationIterations,
 		clickSearchLocations,
 		clickSearchRockets,
+		clickSearchRocketSetups,
+		clickViewRocket,
+		clickViewRocketSetup,
 		selectLocation,
 		selectRocket,
+		selectRocketSetup,
 		scope: 'LaunchControl',
 		validation: useVuelidate({ $scope: 'LaunchControl' })
 	};

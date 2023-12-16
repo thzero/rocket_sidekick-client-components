@@ -106,11 +106,18 @@ export function useRocketsBaseComponent(props, context, options) {
 		rocketCp,
 		rocketDiameter,
 		rocketLength,
+		rocketManufacturer,
+		rocketMotorMountName,
+		rocketMotorMountNames,
 		rocketMotors,
+		rocketMotorNames,
+		rocketMotorNamesByStage,
 		rocketStagePrimary,
 		rocketStages,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
+		rocketTypeName,
+		rocketTypeNames,
 		rocketWeight
 	} = useRocketsUtilityComponent(props, context, options);
 
@@ -233,20 +240,6 @@ export function useRocketsBaseComponent(props, context, options) {
 	const measurementUnitTranslateWeight = (measurementUnitsId, measurementUnitId) => {
 		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitsId, measurementUnitId);
 	};
-	const motors = (item) => {
-		if (!item)
-			return null;
-		let output = [];
-		if (item.stages) {
-			for (const stage of item.stages) {
-				for (const motor of stage.motors) {
-					if (motor.diameter)
-						output.push(motorName(motor));
-				}
-			}
-		}
-		return output.join(', ');
-	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
 		filterItemDiameter.value = data ? data.diameter : null;
@@ -338,7 +331,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		rocketTypes,
 		rocketDiameter,
 		rocketLength,
-		rocketMotors,
+		rocketMotorMountNames,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
 		debug,
