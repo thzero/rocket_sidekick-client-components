@@ -64,7 +64,7 @@ export function useRocketSetupLookupDialogComponent(props, context, options) {
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 	
 	const dialogSelectManager = ref(new DialogSupport());
-	const dialogSelectMessage = ref(LibraryClientUtility.$trans.t(`messages.rocketSetups.rocket.replace_confirm`));
+	const dialogSelectMessage = ref(LibraryClientUtility.$trans.t(props.messageReplace ? props.messageReplace : 'none'));
 	const dialogSelectParams = ref(null);
 	const filterItemName = ref(null);
 	const dialogResetManager = ref(new DialogSupport());
@@ -83,7 +83,7 @@ export function useRocketSetupLookupDialogComponent(props, context, options) {
 		await dialogRocketSetupLookup.value.submit(correlationId());
 	};
 	const clickSelect = async (item) => {
-		if (props.rocketId) {
+		if (props.rocketId && props.rocketSetupId) {
 			dialogSelectParams.value = item;
 			dialogSelectManager.value.open();
 			return;

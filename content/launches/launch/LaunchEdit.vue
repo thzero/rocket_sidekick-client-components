@@ -116,7 +116,7 @@
 						:color="buttonsForms.color.add"
 						@click="clickSearchRockets()"
 					>
-						{{ $t('buttons.select') + ' ' + $t('forms.content.launches.rocket.title') }}
+						{{ $t('buttons.select') }}
 					</v-btn>
 					<v-btn
 						v-if="!isEditable"
@@ -133,8 +133,10 @@
 				v-if="detailItemRocketId"
 				cols="12"
 			>
-				<div class="d-flex">
-					<VtTextFieldWithValidation
+				<div 
+					class="d-flex"
+				>
+					<!-- <VtTextFieldWithValidation
 						ref="detailItemRocketSetupNameRef"
 						v-model="detailItemRocketSetupName"
 						vid="detailItemRocketSetupName"
@@ -142,6 +144,17 @@
 						:errorsReadonly="validation.detailItemRocketSetupId.$silentErrors"
 						:label="$t('forms.content.launches.rocketSetup.title')"
 						:readonly="true"
+					/> -->
+					<VtTextAreaWithValidation
+						ref="detailItemRocketSetupNameRef"
+						v-model="detailItemRocketSetupName"
+						vid="detailItemRocketSetupName"
+						:validation="validation"
+						:errorsReadonly="validation.detailItemRocketSetupId.$silentErrors"
+						:readonly="true"
+						:label="$t('forms.content.launches.rocketSetup.title')"
+						:clearable="false"
+						:rows="1"
 					/>
 					<v-btn
 						v-if="isEditable"
@@ -150,7 +163,7 @@
 						:color="buttonsForms.color.add"
 						@click="clickSearchRocketSetups()"
 					>
-						{{ $t('buttons.select') + ' ' + $t('forms.content.launches.rocketSetup.title') }}
+						{{ $t('buttons.select') }}
 					</v-btn>
 					<v-btn
 						v-if="!isEditable"
@@ -164,10 +177,7 @@
 				</div>
 			</v-col>
 		</v-row>
-		<v-row 
-			dense
-			class="mt-4"
-		>
+		<v-row dense>
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
 					<VtTextFieldWithValidation
@@ -186,7 +196,16 @@
 						:color="buttonsForms.color.add"
 						@click="clickSearchLocations(item)"
 					>
-						{{ $t('buttons.select') + ' ' + $t('forms.content.locations.name') }}
+						{{ $t('buttons.select') }}
+					</v-btn>
+					<v-btn
+						v-if="!isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						@click="clickViewLocation(detailItemData)"
+					>
+						{{ $t('buttons.link') }}
 					</v-btn>
 				</div>
 			</v-col>
@@ -552,13 +571,17 @@
 	/>
 	<RocketLookupDialog
 		ref="dialogRocketLookupManagerRef"
+		message-replace="messages.launches.rocket.replace_confirm"
+		:rocket-id="detailItemRocketId"
 		:signal="dialogRocketLookupManager.signal"
 		@close="dialogRocketLookupManager.cancel()"
 		@select="selectRocket"
 	/>
 	<RocketSetupLookupDialog
 		ref="dialogRocketSetupLookupManagerRef"
+		message-replace="messages.launches.rocketSetup.replace_confirm"
 		:rocket-id="detailItemRocketId"
+		:rocket-setup-id="detailItemRocketSetupId"
 		:signal="dialogRocketSetupLookupManager.signal"
 		@close="dialogRocketSetupLookupManager.cancel()"
 		@select="selectRocketSetup"
@@ -727,6 +750,7 @@ export default {
 			clickSearchLocations,
 			clickSearchRockets,
 			clickSearchRocketSetups,
+			clickViewLocation,
 			clickViewRocket,
 			clickViewRocketSetup,
 			selectLocation,
@@ -849,6 +873,7 @@ export default {
 			clickSearchLocations,
 			clickSearchRockets,
 			clickSearchRocketSetups,
+			clickViewLocation,
 			clickViewRocket,
 			clickViewRocketSetup,
 			selectLocation,

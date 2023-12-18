@@ -109,7 +109,8 @@ export function useRocketsUtilityComponent(props, context, options) {
 			return null;
 		return motorMountName(item);
 	};
-	const rocketMotorMountNames = (item) => {
+	const rocketMotorMountNames = (item, separator) => {
+		separator = separator ?? ', ';
 		if (!item || !item.stages)
 			return null;
 		let output = [];
@@ -119,16 +120,19 @@ export function useRocketsUtilityComponent(props, context, options) {
 					output.push(motorMountName(motor));
 			}
 		}
-		return output.join(', ');
+		return output.join(separator);
 	};
-	const rocketMotorNames = (item) => {
-		const results = rocketMotors(item);
+	const rocketMotorNames = (item, separator) => {
+		separator = separator ?? ', ';
 		const output = [];
+		const results = rocketMotors(item);
+		if (!results)
+			return output;
 		for (const temp of results) {
 			for (const item2 of temp.motors)
 				output.push(`${item2.diameter} ${LibraryClientUtility.$trans.t('strings.content.rockets.with')} ${item2.name} ${LibraryClientUtility.$trans.t('strings.content.rockets.in')} ${item2.caseName}`);
 		}
-		return output.join(', ');
+		return output.join(separator);
 	};
 	// const rocketMotors = (item) => {
 	// 	if (!item || !item.stages || !item.rocket || !item.rocket.stages)
@@ -150,8 +154,10 @@ export function useRocketsUtilityComponent(props, context, options) {
 	// 	return output.join(', ');
 	// };
 	const rocketMotorNamesByStage = (item, stage) => {
-		const results = rocketMotors(item);
 		const output = [];
+		const results = rocketMotors(item);
+		if (!results)
+			return output;
 		const index = 0;
 		for (const temp of results) {
 			for (const item2 of temp.motors)

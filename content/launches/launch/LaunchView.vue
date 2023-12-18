@@ -16,18 +16,48 @@
 			>
 				<v-row dense>
 					<v-col cols="12">
-						<VtTextField
-							v-model="displayItemLocationName"
-							:label="$t('forms.content.locations.name')"
-							:readonly="true"
-						/>
+						<v-row dense>
+							<v-col cols="12">
+								<div 
+									class="d-flex"
+								>
+									<VtTextField
+										v-model="displayItemLocationName"
+										:label="$t('forms.content.locations.name')"
+										:readonly="true"
+									/>
+									<v-btn
+										v-if="$vuetify.display.smAndUp"
+										class="ml-4 text-right"
+										:variant="buttonsForms.variant.default"
+										:color="buttonsForms.color.default"
+										@click="clickViewLocation(displayItem)"
+									>
+										{{ $t('buttons.link') }}
+									</v-btn>
+								</div>
+							</v-col>
+							<v-col cols="12">
+								<VtTextField
+									v-model="displayItemLocationIterationAddress"
+									:label="$t('forms.content.locations.address')"
+									:readonly="true"
+								/>
+							</v-col>
+						</v-row>
 					</v-col>
-					<v-col cols="12">
-						<VtTextField
-							v-model="displayItemLocationIterationAddress"
-							:label="$t('forms.content.locations.address')"
-							:readonly="true"
-						/>
+					<v-col 
+						v-if="$vuetify.display.xs"
+						cols="12"
+						class="text-right"
+					>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							:color="buttonsForms.color.default"
+							@click="clickViewLocation(displayItem)"
+						>
+							{{ $t('buttons.link') }}
+						</v-btn>
 					</v-col>
 					<v-col cols="12">
 						<VtSelect
@@ -72,11 +102,23 @@
 			<v-col
 				cols="12" sm="6" lg="4"
 			>
-				<VtTextField
-					v-model="displayItemLocationName"
-					:label="$t('forms.content.locations.name')"
-					:readonly="true"
-				/>
+				<div 
+					class="d-flex"
+				>
+					<VtTextField
+						v-model="displayItemLocationName"
+						:label="$t('forms.content.locations.name')"
+						:readonly="true"
+					/>
+					<v-btn
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						@click="clickViewLocation(displayItem)"
+					>
+						{{ $t('buttons.link') }}
+					</v-btn>
+				</div>
 			</v-col>
 			<v-col 
 				v-if="displayItemLocationIterationAddress"
@@ -139,10 +181,71 @@
 				cols="12"
 			>
 				<v-sheet
-					class="pt-2 pb-2"
+					class="pb-2"
 				>
 					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
 					<v-divider></v-divider>
+				</v-sheet>
+			</v-col>
+		</v-row>
+		<v-row
+			v-if="displayItemRocketMotorNames"
+			dense
+		>
+			<v-col>
+				<VtTextArea
+					v-model="displayItemRocketMotorNames"
+					:label="$t('forms.content.launches.rocketSetup.title')"
+					:readonly="true"
+					:clearable="false"
+					:rows="1"
+				/>
+			</v-col>
+		</v-row>
+		<v-sheet
+			v-if="displayItemRocketMotors.length > 0"
+			class="pt-2 pb-2 mt-2"
+		>
+			<h3>{{ $t('strings.content.rockets.motors') }}</h3>
+			<v-divider></v-divider>
+		</v-sheet>
+		<v-row 
+			v-for="item in displayItemRocketMotors"
+			:key="item"
+			dense
+		>
+			<v-col 
+				cols="12"
+			>
+				<v-sheet
+					v-if="displayItemRocketMotors.length > 1"
+					color="secondary"
+					class="ml-4 mt-2 pl-4 pr-4 pt-2 pb-2"
+					rounded
+				>
+					{{ $t('forms.content.rockets.stage.name') }}
+					{{ item.index }}
+				</v-sheet>
+				<v-sheet 
+					v-for="(item2, index) in item.motors"
+					:key="item2"
+					:color="index % 2 === 0 ? 'green' : 'green'"
+					:class="`ml-${(displayItemRocketMotors.length > 1 ? '8' : '4')} mt-2 pl-4 pr-4 pt-2 pb-2`"
+					style="width: 100%;"
+					rounded
+				>
+					<!-- <v-row
+						dense
+						class="pl-8"
+					>
+						<v-col>
+							{{ item2.name }}
+						</v-col>
+						<v-col>
+							{{ item2.caseName }}
+						</v-col>
+					</v-row> -->
+					{{ item2.diameter }} {{ $t('strings.content.rockets.with') }} <a style="color: white" :href="motorUrl(item2)" target="_blank">{{ item2.name }}</a> {{ $t('strings.content.rockets.in') }} {{ item2.caseName }}
 				</v-sheet>
 			</v-col>
 		</v-row>
@@ -352,6 +455,7 @@ import LaunchMapping from '@/components/content/launches/launch/LaunchMap';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
+import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
@@ -360,6 +464,7 @@ export default {
 		MeasurementUnitSelect2,
 		VtMarkdown,
 		VtSelect,
+		VtTextArea,
 		VtTextField,
 		LaunchMapping
 	},
@@ -378,8 +483,11 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			buttonsForms,
+			measurementUnitsIdOutput,
 			displayItemMeasurement,
 			displayItemMeasurementLength,
+			motorUrl,
 			measurementUnitsFromUnitId,
 			failureReasons,
 			successReasons,
@@ -404,6 +512,9 @@ export default {
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
 			displayItemRocketCoverUrl,
+			displayItemRocketId,
+			displayItemRocketMotorNames,
+			displayItemRocketMotors,
 			displayItemRocketMame,
 			displayItemTemperature,
 			displayItemWindSpeed,
@@ -413,7 +524,8 @@ export default {
 			hasResults,
 			hasWeather,
 			isFailure,
-			isSuccess
+			isSuccess,
+			clickViewLocation
 		} = useLaunchViewComponent(props, context, options);
 
 		return {
@@ -426,9 +538,12 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			buttonsForms,
+			measurementUnitsIdOutput,
 			displayItemMeasurement,
 			displayItemMeasurementLength,
 			measurementUnitsFromUnitId,
+			motorUrl,
 			failureReasons,
 			successReasons,
 			weatherOptions,
@@ -452,6 +567,9 @@ export default {
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
 			displayItemRocketCoverUrl,
+			displayItemRocketId,
+			displayItemRocketMotorNames,
+			displayItemRocketMotors,
 			displayItemRocketMame,
 			displayItemTemperature,
 			displayItemWindSpeed,
@@ -461,7 +579,8 @@ export default {
 			hasResults,
 			hasWeather,
 			isFailure,
-			isSuccess
+			isSuccess,
+			clickViewLocation
 		};
 	}
 };

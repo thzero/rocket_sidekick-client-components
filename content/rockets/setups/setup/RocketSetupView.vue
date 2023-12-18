@@ -123,14 +123,14 @@
 			</v-col>
 		</v-row>
 		<v-sheet
-			v-if="stageRocketMotors.length > 0"
+			v-if="motors.length > 0"
 			class="pt-2 pb-2 mt-2"
 		>
 			<h3>{{ $t('strings.content.rockets.motors') }}</h3>
 			<v-divider></v-divider>
 		</v-sheet>
 		<v-row 
-			v-for="item in stageRocketMotors"
+			v-for="item in motors"
 			:key="item"
 			dense
 		>
@@ -138,7 +138,7 @@
 				cols="12"
 			>
 				<v-sheet
-					v-if="stageRocketMotors.length > 1"
+					v-if="motors.length > 1"
 					color="secondary"
 					class="ml-4 mt-2 pl-4 pr-4 pt-2 pb-2"
 					rounded
@@ -150,7 +150,7 @@
 					v-for="(item2, index) in item.motors"
 					:key="item2"
 					:color="index % 2 === 0 ? 'green' : 'green'"
-					:class="`ml-${(stageRocketMotors.length > 1 ? '8' : '4')} mt-2 pl-4 pr-4 pt-2 pb-2`"
+					:class="`ml-${(motors.length > 1 ? '8' : '4')} mt-2 pl-4 pr-4 pt-2 pb-2`"
 					style="width: 100%;"
 					rounded
 				>
@@ -213,13 +213,12 @@ export default {
 			displayItem,
 			length,
 			manufacturer,
+			motors,
 			stagePrimary,
 			stagePrimaryRocket,
-			stageRocketMotors,
 			stages,
 			weight,
-			motorUrl,
-			rocketMotors
+			motorUrl
 		} = useRocketSetupViewComponent(props, context);
 
 		return {
@@ -242,13 +241,12 @@ export default {
 			displayItem,
 			length,
 			manufacturer,
+			motors,
 			stagePrimary,
 			stagePrimaryRocket,
-			stageRocketMotors,
 			stages,
 			weight,
-			motorUrl,
-			rocketMotors
+			motorUrl
 		};
 	}
 };

@@ -54,7 +54,7 @@ export function useRocketLookupDialogComponent(props, context, options) {
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 	
 	const dialogSelectConfirmManager = ref(new DialogSupport());
-	const dialogSelectConfirmMessage = ref(LibraryClientUtility.$trans.t(`messages.rocketSetups.rocket.replace_confirm`));
+	const dialogSelectConfirmMessage = ref(LibraryClientUtility.$trans.t(props.messageReplace ? props.messageReplace : 'none'));
 	const dialogSelectConfirmParams = ref(null);
 	const filterItemDiameterMax = ref(null);
 	const filterItemDiameterMin = ref(null);
