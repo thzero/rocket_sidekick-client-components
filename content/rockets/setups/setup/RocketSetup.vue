@@ -85,6 +85,7 @@
 						:color="buttonsForms.color.add"
 						@click="clickSearchRockets()"
 					>
+						{{ $t('buttons.select') }}
 					</v-btn>
 					<v-btn
 						v-if="!isEditable"
@@ -210,8 +211,9 @@
 	/>
 	<RocketLookupDialog
 		ref="dialogRocketLookupManagerRef"
-		:signal="dialogRocketLookupManager.signal"
 		:rocket-id="rocketId"
+		message-replace="messages.rocketSetups.rocket.replace_confirm"
+		:signal="dialogRocketLookupManager.signal"
 		@close="dialogRocketLookupManager.cancel()"
 		@select="selectRocket"
 	/>

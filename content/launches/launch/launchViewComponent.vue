@@ -4,9 +4,12 @@ import { computed, ref } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
+import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useLaunchViewComponent(props, context, options) {
@@ -21,6 +24,11 @@ export function useLaunchViewComponent(props, context, options) {
 		notImplementedError,
 		success
 	} = useBaseComponent(props, context, options);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const {
 		measurementUnitsIdOutput,
@@ -47,6 +55,15 @@ export function useLaunchViewComponent(props, context, options) {
 		weatherOptions,
 		locationIterationName
 	} = useLaunchComponent(props, context);
+	
+	const {
+		motorImpulseClasses,
+		motorMountDiameters,
+		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
+		motorUrl
+	} = useMotorUtilityComponent(props, context);
 
 	const {
 		rocketTypes,
@@ -58,9 +75,9 @@ export function useLaunchViewComponent(props, context, options) {
 		rocketManufacturer,
 		rocketMotorMountName,
 		rocketMotorMountNames,
-		rocketMotors,
 		rocketMotorNames,
 		rocketMotorNamesByStage,
+		rocketMotors,
 		rocketStagePrimary,
 		rocketStages,
 		rocketTypeIcon,
@@ -167,10 +184,20 @@ export function useLaunchViewComponent(props, context, options) {
 		return null;
 	});
 	const displayItemRocketCoverUrl = computed(() => {
-		return displayItem.value && displayItem.value.rocket ? displayItem.value.rocket.coverUrl : '';
+		return displayItem.value && displayItem.value.rocketSetup && displayItem.value.rocketSetup.rocket ? displayItem.value.rocketSetup.rocket.coverUrl : '';
+	});
+	const displayItemRocketMotorNames = computed(() => {
+		if (!displayItem.value || !displayItem.value.rocketSetup)
+			return null;
+		return rocketMotorNames(displayItem.value.rocketSetup, '\n');
+	});
+	const displayItemRocketMotors = computed(() => {
+		if (!displayItem.value || !displayItem.value.rocketSetup)
+			return [];
+		return rocketMotors(displayItem.value.rocketSetup) ?? [];
 	});
 	const displayItemRocketMame = computed(() => {
-		return displayItem.value && displayItem.value.rocket ? displayItem.value.rocket.name : '';
+		return displayItem.value && displayItem.value.rocketSetup && displayItem.value.rocketSetup.rocket ? displayItem.value.rocketSetup.rocket.name : '';
 	});
 	const displayItemTemperature = computed(() => {
 		if (displayItem.value && displayItem.value.temperature)
@@ -231,6 +258,12 @@ export function useLaunchViewComponent(props, context, options) {
 	const isSuccess = computed(() => {
 		return displayItem.value ? displayItem.value.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.success : false;
 	});
+	
+	const clickViewLocation = async (item) => {
+		if (!item)
+			return;
+		LibraryClientUtility.$navRouter.push('/user/locations/' + item.id);
+	};
 
 	return {
 		correlationId,
@@ -242,10 +275,12 @@ export function useLaunchViewComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		buttonsForms,
 		measurementUnitsIdOutput,
 		displayItemMeasurement,
 		displayItemMeasurementLength,
 		measurementUnitsFromUnitId,
+		motorUrl,
 		failureReasons,
 		successReasons,
 		weatherOptions,
@@ -269,6 +304,8 @@ export function useLaunchViewComponent(props, context, options) {
 		displayItemResultsVelocityMax,
 		displayItemResultsVelocityRecovery,
 		displayItemRocketCoverUrl,
+		displayItemRocketMotorNames,
+		displayItemRocketMotors,
 		displayItemRocketMame,
 		displayItemTemperature,
 		displayItemWindSpeed,
@@ -278,7 +315,8 @@ export function useLaunchViewComponent(props, context, options) {
 		hasResults,
 		hasWeather,
 		isFailure,
-		isSuccess
+		isSuccess,
+		clickViewLocation
 	};
 };
 </script>

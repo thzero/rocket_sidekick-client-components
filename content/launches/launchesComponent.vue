@@ -211,8 +211,8 @@ export function useLaunchesBaseComponent(props, context, options) {
 		let output = '';
 		if (!String.isNullOrEmpty(item.name))
 			output += item.name;
-		else if (item.rocket && !String.isNullOrEmpty(item.rocket.name))
-			output += item.rocket.name;
+		else if (item.rocketSetup && item.rocketSetup.rocket && !String.isNullOrEmpty(item.rocketSetup.rocket.name))
+			output += item.rocketSetup.rocket.name;
 
 		// // let date = LibraryCommonUtility.getDateHuman(item.date);
 		// let location = '';
@@ -249,6 +249,11 @@ export function useLaunchesBaseComponent(props, context, options) {
 		
 		return location.trim();
 	};
+	const locationId = (item) => {
+		if (item && item.location)
+			return item.location.id;
+		return null;
+	}
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
 
@@ -258,6 +263,11 @@ export function useLaunchesBaseComponent(props, context, options) {
 		filterItemRocketId.value = data ? data.rocketId : null;
 		filterItemRocketName.value = data ? data.rocketName : null;
 		filterItemRocketTypes.value = data ? data.rocketTypes : null;
+	};
+	const rocketId = (item) => {
+		if (item && item.rocketSetup && item.rocketSetup.rocket)
+			return item.rocketSetup.rocket.id;
+		return null;
 	};
 	const selectLocation = async (item) => {
 		try {
@@ -374,7 +384,9 @@ export function useLaunchesBaseComponent(props, context, options) {
 		launchStatusIcon,
 		launchTitle,
 		launchTitleLocation,
+		locationId,
 		resetAdditional,
+		rocketId,
 		selectLocation,
 		selectRocket,
 		scope: 'LaunchesFilterControl',

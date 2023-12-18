@@ -15,6 +15,7 @@ import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/compone
 import { useContentMarkupComponent } from '@/components/content/contentMarkup';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useLaunchEditComponent(props, context, options) {
 	const {
@@ -106,6 +107,10 @@ export function useLaunchEditComponent(props, context, options) {
 		weatherOptions,
 		locationIterationName
 	} = useLaunchComponent(props, context);
+
+	const {
+		rocketMotorNames
+	} = useRocketsUtilityComponent(props, context, options);
 	
 	const {
 		markupHint
@@ -184,6 +189,11 @@ export function useLaunchEditComponent(props, context, options) {
 	const clickSearchRocketSetups = async (correlationId) => {
 		dialogRocketSetupLookupManager.value.open();
 	};
+	const clickViewLocation = async (item) => {
+		if (!item)
+			return;
+		LibraryClientUtility.$navRouter.push('/user/locations/' + item.id);
+	};
 	const clickViewRocket = async (item) => {
 		if (!item)
 			return;
@@ -221,19 +231,22 @@ export function useLaunchEditComponent(props, context, options) {
 			detailItemLocationName.value = null;
 			location.value = null;
 		}
-		if (value && value.rocket) {
-			detailItemRocketId.value = value.rocket.id;
-			detailItemRocketName.value = value.rocket.name;
+		if (value && value.rocketSetup) {
+			if (value && value.rocketSetup.rocket) {
+				detailItemRocketId.value = value.rocketSetup.rocket.id;
+				detailItemRocketName.value = value.rocketSetup.rocket.name;
+			}
+			else {
+				detailItemRocketId.value = null;
+				detailItemRocketName.value = null;
+			}
+			
+			detailItemRocketSetupId.value = value.rocketSetup.id;
+			detailItemRocketSetupName.value = rocketName(value.rocketSetup);
 		}
 		else {
 			detailItemRocketId.value = null;
 			detailItemRocketName.value = null;
-		}
-		if (value && value.rocketSetup) {
-			detailItemRocketSetupId.value = value.rocketSetup.id;
-			detailItemRocketSetupName.value = value.rocketSetup.name;
-		}
-		else {
 			detailItemRocketSetupId.value = null;
 			detailItemRocketSetupName.value = null;
 		}
@@ -287,6 +300,11 @@ export function useLaunchEditComponent(props, context, options) {
 		if (value)
 			value.results = temp.results;
 	};
+	const rocketName = (item) => {
+		if (!item)
+			return null;
+		return item.name ? item.name : rocketMotorNames(item)
+	};
 	const selectLocation = async (item) => {
 		try {
 			if (!item)
@@ -318,7 +336,7 @@ export function useLaunchEditComponent(props, context, options) {
 				return error('useLaunchEditComponent', 'selectRocketSetup', 'Invalid item.', null, null, null, correlationId);
 			
 			detailItemRocketSetupId.value = item.id;
-			detailItemRocketSetupName.value = item.name;
+			detailItemRocketSetupName.value = rocketName(item);
 		}
 		finally {
 			dialogRocketSetupLookupManager.value.ok();
@@ -507,6 +525,7 @@ export function useLaunchEditComponent(props, context, options) {
 		clickSearchLocations,
 		clickSearchRockets,
 		clickSearchRocketSetups,
+		clickViewLocation,
 		clickViewRocket,
 		clickViewRocketSetup,
 		selectLocation,
