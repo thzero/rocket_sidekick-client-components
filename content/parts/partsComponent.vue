@@ -72,6 +72,8 @@ export function usePartsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		search,
 		display
 	} = useMasterDetailComponent(props, context, {
@@ -176,12 +178,6 @@ export function usePartsBaseComponent(props, context, options) {
 		data = data ? data : new PartData();
 		return success(correlationId, data);
 	};
-	const isPublic = (correlationId, item) => {
-		return item ? item.public ?? false : false;
-	};
-	const isPublicDisplay = (item) => {
-		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
-	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
 		if (!id)
@@ -266,6 +262,8 @@ export function usePartsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		search,
 		display,
 		buttonsDialog,
@@ -275,8 +273,6 @@ export function usePartsBaseComponent(props, context, options) {
 		params,
 		title,
 		buttonSearchResetDisabled,
-		isPublic,
-		isPublicDisplay,
 		manufacturer,
 		measurementUnitTranslateWeight,
 		resetAdditional

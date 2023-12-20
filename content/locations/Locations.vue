@@ -305,6 +305,8 @@ export default {
 			isCopying,
 			isDeleting,
 			isOwner,
+			isPublic,
+			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
@@ -319,7 +321,6 @@ export default {
 			title,
 			buttonSearchResetDisabled,
 			addressDisplay,
-			isPublicDisplay,
 			resetAdditional,
 			scope,
 			validation
@@ -386,6 +387,8 @@ export default {
 			isCopying,
 			isDeleting,
 			isOwner,
+			isPublic,
+			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
@@ -400,7 +403,6 @@ export default {
 			title,
 			buttonSearchResetDisabled,
 			addressDisplay,
-			isPublicDisplay,
 			resetAdditional,
 			scope,
 			validation

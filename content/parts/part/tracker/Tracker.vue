@@ -6,7 +6,7 @@
 		[[ dirty {{ dirty }} ]]
 		[[ isEditable {{ isEditable }} ]]
 		[[ isNew {{ isNew }} ]]
-		[[ isPublic {{ isPublic }} ]]
+		[[ isPublicItem {{ isPublicItem }} ]]
 		<!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
@@ -217,6 +217,8 @@ export default {
 			isEditable,
 			isNew,
 			isOwner,
+			isPublic,
+			isPublicDisplay,
 			dialogDeleteCancel,
 			dialogDeleteError,
 			dialogDeleteOk,
@@ -249,7 +251,7 @@ export default {
 			canAdd,
 			hasAdminDelete,
 			hasAdminEdit,
-			isPublic,
+			isPublicItem,
 			handleAdd,
 			requestManufacturers,
 			scope,
@@ -290,6 +292,8 @@ export default {
 			isEditable,
 			isNew,
 			isOwner,
+			isPublic,
+			isPublicDisplay,
 			dialogDeleteCancel,
 			dialogDeleteError,
 			dialogDeleteOk,
@@ -322,7 +326,7 @@ export default {
 			canAdd,
 			hasAdminDelete,
 			hasAdminEdit,
-			isPublic,
+			isPublicItem,
 			handleAdd,
 			requestManufacturers,
 			scope,

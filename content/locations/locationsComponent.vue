@@ -78,6 +78,8 @@ export function useLocationsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		search,
 		display
 	} = useMasterDetailComponent(props, context, {
@@ -198,12 +200,6 @@ export function useLocationsBaseComponent(props, context, options) {
 		data = data ? data : new LocationData();
 		return success(correlationId, data);
 	};
-	const isPublic = (correlationId, item) => {
-		return item ? item.public ?? false : false;
-	};
-	const isPublicDisplay = (item) => {
-		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
-	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
 		filterItemOrganizations.value = data ? data.organizations : null;
@@ -271,6 +267,8 @@ export function useLocationsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		search,
 		display,
 		buttonsDialog,
@@ -285,7 +283,6 @@ export function useLocationsBaseComponent(props, context, options) {
 		title,
 		buttonSearchResetDisabled,
 		addressDisplay,
-		isPublicDisplay,
 		resetAdditional,
 		scope: 'LocationsFilterControl',
 		validation: useVuelidate({ $scope: 'LocationsilterControl' })

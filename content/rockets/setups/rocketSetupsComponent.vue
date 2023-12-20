@@ -79,6 +79,8 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		search,
 		display
 	} = useMasterDetailComponent(props, context, {
@@ -323,6 +325,8 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		search,
 		display,
 		buttonsDialog,

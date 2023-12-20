@@ -101,6 +101,10 @@
 							v-for="item in items"
 							:key="item.name"
 						>
+						canView {{ canView(item) }}
+						isDefault {{ isDefault(item) }}
+						isOwner {{ isOwner(item) }}
+				<pre>{{ item }}</pre>
 							<v-card>
 								<v-card-title>
 									{{ item.name }}
@@ -295,6 +299,8 @@ export default {
 			isCopying,
 			isDeleting,
 			isOwner,
+			isPublic,
+			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
@@ -386,6 +392,8 @@ export default {
 			isCopying,
 			isDeleting,
 			isOwner,
+			isPublic,
+			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
