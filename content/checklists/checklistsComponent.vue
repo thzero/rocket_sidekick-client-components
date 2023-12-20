@@ -168,7 +168,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 			// const correlationIdI = correlationId();
 			// const response = await serviceStore.dispatcher.startChecklist(correlationIdI, dialogStartParams.value);
 			// if (hasFailed(response)) {
-			// 	setNotify(correlationIdI, 'messages.error');
+			// 	setNotify(correlationIdI, 'errors.error');
 			// 	return;
 			// }
 			alert('start');

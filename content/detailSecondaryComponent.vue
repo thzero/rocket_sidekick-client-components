@@ -115,7 +115,7 @@ export function useDetailSecondaryComponent(props, context, options) {
 			const correlationIdI = correlationId();
 			const response = await options.dialogDeleteSecondaryOk(correlationIdI, dialogDeleteSecondaryParams.value);
 			if (hasFailed(response))
-				setNotify(correlationIdI, 'messages.error');
+				setNotify(correlationIdI, 'errors.error');
 			
 			detailItem.value.data = response.results;
 			return response;
@@ -161,7 +161,7 @@ export function useDetailSecondaryComponent(props, context, options) {
 			const correlationIdI = correlationId();
 			const response = await options.editSecondary(correlationIdI, item);
 			if (hasFailed(response)) {
-				setNotify(correlationIdI, 'messages.error');
+				setNotify(correlationIdI, 'errors.error');
 				return;
 			}
 		}

@@ -76,7 +76,10 @@ export function useMasterDetailComponent(props, context, options) {
 	const showList = computed(() => {
 		return !display.lgAndDown.value;
 	});
-
+	
+	const canAdd = (item) => {
+		return item && (options.canAdd ? options.canAdd(correlationId(), item) : true);
+	};
 	const canCopy = (item) => {
 		return item && (options.canCopy ? options.canCopy(correlationId(), item) : true);
 	};
@@ -130,7 +133,7 @@ export function useMasterDetailComponent(props, context, options) {
 		try {
 			const correlationIdI = correlationId();
 			if (hasFailed(response)) {
-				setNotify(correlationIdI, 'messages.error');
+				setNotify(correlationIdI, 'errors.error');
 				return;
 			}
 
@@ -150,8 +153,10 @@ export function useMasterDetailComponent(props, context, options) {
 	const dialogCopyOpen = (item) => {
 		if (!item)
 			return;
-		// if (!canCopy(item))
-		// 	return;
+		if (!canCopy(item)) {
+			setNotify(correlationId(), 'errors.security');
+			return;
+		}
 
 		dialogCopyParams.value = { id: item.id, name: item.name };
 		dialogCopyManager.value.open();
@@ -179,12 +184,13 @@ export function useMasterDetailComponent(props, context, options) {
 			if (!options.deleteItem)
 				throw Error('No deleteItem function...');
 
-			const response = await options.deleteItem(correlationId(), dialogDeleteParams.id);
+			const correlationIdI = correlationId();
+			const response = await options.deleteItem(correlationIdI, dialogDeleteParams.id);
 			if (hasFailed(response)) {
-				setNotify(correlationIdI, 'messages.error');
+				setNotify(correlationIdI, 'errors.error');
 				return;
 			}
-			await fetch(correlationId()), true;
+			await fetch(correlationIdI), true;
 		}
 		finally {
 			dialogDeleteParams.id = null;
@@ -194,8 +200,10 @@ export function useMasterDetailComponent(props, context, options) {
 	const dialogDeleteOpen = (item) => {
 		if (!item)
 			return;
-		if (!canDelete(item))
+		if (!canDelete(item)) {
+			setNotify(correlationId(), 'errors.security');
 			return;
+		}
 
 		dialogDeleteParams.id = item.id;
 		dialogDeleteManager.value.open();
@@ -217,14 +225,24 @@ export function useMasterDetailComponent(props, context, options) {
 		return response;
 	};
 	const handleAdd = async () => {
+		if (!canAdd(item)) {
+			setNotify(correlationId(), 'errors.security');
+			return;
+		}
+
 		detailItem.value = await initNew();
 	};
 	const handleEdit = async (item) => {
 		const correlationIdI = correlationId();
+		if (!canEdit(item)) {
+			setNotify(correlationIdI, 'errors.security');
+			return;
+		}
+
 		detailItem.value = null;
 		const response = await options.fetchItem(correlationIdI, item.id, true);
 		if (hasFailed(response)) {
-			setNotify(correlationIdI, 'messages.error');
+			setNotify(correlationIdI, 'errors.error');
 			return;
 		}
 		
@@ -232,10 +250,15 @@ export function useMasterDetailComponent(props, context, options) {
 	};
 	const handleView = async (item) => {
 		const correlationIdI = correlationId();
+		if (!canView(item)) {
+			setNotify(correlationIdI, 'errors.security');
+			return;
+		}
+
 		detailItem.value = null;
 		const response = await options.fetchItem(correlationIdI, item.id, false);
 		if (hasFailed(response)) {
-			setNotify(correlationIdI, 'messages.error');
+			setNotify(correlationIdI, 'errors.error');
 			return;
 		}
 		
@@ -325,6 +348,7 @@ export function useMasterDetailComponent(props, context, options) {
 		displaySearchResults,
 		showDetailItem,
 		showList,
+		canAdd,
 		canCopy,
 		canDelete,
 		canEdit,
