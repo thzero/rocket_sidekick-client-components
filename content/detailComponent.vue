@@ -104,7 +104,7 @@ export function useDetailComponent(props, context, options) {
 			const correlationIdI = correlationId();
 			const response = await serviceStore.dispatcher.deletePartById(correlationIdI, dialogDeleteParams.value);
 			if (hasFailed(response)) {
-				setNotify(correlationIdI, 'messages.error');
+				setNotify(correlationIdI, 'errors.error');
 				return;
 			}
 			await fetch(correlationIdI);
@@ -117,8 +117,10 @@ export function useDetailComponent(props, context, options) {
 	const dialogDeleteOpen = (item) => {
 		if (!item)
 			return;
-		if (!canDelete(item))
+		if (!canDelete(item)) {
+			setNotify(correlationId(), 'errors.security');
 			return;
+		}
 
 		dialogDeleteParams.value = item.id;
 		dialogDeleteManager.value.open();
