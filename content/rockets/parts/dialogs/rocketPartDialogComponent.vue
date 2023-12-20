@@ -6,7 +6,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useBaseEditComponent } from '@thzero/library_client_vue3/components/baseEdit';
 import { useAdminComponent } from '@/components/content/adminComponent';
-import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketPartDialogComponent(props, context, options) {

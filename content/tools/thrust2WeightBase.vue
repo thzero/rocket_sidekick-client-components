@@ -13,7 +13,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useToolsBaseComponent } from '@/components/content/tools/toolsBase';
-import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useThrust2WeightBaseComponent(props, context, formRef) {

@@ -2,15 +2,13 @@
 import { computed, ref, watch } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
-import AppSharedConstants from '@/utility/constants';
 
 import AppUtility from '@/utility/app';
-import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useAdminComponent } from '@/components/content/adminComponent';
-import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function usePartComponent(props, context, options) {
