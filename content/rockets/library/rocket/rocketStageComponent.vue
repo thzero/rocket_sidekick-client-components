@@ -11,7 +11,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
-import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementBase';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
 export function useRocketStageComponent(props, context, options) {
