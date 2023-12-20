@@ -12,7 +12,7 @@
 			dense
 		>
 			<v-col
-				cols="7"
+				cols="7" lg="10" md="9"
 			>
 				<v-row dense>
 					<v-col cols="12">
@@ -76,8 +76,73 @@
 						/>
 					</v-col>
 				</v-row>
+				<v-row 
+					v-if="hasRocketSpecs && $vuetify.display.smAndUp"
+					dense
+				>
+					<v-col 
+						cols="12"
+					>
+						<v-sheet
+							class="pb-2"
+						>
+							<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
+							<v-divider></v-divider>
+						</v-sheet>
+					</v-col>
+					<v-col diameterMajor
+						v-if="displayItemRocketDiameter"
+						cols="4" sm="3" md="2"
+					>
+						<VtTextField
+							v-model="displayItemRocketDiameter"
+							:label="$t('strings.rockets.diameterMajor')"
+							:readonly="true"
+						/>
+					</v-col>
+					<v-col 
+						v-if="displayItemRocketLength"
+						cols="6" sm="3" md="2"
+					>
+						<VtTextField
+							v-model="displayItemRocketLength"
+							:label="$t('strings.rockets.length')"
+							:readonly="true"
+						/>
+					</v-col>
+					<v-col 
+						v-if="displayItemRocketWeight"
+						cols="6" sm="23" md="2"
+					>
+						<VtTextField
+							v-model="displayItemRocketWeight"
+							:label="$t('strings.rockets.weight')"
+							:readonly="true"
+						/>
+					</v-col>
+					<v-col 
+						v-if="displayItemRocketCg"
+						cols="6" sm="4" md="2"
+					>
+						<VtTextField
+							v-model="displayItemRocketCg"
+							:label="$t('strings.rockets.cg')"
+							:readonly="true"
+						/>
+					</v-col>
+					<v-col 
+						v-if="displayItemRocketCp"
+						cols="6" sm="4" md="2"
+					>
+						<VtTextField
+							v-model="displayItemRocketCp"
+							:label="$t('strings.rockets.cp')"
+							:readonly="true"
+						/>
+					</v-col>
+				</v-row>
 			</v-col>
-			<v-col cols="5">
+			<v-col cols="5" lg="2" md="3">
 				<img
 					:src="displayItemRocketCoverUrl"
 					style="width: 150px;display: block;margin-left: auto; margin-right: auto; float: right;"
@@ -88,17 +153,12 @@
 			v-if="!displayItemRocketCoverUrl"
 			dense
 		>
-			<v-col>
+			<v-col cols="12">
 				<VtMarkdown 
 					v-if="displayItem.description"
 					v-model="displayItem.description" :use-github=false 
 				/>
 			</v-col>
-		</v-row>
-		<v-row
-			v-if="!displayItemRocketCoverUrl"
-			dense
-		>
 			<v-col
 				cols="12" sm="6" lg="4"
 			>
@@ -174,7 +234,8 @@
 				<a :href="displayItem.videoUrl" target="_blank">{{ displayItem.videoUrl }}</a>
 			</v-col>
 		</v-row>
-		<v-row
+		<v-row 
+			v-if="(!displayItemRocketCoverUrl || $vuetify.display.xs) && hasRocketSpecs"
 			dense
 		>
 			<v-col 
@@ -187,66 +248,128 @@
 					<v-divider></v-divider>
 				</v-sheet>
 			</v-col>
-		</v-row>
-		<v-row
-			v-if="displayItemRocketMotorNames"
-			dense
-		>
-			<v-col>
-				<VtTextArea
-					v-model="displayItemRocketMotorNames"
-					:label="$t('forms.content.launches.rocketSetup.title')"
+			<v-col diameterMajor
+				v-if="displayItemRocketDiameter"
+				cols="3" md="2"
+			>
+				<VtTextField
+					v-model="displayItemRocketDiameter"
+					:label="$t('strings.rockets.diameterMajor')"
 					:readonly="true"
-					:clearable="false"
-					:rows="1"
+				/>
+			</v-col>
+			<v-col 
+				v-if="displayItemRocketLength"
+				cols="3" md="2"
+			>
+				<VtTextField
+					v-model="displayItemRocketLength"
+					:label="$t('strings.rockets.length')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="displayItemRocketWeight"
+				cols="3" md="2"
+			>
+				<VtTextField
+					v-model="displayItemRocketWeight"
+					:label="$t('strings.rockets.weight')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="displayItemRocketCg"
+				cols="4" sm="3" md="2"
+			>
+				<VtTextField
+					v-model="displayItemRocketCg"
+					:label="$t('strings.rockets.cg')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="displayItemRocketCp"
+				cols="4" sm="3" md="2"
+			>
+				<VtTextField
+					v-model="displayItemRocketCp"
+					:label="$t('strings.rockets.cp')"
+					:readonly="true"
 				/>
 			</v-col>
 		</v-row>
-		<v-sheet
-			v-if="displayItemRocketMotors.length > 0"
-			class="pt-2 pb-2 mt-2"
-		>
-			<h3>{{ $t('strings.content.rockets.motors') }}</h3>
-			<v-divider></v-divider>
-		</v-sheet>
-		<v-row 
-			v-for="item in displayItemRocketMotors"
-			:key="item"
+		<v-row
 			dense
 		>
 			<v-col 
 				cols="12"
 			>
+				<v-row
+					v-if="String.isNullOrEmpty(displayItemRocketMotorNames)"
+					dense
+				>
+					<v-col>
+						<VtTextArea
+							v-model="displayItemRocketMotorNames"
+							:label="$t('forms.content.launches.rocketSetup.title')"
+							:readonly="true"
+							:clearable="false"
+							:rows="1"
+						/>
+					</v-col>
+				</v-row>
+			</v-col>
+			<v-col 
+				cols="12"
+			>
 				<v-sheet
-					v-if="displayItemRocketMotors.length > 1"
-					color="secondary"
-					class="ml-4 mt-2 pl-4 pr-4 pt-2 pb-2"
-					rounded
+					v-if="displayItemRocketMotors.length > 0"
+					class="pt-2 pb-2 mt-2"
 				>
-					{{ $t('forms.content.rockets.stage.name') }}
-					{{ item.index }}
+					<h3>{{ $t('strings.content.rockets.motors') }}</h3>
+					<v-divider></v-divider>
 				</v-sheet>
-				<v-sheet 
-					v-for="(item2, index) in item.motors"
-					:key="item2"
-					:color="index % 2 === 0 ? 'green' : 'green'"
-					:class="`ml-${(displayItemRocketMotors.length > 1 ? '8' : '4')} mt-2 pl-4 pr-4 pt-2 pb-2`"
-					style="width: 100%;"
-					rounded
+				<v-row 
+					v-for="item in displayItemRocketMotors"
+					:key="item"
+					dense
 				>
-					<!-- <v-row
-						dense
-						class="pl-8"
+					<v-col 
+						cols="12"
 					>
-						<v-col>
-							{{ item2.name }}
-						</v-col>
-						<v-col>
-							{{ item2.caseName }}
-						</v-col>
-					</v-row> -->
-					{{ item2.diameter }} {{ $t('strings.content.rockets.with') }} <a style="color: white" :href="motorUrl(item2)" target="_blank">{{ item2.name }}</a> {{ $t('strings.content.rockets.in') }} {{ item2.caseName }}
-				</v-sheet>
+						<v-sheet
+							v-if="displayItemRocketMotors.length > 1"
+							color="secondary"
+							class="ml-4 mt-2 pl-4 pr-4 pt-2 pb-2"
+							rounded
+						>
+							{{ $t('forms.content.rockets.stage.name') }}
+							{{ item.index }}
+						</v-sheet>
+						<v-sheet 
+							v-for="(item2, index) in item.motors"
+							:key="item2"
+							:color="index % 2 === 0 ? 'green' : 'green'"
+							:class="`ml-${(displayItemRocketMotors.length > 1 ? '8' : '4')} mt-2 pl-4 pr-4 pt-2 pb-2`"
+							style="width: 100%;"
+							rounded
+						>
+							<!-- <v-row
+								dense
+								class="pl-8"
+							>
+								<v-col>
+									{{ item2.name }}
+								</v-col>
+								<v-col>
+									{{ item2.caseName }}
+								</v-col>
+							</v-row> -->
+							{{ item2.diameter }} {{ $t('strings.content.rockets.with') }} <a style="color: white" :href="motorUrl(item2)" target="_blank">{{ item2.name }}</a> {{ $t('strings.content.rockets.in') }} {{ item2.caseName }}
+						</v-sheet>
+					</v-col>
+				</v-row>
 			</v-col>
 		</v-row>
 		<v-row
@@ -511,17 +634,22 @@ export default {
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
+			displayItemRocketCg,
 			displayItemRocketCoverUrl,
-			displayItemRocketId,
+			displayItemRocketCp,
+			displayItemRocketDiameter,
+			displayItemRocketLength,
 			displayItemRocketMotorNames,
 			displayItemRocketMotors,
 			displayItemRocketMame,
+			displayItemRocketWeight,
 			displayItemTemperature,
 			displayItemWindSpeed,
 			hasCoords,
 			hasCoordsLaunch,
 			hasCoordsRecovery,
 			hasResults,
+			hasRocketSpecs,
 			hasWeather,
 			isFailure,
 			isSuccess,
@@ -566,17 +694,22 @@ export default {
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
+			displayItemRocketCg,
 			displayItemRocketCoverUrl,
-			displayItemRocketId,
+			displayItemRocketCp,
+			displayItemRocketDiameter,
+			displayItemRocketLength,
 			displayItemRocketMotorNames,
 			displayItemRocketMotors,
 			displayItemRocketMame,
+			displayItemRocketWeight,
 			displayItemTemperature,
 			displayItemWindSpeed,
 			hasCoords,
 			hasCoordsLaunch,
 			hasCoordsRecovery,
 			hasResults,
+			hasRocketSpecs,
 			hasWeather,
 			isFailure,
 			isSuccess,

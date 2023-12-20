@@ -48,6 +48,8 @@ export function usePartComponent(props, context, options) {
 		isEditable,
 		isNew,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,
@@ -125,8 +127,6 @@ export function usePartComponent(props, context, options) {
 		isLoggedIn
 	} = useAdminComponent(props, context, { role: 'parts:public'});
 
-	const serviceParts = LibraryClientUtility.$injector.getService(AppSharedConstants.InjectorKeys.SERVICE_PARTS);
-
 	const detailItemDescription = ref(null);
 	const detailItemIsPublic = ref(null);
 	const detailItemManufacturer = ref(null);
@@ -143,8 +143,8 @@ export function usePartComponent(props, context, options) {
 	const canAdd = computed(() => {
 		return !isNew.value && !dirty.value;
 	});
-	const isPublic = computed(() => {
-		return detailItemData.value ? detailItemData.value.public ?? false : false;
+	const isPublicItem = computed(() => {
+		return isPublic(correlationId(), detailItemData.value);
 	});
 
 	const handleAdd = () => {
@@ -207,6 +207,8 @@ export function usePartComponent(props, context, options) {
 		isEditable,
 		isNew,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,
@@ -240,7 +242,7 @@ export function usePartComponent(props, context, options) {
 		hasAdminDelete,
 		hasAdminEdit,
 		hasAdminRoles,
-		isPublic,
+		isPublicItem,
 		handleAdd,
 		requestManufacturers
 	};

@@ -73,6 +73,9 @@ export function useRocketSetupViewComponent(props, context, options) {
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
 	});
+	const hasSpecs = computed(() => {
+		return cg.value || cp.value || diameter.value || length.value || weight.value;
+	});
 	const length = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
@@ -125,6 +128,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 		cp,
 		diameter,
 		displayItem,
+		hasSpecs,
 		length,
 		manufacturer,
 		motors,

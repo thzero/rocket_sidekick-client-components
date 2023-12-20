@@ -116,7 +116,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 	}
 
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item) && isDefault(item) || !isInProgress(item); // TODO: SECURITY: Admin can edit a default
+		return isOwner(correlationId, item) || isDefault(item) || !isInProgress(item); // TODO: SECURITY: Admin can edit a default
 	};
 	const canDeleteI = (correlationId, item) => {
 		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item); // TODO: SECURITY: Admin can edit a default
@@ -128,7 +128,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		return isOwner(correlationId, item) && !isDefault(item) && !!isInProgress(item) && !isCompleted(item);
 	};
 	const canViewI = (correlationId, item) => {
-		return isOwner(correlationId, item) && isDefault(item);
+		return isOwner(correlationId, item) || isDefault(item);
 	};
 	const checklistTypeIcon = (item) => {
 		const icon = checklistTypeIconDetermine(item);

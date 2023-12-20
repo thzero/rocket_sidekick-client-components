@@ -80,6 +80,8 @@ export function useLaunchesBaseComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		search,
 		display
 	} = useMasterDetailComponent(props, context, {

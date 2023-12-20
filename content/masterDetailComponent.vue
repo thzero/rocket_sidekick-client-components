@@ -274,6 +274,12 @@ export function useMasterDetailComponent(props, context, options) {
 		const ownerId = (user.value ?? {}).id;
 		return item ? item.ownerId == ownerId : false; // TODO: allow admin
 	};
+	const isPublic = (correlationId, item) => {
+		return item ? item.public ?? false : false;
+	};
+	const isPublicDisplay = (item) => {
+		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
+	};
 	const search = async () => {
 		// TODO: Should probably check and see if things are dirty, and raise a confirmation dialog
 		return fetch(correlationId(), true);
@@ -350,6 +356,8 @@ export function useMasterDetailComponent(props, context, options) {
 		isCopying,
 		isDeleting,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		search,
 		display
 	};

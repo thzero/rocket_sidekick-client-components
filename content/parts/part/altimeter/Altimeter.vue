@@ -6,7 +6,7 @@
 		[[ dirty {{ dirty }} ]]
 		[[ isEditable {{ isEditable }} ]]
 		[[ isNew {{ isNew }} ]]
-		[[ isPublic {{ isPublic }} ]]
+		[[ isPublicItem {{ isPublicItem }} ]]
 		[[ hasAdminDelete {{ hasAdminDelete }} ]]
 		[[ hasAdminEdit {{ hasAdminEdit }} ]]
 		[[ hasAdminRoles {{ hasAdminRoles }} ]]
@@ -219,6 +219,8 @@ export default {
 			isEditable,
 			isNew,
 			isOwner,
+			isPublic,
+			isPublicDisplay,
 			dialogDeleteCancel,
 			dialogDeleteError,
 			dialogDeleteOk,
@@ -252,7 +254,7 @@ export default {
 			hasAdminDelete,
 			hasAdminEdit,
 			hasAdminRoles,
-			isPublic,
+			isPublicItem,
 			handleAdd,
 			requestManufacturers,
 			scope,
@@ -293,6 +295,8 @@ export default {
 			isEditable,
 			isNew,
 			isOwner,
+			isPublic,
+			isPublicDisplay,
 			dialogDeleteCancel,
 			dialogDeleteError,
 			dialogDeleteOk,
@@ -326,7 +330,7 @@ export default {
 			hasAdminDelete,
 			hasAdminEdit,
 			hasAdminRoles,
-			isPublic,
+			isPublicItem,
 			handleAdd,
 			requestManufacturers,
 			scope,

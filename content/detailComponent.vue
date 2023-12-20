@@ -73,6 +73,12 @@ export function useDetailComponent(props, context, options) {
 		const ownerId = (user.value ?? {}).id;
 		return item ? item.ownerId == ownerId : false; // TODO: allow admin
 	};
+	const isPublic = (correlationId, item) => {
+		return item ? item.public ?? false : false;
+	};
+	const isPublicDisplay = (item) => {
+		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
+	};
 
 	const dialogDeleteCancel = async (item) => {
 		try {
@@ -232,6 +238,8 @@ export function useDetailComponent(props, context, options) {
 		isEditable,
 		isNew,
 		isOwner,
+		isPublic,
+		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,

@@ -18,7 +18,10 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row
+			v-if="hasSpecs"
+			dense
+		>
 			<v-col 
 				cols="12"
 			>
@@ -211,6 +214,7 @@ export default {
 			cp,
 			diameter,
 			displayItem,
+			hasSpecs,
 			length,
 			manufacturer,
 			motors,
@@ -239,6 +243,7 @@ export default {
 			cp,
 			diameter,
 			displayItem,
+			hasSpecs,
 			length,
 			manufacturer,
 			motors,

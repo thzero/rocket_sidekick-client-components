@@ -209,6 +209,33 @@ export function useLaunchViewComponent(props, context, options) {
 			return displayItemMeasurementVelocity(correlationId(), displayItem.value, (value) => { return value.windSpeed; }, (value) => { return value.windSpeedMeasurementUnitsId; }, (value) => { return value.windSpeedMeasurementUnitId; });
 		return null;
 	});
+	
+	const displayItemRocketCg = computed(() => {
+		if (!displayItem.value || !displayItem.value.rocketSetup)
+			return null;
+		return rocketCg(displayItem.value.rocketSetup.stages);
+	});
+	const displayItemRocketCp = computed(() => {
+		if (!displayItem.value || !displayItem.value.rocketSetup || !displayItem.value.rocketSetup.rocket)
+			return null;
+		return rocketCp(displayItem.value.rocketSetup.rocket.stages);
+	});
+	const displayItemRocketDiameter = computed(() => {
+		if (!displayItem.value || !displayItem.value.rocketSetup || !displayItem.value.rocketSetup.rocket)
+			return null;
+		return rocketDiameter(displayItem.value.rocketSetup.rocket.stages);
+	});
+	const displayItemRocketLength = computed(() => {
+		if (!displayItem.value || !displayItem.value.rocketSetup || !displayItem.value.rocketSetup.rocket)
+			return null;
+		return rocketLength(displayItem.value.rocketSetup.rocket.stages);
+	});
+	const displayItemRocketWeight = computed(() => {
+		if (!displayItem.value || !displayItem.value.rocketSetup)
+			return null;
+		return rocketWeight(displayItem.value.rocketSetup.stages);
+	});
+
 	const hasCoords = computed(() => {
 		return hasCoordsLaunch.value && hasCoordsRecovery.value;
 	});
@@ -242,6 +269,9 @@ export function useLaunchViewComponent(props, context, options) {
 			displayItem.value.results.velocityMax || 
 			displayItem.value.results.velocityRecovery
 		);
+	});
+	const hasRocketSpecs = computed(() => {
+		return displayItemRocketCg.value || displayItemRocketCp.value || displayItemRocketDiameter.value || displayItemRocketLength.value || displayItemRocketWeight.value;
 	});
 	const hasWeather = computed(() => {
 		if (!displayItem.value)
@@ -303,16 +333,22 @@ export function useLaunchViewComponent(props, context, options) {
 		displayItemResultsCoordsRecovery,
 		displayItemResultsVelocityMax,
 		displayItemResultsVelocityRecovery,
+		displayItemRocketCg,
 		displayItemRocketCoverUrl,
+		displayItemRocketCp,
+		displayItemRocketDiameter,
+		displayItemRocketLength,
 		displayItemRocketMotorNames,
 		displayItemRocketMotors,
 		displayItemRocketMame,
+		displayItemRocketWeight,
 		displayItemTemperature,
 		displayItemWindSpeed,
 		hasCoords,
 		hasCoordsLaunch,
 		hasCoordsRecovery,
 		hasResults,
+		hasRocketSpecs,
 		hasWeather,
 		isFailure,
 		isSuccess,
