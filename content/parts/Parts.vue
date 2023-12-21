@@ -198,6 +198,7 @@
 
 <script>
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { usePartsBaseComponent } from '@/components/content/parts/partsComponent';
 import { usePartsBaseComponentProps } from '@/components/content/parts/partsComponentProps';
 
@@ -279,9 +280,6 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
@@ -295,6 +293,13 @@ export default {
 			measurementUnitTranslateWeight,
 			resetAdditional
 		} = usePartsBaseComponent(props, context);
+
+		const {
+			isAdmin,
+			isOwner,
+			isPublic,
+			isPublicDisplay
+		} = useMasterDetailSecurityComponent(props, context);
 
 		return {
 			correlationId,
@@ -356,9 +361,6 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
@@ -370,7 +372,9 @@ export default {
 			buttonSearchResetDisabled,
 			manufacturer,
 			measurementUnitTranslateWeight,
-			resetAdditional
+			resetAdditional,
+			isPublic,
+			isPublicDisplay
 		};
 	}
 };

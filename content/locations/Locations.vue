@@ -206,6 +206,7 @@
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useLocationsBaseComponent } from '@/components/content/locations/locationsComponent';
 import { useLocationsBaseComponentProps } from '@/components/content/locations/locationsComponentProps';
 import { useLocationsFilterValidation } from '@/components/content/locations/locationsFilterValidation';
@@ -304,9 +305,6 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
@@ -325,6 +323,13 @@ export default {
 			scope,
 			validation
 		} = useLocationsBaseComponent(props, context);
+
+		const {
+			isAdmin,
+			isOwner,
+			isPublic,
+			isPublicDisplay
+		} = useMasterDetailSecurityComponent(props, context);
 
 		return {
 			correlationId,
@@ -386,9 +391,6 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
@@ -405,7 +407,9 @@ export default {
 			addressDisplay,
 			resetAdditional,
 			scope,
-			validation
+			validation,
+			isPublic,
+			isPublicDisplay
 		};
 	},
 	validations () {

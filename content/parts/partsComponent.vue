@@ -6,6 +6,7 @@ import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 
 import PartData from 'rocket_sidekick_common/data/parts/index';
@@ -71,9 +72,6 @@ export function usePartsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		search,
 		display
 	} = useMasterDetailComponent(props, context, {
@@ -89,6 +87,13 @@ export function usePartsBaseComponent(props, context, options) {
 			initNew: async (correlationId, data) => { return initNewI(correlationId, data); }
 		}
 	);
+
+	const {
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay
+	} = useMasterDetailSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,
@@ -261,9 +266,6 @@ export function usePartsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		search,
 		display,
 		buttonsDialog,

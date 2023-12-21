@@ -46,11 +46,12 @@
 				/>
 			</v-col>
 			<v-col cols="2">
-				<VSwitch
-					v-if="!isEditable"
-					ref="isDefaultRef"
+				<VtSwitchWithValidation
+					ref="detailItemIsDefaultRef"
 					v-model="detailItemIsDefault"
+					vid="detailItemIsDefault"
 					:label="$t('forms.checklists.default')"
+					:validation="validation"
 					:readonly="true"
 				/>
 			</v-col>
@@ -146,6 +147,7 @@
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
+import { useDetailComponentProps } from '@/components/content/detailComponentProps';
 import { useChecklistComponent } from '@/components/content/checklists/checklist/checklistComponent';
 import { useChecklistComponentProps } from '@/components/content/checklists/checklist/checklistComponentProps';
 import { useChecklistValidation } from '@/components/content/checklists/checklist/checklistValidation';
@@ -166,9 +168,10 @@ export default {
 		VtTextFieldWithValidation
 	},
 	props: {
+		...useDetailComponentProps,
 		...useChecklistComponentProps
 	},
-	emits: ['cancel', 'close', 'ok'],
+	emits: ['cancel', 'close', 'dirty', 'error', 'ok'],
 	setup (props, context) {
 		const {
 			correlationId,
@@ -203,9 +206,6 @@ export default {
 			isDeleting,
 			isEditable,
 			isNew,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
 			dialogDeleteCancel,
 			dialogDeleteError,
 			dialogDeleteOk,
@@ -242,7 +242,7 @@ export default {
 			detailItemIsDefault,
 			detailItemName,
 			detailItemReorder,
-			hasAdmin,
+			canAddStep,
 			isDefault,
 			isInProgress,
 			isShared,
@@ -285,9 +285,6 @@ export default {
 			isDeleting,
 			isEditable,
 			isNew,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
 			dialogDeleteCancel,
 			dialogDeleteError,
 			dialogDeleteOk,
@@ -324,7 +321,7 @@ export default {
 			detailItemIsDefault,
 			detailItemName,
 			detailItemReorder,
-			hasAdmin,
+			canAddStep,
 			isDefault,
 			isInProgress,
 			isShared,

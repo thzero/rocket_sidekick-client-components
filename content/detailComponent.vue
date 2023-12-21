@@ -10,6 +10,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
 import { useBaseEditComponent } from '@thzero/library_client_vue3/components/baseEdit';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 
 export function useDetailComponent(props, context, options) {
 	const {
@@ -27,6 +28,13 @@ export function useDetailComponent(props, context, options) {
 		serverErrors,
 		setErrors
 	} = useBaseEditComponent(props, context, options);
+
+	const {
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay
+	} = useMasterDetailSecurityComponent(props, context);
 
 	const {
 		notifyColor,
@@ -69,16 +77,6 @@ export function useDetailComponent(props, context, options) {
 	const isNew = computed(() => {
 		return props.modelValue ? props.modelValue.isNew ?? false : false;
 	});
-	const isOwner = (correlationId, item) => {
-		const ownerId = (user.value ?? {}).id;
-		return item ? item.ownerId == ownerId : false; // TODO: allow admin
-	};
-	const isPublic = (correlationId, item) => {
-		return item ? item.public ?? false : false;
-	};
-	const isPublicDisplay = (item) => {
-		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
-	};
 
 	const dialogDeleteCancel = async (item) => {
 		try {
@@ -239,9 +237,6 @@ export function useDetailComponent(props, context, options) {
 		isDeleting,
 		isEditable,
 		isNew,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,

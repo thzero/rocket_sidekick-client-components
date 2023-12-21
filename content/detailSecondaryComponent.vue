@@ -6,6 +6,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useDetailComponent } from '@/components/content/detailComponent';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 
 export function useDetailSecondaryComponent(props, context, options) {
 	const {
@@ -41,9 +42,6 @@ export function useDetailSecondaryComponent(props, context, options) {
 		isDeleting,
 		isEditable,
 		isNew,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,
@@ -56,6 +54,13 @@ export function useDetailSecondaryComponent(props, context, options) {
 		preCompleteOk,
 		resetAdditional
 	} = useDetailComponent(props, context, options);
+
+	const {
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay
+	} = useMasterDetailSecurityComponent(props, context);
 	
 	const dialogDeleteSecondaryManager = ref(new DialogSupport());
 	const dialogDeleteSecondaryMessage = ref(LibraryClientUtility.$trans.t(`messages.${options && options.dialogDeleteMessage ? options.dialogDeleteMessage : 'items'}.delete_confirm`));
@@ -233,9 +238,6 @@ export function useDetailSecondaryComponent(props, context, options) {
 		isDeleting,
 		isEditable,
 		isNew,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,

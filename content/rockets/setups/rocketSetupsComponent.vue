@@ -15,6 +15,7 @@ import RocketSetupData from 'rocket_sidekick_common/data/rockets/setups/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useRocketSetupsBaseComponent(props, context, options) {
@@ -78,9 +79,6 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		search,
 		display
 	} = useMasterDetailComponent(props, context, {
@@ -96,6 +94,13 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
 	);
+
+	const {
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay
+	} = useMasterDetailSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,
@@ -324,9 +329,6 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		search,
 		display,
 		buttonsDialog,

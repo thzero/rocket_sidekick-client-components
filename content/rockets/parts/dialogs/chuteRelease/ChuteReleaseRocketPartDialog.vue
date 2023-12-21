@@ -6,7 +6,6 @@
 		[[ dirty {{ dirty }} ]]
 		[[ editable {{ editable }} ]]
 		[[ isNew {{ isNew }} ]]
-		[[ isPublic {{ isPublic }} ]]
 		[[ hasAdminDelete {{ hasAdminDelete }} ]]
 		[[ hasAdminEdit {{ hasAdminEdit }} ]]
 		[[ hasAdminRoles {{ hasAdminRoles }} ]]

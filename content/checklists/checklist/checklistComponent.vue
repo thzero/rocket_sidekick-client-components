@@ -11,6 +11,7 @@ import ChecklistStepData from 'rocket_sidekick_common/data/checklists/step';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 
 export function useChecklistComponent(props, context, options) {
 	const {
@@ -46,9 +47,6 @@ export function useChecklistComponent(props, context, options) {
 		isDeleting,
 		isEditable,
 		isNew,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,
@@ -114,6 +112,13 @@ export function useChecklistComponent(props, context, options) {
 	});
 
 	const {
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay
+	} = useMasterDetailSecurityComponent(props, context);
+
+	const {
 		buttonsDialog,
 		buttonsForms
 	} = useButtonComponent(props, context);
@@ -123,8 +128,8 @@ export function useChecklistComponent(props, context, options) {
 	const detailItemName = ref(null);
 	const detailItemReorder = ref(false);
 
-	const hasAdmin = computed(() => {
-		return false;
+	const canAddStep = computed(() => {
+		return isDefault.value || isOwner(detailItemData.value); // TODO: SECURITY: Admin can edit a default
 	});
 	const isDefault = computed(() => {
 		return detailItemData.value ? detailItemData.value.isDefault ?? false : false;
@@ -686,9 +691,6 @@ export function useChecklistComponent(props, context, options) {
 		isDeleting,
 		isEditable,
 		isNew,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,
@@ -725,7 +727,7 @@ export function useChecklistComponent(props, context, options) {
 		detailItemIsDefault,
 		detailItemName,
 		detailItemReorder,
-		hasAdmin,
+		canAddStep,
 		isDefault,
 		isInProgress,
 		isShared,
