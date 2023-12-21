@@ -91,6 +91,25 @@
 		</template>
 		<template v-slot:listing>
 			<v-row dense>
+				<v-col cols="12">
+					<v-snackbar
+						ref="notifyRef"
+						v-model="notifySignal"
+						:color="notifyColor"
+						:timeout="notifyTimeout"
+					>
+						{{ notifyMessage }}
+					</v-snackbar>
+					<div
+						v-if="debug"
+					>
+						[[ colsSearchResults {{ colsSearchResults }}]]
+						[[ colsEditPanel {{ colsEditPanel }}]]
+						[[ showList {{ showList }}]]
+						[[ showDetailItem {{ showDetailItem }}]]
+						<!-- [[ detailitem {{ JSON.stringify(detailItem) }}]] -->
+					</div>
+				</v-col>
 				<v-col
 					v-show="colsSearchResults"
 					:cols="colsSearchResults"
@@ -101,10 +120,6 @@
 							v-for="item in items"
 							:key="item.name"
 						>
-						canView {{ canView(item) }}
-						isDefault {{ isDefault(item) }}
-						isOwner {{ isOwner(item) }}
-				<pre>{{ item }}</pre>
 							<v-card>
 								<v-card-title>
 									{{ item.name }}
@@ -166,6 +181,22 @@
 							</v-card>
 						</v-col>
 					</v-row>
+				</v-col>
+				<v-col
+					class="mb-4"
+					v-show="colsEditPanel"
+					:cols="colsEditPanel"
+				>
+					<Checklist
+						:model-value="detailItem"
+						@cancel="detailClose"
+						@close="detailClose"
+						@error="detailError"
+						@ok="detailOk"
+						@dirty="detailDirtyCallback"
+						:debug="debug"
+					>
+					</Checklist>
 				</v-col>
 			</v-row>
 		</template>
@@ -298,9 +329,6 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,
@@ -391,9 +419,6 @@ export default {
 			initView,
 			isCopying,
 			isDeleting,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
 			search,
 			display,
 			buttonsDialog,

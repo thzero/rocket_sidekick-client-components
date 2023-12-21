@@ -8,6 +8,7 @@ import AppUtility from '@/utility/app';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useAdminComponent } from '@/components/content/adminComponent';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -45,9 +46,6 @@ export function usePartComponent(props, context, options) {
 		isDeleting,
 		isEditable,
 		isNew,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,
@@ -99,6 +97,13 @@ export function usePartComponent(props, context, options) {
 				options.resetAdditional(correlationId, orig);
 		}
 	});
+
+	const {
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay
+	} = useMasterDetailSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,
@@ -204,9 +209,6 @@ export function usePartComponent(props, context, options) {
 		isDeleting,
 		isEditable,
 		isNew,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		dialogDeleteCancel,
 		dialogDeleteError,
 		dialogDeleteOk,

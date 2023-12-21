@@ -10,6 +10,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
 import { useDisplayComponent } from '@thzero/library_client_vue3_vuetify3/components/display';
+import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
 
 export function useMasterDetailComponent(props, context, options) {
@@ -27,6 +28,13 @@ export function useMasterDetailComponent(props, context, options) {
 		sort,
 		target
 	} = useContentBaseComponent(props, context, options);
+
+	const {
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay
+	} = useMasterDetailSecurityComponent(props, context);
 
 	const {
 		notifyColor,
@@ -293,16 +301,6 @@ export function useMasterDetailComponent(props, context, options) {
 
 		return item.id === dialogDeleteParams.id;
 	};
-	const isOwner = (correlationId, item) => {
-		const ownerId = (user.value ?? {}).id;
-		return item ? item.ownerId == ownerId : false; // TODO: allow admin
-	};
-	const isPublic = (correlationId, item) => {
-		return item ? item.public ?? false : false;
-	};
-	const isPublicDisplay = (item) => {
-		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
-	};
 	const search = async () => {
 		// TODO: Should probably check and see if things are dirty, and raise a confirmation dialog
 		return fetch(correlationId(), true);
@@ -379,9 +377,6 @@ export function useMasterDetailComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
 		search,
 		display
 	};

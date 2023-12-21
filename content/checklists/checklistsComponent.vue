@@ -116,7 +116,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 	}
 
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isDefault(item) || !isInProgress(item); // TODO: SECURITY: Admin can edit a default
+		return isOwner(correlationId, item) || isDefault(item) || !isInProgress(item);
 	};
 	const canDeleteI = (correlationId, item) => {
 		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item); // TODO: SECURITY: Admin can edit a default
@@ -190,7 +190,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const fetchI = async (correlationId) => {
 		const params = fetchParams(correlationId, {});
 		if (!params)
-			return error('useRocketsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+			return error('useChecklistsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 
 		serviceStore.dispatcher.setChecklistsSearchCriteria(correlationId, params);
 			
@@ -304,7 +304,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
-		isOwner,
 		search,
 		display,
 		buttonsDialog,
