@@ -5,7 +5,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
-export function useMasterDetailSecurityComponent(props, context, options) {
+export function useContentDetailSecurityComponent(props, context, options) {
 	const {
 		correlationId,
 		error,

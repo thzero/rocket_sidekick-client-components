@@ -10,8 +10,8 @@ import LibraryCommonUtility from '@thzero/library_common/utility';
 import ChecklistStepData from 'rocket_sidekick_common/data/checklists/step';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
-import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 
 export function useChecklistComponent(props, context, options) {
 	const {
@@ -116,7 +116,7 @@ export function useChecklistComponent(props, context, options) {
 		isOwner,
 		isPublic,
 		isPublicDisplay
-	} = useMasterDetailSecurityComponent(props, context);
+	} = useContentDetailSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,

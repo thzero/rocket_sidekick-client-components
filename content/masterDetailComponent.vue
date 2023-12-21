@@ -9,8 +9,8 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useDisplayComponent } from '@thzero/library_client_vue3_vuetify3/components/display';
-import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
 
 export function useMasterDetailComponent(props, context, options) {
@@ -34,7 +34,7 @@ export function useMasterDetailComponent(props, context, options) {
 		isOwner,
 		isPublic,
 		isPublicDisplay
-	} = useMasterDetailSecurityComponent(props, context);
+	} = useContentDetailSecurityComponent(props, context);
 
 	const {
 		notifyColor,

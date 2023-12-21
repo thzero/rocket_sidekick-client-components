@@ -14,8 +14,8 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 import RocketSetupData from 'rocket_sidekick_common/data/rockets/setups/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
-import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useRocketSetupsBaseComponent(props, context, options) {
@@ -100,7 +100,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 		isOwner,
 		isPublic,
 		isPublicDisplay
-	} = useMasterDetailSecurityComponent(props, context);
+	} = useContentDetailSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,
