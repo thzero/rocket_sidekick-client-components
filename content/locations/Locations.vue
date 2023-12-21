@@ -205,11 +205,11 @@
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
-import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useLocationsBaseComponent } from '@/components/content/locations/locationsComponent';
 import { useLocationsBaseComponentProps } from '@/components/content/locations/locationsComponentProps';
 import { useLocationsFilterValidation } from '@/components/content/locations/locationsFilterValidation';
+import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
 
 import ContentHeader from '@/components/content/Header';
 import LocationView from '@/components/content/locations/location/LocationView';
@@ -329,7 +329,7 @@ export default {
 			isOwner,
 			isPublic,
 			isPublicDisplay
-		} = useMasterDetailSecurityComponent(props, context);
+		} = useContentDetailSecurityComponent(props, context);
 
 		return {
 			correlationId,

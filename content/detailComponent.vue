@@ -10,7 +10,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
 import { useBaseEditComponent } from '@thzero/library_client_vue3/components/baseEdit';
-import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 
 export function useDetailComponent(props, context, options) {
 	const {
@@ -34,7 +34,7 @@ export function useDetailComponent(props, context, options) {
 		isOwner,
 		isPublic,
 		isPublicDisplay
-	} = useMasterDetailSecurityComponent(props, context);
+	} = useContentDetailSecurityComponent(props, context);
 
 	const {
 		notifyColor,

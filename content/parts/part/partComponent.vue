@@ -5,10 +5,10 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
 
-import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useDetailComponent } from '@/components/content/detailComponent';
 import { useAdminComponent } from '@/components/content/adminComponent';
-import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useDetailComponent } from '@/components/content/detailComponent';
 import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 
@@ -103,7 +103,7 @@ export function usePartComponent(props, context, options) {
 		isOwner,
 		isPublic,
 		isPublicDisplay
-	} = useMasterDetailSecurityComponent(props, context);
+	} = useContentDetailSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,

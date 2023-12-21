@@ -14,7 +14,7 @@ import RocketData from 'rocket_sidekick_common/data/rockets/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
-import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useRocketsBaseComponent(props, context, options) {
@@ -99,7 +99,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		isOwner,
 		isPublic,
 		isPublicDisplay
-	} = useMasterDetailSecurityComponent(props, context);
+	} = useContentDetailSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,

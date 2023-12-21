@@ -9,6 +9,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 
 import ChecklistData from 'rocket_sidekick_common/data/checklists/index';
@@ -76,7 +77,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		initView,
 		isCopying,
 		isDeleting,
-		isOwner,
 		search,
 		display
 	} = useMasterDetailComponent(props, context, {
@@ -91,6 +91,13 @@ export function useChecklistsBaseComponent(props, context, options) {
 			initNew: async (correlationId, data) => { return await initNewI(correlationId, data); }
 		}
 	);
+
+	const {
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay
+	} = useContentDetailSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,

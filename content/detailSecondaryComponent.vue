@@ -5,8 +5,8 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
+import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useDetailComponent } from '@/components/content/detailComponent';
-import { useMasterDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
 
 export function useDetailSecondaryComponent(props, context, options) {
 	const {
@@ -60,7 +60,7 @@ export function useDetailSecondaryComponent(props, context, options) {
 		isOwner,
 		isPublic,
 		isPublicDisplay
-	} = useMasterDetailSecurityComponent(props, context);
+	} = useContentDetailSecurityComponent(props, context);
 	
 	const dialogDeleteSecondaryManager = ref(new DialogSupport());
 	const dialogDeleteSecondaryMessage = ref(LibraryClientUtility.$trans.t(`messages.${options && options.dialogDeleteMessage ? options.dialogDeleteMessage : 'items'}.delete_confirm`));
