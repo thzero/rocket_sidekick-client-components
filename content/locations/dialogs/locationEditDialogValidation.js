@@ -1,6 +1,7 @@
 import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
 
 export const useLocationEditDialogValidation = { 
+	detailItemDates: { $autoDirty: true },
 	detailItemExperimental: { $autoDirty: true },
 	detailItemNumber: { between: between(0, 9999), $autoDirty: true },
 	detailItemOrganizations: { $autoDirty: true },

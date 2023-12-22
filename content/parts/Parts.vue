@@ -197,7 +197,7 @@
 </template>
 
 <script>
-import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useMasterDetailComponentProps } from '@/components/content/masterDetailComponentProps';
 import { usePartsBaseComponent } from '@/components/content/parts/partsComponent';
 import { usePartsBaseComponentProps } from '@/components/content/parts/partsComponentProps';
@@ -295,11 +295,12 @@ export default {
 		} = usePartsBaseComponent(props, context);
 
 		const {
-			isAdmin,
-			isOwner,
-			isPublic,
-			isPublicDisplay
-		} = useContentDetailSecurityComponent(props, context);
+		isAdmin,
+		isOwner,
+		isPublic,
+		isPublicDisplay,
+		isUser
+		} = useContentSecurityComponent(props, context);
 
 		return {
 			correlationId,

@@ -6,10 +6,12 @@
 		[[ dirty {{ dirty }} ]]
 		[[ isEditable {{ isEditable }} ]]
 		[[ isNew {{ isNew }} ]]
-		[[ canAddStep {{ canAddStep }} ]]
-		[[ canDeleteStep {{ canDeleteStep }} ]]
-		[[ canEditStep {{ canEditStep }} ]]
+		[[ canAddSecondary {{ canAddSecondary }} ]]
+		[[ canDeleteSecondary {{ canDeleteSecondary }} ]]
+		[[ canEditSecondary {{ canEditSecondary }} ]]
 		[[ isDefault {{ isDefault }} ]]
+		[[ isDefaultEdit {{ isDefaultEdit }} ]]
+		[[ isDefaultView {{ isDefaultView }} ]]
 		[[ isInProgress {{ isInProgress }} ]]
 		[[ isShared {{ isShared }} ]]
 		<!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
@@ -47,6 +49,7 @@
 			</v-col>
 			<v-col cols="2">
 				<VtSwitchWithValidation
+					v-if="isDefaultView"
 					ref="detailItemIsDefaultRef"
 					v-model="detailItemIsDefault"
 					vid="detailItemIsDefault"
@@ -71,6 +74,134 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="8">
+				<div class="d-flex">
+					<VtTextFieldWithValidation
+						ref="detailItemLocationNameRef"
+						v-model="detailItemLocationName"
+						vid="detailItemLocationName"
+						:validation="validation"
+						:errorsReadonly="validation.detailItemLocationId.$silentErrors"
+						:label="$t('forms.content.locations.name')"
+						:readonly="true"
+					/>
+					<v-btn
+						v-if="isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
+						@click="clickSearchLocations(item)"
+					>
+						{{ $t('buttons.select') }}
+					</v-btn>
+					<v-btn
+						v-if="!isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						@click="clickViewLocation(detailItemData)"
+					>
+						{{ $t('buttons.link') }}
+					</v-btn>
+				</div>
+			</v-col>
+			<v-col cols="12" sm="4">
+				<VtSelectWithValidation
+					v-if="detailItemLocationId && locationIterations.length > 1"
+					ref="detailItemLocationIterationIdRef"
+					v-model="detailItemLocationIterationId"
+					vid="detailItemLocationIterationId"
+					:items="locationIterations"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.locations.iterations.name')"
+				/>
+			</v-col>
+		</v-row>
+		<v-row 
+			dense
+			class="mt-4"
+		>
+			<v-col cols="12">
+				<div class="d-flex">
+					<VtTextFieldWithValidation
+						ref="detailItemRocketNameRef"
+						v-model="detailItemRocketName"
+						vid="detailItemRocketName"
+						:validation="validation"
+						:errorsReadonly="validation.detailItemRocketId.$silentErrors"
+						:label="$t('forms.content.launches.rocket.title')"
+						:readonly="true"
+					/>
+					<v-btn
+						v-if="isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
+						@click="clickSearchRockets()"
+					>
+						{{ $t('buttons.select') }}
+					</v-btn>
+					<v-btn
+						v-if="!isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						@click="clickViewRocket(detailItemData)"
+					>
+						{{ $t('buttons.link') }}
+					</v-btn>
+				</div>
+			</v-col>
+			<v-col 
+				v-if="detailItemRocketId"
+				cols="12"
+			>
+				<div 
+					class="d-flex"
+				>
+					<!-- <VtTextFieldWithValidation
+						ref="detailItemRocketSetupNameRef"
+						v-model="detailItemRocketSetupName"
+						vid="detailItemRocketSetupName"
+						:validation="validation"
+						:errorsReadonly="validation.detailItemRocketSetupId.$silentErrors"
+						:label="$t('forms.content.launches.rocketSetup.title')"
+						:readonly="true"
+					/> -->
+					<VtTextAreaWithValidation
+						ref="detailItemRocketSetupNameRef"
+						v-model="detailItemRocketSetupName"
+						vid="detailItemRocketSetupName"
+						:validation="validation"
+						:errorsReadonly="validation.detailItemRocketSetupId.$silentErrors"
+						:readonly="true"
+						:label="$t('forms.content.launches.rocketSetup.title')"
+						:clearable="false"
+						:rows="1"
+					/>
+					<v-btn
+						v-if="isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.add"
+						:color="buttonsForms.color.add"
+						@click="clickSearchRocketSetups()"
+					>
+						{{ $t('buttons.select') }}
+					</v-btn>
+					<v-btn
+						v-if="!isEditable"
+						class="ml-4 text-right"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						@click="clickViewRocketSetup(detailItemData)"
+					>
+						{{ $t('buttons.link') }}
+					</v-btn>
+				</div>
+			</v-col>
+		</v-row>
 		<div
 			v-show="false"
 		>
@@ -87,7 +218,7 @@
 				v-if="$vuetify.display.mdAndUp"
 			>
 				<v-btn
-					v-if="canAddStep"
+					v-if="canAddSecondary"
 					:variant="buttonsForms.variant.add"
 					:color="buttonsForms.color.add"
 					class="mr-2"
@@ -96,7 +227,7 @@
 					{{ $t('buttons.add') }} {{ $t('buttons.checklists.step') }}
 				</v-btn>
 				<span
-					v-if="canAddStep"
+					v-if="canAddSecondary"
 					class="mr-2"
 				>|</span>
 			</template>
@@ -116,7 +247,7 @@
 				class="mt-2"
 			>
 				<v-btn
-					v-if="canAddStep"
+					v-if="canAddSecondary"
 					:variant="buttonsForms.variant.add"
 					:color="buttonsForms.color.add"
 					@click="handleAddSecondary"
@@ -142,6 +273,29 @@
 			</v-row>
 		</template>
 	</VtFormControl>
+	<LocationLookupDialog
+		ref="dialogLocationLookupManagerRef"
+		:signal="dialogLocationLookupManager.signal"
+		@close="dialogLocationLookupManager.cancel()"
+		@select="selectLocation"
+	/>
+	<RocketLookupDialog
+		ref="dialogRocketLookupManagerRef"
+		message-replace="messages.launches.rocket.replace_confirm"
+		:rocket-id="detailItemRocketId"
+		:signal="dialogRocketLookupManager.signal"
+		@close="dialogRocketLookupManager.cancel()"
+		@select="selectRocket"
+	/>
+	<RocketSetupLookupDialog
+		ref="dialogRocketSetupLookupManagerRef"
+		message-replace="messages.launches.rocketSetup.replace_confirm"
+		:rocket-id="detailItemRocketId"
+		:rocket-setup-id="detailItemRocketSetupId"
+		:signal="dialogRocketSetupLookupManager.signal"
+		@close="dialogRocketSetupLookupManager.cancel()"
+		@select="selectRocketSetup"
+	/>
 </template>
 
 <script>
@@ -153,7 +307,11 @@ import { useChecklistComponentProps } from '@/components/content/checklists/chec
 import { useChecklistValidation } from '@/components/content/checklists/checklist/checklistValidation';
 
 import ChecklistSteps from '@/components/content/checklists/checklist/ChecklistSteps';
+import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
+import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
+import RocketSetupLookupDialog from '@/components/content/rockets/dialogs/RocketSetupLookupDialog';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
 import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
@@ -162,7 +320,11 @@ export default {
 	name: 'ChecklistControl',
 	components: {
 		ChecklistSteps,
+		LocationLookupDialog,
+		RocketLookupDialog,
+		RocketSetupLookupDialog,
 		VtFormControl,
+		VtSelectWithValidation,
 		VtSwitchWithValidation,
 		VtTextAreaWithValidation,
 		VtTextFieldWithValidation
@@ -238,15 +400,36 @@ export default {
 			handleAddSecondary,
 			buttonsDialog,
 			buttonsForms,
+			dialogLocationLookupManager,
+			dialogRocketLookupManager,
+			dialogRocketSetupLookupManager,
 			detailItemDescription,
 			detailItemIsDefault,
+			detailItemLocationId,
+			detailItemLocationIterationId,
+			detailItemLocationName,
 			detailItemName,
 			detailItemReorder,
-			canAddStep,
+			detailItemRocketId,
+			detailItemRocketName,
+			detailItemRocketSetupId,
+			detailItemRocketSetupName,
 			isDefault,
+			isDefaultEdit,
+			isDefaultView,
 			isInProgress,
 			isShared,
+			locationIterations,
 			steps,
+			clickSearchLocations,
+			clickSearchRockets,
+			clickSearchRocketSetups,
+			clickViewLocation,
+			clickViewRocket,
+			clickViewRocketSetup,
+			selectLocation,
+			selectRocket,
+			selectRocketSetup,
 			updateOrder,
 			scope,
 			validation
@@ -317,22 +500,43 @@ export default {
 			handleAddSecondary,
 			buttonsDialog,
 			buttonsForms,
+			dialogLocationLookupManager,
+			dialogRocketLookupManager,
+			dialogRocketSetupLookupManager,
 			detailItemDescription,
 			detailItemIsDefault,
+			detailItemLocationId,
+			detailItemLocationIterationId,
+			detailItemLocationName,
 			detailItemName,
 			detailItemReorder,
-			canAddStep,
+			detailItemRocketId,
+			detailItemRocketName,
+			detailItemRocketSetupId,
+			detailItemRocketSetupName,
 			isDefault,
+			isDefaultEdit,
+			isDefaultView,
 			isInProgress,
 			isShared,
+			locationIterations,
 			steps,
+			clickSearchLocations,
+			clickSearchRockets,
+			clickSearchRocketSetups,
+			clickViewLocation,
+			clickViewRocket,
+			clickViewRocketSetup,
+			selectLocation,
+			selectRocket,
+			selectRocketSetup,
 			updateOrder,
 			scope,
 			validation
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useChecklistValidation), {
+		return Object.assign(LibraryCommonUtility.cloneDeep(useChecklistValidation(this)), {
 		});
 	}
 };

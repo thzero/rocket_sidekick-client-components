@@ -7,7 +7,6 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
-import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
@@ -15,6 +14,7 @@ import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/compone
 import { useContentMarkupComponent } from '@/components/content/contentMarkup';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
+import { useLocationsUtilityComponent } from '@/components/content/locations/locationUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useLaunchEditComponent(props, context, options) {
@@ -103,9 +103,14 @@ export function useLaunchEditComponent(props, context, options) {
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,
-		weatherOptions,
-		locationIterationName
+		weatherOptions
 	} = useLaunchComponent(props, context);
+
+	const {
+		location,
+		locationIterations,
+		locationIterationName
+	} = useLocationsUtilityComponent(props, context);
 
 	const {
 		rocketMotorNames
@@ -163,7 +168,6 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemWindSpeedMeasurementUnitId = ref(null);
 	const detailItemWindSpeedMeasurementUnitsId = ref(null);
 	
-	const location = ref(null);
 	// const weatherOptionsBlank = ref(LibraryClientVueUtility.selectBlank(weatherOptions));
 	
 	const hasAdmin = computed(() => {
@@ -171,12 +175,6 @@ export function useLaunchEditComponent(props, context, options) {
 	});
 	const isSuccess = computed(() => {
 		return detailItemSuccess.value === AppCommonConstants.Rocketry.Launches.Reasons.Success.success;
-	});
-	const locationIterations = computed(() => {
-		if (location.value)
-			return LibraryClientVueUtility.selectBlank(location.value.iterations.map(l => { return { id : l.id, name: locationIterationName(l) }; }), '');
-
-		return [];
 	});
 
 	const clickSearchLocations = async (correlationId) => {
@@ -230,6 +228,7 @@ export function useLaunchEditComponent(props, context, options) {
 			detailItemLocationName.value = null;
 			location.value = null;
 		}
+		
 		if (value && value.rocketSetup) {
 			if (value && value.rocketSetup.rocket) {
 				detailItemRocketId.value = value.rocketSetup.rocket.id;
@@ -351,6 +350,7 @@ export function useLaunchEditComponent(props, context, options) {
 
 		detailItemData.value.locationId = detailItemLocationId.value;
 		detailItemData.value.locationIterationId = detailItemLocationIterationId.value;
+
 		detailItemData.value.rocketId = detailItemRocketId.value;
 		detailItemData.value.rocketSetupId = detailItemRocketSetupId.value;
 		

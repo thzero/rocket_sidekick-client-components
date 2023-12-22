@@ -5,6 +5,7 @@ import useVuelidate from '@vuelidate/core';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
@@ -47,11 +48,14 @@ export function useLocationEditDialogComponent(props, context, options) {
 	const detailItemAddressCountry = ref(null);
 	const detailItemAddressPostalCode = ref(null);
 	const detailItemAddressStateProvince = ref(null);
+	const detailItemDates = ref(null);
 	const detailItemExperimental = ref(false);
 	const detailItemNumber = ref(null);
 	const detailItemOrganizations = ref([]);
 	const detailItemRocketTypes = ref([]);
 	const detailItemYear = ref(null);
+	
+	let countryWatcher = null;
 	
 	const countries = computed(() => {
 		let temp = [];
@@ -91,7 +95,9 @@ export function useLocationEditDialogComponent(props, context, options) {
 		// call the parent to tell them to save off the detail item
 		return await props.preCompleteOk(correlationId, detailItem.value);
 	};
-	let countryWatcher = null;
+	const resetAdditional = async (correlationId, previous) => {
+		resetEditData(correlationId, detailItem.value);
+	};
 	const resetEditData = (correlationId, value) => {
 		try {
 			if (countryWatcher)
@@ -103,6 +109,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 			detailItemAddressPostalCode.value = value && value.address ? value.address.postalCode : null;
 			detailItemAddressStateProvince.value = value && value.address ? value.address.stateProvince : null;
 
+			detailItemDates.value = value ? value.dates : null;
 			detailItemExperimental.value = value ? value.experimental : null;
 			detailItemNumber.value = value ? value.number : null;
 			detailItemOrganizations.value = value ? value.organizations : null;
@@ -120,6 +127,9 @@ export function useLocationEditDialogComponent(props, context, options) {
 			);
 		}
 	};
+	const setAdditional = async (correlationId) => {
+		setEditData(correlationId, detailItem.value);
+	};
 	const setEditData = (correlationId, value) => {
 		value.address = value.address ?? {};
 		value.address.city = detailItemAddressCity.value;
@@ -127,6 +137,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 		value.address.postalCode = detailItemAddressPostalCode.value;
 		value.address.stateProvince = detailItemAddressStateProvince.value;
 
+		value.dates = LibraryCommonUtility.removeNulls(detailItemDates.value);
 		value.experimental = detailItemExperimental.value;
 		value.number = detailItemNumber.value;
 		value.organizations = detailItemOrganizations.value;
@@ -134,12 +145,6 @@ export function useLocationEditDialogComponent(props, context, options) {
 		value.rocketTypes = detailItemRocketTypes.value;
 		value.rocketTypes = value.rocketTypes && value.rocketTypes.length > 0 ? value.rocketTypes : null;
 		value.year = detailItemYear.value;
-	};
-	const resetAdditional = async (correlationId, previous) => {
-		resetEditData(correlationId, detailItem.value);
-	};
-	const setAdditional = async (correlationId) => {
-		setEditData(correlationId, detailItem.value);
 	};
 
 	// watch(() => detailItemAddressCountry.value,
@@ -166,6 +171,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 		detailItemAddressCountry,
 		detailItemAddressPostalCode,
 		detailItemAddressStateProvince,
+		detailItemDates,
 		detailItemExperimental,
 		detailItemNumber,
 		detailItemOrganizations,

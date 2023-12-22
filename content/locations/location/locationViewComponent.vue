@@ -42,7 +42,6 @@ export function useLocationViewComponent(props, context, options) {
 	const displayItemRocketTypeNames = computed(() => {
 		return rocketTypeNames(displayItem.value.rocketTypes);
 	});
-
 	const hasCoords = computed(() => {
 		if (!displayItem.value)
 			return false;
@@ -52,6 +51,7 @@ export function useLocationViewComponent(props, context, options) {
 			displayItem.value.coordsLong
 		);
 	});
+
 	return {
 		correlationId,
 		error,

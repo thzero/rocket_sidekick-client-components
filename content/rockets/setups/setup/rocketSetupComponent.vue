@@ -93,7 +93,7 @@ export function useRocketSetupComponent(props, context, options) {
 		},
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
-			temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.stages, item);
+			temp.stages = LibraryCommonUtility.updateArrayByObject(temp.stages, item);
 			
 			const response = await serviceStore.dispatcher.saveRocketSetup(correlationId, temp);
 			logger.debug('rocketSetupComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);

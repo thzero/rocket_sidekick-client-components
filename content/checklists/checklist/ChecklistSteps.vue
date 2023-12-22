@@ -2,7 +2,7 @@
 	<!-- [[ ChecklistSteps ]]
 	[[ readonly {{ readonly }}]]
 	[[ hasItem {{ hasItem }}]]
-	[[ item {{ JSON.stringify(item) }}]] -->
+	<pre>[[ item {{ item }}]]</pre> -->
 	<Container 
 		v-if="hasItem"
 		@drop="onDrop($event)"

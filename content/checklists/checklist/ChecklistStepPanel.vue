@@ -35,8 +35,7 @@
 				</v-sheet>
 			</v-col>
 		</v-row>
-		<v-row dense
-		>
+		<v-row dense>
 			<v-col>
 				<v-card>
 					<v-card-text
@@ -46,7 +45,9 @@
 							{{ item.description }}
 						</slot>
 					</v-card-text>
-					<v-card-actions>
+					<v-card-actions
+						v-if="!readonly"
+					>
 						<v-spacer></v-spacer>
 						<v-btn 
 							v-if="!readonly"

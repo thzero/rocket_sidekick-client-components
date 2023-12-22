@@ -6,7 +6,7 @@ import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 
 import PartData from 'rocket_sidekick_common/data/parts/index';
@@ -92,8 +92,9 @@ export function usePartsBaseComponent(props, context, options) {
 		isAdmin,
 		isOwner,
 		isPublic,
-		isPublicDisplay
-	} = useContentDetailSecurityComponent(props, context);
+		isPublicDisplay,
+		isUser
+	} = useContentSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,
