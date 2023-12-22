@@ -205,7 +205,7 @@
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useLocationsBaseComponent } from '@/components/content/locations/locationsComponent';
 import { useLocationsBaseComponentProps } from '@/components/content/locations/locationsComponentProps';
 import { useLocationsFilterValidation } from '@/components/content/locations/locationsFilterValidation';
@@ -328,8 +328,9 @@ export default {
 			isAdmin,
 			isOwner,
 			isPublic,
-			isPublicDisplay
-		} = useContentDetailSecurityComponent(props, context);
+			isPublicDisplay,
+			isUser
+		} = useContentSecurityComponent(props, context);
 
 		return {
 			correlationId,

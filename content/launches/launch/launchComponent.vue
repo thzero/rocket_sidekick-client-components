@@ -40,15 +40,6 @@ export function useLaunchComponent(props, context, options) {
 	
 	const weatherOptions = LibraryClientVueUtility.selectOptions(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.Launches.Weather), LibraryClientUtility.$trans.t, 'strings.content.launches.weather');
 
-	const locationIterationName = (item) => {
-		let output = '';
-		if (item.number)
-			output += item.number + ' ';
-		if (item.year)
-			output += item.year + ' ';
-		return output.trim();
-	};
-
 	return {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
@@ -71,8 +62,7 @@ export function useLaunchComponent(props, context, options) {
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,
-		weatherOptions,
-		locationIterationName
+		weatherOptions
 	};
 };
 </script>

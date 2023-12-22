@@ -247,46 +247,43 @@
 					<v-expansion-panel-title
 						color="secondary"
 					>
-						{{ numberOrYear(item) }}
+						<div style="width: 100%;">
+							{{ numberAndYear(item) }}
+							<span class="float-right">{{ item.datesDisplay }}</span>
+						</div>
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<v-row dense>
-							<v-col
+							<!-- <v-col
 								v-if="item.number"
-								cols="6"
+								cols="3" md="4"
 							>
 								<VtTextField
 									v-model="item.number"
 									:readonly="true"
 									:label="$t('forms.content.locations.number')"
 								/>
-								<!-- <v-row dense>
-									<v-col cols="4" sm="2">
-										{{ $t('forms.content.locations.number') }}
-									</v-col>
-									<v-col cols="8" sm="10">
-										{{ item.number }}
-									</v-col>
-								</v-row> -->
 							</v-col>
 							<v-col
 								v-if="item.year"
-								cols="6"
+								cols="3" md="4"
 							>
 								<VtTextField
 									v-model="item.year"
 									:readonly="true"
 									:label="$t('forms.content.locations.year')"
 								/>
-								<!-- <v-row dense>
-									<v-col cols="4" sm="2">
-										{{ $t('forms.content.locations.year') }}
-									</v-col>
-									<v-col cols="8" sm="10">
-										{{ item.year }}
-									</v-col>
-								</v-row> -->
-							</v-col>
+							</v-col> -->
+							<!-- <v-col
+								v-if="item.dates"
+								cols="6"
+							>
+								<VtTextField
+									v-model="item.datesDisplay"
+									:readonly="true"
+									:label="$t('forms.content.locations.dates')"
+								/>
+							</v-col> -->
 							<v-col
 								v-if="item.experimental"
 								cols="6"
@@ -559,6 +556,7 @@ export default {
 			iterations,
 			stateProvinces,
 			panels,
+			numberAndYear,
 			numberOrYear,
 			panelsUpdated,
 			updateIteration,
@@ -657,6 +655,7 @@ export default {
 			iterations,
 			stateProvinces,
 			panels,
+			numberAndYear,
 			numberOrYear,
 			panelsUpdated,
 			updateIteration,

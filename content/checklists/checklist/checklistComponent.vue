@@ -5,13 +5,19 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants.js';
 
+import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import ChecklistStepData from 'rocket_sidekick_common/data/checklists/step';
 
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
+
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useDetailSecondaryComponent } from '@/components/content/detailSecondaryComponent';
+import { useLocationsUtilityComponent } from '@/components/content/locations/locationUtilityComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 export function useChecklistComponent(props, context, options) {
 	const {
@@ -95,9 +101,7 @@ export function useChecklistComponent(props, context, options) {
 			return success(correlationId);
 		},
 		preCompleteOk: async (correlationId) => {
-			detailItemData.value.description = String.trim(detailItemDescription.value);
-			detailItemData.value.name = String.trim(detailItemName.value);
-			delete detailItemData.value.isDefault;
+			setData(correlationId);
 
 			const response = await serviceStore.dispatcher.saveChecklist(correlationId, detailItemData.value);
 			logger.debug('checklistComponent', 'preCompleteOk', 'response', response, correlationId);
@@ -115,24 +119,48 @@ export function useChecklistComponent(props, context, options) {
 		isAdmin,
 		isOwner,
 		isPublic,
-		isPublicDisplay
-	} = useContentDetailSecurityComponent(props, context);
+		isPublicDisplay,
+		isUser
+	} = useContentSecurityComponent(props, context);
+
+	const {
+		location,
+		locationIterations,
+		locationIterationName
+	} = useLocationsUtilityComponent(props, context);
+
+	const {
+		rocketMotorNames
+	} = useRocketsUtilityComponent(props, context, options);
 
 	const {
 		buttonsDialog,
 		buttonsForms
 	} = useButtonComponent(props, context);
 
+	const dialogLocationLookupManager = ref(new DialogSupport());
+	const dialogRocketLookupManager = ref(new DialogSupport());
+	const dialogRocketSetupLookupManager = ref(new DialogSupport());
 	const detailItemDescription = ref(null);
 	const detailItemIsDefault = ref(null);
 	const detailItemName = ref(null);
 	const detailItemReorder = ref(false);
-
-	const canAddStep = computed(() => {
-		return isDefault.value || isOwner(detailItemData.value); // TODO: SECURITY: Admin can edit a default
-	});
+	const detailItemLocationId = ref(null);
+	const detailItemLocationIterationId = ref(null);
+	const detailItemLocationName = ref(null);
+	const detailItemRocketId = ref(null);
+	const detailItemRocketName = ref(null);
+	const detailItemRocketSetupId = ref(null);
+	const detailItemRocketSetupName  = ref(null);
+	
 	const isDefault = computed(() => {
 		return detailItemData.value ? detailItemData.value.isDefault ?? false : false;
+	});
+	const isDefaultEdit = computed(() => {
+		return isNew.value && isAdmin.value;
+	});
+	const isDefaultView = computed(() => {
+		return isDefault.value;
 	});
 	const isInProgress = computed(() => {
 		return detailItemData.value ? detailItemData.value.type === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
@@ -144,10 +172,127 @@ export function useChecklistComponent(props, context, options) {
 		return detailItemData.value ? detailItemData.value.steps : [{}];
 	});
 
+	const clickSearchLocations = async (correlationId) => {
+		dialogLocationLookupManager.value.open();
+	};
+	const clickSearchRockets = async (correlationId) => {
+		dialogRocketLookupManager.value.open();
+	};
+	const clickSearchRocketSetups = async (correlationId) => {
+		dialogRocketSetupLookupManager.value.open();
+	};
+	const clickViewLocation = async (item) => {
+		if (!item)
+			return;
+		LibraryClientUtility.$navRouter.push('/user/locations/' + item.id);
+	};
+	const clickViewRocket = async (item) => {
+		if (!item)
+			return;
+		LibraryClientUtility.$navRouter.push('/user/rockets/' + item.id);
+	};
+	const clickViewRocketSetup = async (item) => {
+		if (!item)
+			return;
+		LibraryClientUtility.$navRouter.push('/user/rocketsetups/' + item.id);
+	};
+	const requestLocation = async (correlationId, id) => {
+		const response = await serviceStore.dispatcher.requestLocationById(correlationId, id);
+		return hasSucceeded(response) ? response.results : null;
+	};
 	const resetData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemIsDefault.value = value ? value.isDefault : null;
 		detailItemName.value = value ? value.name : null;
+
+		if (value && value.location) {
+			detailItemLocationId.value = value.location.id;
+			detailItemLocationIterationId.value = value.locationIterationId;
+			detailItemLocationName.value = value.location.name;
+			location.value = value.location;
+			// (async () => {
+			// 	location.value = await requestLocation(correlationId, value.location.id);
+			// })();
+		}
+		else {
+			detailItemLocationId.value = null;
+			detailItemLocationIterationId.value = null;
+			detailItemLocationName.value = null;
+			location.value = null;
+		}
+
+		if (value && value.rocketSetup) {
+			if (value && value.rocketSetup.rocket) {
+				detailItemRocketId.value = value.rocketSetup.rocket.id;
+				detailItemRocketName.value = value.rocketSetup.rocket.name;
+			}
+			else {
+				detailItemRocketId.value = null;
+				detailItemRocketName.value = null;
+			}
+			
+			detailItemRocketSetupId.value = value.rocketSetup.id;
+			detailItemRocketSetupName.value = rocketName(value.rocketSetup);
+		}
+		else {
+			detailItemRocketId.value = null;
+			detailItemRocketName.value = null;
+			detailItemRocketSetupId.value = null;
+			detailItemRocketSetupName.value = null;
+		}
+	};
+	const rocketName = (item) => {
+		if (!item)
+			return null;
+		return item.name ? item.name : rocketMotorNames(item)
+	};
+	const selectLocation = async (item) => {
+		try {
+			if (!item)
+				return error('useLaunchEditComponent', 'selectPart', 'Invalid item.', null, null, null, correlationId);
+			
+			detailItemLocationId.value = item.id;
+			detailItemLocationName.value = item.name;
+			location.value = await requestLocation(correlationId(), item.id);
+		}
+		finally {
+			dialogLocationLookupManager.value.ok();
+		}
+	};
+	const selectRocket = async (item) => {
+		try {
+			if (!item)
+				return error('useLaunchEditComponent', 'selectRocket', 'Invalid item.', null, null, null, correlationId);
+			
+			detailItemRocketId.value = item.id;
+			detailItemRocketName.value = item.name;
+		}
+		finally {
+			dialogRocketLookupManager.value.ok();
+		}
+	};
+	const selectRocketSetup = async (item) => {
+		try {
+			if (!item)
+				return error('useLaunchEditComponent', 'selectRocketSetup', 'Invalid item.', null, null, null, correlationId);
+			
+			detailItemRocketSetupId.value = item.id;
+			detailItemRocketSetupName.value = rocketName(item);
+		}
+		finally {
+			dialogRocketSetupLookupManager.value.ok();
+		}
+	};
+	const setData = (correlationId) => {
+		detailItemData.value.description = String.trim(detailItemDescription.value);
+		detailItemData.value.name = String.trim(detailItemName.value);
+		delete detailItemData.value.isDefault;
+
+		detailItemData.value.locationId = detailItemLocationId.value;
+		detailItemData.value.locationIterationId = detailItemLocationIterationId.value;
+
+		detailItemData.value.rocketId = detailItemRocketId.value;
+		detailItemData.value.rocketSetupId = detailItemRocketSetupId.value;
 	};
 	const updateOrder = async (payload, addedIndex, removedIndex) => {
 		console.log('updateOrder', payload);
@@ -723,15 +868,36 @@ export function useChecklistComponent(props, context, options) {
 		handleAddSecondary,
 		buttonsDialog,
 		buttonsForms,
+		dialogLocationLookupManager,
+		dialogRocketLookupManager,
+		dialogRocketSetupLookupManager,
 		detailItemDescription,
 		detailItemIsDefault,
+		detailItemLocationId,
+		detailItemLocationIterationId,
+		detailItemLocationName,
 		detailItemName,
 		detailItemReorder,
-		canAddStep,
+		detailItemRocketId,
+		detailItemRocketName,
+		detailItemRocketSetupId,
+		detailItemRocketSetupName,
 		isDefault,
+		isDefaultEdit,
+		isDefaultView,
 		isInProgress,
 		isShared,
+		locationIterations,
 		steps,
+		clickSearchLocations,
+		clickSearchRockets,
+		clickSearchRocketSetups,
+		clickViewLocation,
+		clickViewRocket,
+		clickViewRocketSetup,
+		selectLocation,
+		selectRocket,
+		selectRocketSetup,
 		updateOrder,
 		scope: 'ChecklistControl',
 		validation: useVuelidate({ $scope: 'ChecklistControl' })

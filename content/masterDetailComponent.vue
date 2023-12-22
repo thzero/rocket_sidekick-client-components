@@ -2,14 +2,13 @@
 import { computed, ref, onMounted } from 'vue';
 import { firstBy, thenBy } from 'thenby';
 
-import LibraryCommonUtility from '@thzero/library_common/utility/index';
-
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
-import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useDisplayComponent } from '@thzero/library_client_vue3_vuetify3/components/display';
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
 
@@ -33,8 +32,9 @@ export function useMasterDetailComponent(props, context, options) {
 		isAdmin,
 		isOwner,
 		isPublic,
-		isPublicDisplay
-	} = useContentDetailSecurityComponent(props, context);
+		isPublicDisplay,
+		isUser
+	} = useContentSecurityComponent(props, context);
 
 	const {
 		notifyColor,
@@ -85,8 +85,10 @@ export function useMasterDetailComponent(props, context, options) {
 		return !display.lgAndDown.value;
 	});
 	
-	const canAdd = (item) => {
-		return item && (options.canAdd ? options.canAdd(correlationId(), item) : true);
+	const canAdd = () => {
+		if (options.canAdd)
+			return options.canAdd(correlationId());
+		return LibraryCommonUtility.isNotNull(user.value);
 	};
 	const canCopy = (item) => {
 		return item && (options.canCopy ? options.canCopy(correlationId(), item) : true);
@@ -233,7 +235,7 @@ export function useMasterDetailComponent(props, context, options) {
 		return response;
 	};
 	const handleAdd = async () => {
-		if (!canAdd(item)) {
+		if (!canAdd()) {
 			setNotify(correlationId(), 'errors.security');
 			return;
 		}

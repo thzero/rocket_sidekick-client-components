@@ -13,7 +13,7 @@ import LocationData from 'rocket_sidekick_common/data/locations/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
-import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
@@ -98,8 +98,9 @@ export function useLocationsBaseComponent(props, context, options) {
 		isAdmin,
 		isOwner,
 		isPublic,
-		isPublicDisplay
-	} = useContentDetailSecurityComponent(props, context);
+		isPublicDisplay,
+		isUser
+	} = useContentSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,

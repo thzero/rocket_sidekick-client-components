@@ -9,7 +9,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 
 import ChecklistData from 'rocket_sidekick_common/data/checklists/index';
@@ -96,8 +96,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isAdmin,
 		isOwner,
 		isPublic,
-		isPublicDisplay
-	} = useContentDetailSecurityComponent(props, context);
+		isPublicDisplay,
+		isUsery
+	} = useContentSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,

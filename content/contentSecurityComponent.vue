@@ -1,11 +1,12 @@
 <script>
-import { ref, onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
-export function useContentDetailSecurityComponent(props, context, options) {
+export function useContentSecurityComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -23,9 +24,10 @@ export function useContentDetailSecurityComponent(props, context, options) {
 
 	const user = ref(null);
 	
-	const isAdmin = (correlationId) => {
+	const isAdmin = computed(() => {
 		return false; // TODO: SECURITY: Allow admin
-	};
+	});
+
 	const isOwner = (correlationId, item) => {
 		const ownerId = (user.value ?? {}).id;
 		return item ? item.ownerId == ownerId : false;
@@ -36,6 +38,9 @@ export function useContentDetailSecurityComponent(props, context, options) {
 	const isPublicDisplay = (item) => {
 		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
 	};
+	const isUser = (correlationId, item) => {
+		return LibraryCommonUtility.isNotNull(user.value);
+	};
 
 	onMounted(async () => {
 		user.value = await serviceStore.user;
@@ -45,7 +50,8 @@ export function useContentDetailSecurityComponent(props, context, options) {
 		isAdmin,
 		isOwner,
 		isPublic,
-		isPublicDisplay
+		isPublicDisplay,
+		isUser
 	};
 };
 </script>

@@ -17,13 +17,13 @@ export function useLaunchEditValidation(self, nameRequired) {
 			$autoDirty: true 
 		},
 		detailItemFailureReasons: { $autoDirty: true },
-		detailItemLocationName: {
-			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
-			$autoDirty: true
-		},
 		detailItemLocationId: { 
 			required,
 			$autoDirty: true 
+		},
+		detailItemLocationName: {
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
+			$autoDirty: true
 		},
 		detailItemLocationIterationId: { 
 			$autoDirty: true 

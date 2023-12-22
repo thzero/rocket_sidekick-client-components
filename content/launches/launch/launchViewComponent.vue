@@ -52,8 +52,7 @@ export function useLaunchViewComponent(props, context, options) {
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,
-		weatherOptions,
-		locationIterationName
+		weatherOptions
 	} = useLaunchComponent(props, context);
 	
 	const {

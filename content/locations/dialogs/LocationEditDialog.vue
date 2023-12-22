@@ -24,7 +24,7 @@
 			detailItemAddressStateProvince {{  detailItemAddressStateProvince }}
 		</div>
 		<v-row dense>
-			<v-col cols="12" sm="6">
+			<v-col cols="3" md="4">
 				<VtNumberFieldWithValidation
 					ref="detailItemNumberRef"
 					v-model="detailItemNumber"
@@ -34,7 +34,7 @@
 					:label="$t('forms.content.locations.number')"
 				/>
 			</v-col>
-			<v-col cols="12" sm="6">
+			<v-col cols="3" md="4">
 				<VtNumberFieldWithValidation
 					ref="detailItemYearRef"
 					v-model="detailItemYear"
@@ -44,19 +44,16 @@
 					:label="$t('forms.content.locations.year')"
 				/>
 			</v-col>
-		</v-row>
-		<v-row dense>
-			<v-col cols="12">
-				<VtSelectWithValidation
-					ref="detailItemOrganizationsRef"
-					v-model="detailItemOrganizations"
-					vid="detailItemOrganizations"
-					multiple
-					:max-values="3"
-					:items="organizations"
+			<v-col cols="6" md="4">
+				<VtDateTimePickerFieldWithValidation
+					ref="detailItemDatesRef"
+					v-model="detailItemDates"
+					vid="detailItemDates"
+					:default-date="false"
+					:range="true"
 					:validation="validation"
-					:label="$t('forms.content.organizations.plural')"
-					:hint="$t('forms.content.organizations.hint')"
+					:readonly="!isEditable"
+					:label="$t('forms.date')"
 				/>
 			</v-col>
 		</v-row>
@@ -142,6 +139,7 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
+import VtDateTimePickerFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtDateTimePickerFieldWithValidationTemp';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
@@ -155,6 +153,7 @@ export default {
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		VtFormDialog,
+		VtDateTimePickerFieldWithValidation,
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
@@ -182,6 +181,7 @@ export default {
 			detailItemAddressCountry,
 			detailItemAddressPostalCode,
 			detailItemAddressStateProvince,
+			detailItemDates,
 			detailItemExperimental,
 			detailItemNumber,
 			detailItemOrganizations,
@@ -215,6 +215,7 @@ export default {
 			detailItemAddressCountry,
 			detailItemAddressPostalCode,
 			detailItemAddressStateProvince,
+			detailItemDates,
 			detailItemExperimental,
 			detailItemNumber,
 			detailItemOrganizations,

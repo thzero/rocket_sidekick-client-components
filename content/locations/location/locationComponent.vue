@@ -85,6 +85,9 @@ export function useLocationComponent(props, context, options) {
 		dialogDeleteSecondaryOk: async (correlationId, id) => {
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 			LibraryCommonUtility.deleteArrayById(temp.iterations, id);
+			temp.iterations.forEach(k => {
+				delete k.datesDisplay;
+			});
 			
 			const response = await serviceStore.dispatcher.saveLocation(correlationId, temp);
 			logger.debug('useLocationComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
@@ -92,9 +95,12 @@ export function useLocationComponent(props, context, options) {
 		},
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
-			temp.stages = LibraryCommonUtility.updateArrayByObject(detailItemData.value.iterations, item);
+			temp.iterations = LibraryCommonUtility.updateArrayByObject(temp.iterations, item);
+			temp.iterations.forEach(k => {
+				delete k.datesDisplay;
+			});
 			
-			const response = await serviceStore.dispatcher.saveLocation(correlationId, detailItemData.value);
+			const response = await serviceStore.dispatcher.saveLocation(correlationId, temp);
 			logger.debug('useLocationComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);
 			
 			return response;
@@ -162,6 +168,8 @@ export function useLocationComponent(props, context, options) {
 	const detailItemOrganizations = ref([]);
 	const detailItemRocketTypes = ref([]);
 	const panels = ref([]);
+	
+	let countryWatcher = null;
 
 	const countries = computed(() => {
 		let temp = [];
@@ -178,6 +186,9 @@ export function useLocationComponent(props, context, options) {
 			firstBy((v1, v2) => { return (v1.number && v2.number) && v1.number.localeCompare(v2.number); })
 			.thenBy((v1, v2) => { return (v1.year && v2.year) && v1.year.localeCompare(v2.year); })
 		);
+		temp.forEach(k => {
+			k.datesDisplay = datesToString(k.dates);
+		});
 		return temp;
 	});
 	const stateProvinces = computed(() => {
@@ -192,6 +203,26 @@ export function useLocationComponent(props, context, options) {
 		return temp.stateProvinces.map(l => { return { id: l.state_code, name: l.name }; });
 	});
 
+	const datesToString = (dates) => {
+		if (!dates)
+			return null;
+		let output = '';
+		if (dates.length >= 1)
+			output += LibraryCommonUtility.getDateHuman(dates[0]);
+		if (dates.length === 2) {
+			output += ' - ';
+			output += LibraryCommonUtility.getDateHuman(dates[1]);
+		}
+		return output;
+	};
+	const numberAndYear = (item) => {
+		let output = '';
+		if (item.number)
+			output += '#' + item.number + ' ';
+		if (item.year)
+			output += item.year;
+		return output.trim();
+	};
 	const numberOrYear = (item) => {
 		return item.number ? item.number : item.year;
 	};
@@ -201,7 +232,6 @@ export function useLocationComponent(props, context, options) {
 	const panelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setLocationsExpanded(correlationId(), { id: panelsKey(), expanded: value });
 	};
-	let countryWatcher = null;
 	const resetData = (correlationId, value) => {
 		try {
 			if (countryWatcher)
@@ -383,6 +413,7 @@ export function useLocationComponent(props, context, options) {
 		iterations,
 		stateProvinces,
 		panels,
+		numberAndYear,
 		numberOrYear,
 		panelsUpdated,
 		updateIteration,

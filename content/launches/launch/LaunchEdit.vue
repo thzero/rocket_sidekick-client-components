@@ -211,6 +211,7 @@
 			</v-col>
 			<v-col cols="12" sm="4">
 				<VtSelectWithValidation
+					v-if="detailItemLocationId && locationIterations.length > 1"
 					ref="detailItemLocationIterationIdRef"
 					v-model="detailItemLocationIterationId"
 					vid="detailItemLocationIterationId"
@@ -598,14 +599,14 @@ import { useLaunchEditComponentProps } from '@/components/content/launches/launc
 
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 
+import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
-import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import RocketSetupLookupDialog from '@/components/content/rockets/dialogs/RocketSetupLookupDialog';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
-import VtDateTimePickerFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtDatetimePickerFieldWithValidationTemp';
+import VtDateTimePickerFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtDateTimePickerFieldWithValidationTemp';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';

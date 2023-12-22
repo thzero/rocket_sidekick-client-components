@@ -7,7 +7,7 @@ import AppUtility from '@/utility/app';
 
 import { useAdminComponent } from '@/components/content/adminComponent';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useContentDetailSecurityComponent } from '@/components/content/contentSecurityComponent';
+import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
@@ -102,8 +102,9 @@ export function usePartComponent(props, context, options) {
 		isAdmin,
 		isOwner,
 		isPublic,
-		isPublicDisplay
-	} = useContentDetailSecurityComponent(props, context);
+		isPublicDisplay,
+		isUser
+	} = useContentSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,
