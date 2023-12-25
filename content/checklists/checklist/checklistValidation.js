@@ -9,6 +9,10 @@ export function useChecklistValidation(self) {
 			maxLength: maxLength(50),
 			$autoDirty: true
 		},
+		detailItemDate: { 
+			required,
+			$autoDirty: true 
+		},
 		detailItemDescription: { 
 			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
 			$autoDirty: true 

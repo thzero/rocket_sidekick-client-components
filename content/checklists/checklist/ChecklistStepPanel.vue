@@ -9,9 +9,10 @@
 					rounded
 				>
 					<div class="pl-2 pr-4 pb-4 pt-2">
-						<slot name="draghandle">
+						<!-- dragable -->
+						<!-- <slot name="draghandle">
 							<span class="column-drag-handle mr-2">&#x2630;</span>
-						</slot>
+						</slot> -->
 						<slot name="title">
 							{{ title }}
 						</slot>

@@ -6,7 +6,6 @@ import useVuelidate from '@vuelidate/core';
 import AppCommonConstants from 'rocket_sidekick_common/constants.js';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
-import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import ChecklistStepData from 'rocket_sidekick_common/data/checklists/step';
@@ -141,6 +140,7 @@ export function useChecklistComponent(props, context, options) {
 	const dialogLocationLookupManager = ref(new DialogSupport());
 	const dialogRocketLookupManager = ref(new DialogSupport());
 	const dialogRocketSetupLookupManager = ref(new DialogSupport());
+	const detailItemDate = ref(null);
 	const detailItemDescription = ref(null);
 	const detailItemIsDefault = ref(null);
 	const detailItemName = ref(null);
@@ -201,6 +201,7 @@ export function useChecklistComponent(props, context, options) {
 		return hasSucceeded(response) ? response.results : null;
 	};
 	const resetData = (correlationId, value) => {
+		detailItemDate.value = value ? value.date : null;
 		detailItemDescription.value = value ? value.description : null;
 		detailItemIsDefault.value = value ? value.isDefault : null;
 		detailItemName.value = value ? value.name : null;
@@ -284,6 +285,7 @@ export function useChecklistComponent(props, context, options) {
 		}
 	};
 	const setData = (correlationId) => {
+		detailItemData.value.date = detailItemDate.value;
 		detailItemData.value.description = String.trim(detailItemDescription.value);
 		detailItemData.value.name = String.trim(detailItemName.value);
 		delete detailItemData.value.isDefault;
@@ -871,6 +873,7 @@ export function useChecklistComponent(props, context, options) {
 		dialogLocationLookupManager,
 		dialogRocketLookupManager,
 		dialogRocketSetupLookupManager,
+		detailItemDate,
 		detailItemDescription,
 		detailItemIsDefault,
 		detailItemLocationId,

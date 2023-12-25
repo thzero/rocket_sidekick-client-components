@@ -85,9 +85,6 @@ export function useLocationComponent(props, context, options) {
 		dialogDeleteSecondaryOk: async (correlationId, id) => {
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 			LibraryCommonUtility.deleteArrayById(temp.iterations, id);
-			temp.iterations.forEach(k => {
-				delete k.datesDisplay;
-			});
 			
 			const response = await serviceStore.dispatcher.saveLocation(correlationId, temp);
 			logger.debug('useLocationComponent', 'dialogDeleteSecondaryOk', 'response', response, correlationId);
@@ -96,9 +93,6 @@ export function useLocationComponent(props, context, options) {
 		dialogEditSecondaryPreCompleteOk : async (correlationId, item) => {
 			const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 			temp.iterations = LibraryCommonUtility.updateArrayByObject(temp.iterations, item);
-			temp.iterations.forEach(k => {
-				delete k.datesDisplay;
-			});
 			
 			const response = await serviceStore.dispatcher.saveLocation(correlationId, temp);
 			logger.debug('useLocationComponent', 'dialogEditSecondaryPreCompleteOk', 'response', response, correlationId);
@@ -186,9 +180,6 @@ export function useLocationComponent(props, context, options) {
 			firstBy((v1, v2) => { return (v1.number && v2.number) && v1.number.localeCompare(v2.number); })
 			.thenBy((v1, v2) => { return (v1.year && v2.year) && v1.year.localeCompare(v2.year); })
 		);
-		temp.forEach(k => {
-			k.datesDisplay = datesToString(k.dates);
-		});
 		return temp;
 	});
 	const stateProvinces = computed(() => {
@@ -413,6 +404,7 @@ export function useLocationComponent(props, context, options) {
 		iterations,
 		stateProvinces,
 		panels,
+		datesToString,
 		numberAndYear,
 		numberOrYear,
 		panelsUpdated,

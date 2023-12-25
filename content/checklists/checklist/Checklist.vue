@@ -36,7 +36,38 @@
 	>
 		<!-- :readonly="!isEditable" -->
 		<v-row dense>
-			<v-col cols="10">
+			<v-col
+				v-if="!isDefaultView"
+				cols="12" sm="8" lg="10"
+			>
+				<VtTextFieldWithValidation
+					ref="detailItemNameRef"
+					v-model="detailItemName"
+					vid="detailItemName"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.name')"
+					:counter="30"
+				/>
+			</v-col>
+			<v-col
+				v-if="!isDefaultView"
+				cols="12" sm="4" lg="2"
+			>
+				<VtDateTimePickerFieldWithValidation
+					ref="detailItemDateRef"
+					v-model="detailItemDate"
+					vid="detailItemDate"
+					:default-date="false"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.date')"
+				/>
+			</v-col>
+			<v-col
+				v-if="isDefaultView"
+				cols="10"
+			>
 				<VtTextFieldWithValidation
 					ref="nameRef"
 					v-model="detailItemName"
@@ -47,9 +78,11 @@
 					:readonly="!isEditable"
 				/>
 			</v-col>
-			<v-col cols="2">
+			<v-col 
+				v-if="isDefaultView"
+				cols="2"
+			>
 				<VtSwitchWithValidation
-					v-if="isDefaultView"
 					ref="detailItemIsDefaultRef"
 					v-model="detailItemIsDefault"
 					vid="detailItemIsDefault"
@@ -311,6 +344,7 @@ import LocationLookupDialog from '@/components/content/locations/dialogs/Locatio
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import RocketSetupLookupDialog from '@/components/content/rockets/dialogs/RocketSetupLookupDialog';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
+import VtDateTimePickerFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtDateTimePickerFieldWithValidationTemp';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
@@ -324,6 +358,7 @@ export default {
 		RocketLookupDialog,
 		RocketSetupLookupDialog,
 		VtFormControl,
+		VtDateTimePickerFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
 		VtTextAreaWithValidation,
@@ -403,6 +438,7 @@ export default {
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
 			dialogRocketSetupLookupManager,
+			detailItemDate,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemLocationId,
@@ -503,6 +539,7 @@ export default {
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
 			dialogRocketSetupLookupManager,
+			detailItemDate,
 			detailItemDescription,
 			detailItemIsDefault,
 			detailItemLocationId,

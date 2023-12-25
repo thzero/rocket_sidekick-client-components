@@ -3,17 +3,17 @@ export const useChecklistStepsPanelComponentProps = {
 		type: Boolean,
 		default: false
 	},
+	depth: {
+		type: Number,
+		default: null
+	},
+	index: {
+		type: Number,
+		default: null
+	},
 	item: {
 		type: Object,
 		default: { }
-	},
-	moveDown: {
-		type: Boolean,
-		default: true
-	},
-	moveUp: {
-		type: Boolean,
-		default: true
 	},
 	parent: {
 		type: Object,
@@ -25,6 +25,10 @@ export const useChecklistStepsPanelComponentProps = {
 	},
 	title: {
 		type: String,
+		default: null
+	},
+	total: {
+		type: Number,
 		default: null
 	},
 	// modelValue: {

@@ -40,7 +40,7 @@
 					:counter="30"
 				/>
 			</v-col>
-			<v-col cols="sm" sm="4">
+			<v-col cols="12" sm="4">
 				<VtDateTimePickerFieldWithValidation
 					ref="detailItemDateRef"
 					v-model="detailItemDate"

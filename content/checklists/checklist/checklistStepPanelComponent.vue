@@ -22,11 +22,12 @@ export function useChecklistStepPanelComponent(props, context, options) {
 	});
 
 	const moveDown1 = computed(() => {
-		return (props.moveDown && props.parent !== null && props.parent.steps && props.parent.steps.length > 1);
+		const total = (props.total ?? 99) - 1;
+		return (props.depth > 0) || (props.depth === 0 && props.index >= 0 && props.index < total);
 	});
 
 	const moveUp1 = computed(() => {	
-		return props.moveUp;
+		return (props.depth > 0) || (props.depth === 0 && props.index > 0);
 	});
 	
 	return {
