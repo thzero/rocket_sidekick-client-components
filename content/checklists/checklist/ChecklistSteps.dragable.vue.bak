@@ -1,0 +1,199 @@
+<template>
+	<!-- [[ ChecklistSteps ]]
+	[[ readonly {{ readonly }}]]
+	[[ hasItem {{ hasItem }}]]
+	<pre>[[ item {{ item }}]]</pre> -->
+	<Container 
+		v-if="hasItem"
+		@drop="onDrop($event)"
+		:get-child-payload="(itemIndex) => getChildPayload(null, itemIndex)"
+		lock-axis="y"
+	>
+		<!-- drag-handle-selector=".column-drag-handle" -->
+		<Draggable 
+			v-for="(item1, index1) in item.steps" 
+			:key="item1.id"
+			:drag-not-allowed="true"
+		>
+			<ChecklistStepPanel 
+				class="mt-2"
+				:title="item1.name"
+				depth="0"
+				:index="index1"
+				:item="item1"
+				:parent="item"
+				:readonly="readonly"
+				:debug="debug"
+			>
+				<Container 
+					@drop="onDrop($event)"
+					:get-child-payload="(itemIndex) => getChildPayload([item1.id], itemIndex)"
+					lock-axis="y"
+				>
+					<Draggable 
+						v-for="(item2, index2) in item1.steps" 
+						:key="item2.id"
+						:drag-not-allowed="false"
+					>
+						<ChecklistStepPanel 
+							class="ml-6 mt-2"
+							:title="item2.name"
+							depth="1"
+							:index="index2"
+							:item="item2"
+							:parent="item1"
+							:readonly="readonly"
+							:debug="debug"
+						>
+							<Container 
+								@drop="onDrop($event)"
+								:get-child-payload="(itemIndex) => getChildPayload([item1.id, item2.id], itemIndex)"
+								lock-axis="y"
+							>
+								<Draggable 
+									v-for="(item3, index3) in item2.steps" 
+									:key="item3.id"
+									:readonly="readonly"
+								>
+									<ChecklistStepPanel 
+										class="ml-6 mt-2"
+										:title="item3.name"
+										depth="2"
+										:index="index3"
+										:item="item3"
+										:parent="item2"
+										:readonly="readonly"
+										:debug="debug"
+									>
+										<Container 
+											@drop="onDrop($event)"
+											:get-child-payload="(itemIndex) => getChildPayload([item1.id, item2.id, item3.id], itemIndex)"
+											lock-axis="y"
+										>
+											<Draggable 
+												v-for="(item4, index4) in item3.steps" 
+												:key="item4.id"
+												:readonly="readonly"
+											>
+												<ChecklistStepPanel 
+													class="ml-6 mt-2"
+													:title="item4.name"
+													depth="3"
+													:index="index4"
+													:item="item4"
+													:parent="item3"
+													:readonly="readonly"
+													:debug="debug"
+												>
+													<Container 
+														@drop="onDrop($event)"
+														:get-child-payload="(itemIndex) => getChildPayload([item1.id, item2.id, item3.id, item4.id], itemIndex)"
+														lock-axis="y"
+													>
+														<Draggable 
+															v-for="(item5, index5) in item4.steps" 
+															:key="item5.id"
+															:readonly="readonly"
+														>
+															<ChecklistStepPanel 
+																class="ml-6 mt-2"
+																:title="item5.name"
+																depth="4"
+																:index="index5"
+																:item="item5"
+																:parent="item4"
+																:readonly="readonly"
+																:debug="debug"
+															>
+															</ChecklistStepPanel>
+														</Draggable>
+													</Container>
+												</ChecklistStepPanel>
+											</Draggable>
+										</Container>
+									</ChecklistStepPanel>
+								</Draggable>
+							</Container>
+						</ChecklistStepPanel>
+					</Draggable> 
+				</Container>
+			</ChecklistStepPanel>
+		</Draggable> 
+	</Container>
+</template>
+
+<script>
+import { Container, Draggable } from "vue-dndrop";
+// import { applyDrag, generateItems } from "../utils/helpers";
+
+import { useChecklistStepsComponent } from '@/components/content/checklists/checklist/checklistStepsComponent';
+import { useChecklistStepsComponentProps } from '@/components/content/checklists/checklist/checklistStepsComponentProps';
+
+import ChecklistStepPanel from '@/components/content/checklists/checklist/ChecklistStepPanel';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
+import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
+
+export default {
+	name: 'ChecklistSteps',
+	components: {
+		Container,
+		Draggable,
+		ChecklistStepPanel,
+		VtSwitchWithValidation,
+		VtTextAreaWithValidation,
+		VtTextFieldWithValidation
+	},
+	props: {
+		...useChecklistStepsComponentProps
+	},
+	setup (props, context) {
+		const {
+			correlationId,
+			error,
+			hasFailed,
+			hasSucceeded,
+			initialize,
+			logger,
+			noBreakingSpaces,
+			notImplementedError,
+			success,
+			successResponse,
+			isSaving,
+			serverErrors,
+			setErrors,
+			hasItem,
+			getChildPayload,
+			onDrop
+		} = useChecklistStepsComponent(props, context);
+
+		return {
+			correlationId,
+			error,
+			hasFailed,
+			hasSucceeded,
+			initialize,
+			logger,
+			noBreakingSpaces,
+			notImplementedError,
+			success,
+			successResponse,
+			isSaving,
+			serverErrors,
+			setErrors,
+			hasItem,
+			getChildPayload,
+			onDrop
+		};
+	}
+};
+</script>
+
+<style scoped>
+</style>
+
+<style>
+.dndrop-container {
+	min-height: auto;
+}
+</style>

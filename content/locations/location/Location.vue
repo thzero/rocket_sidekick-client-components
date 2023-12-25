@@ -249,7 +249,7 @@
 					>
 						<div style="width: 100%;">
 							{{ numberAndYear(item) }}
-							<span class="float-right">{{ item.datesDisplay }}</span>
+							<span class="float-right">{{ datesToString(item.dates) }}</span>
 						</div>
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
@@ -556,6 +556,7 @@ export default {
 			iterations,
 			stateProvinces,
 			panels,
+			datesToString,
 			numberAndYear,
 			numberOrYear,
 			panelsUpdated,
@@ -655,6 +656,7 @@ export default {
 			iterations,
 			stateProvinces,
 			panels,
+			datesToString,
 			numberAndYear,
 			numberOrYear,
 			panelsUpdated,

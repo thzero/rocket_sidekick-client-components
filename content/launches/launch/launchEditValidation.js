@@ -2,14 +2,14 @@ import { between, decimal, helpers, maxLength, minLength, required, requiredIf, 
 
 export function useLaunchEditValidation(self, nameRequired) { 
 	const validation = {
-		detailItemDate: { 
-			required,
-			$autoDirty: true 
-		},
 		detailItemAlbumUrl: { 
 			url,
 			maxLength: maxLength(255),
 			minLength: minLength(6),
+			$autoDirty: true 
+		},
+		detailItemDate: { 
+			required,
 			$autoDirty: true 
 		},
 		detailItemDescription: { 
