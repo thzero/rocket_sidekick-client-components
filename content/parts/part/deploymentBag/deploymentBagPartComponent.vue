@@ -86,19 +86,19 @@ export function useDeploymentBagPartComponent(props, context, options) {
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag,
 		partsType: AppCommonConstants.Rocketry.PartTypes.deploymentBag, 
 		preCompleteOkPart: (correlationId, data) => {
-			data.diameter = AppUtility.convertNumber(detailItemDiameter.value);
+			data.diameter = LibraryClientUtility.convertNumber(detailItemDiameter.value);
 			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUnitId.value;
 			// data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
 			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, diameterMeasurementUnitId.value);
 
-			data.length = AppUtility.convertNumber(detailItemLength.value);
+			data.length = LibraryClientUtility.convertNumber(detailItemLength.value);
 			data.lengthMeasurementUnitId = detailItemLengthMeasurementUnitId.value;
 			// data.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
 			data.lengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, lengthMeasurementUnitId.value);
 
 			data.pilotChute = detailItemPilotChute.value ?? false;
-			data.pilotChuteCd = AppUtility.convertNumber(detailItemPilotChuteCd.value);
-			data.pilotChuteDiameter = AppUtility.convertNumber(detailItemPilotChuteDiameter.value);
+			data.pilotChuteCd = LibraryClientUtility.convertNumber(detailItemPilotChuteCd.value);
+			data.pilotChuteDiameter = LibraryClientUtility.convertNumber(detailItemPilotChuteDiameter.value);
 
 			data.pilotChuteDiameterMeasurementUnitId = detailItemPilotChuteDiameterMeasurementUnitId.value;
 			// data.pilotChuteDiameterMeasurementUnitsId = detailItemPilotChuteDiameterMeasurementUnitsId.value;

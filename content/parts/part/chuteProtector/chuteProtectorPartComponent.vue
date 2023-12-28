@@ -86,14 +86,14 @@ export function useChuteProtectorPartComponent(props, context, options) {
 		manufacturerType: AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector,
 		partsType: AppCommonConstants.Rocketry.PartTypes.chuteProtector, 
 		preCompleteOkPart: (correlationId, data) => {
-			data.cd = AppUtility.convertNumber(detailItemCd.value);
+			data.cd = LibraryClientUtility.convertNumber(detailItemCd.value);
 
-			data.diameter = AppUtility.convertNumber(detailItemDiameter.value);
+			data.diameter = LibraryClientUtility.convertNumber(detailItemDiameter.value);
 			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUniId.value;
 			// data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnisId.value;
 			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMeasurementUniId.value);
 			
-			data.dimension = AppUtility.convertNumber(detailItemDimension.value);
+			data.dimension = LibraryClientUtility.convertNumber(detailItemDimension.value);
 			data.dimensionMeasurementUnitId = detailItemDimensionMeasurementUnitId.value;
 			// data.dimensionMeasurementUnitsId = detailItemDimensionMeasurementUnitsId.value;
 			data.dimensionMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDimensionMeasurementUnitId.value);

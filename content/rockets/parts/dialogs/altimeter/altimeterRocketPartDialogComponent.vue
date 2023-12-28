@@ -1,11 +1,11 @@
 <script>
-import { computed, ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import AppUtility from '@/utility/app';
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useRocketPartDialogComponent } from '@/components/content/rockets/parts/dialogs/rocketPartDialogComponent';
 
@@ -66,14 +66,14 @@ export function useAltimeterRocketPartComponent(props, context, options) {
 		detailItemMotorDelay.value = detailItem.value ? detailItem.value.motorDelay : null;
 	};
 	const setAdditionalI = async (correlationId) => {
-		detailItem.value.apogeeDelay = AppUtility.convertNumber(detailItemApogeeDelay.value);
+		detailItem.value.apogeeDelay = LibraryClientUtility.convertNumber(detailItemApogeeDelay.value);
 
-		detailItem.value.altitudeMain = AppUtility.convertNumber(detailItemMainAltitude.value);
+		detailItem.value.altitudeMain = LibraryClientUtility.convertNumber(detailItemMainAltitude.value);
 		detailItem.value.altitudeMainMeasurementUnitId = detailItemMainAltitudeMeasurementUnitId.value;
 		// detailItem.value.altitudeMainMeasurementUnitsId = detailItemMainAltitudeMeasurementUnitsId.value;
 		detailItem.value.altitudeMainMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemMainAltitudeMeasurementUnitId.value);
 
-		detailItem.value.motorDelay = AppUtility.convertNumber(detailItemMotorDelay.value);
+		detailItem.value.motorDelay = LibraryClientUtility.convertNumber(detailItemMotorDelay.value);
 	};
 	
 	return {

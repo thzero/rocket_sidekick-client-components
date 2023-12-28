@@ -5,7 +5,6 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
@@ -357,7 +356,7 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemData.value.success = detailItemSuccess.value;
 		detailItemData.value.failureReasons = detailItemFailureReasons.value;
 
-		detailItemData.value.temperature = AppUtility.convertNumber(detailItemTemperature.value);
+		detailItemData.value.temperature = LibraryClientUtility.convertNumber(detailItemTemperature.value);
 		detailItemData.value.temperatureMeasurementUnitId = detailItemTemperatureMeasurementUnitId.value;
 		detailItemData.value.temperatureMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.temperature.id, detailItemTemperatureMeasurementUnitId.value);
 		
@@ -365,7 +364,7 @@ export function useLaunchEditComponent(props, context, options) {
 
 		detailItemData.value.weather = detailItemWeather.value;
 
-		detailItemData.value.windSpeed = AppUtility.convertNumber(detailItemWindSpeed.value);
+		detailItemData.value.windSpeed = LibraryClientUtility.convertNumber(detailItemWindSpeed.value);
 		detailItemData.value.windSpeedMeasurementUnitId = detailItemWindSpeedMeasurementUnitId.value;
 		detailItemData.value.windSpeedMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, detailItemWindSpeedMeasurementUnitId.value);
 
@@ -376,27 +375,27 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemData.value.results.coordsLatRecovery = detailItemResultsCoordsLatRecovery.value ? detailItemResultsCoordsLatRecovery.value : null;
 		detailItemData.value.results.coordsLongRecovery = detailItemResultsCoordsLongRecovery.value ? detailItemResultsCoordsLongRecovery.value : null;
 
-		detailItemData.value.results.accelerationMax = AppUtility.convertNumber(detailItemResultsAccelerationMax.value);
+		detailItemData.value.results.accelerationMax = LibraryClientUtility.convertNumber(detailItemResultsAccelerationMax.value);
 		detailItemData.value.results.accelerationMaxMeasurementUnitId = detailItemResultsAccelerationMaxMeasurementUnitId.value;
 		detailItemData.value.results.accelerationMaxMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.acceleration.id, detailItemResultsAccelerationMaxMeasurementUnitId.value);
 		
-		detailItemData.value.results.altitudeMax = AppUtility.convertNumber(detailItemResultsAltitudeMax.value);
+		detailItemData.value.results.altitudeMax = LibraryClientUtility.convertNumber(detailItemResultsAltitudeMax.value);
 		detailItemData.value.results.altitudeMaxMeasurementUnitId = detailItemResultsAltitudeMaxMeasurementUnitId.value;
 		detailItemData.value.results.altitudeMaxMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.altitude.id, detailItemResultsAltitudeMaxMeasurementUnitId.value);
 		
-		detailItemData.value.results.altitudeDeployDrogue = AppUtility.convertNumber(detailItemResultsAltitudeDeployDrogue.value);
+		detailItemData.value.results.altitudeDeployDrogue = LibraryClientUtility.convertNumber(detailItemResultsAltitudeDeployDrogue.value);
 		detailItemData.value.results.altitudeDeployDrogueMeasurementUnitId = detailItemResultsAltitudeDeployDrogueMeasurementUnitId.value;
 		detailItemData.value.results.altitudeDeployDrogueMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.altitude.id, detailItemResultsAltitudeDeployDrogueMeasurementUnitId.value);
 		
-		detailItemData.value.results.altitudeDeployMain = AppUtility.convertNumber(detailItemResultsAltitudeDeployMain.value);
+		detailItemData.value.results.altitudeDeployMain = LibraryClientUtility.convertNumber(detailItemResultsAltitudeDeployMain.value);
 		detailItemData.value.results.altitudeDeployMainMeasurementUnitId = detailItemResultsAltitudeDeployMainMeasurementUnitId.value;
 		detailItemData.value.results.altitudeDeployMainMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.altitude.id, detailItemResultsAltitudeDeployMainMeasurementUnitId.value);
 		
-		detailItemData.value.results.velocityMax = AppUtility.convertNumber(detailItemResultsVelocityMax.value);
+		detailItemData.value.results.velocityMax = LibraryClientUtility.convertNumber(detailItemResultsVelocityMax.value);
 		detailItemData.value.results.velocityMaxMeasurementUnitId = detailItemResultsVelocityMaxMeasurementUnitId.value;
 		detailItemData.value.results.velocityMaxMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, detailItemResultsVelocityMaxMeasurementUnitId.value);
 		
-		detailItemData.value.results.velocityRecovery = AppUtility.convertNumber(detailItemResultsVelocityRecovery.value);
+		detailItemData.value.results.velocityRecovery = LibraryClientUtility.convertNumber(detailItemResultsVelocityRecovery.value);
 		detailItemData.value.results.velocityRecoveryMeasurementUnitId = detailItemResultsVelocityRecoveryMeasurementUnitId.value;
 		detailItemData.value.results.velocityRecoveryMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.velocity.id, detailItemResultsVelocityRecoveryMeasurementUnitId.value);
 	};

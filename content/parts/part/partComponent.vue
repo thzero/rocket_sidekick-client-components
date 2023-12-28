@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import AppUtility from '@/utility/app';
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useAdminComponent } from '@/components/content/adminComponent';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
@@ -78,7 +78,7 @@ export function usePartComponent(props, context, options) {
 
 			detailItemData.value.public = detailItemIsPublic.value ?? false;
 			
-			detailItemData.value.weight = AppUtility.convertNumber(detailItemWeight.value);
+			detailItemData.value.weight = LibraryClientUtility.convertNumber(detailItemWeight.value);
 			detailItemData.value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
 			// detailItemData.value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
 			detailItemData.value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);

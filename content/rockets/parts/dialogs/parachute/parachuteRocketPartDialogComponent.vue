@@ -1,11 +1,11 @@
 <script>
-import { computed, ref, watch } from 'vue';
+import {  ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import AppUtility from '@/utility/app';
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useRocketPartDialogComponent } from '@/components/content/rockets/parts/dialogs/rocketPartDialogComponent';
 
@@ -63,7 +63,7 @@ export function useParachuteRocketPartComponent(props, context, options) {
 	};
 	const setAdditionalI = async (correlationId) => {
 		detailItem.value.reefed = detailItemReefed.value;
-		detailItem.value.reefedLength = AppUtility.convertNumber(detailItemReefedLength.value);
+		detailItem.value.reefedLength = LibraryClientUtility.convertNumber(detailItemReefedLength.value);
 		detailItem.value.reefedMeasurementUnitId = detailItemReefedLengthMeasurementUnitId.value;
 		// detailItem.value.reefedMeasurementUnitsId = detailItemReefedLengthMeasurementUnitsId.value;
 		detailItem.value.reefedMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemReefedLengthMeasurementUnitId.value);

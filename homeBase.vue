@@ -4,7 +4,6 @@ import { computed, onMounted, ref } from 'vue';
 import AppSharedConstants from '@/utility/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
@@ -88,7 +87,7 @@ export function useHomeBaseComponent(props, context, options) {
 		return serviceStore.user;
 	});
 	const userDisplayName = computed(() => {
-		return AppUtility.userDisplayName(correlationId(), serviceStore.user);
+		return userDisplayName.userDisplayName(correlationId(), serviceStore.user);
 	});
 	const webSiteInject = (value) => {
 		return value ? value.replace('[url]', websiteUrl) : '';

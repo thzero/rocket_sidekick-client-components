@@ -824,20 +824,20 @@ export default {
 // 		return true;
 // 	if (String.isNullOrEmpty(initial))
 // 		return true;
-// 	// return (value > AppUtility.convertNumber(initial));
+// 	// return (value > LibraryClientUtility.convertNumber(initial));
 // 	return true;
 // }
 // const thrustAverageInitial1 = (value, siblings, vm) => {
-// 	return thrustAverageInitialI(AppUtility.convertNumber(value), siblings.thrustInitial1);
+// 	return thrustAverageInitialI(LibraryClientUtility.convertNumber(value), siblings.thrustInitial1);
 // }
 // const thrustAverageInitial2 = (value, siblings, vm) => {
-// 	return thrustAverageInitialI(AppUtility.convertNumber(value), siblings.thrustInitial2);
+// 	return thrustAverageInitialI(LibraryClientUtility.convertNumber(value), siblings.thrustInitial2);
 // }
 // const thrustAverageInitial3 = (value, siblings, vm) => {
-// 	return thrustAverageInitialI(AppUtility.convertNumber(value), siblings.thrustInitial3);
+// 	return thrustAverageInitialI(LibraryClientUtility.convertNumber(value), siblings.thrustInitial3);
 // }
 // const thrustAverageInitial4 = (value, siblings, vm) => {
-// 	return thrustAverageInitialI(AppUtility.convertNumber(value), siblings.thrustInitial4);
+// 	return thrustAverageInitialI(LibraryClientUtility.convertNumber(value), siblings.thrustInitial4);
 // }
 
 // const thrustInitialAverageI = (value, average) => {
@@ -845,20 +845,20 @@ export default {
 // 		return true;
 // 	if (String.isNullOrEmpty(average))
 // 		return true;
-// 	// return (value <= AppUtility.convertNumber(average));
+// 	// return (value <= LibraryClientUtility.convertNumber(average));
 // 	return true;
 // }
 // const thrustInitialAverage1 = (value, siblings, vm) => {
-// 	return thrustInitialAverageI(AppUtility.convertNumber(value), siblings.thrustAverage1);
+// 	return thrustInitialAverageI(LibraryClientUtility.convertNumber(value), siblings.thrustAverage1);
 // }
 // const thrustInitialAverage2 = (value, siblings, vm) => {
-// 	return thrustInitialAverageI(AppUtility.convertNumber(value), siblings.thrustAverage2);
+// 	return thrustInitialAverageI(LibraryClientUtility.convertNumber(value), siblings.thrustAverage2);
 // }
 // const thrustInitialAverage3 = (value, siblings, vm) => {
-// 	return thrustInitialAverageI(AppUtility.convertNumber(value), siblings.thrustAverage3);
+// 	return thrustInitialAverageI(LibraryClientUtility.convertNumber(value), siblings.thrustAverage3);
 // }
 // const thrustInitialAverage4 = (value, siblings, vm) => {
-// 	return thrustInitialAverageI(AppUtility.convertNumber(value), siblings.thrustAverage4);
+// 	return thrustInitialAverageI(LibraryClientUtility.convertNumber(value), siblings.thrustAverage4);
 // }
 
 // const thrustInitialPeakI = (value, peak) => {
@@ -866,19 +866,19 @@ export default {
 // 		return true;
 // 	if (String.isNullOrEmpty(peak))
 // 		return true;
-// 	return (value <= AppUtility.convertNumber(peak));
+// 	return (value <= LibraryClientUtility.convertNumber(peak));
 // }
 // const thrustInitialPeak1 = (value, siblings, vm) => {
-// 	return thrustInitialPeakI(AppUtility.convertNumber(value), siblings.thrustPeak1);
+// 	return thrustInitialPeakI(LibraryClientUtility.convertNumber(value), siblings.thrustPeak1);
 // }
 // const thrustInitialPeak2 = (value, siblings, vm) => {
-// 	return thrustInitialPeakI(AppUtility.convertNumber(value), siblings.thrustPeak2);
+// 	return thrustInitialPeakI(LibraryClientUtility.convertNumber(value), siblings.thrustPeak2);
 // }
 // const thrustInitialPeak3 = (value, siblings, vm) => {
-// 	return thrustInitialPeakI(AppUtility.convertNumber(value), siblings.thrustPeak3);
+// 	return thrustInitialPeakI(LibraryClientUtility.convertNumber(value), siblings.thrustPeak3);
 // }
 // const thrustInitialPeak4 = (value, siblings, vm) => {
-// 	return thrustInitialPeakI(AppUtility.convertNumber(value), siblings.thrustPeak4);
+// 	return thrustInitialPeakI(LibraryClientUtility.convertNumber(value), siblings.thrustPeak4);
 // }
 
 // const thrustAveragePeakI = (value, peak, vm) => {
@@ -886,19 +886,19 @@ export default {
 // 		return true;
 // 	if (String.isNullOrEmpty(peak))
 // 		return true;
-// 	return (value < AppUtility.convertNumber(peak));
+// 	return (value < LibraryClientUtility.convertNumber(peak));
 // }
 // const thrustAveragePeak1 = (value, siblings, vm) => {
-// 	return thrustAveragePeakI(AppUtility.convertNumber(value), siblings.thrustPeak1);
+// 	return thrustAveragePeakI(LibraryClientUtility.convertNumber(value), siblings.thrustPeak1);
 // }
 // const thrustAveragePeak2 = (value, siblings, vm) => {
-// 	return thrustAveragePeakI(AppUtility.convertNumber(value), siblings.thrustPeak2);
+// 	return thrustAveragePeakI(LibraryClientUtility.convertNumber(value), siblings.thrustPeak2);
 // }
 // const thrustAveragePeak3 = (value, siblings, vm) => {
-// 	return thrustAveragePeakI(AppUtility.convertNumber(value), siblings.thrustPeak3);
+// 	return thrustAveragePeakI(LibraryClientUtility.convertNumber(value), siblings.thrustPeak3);
 // }
 // const thrustAveragePeak4 = (value, siblings, vm) => {
-// 	return thrustAveragePeakI(AppUtility.convertNumber(value), siblings.thrustPeak4);
+// 	return thrustAveragePeakI(LibraryClientUtility.convertNumber(value), siblings.thrustPeak4);
 // }
 
 // const thrustPeakAverageI = (value, average) => {
@@ -906,19 +906,19 @@ export default {
 // 		return true;
 // 	if (String.isNullOrEmpty(average))
 // 		return true;
-// 	return (value > AppUtility.convertNumber(average));
+// 	return (value > LibraryClientUtility.convertNumber(average));
 // }
 // const thrustPeakAverage1 = (value, siblings, vm) => {
-// 	return thrustPeakAverageI(AppUtility.convertNumber(value), siblings.thrustAverage1);
+// 	return thrustPeakAverageI(LibraryClientUtility.convertNumber(value), siblings.thrustAverage1);
 // }
 // const thrustPeakAverage2 = (value, siblings, vm) => {
-// 	return thrustPeakAverageI(AppUtility.convertNumber(value), siblings.thrustAverage2);
+// 	return thrustPeakAverageI(LibraryClientUtility.convertNumber(value), siblings.thrustAverage2);
 // }
 // const thrustPeakAverage3 = (value, siblings, vm) => {
-// 	return thrustPeakAverageI(AppUtility.convertNumber(value), siblings.thrustAverage3);
+// 	return thrustPeakAverageI(LibraryClientUtility.convertNumber(value), siblings.thrustAverage3);
 // }
 // const thrustPeakAverage4 = (value, siblings, vm) => {
-// 	return thrustPeakAverageI(AppUtility.convertNumber(value), siblings.thrustAverage4);
+// 	return thrustPeakAverageI(LibraryClientUtility.convertNumber(value), siblings.thrustAverage4);
 // }
 
 // const thrustPeakInitialI = (value, initial) => {
@@ -926,18 +926,18 @@ export default {
 // 		return true;
 // 	if (String.isNullOrEmpty(initial))
 // 		return true;
-// 	return (value >= AppUtility.convertNumber(initial));
+// 	return (value >= LibraryClientUtility.convertNumber(initial));
 // }
 // const thrustPeakInitial1 = (value, siblings, vm) => {
-// 	return thrustPeakInitialI(AppUtility.convertNumber(value), siblings.thrustInitial1);
+// 	return thrustPeakInitialI(LibraryClientUtility.convertNumber(value), siblings.thrustInitial1);
 // }
 // const thrustPeakInitial2 = (value, siblings, vm) => {
-// 	return thrustPeakInitialI(AppUtility.convertNumber(value), siblings.thrustInitial2);
+// 	return thrustPeakInitialI(LibraryClientUtility.convertNumber(value), siblings.thrustInitial2);
 // }
 // const thrustPeakInitial3 = (value, siblings, vm) => {
-// 	return thrustPeakInitialI(AppUtility.convertNumber(value), siblings.thrustInitial3);
+// 	return thrustPeakInitialI(LibraryClientUtility.convertNumber(value), siblings.thrustInitial3);
 // }
 // const thrustPeakInitial4 = (value, siblings, vm) => {
-// 	return thrustPeakInitialI(AppUtility.convertNumber(value), siblings.thrustInitial4);
+// 	return thrustPeakInitialI(LibraryClientUtility.convertNumber(value), siblings.thrustInitial4);
 // }
 </script>
