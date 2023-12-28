@@ -5,7 +5,6 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
@@ -310,7 +309,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const setAdditional = async (correlationId) => {
 		detailItem.value.notes = String.trim(detailItemNotes.value);
 
-		detailItem.value.cg = AppUtility.convertNumber(detailItemCg.value);
+		detailItem.value.cg = LibraryClientUtility.convertNumber(detailItemCg.value);
 		detailItem.value.cgFrom = detailItemCgFrom.value;
 		detailItem.value.cgMeasurementUnitId = detailItemCgMeasurementUnitId.value;
 		// detailItem.value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
@@ -333,12 +332,12 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 			detailItem.value.motors[index].motorId = temp.motorId.value;
 		}
 
-		detailItem.value.weight = AppUtility.convertNumber(detailItemWeight.value);
+		detailItem.value.weight = LibraryClientUtility.convertNumber(detailItemWeight.value);
 		detailItem.value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
 		// detailItem.value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
 		detailItem.value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);
 	
-		detailItem.value.weightNose = AppUtility.convertNumber(detailItemWeightNose.value);
+		detailItem.value.weightNose = LibraryClientUtility.convertNumber(detailItemWeightNose.value);
 		detailItem.value.weightNoseMeasurementUnitId = detailItemWeightNoseMeasurementUnitId.value;
 		// detailItem.value.weightNoseMeasurementUnitsId = detailItemWeightNoseMeasurementUnitsId.value;
 		detailItem.value.weightNoseMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightNoseMeasurementUnitId.value);

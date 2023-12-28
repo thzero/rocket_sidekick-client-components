@@ -5,7 +5,6 @@ import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
@@ -150,23 +149,23 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	const setEditData = (correlationId, value) => {
 		value.description = String.trim(detailItemDescription.value);
 
-		value.cp = AppUtility.convertNumber(detailItemCp.value);
+		value.cp = LibraryClientUtility.convertNumber(detailItemCp.value);
 		value.cpFrom = detailItemCpFrom.value;
 		value.cpMeasurementUnitId = detailItemCpMeasurementUnitId.value;
 		// value.cpMeasurementUnitsId = detailItemCpMeasurementUnitsId.value;
 		value.cpMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCpMeasurementUnitId.value);
 		
-		value.diameterMajor = AppUtility.convertNumber(detailItemDiameterMajor.value);
+		value.diameterMajor = LibraryClientUtility.convertNumber(detailItemDiameterMajor.value);
 		value.diameterMajorMeasurementUnitId = detailItemDiameterMajorMeasurementUnitId.value;
 		// value.diameterMajorMeasurementUnitsId = detailItemDiameterMajorMeasurementUnitsId.value;
 		value.diameterMajorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMajorMeasurementUnitId.value);
 		
-		value.diameterMinor = AppUtility.convertNumber(detailItemDiameterMinor.value);
+		value.diameterMinor = LibraryClientUtility.convertNumber(detailItemDiameterMinor.value);
 		value.diameterMinorMeasurementUnitId = detailItemDiameterMinorMeasurementUnitId.value;
 		// value.diameterMinorMeasurementUnitsId = detailItemDiameterMinorMeasurementUnitsId.value;
 		value.diameterMinorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMinorMeasurementUnitId.value);
 
-		value.length = AppUtility.convertNumber(detailItemLength.value);
+		value.length = LibraryClientUtility.convertNumber(detailItemLength.value);
 		value.lengthMeasurementUnitId = detailItemLengthMeasurementUnitId.value;
 		// value.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
 		value.lengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemLengthMeasurementUnitId.value);
@@ -174,15 +173,15 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		value.manufacturerId = detailItemManufacturer.value;
 		value.manufacturerStockId = detailItemManufacturerStockId.value;
 
-		value.motors[0].count = AppUtility.convertNumber(detailItemMotorCount0.value);
-		value.motors[1].count = AppUtility.convertNumber(detailItemMotorCount1.value);
-		value.motors[2].count = AppUtility.convertNumber(detailItemMotorCount2.value);
+		value.motors[0].count = LibraryClientUtility.convertNumber(detailItemMotorCount0.value);
+		value.motors[1].count = LibraryClientUtility.convertNumber(detailItemMotorCount1.value);
+		value.motors[2].count = LibraryClientUtility.convertNumber(detailItemMotorCount2.value);
 
 		value.motors[0].diameter = detailItemMotorDiameter0.value;
 		value.motors[1].diameter = detailItemMotorDiameter1.value;
 		value.motors[2].diameter = detailItemMotorDiameter2.value;
 		
-		value.weight = AppUtility.convertNumber(detailItemWeight.value);
+		value.weight = LibraryClientUtility.convertNumber(detailItemWeight.value);
 		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
 		// value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
 		value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitsId.value);

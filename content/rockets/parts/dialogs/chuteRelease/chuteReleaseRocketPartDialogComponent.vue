@@ -1,11 +1,11 @@
 <script>
-import { computed, ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import AppUtility from '@/utility/app';
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useRocketPartDialogComponent } from '@/components/content/rockets/parts/dialogs/rocketPartDialogComponent';
 
@@ -60,7 +60,7 @@ export function useChuteReleaseRocketPartComponent(props, context, options) {
 		detailItemAltitudeMeasurementUnitsId.value = detailItem.value ? detailItem.value.altitudeMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	const setAdditionalI = async (correlationId) => {
-		detailItem.value.altitude = AppUtility.convertNumber(detailItemAltitude.value);
+		detailItem.value.altitude = LibraryClientUtility.convertNumber(detailItemAltitude.value);
 		detailItem.value.altitudeMeasurementUnitId = detailItemAltitudeMeasurementUnitId.value;
 		// detailItem.value.altitudeMeasurementUnitsId = detailItemAltitudeMeasurementUnitsId.value;
 		detailItem.value.altitudeMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemAltitudeMeasurementUnitId.value);
