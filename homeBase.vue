@@ -87,7 +87,7 @@ export function useHomeBaseComponent(props, context, options) {
 		return serviceStore.user;
 	});
 	const userDisplayName = computed(() => {
-		return userDisplayName.userDisplayName(correlationId(), serviceStore.user);
+		return LibraryClientUtility.userDisplayName(correlationId(), serviceStore.user);
 	});
 	const webSiteInject = (value) => {
 		return value ? value.replace('[url]', websiteUrl) : '';
