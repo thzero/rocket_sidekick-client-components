@@ -19,13 +19,13 @@
 <div class="mt-4">
     <p>
 {{ $t('strings.about.text1') }}
- {{ $t('strings.about.text2') }} <a href="mailto:rocketsidekick@thzero.com" title="Rocket Sidekick Inquiry">rocketsidekick@thzero.com</a>.
+ {{ $t('strings.about.text2') }} <a :href="`mailto:${emailsInquiry}@thzero.com`" :title="emailsInquiryTitle">{{ emailsInquiry }}</a>.
     </p>
 </div>
 <div class="mt-4">
     <p class="text-h6 text-center pb-4">{{ $t('strings.about.contributing.title') }}</p>
     <p>
- {{ $t('titles.application') }} {{ $t('strings.about.contributing.text1') }} <a href="mailto:rocketsidekick@thzero.com" title="Rocket Sidekick Inquiry">rocketsidekick@thzero.com</a>.
+ {{ $t('titles.application') }} {{ $t('strings.about.contributing.text1') }} <a :href="`mailto:${emailsContributing}@thzero.com`" :title="emailsContributingTitle"> {{ emailsContributing }}</a>.
     </p>
     <p class="mt-2">
         {{ $t('strings.about.contributing.text2') }}:
@@ -64,10 +64,10 @@
 </template>
 
 <script>
-import { useBaseAboutComponent } from '@thzero/library_client_vue3/components/baseAbout';
+import { useAppAboutComponent } from '@/components/appAbout';
 
 export default {
-	name: 'Support',
+	name: 'About',
 	setup(props, context) {
 		const {
 			correlationId,
@@ -78,8 +78,12 @@ export default {
 			logger,
 			noBreakingSpaces,
 			notImplementedError,
-			success
-		} = useBaseAboutComponent(props, context);
+			success,
+			emailsContributing,
+			emailsContributingTitle,
+			emailsInquiry,
+			emailsInquiryTitle
+		} = useAppAboutComponent(props, context);
 
 		return {
 			correlationId,
@@ -90,7 +94,11 @@ export default {
 			logger,
 			noBreakingSpaces,
 			notImplementedError,
-			success
+			success,
+			emailsContributing,
+			emailsContributingTitle,
+			emailsInquiry,
+			emailsInquiryTitle
 		};
 	}
 };
