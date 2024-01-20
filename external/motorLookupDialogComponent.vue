@@ -9,6 +9,7 @@ import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
+import LibraryMomentUtility from '@thzero/library_common/utility/moment';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
@@ -62,7 +63,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 
 	const buttonMotorSearchResetDisabled = computed(() => {
 		// const ttl = .serviceStore.state.motorSearchResults ? serviceStore.state.motorSearchResults.ttl : 0;
-		const now = LibraryCommonUtility.getTimestamp();
+		const now = LibraryMomentUtility.getTimestamp();
 		return (ttl.value < now);
 	});
 	const searchLocaleName = computed(() => {
@@ -87,7 +88,7 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		// const ttl2 = serviceStore.state.motorSearchResults ? serviceStore.state.motorSearchResults.ttl : 0;
 		const ttl2 = ttl.value;
 
-		const now = LibraryCommonUtility.getTimestamp();
+		const now = LibraryMomentUtility.getTimestamp();
 		if (ttl2 < now) {
 			return;
 		}
