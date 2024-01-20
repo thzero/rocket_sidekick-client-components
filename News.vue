@@ -40,7 +40,8 @@ import { computed } from 'vue';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
-import LibraryCommonUtility from '@thzero/library_common/utility';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+import LibraryMomentUtility from '@thzero/library_common/utility/moment';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
@@ -67,7 +68,7 @@ export default {
 		const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
 
 		const getDateTimeHuman = computed(() => {
-			return LibraryCommonUtility.getDateTimeHuman(date);
+			return LibraryMomentUtility.getDateTimeHuman(date);
 		});
 		const news = computed(() => {
 			if (!serviceStore.news.latest)

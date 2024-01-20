@@ -4,8 +4,9 @@ import { firstBy, thenBy } from 'thenby';
 
 import useVuelidate from '@vuelidate/core';
 
-import LibraryCommonUtility from '@thzero/library_common/utility';
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+import LibraryMomentUtility from '@thzero/library_common/utility/moment';
 
 import LocationIterationData from 'rocket_sidekick_common/data/locations/iteration';
 
@@ -199,10 +200,10 @@ export function useLocationComponent(props, context, options) {
 			return null;
 		let output = '';
 		if (dates.length >= 1)
-			output += LibraryCommonUtility.getDateHuman(dates[0]);
+			output += LibraryMomentUtility.getDateHuman(dates[0]);
 		if (dates.length === 2) {
 			output += ' - ';
-			output += LibraryCommonUtility.getDateHuman(dates[1]);
+			output += LibraryMomentUtility.getDateHuman(dates[1]);
 		}
 		return output;
 	};

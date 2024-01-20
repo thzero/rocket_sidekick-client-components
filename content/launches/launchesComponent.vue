@@ -8,6 +8,7 @@ import LibraryClientConstants from '@thzero/library_client/constants.js';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
+import LibraryMomentUtility from '@thzero/library_common/utility/moment';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
@@ -207,7 +208,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		return success(correlationId, data);
 	};
 	const launchDate = (item) => {
-		return LibraryCommonUtility.getDateHuman(item.date);
+		return LibraryMomentUtility.getDateHuman(item.date);
 	};
 	const launchStatusColor = (item) => {
 		return item ? (item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.success ? 'bg-success' : item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.failed ? 'bg-red' : 'bg-primary') : 'bg-primary';
@@ -222,7 +223,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		else if (item.rocketSetup && item.rocketSetup.rocket && !String.isNullOrEmpty(item.rocketSetup.rocket.name))
 			output += item.rocketSetup.rocket.name;
 
-		// // let date = LibraryCommonUtility.getDateHuman(item.date);
+		// // let date = LibraryMomentUtility.getDateHuman(item.date);
 		// let location = '';
 		// if (item.location) {
 		// 	location = item.location.name;
@@ -241,7 +242,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		return `${output}`
 	};
 	const launchTitleLocation = (item) => {
-		// let date = LibraryCommonUtility.getDateHuman(item.date);
+		// let date = LibraryMomentUtility.getDateHuman(item.date);
 		let location = '';
 		if (item.location) {
 			location = item.location.name;

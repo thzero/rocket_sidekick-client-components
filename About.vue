@@ -18,7 +18,9 @@
 				<v-card-text>
 <div class="mt-4">
     <p>
-{{ $t('strings.about.text1') }}
+{{ $t('strings.about.text1a') }}
+<a href="https://thzero.com/labs" target="_blank">thZero Labs</a>.
+{{ $t('strings.about.text1ab') }}
  {{ $t('strings.about.text2') }} <a :href="`mailto:${emailsInquiry}@thzero.com`" :title="emailsInquiryTitle">{{ emailsInquiry }}</a>.
     </p>
 </div>
