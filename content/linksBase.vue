@@ -34,7 +34,7 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => l.category === 'book');
 		return links.value.filter(l => l.category === 'book').sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksCompetitions = computed(() => {
@@ -43,7 +43,7 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => l.category === 'competition');
 		return links.value.filter(l => l.category === 'competition').sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksEvents = computed(() => {
@@ -52,7 +52,7 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => l.category === 'event');
 		return links.value.filter(l => l.category === 'event').sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksForums = computed(() => {
@@ -61,7 +61,7 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => l.category === 'forum');
 		return links.value.filter(l => l.category === 'forum').sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksGeneral = computed(() => {
@@ -70,7 +70,7 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => String.isNullOrEmpty(l.category));
 		return links.value.filter(l => String.isNullOrEmpty(l.category)).sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksGuidance = computed(() => {
@@ -79,16 +79,17 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => l.category === 'guidance');
 		return links.value.filter(l => l.category === 'guidance').sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksManufacturers = computed(() => {
 		if (!links.value)
 			return [];
 		// return links.value.filter(l => l.category === 'manufacturer');
-		return links.value.filter(l => l.category === 'manufacturer').sort(
+		const results = links.value.filter(l => l.category === 'manufacturer' || l.category === 'vendor');
+		return results.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksOrganizations = computed(() => {
@@ -97,7 +98,7 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => l.category === 'organization');
 		return links.value.filter(l => l.category === 'organization').sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksVendors = computed(() => {
@@ -106,7 +107,7 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => l.category === 'vendor');
 		return links.value.filter(l => l.category === 'vendor').sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 	const linksVideos = computed(() => {
@@ -115,7 +116,7 @@ export function useLinksBaseComponent(props, context, options) {
 		// return links.value.filter(l => l.category === 'video');
 		return links.value.filter(l => l.category === 'video').sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			.thenBy((v1, v2) => { return (v1.title && v2.title) && (v1.title.localeCompare(v2.title)); })
 		);
 	});
 
