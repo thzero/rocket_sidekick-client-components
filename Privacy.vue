@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { useAppPrivacyComponent } from '@/components/appPrivacy';
+import { useBasePrivacyComponent } from '@thzero/library_client_vue3/components/basePrivacy';
 
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 
@@ -49,7 +49,7 @@ export default {
 			notImplementedError,
 			success,
 			privacyMarkup
-		} = useAppPrivacyComponent(props, context);
+		} = useBasePrivacyComponent(props, context);
 
 		return {
 			correlationId,
