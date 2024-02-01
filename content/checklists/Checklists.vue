@@ -26,27 +26,41 @@
 							</v-col>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<v-row dense>
-									<v-col cols="4" md="2">
+									<v-col cols="4" md="4">
 										<v-checkbox
-											v-model="filterItemYours"
+											v-model="filterItemIsCompleted"
 											density="compact"
-											:label="$t('forms.content.checklists.yours')"
+											:label="$t('forms.content.checklists.completed')"
 										/>
 									</v-col>
-									<v-col cols="4" md="2">
+									<v-col cols="4" md="4">
 										<v-checkbox
 											v-model="filterItemIsDefault"
 											density="compact"
 											:label="$t('forms.content.checklists.default')"
 										/>
 									</v-col>
-									<v-col cols="4" md="2">
+									<v-col cols="4" md="4">
+										<v-checkbox
+											v-model="filterItemInProgress"
+											density="compact"
+											:label="$t('forms.content.checklists.inProgress')"
+										/>
+									</v-col>
+									<v-col cols="4" md="4">
+										<v-checkbox
+											v-model="filterItemYours"
+											density="compact"
+											:label="$t('forms.content.checklists.yours')"
+										/>
+									</v-col>
+									<!-- <v-col cols="4" md="4">
 										<v-checkbox
 											v-model="filterItemShared"
 											density="compact"
 											:label="$t('forms.content.checklists.shared')"
 										/>
-									</v-col>
+									</v-col> -->
 								</v-row>
 							</v-col>
 						</v-row>
@@ -121,8 +135,25 @@
 							:key="item.name"
 						>
 							<v-card>
-								<v-card-title>
-									{{ item.name }}
+								<v-card-title
+									class="bg-primary"
+								>
+									&nbsp;{{ item.name }}
+									<div
+										v-if="item.rocketSetup && item.rocketSetup.rocket" 
+										class="float-right"
+									>
+										<a class="text-contrast" :href="'/user/rockets/' + item.rocketSetup.rocket.id">{{ item.rocketSetup.rocket.name }}</a>
+									</div>
+									<!--
+									<div class="float-right">
+										{{ rocketDiameter(item.stages) }},
+										{{ rocketMotorMountNames(item) }}
+									</div> -->
+									<img
+										v-if="item.rocketSetup && item.rocketSetup" 
+										:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px; float: left;" 
+									/>
 								</v-card-title>
 								<v-card-text>
 									{{ item.description }}
@@ -333,6 +364,7 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
+			rocketTypeIcon,
 			debug,
 			dialogChecklistsLookupRef,
 			dialogStartManager,
@@ -344,7 +376,9 @@ export default {
 			dialogStartCancel,
 			dialogStartParams,
 			filterItemName,
+			filterItemIsCompleted,
 			filterItemIsDefault,
+			filterItemIsInProgress,
 			filterItemShared,
 			filterItemYours,
 			dialogStartOk,
@@ -423,6 +457,7 @@ export default {
 			display,
 			buttonsDialog,
 			buttonsForms,
+			rocketTypeIcon,
 			debug,
 			dialogChecklistsLookupRef,
 			dialogStartManager,
@@ -434,7 +469,9 @@ export default {
 			dialogStartCancel,
 			dialogStartParams,
 			filterItemName,
+			filterItemIsCompleted,
 			filterItemIsDefault,
+			filterItemIsInProgress,
 			filterItemShared,
 			filterItemYours,
 			dialogStartOk,

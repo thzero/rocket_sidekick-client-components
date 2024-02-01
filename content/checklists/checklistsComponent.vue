@@ -11,6 +11,7 @@ import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
+import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
 import ChecklistData from 'rocket_sidekick_common/data/checklists/index';
 
@@ -85,6 +86,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 			canDelete: (correlationId, item) => { return canDeleteI(correlationId, item); },
 			canEdit: (correlationId, item) => { return canEditI(correlationId, item); },
 			canView: (correlationId, item) => { return canViewI(correlationId, item); },
+			deleteItem: async (correlationId, id) => { return await deleteItemI(correlationId, id); },
 			fetch: async (correlationId) => { return await fetchI(correlationId); },
 			fetchItem: async (correlationId, id, editable) => { return await fetchItemI(correlationId, id, editable); },
 			init: async (correlationId) => { return await initI(correlationId); },
@@ -105,13 +107,37 @@ export function useChecklistsBaseComponent(props, context, options) {
 		buttonsForms
 	} = useButtonComponent(props, context);
 
+	const {
+		rocketTypes,
+		hasCoverUrl,
+		rocketCg,
+		rocketCp,
+		rocketDiameter,
+		rocketLength,
+		rocketManufacturer,
+		rocketMotorMountName,
+		rocketMotorMountNames,
+		rocketMotors,
+		rocketMotorNames,
+		rocketMotorNamesByStage,
+		rocketStagePrimary,
+		rocketStages,
+		rocketTypeIcon,
+		rocketTypeIconDetermine,
+		rocketTypeName,
+		rocketTypeNames,
+		rocketWeight
+	} = useRocketsUtilityComponent(props, context, options);
+
 	const debug = ref(false);
 	const dialogChecklistsLookupRef = ref(null);
 	const dialogStartManager = ref(new DialogSupport());
 	const dialogStartMessage = ref(LibraryClientUtility.$trans.t('messages.checklists.start_confirm'));
 	const dialogStartParams = ref(null);
 	const filterItemName = ref(null);
+	const filterItemIsCompleted = ref(false);
 	const filterItemIsDefault = ref(true);
+	const filterItemIsInProgress = ref(true);
 	const filterItemShared = ref(false);
 	const filterItemYours  = ref(true);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t('titles.content.checklists.title'));
@@ -124,16 +150,16 @@ export function useChecklistsBaseComponent(props, context, options) {
 	}
 
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isDefault(item) || !isInProgress(item);
+		return (isOwner(correlationId, item) || isDefault(item)) && !isInProgress(item);
 	};
 	const canDeleteI = (correlationId, item) => {
-		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item); // TODO: SECURITY: Admin can edit a default
+		return isOwner(correlationId, item) && !isDefault(item);
 	};
 	const canEditI = (correlationId, item) => {
-		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item); // TODO: SECURITY: Admin can edit a default
+		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item);
 	};
 	const canStart = (item) => {
-		return isOwner(correlationId, item) && !isDefault(item) && !!isInProgress(item) && !isCompleted(item);
+		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item);
 	};
 	const canViewI = (correlationId, item) => {
 		return isOwner(correlationId, item) || isDefault(item);
@@ -158,6 +184,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.mid)
 			return 'rocket_mid.png';
 		return null;
+	};
+	const deleteItemI = async (correlationId, id) => {
+		return await serviceStore.dispatcher.deleteChecklistById(correlationId, id);
 	};
 	const dialogStartCancel = async (item) => {
 		try {
@@ -209,9 +238,11 @@ export function useChecklistsBaseComponent(props, context, options) {
 	};
 	const fetchParams = (correlationId, params) => {
 		params.name = filterItemName.value;
-		params.yours = filterItemYours.value;
+		params.isCompleted = filterItemIsCompleted.value;
 		params.isDefault = filterItemIsDefault.value;
+		params.isInProgress = filterItemIsInProgress.value;
 		params.shared = filterItemShared.value;
+		params.yours = filterItemYours.value;
 		return params;
 	};
 	const initI = async (correlationId) => {
@@ -243,8 +274,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
 		filterItemYours.value = data ? data.yours : null;
+		filterItemIsInProgress.value = data ? data.isInProgress : null;
+		filterItemIsCompleted.value = data ? data.isCompleted : false;
 		filterItemIsDefault.value = data ? data.isDefault : null;
-		filterItemShared.value = data ? data.shared : null;
 
 		if (!filterItemYours.value && !filterItemIsDefault.value && !filterItemShared.value) {
 			filterItemIsDefault.value = true;
@@ -316,6 +348,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		display,
 		buttonsDialog,
 		buttonsForms,
+		rocketTypeIcon,
 		debug,
 		dialogChecklistsLookupRef,
 		dialogStartManager,
@@ -327,7 +360,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogStartCancel,
 		dialogStartParams,
 		filterItemName,
+		filterItemIsCompleted,
 		filterItemIsDefault,
+		filterItemIsInProgress,
 		filterItemShared,
 		filterItemYours,
 		dialogStartOk,
@@ -337,8 +372,8 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isInProgress,
 		isStarting,
 		resetAdditional,
-		scope: 'RocketsFilterControl',
-		validation: useVuelidate({ $scope: 'RocketsFilterControl' })
+		scope: 'Checklists',
+		validation: useVuelidate({ $scope: 'Checklists' })
 	};
 };
 </script>

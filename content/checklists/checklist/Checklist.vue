@@ -111,6 +111,7 @@
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
 					<VtTextFieldWithValidation
+						v-if="!isDefault"
 						ref="detailItemLocationNameRef"
 						v-model="detailItemLocationName"
 						vid="detailItemLocationName"
@@ -129,7 +130,7 @@
 						{{ $t('buttons.select') }}
 					</v-btn>
 					<v-btn
-						v-if="!isEditable"
+						v-if="!isEditable && !isDefault"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.default"
 						:color="buttonsForms.color.default"
@@ -159,6 +160,7 @@
 			<v-col cols="12">
 				<div class="d-flex">
 					<VtTextFieldWithValidation
+						v-if="!isDefault"
 						ref="detailItemRocketNameRef"
 						v-model="detailItemRocketName"
 						vid="detailItemRocketName"
@@ -177,7 +179,7 @@
 						{{ $t('buttons.select') }}
 					</v-btn>
 					<v-btn
-						v-if="!isEditable"
+						v-if="!isEditable && !isDefault"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.default"
 						:color="buttonsForms.color.default"

@@ -59,18 +59,34 @@
 		</v-row>
 		<v-row dense>
 			<v-col cols="12">
-				<VtTextAreaWithValidation
-					ref="descriptionRef"
-					v-model="detailItemDescription"
-					vid="detailItemDescription"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.description')"
-					:counter="500"
-					:clearable="isEditable"
-					:rows="detailItemTextRows"
-				/>
-<div v-html="markupHint"></div>
+				<v-row dense>
+					<v-col :cols="isEditable ? 12 : $vuetify.display.smAndDown ? 12 : 6">
+						<VtTextAreaWithValidation
+							ref="descriptionRef"
+							v-model="detailItemDescription"
+							vid="detailItemDescription"
+							:validation="validation"
+							:readonly="!isEditable"
+							:label="$t('forms.description')"
+							:counter="500"
+							:clearable="isEditable"
+							:rows="detailItemTextRows"
+						/>
+<div
+	v-if="isEditable"
+	v-html="markupHint"
+></div>
+					</v-col>
+					<v-col
+						v-if="!isEditable"
+						:cols="isEditable ? 12 : $vuetify.display.smAndDown ? 12 : 6"
+					>
+					<v-img
+						:src="coverUrl"
+						cover
+					></v-img>
+					</v-col>
+				</v-row>
 			</v-col>
 		</v-row>
 		<v-row dense>
@@ -324,6 +340,7 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemRocketType,
+			coverUrl,
 			manufacturers,
 			panels,
 			panelsId,
@@ -414,6 +431,7 @@ export default {
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemRocketType,
+			coverUrl,
 			manufacturers,
 			panels,
 			panelsId,
