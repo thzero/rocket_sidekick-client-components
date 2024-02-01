@@ -3,8 +3,6 @@ import { computed, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
-import AppCommonConstants from 'rocket_sidekick_common/constants';
-
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import RocketStage from 'rocket_sidekick_common/data/rockets/stage';
@@ -181,6 +179,9 @@ export function useRocketComponent(props, context, options) {
 	]);
 	const stagesPanels = ref([]);
 	
+	const coverUrl = computed(() => {
+		return detailItemData.value ? detailItemData.value.coverUrl : '';
+	});
 	const manufacturers = computed(() => {
 		return props.manufacturers ? props.manufacturers : [];
 	});
@@ -364,6 +365,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemManufacturerStockId,
 		detailItemName,
 		detailItemRocketType,
+		coverUrl,
 		manufacturers,
 		panels,
 		panelsId,
