@@ -172,7 +172,7 @@
 									class="bg-primary"
 								>
 									<slot name="panelTitle" :item="item">
-										&nbsp;<a class="text-contrast" :href="'/user/rockets/' + item.rocket.id">{{ item.rocket.name }}</a>asdasd
+										&nbsp;<a class="text-contrast" :href="'/user/rockets/' + item.rocket.id">{{ item.rocket.name }}</a>
 									</slot>
 									<!-- <div class="float-right">{{ manufacturer(item) }}</div> -->
 									<div class="float-right">
