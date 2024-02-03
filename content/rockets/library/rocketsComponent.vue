@@ -43,6 +43,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,
@@ -177,28 +178,29 @@ export function useRocketsBaseComponent(props, context, options) {
 			return error('useRocketsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 
 		serviceStore.dispatcher.setRocketsSearchCriteria(correlationId, params);
+
+		if (requestedItemId.value)
+			params.rocketId = requestedItemId.value;
 			
 		const response = await serviceStore.dispatcher.requestRockets(correlationId, params);
 		if (hasFailed(response))
 			return response;
 
-		let results = response.results;
-		results.forEach((item) => {
+		response.results.forEach((item) => {
 			const temp = manufacturers.value.find(l => l.id === item.manufacturerId);
 			if (temp)
 				item.manufacturerName = temp.name;
 		});
-	 	results = results.sort(
+		response.results = response.results.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 			.thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
 		);
-		// results = results.sort(
+		// response.results = response.results.sort(
 		// 	firstBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
 		// );
 
-		response.results = results;
-		return response;
+		return success(correlationId, { data: response.results, sorted: true });
 	};
 	const fetchItemI = async (correlationId, id, editable) => {
 		return await serviceStore.dispatcher.requestRocketById(correlationId, id, editable);
@@ -268,7 +270,7 @@ export function useRocketsBaseComponent(props, context, options) {
 			let temp2 = response.results.filter(l => l.types.find(j => j === AppCommonConstants.Rocketry.ManufacturerTypes.rocket));
 			temp2 = temp2.map((item) => { return { id: item.id, name: item.name, types: item.types}; });
 			manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
-		}		
+		}
 	});
 
 	return {
@@ -296,6 +298,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,

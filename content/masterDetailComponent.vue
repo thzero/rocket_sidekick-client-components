@@ -1,5 +1,6 @@
 <script>
 import { computed, ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { firstBy, thenBy } from 'thenby';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
@@ -11,6 +12,7 @@ import { useContentBaseComponent } from '@/components/content/contentBase';
 import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useDisplayComponent } from '@thzero/library_client_vue3_vuetify3/components/display';
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
+import router from '@/router';
 
 export function useMasterDetailComponent(props, context, options) {
 	const {
@@ -27,6 +29,8 @@ export function useMasterDetailComponent(props, context, options) {
 		sort,
 		target
 	} = useContentBaseComponent(props, context, options);
+
+	const route = useRoute();
 
 	const {
 		isAdmin,
@@ -55,6 +59,7 @@ export function useMasterDetailComponent(props, context, options) {
 	const detailDirty = ref(false);
 	const detailItem = ref(null);
 	const items = ref([]);
+	const requestedItemId = ref(route.params.id);
 	const user = ref(null);
 
 	const colsEditPanel = computed(() => {
@@ -103,10 +108,12 @@ export function useMasterDetailComponent(props, context, options) {
 		return item && (options.canView ? options.canView(correlationId(), item) : true);
 	};
 	const clickSearch = async (submit) => {
+		requestedItemId.value = null; // reset the requestdItemId if trying to filter.
 		await submit(correlationId());
 	};
 	const clickSearchClear = async (reset, submit) => {
 		const correlationIdI = correlationId();
+		requestedItemId.value = route.params.id;
 		await reset(correlationIdI, true);
 		await submit(correlationIdI);
 	};
@@ -200,7 +207,7 @@ export function useMasterDetailComponent(props, context, options) {
 				setNotify(correlationIdI, 'errors.error');
 				return;
 			}
-			await fetch(correlationIdI), true;
+			await fetch(correlationIdI, true);
 		}
 		finally {
 			dialogDeleteParams.id = null;
@@ -218,19 +225,25 @@ export function useMasterDetailComponent(props, context, options) {
 		dialogDeleteParams.id = item.id;
 		dialogDeleteManager.value.open();
 	};
-	const fetch = async (correlationId, force) => {
-		if (force === true)
+	const fetch = async (correlationId, detailItemReset) => {
+		if (detailItemReset === true)
 			detailItem.value = null; // reset to so that the detail doesn't display
 
 		const response = await options.fetch(correlationId);
 		if (hasFailed(response))
 			return [];
+
+		response.results = response.results ?? { data: [], sorted: false };
 		
-		// const results = response.results.sort((a, b) => a.sortName.localeCompare(b.sortName));
-		const results = response.results.sort(
-			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
-		);
+		let results = response.results.data;
+		if (!response.results.sorted) {
+			// const results = response.results.sort((a, b) => a.sortName.localeCompare(b.sortName));
+			results = results.sort(
+				firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
+				.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
+			);
+		}
+
 		items.value = results;
 		return response;
 	};
@@ -342,6 +355,7 @@ export function useMasterDetailComponent(props, context, options) {
 		dialogDeleteMessage,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,

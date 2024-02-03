@@ -43,6 +43,7 @@ export function useLocationsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,
@@ -173,19 +174,14 @@ export function useLocationsBaseComponent(props, context, options) {
 			return error('useLocationsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 
 		serviceStore.dispatcher.setLocationsSearchCriteria(correlationId, params);
+
+		if (requestedItemId.value)
+			params.locationId = requestedItemId.value;
 			
 		const response = await serviceStore.dispatcher.requestLocations(correlationId, params);
 		if (hasFailed(response))
-			return response;
-
-		let results = response.results;
-	 	results = results.sort(
-			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
-		);
-
-		response.results = results;
-		return response;
+			return;
+		return success(correlationId, { data: response.results, sorted: false });
 	};
 	const fetchItemI = async (correlationId, id, editable) => {
 		return await serviceStore.dispatcher.requestLocationById(correlationId, id, editable);
@@ -237,6 +233,7 @@ export function useLocationsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,

@@ -118,7 +118,7 @@
 					>
 						{{ $t('buttons.select') }}
 					</v-btn>
-					<v-btn
+					<!-- <v-btn
 						v-if="!isEditable"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.default"
@@ -126,7 +126,18 @@
 						@click="clickViewRocket(detailItemData)"
 					>
 						{{ $t('buttons.link') }}
-					</v-btn>
+					</v-btn> -->
+					<div
+						v-if="!isEditable && detailItemData && detailItemData.rocketId"
+						style="display: flex; justify-content: center; align-items: center;"
+					>
+						<router-link
+							:to="'/user/rockets/' + (detailItemData ? detailItemData.rocketId: '')"
+							class="text-contrast router-link headline"
+						>
+							<h2>{{ $t('buttons.link') }}</h2>
+						</router-link>
+					</div>
 				</div>
 			</v-col>
 			<v-col 
@@ -165,7 +176,7 @@
 					>
 						{{ $t('buttons.select') }}
 					</v-btn>
-					<v-btn
+					<!-- <v-btn
 						v-if="!isEditable"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.default"
@@ -173,7 +184,18 @@
 						@click="clickViewRocketSetup(detailItemData)"
 					>
 						{{ $t('buttons.link') }}
-					</v-btn>
+					</v-btn> -->
+					<div
+						v-if="!isEditable && detailItemData && detailItemData.rocketSetupId"
+						style="display: flex; justify-content: center; align-items: center;"
+					>
+						<router-link
+							:to="'/user/rocketsetups/' + (detailItemData ? detailItemData.rocketSetupId: '')"
+							class="text-contrast router-link headline"
+						>
+							<h2>{{ $t('buttons.link') }}</h2>
+						</router-link>
+					</div>
 				</div>
 			</v-col>
 		</v-row>
@@ -198,7 +220,7 @@
 					>
 						{{ $t('buttons.select') }}
 					</v-btn>
-					<v-btn
+					<!-- <v-btn
 						v-if="!isEditable"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.default"
@@ -206,7 +228,18 @@
 						@click="clickViewLocation(detailItemData)"
 					>
 						{{ $t('buttons.link') }}
-					</v-btn>
+					</v-btn> -->
+					<div
+						v-if="!isEditable && detailItemData && detailItemData.locationId"
+						style="display: flex; justify-content: center; align-items: center;"
+					>
+						<router-link
+							:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
+							class="text-contrast router-link headline"
+						>
+							<h2>{{ $t('buttons.link') }}</h2>
+						</router-link>
+					</div>
 				</div>
 			</v-col>
 			<v-col cols="12" sm="4">

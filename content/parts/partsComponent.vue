@@ -37,6 +37,7 @@ export function usePartsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,
@@ -130,37 +131,39 @@ export function usePartsBaseComponent(props, context, options) {
 		return await serviceStore.dispatcher.deletePartById(correlationId, id);
 	};
 	const fetchI = async (correlationId) => {
+		await fetchManufacturers(correlationId);
+
 		params.value = { typeId: props.type };
 		if (props.fetchParams)
 			params.value = await props.fetchParams(correlationId, params.value);
 		if (!params)
 			return error('usePartsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+
+		serviceStore.dispatcher.setPartsSearchCriteria(correlationId, { params: params.value, type: props.type });
+
+		if (requestedItemId.value)
+			params.partId = requestedItemId.value;
 			
 		const response = await serviceStore.dispatcher.requestParts(correlationId, params.value);
 		if (hasFailed(response))
 			return response;
 
-		serviceStore.dispatcher.setPartsSearchCriteria(correlationId, { params: params.value, type: props.type });
-
-		await fetchManufacturers(correlationId);
-
-		let results = response.results.filter(l => l.typeId === props.type);
-		results.forEach((item) => {
+		response.results = response.results.filter(l => l.typeId === props.type);
+		response.results.forEach((item) => {
 			const temp = manufacturers.value.find(l => l.id === item.manufacturerId);
 			if (temp)
 				item.manufacturerName = temp.name;
 		});
-	 	results = results.sort(
+		response.results = response.results.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
 			.thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
 		);
-		// results = results.sort(
+		// response.results = response.results.sort(
 		// 	firstBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
 		// );
 
-		response.results = results;
-		return response;
+		return success(correlationId, { data: response.results, sorted: true });
 	};
 	const fetchItemI = async (correlationId, id, editable) => {
 		return await serviceStore.dispatcher.requestPartById(correlationId, id, editable);
@@ -232,6 +235,7 @@ export function usePartsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,

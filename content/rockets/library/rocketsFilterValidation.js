@@ -13,5 +13,11 @@ export const useRocketsFilterValidation = {
 		maxLength: maxLength(50),
 		$autoDirty: true
 	},
-	filterItemRocketTypes: { $autoDirty: true }
+	filterItemRocketTypes: { $autoDirty: true },
+	// requestedUserId: {
+	// 	characters: helpers.withMessage('Invalid characters', helpers.regex(/^([_\-a-zA-Z0-9]*)*$/)),
+	// 	minLength: minLength(3),
+	// 	maxLength: maxLength(12),
+	// 	$autoDirty: true
+	// }
 };

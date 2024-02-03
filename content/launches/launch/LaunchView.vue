@@ -26,7 +26,7 @@
 										:label="$t('forms.content.locations.name')"
 										:readonly="true"
 									/>
-									<v-btn
+									<!-- <v-btn
 										v-if="$vuetify.display.smAndUp"
 										class="ml-4 text-right"
 										:variant="buttonsForms.variant.default"
@@ -34,7 +34,18 @@
 										@click="clickViewLocation(displayItem)"
 									>
 										{{ $t('buttons.link') }}
-									</v-btn>
+									</v-btn> -->
+									<div
+										v-if="!isEditable && detailItemData && detailItemData.locationId"
+										style="display: flex; justify-content: center; align-items: center;"
+									>
+										<router-link
+											:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
+											class="text-contrast router-link headline"
+										>
+											<h2>{{ $t('buttons.link') }}</h2>
+										</router-link>
+									</div>
 								</div>
 							</v-col>
 							<v-col cols="12">
@@ -51,13 +62,24 @@
 						cols="12"
 						class="text-right"
 					>
-						<v-btn
+						<!-- <v-btn
 							:variant="buttonsForms.variant.default"
 							:color="buttonsForms.color.default"
 							@click="clickViewLocation(displayItem)"
 						>
 							{{ $t('buttons.link') }}
-						</v-btn>
+						</v-btn> -->
+						<div
+							v-if="!isEditable && detailItemData && detailItemData.locationId"
+							style="display: flex; justify-content: center; align-items: center;"
+						>
+							<router-link
+								:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
+								class="text-contrast router-link headline"
+							>
+								<h2>{{ $t('buttons.link') }}</h2>
+							</router-link>
+						</div>
 					</v-col>
 					<v-col cols="12">
 						<VtSelect
@@ -170,14 +192,25 @@
 						:label="$t('forms.content.locations.name')"
 						:readonly="true"
 					/>
-					<v-btn
+					<!-- <v-btn
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.default"
 						:color="buttonsForms.color.default"
 						@click="clickViewLocation(displayItem)"
 					>
 						{{ $t('buttons.link') }}
-					</v-btn>
+					</v-btn> -->
+					<div
+						v-if="!isEditable && detailItemData && detailItemData.locationId"
+						style="display: flex; justify-content: center; align-items: center;"
+					>
+						<router-link
+							:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
+							class="text-contrast router-link headline"
+						>
+							<h2>{{ $t('buttons.link') }}</h2>
+						</router-link>
+					</div>
 				</div>
 			</v-col>
 			<v-col 

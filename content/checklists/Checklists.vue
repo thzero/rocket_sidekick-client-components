@@ -143,7 +143,13 @@
 										v-if="item.rocketSetup && item.rocketSetup.rocket" 
 										class="float-right"
 									>
-										<a class="text-contrast" :href="'/user/rockets/' + item.rocketSetup.rocket.id">{{ item.rocketSetup.rocket.name }}</a>
+										<!-- <a class="text-contrast" target="_blank" :href="'/user/rockets/' + item.rocketSetup.rocket.id">{{ item.rocketSetup.rocket.name }}</a> -->
+										<router-link
+											:to="'/user/rockets/' + item.rocketSetup.rocket.id"
+											class="text-contrast router-link"
+										>
+											{{ item.rocketSetup.rocket.name }}
+										</router-link>
 									</div>
 									<!--
 									<div class="float-right">
@@ -325,6 +331,7 @@ export default {
 			dialogDeleteParams,
 			detailItem,
 			items,
+			requestedItemId,
 			colsEditPanel,
 			colsSearchResults,
 			displayEditPanel,
@@ -418,6 +425,7 @@ export default {
 			dialogDeleteParams,
 			detailItem,
 			items,
+			requestedItemId,
 			colsEditPanel,
 			colsSearchResults,
 			displayEditPanel,

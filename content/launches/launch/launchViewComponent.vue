@@ -291,7 +291,7 @@ export function useLaunchViewComponent(props, context, options) {
 	const clickViewLocation = async (item) => {
 		if (!item)
 			return;
-		LibraryClientUtility.$navRouter.push('/user/locations/' + item.id);
+		LibraryClientUtility.$navRouter.push('/user/locations/' + item.locationId);
 	};
 
 	return {
