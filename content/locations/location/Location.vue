@@ -335,9 +335,9 @@
 							</v-col>
 							<v-col cols="6" sm="4">
 								<VtSelect
-									v-if="item.address.state"
-									v-model="item.address.state"
-									:items="stateProvinces"
+									v-if="item.address.stateProvince"
+									v-model="item.address.stateProvince"
+									:items="stateProvincesByCountry(item.address.country)"
 									:readonly="true"
 									:label="$t('forms.address.stateProvince.title')"
 								/>
@@ -560,6 +560,7 @@ export default {
 			numberAndYear,
 			numberOrYear,
 			panelsUpdated,
+			stateProvincesByCountry,
 			updateIteration,
 			scope,
 			validation
@@ -660,6 +661,7 @@ export default {
 			numberAndYear,
 			numberOrYear,
 			panelsUpdated,
+			stateProvincesByCountry,
 			updateIteration,
 			scope,
 			validation

@@ -261,6 +261,7 @@ export function useLocationComponent(props, context, options) {
 	const setData = (correlationId) => {
 		detailItemData.value.description = detailItemDescription.value;
 
+		detailItemData.value.address = detailItemData.value.address ?? {};
 		detailItemData.value.address.city = detailItemAddressCity.value;
 		detailItemData.value.address.country = detailItemAddressCountry.value;
 		detailItemData.value.address.postalCode = detailItemAddressPostalCode.value;
@@ -277,7 +278,12 @@ export function useLocationComponent(props, context, options) {
 		detailItemData.value.organizations = detailItemData.value.organizations && detailItemData.value.organizations.length > 0 ? detailItemData.value.organizations : null;
 		detailItemData.value.rocketTypes = detailItemRocketTypes.value;
 		detailItemData.value.rocketTypes = detailItemData.value.rocketTypes && detailItemData.value.rocketTypes.length > 0 ? detailItemData.value.rocketTypes : null;
-		
+	};
+	const stateProvincesByCountry = (countryId) => {
+		const temp = countriesAndStateProvinces.value.find(l => l.id === countryId);
+		if (!temp)
+			return ['a'];
+		return temp.stateProvinces.map(l => { return { id: l.state_code, name: l.name }; });
 	};
 	const updateIteration = async(correlationId, stage) => {
 		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
@@ -409,6 +415,7 @@ export function useLocationComponent(props, context, options) {
 		numberAndYear,
 		numberOrYear,
 		panelsUpdated,
+		stateProvincesByCountry,
 		updateIteration,
 		scope: 'LocationControl',
 		validation: useVuelidate({ $scope: 'LocationControl' })

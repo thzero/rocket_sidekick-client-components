@@ -37,7 +37,7 @@ export function useLocationViewComponent(props, context, options) {
 		return AppUtility.address(displayItem.value.address);
 	});
 	const displayItemOrganizations = computed(() => {
-		return rocketTypeNames(displayItem.value.rocketTypes);
+		return organizationNames(displayItem.value.organizations);
 	});
 	const displayItemRocketTypeNames = computed(() => {
 		return rocketTypeNames(displayItem.value.rocketTypes);

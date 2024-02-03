@@ -117,7 +117,7 @@
 					ref="detailItemAddressStateProvinceRef"
 					v-model="detailItemAddressStateProvince"
 					vid="detailItemAddressStateProvince"
-					:items="states"
+					:items="stateProvinces"
 					:validation="validation"
 					:label="$t('forms.address.stateProvince.title')"
 				/>
@@ -192,7 +192,7 @@ export default {
 			countries,
 			displayName,
 			numberOrYear,
-			states,
+			stateProvinces,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,
@@ -226,7 +226,7 @@ export default {
 			countries,
 			displayName,
 			numberOrYear,
-			states,
+			stateProvinces,
 			preCompleteOk,
 			resetAdditional,
 			setAdditional,

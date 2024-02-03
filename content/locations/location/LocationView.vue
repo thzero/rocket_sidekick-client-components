@@ -17,20 +17,22 @@
 				v-if="displayItem.organizations"
 				class="mt-2"
 			>
-				<VtTextField
+				<VtTextArea
 					v-model="displayItemOrganizations"
 					:label="$t('forms.content.organizations.plural')"
 					:readonly="true"
+					rows="1"
 				/>
 			</v-col>
 			<v-col
 				v-if="displayItem.rocketTypes"
 				class="mt-2"
 			>
-				<VtTextField
+				<VtTextArea
 					v-model="displayItemRocketTypeNames"
 					:label="$t('forms.content.rockets.level')"
 					:readonly="true"
+					rows="1"
 				/>
 			</v-col>
 		</v-row>
@@ -97,6 +99,7 @@ import LocationMapping from '@/components/content/locations/location/LocationMap
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
+import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtTextArea';
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
@@ -106,6 +109,7 @@ export default {
 		MeasurementUnitSelect2,
 		VtMarkdown,
 		VtSelect,
+		VtTextArea,
 		VtTextField
 	},
 	props: {
