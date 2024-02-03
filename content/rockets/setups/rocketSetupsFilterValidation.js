@@ -16,5 +16,10 @@ export const useRocketSetupsFilterValidation = {
 	filterItemRocketId: { 
 		$autoDirty: true
 	},
-	filterItemRocketTypes: { $autoDirty: true }
+	filterItemRocketTypes: {
+		characters: helpers.withMessage('Invalid characters', helpers.regex(/^([_\-a-zA-Z0-9]*)*$/)),
+		minLength: minLength(3),
+		maxLength: maxLength(12),
+		$autoDirty: true
+	}
 };

@@ -199,7 +199,7 @@ export function useRocketSetupComponent(props, context, options) {
 	const clickViewRocket = async (item) => {
 		if (!item)
 			return;
-		LibraryClientUtility.$navRouter.push('/user/rocket/' + item.id);
+		LibraryClientUtility.$navRouter.push('/user/rockets/' + item.rocket.id);
 	};
 	const panelsKey = (value) => {
 		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;

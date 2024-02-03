@@ -43,6 +43,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,
@@ -230,8 +231,14 @@ export function useChecklistsBaseComponent(props, context, options) {
 			return error('useChecklistsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 
 		serviceStore.dispatcher.setChecklistsSearchCriteria(correlationId, params);
+
+		if (requestedItemId.value)
+			params.checklistId = requestedItemId.value;
 			
-		return await serviceStore.dispatcher.requestChecklists(correlationId, params);
+		const response = await serviceStore.dispatcher.requestChecklists(correlationId, params);
+		if (hasFailed(response))
+			return;
+		return success(correlationId, { data: response.results, sorted: false });
 	};
 	const fetchItemI = async (correlationId, id, editable) => {
 		return await serviceStore.dispatcher.requestChecklistById(correlationId, id, editable);
@@ -309,6 +316,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogDeleteParams,
 		detailItem,
 		items,
+		requestedItemId,
 		colsEditPanel,
 		colsSearchResults,
 		displayEditPanel,

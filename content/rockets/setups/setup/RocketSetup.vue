@@ -87,7 +87,7 @@
 					>
 						{{ $t('buttons.select') }}
 					</v-btn>
-					<v-btn
+					<!-- <v-btn
 						v-if="!isEditable"
 						class="ml-4 text-right"
 						:variant="buttonsForms.variant.default"
@@ -95,7 +95,18 @@
 						@click="clickViewRocket(detailItemData)"
 					>
 						{{ $t('buttons.link') }}
-					</v-btn>
+					</v-btn> -->
+					<div
+						v-if="!isEditable && detailItemData && detailItemData.rocket && detailItemData.rocket.id"
+						style="display: flex; justify-content: center; align-items: center;"
+					>
+						<router-link
+							:to="'/user/rockets/' + (detailItemData ? detailItemData.rocket.id : '')"
+							class="text-contrast router-link headline"
+						>
+							<h2>{{ $t('buttons.link') }}</h2>
+						</router-link>
+					</div>
 				</div>
 			</v-col>
 			<v-col cols="12" sm="6">

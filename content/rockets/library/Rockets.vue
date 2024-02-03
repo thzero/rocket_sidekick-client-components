@@ -15,6 +15,15 @@
 				<v-card-text>
 					<slot name="filters">
 						<v-row dense>
+							<!-- <v-col cols="12" :sm="filterDrawer ? 12: 6">
+								<VtTextFieldWithValidation
+									ref="requestedItemIdRef"
+									v-model="requestedItemId"
+									vid="requestedItemId"
+									:label="$t('forms.rocket.id')"
+									:validation="validation"
+								/>
+							</v-col> -->
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<VtTextFieldWithValidation
 									ref="filterItemNameRef"
@@ -323,6 +332,7 @@ export default {
 			dialogDeleteParams,
 			detailItem,
 			items,
+			requestedItemId,
 			colsEditPanel,
 			colsSearchResults,
 			displayEditPanel,
@@ -416,6 +426,7 @@ export default {
 			dialogDeleteParams,
 			detailItem,
 			items,
+			requestedItemId,
 			colsEditPanel,
 			colsSearchResults,
 			displayEditPanel,

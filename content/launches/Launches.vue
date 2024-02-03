@@ -177,11 +177,25 @@
 									>
 										{{ launchStatusIcon(item) }}
 									</v-icon>
-									&nbsp;<a class="text-contrast" :href="'/user/rockets/' + rocketId(item)">{{ launchTitle(item) }}</a>
+									&nbsp;
+									<!-- <a class="text-contrast" :href="'/user/rockets/' + rocketId(item)">{{ launchTitle(item) }}</a> -->
+									<router-link
+										:to="'/user/rockets/' + rocketId(item)"
+										class="text-contrast router-link"
+									>
+										{{ launchTitle(item) }}
+									</router-link>
 									<span
 										v-if="$vuetify.display.mdAndUp"
 									>
-										@&nbsp;<a class="text-contrast" :href="'/user/locations/' + locationId(item)">{{ launchTitleLocation(item) }}</a>
+										@&nbsp;
+										<!-- <a class="text-contrast" :href="'/user/locations/' + locationId(item)">{{ launchTitleLocation(item) }}</a> -->
+										<router-link
+											:to="'/user/locations/' + locationId(item)"
+											class="text-contrast router-link"
+										>
+											{{ launchTitleLocation(item) }}
+										</router-link>
 									</span>
 									<div class="float-right">{{ launchDate(item) }}</div>
 								</v-card-title>
@@ -359,6 +373,7 @@ export default {
 			dialogDeleteParams,
 			detailItem,
 			items,
+			requestedItemId,
 			colsEditPanel,
 			colsSearchResults,
 			displayEditPanel,
@@ -457,6 +472,7 @@ export default {
 			dialogDeleteParams,
 			detailItem,
 			items,
+			requestedItemId,
 			colsEditPanel,
 			colsSearchResults,
 			displayEditPanel,

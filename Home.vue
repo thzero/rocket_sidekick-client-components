@@ -96,7 +96,11 @@
 								lg="4"
 								class="text-center"
 							>
-								<v-card class="mb-2" variant="outlined">
+								<v-card 
+									class="mb-2"
+									height="100%"
+									variant="outlined"
+								>
 									<v-card-item>
 										<v-btn variant="flat" block class="mr-2" color="primary"
 											:to="contentLink(item)"
@@ -124,7 +128,11 @@
 								lg="4"
 								class="text-center"
 							>
-								<v-card class="mb-2" variant="outlined">
+								<v-card 
+									class="mb-2"
+									height="100%"
+									variant="outlined"
+								>
 									<v-card-item>
 										<v-btn variant="flat" block class="mr-2" color="primary"
 											:to="contentLink(item)"
@@ -206,6 +214,7 @@
 			>
 				<v-card
 					class="mb-2"
+					style="height: 100%;"
 				>
 					<v-card-text>
 						<v-badge :content="newsCount" inline>

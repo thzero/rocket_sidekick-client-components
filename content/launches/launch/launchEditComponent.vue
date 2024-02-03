@@ -188,17 +188,17 @@ export function useLaunchEditComponent(props, context, options) {
 	const clickViewLocation = async (item) => {
 		if (!item)
 			return;
-		LibraryClientUtility.$navRouter.push('/user/locations/' + item.id);
+		LibraryClientUtility.$navRouter.push('/user/locations/' + item.locationId);
 	};
 	const clickViewRocket = async (item) => {
 		if (!item)
 			return;
-		LibraryClientUtility.$navRouter.push('/user/rockets/' + item.id);
+		LibraryClientUtility.$navRouter.push('/user/rockets/' + item.rocketId);
 	};
 	const clickViewRocketSetup = async (item) => {
 		if (!item)
 			return;
-		LibraryClientUtility.$navRouter.push('/user/rocketsetups/' + item.id);
+		LibraryClientUtility.$navRouter.push('/user/rocketsetups/' + item.rocketSetupId);
 	};
 	const requestLocation = async (correlationId, id) => {
 		const response = await serviceStore.dispatcher.requestLocationById(correlationId, id);
