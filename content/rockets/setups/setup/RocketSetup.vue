@@ -104,7 +104,10 @@
 							:to="'/user/rockets/' + (detailItemData ? detailItemData.rocket.id : '')"
 							class="text-contrast router-link headline"
 						>
-							<h2>{{ $t('buttons.link') }}</h2>
+							<!-- <h2>{{ $t('buttons.link') }}</h2> -->
+							<v-icon color="green darken-2">
+								mdi-link
+							</v-icon>
 						</router-link>
 					</div>
 				</div>

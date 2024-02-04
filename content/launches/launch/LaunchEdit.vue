@@ -135,7 +135,10 @@
 							:to="'/user/rockets/' + (detailItemData ? detailItemData.rocketId: '')"
 							class="text-contrast router-link headline"
 						>
-							<h2>{{ $t('buttons.link') }}</h2>
+							<!-- <h2>{{ $t('buttons.link') }}</h2> -->
+							<v-icon color="green darken-2">
+								mdi-link
+							</v-icon>
 						</router-link>
 					</div>
 				</div>
@@ -193,7 +196,10 @@
 							:to="'/user/rocketsetups/' + (detailItemData ? detailItemData.rocketSetupId: '')"
 							class="text-contrast router-link headline"
 						>
-							<h2>{{ $t('buttons.link') }}</h2>
+							<!-- <h2>{{ $t('buttons.link') }}</h2> -->
+							<v-icon color="green darken-2">
+								mdi-link
+							</v-icon>
 						</router-link>
 					</div>
 				</div>
@@ -237,7 +243,10 @@
 							:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
 							class="text-contrast router-link headline"
 						>
-							<h2>{{ $t('buttons.link') }}</h2>
+							<!-- <h2>{{ $t('buttons.link') }}</h2> -->
+							<v-icon color="green darken-2">
+								mdi-link
+							</v-icon>
 						</router-link>
 					</div>
 				</div>
