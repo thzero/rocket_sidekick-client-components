@@ -179,7 +179,15 @@ export function useLaunchesBaseComponent(props, context, options) {
 		const response = await serviceStore.dispatcher.requestLaunches(correlationId, params);
 		if (hasFailed(response))
 			return;
-		return success(correlationId, { data: response.results, sorted: false });
+
+		response.results = response.results.sort(
+			firstBy('name', { ignoreCase: true })
+			.thenBy((v1, v2) => { return (v1 && v1.rocketSetup && v1.rocketSetup.name && v2 && v2.rocketSetup) && v1.rocketSetup.name.localeCompare(v2.rocketSetup.name); }, { ignoreCase: true })
+			.thenBy((v1, v2) => { return (v1 && v1.rocketSetup && v1.rocketSetup.rocket && v1.rocketSetup.rocket.name && v2 && v2.rocketSetup && v2.rocketSetup.rocket) && v1.rocketSetup.rocket.name.localeCompare(v2.rocketSetup.rocket.name); }, { ignoreCase: true })
+			.thenBy((v1, v2) => { return (v1 && v1.location && v1.location.name && v2 && v2.location) && v1.location.name.localeCompare(v2.location.name); }, { ignoreCase: true })
+		);
+
+		return success(correlationId, { data: response.results, sorted: true });
 	};
 	const fetchItemI = async (correlationId, id, editable) => {
 		return await serviceStore.dispatcher.requestLaunchById(correlationId, id, editable);

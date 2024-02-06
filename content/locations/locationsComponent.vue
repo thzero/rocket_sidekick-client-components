@@ -181,6 +181,7 @@ export function useLocationsBaseComponent(props, context, options) {
 		const response = await serviceStore.dispatcher.requestLocations(correlationId, params);
 		if (hasFailed(response))
 			return;
+		
 		return success(correlationId, { data: response.results, sorted: false });
 	};
 	const fetchItemI = async (correlationId, id, editable) => {
