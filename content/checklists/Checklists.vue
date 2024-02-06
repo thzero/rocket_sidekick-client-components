@@ -42,7 +42,7 @@
 									</v-col>
 									<v-col cols="4" md="4">
 										<v-checkbox
-											v-model="filterItemInProgress"
+											v-model="filterItemIsInProgress"
 											density="compact"
 											:label="$t('forms.content.checklists.inProgress')"
 										/>
@@ -138,7 +138,7 @@
 								<v-card-title
 									class="bg-primary"
 								>
-									&nbsp;{{ item.name }}
+									&nbsp;{{ item.name }} {{  item.isDefault === true }}
 									<div
 										v-if="item.rocketSetup && item.rocketSetup.rocket" 
 										class="float-right"
@@ -205,6 +205,15 @@
 										@click="dialogStartOpen(item)"
 									>
 										{{ $t('buttons.start') }}
+									</v-btn>
+									<v-btn
+										v-if="isInProgress(item)"
+										:variant="buttonsForms.variant.ok"
+										:color="buttonsForms.color.ok"
+										:disabled="isStarting(item)"
+										@click="handleInProgress(item)"
+									>
+										{{ $t('buttons.inProgress') }}
 									</v-btn>
 									<v-btn
 										v-if="canView(item)"
@@ -390,6 +399,7 @@ export default {
 			filterItemYours,
 			dialogStartOk,
 			dialogStartOpen,
+			handleInProgress,
 			isCompleted,
 			isDefault,
 			isInProgress,
@@ -484,6 +494,7 @@ export default {
 			filterItemYours,
 			dialogStartOk,
 			dialogStartOpen,
+			handleInProgress,
 			isCompleted,
 			isDefault,
 			isInProgress,

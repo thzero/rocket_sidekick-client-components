@@ -111,21 +111,30 @@
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
 					<VtTextFieldWithValidation
-						v-if="!isDefault"
+						v-if="viewLocation"
 						ref="detailItemLocationNameRef"
 						v-model="detailItemLocationName"
 						vid="detailItemLocationName"
 						:validation="validation"
-						:errorsReadonly="validation.detailItemLocationId.$silentErrors"
 						:label="$t('forms.content.locations.name')"
 						:readonly="true"
 					/>
+					<!-- :errorsReadonly="validation.detailItemLocationId.$silentErrors" -->
+					<v-btn
+						v-if="isEditable && detailItemLocationId"
+						class="text-right"
+						:variant="buttonsForms.variant.delete"
+						:color="buttonsForms.color.delete"
+						@click="clickRemoveLocation()"
+					>
+						{{ $t('buttons.remove') }}
+					</v-btn>
 					<v-btn
 						v-if="isEditable"
-						class="ml-4 text-right"
+						:class="detailItemLocationId ? 'ml-2' : '' + ' mr-2 text-right'"
 						:variant="buttonsForms.variant.add"
 						:color="buttonsForms.color.add"
-						@click="clickSearchLocations(item)"
+						@click="clickSearchLocations()"
 					>
 						{{ $t('buttons.select') }}
 					</v-btn>
@@ -139,8 +148,9 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="!isEditable && !isDefault && detailItemData && detailItemData.locationId"
+						v-if="detailItemLocationId"
 						style="display: flex; justify-content: center; align-items: center;"
+						:class="detailItemLocationId ? 'ml-2' : ''"
 					>
 						<router-link
 							:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
@@ -174,7 +184,7 @@
 			<v-col cols="12">
 				<div class="d-flex">
 					<VtTextFieldWithValidation
-						v-if="!isDefault"
+						v-if="viewRocket"
 						ref="detailItemRocketNameRef"
 						v-model="detailItemRocketName"
 						vid="detailItemRocketName"
@@ -184,8 +194,17 @@
 						:readonly="true"
 					/>
 					<v-btn
+						v-if="isEditable && detailItemRocketId"
+						class="text-right"
+						:variant="buttonsForms.variant.delete"
+						:color="buttonsForms.color.delete"
+						@click="clickRemoveRocket()"
+					>
+						{{ $t('buttons.remove') }}
+					</v-btn>
+					<v-btn
 						v-if="isEditable"
-						class="ml-4 text-right"
+						:class="detailItemRocketId ? 'ml-2' : '' + ' mr-2 text-right'"
 						:variant="buttonsForms.variant.add"
 						:color="buttonsForms.color.add"
 						@click="clickSearchRockets()"
@@ -202,8 +221,9 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="!isEditable && !isDefault && detailItemData && detailItemData.rocketId"
+						v-if="detailItemRocketId"
 						style="display: flex; justify-content: center; align-items: center;"
+						:class="detailItemLocationId ? 'ml-2' : ''"
 					>
 						<router-link
 							:to="'/user/rockets/' + (detailItemData ? detailItemData.rocketId: '')"
@@ -234,6 +254,7 @@
 						:readonly="true"
 					/> -->
 					<VtTextAreaWithValidation
+						v-if="viewRocketSetup"
 						ref="detailItemRocketSetupNameRef"
 						v-model="detailItemRocketSetupName"
 						vid="detailItemRocketSetupName"
@@ -245,8 +266,17 @@
 						:rows="1"
 					/>
 					<v-btn
+						v-if="isEditable && detailItemRocketSetupId"
+						class="text-right"
+						:variant="buttonsForms.variant.delete"
+						:color="buttonsForms.color.delete"
+						@click="clickRemoveRocketSetup()"
+					>
+						{{ $t('buttons.remove') }}
+					</v-btn>
+					<v-btn
 						v-if="isEditable"
-						class="ml-4 text-right"
+						:class="detailItemRocketSetupId ? 'ml-2' : '' + ' mr-2 text-right'"
 						:variant="buttonsForms.variant.add"
 						:color="buttonsForms.color.add"
 						@click="clickSearchRocketSetups()"
@@ -263,8 +293,9 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="!isEditable && !isDefault && detailItemData && detailItemData.rocketSetupId"
+						v-if="detailItemRocketSetupId"
 						style="display: flex; justify-content: center; align-items: center;"
+						:class="detailItemLocationId ? 'ml-2' : ''"
 					>
 						<router-link
 							:to="'/user/rocketsetups/' + (detailItemData ? detailItemData.rocketSetupId: '')"
@@ -350,6 +381,14 @@
 			</v-row>
 		</template>
 	</VtFormControl>
+	<VtConfirmationDialog
+		ref="dialogDeleteConfirmationRef"
+		:message="dialogDeleteConfirmationMessage"
+		:messageRaw=true
+		:signal="dialogDeleteConfirmationManager.signal"
+		@cancel="dialogDeleteConfirmationCancel"
+		@ok="dialogDeleteConfirmationOk"
+	/>
 	<LocationLookupDialog
 		ref="dialogLocationLookupManagerRef"
 		:signal="dialogLocationLookupManager.signal"
@@ -387,6 +426,7 @@ import ChecklistSteps from '@/components/content/checklists/checklist/ChecklistS
 import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import RocketSetupLookupDialog from '@/components/content/rockets/dialogs/RocketSetupLookupDialog';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtDateTimePickerFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtDateTimePickerFieldWithValidationTemp';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
@@ -401,6 +441,7 @@ export default {
 		LocationLookupDialog,
 		RocketLookupDialog,
 		RocketSetupLookupDialog,
+		VtConfirmationDialog,
 		VtFormControl,
 		VtDateTimePickerFieldWithValidation,
 		VtSelectWithValidation,
@@ -479,6 +520,9 @@ export default {
 			handleAddSecondary,
 			buttonsDialog,
 			buttonsForms,
+			dialogDeleteConfirmationManager,
+			dialogDeleteConfirmationMessage,
+			dialogDeleteConfirmationParams,
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
 			dialogRocketSetupLookupManager,
@@ -501,12 +545,25 @@ export default {
 			isShared,
 			locationIterations,
 			steps,
+			viewLocation,
+			viewRocket,
+			viewRocketSetup,
+			clickRemoveLocation,
+			clickRemoveRocket,
+			clickRemoveRocketSetup,
 			clickSearchLocations,
 			clickSearchRockets,
 			clickSearchRocketSetups,
 			clickViewLocation,
 			clickViewRocket,
 			clickViewRocketSetup,
+			dialogDeleteConfirmationCancel,
+			dialogDeleteConfirmationError,
+			dialogDeleteConfirmationOk,
+			dialogDeleteConfirmationOpen,
+			removeLocation,
+			removeRocket,
+			removeRocketSetup,
 			selectLocation,
 			selectRocket,
 			selectRocketSetup,
@@ -580,6 +637,9 @@ export default {
 			handleAddSecondary,
 			buttonsDialog,
 			buttonsForms,
+			dialogDeleteConfirmationManager,
+			dialogDeleteConfirmationMessage,
+			dialogDeleteConfirmationParams,
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
 			dialogRocketSetupLookupManager,
@@ -602,12 +662,25 @@ export default {
 			isShared,
 			locationIterations,
 			steps,
+			viewLocation,
+			viewRocket,
+			viewRocketSetup,
+			clickRemoveLocation,
+			clickRemoveRocket,
+			clickRemoveRocketSetup,
 			clickSearchLocations,
 			clickSearchRockets,
 			clickSearchRocketSetups,
 			clickViewLocation,
 			clickViewRocket,
 			clickViewRocketSetup,
+			dialogDeleteConfirmationCancel,
+			dialogDeleteConfirmationError,
+			dialogDeleteConfirmationOk,
+			dialogDeleteConfirmationOpen,
+			removeLocation,
+			removeRocket,
+			removeRocketSetup,
 			selectLocation,
 			selectRocket,
 			selectRocketSetup,

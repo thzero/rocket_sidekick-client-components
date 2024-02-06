@@ -79,8 +79,17 @@
 						:readonly="true"
 					/>
 					<v-btn
+						v-if="isEditable && detailItemRocketId"
+						class="text-right"
+						:variant="buttonsForms.variant.delete"
+						:color="buttonsForms.color.delete"
+						@click="clickRemoveRocket()"
+					>
+						{{ $t('buttons.remove') }}
+					</v-btn>
+					<v-btn
 						v-if="isEditable"
-						class="ml-4 text-right"
+						:class="detailItemRocketId ? 'ml-2' : '' + ' mr-2 text-right'"
 						:variant="buttonsForms.variant.add"
 						:color="buttonsForms.color.add"
 						@click="clickSearchRockets()"
@@ -97,12 +106,13 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="!isEditable && detailItemData && detailItemData.rocket && detailItemData.rocket.id"
+						v-if="detailItemRocketId"
 						style="display: flex; justify-content: center; align-items: center;"
 					>
 						<router-link
 							:to="'/user/rockets/' + (detailItemData ? detailItemData.rocket.id : '')"
 							class="text-contrast router-link headline"
+							:class="detailItemRocketId ? 'ml-2' : ''"
 						>
 							<!-- <h2>{{ $t('buttons.link') }}</h2> -->
 							<v-icon color="green darken-2">
@@ -214,6 +224,14 @@
 			</v-expansion-panels>
 		</template>
 	</VtFormControl>
+	<VtConfirmationDialog
+		ref="dialogDeleteConfirmationRef"
+		:message="dialogDeleteConfirmationMessage"
+		:messageRaw=true
+		:signal="dialogDeleteConfirmationManager.signal"
+		@cancel="dialogDeleteConfirmationCancel"
+		@ok="dialogDeleteConfirmationOk"
+	/>
 	<VtConfirmationDialog
 		ref="dialogDeleteSecondaryRef"
 		:message="dialogDeleteSecondaryMessage"
@@ -357,6 +375,9 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			markupHint,
+			dialogDeleteConfirmationManager,
+			dialogDeleteConfirmationMessage,
+			dialogDeleteConfirmationParams,
 			dialogRocketLookupManager,
 			detailItemDescription,
 			detailItemName,
@@ -372,8 +393,13 @@ export default {
 			hasAdmin,
 			rocketId,
 			stages,
+			clickRemoveRocket,
 			clickSearchRockets,
 			clickViewRocket,
+			dialogDeleteConfirmationCancel,
+			dialogDeleteConfirmationError,
+			dialogDeleteConfirmationOk,
+			dialogDeleteConfirmationOpen,
 			panelsUpdated,
 			stagesPanelsUpdated,
 			selectRocket,
@@ -452,6 +478,9 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			markupHint,
+			dialogDeleteConfirmationManager,
+			dialogDeleteConfirmationMessage,
+			dialogDeleteConfirmationParams,
 			dialogRocketLookupManager,
 			detailItemDescription,
 			detailItemName,
@@ -467,8 +496,13 @@ export default {
 			hasAdmin,
 			rocketId,
 			stages,
+			clickRemoveRocket,
 			clickSearchRockets,
 			clickViewRocket,
+			dialogDeleteConfirmationCancel,
+			dialogDeleteConfirmationError,
+			dialogDeleteConfirmationOk,
+			dialogDeleteConfirmationOpen,
 			panelsUpdated,
 			stagesPanelsUpdated,
 			selectRocket,

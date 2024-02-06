@@ -36,11 +36,11 @@
 										{{ $t('buttons.link') }}
 									</v-btn> -->
 									<div
-										v-if="!isEditable && detailItemData && detailItemData.locationId"
+										v-if="displayItem && displayItem.locationId"
 										style="display: flex; justify-content: center; align-items: center;"
 									>
 										<router-link
-											:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
+											:to="'/user/locations/' + (displayItem ? displayItem.locationId: '')"
 											class="text-contrast router-link headline"
 										>
 											<!-- <h2>{{ $t('buttons.link') }}</h2> -->
@@ -73,11 +73,11 @@
 							{{ $t('buttons.link') }}
 						</v-btn> -->
 						<div
-							v-if="!isEditable && detailItemData && detailItemData.locationId"
+							v-if="displayItem && displayItem.locationId"
 							style="display: flex; justify-content: center; align-items: center;"
 						>
 							<router-link
-								:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
+								:to="'/user/locations/' + (displayItem ? displayItem.locationId: '')"
 								class="text-contrast router-link headline"
 							>
 								<!-- <h2>{{ $t('buttons.link') }}</h2> -->
@@ -207,11 +207,11 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="!isEditable && detailItemData && detailItemData.locationId"
+						v-if="displayItem && displayItem.locationId"
 						style="display: flex; justify-content: center; align-items: center;"
 					>
 						<router-link
-							:to="'/user/locations/' + (detailItemData ? detailItemData.locationId: '')"
+							:to="'/user/locations/' + (displayItem ? displayItem.locationId: '')"
 							class="text-contrast router-link headline"
 						>
 							<!-- <h2>{{ $t('buttons.link') }}</h2> -->

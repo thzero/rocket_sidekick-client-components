@@ -1,6 +1,7 @@
 <script>
 import { ref} from 'vue';
 import useVuelidate from '@vuelidate/core';
+import { firstBy, thenBy } from 'thenby';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
@@ -159,11 +160,14 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const canEditI = (correlationId, item) => {
 		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item);
 	};
+	const canInProgress = (item) => {
+		return isOwner(correlationId(), item) && isInProgress(item);
+	};
 	const canStart = (item) => {
-		return isOwner(correlationId, item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item);
+		return isOwner(correlationId(), item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item);
 	};
 	const canViewI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isDefault(item);
+		return (isOwner(correlationId, item) || isDefault(item)) && !isInProgress(item);
 	};
 	const checklistTypeIcon = (item) => {
 		const icon = checklistTypeIconDetermine(item);
@@ -202,14 +206,23 @@ export function useChecklistsBaseComponent(props, context, options) {
 			if (!dialogStartParams.value)
 				return;
 
-			// TODO
-			// const correlationIdI = correlationId();
-			// const response = await serviceStore.dispatcher.startChecklist(correlationIdI, dialogStartParams.value);
-			// if (hasFailed(response)) {
-			// 	setNotify(correlationIdI, 'errors.error');
-			// 	return;
-			// }
-			alert('start');
+			const correlationIdI = correlationId();
+			const response = await serviceStore.dispatcher.startChecklistById(correlationIdI, dialogStartParams.value);
+			if (hasFailed(response)) {
+				setNotify(correlationIdI, 'errors.error');
+				return;
+			}
+
+			await fetch(correlationIdI);
+
+			detailItem.value = null;
+			const response2 = await fetchItemI(correlationIdI, dialogStartParams.value, false);
+			if (hasFailed(response2)) {
+				setNotify(correlationIdI, 'errors.error');
+				return;
+			}
+			
+			detailItem.value = initView(correlationIdI, response2.results);
 		}
 		finally {
 			dialogStartParams.value = null;
@@ -238,7 +251,15 @@ export function useChecklistsBaseComponent(props, context, options) {
 		const response = await serviceStore.dispatcher.requestChecklists(correlationId, params);
 		if (hasFailed(response))
 			return;
-		return success(correlationId, { data: response.results, sorted: false });
+
+		response.results = response.results.sort(
+			firstBy('isDefault', { direction: 'desc' })
+			.thenBy('sortName', { ignoreCase: true })
+			.thenBy('name', { ignoreCase: true })
+			// .thenBy('manufacturerName', { ignoreCase: true })
+		);
+
+		return success(correlationId, { data: response.results, sorted: true });
 	};
 	const fetchItemI = async (correlationId, id, editable) => {
 		return await serviceStore.dispatcher.requestChecklistById(correlationId, id, editable);
@@ -251,6 +272,22 @@ export function useChecklistsBaseComponent(props, context, options) {
 		params.shared = filterItemShared.value;
 		params.yours = filterItemYours.value;
 		return params;
+	};
+	const handleInProgress = async (item) => {
+		const correlationIdI = correlationId();
+		if (!canInProgress(item)) {
+			setNotify(correlationIdI, 'errors.security');
+			return;
+		}
+
+		detailItem.value = null;
+		const response = await fetchItemI(correlationIdI, item.id, false);
+		if (hasFailed(response)) {
+			setNotify(correlationIdI, 'errors.error');
+			return;
+		}
+		
+		detailItem.value = initView(correlationIdI, response.results);
 	};
 	const initI = async (correlationId) => {
 		const params = await serviceStore.getters.getChecklistsSearchCriteria(correlationId);
@@ -270,7 +307,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		return item ? item.isDefault ?? false : false;
 	};
 	const isInProgress = (item) => {
-		return item ? item.type === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
+		return item ? item.statusId === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
 	};
 	const isStarting = (item) => {
 		if (!dialogStartParams.value || !item)
@@ -375,6 +412,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		filterItemYours,
 		dialogStartOk,
 		dialogStartOpen,
+		handleInProgress,
 		isCompleted,
 		isDefault,
 		isInProgress,
