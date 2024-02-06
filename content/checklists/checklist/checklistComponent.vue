@@ -137,6 +137,9 @@ export function useChecklistComponent(props, context, options) {
 		buttonsForms
 	} = useButtonComponent(props, context);
 
+	const dialogDeleteConfirmationManager = ref(new DialogSupport());
+	const dialogDeleteConfirmationMessage = ref(null);
+	const dialogDeleteConfirmationParams = ref(null);
 	const dialogLocationLookupManager = ref(new DialogSupport());
 	const dialogRocketLookupManager = ref(new DialogSupport());
 	const dialogRocketSetupLookupManager = ref(new DialogSupport());
@@ -171,7 +174,43 @@ export function useChecklistComponent(props, context, options) {
 	const steps = computed(() => {
 		return detailItemData.value ? detailItemData.value.steps : [{}];
 	});
+	const viewLocation = computed(() => {
+		if (isDefault.value)
+			return false;
+		if (isEditable.value)
+			return true;
 
+		return detailItemLocationId.value;
+	});
+	const viewRocket = computed(() => {
+		if (isDefault.value)
+			return false;
+		if (isEditable.value)
+			return true;
+
+		return detailItemRocketId.value;
+	});
+	const viewRocketSetup = computed(() => {
+		if (isDefault.value)
+			return false;
+		if (isEditable.value)
+			return true;
+
+		return detailItemRocketSetupId.value;
+	});
+
+	const clickRemoveLocation = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemLocationId.value, type: 'location' };
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const clickRemoveRocket = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemRocketId.value, type: 'rocket' };
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const clickRemoveRocketSetup = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemRocketSetupId.value, type: 'rocketSetup' };
+		dialogDeleteConfirmationManager.value.open();
+	};
 	const clickSearchLocations = async (correlationId) => {
 		dialogLocationLookupManager.value.open();
 	};
@@ -186,15 +225,65 @@ export function useChecklistComponent(props, context, options) {
 			return;
 		LibraryClientUtility.$navRouter.push('/user/locations/' + item.locationId);
 	};
-	const clickViewRocket = async (item) => {
+	const clickViewRocket = async () => {
 		if (!item)
 			return;
 		LibraryClientUtility.$navRouter.push('/user/rockets/' + item.rocketId);
 	};
-	const clickViewRocketSetup = async (item) => {
+	const clickViewRocketSetup = async () => {
 		if (!item)
 			return;
 		LibraryClientUtility.$navRouter.push('/user/rocketsetups/' + item.rocketSetupId);
+	};
+	const dialogDeleteConfirmationCancel = async () => {
+		try {
+			dialogDeleteConfirmationManager.value.cancel();
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+		}
+	};
+	const dialogDeleteConfirmationError = async (err) => {
+		try {
+			dialogDeleteConfirmationManager.value.cancel();
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+		}
+	};
+	const dialogDeleteConfirmationOk = async (correlationId) => {
+		try {
+			if (!dialogDeleteConfirmationParams.value.type)
+				return;
+
+			if (dialogDeleteConfirmationParams.value.type === 'location') {
+				await removeLocation(correlationId);
+				return;
+			}
+			else if (dialogDeleteConfirmationParams.value.type === 'rocket') {
+				await removeRocket(correlationId);
+				return;
+			}
+			else if (dialogDeleteConfirmationParams.value.type === 'rocketSetup') {
+				await removeRocketSetup(correlationId);
+				return;
+			}
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+			dialogDeleteConfirmationManager.value.ok();
+		}
+	};
+	const dialogDeleteConfirmationOpen = (item) => {
+		if (!item)
+			return;
+		if (!canDelete(item)) {
+			setNotify(correlationId(), 'errors.security');
+			return;
+		}
+
+		dialogDeleteConfirmationParams.id = item.id;
+		dialogDeleteConfirmationManager.value.open();
 	};
 	const requestLocation = async (correlationId, id) => {
 		const response = await serviceStore.dispatcher.requestLocationById(correlationId, id);
@@ -246,6 +335,21 @@ export function useChecklistComponent(props, context, options) {
 		if (!item)
 			return null;
 		return item.name ? item.name : rocketMotorNames(item)
+	};
+	const removeLocation = async () => {
+		detailItemLocationId.value = null;
+		detailItemLocationName.value = null;
+		location.value = null;
+	};
+	const removeRocket = async () => {
+		detailItemRocketId.value = null;
+		detailItemRocketName.value = null;
+		detailItemRocketSetupId.value = null;
+		detailItemRocketSetupName.value = null;
+	};
+	const removeRocketSetup = async () => {
+		detailItemRocketSetupId.value = null;
+		detailItemRocketSetupName.value = null;
 	};
 	const selectLocation = async (item) => {
 		try {
@@ -870,6 +974,9 @@ export function useChecklistComponent(props, context, options) {
 		handleAddSecondary,
 		buttonsDialog,
 		buttonsForms,
+		dialogDeleteConfirmationManager,
+		dialogDeleteConfirmationMessage,
+		dialogDeleteConfirmationParams,
 		dialogLocationLookupManager,
 		dialogRocketLookupManager,
 		dialogRocketSetupLookupManager,
@@ -892,12 +999,25 @@ export function useChecklistComponent(props, context, options) {
 		isShared,
 		locationIterations,
 		steps,
+		viewLocation,
+		viewRocket,
+		viewRocketSetup,
+		clickRemoveLocation,
+		clickRemoveRocket,
+		clickRemoveRocketSetup,
 		clickSearchLocations,
 		clickSearchRockets,
 		clickSearchRocketSetups,
 		clickViewLocation,
 		clickViewRocket,
 		clickViewRocketSetup,
+		dialogDeleteConfirmationCancel,
+		dialogDeleteConfirmationError,
+		dialogDeleteConfirmationOk,
+		dialogDeleteConfirmationOpen,
+		removeLocation,
+		removeRocket,
+		removeRocketSetup,
 		selectLocation,
 		selectRocket,
 		selectRocketSetup,

@@ -161,6 +161,9 @@ export function useRocketSetupComponent(props, context, options) {
 		markupHint
 	} = useContentMarkupComponent(props, context);
 	
+	const dialogDeleteConfirmationManager = ref(new DialogSupport());
+	const dialogDeleteConfirmationMessage = ref(null);
+	const dialogDeleteConfirmationParams = ref(null);
 	const dialogRocketLookupManager = ref(new DialogSupport());
 
 	const detailItemDescription = ref(null);
@@ -193,6 +196,18 @@ export function useRocketSetupComponent(props, context, options) {
 		return detailItemData.value ? detailItemData.value.stages.filter(l => l.enabled) : [];
 	});
 	
+	const clickRemoveLocation = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemLocationId.value, type: 'location' };
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const clickRemoveRocket = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemRocketId.value, type: 'rocket' };
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const clickRemoveRocketSetup = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemRocketSetupId.value, type: 'rocketSetup' };
+		dialogDeleteConfirmationManager.value.open();
+	};
 	const clickSearchRockets = async (correlationId) => {
 		dialogRocketLookupManager.value.open();
 	};
@@ -201,11 +216,65 @@ export function useRocketSetupComponent(props, context, options) {
 			return;
 		LibraryClientUtility.$navRouter.push('/user/rockets/' + item.rocket.id);
 	};
+	const dialogDeleteConfirmationCancel = async (item) => {
+		try {
+			dialogDeleteConfirmationManager.value.cancel();
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+		}
+	};
+	const dialogDeleteConfirmationError = async (err) => {
+		try {
+			dialogDeleteConfirmationManager.value.cancel();
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+		}
+	};
+	const dialogDeleteConfirmationOk = async (correlationId) => {
+		try {
+			if (!dialogDeleteConfirmationParams.value.type)
+				return;
+
+			if (dialogDeleteConfirmationParams.value.type === 'location') {
+				await removeLocation(correlationId);
+				return;
+			}
+			else if (dialogDeleteConfirmationParams.value.type === 'rocket') {
+				await removeRocket(correlationId);
+				return;
+			}
+			else if (dialogDeleteConfirmationParams.value.type === 'rocketSetup') {
+				await removeRocketSetup(correlationId);
+				return;
+			}
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+			dialogDeleteConfirmationManager.value.ok();
+		}
+	};
+	const dialogDeleteConfirmationOpen = (item) => {
+		if (!item)
+			return;
+		if (!canDelete(item)) {
+			setNotify(correlationId(), 'errors.security');
+			return;
+		}
+
+		dialogDeleteConfirmationParams.id = item.id;
+		dialogDeleteConfirmationManager.value.open();
+	};
 	const panelsKey = (value) => {
 		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;
 	};
 	const panelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setRocketSetupsExpanded(correlationId(), { id: panelsKey(), expanded: value });
+	};
+	const removeRocket = async () => {
+		detailItemRocketId.value = null;
+		detailItemRocketName.value = null;
 	};
 	const resetData = (correlationId, value) => {
 		detailItemDescription.value = value ? value.description : null;
@@ -348,6 +417,9 @@ export function useRocketSetupComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		markupHint,
+		dialogDeleteConfirmationManager,
+		dialogDeleteConfirmationMessage,
+		dialogDeleteConfirmationParams,
 		dialogRocketLookupManager,
 		detailItemDescription,
 		detailItemName,
@@ -363,8 +435,13 @@ export function useRocketSetupComponent(props, context, options) {
 		hasAdmin,
 		rocketId,
 		stages,
+		clickRemoveRocket,
 		clickSearchRockets,
 		clickViewRocket,
+		dialogDeleteConfirmationCancel,
+		dialogDeleteConfirmationError,
+		dialogDeleteConfirmationOk,
+		dialogDeleteConfirmationOpen,
 		panelsUpdated,
 		stagesPanelsUpdated,
 		selectRocket,

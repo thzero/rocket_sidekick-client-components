@@ -182,16 +182,8 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 			if (temp)
 				item.manufacturerName = temp.name;
 		});
-		response.results = response.results.sort(
-			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return (v1.name && v2.name) && (v1.name.localeCompare(v2.name)); })
-			// .thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
-		);
-		// response.results = response.results.sort(
-		// 	firstBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
-		// );
 
-		return success(correlationId, { data: response.results, sorted: true });
+		return success(correlationId, { data: response.results, sorted: false });
 	};
 	const fetchItemI = async (correlationId, id, editable) => {
 		return await serviceStore.dispatcher.requestRocketSetupById(correlationId, id, editable);

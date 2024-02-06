@@ -119,6 +119,9 @@ export function useLaunchEditComponent(props, context, options) {
 		markupHint
 	} = useContentMarkupComponent(props, context);
 	
+	const dialogDeleteConfirmationManager = ref(new DialogSupport());
+	const dialogDeleteConfirmationMessage = ref(null);
+	const dialogDeleteConfirmationParams = ref(null);
 	const dialogLocationLookupManager = ref(new DialogSupport());
 	const dialogRocketLookupManager = ref(new DialogSupport());
 	const dialogRocketSetupLookupManager = ref(new DialogSupport());
@@ -176,6 +179,18 @@ export function useLaunchEditComponent(props, context, options) {
 		return detailItemSuccess.value === AppCommonConstants.Rocketry.Launches.Reasons.Success.success;
 	});
 
+	const clickRemoveLocation = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemLocationId.value, type: 'location' };
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const clickRemoveRocket = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemRocketId.value, type: 'rocket' };
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const clickRemoveRocketSetup = async (item) => {
+		dialogDeleteConfirmationParams.value = { id: detailItemRocketSetupId.value, type: 'rocketSetup' };
+		dialogDeleteConfirmationManager.value.open();
+	};
 	const clickSearchLocations = async (correlationId) => {
 		dialogLocationLookupManager.value.open();
 	};
@@ -199,6 +214,71 @@ export function useLaunchEditComponent(props, context, options) {
 		if (!item)
 			return;
 		LibraryClientUtility.$navRouter.push('/user/rocketsetups/' + item.rocketSetupId);
+	};
+	const dialogDeleteConfirmationCancel = async (item) => {
+		try {
+			dialogDeleteConfirmationManager.value.cancel();
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+		}
+	};
+	const dialogDeleteConfirmationError = async (err) => {
+		try {
+			dialogDeleteConfirmationManager.value.cancel();
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+		}
+	};
+	const dialogDeleteConfirmationOk = async (correlationId) => {
+		try {
+			if (!dialogDeleteConfirmationParams.value.type)
+				return;
+
+			if (dialogDeleteConfirmationParams.value.type === 'location') {
+				await removeLocation(correlationId);
+				return;
+			}
+			else if (dialogDeleteConfirmationParams.value.type === 'rocket') {
+				await removeRocket(correlationId);
+				return;
+			}
+			else if (dialogDeleteConfirmationParams.value.type === 'rocketSetup') {
+				await removeRocketSetup(correlationId);
+				return;
+			}
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+			dialogDeleteConfirmationManager.value.ok();
+		}
+	};
+	const dialogDeleteConfirmationOpen = (item) => {
+		if (!item)
+			return;
+		if (!canDelete(item)) {
+			setNotify(correlationId(), 'errors.security');
+			return;
+		}
+
+		dialogDeleteConfirmationParams.id = item.id;
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const removeLocation = async () => {
+		detailItemLocationId.value = null;
+		detailItemLocationName.value = null;
+		location.value = null;
+	};
+	const removeRocket = async () => {
+		detailItemRocketId.value = null;
+		detailItemRocketName.value = null;
+		detailItemRocketSetupId.value = null;
+		detailItemRocketSetupName.value = null;
+	};
+	const removeRocketSetup = async () => {
+		detailItemRocketSetupId.value = null;
+		detailItemRocketSetupName.value = null;
 	};
 	const requestLocation = async (correlationId, id) => {
 		const response = await serviceStore.dispatcher.requestLocationById(correlationId, id);
@@ -468,6 +548,9 @@ export function useLaunchEditComponent(props, context, options) {
 		failureReasons,
 		successReasons,
 		markupHint,
+		dialogDeleteConfirmationManager,
+		dialogDeleteConfirmationMessage,
+		dialogDeleteConfirmationParams,
 		dialogLocationLookupManager,
 		dialogRocketLookupManager,
 		dialogRocketSetupLookupManager,
@@ -519,12 +602,19 @@ export function useLaunchEditComponent(props, context, options) {
 		hasAdmin,
 		isSuccess,
 		locationIterations,
+		clickRemoveLocation,
+		clickRemoveRocket,
+		clickRemoveRocketSetup,
 		clickSearchLocations,
 		clickSearchRockets,
 		clickSearchRocketSetups,
 		clickViewLocation,
 		clickViewRocket,
 		clickViewRocketSetup,
+		dialogDeleteConfirmationCancel,
+		dialogDeleteConfirmationError,
+		dialogDeleteConfirmationOk,
+		dialogDeleteConfirmationOpen,
 		selectLocation,
 		selectRocket,
 		selectRocketSetup,

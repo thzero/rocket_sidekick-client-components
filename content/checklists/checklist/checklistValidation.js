@@ -18,7 +18,6 @@ export function useChecklistValidation(self) {
 			$autoDirty: true 
 		},
 		detailItemLocationId: { 
-			required,
 			$autoDirty: true 
 		},
 		detailItemLocationName: {
@@ -30,7 +29,6 @@ export function useChecklistValidation(self) {
 		},
 		detailItemReorder: { $autoDirty: true },
 		detailItemRocketId: { 
-			required,
 			$autoDirty: true 
 		},
 		detailItemRocketSetupId: {
