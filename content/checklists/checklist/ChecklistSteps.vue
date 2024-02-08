@@ -6,7 +6,6 @@
 	<template 
 		v-if="hasItem"
 	>
-		{{ item.canLaunch === true }}
 		<template 
 			v-for="(item1, index1) in item.steps" 
 			:key="item1.id"

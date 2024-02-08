@@ -3,7 +3,6 @@
 	<div v-bind="$attrs">
 		<v-row dense>
 			<v-col>
-		{{ statusCompleted === true }}
 				<v-sheet 
 					class="d-flex"
 					:color="rowColor"
