@@ -116,6 +116,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 	} = useOrganizationsUtilityComponent(props, context);
 
 	const {
+		rocketTypeIcon,
 		rocketTypes
 	} = useRocketsUtilityComponent(props, context, options);
 
@@ -134,6 +135,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 	const filterItemRocketName = ref(null);
 	const filterItemRocketTypes = ref(null);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.launches.title`));
+	const viewType = ref('listing');
 	
 	if (LibraryCommonUtility.isDev) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
@@ -200,6 +202,9 @@ export function useLaunchesBaseComponent(props, context, options) {
 		params.rocketId = filterItemRocketId.value;
 		params.rocketTypes = filterItemRocketTypes.value;
 		return params;
+	};
+	const handleViewType = () => {
+		viewType.value = viewType.value === 'listing' ? 'table' : 'listing';
 	};
 	const initI = async (correlationId) => {
 		const params = await serviceStore.getters.getLaunchesSearchCriteria(correlationId);
@@ -373,6 +378,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms,
 		organizations,
+		rocketTypeIcon,
 		rocketTypes,
 		debug,
 		diameterMeasurementUnitId,
@@ -389,9 +395,11 @@ export function useLaunchesBaseComponent(props, context, options) {
 		filterItemRocketName,
 		filterItemRocketTypes,
 		title,
+		viewType,
 		buttonSearchResetDisabled,
 		clickSearchLocations,
 		clickSearchRockets,
+		handleViewType,
 		launchDate,
 		launchStatusColor,
 		launchStatusIcon,

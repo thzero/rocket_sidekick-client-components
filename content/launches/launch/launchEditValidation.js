@@ -61,9 +61,9 @@ export function useLaunchEditValidation(self, nameRequired) {
 			$autoDirty: true 
 		},
 		detailItemRocketSetupId: {
-			requiredIfRocket: requiredIf((value, siblings) => { 
-				return self.detailItemRocketId;
-			}),
+			// requiredIfRocket: requiredIf((value, siblings) => { 
+			// 	return self.detailItemRocketId;
+			// }),
 			$autoDirty: true 
 		},
 		detailItemSuccess: { 

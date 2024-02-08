@@ -136,33 +136,82 @@
 						>
 							<v-card>
 								<v-card-title
-									class="bg-primary"
+									:class="checklistStatusColor(item)"
 								>
-									&nbsp;{{ item.name }} {{  item.isDefault === true }}
-									<div
+									&nbsp;{{ item.name }}
+									<!-- <div
 										v-if="item.rocketSetup && item.rocketSetup.rocket" 
 										class="float-right"
 									>
-										<!-- <a class="text-contrast" target="_blank" :href="'/user/rockets/' + item.rocketSetup.rocket.id">{{ item.rocketSetup.rocket.name }}</a> -->
 										<router-link
 											:to="'/user/rockets/' + item.rocketSetup.rocket.id"
 											class="text-contrast router-link"
 										>
 											{{ item.rocketSetup.rocket.name }}
 										</router-link>
-									</div>
+									</div> -->
 									<!--
 									<div class="float-right">
 										{{ rocketDiameter(item.stages) }},
 										{{ rocketMotorMountNames(item) }}
 									</div> -->
-									<img
-										v-if="item.rocketSetup && item.rocketSetup" 
+									<!-- <v-icon
+										style="float: left;" 
+									>
+										mdi-rocket-launch
+									</v-icon> -->
+									<!-- <img
+										v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
 										:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px; float: left;" 
-									/>
+									/> -->
+									<table style="float: left;">
+										<tr>
+											<td>
+												<v-icon
+													v-if="isCompleted(item) || isLaunched(item)"
+													class="mr-2"
+												>
+													{{  isCompleted(item) ? 'mdi-check' : '' }}
+													{{  isLaunched(item) ? 'mdi-rocket' : '' }}
+												</v-icon>
+											</td>
+											<td>
+												<img
+													v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
+													:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px;" 
+												/>
+											</td>
+										</tr>
+									</table>
+									<div class="float-right">{{ checklistDate(item) }}</div>
 								</v-card-title>
 								<v-card-text>
-									{{ item.description }}
+									<!-- <v-row dense>
+										<v-col
+											v-if="item.description"
+											cols="12"
+										>
+											{{ item.description }}
+										</v-col>
+										<v-col
+											cols="10"
+										>
+										</v-col>
+										<v-col
+											cols="2"
+											style="text-align: right;"
+										>
+											{{ checklistDate(item) }}
+											<VtTextField
+												v-model="checklistDate(item)"
+												:label="$t('forms.content.rockets.name')"
+												:readonly="true"
+											/>
+										</v-col>
+									</v-row> -->
+									<ChecklistView
+										:detailItem="item"
+									/>
 								</v-card-text>
 								<v-card-actions>
 									<v-chip
@@ -209,7 +258,7 @@
 									<v-btn
 										v-if="isInProgress(item)"
 										:variant="buttonsForms.variant.ok"
-										:color="buttonsForms.color.ok"
+										color="purple"
 										:disabled="isStarting(item)"
 										@click="handleInProgress(item)"
 									>
@@ -282,6 +331,7 @@ import { useChecklistsFilterValidation } from '@/components/content/checklists/c
 
 import Checklist from '@/components/content/checklists/checklist/Checklist';
 import ChecklistCopyDialog from '@/components/content/checklists/dialogs/ChecklistCopyDialog';
+import ChecklistView from '@/components/content/checklists/checklist/ChecklistView';
 import ContentHeader from '@/components/content/Header';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
@@ -292,6 +342,7 @@ import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/co
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
+import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
@@ -299,6 +350,7 @@ export default {
 	components: {
 		Checklist,
 		ChecklistCopyDialog,
+		ChecklistView,
 		ContentHeader,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
@@ -308,6 +360,7 @@ export default {
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
 		VtTextAreaWithValidation,
+		VtTextField,
 		VtTextFieldWithValidation
 	},
 	props: {
@@ -387,8 +440,9 @@ export default {
 			dialogStartMessage,
 			title,
 			canStart,
-			checklistTypeIcon,
-			checklistTypeIconDetermine,
+			checklistDate,
+			checklistStatusColor,
+			checklistStatusIcon,
 			dialogStartCancel,
 			dialogStartParams,
 			filterItemName,
@@ -402,8 +456,8 @@ export default {
 			handleInProgress,
 			isCompleted,
 			isDefault,
+			isLaunched,
 			isInProgress,
-			isShared,
 			isStarting,
 			resetAdditional,
 			scope,
@@ -482,8 +536,9 @@ export default {
 			dialogStartMessage,
 			title,
 			canStart,
-			checklistTypeIcon,
-			checklistTypeIconDetermine,
+			checklistDate,
+			checklistStatusColor,
+			checklistStatusIcon,
 			dialogStartCancel,
 			dialogStartParams,
 			filterItemName,
@@ -497,8 +552,8 @@ export default {
 			handleInProgress,
 			isCompleted,
 			isDefault,
+			isLaunched,
 			isInProgress,
-			isShared,
 			isStarting,
 			resetAdditional,
 			scope,

@@ -146,15 +146,16 @@ export function useChecklistComponent(props, context, options) {
 	const detailItemDate = ref(null);
 	const detailItemDescription = ref(null);
 	const detailItemIsDefault = ref(null);
-	const detailItemName = ref(null);
-	const detailItemReorder = ref(false);
 	const detailItemLocationId = ref(null);
 	const detailItemLocationIterationId = ref(null);
 	const detailItemLocationName = ref(null);
+	const detailItemName = ref(null);
+	const detailItemReorder = ref(false);
 	const detailItemRocketId = ref(null);
 	const detailItemRocketName = ref(null);
 	const detailItemRocketSetupId = ref(null);
 	const detailItemRocketSetupName  = ref(null);
+	const detailitemStatus = ref(null);
 	
 	const isDefault = computed(() => {
 		return detailItemData.value ? detailItemData.value.isDefault ?? false : false;
@@ -166,10 +167,21 @@ export function useChecklistComponent(props, context, options) {
 		return isDefault.value;
 	});
 	const isInProgress = computed(() => {
-		return detailItemData.value ? detailItemData.value.type === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
+		return detailItemData.value ? detailItemData.value.statusId === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
 	});
 	const isShared = computed(() => {
 		return detailItemData.value ? detailItemData.value.isShared ?? false : false;
+	});
+	const statusName = computed(() => {
+		if (!detailItemData.value)
+			return null;
+		if (!detailItemData.value.statusId)
+			return null;
+		if (detailItemData.value.statusId == AppCommonConstants.Checklists.ChecklistStatus.completed)
+			return LibraryClientUtility.$trans.t('forms.content.checklists.completed');
+		if (detailItemData.value.statusId == AppCommonConstants.Checklists.ChecklistStatus.inProgress)
+			return LibraryClientUtility.$trans.t('forms.content.checklists.inProgress');
+		return null;
 	});
 	const steps = computed(() => {
 		return detailItemData.value ? detailItemData.value.steps : [{}];
@@ -294,6 +306,7 @@ export function useChecklistComponent(props, context, options) {
 		detailItemDescription.value = value ? value.description : null;
 		detailItemIsDefault.value = value ? value.isDefault : null;
 		detailItemName.value = value ? value.name : null;
+		detailitemStatus.value = value ? value.statusId : null;
 
 		if (value && value.location) {
 			detailItemLocationId.value = value.location.id;
@@ -330,6 +343,8 @@ export function useChecklistComponent(props, context, options) {
 			detailItemRocketSetupId.value = null;
 			detailItemRocketSetupName.value = null;
 		}
+
+		value.canLaunch = canLaunchI(value);
 	};
 	const rocketName = (item) => {
 		if (!item)
@@ -399,6 +414,8 @@ export function useChecklistComponent(props, context, options) {
 
 		detailItemData.value.rocketId = detailItemRocketId.value;
 		detailItemData.value.rocketSetupId = detailItemRocketSetupId.value;
+
+		detailItemData.value.canLaunch = canLaunchI(detailItemData.value);
 	};
 	const updateOrder = async (payload, addedIndex, removedIndex) => {
 		console.log('updateOrder', payload);
@@ -428,6 +445,58 @@ export function useChecklistComponent(props, context, options) {
 		console.log('updateOrder', detailItemData.value);
 
 		detailItemReorder.value = !detailItemReorder.value;
+	};
+	const updateStatus = async (correlationId, id, status, launch) => {
+		console.log('updateStatus', id);
+		console.log('updateStatus', status);
+
+		let item = updateStatusFindStep(correlationId, detailItemData.value.steps, id);
+		if (!item)
+			throw Error('Invalid item in updateStatus...');
+
+		console.log('updateStatus', item.statusId);
+		item.statusId = status;
+
+		if (launch) {
+			detailItemData.value.launched = true;
+			detailItemData.value.statusId = AppCommonConstants.Checklists.ChecklistStatus.completed;
+		}
+		await formControlRef.value.submit(true);
+		detailItemData.value.canLaunch = canLaunchI(detailItemData.value);
+	};
+	const updateStatusFindStep = (correlationId, steps, id) => {
+		if (!steps)
+			return null;
+
+		let item = steps.find(l => l.id === id);
+		if (item)
+			return item;
+
+		for (const temp of steps) {
+			if (!temp.steps)
+				continue;
+
+			item = updateStatusFindStep(correlationId, temp.steps, id);
+			if (item)
+				return item;
+		}
+	};
+
+	const canLaunchI = (value) => {
+		if (!value)
+			return false;
+		for (const temp of value.steps) {
+			if ((temp.typeId === AppCommonConstants.Checklists.ChecklistStepTypes.launch) ||
+				(temp.typeId === AppCommonConstants.Checklists.ChecklistStepTypes.section))
+				continue;
+			
+			if (temp.statusId !== AppCommonConstants.Checklists.ChecklistStepStatus.completed)
+				return false;
+
+			if (temp.stages) 
+				return canLaunchI(temp);
+		}
+		return true;
 	};
 
 	// const dataModel = ref(

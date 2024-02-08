@@ -1,6 +1,6 @@
 <template>
 	<!-- [[ ChecklistSteps ]]
-	[[ readonly {{ readonly }}]]
+	[[ isEditable {{ isEditable }}]]
 	[[ hasItem {{ hasItem }}]]
 	<pre>[[ item {{ item }}]]</pre> -->
 	<template 
@@ -12,13 +12,15 @@
 		>
 			<ChecklistStepPanel 
 				class="mt-2"
-				:title="item1.name"
 				:depth="0"
 				:index="index1"
 				:item="item1"
 				:total="item.steps.length"
 				:parent="item"
-				:readonly="readonly"
+				:root="item"
+				:isEditable="isEditable"
+				:isInProgress="isInProgress"
+				:updateStatus="updateStatus"
 				:debug="debug"
 			>
 				<template 
@@ -27,12 +29,14 @@
 				>
 					<ChecklistStepPanel 
 						class="ml-6 mt-2"
-						:title="item2.name"
 						:depth="1"
 						:index="index2"
 						:item="item2"
 						:parent="item1"
-						:readonly="readonly"
+						:root="item"
+						:isEditable="isEditable"
+						:isInProgress="isInProgress"
+						:updateStatus="updateStatus"
 						:debug="debug"
 					>
 						<template 
@@ -41,12 +45,14 @@
 						>
 							<ChecklistStepPanel 
 								class="ml-6 mt-2"
-								:title="item3.name"
 								:depth="2"
 								:index="index3"
 								:item="item3"
 								:parent="item2"
-								:readonly="readonly"
+								:root="item"
+								:isEditable="isEditable"
+								:isInProgress="isInProgress"
+								:updateStatus="updateStatus"
 								:debug="debug"
 							>
 								<template 
@@ -55,12 +61,14 @@
 								>
 									<ChecklistStepPanel 
 										class="ml-6 mt-2"
-										:title="item4.name"
 										:depth="3"
 										:index="index4"
 										:item="item4"
 										:parent="item3"
-										:readonly="readonly"
+										:root="item"
+										:isEditable="isEditable"
+										:isInProgress="isInProgress"
+										:updateStatus="updateStatus"
 										:debug="debug"
 									>
 										<template 
@@ -69,11 +77,13 @@
 										>
 											<ChecklistStepPanel 
 												class="ml-6 mt-2"
-												:title="item5.name"
 												:depth="4"
 												:index="index5"
 												:parent="item4"
-												:readonly="readonly"
+												:root="item"
+												:isEditable="isEditable"
+												:isInProgress="isInProgress"
+												:updateStatus="updateStatus"
 												:debug="debug"
 											>
 											</ChecklistStepPanel>

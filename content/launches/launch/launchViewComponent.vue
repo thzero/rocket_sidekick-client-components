@@ -1,5 +1,5 @@
 <script>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
@@ -208,7 +208,6 @@ export function useLaunchViewComponent(props, context, options) {
 			return displayItemMeasurementVelocity(correlationId(), displayItem.value, (value) => { return value.windSpeed; }, (value) => { return value.windSpeedMeasurementUnitsId; }, (value) => { return value.windSpeedMeasurementUnitId; });
 		return null;
 	});
-	
 	const displayItemRocketCg = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup)
 			return null;
@@ -234,7 +233,6 @@ export function useLaunchViewComponent(props, context, options) {
 			return null;
 		return rocketWeight(displayItem.value.rocketSetup.stages);
 	});
-
 	const hasCoords = computed(() => {
 		return hasCoordsLaunch.value && hasCoordsRecovery.value;
 	});

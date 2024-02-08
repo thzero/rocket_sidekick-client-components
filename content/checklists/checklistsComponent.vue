@@ -8,6 +8,7 @@ import LibraryClientConstants from '@thzero/library_client/constants.js';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
+import LibraryMomentUtility from '@thzero/library_common/utility/moment';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
@@ -164,31 +165,28 @@ export function useChecklistsBaseComponent(props, context, options) {
 		return isOwner(correlationId(), item) && isInProgress(item);
 	};
 	const canStart = (item) => {
-		return isOwner(correlationId(), item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item);
+		return isOwner(correlationId(), item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item) && (item ? (item.date !== null) : false);
 	};
 	const canViewI = (correlationId, item) => {
 		return (isOwner(correlationId, item) || isDefault(item)) && !isInProgress(item);
 	};
-	const checklistTypeIcon = (item) => {
-		const icon = checklistTypeIconDetermine(item);
-		if (!icon)
-			return null;
-		return '/icons/' + icon;
+	const checklistDate = (item) => {
+		return item.date ? LibraryMomentUtility.getDateHuman(item.date) : null;
 	};
-	const checklistTypeIconDetermine = (item) => {
+	const checklistStatusColor = (item) => {
 		if (!item)
-			return null;
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.highone)
-			return 'rocket_level1.png';
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.hightwo)
-			return 'rocket_level2.png';
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.highthree)
-			return 'rocket_level3.png';
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.low)
-			return 'rocket_low.png';
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.mid)
-			return 'rocket_mid.png';
-		return null;
+			return 'bg-primary';
+
+		if (item.statusId === AppCommonConstants.Checklists.ChecklistStatus.inProgress)
+			return 'bg-purple';
+
+		if (item.statusId === AppCommonConstants.Checklists.ChecklistStatus.completed)
+			return 'bg-green';
+
+		return 'bg-primary';
+	};
+	const checklistStatusIcon = (item) => {
+		return item ? (item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.success ? 'mdi-thumb-up' : item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.failed ? 'mdi-thumb-down' : null) : null;
 	};
 	const deleteItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.deleteChecklistById(correlationId, id);
@@ -301,10 +299,13 @@ export function useChecklistsBaseComponent(props, context, options) {
 		return success(correlationId, data);
 	};
 	const isCompleted = (item) => {
-		return item ? item.completed  ?? false : false;
+		return item ? item.statusId === AppCommonConstants.Checklists.ChecklistStatus.completed : false;
 	};
 	const isDefault = (item) => {
 		return item ? item.isDefault ?? false : false;
+	};
+	const isLaunched = (item) => {
+		return item ? item.launched : false;
 	};
 	const isInProgress = (item) => {
 		return item ? item.statusId === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
@@ -400,8 +401,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogStartMessage,
 		title,
 		canStart,
-		checklistTypeIcon,
-		checklistTypeIconDetermine,
+		checklistDate,
+		checklistStatusColor,
+		checklistStatusIcon,
 		dialogStartCancel,
 		dialogStartParams,
 		filterItemName,
@@ -415,6 +417,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		handleInProgress,
 		isCompleted,
 		isDefault,
+		isLaunched,
 		isInProgress,
 		isStarting,
 		resetAdditional,

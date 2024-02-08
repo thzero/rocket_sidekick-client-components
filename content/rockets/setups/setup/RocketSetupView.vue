@@ -8,10 +8,16 @@
 		<!-- length {{ length }} -->
 		<v-row dense>
 			<v-col>
-				<img
-					:src="coverUrl"
-					style="width: 150px;display: block;margin-left: auto; margin-right: auto; float: right;"
-				/>
+				<router-link
+					v-if="coverUrl && displayItem.rocket && displayItem.rocket.id"
+					:to="'/user/rockets/' + displayItem.rocket.id"
+					class="text-contrast router-link"
+				>
+					<img
+						:src="coverUrl"
+						style="width: 150px;display: block;margin-left: auto; margin-right: auto; float: right;"
+					/>
+				</router-link>
 				<VtMarkdown 
 					v-if="displayItem.description"
 					v-model="displayItem.description" :use-github=false 

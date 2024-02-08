@@ -32,11 +32,11 @@ export function useChecklistValidation(self) {
 			$autoDirty: true 
 		},
 		detailItemRocketSetupId: {
-			requiredIfRocket: requiredIf((value, siblings) => { 
-				return self.detailItemRocketId;
-			}),
+			// requiredIfRocket: requiredIf((value, siblings) => { 
+			// 	return self.detailItemRocketId;
+			// }),
 			$autoDirty: true 
-		}
+		},
 	};
 	return validation;
 };

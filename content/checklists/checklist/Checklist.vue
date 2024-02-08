@@ -38,7 +38,7 @@
 		<v-row dense>
 			<v-col
 				v-if="!isDefaultView"
-				cols="12" sm="8" lg="10"
+				cols="12" md="8" lg="8"
 			>
 				<VtTextFieldWithValidation
 					ref="detailItemNameRef"
@@ -52,7 +52,7 @@
 			</v-col>
 			<v-col
 				v-if="!isDefaultView"
-				cols="12" sm="4" lg="2"
+				cols="12" md="2" lg="2"
 			>
 				<VtDateTimePickerFieldWithValidation
 					ref="detailItemDateRef"
@@ -63,6 +63,12 @@
 					:readonly="!isEditable"
 					:label="$t('forms.date')"
 				/>
+			</v-col>
+			<v-col
+				v-if="!isDefaultView && detailitemStatus"
+				cols="6" md="2" lg="2"
+			>
+				<v-alert color="green" class="text-center pl-4 pr-4 pb-2 pt-2">{{ statusName }}</v-alert>
 			</v-col>
 			<v-col
 				v-if="isDefaultView"
@@ -372,8 +378,10 @@
 				<v-col>
 					<ChecklistSteps
 						:item="detailItemData"
-						:readonly="!isEditable"
+						:isEditable="isEditable"
+						:isInProgress="isInProgress"
 						:update-order="updateOrder"
+						:update-status="updateStatus"
 						:debug="debug"
 					>
 					</ChecklistSteps>
@@ -538,12 +546,14 @@ export default {
 			detailItemRocketName,
 			detailItemRocketSetupId,
 			detailItemRocketSetupName,
+			detailitemStatus,
 			isDefault,
 			isDefaultEdit,
 			isDefaultView,
 			isInProgress,
 			isShared,
 			locationIterations,
+			statusName,
 			steps,
 			viewLocation,
 			viewRocket,
@@ -568,6 +578,7 @@ export default {
 			selectRocket,
 			selectRocketSetup,
 			updateOrder,
+			updateStatus,
 			scope,
 			validation
 		} = useChecklistComponent(props, context);
@@ -655,12 +666,14 @@ export default {
 			detailItemRocketName,
 			detailItemRocketSetupId,
 			detailItemRocketSetupName,
+			detailitemStatus,
 			isDefault,
 			isDefaultEdit,
 			isDefaultView,
 			isInProgress,
 			isShared,
 			locationIterations,
+			statusName,
 			steps,
 			viewLocation,
 			viewRocket,
@@ -685,6 +698,7 @@ export default {
 			selectRocket,
 			selectRocketSetup,
 			updateOrder,
+			updateStatus,
 			scope,
 			validation
 		};
