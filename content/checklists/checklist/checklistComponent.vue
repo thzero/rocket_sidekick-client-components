@@ -146,11 +146,11 @@ export function useChecklistComponent(props, context, options) {
 	const detailItemDate = ref(null);
 	const detailItemDescription = ref(null);
 	const detailItemIsDefault = ref(null);
-	const detailItemName = ref(null);
-	const detailItemReorder = ref(false);
 	const detailItemLocationId = ref(null);
 	const detailItemLocationIterationId = ref(null);
 	const detailItemLocationName = ref(null);
+	const detailItemName = ref(null);
+	const detailItemReorder = ref(false);
 	const detailItemRocketId = ref(null);
 	const detailItemRocketName = ref(null);
 	const detailItemRocketSetupId = ref(null);
@@ -1061,14 +1061,12 @@ export function useChecklistComponent(props, context, options) {
 		detailItemRocketName,
 		detailItemRocketSetupId,
 		detailItemRocketSetupName,
-		detailitemStatus,
 		isDefault,
 		isDefaultEdit,
 		isDefaultView,
 		isInProgress,
 		isShared,
 		locationIterations,
-		statusName,
 		steps,
 		viewLocation,
 		viewRocket,
@@ -1093,7 +1091,6 @@ export function useChecklistComponent(props, context, options) {
 		selectRocket,
 		selectRocketSetup,
 		updateOrder,
-		updateStatus,
 		scope: 'ChecklistControl',
 		validation: useVuelidate({ $scope: 'ChecklistControl' })
 	};

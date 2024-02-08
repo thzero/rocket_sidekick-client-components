@@ -12,6 +12,7 @@ import { useContentBaseComponent } from '@/components/content/contentBase';
 import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useDisplayComponent } from '@thzero/library_client_vue3_vuetify3/components/display';
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
+import router from '@/router';
 
 export function useMasterDetailComponent(props, context, options) {
 	const {

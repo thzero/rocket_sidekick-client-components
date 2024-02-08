@@ -21,6 +21,32 @@
 								<div 
 									class="d-flex"
 								>
+									<VtTextField 
+										v-if="displayItem && displayItem.rocketSetup && displayItem.rocketSetup.rocket"
+										v-model="displayItemRocketMame"
+										:label="$t('forms.content.rockets.name')"
+										:readonly="true"
+									/>
+									<div
+										v-if="displayItem && displayItem.rocketSetup && displayItem.rocketSetup.rocket"
+										style="display: flex; justify-content: center; align-items: center;"
+									>
+										<router-link
+											:to="'/user/rockets/' + (displayItem ? displayItem.rocketId: '')"
+											class="text-contrast router-link headline"
+										>
+											<!-- <h2>{{ $t('buttons.link') }}</h2> -->
+											<v-icon color="green darken-2">
+												mdi-link
+											</v-icon>
+										</router-link>
+									</div>
+								</div>
+							</v-col>
+							<v-col cols="12">
+								<div 
+									class="d-flex"
+								>
 									<VtTextField
 										v-model="displayItemLocationName"
 										:label="$t('forms.content.locations.name')"
@@ -44,9 +70,9 @@
 											class="text-contrast router-link headline"
 										>
 											<!-- <h2>{{ $t('buttons.link') }}</h2> -->
-							<v-icon color="green darken-2">
-								mdi-link
-							</v-icon>
+											<v-icon color="green darken-2">
+												mdi-link
+											</v-icon>
 										</router-link>
 									</div>
 								</div>
@@ -171,16 +197,47 @@
 				</v-row>
 			</v-col>
 			<v-col cols="5" lg="2" md="3">
-				<img
-					:src="displayItemRocketCoverUrl"
-					style="width: 150px;display: block;margin-left: auto; margin-right: auto; float: right;"
-				/>
+				<router-link
+					:to="'/user/locations/' + (displayItem ? displayItem.rocketId: '')"
+					class="text-contrast router-link headline"
+					style="float: right;display: block;margin-left: auto; margin-right: auto;"
+				>
+					<img
+						style="width: 150px;"
+						:src="displayItemRocketCoverUrl"
+					/>
+				</router-link>
 			</v-col>
 		</v-row>
 		<v-row
 			v-if="!displayItemRocketCoverUrl"
 			dense
 		>
+			<v-col cols="12">
+				<div
+					v-if="displayItem && displayItem.rocketSetup && displayItem.rocketSetup.rocket"
+					class="d-flex"
+				>
+					<VtTextField 
+						v-model="displayItemRocketMame"
+						:label="$t('forms.content.rockets.name')"
+						:readonly="true"
+					/>
+					<div
+						style="display: flex; justify-content: center; align-items: center;"
+					>
+						<router-link
+							:to="'/user/rockets/' + (displayItem ? displayItem.rocketId: '')"
+							class="text-contrast router-link headline"
+						>
+							<!-- <h2>{{ $t('buttons.link') }}</h2> -->
+							<v-icon color="green darken-2">
+								mdi-link
+							</v-icon>
+						</router-link>
+					</div>
+				</div>
+			</v-col>
 			<v-col cols="12">
 				<VtMarkdown 
 					v-if="displayItem.description"
@@ -392,7 +449,7 @@
 						<v-sheet 
 							v-for="(item2, index) in item.motors"
 							:key="item2"
-							:color="index % 2 === 0 ? 'green' : 'green'"
+							:color="index % 2 === 0 ? 'grey' : 'grey'"
 							:class="`ml-${(displayItemRocketMotors.length > 1 ? '8' : '4')} mt-2 pl-4 pr-4 pt-2 pb-2`"
 							style="width: 100%;"
 							rounded

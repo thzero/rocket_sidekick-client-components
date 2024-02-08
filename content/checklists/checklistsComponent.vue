@@ -8,6 +8,7 @@ import LibraryClientConstants from '@thzero/library_client/constants.js';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
+import LibraryMomentUtility from '@thzero/library_common/utility/moment';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
@@ -169,26 +170,23 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const canViewI = (correlationId, item) => {
 		return (isOwner(correlationId, item) || isDefault(item)) && !isInProgress(item);
 	};
-	const checklistTypeIcon = (item) => {
-		const icon = checklistTypeIconDetermine(item);
-		if (!icon)
-			return null;
-		return '/icons/' + icon;
+	const checklistDate = (item) => {
+		return item.date ? LibraryMomentUtility.getDateHuman(item.date) : null;
 	};
-	const checklistTypeIconDetermine = (item) => {
+	const checklistStatusColor = (item) => {
 		if (!item)
-			return null;
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.highone)
-			return 'rocket_level1.png';
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.hightwo)
-			return 'rocket_level2.png';
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.highthree)
-			return 'rocket_level3.png';
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.low)
-			return 'rocket_low.png';
-		if (item.launchTypeId === AppCommonConstants.Rocketry.RocketTypes.mid)
-			return 'rocket_mid.png';
-		return null;
+			return 'bg-primary';
+
+		if (item.statusId === AppCommonConstants.Checklists.ChecklistStatus.inProgress)
+			return 'bg-purple';
+
+		if (item.statusId === AppCommonConstants.Checklists.ChecklistStatus.completed)
+			return 'bg-green';
+
+		return 'bg-primary';
+	};
+	const checklistStatusIcon = (item) => {
+		return item ? (item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.success ? 'mdi-thumb-up' : item.success === AppCommonConstants.Rocketry.Launches.Reasons.Success.failed ? 'mdi-thumb-down' : null) : null;
 	};
 	const deleteItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.deleteChecklistById(correlationId, id);
@@ -330,18 +328,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 			filterItemYours.value = true;
 		}
 	};
-	const rowColor = (item) => {
-		if (!item)
-			return 'bg-primary';
-
-		if (item.statusId === AppCommonConstants.Checklists.ChecklistStatus.inProgress)
-			return 'bg-green';
-
-		if (item.statusId === AppCommonConstants.Checklists.ChecklistStatus.completed)
-			return 'bg-purple';
-
-		return 'bg-primary';
-	};
 
 	return {
 		correlationId,
@@ -415,8 +401,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 		dialogStartMessage,
 		title,
 		canStart,
-		checklistTypeIcon,
-		checklistTypeIconDetermine,
+		checklistDate,
+		checklistStatusColor,
+		checklistStatusIcon,
 		dialogStartCancel,
 		dialogStartParams,
 		filterItemName,
@@ -434,7 +421,6 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isInProgress,
 		isStarting,
 		resetAdditional,
-		rowColor,
 		scope: 'Checklists',
 		validation: useVuelidate({ $scope: 'Checklists' })
 	};

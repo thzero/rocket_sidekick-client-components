@@ -137,6 +137,18 @@
 				{{ $t('buttons.add') }}
 			</v-btn>
 		</template>
+		<template #postActions=" { filterDrawer, isLoading }">
+			<v-btn
+				v-if="!showDetailItem && filterDrawer"
+				:variant="buttonsForms.variant.add"
+				:color="buttonsForms.color.add"
+				:disabled="isLoading"
+				class="ml-2"
+				@click="handleViewType"
+				:icon="`mdi-${viewType === 'listing' ? 'view-list' : 'table'}`"
+			>
+			</v-btn>
+		</template>
 		<template v-slot:listing>
 			<v-row dense>
 				<v-col cols="12">
@@ -172,23 +184,39 @@
 								<v-card-title
 									:class="launchStatusColor(item)"
 								>
-									<v-icon
+									<!-- <v-icon
 										v-if="launchStatusIcon(item)"
 									>
 										{{ launchStatusIcon(item) }}
-									</v-icon>
+									</v-icon> -->
+									<table style="float: left;">
+										<tr>
+											<td>
+												<v-icon
+													v-if="launchStatusIcon(item)"
+													class="mr-2"
+												>
+													{{ launchStatusIcon(item) }}
+												</v-icon>
+											</td>
+											<td>
+												<img
+													v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
+													:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px;" 
+												/>
+											</td>
+										</tr>
+									</table>
 									&nbsp;
 									<!-- <a class="text-contrast" :href="'/user/rockets/' + rocketId(item)">{{ launchTitle(item) }}</a> -->
-									<router-link
+									<!-- <router-link
 										:to="'/user/rockets/' + rocketId(item)"
 										class="text-contrast router-link"
 									>
 										{{ launchTitle(item) }}
-									</router-link>
-									<span
-										v-if="$vuetify.display.mdAndUp"
-									>
-										@&nbsp;
+									</router-link> -->
+									<span>
+										<!-- @&nbsp; -->
 										<!-- <a class="text-contrast" :href="'/user/locations/' + locationId(item)">{{ launchTitleLocation(item) }}</a> -->
 										<router-link
 											:to="'/user/locations/' + locationId(item)"
@@ -414,6 +442,7 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			organizations,
+			rocketTypeIcon,
 			rocketTypes,
 			debug,
 			diameterMeasurementUnitId,
@@ -430,9 +459,11 @@ export default {
 			filterItemRocketName,
 			filterItemRocketTypes,
 			title,
+			viewType,
 			buttonSearchResetDisabled,
 			clickSearchLocations,
 			clickSearchRockets,
+			handleViewType,
 			launchDate,
 			launchStatusColor,
 			launchStatusIcon,
@@ -513,6 +544,7 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			organizations,
+			rocketTypeIcon,
 			rocketTypes,
 			debug,
 			diameterMeasurementUnitId,
@@ -529,9 +561,11 @@ export default {
 			filterItemRocketName,
 			filterItemRocketTypes,
 			title,
+			viewType,
 			buttonSearchResetDisabled,
 			clickSearchLocations,
 			clickSearchRockets,
+			handleViewType,
 			launchDate,
 			launchStatusColor,
 			launchStatusIcon,
