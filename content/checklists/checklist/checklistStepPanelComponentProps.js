@@ -11,11 +11,23 @@ export const useChecklistStepsPanelComponentProps = {
 		type: Number,
 		default: null
 	},
+	isEditable: {
+		type: Boolean,
+		default: false
+	},
+	isInProgress: {
+		type: Boolean,
+		default: false
+	},
 	item: {
 		type: Object,
 		default: { }
 	},
 	parent: {
+		type: Object,
+		default: null
+	},
+	root: {
 		type: Object,
 		default: null
 	},
@@ -31,6 +43,10 @@ export const useChecklistStepsPanelComponentProps = {
 		type: Number,
 		default: null
 	},
+	updateStatus: {
+		type: Function,
+		default: null
+	}
 	// modelValue: {
 	// 	type: Array,
 	// 	default: []

@@ -131,19 +131,18 @@
 					<v-row dense>
 						<v-col
 							cols="12"
-							v-for="item in items"
-							:key="item.name"
+							v-for="(item, index) in items"
+							:key="index"
 						>
 							<v-card>
 								<v-card-title
-									class="bg-primary"
+									:class="rowColor(item)"
 								>
-									&nbsp;{{ item.name }} {{  item.isDefault === true }}
+									&nbsp;{{ item.name }}
 									<div
 										v-if="item.rocketSetup && item.rocketSetup.rocket" 
 										class="float-right"
 									>
-										<!-- <a class="text-contrast" target="_blank" :href="'/user/rockets/' + item.rocketSetup.rocket.id">{{ item.rocketSetup.rocket.name }}</a> -->
 										<router-link
 											:to="'/user/rockets/' + item.rocketSetup.rocket.id"
 											class="text-contrast router-link"
@@ -156,10 +155,34 @@
 										{{ rocketDiameter(item.stages) }},
 										{{ rocketMotorMountNames(item) }}
 									</div> -->
-									<img
-										v-if="item.rocketSetup && item.rocketSetup" 
+									<!-- <v-icon
+										style="float: left;" 
+									>
+										mdi-rocket-launch
+									</v-icon> -->
+									<!-- <img
+										v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
 										:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px; float: left;" 
-									/>
+									/> -->
+									
+								<table style="float: left;">
+									<tr>
+										<td>
+											<v-icon
+												v-if="isCompleted(item) || isLaunched(item)"
+											>
+												{{  isCompleted(item) ? 'mdi-check' : '' }}
+												{{  isLaunched(item) ? 'mdi-rocket' : '' }}
+											</v-icon>
+										</td>
+										<td>
+											<img
+												v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
+												:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px;" 
+											/>
+										</td>
+									</tr>
+								</table>
 								</v-card-title>
 								<v-card-text>
 									{{ item.description }}
@@ -401,11 +424,13 @@ export default {
 			dialogStartOpen,
 			handleInProgress,
 			isCompleted,
+			isLaunched,
 			isDefault,
 			isInProgress,
 			isShared,
 			isStarting,
 			resetAdditional,
+			rowColor,
 			scope,
 			validation
 		} = useChecklistsBaseComponent(props, context);
@@ -496,11 +521,13 @@ export default {
 			dialogStartOpen,
 			handleInProgress,
 			isCompleted,
+			isLaunched,
 			isDefault,
 			isInProgress,
 			isShared,
 			isStarting,
 			resetAdditional,
+			rowColor,
 			scope,
 			validation
 		};

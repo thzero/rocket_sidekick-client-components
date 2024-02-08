@@ -164,7 +164,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		return isOwner(correlationId(), item) && isInProgress(item);
 	};
 	const canStart = (item) => {
-		return isOwner(correlationId(), item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item);
+		return isOwner(correlationId(), item) && !isDefault(item) && !isInProgress(item) && !isCompleted(item) && (item ? (item.date !== null) : false);
 	};
 	const canViewI = (correlationId, item) => {
 		return (isOwner(correlationId, item) || isDefault(item)) && !isInProgress(item);
@@ -301,10 +301,13 @@ export function useChecklistsBaseComponent(props, context, options) {
 		return success(correlationId, data);
 	};
 	const isCompleted = (item) => {
-		return item ? item.completed  ?? false : false;
+		return item ? item.statusId === AppCommonConstants.Checklists.ChecklistStatus.completed : false;
 	};
 	const isDefault = (item) => {
 		return item ? item.isDefault ?? false : false;
+	};
+	const isLaunched = (item) => {
+		return item ? item.launched : false;
 	};
 	const isInProgress = (item) => {
 		return item ? item.statusId === AppCommonConstants.Checklists.ChecklistStatus.inProgress : false;
@@ -326,6 +329,18 @@ export function useChecklistsBaseComponent(props, context, options) {
 			filterItemIsDefault.value = true;
 			filterItemYours.value = true;
 		}
+	};
+	const rowColor = (item) => {
+		if (!item)
+			return 'bg-primary';
+
+		if (item.statusId === AppCommonConstants.Checklists.ChecklistStatus.inProgress)
+			return 'bg-green';
+
+		if (item.statusId === AppCommonConstants.Checklists.ChecklistStatus.completed)
+			return 'bg-purple';
+
+		return 'bg-primary';
 	};
 
 	return {
@@ -415,9 +430,11 @@ export function useChecklistsBaseComponent(props, context, options) {
 		handleInProgress,
 		isCompleted,
 		isDefault,
+		isLaunched,
 		isInProgress,
 		isStarting,
 		resetAdditional,
+		rowColor,
 		scope: 'Checklists',
 		validation: useVuelidate({ $scope: 'Checklists' })
 	};
