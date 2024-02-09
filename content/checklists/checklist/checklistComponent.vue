@@ -414,8 +414,6 @@ export function useChecklistComponent(props, context, options) {
 
 		detailItemData.value.rocketId = detailItemRocketId.value;
 		detailItemData.value.rocketSetupId = detailItemRocketSetupId.value;
-
-		detailItemData.value.canLaunch = canLaunchI(detailItemData.value);
 	};
 	const updateOrder = async (payload, addedIndex, removedIndex) => {
 		console.log('updateOrder', payload);
@@ -482,20 +480,35 @@ export function useChecklistComponent(props, context, options) {
 		}
 	};
 
-	const canLaunchI = (value) => {
+	const canLaunchI = (value, depth) => {
+		depth = depth ?? '';
 		if (!value)
 			return false;
-		for (const temp of value.steps) {
-			if ((temp.typeId === AppCommonConstants.Checklists.ChecklistStepTypes.launch) ||
-				(temp.typeId === AppCommonConstants.Checklists.ChecklistStepTypes.section))
-				continue;
-			
-			if (temp.statusId !== AppCommonConstants.Checklists.ChecklistStepStatus.completed)
-				return false;
+		
+		// console.log(depth + 'value ' + value.id + ' ' + value.name + ' ' + value.typeId + ' ' + value.statusId + ' ' + (value.steps ? value.steps.length : null));
 
-			if (temp.stages) 
-				return canLaunchI(temp);
+		let results;
+		for (const temp of value.steps) {
+			// console.dir(temp);
+			// console.log(depth + 'temp ' + temp.id + ' ' + temp.name + ' ' + temp.typeId + ' ' + temp.statusId + ' ' + (temp.steps ? temp.steps.length : null));
+			if ((temp.typeId !== AppCommonConstants.Checklists.ChecklistStepTypes.launch) &&
+				(temp.typeId !== AppCommonConstants.Checklists.ChecklistStepTypes.section)) {
+
+				if (temp.statusId !== AppCommonConstants.Checklists.ChecklistStepStatus.completed) {
+					// console.log(depth + 'temp ' + temp.id + ' ' + (false));
+					return false;
+				}
+			};
+
+			if (temp.steps) {
+				results = canLaunchI(temp, depth + '\t');
+				if (!results) {
+					// console.log(depth + 'temp ' + temp.id + ' ' + (false));
+					return false;
+				}
+			}
 		}
+
 		return true;
 	};
 
@@ -1091,6 +1104,7 @@ export function useChecklistComponent(props, context, options) {
 		selectRocket,
 		selectRocketSetup,
 		updateOrder,
+		updateStatus,
 		scope: 'ChecklistControl',
 		validation: useVuelidate({ $scope: 'ChecklistControl' })
 	};
