@@ -40,6 +40,7 @@
 							:variant="buttonsForms.variant.ok"
 							:color="buttonsForms.color.ok"
 							@click="handleComplete"
+							:loading="isLoading"
 							>{{ $t('buttons.complete') }}</v-btn>
 						<v-btn 
 							v-if="isInProgress && !statusCompleted && hasLaunch && root.canLaunch"
@@ -47,6 +48,7 @@
 							:variant="buttonsForms.variant.ok"
 							:color="buttonsForms.color.ok"
 							@click="handleLaunch"
+							:loading="isLoading"
 						>{{ $t('buttons.launch') }}</v-btn>
 					</div>
 				</v-sheet>

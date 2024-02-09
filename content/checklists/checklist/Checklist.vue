@@ -370,7 +370,7 @@
 				</v-btn>
 			</div>
 		</template>
-		<template v-slot:after>	
+		<template v-slot:after="{ isLoading }">
 			<v-row
 				dense 
 				class="mt-4"
@@ -379,6 +379,7 @@
 					<ChecklistSteps
 						:item="detailItemData"
 						:isEditable="isEditable"
+						:isLoading="isLoading"
 						:isInProgress="isInProgress"
 						:update-order="updateOrder"
 						:update-status="updateStatus"

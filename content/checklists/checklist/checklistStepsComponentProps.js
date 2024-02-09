@@ -7,6 +7,10 @@ export const useChecklistStepsComponentProps = {
 		type: Boolean,
 		default: false
 	},
+	isLoading: {
+		type: Boolean,
+		default: false
+	},
 	isInProgress: {
 		type: Boolean,
 		default: false
