@@ -6,5 +6,9 @@ export const useLaunchViewComponentProps = {
 	detailItem: {
 		type: Object,
 		value: null
+	},
+	isHeaders: {
+		type: Boolean,
+		value: false
 	}
 };
