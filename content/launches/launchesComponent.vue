@@ -3,6 +3,8 @@ import { computed, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
+import { utils, writeFileXLSX } from 'xlsx';
+
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
@@ -134,8 +136,11 @@ export function useLaunchesBaseComponent(props, context, options) {
 	const filterItemRocketId = ref(null);
 	const filterItemRocketName = ref(null);
 	const filterItemRocketTypes = ref(null);
+	const mobileOnly = ref(LibraryClientUtility.$store.mobileOnly);
+	const settings = ref(null);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.launches.title`));
 	const viewType = ref('listing');
+	const viewTypeListingRef = ref(null);
 	
 	if (LibraryCommonUtility.isDev) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
@@ -147,6 +152,16 @@ export function useLaunchesBaseComponent(props, context, options) {
 	const buttonSearchResetDisabled = computed(() => {
 		return false;
 	});
+	const viewTypeIcon = computed(() => {
+		return `mdi-${viewType.value === 'listing' ? 'view-list' : 'table'}`;
+	});
+	const viewTypeListing = computed(() => {
+		return viewType.value === 'listing';
+	});
+	const viewTypeTable = computed(() => {
+		return viewType.value === 'table' || viewType.value === null;
+	});
+
 	const canCopyI = (correlationId, item) => {
 		return isOwner(correlationId, item);
 	};
@@ -169,16 +184,13 @@ export function useLaunchesBaseComponent(props, context, options) {
 		return await serviceStore.dispatcher.deleteLaunchById(correlationId, id);
 	};
 	const fetchI = async (correlationId) => {
-		const params = fetchParams(correlationId, {});
-		if (!params)
-			return error('useLaunchesBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
-
-		serviceStore.dispatcher.setLaunchesSearchCriteria(correlationId, params);
+		fetchParams(correlationId, settings.value.params);
+		serviceStore.dispatcher.setLaunchesSettings(correlationId, settings.value.params);
 
 		if (requestedItemId.value)
 			params.launchId = requestedItemId.value;
 			
-		const response = await serviceStore.dispatcher.requestLaunches(correlationId, params);
+		const response = await serviceStore.dispatcher.requestLaunches(correlationId, settings.value.params);
 		if (hasFailed(response))
 			return;
 
@@ -195,21 +207,120 @@ export function useLaunchesBaseComponent(props, context, options) {
 		return await serviceStore.dispatcher.requestLaunchById(correlationId, id, editable);
 	};
 	const fetchParams = (correlationId, params) => {
+		params = params ?? {};
 		params.name = filterItemName.value;
 
 		params.locationId = filterItemLocationId.value;
 		params.organizations = filterItemOrganizations.value;
 		params.rocketId = filterItemRocketId.value;
 		params.rocketTypes = filterItemRocketTypes.value;
-		return params;
 	};
 	const handleViewType = () => {
 		viewType.value = viewType.value === 'listing' ? 'table' : 'listing';
+		settings.value.viewType = viewType.value;
+		serviceStore.dispatcher.setLaunchesSettings(correlationId, settings.value);
+	};
+	const handleViewTypeListingDownload = async () => {
+		if (!viewTypeListingRef.value) {
+			alert('boo');
+			return;
+		}
+		
+		await handleViewTypeListingConversion();
+	};
+	const handleViewTypeListingConversion = async () => {
+		const el = viewTypeListingRef.value.$el.children[0].children[0];
+		let htmlHeaders = el.children[0].children[0];
+		const headers = [];
+		for (const header of htmlHeaders.children)
+			headers.push(header.innerHTML);
+
+		const ids = [];
+		ids.push('rocket');
+		ids.push('location');
+		ids.push('failureReasons');
+		ids.push('diameter');
+		ids.push('length');
+		ids.push('weight');
+		ids.push('cg');
+		ids.push('cp');
+		ids.push('motors');
+		ids.push('temperature');
+		ids.push('windSpeed');
+		ids.push('accelerationMax');
+		ids.push('velocityMax');
+		ids.push('altitudeMax');
+		ids.push('altitudeMain');
+		ids.push('aAltitudeDrogue');
+
+		let htmlBody = el.children[1];
+		const rows = [];
+		let temp = {};
+		let index = 0;
+		for (const row of htmlBody.children) {
+			index = 0;
+			temp = {};
+			if (row.children.length > 2) {
+				for (const id of ids) {
+					temp[id] = row.children[index].innerHTML;
+					index++;
+				}
+			}
+			rows.push(temp);
+		}
+		// for (const row of htmlBody.children) {
+		// 	temp = {};
+		// 	if (row.children.length > 2) {
+		// 		temp.rocket = row.children[0].innerHTML;
+		// 		temp.location = row.children[1].innerHTML;
+		// 		temp.failureReasons = row.children[2].innerHTML;
+		// 		temp.diameter = row.children[3].innerHTML;
+		// 		temp.length = row.children[4].innerHTML;
+		// 		temp.weight = row.children[5].innerHTML;
+		// 		temp.cg = row.children[6].innerHTML;
+		// 		temp.cp = row.children[7].innerHTML;
+		// 		temp.motors = row.children[8].innerHTML;
+		// 		temp.temperature = row.children[9].innerHTML;
+		// 		temp.windSpeed = row.children[10].innerHTML;
+		// 		temp.accelerationMax = row.children[11].innerHTML;
+		// 		temp.velocityMax = row.children[12].innerHTML;
+		// 		temp.altitudeMax = row.children[13].innerHTML;
+		// 		temp.altitudeMain = row.children[14].innerHTML;
+		// 		temp.aAltitudeDrogue = row.children[15].innerHTML;
+		// 	}
+		// 	rows.push(temp);
+		// }
+
+		const output = rows;
+
+		/* generate worksheet from state */
+		const ws = utils.json_to_sheet(output);
+		utils.sheet_add_aoa(ws, [ headers ], { origin: 'A1' });
+
+		const cols = [];
+		index = 0;
+		for (const id of ids) {
+			const max_width_data = output.reduce((w, r) => Math.max(w, r[id].length), 12);
+			const max_width_header = headers[index].length;
+			const max_width = max_width_data > max_width_header ? max_width_data : max_width_header;
+			cols.push( { wch: max_width });
+			index++;
+		}
+		ws['!cols'] = cols;
+
+		/* create workbook and append worksheet */
+		const wb = utils.book_new();
+		utils.book_append_sheet(wb, ws, "Data");
+		/* export to XLSX */
+		writeFileXLSX(wb, "SheetJSVueAoO.xlsx");
 	};
 	const initI = async (correlationId) => {
-		const params = await serviceStore.getters.getLaunchesSearchCriteria(correlationId);
-		if (params)
-			resetAdditional(correlationId, params);
+		settings.value = await serviceStore.getters.getLaunchesSettings(correlationId);
+		settings.value = settings.value ?? { };
+		settings.value.params = settings.value.params ?? { };
+		settings.value.viewType = settings.value.viewType ?? 'table';
+		resetAdditional(correlationId, settings.value);
+		viewType.value = settings.value.viewType;
 		return success(correlationId);
 	};
 	const initNewI = async (correlationId, data) => {
@@ -394,12 +505,18 @@ export function useLaunchesBaseComponent(props, context, options) {
 		filterItemRocketId,
 		filterItemRocketName,
 		filterItemRocketTypes,
+		mobileOnly,
 		title,
 		viewType,
+		viewTypeListingRef,
 		buttonSearchResetDisabled,
+		viewTypeIcon,
+		viewTypeListing,
+		viewTypeTable,
 		clickSearchLocations,
 		clickSearchRockets,
 		handleViewType,
+		handleViewTypeListingDownload,
 		launchDate,
 		launchStatusColor,
 		launchStatusIcon,

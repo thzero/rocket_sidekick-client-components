@@ -175,7 +175,6 @@
 						/>
 					</v-col>
 					<v-col 
-						v-if="displayItemRocketCg"
 						cols="6" sm="4" md="2"
 					>
 						<VtTextField

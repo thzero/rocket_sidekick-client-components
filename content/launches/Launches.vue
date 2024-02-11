@@ -139,14 +139,24 @@
 		</template>
 		<template #postActions=" { filterDrawer, isLoading }">
 			<v-btn
-				v-if="!showDetailItem && filterDrawer"
+				v-if="!showDetailItem && filterDrawer && !mobileOnly"
 				:variant="buttonsForms.variant.add"
 				:color="buttonsForms.color.add"
 				:disabled="isLoading"
 				class="ml-2"
 				@click="handleViewType"
-				:icon="`mdi-${viewType === 'listing' ? 'view-list' : 'table'}`"
+				:icon="viewTypeIcon"
 			>
+			</v-btn>
+			<v-btn
+				v-if="!showDetailItem && filterDrawer && viewTypeListing && !mobileOnly"
+				:variant="buttonsForms.variant.add"
+				:color="buttonsForms.color.add"
+				:disabled="isLoading"
+				class="ml-2"
+				@click="handleViewTypeListingDownload"
+			>
+				{{ $t('buttons.export') }}
 			</v-btn>
 		</template>
 		<template v-slot:listing>
@@ -174,7 +184,10 @@
 					v-show="colsSearchResults"
 					:cols="colsSearchResults"
 				>
-					<v-row dense>
+					<v-row 
+						v-if="viewTypeTable"
+						dense
+					>
 						<v-col
 							cols="12"
 							v-for="item in items"
@@ -240,6 +253,7 @@
 									<LaunchView
 										:detail-item="item"
 										:debug="debug"
+										:isTable="viewTypeTable"
 									>
 									</LaunchView>
 								</v-card-text>
@@ -283,6 +297,28 @@
 							</v-card>
 						</v-col>
 					</v-row>
+					<v-table
+						ref="viewTypeListingRef"
+						v-if="viewTypeListing"
+						density="compact"
+					>
+						<thead>
+							<LaunchViewListing
+								:debug="debug"
+								:isHeaders="viewTypeListing"
+							>
+							</LaunchViewListing>
+						</thead>
+						<tbody>
+							<LaunchViewListing
+								v-for="item in items"
+								:key="item.id"
+								:detail-item="item"
+								:debug="debug"
+							>
+							</LaunchViewListing>
+						</tbody>
+					</v-table>
 				</v-col>
 				<v-col
 					class="mb-4"
@@ -337,6 +373,7 @@ import { useLaunchesFilterValidation } from '@/components/content/launches/launc
 import ContentHeader from '@/components/content/Header';
 import LaunchEdit from '@/components/content/launches/launch/LaunchEdit';
 import LaunchView from '@/components/content/launches/launch/LaunchView';
+import LaunchViewListing from '@/components/content/launches/launch/LaunchViewListing';
 import LocationLookupDialog from '@/components/content/locations/dialogs/LocationLookupDialog';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
@@ -357,6 +394,7 @@ export default {
 		ContentHeader,
 		LaunchEdit,
 		LaunchView,
+		LaunchViewListing,
 		LocationLookupDialog,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
@@ -458,12 +496,18 @@ export default {
 			filterItemRocketId,
 			filterItemRocketName,
 			filterItemRocketTypes,
+			mobileOnly,
 			title,
 			viewType,
+			viewTypeListingRef,
 			buttonSearchResetDisabled,
+			viewTypeIcon,
+			viewTypeListing,
+			viewTypeTable,
 			clickSearchLocations,
 			clickSearchRockets,
 			handleViewType,
+			handleViewTypeListingDownload,
 			launchDate,
 			launchStatusColor,
 			launchStatusIcon,
@@ -560,12 +604,18 @@ export default {
 			filterItemRocketId,
 			filterItemRocketName,
 			filterItemRocketTypes,
+			mobileOnly,
 			title,
 			viewType,
+			viewTypeListingRef,
 			buttonSearchResetDisabled,
+			viewTypeIcon,
+			viewTypeListing,
+			viewTypeTable,
 			clickSearchLocations,
 			clickSearchRockets,
 			handleViewType,
+			handleViewTypeListingDownload,
 			launchDate,
 			launchStatusColor,
 			launchStatusIcon,

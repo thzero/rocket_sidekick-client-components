@@ -80,12 +80,19 @@ export function useAppOpenSourceComponent(props, context, options) {
 			licenseName: 'Apache License 2.0',
 			licenseUrl: 'https://github.com/Teun/thenBy.js/blob/master/LICENSE.TXT'
 		},
+		// {
+		// 	category: 'client',
+		// 	name: 'vue-dndrop',
+		// 	url: 'https://github.com/amendx/vue-dndrop',
+		// 	licenseName: 'MIT',
+		// 	licenseUrl: 'https://github.com/amendx/vue-dndrop/blob/master/LICENSE'
+		// },
 		{
 			category: 'client',
-			name: 'vue-dndrop',
-			url: 'https://github.com/amendx/vue-dndrop',
-			licenseName: 'MIT',
-			licenseUrl: 'https://github.com/amendx/vue-dndrop/blob/master/LICENSE'
+			name: 'sheetjs/xlsx',
+			url: 'https://git.sheetjs.com/sheetjs/sheetjs',
+			licenseName: 'Apache License 2.0',
+			licenseUrl: 'https://git.sheetjs.com/sheetjs/sheetjs/src/branch/master/LICENSE'
 		}
 	]);
 

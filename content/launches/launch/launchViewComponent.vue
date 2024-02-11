@@ -1,5 +1,6 @@
 <script>
 import { computed } from 'vue';
+import { read, writeFileXLSX } from "sheetjs";
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
@@ -141,12 +142,12 @@ export function useLaunchViewComponent(props, context, options) {
 	});
 	const displayItemResultsAltitudeDrogue = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDeployDrogue)
-			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeDeployDrogue; }, (value) => { return value.altitudeDeployDrogueMeasurementUnitsId; }, (value) => { return value.altitudeDrogueMeasurementUnitId; });
+			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeDeployDrogue; }, (value) => { return value.altitudeDeployDrogueMeasurementUnitsId; }, (value) => { return value.altitudeDeployDrogueMeasurementUnitId; });
 		return null;
 	});
 	const displayItemResultsAltitudeMain = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.altitudeDeployMain)
-			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeDeployMain; }, (value) => { return value.altitudeDeployMainMeasurementUnitsId; }, (value) => { return value.altitudeMainMeasurementUnitId; });
+			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeDeployMain; }, (value) => { return value.altitudeDeployMainMeasurementUnitsId; }, (value) => { return value.altitudeDeployMainMeasurementUnitId; });
 		return null;
 	});
 	const displayItemResultsAltitudeMax = computed(() => {
