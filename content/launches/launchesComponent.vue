@@ -312,7 +312,10 @@ export function useLaunchesBaseComponent(props, context, options) {
 		const wb = utils.book_new();
 		utils.book_append_sheet(wb, ws, "Data");
 		/* export to XLSX */
-		writeFileXLSX(wb, "SheetJSVueAoO.xlsx");
+		const now = new Date();
+		let launchFileName = `${LibraryClientUtility.$trans.t('forms.content.launches.plural')} ${now.getDate()}${now.getMonth()}${now.getFullYear()}`;
+		launchFileName = launchFileName.toLocaleLowerCase();
+		writeFileXLSX(wb, `${launchFileName}.xlsx`);
 	};
 	const initI = async (correlationId) => {
 		settings.value = await serviceStore.getters.getLaunchesSettings(correlationId);

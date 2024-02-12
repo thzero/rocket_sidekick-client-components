@@ -71,55 +71,55 @@
 		v-if="isHeaders"
 	>
 	<tr style="isSuccess ? : 'background-color: red;' : '''">
-		<th class="text-left text-h2">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.rockets.name') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.locations.name') }}
 		</th>
-		<!-- <th class="text-left">
+		<!-- <th class="text-left font-weight-bold">
 			{{ $t('forms.content.locations.address') }}
 		</th> -->
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.launches.failureReasons') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('strings.rockets.diameterMajor') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('strings.rockets.length') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('strings.rockets.weight') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('strings.rockets.cg') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('strings.rockets.cp') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('strings.content.rockets.motors') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.launches.weather.temperature') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.launches.weather.windspeed') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.launches.results.acceleration.max') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.launches.results.velocity.max') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.launches.results.altitude.max') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.launches.results.altitude.main') }}
 		</th>
-		<th class="text-left">
+		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.launches.results.altitude.drogue') }}
 		</th>
 	</tr>
