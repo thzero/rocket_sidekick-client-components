@@ -1,6 +1,5 @@
 <script>
 import { computed } from 'vue';
-import { read, writeFileXLSX } from "sheetjs";
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
