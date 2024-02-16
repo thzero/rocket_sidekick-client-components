@@ -13,27 +13,27 @@
 							v-if="statusCompleted"
 							style="height: 48px; float: left;" 
 						>
-							{{ hasLaunch ? 'mdi-rocket-launch' : 'mdi-check' }}
+							{{ isLaunch ? 'mdi-rocket-launch' : 'mdi-check' }}
 						</v-icon>
 						<!-- dragable -->
 						<!-- <slot name="draghandle">
 							<span class="column-drag-handle mr-2">&#x2630;</span>
 						</slot> -->
-						<span class="v-card-title">{{ item.name }}</span>
+						<span class="v-card-title">{{ item.name }} {{ isSection ? $t('forms.content.checklists.section') : ''}}</span>
 					</div>
 					<v-spacer></v-spacer>
 					<div class="pl-4 pr-4 pb-2 pt-2">
-						<v-btn
-							v-if="isEditable && moveUp1"
+						<!-- <v-btn
+							v-if="isEditable && moveUp"
 							class="mr-2"
 							size="small"
 							icon="mdi-menu-up"
 						></v-btn>
 						<v-btn
-							v-if="isEditable && moveDown1"
+							v-if="isEditable && moveDown"
 							size="small"
 							icon="mdi-menu-down"
-						></v-btn>
+						></v-btn> -->
 						<v-btn 
 							v-if="isInProgress && !statusCompleted && hasCompleted"
 							prepend-icon="mdi-check"
@@ -43,7 +43,7 @@
 							:loading="isLoading"
 							>{{ $t('buttons.complete') }}</v-btn>
 						<v-btn 
-							v-if="isInProgress && !statusCompleted && hasLaunch && root.canLaunch"
+							v-if="isInProgress && !statusCompleted && isLaunch && root.canLaunch"
 							prepend-icon="mdi-rocket-launch"
 							:variant="buttonsForms.variant.ok"
 							:color="buttonsForms.color.ok"
@@ -65,23 +65,90 @@
 						</slot>
 					</v-card-text>
 					<v-card-actions
-						v-if="isEditable"
+						v-if="isEditable && !isLaunch"
 					>
 						<v-spacer></v-spacer>
-						<v-btn 
-							v-if="isEditable"
-							class="ml-2 mr-2">asdfasdf</v-btn>
-						<v-btn 
-							v-if="isEditable"
-							class="ml-2 mr-2">asdfasdf</v-btn>
-						<v-btn 
-							v-if="isEditable"
-							class="ml-2 mr-2">asdfasdf</v-btn>
+						<v-tooltip :text="$t('tooltips.content.checklists.steps.add')">
+							<template v-slot:activator="{ props }">
+								<v-btn
+									v-if="canAdd"
+									v-bind="props"
+									:variant="buttonsForms.variant.add"
+									:color="buttonsForms.color.add"
+									class="ml-2 mr-2">{{ $t('buttons.add' )}}</v-btn>
+							</template>
+						</v-tooltip>
+						<v-tooltip :text="$t('tooltips.content.checklists.steps.delete')">
+							<template v-slot:activator="{ props }">
+								<v-btn 
+									v-if="canDelete"
+									v-bind="props"
+									:variant="buttonsForms.variant.delete"
+									:color="buttonsForms.color.delete"
+									class="ml-2 mr-2">{{ $t('buttons.delete' )}}</v-btn>
+							</template>
+						</v-tooltip>
+						<v-tooltip :text="$t('tooltips.content.checklists.steps.edit')">
+							<template v-slot:activator="{ props }">
+								<v-btn 
+									v-if="isEditable"
+									v-bind="props"
+									:variant="buttonsForms.variant.edit"
+									:color="buttonsForms.color.edit"
+									class="ml-2 mr-2">{{ $t('buttons.edit' )}}</v-btn>
+							</template>
+						</v-tooltip>
 						<!-- <v-btn 
-							v-if="isInProgress"
-							:variant="buttonsForms.variant.ok"
-							:color="buttonsForms.color.ok"
-							class="ml-2 mr-2">Complete</v-btn> -->
+							v-if="isEditable"
+							class="ml-2 mr-2">{{ $t('buttons.delete' )}}</v-btn> -->
+						<v-tooltip :text="$t('tooltips.content.checklists.steps.moveIn')">
+							<template v-slot:activator="{ props }">
+								<v-btn
+									v-if="isEditable && moveIn"
+									v-bind="props"
+									density="comfortable"
+									color="black"
+									style="background-color: gray;"
+									icon="mdi-menu-right"
+								></v-btn>
+							</template>
+						</v-tooltip>
+						<v-tooltip :text="$t('tooltips.content.checklists.steps.moveUp')">
+							<template v-slot:activator="{ props }">
+								<v-btn
+									v-if="isEditable && moveUp"
+									v-bind="props"
+									color="black"
+									density="comfortable"
+									style="background-color: gray;"
+									icon="mdi-menu-up"
+								></v-btn>
+							</template>
+						</v-tooltip>
+						<v-tooltip :text="$t('tooltips.content.checklists.steps.moveDown')">
+							<template v-slot:activator="{ props }">
+								<v-btn
+									v-if="isEditable && moveDown"
+									v-bind="props"
+									density="comfortable"
+									color="black"
+									style="background-color: gray;"
+									icon="mdi-menu-down"
+								></v-btn>
+							</template>
+						</v-tooltip>
+						<v-tooltip :text="$t('tooltips.content.checklists.steps.moveOut')">
+							<template v-slot:activator="{ props }">
+								<v-btn
+									v-if="isEditable && moveOut"
+									v-bind="props"
+									density="comfortable"
+									color="black"
+									style="background-color: gray;"
+									icon="mdi-menu-left"
+								></v-btn>
+							</template>
+						</v-tooltip>
 					</v-card-actions>
 				</v-card>
 			</v-col>
@@ -116,10 +183,15 @@ export default {
 			serverErrors,
 			setErrors,
 			buttonsForms,
+			canAdd,
+			canDelete,
 			hasCompleted,
-			hasLaunch,
-			moveDown1,
-			moveUp1,
+			isLaunch,
+			isSection,
+			moveDown,
+			moveIn,
+			moveOut,
+			moveUp,
 			rowColor,
 			statusCompleted,
 			handleComplete,
@@ -141,10 +213,15 @@ export default {
 			serverErrors,
 			setErrors,
 			buttonsForms,
+			canAdd,
+			canDelete,
 			hasCompleted,
-			hasLaunch,
-			moveDown1,
-			moveUp1,
+			isLaunch,
+			isSection,
+			moveDown,
+			moveIn,
+			moveOut,
+			moveUp,
 			rowColor,
 			statusCompleted,
 			handleComplete,

@@ -7,6 +7,10 @@ export const useChecklistStepsPanelComponentProps = {
 		type: Number,
 		default: null
 	},
+	depthMax: {
+		type: Boolean,
+		default: false
+	},
 	index: {
 		type: Number,
 		default: null

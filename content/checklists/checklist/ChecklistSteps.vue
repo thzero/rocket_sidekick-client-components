@@ -13,6 +13,7 @@
 			<ChecklistStepPanel 
 				class="mt-2"
 				:depth="0"
+				:depthMax="!item.steps || item.steps.length === 0"
 				:index="index1"
 				:item="item1"
 				:total="item.steps.length"
@@ -31,6 +32,7 @@
 					<ChecklistStepPanel 
 						class="ml-6 mt-2"
 						:depth="1"
+						:depthMax="!item2.steps || item2.steps.length === 0"
 						:index="index2"
 						:item="item2"
 						:parent="item1"
@@ -48,6 +50,7 @@
 							<ChecklistStepPanel 
 								class="ml-6 mt-2"
 								:depth="2"
+								:depthMax="!item3.steps || item3.steps.length === 0"
 								:index="index3"
 								:item="item3"
 								:parent="item2"
@@ -65,6 +68,7 @@
 									<ChecklistStepPanel 
 										class="ml-6 mt-2"
 										:depth="3"
+										:depthMax="!item4.steps || item4.steps.length === 0"
 										:index="index4"
 										:item="item4"
 										:parent="item3"
@@ -82,6 +86,7 @@
 											<ChecklistStepPanel 
 												class="ml-6 mt-2"
 												:depth="4"
+												:depthMax="false"
 												:index="index5"
 												:parent="item4"
 												:root="item"
