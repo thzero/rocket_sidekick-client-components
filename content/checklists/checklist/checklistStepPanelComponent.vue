@@ -30,6 +30,18 @@ export function useChecklistStepPanelComponent(props, context, options) {
 		buttonsForms
 	} = useButtonComponent(props, context);
 
+	const canAdd = computed(() => {
+		if (!props.item)
+			return false;
+		
+		return props.isEditable && isSection.value && !isLaunch.value;
+	});
+	const canDelete = computed(() => {
+		if (!props.item)
+			return false;
+		
+		return props.isEditable && !isLaunch.value;
+	});
 	const hasCompleted = computed(() => {
 		if (!props.item)
 			return false;
@@ -37,28 +49,45 @@ export function useChecklistStepPanelComponent(props, context, options) {
 		return (props.item.typeId !== AppCommonConstants.Checklists.ChecklistStepTypes.launch) &&
 			(props.item.typeId !== AppCommonConstants.Checklists.ChecklistStepTypes.section);
 	});
-	const hasLaunch = computed(() => {
+	const isLaunch = computed(() => {
 		if (!props.item)
 			return false;
 		
 		return (props.item.typeId === AppCommonConstants.Checklists.ChecklistStepTypes.launch);
 	});
-	const moveDown1 = computed(() => {
-		const total = (props.total ?? 99) - 1;
-		return (props.depth > 0) || (props.depth === 0 && props.index >= 0 && props.index < total);
+	const isSection = computed(() => {
+		if (!props.item)
+			return false;
+		
+		return (props.item.typeId === AppCommonConstants.Checklists.ChecklistStepTypes.section);
 	});
-
-	const moveUp1 = computed(() => {
-		return (props.depth > 0) || (props.depth === 0 && props.index > 0);
+	const moveDown = computed(() => {
+		const total = (props.total ?? 99) - 1;
+		return ((props.depth > 0) || (props.depth === 0 && props.index >= 0 && props.index < total)) && !isLaunch.value;;
+	});
+	const moveIn = computed(() => {
+		return (((props.depth > 0) || (props.depth === 0 && props.index > 0)) && !props.depthMax) && !isLaunch.value;;
+	});
+	const moveOut = computed(() => {
+		return ((props.depth > 0) || (props.depth === 0 && props.index > 0)) && !isLaunch.value;;
+	});
+	const moveUp = computed(() => {
+		return ((props.depth > 0) || (props.depth === 0 && props.index > 0)) && !isLaunch.value;;
 	});
 	const rowColor = computed(() => {
-		if (!props.item || !props.item.statusId)
-			return 'primary';
+		if (!props.item || !props.item.statusId) {
+			if (props.item.typeId === AppCommonConstants.Checklists.ChecklistStepTypes.launch)
+				return 'red';
+			return isSection.value ? 'primary' : 'secondary';
+		}
 
 		if (props.item.statusId === AppCommonConstants.Checklists.ChecklistStepStatus.completed)
 			return 'green';
 
-		return 'primary';
+		if (props.item.typeId === AppCommonConstants.Checklists.ChecklistStepTypes.launch)
+			return 'red';
+
+		return isSection.value ? 'primary' : 'secondary';
 	});
 	const statusCompleted = computed(() => {
 		if (!props.item)
@@ -89,10 +118,15 @@ export function useChecklistStepPanelComponent(props, context, options) {
 		serverErrors,
 		setErrors,
 		buttonsForms,
+		canAdd,
+		canDelete,
 		hasCompleted,
-		hasLaunch,
-		moveDown1,
-		moveUp1,
+		isLaunch,
+		isSection,
+		moveDown,
+		moveIn,
+		moveOut,
+		moveUp,
 		rowColor,
 		statusCompleted,
 		handleComplete,

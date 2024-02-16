@@ -520,7 +520,7 @@ export function useChecklistComponent(props, context, options) {
 	// 	"description":"Checklist for dual deploy launch with electronics.",
 	// 	"isDefault":true,
 	// 	"name":"Single altimeter dual deploy checklist",
-	// 	"launchTypeId":"all",
+	// 	"rocketTypes":[],
 	// 	"steps":[
 	// 		{
 	// 			"id":"rbl39kuhoyoow0scu0ugx",
