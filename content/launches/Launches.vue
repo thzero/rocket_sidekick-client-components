@@ -140,8 +140,8 @@
 		<template #postActions=" { filterDrawer, isLoading }">
 			<v-btn
 				v-if="!showDetailItem && filterDrawer && !mobileOnly"
-				:variant="buttonsForms.variant.add"
-				:color="buttonsForms.color.add"
+				:variant="buttonsForms.variant.default"
+				:color="buttonsForms.color.default"
 				:disabled="isLoading"
 				class="ml-2"
 				@click="handleViewType"
@@ -150,8 +150,8 @@
 			</v-btn>
 			<v-btn
 				v-if="!showDetailItem && filterDrawer && viewTypeListing && !mobileOnly"
-				:variant="buttonsForms.variant.add"
-				:color="buttonsForms.color.add"
+				:variant="buttonsForms.variant.default"
+				:color="buttonsForms.color.default"
 				:disabled="isLoading"
 				class="ml-2"
 				@click="handleViewTypeListingDownload"

@@ -122,8 +122,9 @@
 							<v-list>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="purple"
+										block
 										@click="clickAltimetersSearch"
 									>
 										{{ $t('forms.content.parts.altimeter.name') }}
@@ -131,8 +132,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickChuteProtectorsSearch"
 									>
 										{{ $t('forms.content.parts.chuteProtector.name') }}
@@ -140,8 +142,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickChuteReleasesSearch"
 									>
 										{{ $t('forms.content.parts.chuteRelease.name') }}
@@ -149,8 +152,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickDeploymentBagsSearch"
 									>
 										{{ $t('forms.content.parts.deploymentBag.name') }}
@@ -158,8 +162,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickParachutesSearch"
 									>
 										{{ $t('forms.content.parts.parachute.name') }}
@@ -167,8 +172,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickStreamersSearch"
 									>
 										{{ $t('forms.content.parts.streamer.name') }}
@@ -178,6 +184,7 @@
 									<v-btn
 										variant="flat"
 										color="blue"
+										block
 										@click="clickTrackersSearch"
 									>
 										{{ $t('forms.content.parts.tracker.name') }}
@@ -431,6 +438,7 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			altimeters,
@@ -541,6 +549,7 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			altimeters,
