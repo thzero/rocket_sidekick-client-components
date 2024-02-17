@@ -33,7 +33,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		notImplementedError,
 		success,
 		serviceStore,
-		sort,
+		sortByOrder,
 		target
 	} = useContentBaseComponent(props, context, options);
 
@@ -90,6 +90,8 @@ export function useInventoryBaseComponent(props, context, options) {
 	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.streamer ]);
 	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.tracker ]);
 	const manufacturers = ref(props.manufacturers);
+	const panels = ref([]);
+	const partTypes = ref(AppCommonConstants.Rocketry.PartTypes);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.inventory.title`));
 
 	if (LibraryCommonUtility.isDev) {
@@ -214,6 +216,12 @@ export function useInventoryBaseComponent(props, context, options) {
 		// params.rocketTypes = filterItemRocketTypes.value;
 		return params;
 	};
+	const isPartType = (item, typeId) => {
+		return item && item.typeId === typeId;
+	};
+	const panelsUpdated = async (value) => {
+		await serviceStore.dispatcher.setInventoryExpanded(correlationId(), value);
+	};
 	const resetAdditional = async (correlationId, data) => {
 		// filterItemName.value = data ? data.name : null;
 		// filterItemOrganizations.value = data ? data.organizations : null;
@@ -231,21 +239,39 @@ export function useInventoryBaseComponent(props, context, options) {
 			return;
 		
 		inventory.value = response.results;
-		inventoryListing.value = response.results.items ?? [];
+		inventoryListing.value = sortListing(correlationId, response.results.items ?? []);
 		return success(correlationId);
 	};
 	const selectPart = async(correlationId, item) => {
 		if (!item)
 			return;
 
-		const find = inventoryListing.value.find(l => l.item.id === item.id);
-		if (find) {
-			setNotify(correlationId, 'errors.content.inventory.exists');
-			return;
-		}
+		// const find = inventoryListing.value.find(l => l.item.id === item.id);
+		// if (find) {
+		// 	setNotify(correlationId, 'errors.content.inventory.exists');
+		// 	return;
+		// }
 
-		const manufacturer = manufacturers.value.find(l => l.id === item.manufacturerId);
-		inventoryListing.value.push({ item: item, manufacturer: manufacturer ? manufacturer.name : '', quantity: 0 });
+		// const manufacturer = manufacturers.value.find(l => l.id === item.manufacturerId);
+		// inventoryListing.value.push({ item: item, manufacturer: manufacturer ? manufacturer.name : '', quantity: 0 });
+		let temp = inventoryListing.value.find(l => l.typeId === item.typeId);
+		if (!temp) {
+			temp = { typeId: item.typeId, items: [], title: LibraryClientUtility.$trans.t(`forms.content.parts.${item.typeId}.plural`)};
+			inventoryListing.value.push(temp);
+		}
+		else {
+			const find = temp.items.find(l => l.item.id === item.id);
+			if (find) {
+				setNotify(correlationId, 'errors.content.inventory.exists');
+				return;
+			}
+		}
+		temp.items.push({ item: item, quantity: 0 });
+		temp.items = sortListingItems(correlationId, temp.items);
+		inventoryListing.value = sortListing(correlationId, inventoryListing.value);
+
+		if (!panels.value.find(l => l === item.typeId))
+			panels.value.push(item.typeId);
 	};
 	const selectAltimeter = async (item) => {
 		try {
@@ -324,10 +350,35 @@ export function useInventoryBaseComponent(props, context, options) {
 			dialogPartsSearchTrackersManager.value.ok();
 		}
 	};
+	const sortListing = (correlationId, listing) => {
+		return listing.sort(
+			firstBy((v1, v2) => { return (v1.title && v2.typeId) && v1.title.localeCompare(v2.title); })
+		);
+	};
+	const sortListingItems = (correlationId, listing) => {
+		return listing.sort(
+			firstBy((v1, v2) => { return (v1.name && v2.typeId) && v1.title.localeCompare(v2.name); })
+		);
+	};
 
 	onMounted(async () => {
 		const correlationIdI = correlationId();
-		
+
+		let temp = await serviceStore.getters.getInventoryExpanded();
+		if (temp || temp.length)
+			temp = [ 
+				AppCommonConstants.Rocketry.ManufacturerTypes.altimeter,
+				AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector,
+				AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease,
+				AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag,
+				AppCommonConstants.Rocketry.ManufacturerTypes.motor,
+				AppCommonConstants.Rocketry.ManufacturerTypes.motorCase,
+				AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
+				AppCommonConstants.Rocketry.ManufacturerTypes.streamer,
+				AppCommonConstants.Rocketry.ManufacturerTypes.tracker
+			];
+		panels.value = temp;
+
 		await search(correlationIdI);
 
 		if (!manufacturers.value) {
@@ -352,7 +403,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		notImplementedError,
 		success,
 		serviceStore,
-		sort,
+		sortByOrder,
 		target,
 		buttonsDialog,
 		buttonsForms,
@@ -367,6 +418,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		// filterItemName,
 		// filterItemOrganizations,
 		// filterItemRocketTypes,
+		panels,
+		partTypes,
 		title,
 		dialogPartsSearchAltimetersManager,
 		dialogPartsSearchChuteProtectorsManager,
@@ -404,6 +457,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		clickParachutesSearch,
 		clickStreamersSearch,
 		clickTrackersSearch,
+		isPartType,
+		panelsUpdated,
 		resetAdditional,
 		search,
 		selectAltimeter,

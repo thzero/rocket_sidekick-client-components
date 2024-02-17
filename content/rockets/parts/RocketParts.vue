@@ -90,18 +90,19 @@
 		<v-expansion-panel-title
 			color="secondary"
 		>
-			{{ partTypeName(item.name) }}
+			<span class="v-card-title pb-0 pl-0 pr-0 pt-0">{{ partTypeName(item.name) }}</span>
 		</v-expansion-panel-title>
 		<v-expansion-panel-text>
 			<div
-				v-for="item2 in item.results" 
+				v-for="(item2, index2) in item.results" 
 				:key="item2.id"
 			>
 				<v-card
-					color="grey-darken-3"
 					class="mb-4"
 				>
-					<v-card-title>
+					<v-card-title
+						:class="index2 % 2 === 1 ? 'bg-grey-darken-3' : 'bg-grey-darken-1'"
+					>
 						<AltimeterPanelTitle
 							v-if="isPartType(item2, partTypes.altimeter)"
 							:item="item2"

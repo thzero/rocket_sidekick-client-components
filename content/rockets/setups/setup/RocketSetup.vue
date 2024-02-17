@@ -181,9 +181,9 @@
 					:value="item.id"
 				>
 					<v-expansion-panel-title
-						color="secondary"
+						color="primary"
 					>
-						{{ $t(`forms.content.rockets.stage.name`) }} {{ item.index  + 1 }}
+						<span class="v-card-title pb-0 pl-0 pr-0 pt-0">{{ $t(`forms.content.rockets.stage.name`) }} {{ item.index  + 1 }}</span>
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
 						<RocketSetupStage

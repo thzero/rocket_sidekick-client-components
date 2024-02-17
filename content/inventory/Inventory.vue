@@ -203,46 +203,97 @@
 				</v-col>
 				<v-col
 				>
-					<div>
-						inventory {{ inventory }}
-					</div>
-					<div>
-						inventoryListing {{ inventoryListing }}
-					</div>
 					 <v-row dense>
 						<v-col
 							cols="12"
-							v-for="(item, index) in inventoryListing"
-							:key="index"
 						>
-							<v-card>
-								<v-card-title
-									class="bg-primary"
-								>
-										{{ item.manufacturer }}
-									<div class="float-right">
-										{{ item.item.name }}
-									</div>
-								</v-card-title>
-								<v-card-text>
-									<div class="float-right">
-									<!-- <Locat\ionView
-										:detail-item="item"
-										:debug="debug"
+						{{  panels }}
+							<v-expansion-panels
+								v-model="panels"
+								class="mt-4"
+								multiple
+								@update:modelValue="panelsUpdated"
+							>
+									<v-expansion-panel
+									v-for="(item, index) in inventoryListing"
+									:key="index"
+										:value="item.typeId"
 									>
-									</LocationView> -->
-										<VtNumberFieldWithValidation
-											style="min-width: 200px;"
-											ref="detailItemTemperatureRef"
-											v-model="item.quantity"
-											vid="detailItemTemperature"
-											type="decimal"
-											:validation="validation"
-											:label="$t('forms.content.launches.weather.temperature')"
-										/>
-									</div>
-								</v-card-text>
-							</v-card>
+										<v-expansion-panel-title
+											color="primary"
+										>
+											<span class="v-card-title pb-0 pl-0 pr-0 pt-0">{{ item.title }}</span>
+										</v-expansion-panel-title>
+										<v-expansion-panel-text>
+											<div
+												v-for="(item2, index2) in item.items"
+												:key="index2"
+											>
+												<v-card>
+													<v-card-title
+														:class="index2 % 2 === 1 ? 'bg-grey-darken-3' : 'bg-grey-darken-1'"
+													>
+														<AltimeterPanelTitle
+															v-if="isPartType(item2.item, partTypes.altimeter)"
+															:item="item2.item"
+														/>
+														<ChuteProtectorPanelTitle
+															v-if="isPartType(item2.item, partTypes.chuteProtector)"
+															:item="item2.item"
+														/>
+														<ChuteReleasePanelTitle
+															v-if="isPartType(item2.item, partTypes.chuteRelease)"
+															:item="item2.item"
+														/>
+														<DeploymentBagPanelTitle
+															v-if="isPartType(item2.item, partTypes.deploymentBag)"
+															:item="item2.item"
+														/>
+														<MotorPanelTitle
+															v-if="isPartType(item2.item, partTypes.motor)"
+															:item="item2.item"
+														/>
+														<MotorCasePanelTitle
+															v-if="isPartType(item2.item, partTypes.motorCase)"
+															:item="item2.item"
+														/>
+												<!-- reefing -->
+														<ParachutePanelTitle
+															v-if="isPartType(item2.item, partTypes.parachute)"
+															:item="item2.item"
+														/>
+														<StreamerPanelTitle
+															v-if="isPartType(item2.item, partTypes.streamer)"
+															:item="item2.item"
+														/>
+														<TrackerPanelTitle
+															v-if="isPartType(item2.item, partTypes.tracker)"
+															:item="item2.item"
+														/>
+														<div class="float-right">
+															{{ item2.item.manufacturer }}
+														</div>
+													</v-card-title>
+													<v-card-text>
+														<div class="float-right mb-2 mt-2">
+															<VtNumberField
+																style="min-width: 200px;"
+																ref="detailItemTemperatureRef"
+																v-model="item2.quantity"
+																vid="detailItemTemperature"
+																:min="0"
+																:max="1000"
+																type="integer"
+																:validation="validation"
+																:label="$t('forms.content.launches.weather.temperature')"
+															/>
+														</div>
+													</v-card-text>
+												</v-card>
+											</div>
+										</v-expansion-panel-text>
+									</v-expansion-panel>
+								</v-expansion-panels>
 						</v-col>
 					</v-row>
 				</v-col>
@@ -307,32 +358,42 @@ import { useInventoryBaseComponent } from '@/components/content/inventory/invent
 import { useInventoryBaseComponentProps } from '@/components/content/inventory/inventoryComponentProps';
 import { useInventoryFilterValidation } from '@/components/content/inventory/inventoryFilterValidation';
 
+import AltimeterPanelTitle from '@/components/content/parts/altimeters/AltimeterPanelTitle';
+import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors/ChuteProtectorPanelTitle';
+import ChuteReleasePanelTitle from '@/components/content/parts/chuteReleases/ChuteReleasePanelTitle';
 import ContentHeader from '@/components/content/Header';
+import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import MotorPanelTitle from '@/components/content/parts/motors/MotorPanelTitle';
+import MotorCasePanelTitle from '@/components/content/parts/motorCases/MotorCasePanelTitle';
+import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
+import StreamerPanelTitle from '@/components/content/parts/streamers/StreamerPanelTitle';
+import TrackerPanelTitle from '@/components/content/parts/trackers/TrackerPanelTitle';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
-import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
-import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
-import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
-import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
-import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
+import VtNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberField';
 
 export default {
 	name: 'InventoryUserControl',
 	components: {
+		AltimeterPanelTitle,
+		ChuteProtectorPanelTitle,
+		ChuteReleasePanelTitle,
 		ContentHeader,
+		DeploymentBagPanelTitle,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
+		MotorPanelTitle,
+		MotorCasePanelTitle,
+		ParachutePanelTitle,
 		RocketPartsLookupDialog,
+		StreamerPanelTitle,
+		TrackerPanelTitle,
 		VtConfirmationDialog,
 		VtFormListing,
-		VtNumberFieldWithValidation,
-		VtSelectWithValidation,
-		VtSwitchWithValidation,
-		VtTextAreaWithValidation,
-		VtTextFieldWithValidation
+		VtNumberField
 	},
 	props: {
 		...useInventoryBaseComponentProps
@@ -349,7 +410,7 @@ export default {
 			notImplementedError,
 			success,
 			serviceStore,
-			sort,
+			sortByOrder,
 			target,
 			buttonsDialog,
 			buttonsForms,
@@ -364,6 +425,8 @@ export default {
 			// filterItemName,
 			// filterItemOrganizations,
 			// filterItemRocketTypes,
+			panels,
+			partTypes,
 			title,
 			dialogPartsSearchAltimetersManager,
 			dialogPartsSearchChuteProtectorsManager,
@@ -401,6 +464,8 @@ export default {
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
+			isPartType,
+			panelsUpdated,
 			resetAdditional,
 			search,
 			selectAltimeter,
@@ -425,7 +490,7 @@ export default {
 			notImplementedError,
 			success,
 			serviceStore,
-			sort,
+			sortByOrder,
 			target,
 			buttonsDialog,
 			buttonsForms,
@@ -440,6 +505,8 @@ export default {
 			// filterItemName,
 			// filterItemOrganizations,
 			// filterItemRocketTypes,
+			panels,
+			partTypes,
 			title,
 			dialogPartsSearchAltimetersManager,
 			dialogPartsSearchChuteProtectorsManager,
@@ -477,6 +544,8 @@ export default {
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
+			isPartType,
+			panelsUpdated,
 			resetAdditional,
 			search,
 			selectAltimeter,

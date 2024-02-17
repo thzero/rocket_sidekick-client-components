@@ -245,10 +245,10 @@
 					:value="item.id"
 				>
 					<v-expansion-panel-title
-						color="secondary"
+						color="primary"
 					>
 						<div style="width: 100%;">
-							{{ numberAndYear(item) }}
+							<span class="v-card-title pb-0 pl-0 pr-0 pt-0">{{ numberAndYear(item) }}</span>
 							<span class="float-right">{{ datesToString(item.dates) }}</span>
 						</div>
 					</v-expansion-panel-title>
