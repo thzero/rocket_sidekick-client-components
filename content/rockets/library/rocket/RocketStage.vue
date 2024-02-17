@@ -160,8 +160,9 @@
 							<v-list>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="purple"
+										block
 										@click="clickAltimetersSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.altimeter.name') }}
@@ -169,8 +170,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickChuteProtectorsSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.chuteProtector.name') }}
@@ -178,8 +180,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickChuteReleasesSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.chuteRelease.name') }}
@@ -187,8 +190,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickDeploymentBagsSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.deploymentBag.name') }}
@@ -196,8 +200,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickParachutesSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.parachute.name') }}
@@ -205,8 +210,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="orange"
+										block
 										@click="clickStreamersSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.streamer.name') }}
@@ -214,8 +220,9 @@
 								</v-list-item>
 								<v-list-item>
 									<v-btn
-										variant="flat"
+										:variant="buttonsForms.variant.default"
 										color="blue"
+										block
 										@click="clickTrackersSearch(displayItem.id)"
 									>
 										{{ $t('forms.content.parts.tracker.name') }}
@@ -421,6 +428,7 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			altimeters,
@@ -507,6 +515,7 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			altimeters,
