@@ -3,6 +3,7 @@ import { computed, onMounted, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
+import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
 import AppUtility from '@/utility/app';
@@ -10,6 +11,8 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import InventoryData from 'rocket_sidekick_common/data/inventory/index';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
@@ -66,12 +69,27 @@ export function useInventoryBaseComponent(props, context, options) {
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);
-	const inventory = ref(new InventoryData());
-	const inventoryListing = ref([]);
-	const inventoryListingRef = ref(null);
+	const dialogPartsSearchAltimetersManager = ref(new DialogSupport());
+	const dialogPartsSearchChuteProtectorsManager = ref(new DialogSupport());
+	const dialogPartsSearchChuteReleasesManager = ref(new DialogSupport());
+	const dialogPartsSearchDeploymentBagsManager = ref(new DialogSupport());
+	const dialogPartsSearchParachutesManager = ref(new DialogSupport());
+	const dialogPartsSearchStreamersManager = ref(new DialogSupport());
+	const dialogPartsSearchTrackersManager = ref(new DialogSupport());
 	// const filterItemName = ref(null);
 	// const filterItemOrganizations = ref([]);
 	// const filterItemRocketTypes = ref([]);
+	const inventory = ref(new InventoryData());
+	const inventoryListing = ref([]);
+	const inventoryListingRef = ref(null);
+	const manufacturerTypeAltimeter = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.altimeter ]);
+	const manufacturerTypeChuteProtector = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector ]);
+	const manufacturerTypeChuteRelease = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease ]);
+	const manufacturerTypeDeploymentBag = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag ]);
+	const manufacturerTypeParachute = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.parachute ]);
+	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.streamer ]);
+	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.tracker ]);
+	const manufacturers = ref(props.manufacturers);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.inventory.title`));
 
 	if (LibraryCommonUtility.isDev) {
@@ -80,7 +98,116 @@ export function useInventoryBaseComponent(props, context, options) {
 		if (config)
 			debug.value = config['inventory'] ?? false;
 	}
-
+	
+	const altimeters = computed(() => {
+		if (!inventoryListing)
+			return [];
+		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.altimeter);
+	});
+	const chuteProtectors = computed(() => {
+		if (!inventoryListing)
+			return [];
+		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.chuteProtector);
+	});
+	const chuteReleases = computed(() => {
+		if (!inventoryListing)
+			return [];
+		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.chuteRelease);
+	});
+	const deploymentBags = computed(() => {
+		if (!inventoryListing)
+			return [];
+		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.deploymentBag);
+	});
+	const hasAltimeters = computed(() => {
+		const temp = altimeters.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasChuteProtectors = computed(() => {
+		const temp = chuteProtectors.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasChuteReleases = computed(() => {
+		const temp = chuteReleases.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasDeploymentBags = computed(() => {
+		const temp = deploymentBags.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasParachutes = computed(() => {
+		const temp = parachutes.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasStreamers = computed(() => {
+		const temp = streamers.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	const hasTrackers = computed(() => {
+		const temp = trackers.value;
+		return temp &&  Array.isArray(temp) && temp.length > 0;
+	});
+	// const motorCases = computed(() => {
+	// 	const output = [];
+	// 	if (hasMotorInfo(0))
+	// 		output.push(motorCaseInfoByIndex(0));
+	// 	if (hasMotorInfo(1))
+	// 		output.push(motorCaseInfoByIndex(1));
+	// 	if (hasMotorInfo(2))
+	// 		output.push(motorCaseInfoByIndex(2));
+	// 	if (hasMotorInfo(3))
+	// 		output.push(motorCaseInfoByIndex(3));
+	// 	return output;
+	// });
+	// const motors = computed(() => {
+	// 	const output = [];
+	// 	if (hasMotorInfo(0))
+	// 		output.push(motorInfo(0));
+	// 	if (hasMotorInfo(1))
+	// 		output.push(motorInfo(3));
+	// 	if (hasMotorInfo(2))
+	// 		output.push(motorInfo(2));
+	// 	if (hasMotorInfo(3))
+	// 		output.push(motorInfo(3));
+	// 	return output;
+	// });
+	const parachutes = computed(() => {
+		if (!inventoryListing)
+			return [];
+		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.parachute);
+	});
+	const streamers = computed(() => {
+		if (!inventoryListing)
+			return [];
+		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.streamer);
+	});
+	const trackers = computed(() => {
+		if (!inventoryListing)
+			return [];
+		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.tracker);
+	});
+	
+	const clickAltimetersSearch = async () => {
+		dialogPartsSearchAltimetersManager.value.open();
+	};
+	const clickChuteProtectorsSearch = async () => {
+		dialogPartsSearchChuteProtectorsManager.value.open();
+	};
+	const clickChuteReleasesSearch = async () => {
+		dialogPartsSearchChuteReleasesManager.value.open();
+	};
+	const clickDeploymentBagsSearch = async () => {
+		dialogPartsSearchDeploymentBagsManager.value.open();
+	};
+	const clickParachutesSearch = async () => {
+		dialogPartsSearchParachutesManager.value.open();
+	};
+	const clickStreamersSearch = async () => {
+		dialogPartsSearchStreamersManager.value.open();
+	};
+	const clickTrackersSearch = async () => {
+		dialogPartsSearchTrackersManager.value.open();
+	};
 	const fetchParams = (correlationId, params) => {
 		// params.name = filterItemName.value;
 		// params.organizations = filterItemOrganizations.value;
@@ -104,12 +231,114 @@ export function useInventoryBaseComponent(props, context, options) {
 			return;
 		
 		inventory.value = response.results;
-		inventoryListing.value = response.results.items;
+		inventoryListing.value = response.results.items ?? [];
 		return success(correlationId);
+	};
+	const selectPart = async(correlationId, item) => {
+		if (!item)
+			return;
+
+		const find = inventoryListing.value.find(l => l.item.id === item.id);
+		if (find) {
+			setNotify(correlationId, 'errors.content.inventory.exists');
+			return;
+		}
+
+		const manufacturer = manufacturers.value.find(l => l.id === item.manufacturerId);
+		inventoryListing.value.push({ item: item, manufacturer: manufacturer ? manufacturer.name : '', quantity: 0 });
+	};
+	const selectAltimeter = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item
+			);
+		}
+		finally {
+			dialogPartsSearchAltimetersManager.value.ok();
+		}
+	};
+	const selectChuteProtector = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item
+			);
+		}
+		finally {
+			dialogPartsSearchChuteProtectorsManager.value.ok();
+		}
+	};
+	const selectChuteRelease = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item
+			);
+		}
+		finally {
+			dialogPartsSearchChuteReleasesManager.value.ok();
+		}
+	};
+	const selectDeploymentBag = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item
+			);
+		}
+		finally {
+			dialogPartsSearchDeploymentBagsManager.value.ok();
+		}
+	};
+	const selectParachute = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item
+			);
+		}
+		finally {
+			dialogPartsSearchParachutesManager.value.ok();
+		}
+	};
+	const selectStreamer = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item
+			);
+		}
+		finally {
+			dialogPartsSearchStreamersManager.value.ok();
+		}
+	};
+	const selectTracker = async (item) => {
+		try {
+			return selectPart(
+				correlationId(), 
+				item
+			);
+		}
+		finally {
+			dialogPartsSearchTrackersManager.value.ok();
+		}
 	};
 
 	onMounted(async () => {
-		await search(correlationId());
+		const correlationIdI = correlationId();
+		
+		await search(correlationIdI);
+
+		if (!manufacturers.value) {
+			const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
+			if (hasFailed(response))
+				return;
+				
+			let temp2 = response.results;
+			temp2 = temp2.map((item) => { return { id: item.id, name: item.name, types: item.types}; });
+			manufacturers.value = temp2.sort((a, b) => a.name.localeCompare(b.name));
+		}
 	});
 
 	return {
@@ -139,8 +368,51 @@ export function useInventoryBaseComponent(props, context, options) {
 		// filterItemOrganizations,
 		// filterItemRocketTypes,
 		title,
+		dialogPartsSearchAltimetersManager,
+		dialogPartsSearchChuteProtectorsManager,
+		dialogPartsSearchChuteReleasesManager,
+		dialogPartsSearchDeploymentBagsManager,
+		dialogPartsSearchParachutesManager,
+		dialogPartsSearchStreamersManager,
+		dialogPartsSearchTrackersManager,
+		manufacturerTypeAltimeter,
+		manufacturerTypeChuteProtector,
+		manufacturerTypeChuteRelease,
+		manufacturerTypeDeploymentBag,
+		manufacturerTypeParachute,
+		manufacturerTypeStreamer,
+		manufacturerTypeTracker,
+		manufacturers,
+		altimeters,
+		chuteProtectors,
+		chuteReleases,
+		deploymentBags,
+		hasAltimeters,
+		hasChuteProtectors,
+		hasChuteReleases,
+		hasDeploymentBags,
+		hasParachutes,
+		hasStreamers,
+		hasTrackers,
+		parachutes,
+		streamers,
+		trackers,
+		clickAltimetersSearch,
+		clickChuteProtectorsSearch,
+		clickChuteReleasesSearch,
+		clickDeploymentBagsSearch,
+		clickParachutesSearch,
+		clickStreamersSearch,
+		clickTrackersSearch,
 		resetAdditional,
 		search,
+		selectAltimeter,
+		selectChuteProtector,
+		selectChuteRelease,
+		selectDeploymentBag,
+		selectParachute,
+		selectStreamer,
+		selectTracker,
 		scope: 'InventoryFilterControl',
 		validation: useVuelidate({ $scope: 'InventoryilterControl' })
 	};

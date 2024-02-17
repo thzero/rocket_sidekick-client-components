@@ -96,7 +96,7 @@
 								:variant="buttonsForms.variant.default"
 								color="purple"
 								block
-								@click="clickAltimetersSearch(displayItem.id)"
+								@click="clickAltimetersSearch()"
 							>
 								{{ $t('forms.content.parts.altimeter.name') }}
 							</v-btn>
@@ -106,7 +106,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickChuteProtectorsSearch(displayItem.id)"
+								@click="clickChuteProtectorsSearch()"
 							>
 								{{ $t('forms.content.parts.chuteProtector.name') }}
 							</v-btn>
@@ -116,7 +116,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickChuteReleasesSearch(displayItem.id)"
+								@click="clickChuteReleasesSearch()"
 							>
 								{{ $t('forms.content.parts.chuteRelease.name') }}
 							</v-btn>
@@ -126,7 +126,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickDeploymentBagsSearch(displayItem.id)"
+								@click="clickDeploymentBagsSearch()"
 							>
 								{{ $t('forms.content.parts.deploymentBag.name') }}
 							</v-btn>
@@ -136,7 +136,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickDeploymentBagsSearch(displayItem.id)"
+								@click="clickDeploymentBagsSearch()"
 							>
 								{{ $t('forms.content.parts.motor.name') }}
 							</v-btn>
@@ -146,7 +146,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickDeploymentBagsSearch(displayItem.id)"
+								@click="clickDeploymentBagsSearch()"
 							>
 								{{ $t('forms.content.parts.motorCase.name') }}
 							</v-btn>
@@ -156,7 +156,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickParachutesSearch(displayItem.id)"
+								@click="clickParachutesSearch()"
 							>
 								{{ $t('forms.content.parts.parachute.name') }}
 							</v-btn>
@@ -166,7 +166,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickStreamersSearch(displayItem.id)"
+								@click="clickStreamersSearch()"
 							>
 								{{ $t('forms.content.parts.streamer.name') }}
 							</v-btn>
@@ -176,7 +176,7 @@
 								:variant="buttonsForms.variant.default"
 								color="blue"
 								block
-								@click="clickTrackersSearch(displayItem.id)"
+								@click="clickTrackersSearch()"
 							>
 								{{ $t('forms.content.parts.tracker.name') }}
 							</v-btn>
@@ -209,69 +209,100 @@
 					<div>
 						inventoryListing {{ inventoryListing }}
 					</div>
-					<!-- <v-row dense>
+					 <v-row dense>
 						<v-col
 							cols="12"
-							v-for="item in items"
-							:key="item.id"
+							v-for="(item, index) in inventoryListing"
+							:key="index"
 						>
 							<v-card>
 								<v-card-title
 									class="bg-primary"
 								>
-									{{ item.name }}
+										{{ item.manufacturer }}
 									<div class="float-right">
-										{{ addressDisplay(item) }} {{ isPublicDisplay(item) }}
+										{{ item.item.name }}
 									</div>
 								</v-card-title>
 								<v-card-text>
-									<LocationView
+									<div class="float-right">
+									<!-- <Locat\ionView
 										:detail-item="item"
 										:debug="debug"
 									>
-									</LocationView>
+									</LocationView> -->
+										<VtNumberFieldWithValidation
+											style="min-width: 200px;"
+											ref="detailItemTemperatureRef"
+											v-model="item.quantity"
+											vid="detailItemTemperature"
+											type="decimal"
+											:validation="validation"
+											:label="$t('forms.content.launches.weather.temperature')"
+										/>
+									</div>
 								</v-card-text>
-								<v-card-actions>
-									<v-spacer></v-spacer>
-									<v-btn
-										v-if="canDelete(item)"
-										:variant="buttonsForms.variant.delete"
-										:color="buttonsForms.color.delete"
-										:disabled="isDeleting(item)"
-										@click="dialogDeleteOpen(item)"
-									>
-										{{ $t('buttons.delete') }}
-									</v-btn>
-									<v-btn
-										v-if="canEdit(item)"
-										:variant="buttonsForms.variant.edit"
-										:color="buttonsForms.color.edit"
-										@click="handleEdit(item)"
-									>
-										{{ $t('buttons.edit') }}
-									</v-btn>
-									<v-btn
-										v-if="canView(item)"
-										:variant="buttonsForms.variant.ok"
-										:color="buttonsForms.color.ok"
-										@click="handleView(item)"
-									>
-										{{ $t('buttons.view') }}
-									</v-btn>
-								</v-card-actions>
 							</v-card>
 						</v-col>
-					</v-row> -->
+					</v-row>
 				</v-col>
 			</v-row>
 		</template>
 	</VtFormListing>
+	<RocketPartsLookupDialog
+		ref="dialogPartsSearchAltimetersRef"
+		:signal="dialogPartsSearchAltimetersManager.signal"
+		:part-types="manufacturerTypeAltimeter"
+		@close="dialogPartsSearchAltimetersManager.cancel()"
+		@select="selectAltimeter"
+	/>
+	<RocketPartsLookupDialog
+		ref="dialogPartsSearchChuteProtectorsRef"
+		:signal="dialogPartsSearchChuteProtectorsManager.signal"
+		:part-types="manufacturerTypeChuteProtector"
+		@close="dialogPartsSearchChuteProtectorsManager.cancel()"
+		@select="selectChuteProtector"
+	/>
+	<RocketPartsLookupDialog
+		ref="dialogPartsSearchChuteReleasesRef"
+		:signal="dialogPartsSearchChuteReleasesManager.signal"
+		:part-types="manufacturerTypeChuteRelease"
+		@close="dialogPartsSearchChuteReleasesManager.cancel()"
+		@select="selectChuteRelease"
+	/>
+	<RocketPartsLookupDialog
+		ref="dialoSearchgDeploymentBagsRef"
+		:signal="dialogPartsSearchDeploymentBagsManager.signal"
+		:part-types="manufacturerTypeDeploymentBag"
+		@close="dialogPartsSearchDeploymentBagsManager.cancel()"
+		@select="selectDeploymentBag"
+	/>
+	<RocketPartsLookupDialog
+		ref="dialogPartsSearchParachutesRef"
+		:signal="dialogPartsSearchParachutesManager.signal"
+		:part-types="manufacturerTypeParachute"
+		@close="dialogPartsSearchParachutesManager.cancel()"
+		@select="selectParachute"
+	/>
+	<RocketPartsLookupDialog
+		ref="dialogPartsSearchStreamersRef"
+		:signal="dialogPartsSearchStreamersManager.signal"
+		:part-types="manufacturerTypeStreamer"
+		@close="dialogPartsSearchStreamersManager.cancel()"
+		@select="selectStreamer"
+	/>
+	<RocketPartsLookupDialog
+		ref="dialogPartsSearchTrackersRef"
+		:signal="dialogPartsSearchTrackersManager.signal"
+		:part-types="manufacturerTypeTracker"
+		@close="dialogPartsSearchTrackersManager.cancel()"
+		@select="selectTracker"
+	/>
 </template>
 
 <script>
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
-import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useInventoryBaseComponent } from '@/components/content/inventory/inventoryComponent';
 import { useInventoryBaseComponentProps } from '@/components/content/inventory/inventoryComponentProps';
 import { useInventoryFilterValidation } from '@/components/content/inventory/inventoryFilterValidation';
@@ -279,6 +310,7 @@ import { useInventoryFilterValidation } from '@/components/content/inventory/inv
 import ContentHeader from '@/components/content/Header';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
@@ -293,6 +325,7 @@ export default {
 		ContentHeader,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
+		RocketPartsLookupDialog,
 		VtConfirmationDialog,
 		VtFormListing,
 		VtNumberFieldWithValidation,
@@ -332,19 +365,54 @@ export default {
 			// filterItemOrganizations,
 			// filterItemRocketTypes,
 			title,
+			dialogPartsSearchAltimetersManager,
+			dialogPartsSearchChuteProtectorsManager,
+			dialogPartsSearchChuteReleasesManager,
+			dialogPartsSearchDeploymentBagsManager,
+			dialogPartsSearchParachutesManager,
+			dialogPartsSearchStreamersManager,
+			dialogPartsSearchTrackersManager,
+			manufacturerTypeAltimeter,
+			manufacturerTypeChuteProtector,
+			manufacturerTypeChuteRelease,
+			manufacturerTypeDeploymentBag,
+			manufacturerTypeParachute,
+			manufacturerTypeStreamer,
+			manufacturerTypeTracker,
+			manufacturers,
+			altimeters,
+			chuteProtectors,
+			chuteReleases,
+			deploymentBags,
+			hasAltimeters,
+			hasChuteProtectors,
+			hasChuteReleases,
+			hasDeploymentBags,
+			hasParachutes,
+			hasStreamers,
+			hasTrackers,
+			parachutes,
+			streamers,
+			trackers,
+			clickAltimetersSearch,
+			clickChuteProtectorsSearch,
+			clickChuteReleasesSearch,
+			clickDeploymentBagsSearch,
+			clickParachutesSearch,
+			clickStreamersSearch,
+			clickTrackersSearch,
 			resetAdditional,
 			search,
+			selectAltimeter,
+			selectChuteProtector,
+			selectChuteRelease,
+			selectDeploymentBag,
+			selectParachute,
+			selectStreamer,
+			selectTracker,
 			scope,
 			validation
 		} = useInventoryBaseComponent(props, context);
-
-		const {
-			isAdmin,
-			isOwner,
-			isPublic,
-			isPublicDisplay,
-			isUser
-		} = useContentSecurityComponent(props, context);
 
 		return {
 			correlationId,
@@ -373,12 +441,53 @@ export default {
 			// filterItemOrganizations,
 			// filterItemRocketTypes,
 			title,
+			dialogPartsSearchAltimetersManager,
+			dialogPartsSearchChuteProtectorsManager,
+			dialogPartsSearchChuteReleasesManager,
+			dialogPartsSearchDeploymentBagsManager,
+			dialogPartsSearchParachutesManager,
+			dialogPartsSearchStreamersManager,
+			dialogPartsSearchTrackersManager,
+			manufacturerTypeAltimeter,
+			manufacturerTypeChuteProtector,
+			manufacturerTypeChuteRelease,
+			manufacturerTypeDeploymentBag,
+			manufacturerTypeParachute,
+			manufacturerTypeStreamer,
+			manufacturerTypeTracker,
+			manufacturers,
+			altimeters,
+			chuteProtectors,
+			chuteReleases,
+			deploymentBags,
+			hasAltimeters,
+			hasChuteProtectors,
+			hasChuteReleases,
+			hasDeploymentBags,
+			hasParachutes,
+			hasStreamers,
+			hasTrackers,
+			parachutes,
+			streamers,
+			trackers,
+			clickAltimetersSearch,
+			clickChuteProtectorsSearch,
+			clickChuteReleasesSearch,
+			clickDeploymentBagsSearch,
+			clickParachutesSearch,
+			clickStreamersSearch,
+			clickTrackersSearch,
 			resetAdditional,
 			search,
+			selectAltimeter,
+			selectChuteProtector,
+			selectChuteRelease,
+			selectDeploymentBag,
+			selectParachute,
+			selectStreamer,
+			selectTracker,
 			scope,
-			validation,
-			isPublic,
-			isPublicDisplay
+			validation
 		};
 	},
 	validations () {

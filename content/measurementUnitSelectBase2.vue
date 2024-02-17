@@ -25,15 +25,6 @@ export function useMeasurementUnitSelectBaseComponent(props, context, options) {
 	} = useContentBaseComponent(props, context, options);
 
 	const {
-		// correlationId,
-		// error,
-		// hasFailed,
-		// hasSucceeded,
-		// initialize,
-		// logger,
-		// noBreakingSpaces,
-		// notImplementedError,
-		// success,
 		successResponse,
 		isSaving,
 		serverErrors,
@@ -43,8 +34,8 @@ export function useMeasurementUnitSelectBaseComponent(props, context, options) {
 		errorsI,
 		hideDetails,
 		innerValue,
+		initValue,
 		innerValueUpdate,
-		initValue
 	} = useBaseControlEditComponent(props, context, options);
 
 	const measurementUnits = computed(() => {
