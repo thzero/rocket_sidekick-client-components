@@ -2,9 +2,9 @@
 import { computed, onMounted, ref, watch } from 'vue';
 
 import LibraryClientConstants from '@thzero/library_client/constants';
-import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 

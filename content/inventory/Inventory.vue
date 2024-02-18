@@ -207,93 +207,92 @@
 						<v-col
 							cols="12"
 						>
-						{{  panels }}
 							<v-expansion-panels
 								v-model="panels"
 								class="mt-4"
 								multiple
 								@update:modelValue="panelsUpdated"
 							>
-									<v-expansion-panel
-									v-for="(item, index) in inventoryListing"
+								<v-expansion-panel
+									v-for="(type, index) in inventory.types"
 									:key="index"
-										:value="item.typeId"
+									:value="type.typeId"
+								>
+									<v-expansion-panel-title
+										color="primary"
 									>
-										<v-expansion-panel-title
-											color="primary"
+										<span class="v-card-title pb-0 pl-0 pr-0 pt-0">{{ type.title }}</span>
+									</v-expansion-panel-title>
+									<v-expansion-panel-text>
+										<div
+											v-for="(item2, index2) in type.items"
+											:key="index2"
 										>
-											<span class="v-card-title pb-0 pl-0 pr-0 pt-0">{{ item.title }}</span>
-										</v-expansion-panel-title>
-										<v-expansion-panel-text>
-											<div
-												v-for="(item2, index2) in item.items"
-												:key="index2"
-											>
-												<v-card>
-													<v-card-title
-														:class="index2 % 2 === 1 ? 'bg-grey-darken-3' : 'bg-grey-darken-1'"
-													>
-														<AltimeterPanelTitle
-															v-if="isPartType(item2.item, partTypes.altimeter)"
-															:item="item2.item"
+											<v-card>
+												<v-card-title
+													:class="index2 % 2 === 1 ? 'bg-grey-darken-3' : 'bg-grey-darken-1'"
+												>
+													<AltimeterPanelTitle
+														v-if="isPartType(item2.item, partTypes.altimeter)"
+														:item="item2.item"
+													/>
+													<ChuteProtectorPanelTitle
+														v-if="isPartType(item2.item, partTypes.chuteProtector)"
+														:item="item2.item"
+													/>
+													<ChuteReleasePanelTitle
+														v-if="isPartType(item2.item, partTypes.chuteRelease)"
+														:item="item2.item"
+													/>
+													<DeploymentBagPanelTitle
+														v-if="isPartType(item2.item, partTypes.deploymentBag)"
+														:item="item2.item"
+													/>
+													<MotorPanelTitle
+														v-if="isPartType(item2.item, partTypes.motor)"
+														:item="item2.item"
+													/>
+													<MotorCasePanelTitle
+														v-if="isPartType(item2.item, partTypes.motorCase)"
+														:item="item2.item"
+													/>
+											<!-- reefing -->
+													<ParachutePanelTitle
+														v-if="isPartType(item2.item, partTypes.parachute)"
+														:item="item2.item"
+													/>
+													<StreamerPanelTitle
+														v-if="isPartType(item2.item, partTypes.streamer)"
+														:item="item2.item"
+													/>
+													<TrackerPanelTitle
+														v-if="isPartType(item2.item, partTypes.tracker)"
+														:item="item2.item"
+													/>
+													<div class="float-right">
+														{{ item2.item.manufacturer }}
+													</div>
+												</v-card-title>
+												<v-card-text>
+													<div class="float-right mb-2 mt-2">
+														<VtNumberField
+															style="min-width: 200px;"
+															ref="detailItemTemperatureRef"
+															v-model="item2.quantity"
+															vid="detailItemTemperature"
+															:min="0"
+															:max="1000"
+															type="integer"
+															:validation="validation"
+															:label="$t('forms.content.launches.weather.temperature')"
 														/>
-														<ChuteProtectorPanelTitle
-															v-if="isPartType(item2.item, partTypes.chuteProtector)"
-															:item="item2.item"
-														/>
-														<ChuteReleasePanelTitle
-															v-if="isPartType(item2.item, partTypes.chuteRelease)"
-															:item="item2.item"
-														/>
-														<DeploymentBagPanelTitle
-															v-if="isPartType(item2.item, partTypes.deploymentBag)"
-															:item="item2.item"
-														/>
-														<MotorPanelTitle
-															v-if="isPartType(item2.item, partTypes.motor)"
-															:item="item2.item"
-														/>
-														<MotorCasePanelTitle
-															v-if="isPartType(item2.item, partTypes.motorCase)"
-															:item="item2.item"
-														/>
-												<!-- reefing -->
-														<ParachutePanelTitle
-															v-if="isPartType(item2.item, partTypes.parachute)"
-															:item="item2.item"
-														/>
-														<StreamerPanelTitle
-															v-if="isPartType(item2.item, partTypes.streamer)"
-															:item="item2.item"
-														/>
-														<TrackerPanelTitle
-															v-if="isPartType(item2.item, partTypes.tracker)"
-															:item="item2.item"
-														/>
-														<div class="float-right">
-															{{ item2.item.manufacturer }}
-														</div>
-													</v-card-title>
-													<v-card-text>
-														<div class="float-right mb-2 mt-2">
-															<VtNumberField
-																style="min-width: 200px;"
-																ref="detailItemTemperatureRef"
-																v-model="item2.quantity"
-																vid="detailItemTemperature"
-																:min="0"
-																:max="1000"
-																type="integer"
-																:validation="validation"
-																:label="$t('forms.content.launches.weather.temperature')"
-															/>
-														</div>
-													</v-card-text>
-												</v-card>
-											</div>
-										</v-expansion-panel-text>
-									</v-expansion-panel>
-								</v-expansion-panels>
+													</div>
+												</v-card-text>
+											</v-card>
+										</div>
+									</v-expansion-panel-text>
+								</v-expansion-panel>
+							</v-expansion-panels>
 						</v-col>
 					</v-row>
 				</v-col>
@@ -420,7 +419,6 @@ export default {
 			notifyTimeout,
 			debug,
 			inventory,
-			inventoryListing,
 			inventoryListingRef,
 			// filterItemName,
 			// filterItemOrganizations,
@@ -475,6 +473,7 @@ export default {
 			selectParachute,
 			selectStreamer,
 			selectTracker,
+		dirty,
 			scope,
 			validation
 		} = useInventoryBaseComponent(props, context);
@@ -500,7 +499,6 @@ export default {
 			notifyTimeout,
 			debug,
 			inventory,
-			inventoryListing,
 			inventoryListingRef,
 			// filterItemName,
 			// filterItemOrganizations,
@@ -555,6 +553,7 @@ export default {
 			selectParachute,
 			selectStreamer,
 			selectTracker,
+		dirty,
 			scope,
 			validation
 		};
