@@ -1,12 +1,11 @@
 <script>
-import { computed, onMounted, ref} from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
@@ -80,7 +79,7 @@ export function useInventoryBaseComponent(props, context, options) {
 	// const filterItemOrganizations = ref([]);
 	// const filterItemRocketTypes = ref([]);
 	const inventory = ref(new InventoryData());
-	const inventoryListing = ref([]);
+	const inventoryOrig = ref(new InventoryData());
 	const inventoryListingRef = ref(null);
 	const manufacturerTypeAltimeter = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.altimeter ]);
 	const manufacturerTypeChuteProtector = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector ]);
@@ -102,24 +101,24 @@ export function useInventoryBaseComponent(props, context, options) {
 	}
 	
 	const altimeters = computed(() => {
-		if (!inventoryListing)
+		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.altimeter);
+		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.altimeter);
 	});
 	const chuteProtectors = computed(() => {
-		if (!inventoryListing)
+		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.chuteProtector);
+		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.chuteProtector);
 	});
 	const chuteReleases = computed(() => {
-		if (!inventoryListing)
+		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.chuteRelease);
+		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.chuteRelease);
 	});
 	const deploymentBags = computed(() => {
-		if (!inventoryListing)
+		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.deploymentBag);
+		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.deploymentBag);
 	});
 	const hasAltimeters = computed(() => {
 		const temp = altimeters.value;
@@ -174,19 +173,19 @@ export function useInventoryBaseComponent(props, context, options) {
 	// 	return output;
 	// });
 	const parachutes = computed(() => {
-		if (!inventoryListing)
+		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.parachute);
+		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.parachute);
 	});
 	const streamers = computed(() => {
-		if (!inventoryListing)
+		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.streamer);
+		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.streamer);
 	});
 	const trackers = computed(() => {
-		if (!inventoryListing)
+		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventoryListing.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.tracker);
+		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.tracker);
 	});
 	
 	const clickAltimetersSearch = async () => {
@@ -237,27 +236,25 @@ export function useInventoryBaseComponent(props, context, options) {
 		const response = await serviceStore.dispatcher.requestInventory(correlationId, params);
 		if (hasFailed(response))
 			return;
+
+		response.results = response.results ?? new InventoryData();
+		response.results.types = sortListing(correlationId, response.results.types ?? []);
+
+		for (const type of response.results.types)
+			type.title = LibraryClientUtility.$trans.t(`forms.content.parts.${type.typeId}.plural`);
 		
 		inventory.value = response.results;
-		inventoryListing.value = sortListing(correlationId, response.results.items ?? []);
+		inventoryOrig.value = LibraryCommonUtility.cloneDeep(response.results);
 		return success(correlationId);
 	};
 	const selectPart = async(correlationId, item) => {
 		if (!item)
 			return;
 
-		// const find = inventoryListing.value.find(l => l.item.id === item.id);
-		// if (find) {
-		// 	setNotify(correlationId, 'errors.content.inventory.exists');
-		// 	return;
-		// }
-
-		// const manufacturer = manufacturers.value.find(l => l.id === item.manufacturerId);
-		// inventoryListing.value.push({ item: item, manufacturer: manufacturer ? manufacturer.name : '', quantity: 0 });
-		let temp = inventoryListing.value.find(l => l.typeId === item.typeId);
+		let temp = inventory.value.types.find(l => l.typeId === item.typeId);
 		if (!temp) {
 			temp = { typeId: item.typeId, items: [], title: LibraryClientUtility.$trans.t(`forms.content.parts.${item.typeId}.plural`)};
-			inventoryListing.value.push(temp);
+			inventory.value.types.push(temp);
 		}
 		else {
 			const find = temp.items.find(l => l.item.id === item.id);
@@ -266,9 +263,9 @@ export function useInventoryBaseComponent(props, context, options) {
 				return;
 			}
 		}
-		temp.items.push({ item: item, quantity: 0 });
+		temp.items.push({ itemId: item.id, item: item, quantity: 0 });
 		temp.items = sortListingItems(correlationId, temp.items);
-		inventoryListing.value = sortListing(correlationId, inventoryListing.value);
+		inventory.value.types = sortListing(correlationId, inventory.value.types);
 
 		if (!panels.value.find(l => l === item.typeId))
 			panels.value.push(item.typeId);
@@ -360,9 +357,14 @@ export function useInventoryBaseComponent(props, context, options) {
 			firstBy((v1, v2) => { return (v1.name && v2.typeId) && v1.title.localeCompare(v2.name); })
 		);
 	};
+	const update = async () => {
+		dirty.value = false;
+		serviceStore.dispatcher.saveInventory(correlationId(), inventory.value);
+	};
 
 	onMounted(async () => {
 		const correlationIdI = correlationId();
+		dirty.value = false;
 
 		let temp = await serviceStore.getters.getInventoryExpanded();
 		if (temp || temp.length)
@@ -392,6 +394,26 @@ export function useInventoryBaseComponent(props, context, options) {
 		}
 	});
 
+	onBeforeUnmount(async () => {
+		if (dirty.value)
+			update();
+	});
+
+	const dirty = ref(false);
+	let debounced = null;
+	watch(() => inventory,
+		(value) => {
+			if (!debounced) {
+				debounced = LibraryCommonUtility.debounce(update, 750);
+				return;
+			}
+
+			dirty.value = !LibraryCommonUtility.isEqual(value, inventoryOrig.value);
+			debounced();
+		},
+		{ deep: true }
+	);
+
 	return {
 		correlationId,
 		error,
@@ -413,7 +435,6 @@ export function useInventoryBaseComponent(props, context, options) {
 		notifyTimeout,
 		debug,
 		inventory,
-		inventoryListing,
 		inventoryListingRef,
 		// filterItemName,
 		// filterItemOrganizations,
@@ -468,6 +489,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		selectParachute,
 		selectStreamer,
 		selectTracker,
+		dirty,
 		scope: 'InventoryFilterControl',
 		validation: useVuelidate({ $scope: 'InventoryilterControl' })
 	};
