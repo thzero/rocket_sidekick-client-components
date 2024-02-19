@@ -274,17 +274,27 @@
 													</div>
 												</v-card-title>
 												<v-card-text>
+													<div class="float-right ml-4 mb-2 mt-2">
+														<v-btn
+															:variant="buttonsForms.variant.delete"
+															:color="buttonsForms.color.delete"
+															block
+															@click="handleDelete(item2)"
+														>
+															{{ $t('buttons.delete') }}
+														</v-btn>
+													</div>
 													<div class="float-right mb-2 mt-2">
 														<VtNumberField
-															style="min-width: 200px;"
-															ref="detailItemTemperatureRef"
+															ref="detailItemQuantityRef"
 															v-model="item2.quantity"
-															vid="detailItemTemperature"
+															vid="detailItemQuantity"
 															:min="0"
 															:max="1000"
 															type="integer"
 															:validation="validation"
-															:label="$t('forms.content.launches.weather.temperature')"
+															:label="$t('forms.content.inventory.quantity')"
+															style="min-width: 200px;"
 														/>
 													</div>
 												</v-card-text>
@@ -462,6 +472,7 @@ export default {
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
+			handleDelete,
 			isPartType,
 			panelsUpdated,
 			resetAdditional,
@@ -542,6 +553,7 @@ export default {
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
+			handleDelete,
 			isPartType,
 			panelsUpdated,
 			resetAdditional,

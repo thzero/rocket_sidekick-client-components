@@ -215,6 +215,13 @@ export function useInventoryBaseComponent(props, context, options) {
 		// params.rocketTypes = filterItemRocketTypes.value;
 		return params;
 	};
+	const handleDelete = async (item) => {
+		alert(item)
+		if (!item)
+			return;
+
+		
+	};
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;
 	};
@@ -478,6 +485,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		clickParachutesSearch,
 		clickStreamersSearch,
 		clickTrackersSearch,
+		handleDelete,
 		isPartType,
 		panelsUpdated,
 		resetAdditional,
