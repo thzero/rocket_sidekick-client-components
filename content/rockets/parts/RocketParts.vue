@@ -56,9 +56,12 @@
 							v-if="isPartType(item2, partTypes.tracker)"
 							:item="item2"
 						/>
+						<!-- <div 
+							class="float-right"
+						>{{ manufacturer(item2) }}</div> -->
 						<div 
 							class="float-right"
-						>{{ manufacturer(item2) }}</div>
+						>{{ item2.manufacturer }}</div>
 					</v-card-title>
 					<v-card-actions
 						v-if="deletable || selectable"

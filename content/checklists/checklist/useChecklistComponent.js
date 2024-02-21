@@ -385,7 +385,7 @@ if (launch) {
 detailItemData.value.launched = true;
 detailItemData.value.statusId = AppCommonConstants.Checklists.ChecklistStatus.completed;
 }
-await formControlRef.value.submit(true);
+await formControlRef.value.submitEx(true);
 detailItemData.value.canLaunch = canLaunchI(detailItemData.value);
 };
 const updateStatusFindStep = (correlationId, steps, id) => {

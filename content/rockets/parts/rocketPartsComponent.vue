@@ -51,12 +51,22 @@ export function useRocketPartsComponent(props, context, options) {
 
 	const results = computed(() => {
 		let temp = props.items ?? [];
+		// for (const item of temp) {
+		// 	item.manufacturer = props.manufacturers.find(l => l.id === item.manufacturerId);
+		// 	if (item.manufacturer)
+		// 		item.manufacturer = item.manufacturer.name;
+		// }
+		// temp = temp.sort(
+		// 	firstBy((v1, v2) => { return (v1.typeId && v2.typeId) && v1.typeId.localeCompare(v2.typeId); })
+		// 	// .thenBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
+		// 	// .thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
+		// 	//.thenBy((v1, v2) => { return (v1.manufacturer && v2.manufacturer) && v1.manufacturer.localeCompare(v2.manufacturer); })
+		// 	.thenBy((v1, v2) => { return (v1.index && v2.index) && v1.index.compare(v2.index); })
+		// );
 		temp = temp.sort(
-			firstBy((v1, v2) => { return (v1.typeId && v2.typeId) && v1.typeId.localeCompare(v2.typeId); })
-			// .thenBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			// .thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
-			// .thenBy((v1, v2) => { return (v1.manufacturerName && v2.manufacturerName) && v1.manufacturerName.localeCompare(v2.manufacturerName); })
-			.thenBy((v1, v2) => { return (v1.index && v2.index) && v1.index.compare(v2.index); })
+			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
+			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
+			.thenBy((v1, v2) => { return (v1.manufacturer && v2.manufacturer) && v1.manufacturer.localeCompare(v2.manufacturer); })
 		);
 		let prev = null;
 		let prevId = null;

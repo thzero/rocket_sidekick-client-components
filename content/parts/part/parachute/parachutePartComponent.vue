@@ -94,16 +94,16 @@ export function useParachutePartComponent(props, context, options) {
 			data.diameter = LibraryClientUtility.convertNumber(detailItemDiameter.value);
 			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUnitId.value;
 			// data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
-			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, diameterMeasurementUnitId.value);
+			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMeasurementUnitId.value);
 			
 			data.loadMaxWeightMeasurementUnitId = detailItemLoadMaxWeightMeasurementUnitId.value;
 			// data.loadMaxWeightMeasurementUnitsId = detailItemLoadMaxWeightMeasurementUnitsId.value;
-			data.loadMaxWeightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, loadMaxWeightMeasurementUnitId.value);
+			data.loadMaxWeightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemLoadMaxWeightMeasurementUnitId.value);
 			data.loadMinWeightMeasurementUnitId = detailItemLoadMinWeightMeasurementUnitId.value;
 			// data.loadMinWeightMeasurementUnitsId = detailItemLoadMinWeightMeasurementUnitsId.value;
-			data.loadMinWeightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, loadMinWeightMeasurementUnitId.value);
+			data.loadMinWeightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemLoadMinWeightMeasurementUnitId.value);
 
-			const temp = AppUtility.measurementUnitTranslateLength(correlationId, diameterMeasurementUnitsId.value, diameterMeasurementUnitId.value);
+			const temp = AppUtility.measurementUnitTranslateLength(correlationId, detailItemDiameterMeasurementUnitsId.value, detailItemDiameterMeasurementUnitId.value);
 			data.sortName = String(data.diameter ?? '').padStart(4, '0') + temp + (data.thinMill ? 'TM' : '') + data.name;
 		
 			return data;

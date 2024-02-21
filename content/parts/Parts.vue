@@ -63,7 +63,6 @@
 		<template v-slot:listing>
 			<v-row dense>
 				<v-col cols="12">
-					asdsadfsd
 					<v-snackbar
 						ref="notifyRef"
 						v-model="notifySignal"

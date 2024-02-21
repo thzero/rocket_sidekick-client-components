@@ -190,11 +190,16 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 			serviceStore.dispatcher.setMotorSearchCriteria(correlationId, request);
 		}
 
-		const temp = await serviceStore.dispatcher.requestPartsRocketSearch(correlationId, request);
-		results.value = temp.sort(
-			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
-			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
-		);
+		// const temp = await serviceStore.dispatcher.requestPartsRocketSearch(correlationId, request);
+		// // results.value = temp.sort(
+		// // 	firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
+		// // 	.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
+		// // 	.thenBy((v1, v2) => { return (v1.manufacturer && v2.manufacturer) && v1.manufacturer.localeCompare(v2.manufacturer); })
+		// // );
+		// results.value = temp.sort(
+		// 	firstBy((v1, v2) => { return (v1.manufacturer && v2.manufacturer) && v1.manufacturer.localeCompare(v2.manufacturer); })
+		// );
+		results.value = await serviceStore.dispatcher.requestPartsRocketSearch(correlationId, request);
 		return success(correlationId);
 	};
 	const resetAdditional = async (correlationId, previous, loaded) => {

@@ -89,12 +89,12 @@ export function useDeploymentBagPartComponent(props, context, options) {
 			data.diameter = LibraryClientUtility.convertNumber(detailItemDiameter.value);
 			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUnitId.value;
 			// data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnitsId.value;
-			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, diameterMeasurementUnitId.value);
+			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMeasurementUnitId.value);
 
 			data.length = LibraryClientUtility.convertNumber(detailItemLength.value);
 			data.lengthMeasurementUnitId = detailItemLengthMeasurementUnitId.value;
 			// data.lengthMeasurementUnitsId = detailItemLengthMeasurementUnitsId.value;
-			data.lengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, lengthMeasurementUnitId.value);
+			data.lengthMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemLengthMeasurementUnitId.value);
 
 			data.pilotChute = detailItemPilotChute.value ?? false;
 			data.pilotChuteCd = LibraryClientUtility.convertNumber(detailItemPilotChuteCd.value);
@@ -102,7 +102,7 @@ export function useDeploymentBagPartComponent(props, context, options) {
 
 			data.pilotChuteDiameterMeasurementUnitId = detailItemPilotChuteDiameterMeasurementUnitId.value;
 			// data.pilotChuteDiameterMeasurementUnitsId = detailItemPilotChuteDiameterMeasurementUnitsId.value;
-			data.pilotChuteDiameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, pilotChuteDiameterMeasurementUnitId.value);
+			data.pilotChuteDiameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemPilotChuteDiameterMeasurementUnitId.value);
 
 			if (!data.pilotChute) {
 				data.pilotChuteCd = null;
