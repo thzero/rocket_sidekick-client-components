@@ -84,7 +84,7 @@ export function usePartComponent(props, context, options) {
 			detailItemData.value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);
 
 			if (options.preCompleteOkPart)
-			detailItemData.value = options.preCompleteOkPart(correlationId, detailItemData.value);
+				detailItemData.value = options.preCompleteOkPart(correlationId, detailItemData.value);
 
 			const response = await serviceStore.dispatcher.savePart(correlationId, detailItemData.value);
 			logger.debug('partComponent', 'preCompleteOk', 'response', response, correlationId);

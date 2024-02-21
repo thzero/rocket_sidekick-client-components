@@ -89,9 +89,9 @@ export function useChuteProtectorPartComponent(props, context, options) {
 			data.cd = LibraryClientUtility.convertNumber(detailItemCd.value);
 
 			data.diameter = LibraryClientUtility.convertNumber(detailItemDiameter.value);
-			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUniId.value;
+			data.diameterMeasurementUnitId = detailItemDiameterMeasurementUnitId.value;
 			// data.diameterMeasurementUnitsId = detailItemDiameterMeasurementUnisId.value;
-			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMeasurementUniId.value);
+			data.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMeasurementUnitId.value);
 			
 			data.dimension = LibraryClientUtility.convertNumber(detailItemDimension.value);
 			data.dimensionMeasurementUnitId = detailItemDimensionMeasurementUnitId.value;
