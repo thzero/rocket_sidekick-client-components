@@ -228,10 +228,13 @@
 											v-for="(item2, index2) in type.items"
 											:key="index2"
 										>
-											<v-card>
+											<v-card
+												class="mb-2"
+											>
 												<v-card-title
 													:class="index2 % 2 === 1 ? 'bg-grey-darken-3' : 'bg-grey-darken-1'"
 												>
+												<!-- <pre>{{ item2 }}</pre> -->
 													<AltimeterPanelTitle
 														v-if="isPartType(item2.item, partTypes.altimeter)"
 														:item="item2.item"
@@ -256,7 +259,6 @@
 														v-if="isPartType(item2.item, partTypes.motorCase)"
 														:item="item2.item"
 													/>
-											<!-- reefing -->
 													<ParachutePanelTitle
 														v-if="isPartType(item2.item, partTypes.parachute)"
 														:item="item2.item"
@@ -269,13 +271,24 @@
 														v-if="isPartType(item2.item, partTypes.tracker)"
 														:item="item2.item"
 													/>
-													<div class="float-right">
+													<!-- <br
+														v-if="$vuetify.display.smAndDown"
+													>
 														{{ item2.item.manufacturer }}
-													</div>
-												</v-card-title>
-												<v-card-text>
-													<div class="float-right ml-4 mb-2 mt-2">
+													 -->
+													<div class="float-right">
+														<div class="float-right ml-4 mb-2 mt-2">
 														<v-btn
+															v-if="$vuetify.display.smAndDown"
+															:variant="buttonsForms.variant.delete"
+															:color="buttonsForms.color.delete"
+															block
+															@click="handleDelete(item2)"
+															icon="mdi-delete"
+														>
+														</v-btn>
+														<v-btn
+															v-if="$vuetify.display.mdAndUp"
 															:variant="buttonsForms.variant.delete"
 															:color="buttonsForms.color.delete"
 															block
@@ -294,10 +307,55 @@
 															type="integer"
 															:validation="validation"
 															:label="$t('forms.content.inventory.quantity')"
-															style="min-width: 200px;"
 														/>
 													</div>
+													</div>
+													<div
+														class="float-right mr-2"
+														v-if="$vuetify.display.mdAndUp"
+													>
+														{{ item2.item.manufacturer }}
+													</div>
+												</v-card-title>
+												<v-card-text
+													v-if="$vuetify.display.smAndDown"
+												>
+													{{ item2.item.manufacturer }}
 												</v-card-text>
+												<!-- <v-card-text>
+													<div class="float-right ml-4 mb-2 mt-2">
+														<v-btn
+															v-if="$vuetify.display.smAndDown"
+															:variant="buttonsForms.variant.delete"
+															:color="buttonsForms.color.delete"
+															block
+															@click="handleDelete(item2)"
+															icon="mdi-delete"
+														>
+														</v-btn>
+														<v-btn
+															v-if="$vuetify.display.mdAndUp"
+															:variant="buttonsForms.variant.delete"
+															:color="buttonsForms.color.delete"
+															block
+															@click="handleDelete(item2)"
+														>
+															{{ $t('buttons.delete') }}
+														</v-btn>
+													</div>
+													<div class="float-right mb-2 mt-2">
+														<VtNumberField
+															ref="detailItemQuantityRef"
+															v-model="item2.quantity"
+															vid="detailItemQuantity"
+															:min="0"
+															:max="1000"
+															type="integer"
+															:validation="validation"
+															:label="$t('forms.content.inventory.quantity')"
+														/>
+													</div>
+												</v-card-text> -->
 											</v-card>
 										</div>
 									</v-expansion-panel-text>

@@ -216,11 +216,18 @@ export function useInventoryBaseComponent(props, context, options) {
 		return params;
 	};
 	const handleDelete = async (item) => {
-		alert(item)
-		if (!item)
+		if (!item || !item.item || !inventory.value || !inventory.value.types)
 			return;
 
-		
+		const temp = inventory.value.types.find(l => l.typeId === item.item.typeId);
+		if (!temp)
+			return;
+
+		LibraryCommonUtility.deleteArrayById(temp.items, item.id);
+		if (!temp.items || temp.items.length === 0)
+			LibraryCommonUtility.deleteArray(inventory.value.types, temp.typeId, 'typeId');
+
+		await update();
 	};
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;
@@ -247,8 +254,10 @@ export function useInventoryBaseComponent(props, context, options) {
 		response.results = response.results ?? new InventoryData();
 		response.results.types = sortListing(correlationId, response.results.types ?? []);
 
-		for (const type of response.results.types)
+		for (const type of response.results.types) {
 			type.title = LibraryClientUtility.$trans.t(`forms.content.parts.${type.typeId}.plural`);
+			type.items = sortListingItems(correlationId, type.items);
+		}
 		
 		inventory.value = response.results;
 		inventoryOrig.value = LibraryCommonUtility.cloneDeep(response.results);
@@ -270,8 +279,14 @@ export function useInventoryBaseComponent(props, context, options) {
 				return;
 			}
 		}
-		temp.items.push({ itemId: item.id, item: item, quantity: 0 });
+
+		const manufacturer = manufacturers.value.find(l => l.id === item.manufacturerId);
+		if (manufacturer)
+			item.manufacturer = manufacturer.name;
+
+		temp.items.push({ id: item.id, item: item, quantity: 0 });
 		temp.items = sortListingItems(correlationId, temp.items);
+
 		inventory.value.types = sortListing(correlationId, inventory.value.types);
 
 		if (!panels.value.find(l => l === item.typeId))
@@ -356,12 +371,13 @@ export function useInventoryBaseComponent(props, context, options) {
 	};
 	const sortListing = (correlationId, listing) => {
 		return listing.sort(
-			firstBy((v1, v2) => { return (v1.title && v2.typeId) && v1.title.localeCompare(v2.title); })
+			firstBy((v1, v2) => { return (v1.title && v2.title) && v1.title.localeCompare(v2.title); })
 		);
 	};
 	const sortListingItems = (correlationId, listing) => {
 		return listing.sort(
-			firstBy((v1, v2) => { return (v1.name && v2.typeId) && v1.title.localeCompare(v2.name); })
+			firstBy((v1, v2) => { return (v1.item && v1.item.sortName && v2.item && v2.item.sortName) && v1.item.sortName.localeCompare(v2.item.sortName); })
+			.thenBy((v1, v2) => { return (v1.item && v1.item.name && v2.item && v2.item.name) && v1.item.name.localeCompare(v2.item.name); })
 		);
 	};
 	const update = async () => {
@@ -374,7 +390,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		dirty.value = false;
 
 		let temp = await serviceStore.getters.getInventoryExpanded();
-		if (temp || temp.length)
+		if (!temp || (temp && temp.length === 0))
 			temp = [ 
 				AppCommonConstants.Rocketry.ManufacturerTypes.altimeter,
 				AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector,
