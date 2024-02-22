@@ -1,6 +1,6 @@
 <script>
 import { computed, onMounted, ref } from 'vue';
-import { firstBy, thenBy } from 'thenby';
+// import { firstBy, thenBy } from 'thenby';
 
 import useVuelidate from '@vuelidate/core';
 
@@ -8,6 +8,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
@@ -76,6 +77,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 	const dialogResetMessage = ref(null);
 	const manufacturersI = ref(null);
 	const results = ref([]);
+	const selected = ref([]);
 
 	const manufacturers = computed(() => {
 // alert(props.partTypes);
@@ -104,7 +106,25 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		await dialogRocketPartsLookup.value.reset(correlationId(), null, true);
 		await dialogRocketPartsLookup.value.submit(correlationId());
 	};
+	const clickRocketPartsSearchClearSelection = async () => {
+		selected.value = [];
+	};
+	const clickRocketPartsSearchSelect = async () => {
+		context.emit('select', selected.value);
+		selected.value = [];
+	};
 	const clickRocketPartSelect = async (item) => {
+		if (props.multiple) {
+			const temp = selected.value.find(l => l.id === item.id);
+			if (!temp) {
+				selected.value.push(item);
+				return;
+			}
+
+			LibraryCommonUtility.deleteArrayById(selected.value, item.id);
+			return;
+		}
+
 		context.emit('select', item);
 	};
 	const close = () => {
@@ -300,11 +320,14 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		dialogResetManager,
 		dialogResetMessage,
 		results,
+		selected,
 		manufacturers,
 		partTypeName,
 		buttonOkDisabledOverride,
 		clickRocketPartsSearch,
 		clickRocketPartsSearchClear,
+		clickRocketPartsSearchClearSelection,
+		clickRocketPartsSearchSelect,
 		clickRocketPartSelect,
 		close,
 		dialogResetOk,

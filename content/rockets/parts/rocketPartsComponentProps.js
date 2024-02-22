@@ -27,6 +27,10 @@ export const useRocketPartsComponentProps = {
 		type: Array,
 		value: null
 	},
+	multiple: {
+		type: Boolean,
+		value: false
+	},
 	panelTypeId: {
 		type: String,
 		value: null
@@ -42,6 +46,10 @@ export const useRocketPartsComponentProps = {
 	selectable: {
 		type: Boolean,
 		value: false
+	},
+	selected: {
+		type: Array,
+		value: null
 	},
 	stageId: {
 		type: String,

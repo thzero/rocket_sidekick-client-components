@@ -43,7 +43,7 @@
 							v-if="isPartType(item2, partTypes.motorCase)"
 							:item="item2"
 						/>
-				<!-- reefing -->
+						<!-- reefing -->
 						<ParachutePanelTitle
 							v-if="isPartType(item2, partTypes.parachute)"
 							:item="item2"
@@ -76,7 +76,7 @@
 						<v-btn
 							v-if="selectable"
 							:variant="buttonsForms.variant.default"
-							:color="buttonsForms.color.default"
+							:color="isSelected(item2) ? 'green' : 'buttonsForms.color.default'"
 							@click="clickSelectRocketPart(item2, stageId)"
 						>{{ $t('buttons.select') }}</v-btn>
 					</v-card-actions>
@@ -177,7 +177,7 @@
 						<v-btn
 							v-if="selectable && !item2.fromRocket"
 							:variant="buttonsForms.variant.default"
-							:color="buttonsForms.color.default"
+							:color="isSelected(item2) ? 'buttonsForms.color.add' : 'buttonsForms.color.default'"
 							@click="clickSelectRocketPart(item2, stageId)"
 						>{{ $t('buttons.select') }}</v-btn>
 					</v-card-actions>
@@ -285,6 +285,7 @@ export default {
 			dialogEditRocketPartPreCompleteOk,
 			editablePart,
 			isPartType,
+			isSelected,
 			manufacturer,
 			partTypeName,
 			panelsUpdated
@@ -320,6 +321,7 @@ export default {
 			dialogEditRocketPartPreCompleteOk,
 			editablePart,
 			isPartType,
+			isSelected,
 			manufacturer,
 			partTypeName,
 			panelsUpdated

@@ -7,6 +7,10 @@ export const useRocketPartsLookupDialogComponentProps = {
 		type: String,
 		value: null
 	},
+	multiple: {
+		type: Boolean,
+		value: null
+	},
 	partTypes: {
 		type: Array,
 		value: []
