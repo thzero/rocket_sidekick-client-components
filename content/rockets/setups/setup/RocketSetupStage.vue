@@ -269,7 +269,7 @@
 					<template #partText	="{ item }">
 						<v-row 
 							dense
-							class="mb-2"
+							class="mt-4"
 						>
 							<v-col 
 								cols="12" sm="5"

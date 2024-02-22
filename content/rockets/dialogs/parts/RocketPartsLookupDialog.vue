@@ -195,6 +195,14 @@
 						<v-card-actions>
 							<v-spacer />
 							<v-btn
+								v-if="multiple"
+								:variant="buttonsForms.variant.clear"
+								:color="buttonsForms.color.clear"
+								:loading="isLoading"
+								:disabled="selected && selected.length === 0"
+								@click="clickRocketPartsSearchClearSelection"
+							>{{ $t('buttons.cleaSelections') }}</v-btn>
+							<v-btn
 								:variant="buttonsForms.variant.clear"
 								:color="buttonsForms.color.clear"
 								:loading="isLoading"
@@ -211,6 +219,17 @@
 					</v-card>
 				</v-col>
 			</v-row>
+		</template>
+		<template #preActions="{ buttonOkDisabled, isLoading }">
+			<v-btn
+				v-if="multiple"
+				:variant="buttonsForms.variant.cancel"
+				:color="buttonsForms.color.cancel"
+				:loading="isLoading"
+				:disabled="selected && selected.length === 0"
+				@click="clickRocketPartsSearchSelect"
+				class="mr-2"
+			>{{ $t('buttons.select') }}</v-btn>
 		</template>
 		<template v-slot:listing>
 			<div
@@ -229,7 +248,9 @@
 				>
 					<RocketParts
 						:items="results"
+						:multiple="true"
 						:selectable="true"
+						:selected="selected"
 						:manufacturers="manufacturers"
 						:search="true"
 						panel-type-id="rocket-search"
@@ -324,11 +345,14 @@ export default {
 			dialogResetManager,
 			dialogResetMessage,
 			results,
+			selected,
 			manufacturers,
 			partTypeName,
 			buttonOkDisabledOverride,
 			clickRocketPartsSearch,
 			clickRocketPartsSearchClear,
+			clickRocketPartsSearchClearSelection,
+			clickRocketPartsSearchSelect,
 			clickRocketPartSelect,
 			close,
 			dialogResetOk,
@@ -389,11 +413,14 @@ export default {
 			dialogResetManager,
 			dialogResetMessage,
 			results,
+			selected,
 			manufacturers,
 			partTypeName,
 			buttonOkDisabledOverride,
 			clickRocketPartsSearch,
 			clickRocketPartsSearchClear,
+			clickRocketPartsSearchClearSelection,
+			clickRocketPartsSearchSelect,
 			clickRocketPartSelect,
 			close,
 			dialogResetOk,

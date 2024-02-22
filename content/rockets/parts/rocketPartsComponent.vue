@@ -127,6 +127,15 @@ export function useRocketPartsComponent(props, context, options) {
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;
 	};
+	const isSelected = (item) => {
+		if (!props.selectable)
+			return false;
+		if (!props.selected || props.selected.length === 0)
+			return false;
+
+		const temp = props.selected.find(l => l.id === item.id);
+		return temp !== null && temp !== undefined;
+	};
 	const manufacturer = (item) => {
 		const id = item ? item.manufacturerId ?? null : null;
 		if (!id)
@@ -214,6 +223,7 @@ export function useRocketPartsComponent(props, context, options) {
 		dialogEditRocketPartPreCompleteOk,
 		editablePart,
 		isPartType,
+		isSelected,
 		manufacturer,
 		partTypeName,
 		panelsUpdated
