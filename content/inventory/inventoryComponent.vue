@@ -301,7 +301,7 @@ export function useInventoryBaseComponent(props, context, options) {
 			if (manufacturer)
 				item.manufacturer = manufacturer.name;
 
-			temp.items.push({ id: item.id, item: item, quantity: 0 });
+			temp.items.push({ id: item.id, item: item, quantity: 1 });
 			temp.items = sortListingItems(correlationId, temp.items);
 
 			inventory.value.types = sortListing(correlationId, inventory.value.types);
