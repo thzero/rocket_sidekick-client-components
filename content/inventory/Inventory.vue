@@ -136,7 +136,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickDeploymentBagsSearch()"
+								@click="clickMotorSearch()"
 							>
 								{{ $t('forms.content.parts.motor.name') }}
 							</v-btn>
@@ -146,7 +146,7 @@
 								:variant="buttonsForms.variant.default"
 								color="orange"
 								block
-								@click="clickDeploymentBagsSearch()"
+								@click="clickMotorCaseSearch()"
 							>
 								{{ $t('forms.content.parts.motorCase.name') }}
 							</v-btn>
@@ -370,6 +370,7 @@
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchAltimetersRef"
 		:signal="dialogPartsSearchAltimetersManager.signal"
+		:multiple="true"
 		:part-types="manufacturerTypeAltimeter"
 		@close="dialogPartsSearchAltimetersManager.cancel()"
 		@select="selectAltimeter"
@@ -377,6 +378,7 @@
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchChuteProtectorsRef"
 		:signal="dialogPartsSearchChuteProtectorsManager.signal"
+		:multiple="true"
 		:part-types="manufacturerTypeChuteProtector"
 		@close="dialogPartsSearchChuteProtectorsManager.cancel()"
 		@select="selectChuteProtector"
@@ -384,6 +386,7 @@
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchChuteReleasesRef"
 		:signal="dialogPartsSearchChuteReleasesManager.signal"
+		:multiple="true"
 		:part-types="manufacturerTypeChuteRelease"
 		@close="dialogPartsSearchChuteReleasesManager.cancel()"
 		@select="selectChuteRelease"
@@ -391,13 +394,31 @@
 	<RocketPartsLookupDialog
 		ref="dialoSearchgDeploymentBagsRef"
 		:signal="dialogPartsSearchDeploymentBagsManager.signal"
+		:multiple="true"
 		:part-types="manufacturerTypeDeploymentBag"
 		@close="dialogPartsSearchDeploymentBagsManager.cancel()"
 		@select="selectDeploymentBag"
 	/>
 	<RocketPartsLookupDialog
+		ref="dialogPartsSearchMotorsRef"
+		:signal="dialogPartsSearchMotorsManager.signal"
+		:multiple="true"
+		:part-types="manufacturerTypeMotor"
+		@close="dialogPartsSearchMotorsManager.cancel()"
+		@select="selectMotor"
+	/>
+	<RocketPartsLookupDialog
+		ref="dialogPartsSearchMotorCasesRef"
+		:signal="dialogPartsSearchMotorCasesManager.signal"
+		:multiple="true"
+		:part-types="manufacturerTypeMotorCase"
+		@close="dialogPartsSearchMotorCasesManager.cancel()"
+		@select="selectMotorCase"
+	/>
+	<RocketPartsLookupDialog
 		ref="dialogPartsSearchParachutesRef"
 		:signal="dialogPartsSearchParachutesManager.signal"
+		:multiple="true"
 		:part-types="manufacturerTypeParachute"
 		@close="dialogPartsSearchParachutesManager.cancel()"
 		@select="selectParachute"
@@ -405,6 +426,7 @@
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchStreamersRef"
 		:signal="dialogPartsSearchStreamersManager.signal"
+		:multiple="true"
 		:part-types="manufacturerTypeStreamer"
 		@close="dialogPartsSearchStreamersManager.cancel()"
 		@select="selectStreamer"
@@ -412,6 +434,7 @@
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchTrackersRef"
 		:signal="dialogPartsSearchTrackersManager.signal"
+		:multiple="true"
 		:part-types="manufacturerTypeTracker"
 		@close="dialogPartsSearchTrackersManager.cancel()"
 		@select="selectTracker"
@@ -498,6 +521,8 @@ export default {
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
 			dialogPartsSearchDeploymentBagsManager,
+			dialogPartsSearchMotorsManager,
+			dialogPartsSearchMotorCasesManager,
 			dialogPartsSearchParachutesManager,
 			dialogPartsSearchStreamersManager,
 			dialogPartsSearchTrackersManager,
@@ -505,6 +530,8 @@ export default {
 			manufacturerTypeChuteProtector,
 			manufacturerTypeChuteRelease,
 			manufacturerTypeDeploymentBag,
+			manufacturerTypeMotor,
+			manufacturerTypeMotorCase,
 			manufacturerTypeParachute,
 			manufacturerTypeStreamer,
 			manufacturerTypeTracker,
@@ -527,6 +554,8 @@ export default {
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
 			clickDeploymentBagsSearch,
+			clickMotorSearch,
+			clickMotorCaseSearch,
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
@@ -539,6 +568,8 @@ export default {
 			selectChuteProtector,
 			selectChuteRelease,
 			selectDeploymentBag,
+			selectMotor,
+			selectMotorCase,
 			selectParachute,
 			selectStreamer,
 			selectTracker,
@@ -579,6 +610,8 @@ export default {
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
 			dialogPartsSearchDeploymentBagsManager,
+			dialogPartsSearchMotorsManager,
+			dialogPartsSearchMotorCasesManager,
 			dialogPartsSearchParachutesManager,
 			dialogPartsSearchStreamersManager,
 			dialogPartsSearchTrackersManager,
@@ -586,6 +619,8 @@ export default {
 			manufacturerTypeChuteProtector,
 			manufacturerTypeChuteRelease,
 			manufacturerTypeDeploymentBag,
+			manufacturerTypeMotor,
+			manufacturerTypeMotorCase,
 			manufacturerTypeParachute,
 			manufacturerTypeStreamer,
 			manufacturerTypeTracker,
@@ -608,6 +643,8 @@ export default {
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
 			clickDeploymentBagsSearch,
+			clickMotorSearch,
+			clickMotorCaseSearch,
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
@@ -620,6 +657,8 @@ export default {
 			selectChuteProtector,
 			selectChuteRelease,
 			selectDeploymentBag,
+			selectMotor,
+			selectMotorCase,
 			selectParachute,
 			selectStreamer,
 			selectTracker,

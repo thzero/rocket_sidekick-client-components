@@ -72,6 +72,8 @@ export function useInventoryBaseComponent(props, context, options) {
 	const dialogPartsSearchChuteProtectorsManager = ref(new DialogSupport());
 	const dialogPartsSearchChuteReleasesManager = ref(new DialogSupport());
 	const dialogPartsSearchDeploymentBagsManager = ref(new DialogSupport());
+	const dialogPartsSearchMotorsManager = ref(new DialogSupport());
+	const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
 	const dialogPartsSearchParachutesManager = ref(new DialogSupport());
 	const dialogPartsSearchStreamersManager = ref(new DialogSupport());
 	const dialogPartsSearchTrackersManager = ref(new DialogSupport());
@@ -85,6 +87,8 @@ export function useInventoryBaseComponent(props, context, options) {
 	const manufacturerTypeChuteProtector = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector ]);
 	const manufacturerTypeChuteRelease = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease ]);
 	const manufacturerTypeDeploymentBag = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag ]);
+	const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
+	const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
 	const manufacturerTypeParachute = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.parachute ]);
 	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.streamer ]);
 	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.tracker ]);
@@ -200,6 +204,12 @@ export function useInventoryBaseComponent(props, context, options) {
 	const clickDeploymentBagsSearch = async () => {
 		dialogPartsSearchDeploymentBagsManager.value.open();
 	};
+	const clickMotorSearch = async () => {
+		dialogPartsSearchMotorsManager.value.open();
+	};
+	const clickMotorCaseSearch = async () => {
+		dialogPartsSearchMotorCasesManager.value.open();
+	};
 	const clickParachutesSearch = async () => {
 		dialogPartsSearchParachutesManager.value.open();
 	};
@@ -263,106 +273,136 @@ export function useInventoryBaseComponent(props, context, options) {
 		inventoryOrig.value = LibraryCommonUtility.cloneDeep(response.results);
 		return success(correlationId);
 	};
-	const selectPart = async(correlationId, item) => {
-		if (!item)
+	const selectParts = async(correlationId, items) => {
+		if (!items)
 			return;
 
-		let temp = inventory.value.types.find(l => l.typeId === item.typeId);
-		if (!temp) {
-			temp = { typeId: item.typeId, items: [], title: LibraryClientUtility.$trans.t(`forms.content.parts.${item.typeId}.plural`)};
-			inventory.value.types.push(temp);
-		}
-		else {
-			const find = temp.items.find(l => l.item.id === item.id);
-			if (find) {
-				setNotify(correlationId, 'errors.content.inventory.exists');
-				return;
+		let find;
+		let manufacturer;
+		let temp;
+		for (const item of items) {
+			temp = inventory.value.types.find(l => l.typeId === item.typeId);
+			if (!temp) {
+				temp = { typeId: item.typeId, items: [], title: LibraryClientUtility.$trans.t(`forms.content.parts.${item.typeId}.plural`)};
+				inventory.value.types.push(temp);
 			}
+			else {
+				find = temp.items.find(l => l.item.id === item.id);
+				if (find) {
+					if (items.length === 1) {
+						setNotify(correlationId, 'errors.content.inventory.exists');
+						return;
+					}
+					continue;
+				}
+			}
+
+			manufacturer = manufacturers.value.find(l => l.id === item.manufacturerId);
+			if (manufacturer)
+				item.manufacturer = manufacturer.name;
+
+			temp.items.push({ id: item.id, item: item, quantity: 0 });
+			temp.items = sortListingItems(correlationId, temp.items);
+
+			inventory.value.types = sortListing(correlationId, inventory.value.types);
+
+			if (!panels.value.find(l => l === item.typeId))
+				panels.value.push(item.typeId);
 		}
-
-		const manufacturer = manufacturers.value.find(l => l.id === item.manufacturerId);
-		if (manufacturer)
-			item.manufacturer = manufacturer.name;
-
-		temp.items.push({ id: item.id, item: item, quantity: 0 });
-		temp.items = sortListingItems(correlationId, temp.items);
-
-		inventory.value.types = sortListing(correlationId, inventory.value.types);
-
-		if (!panels.value.find(l => l === item.typeId))
-			panels.value.push(item.typeId);
 	};
-	const selectAltimeter = async (item) => {
+	const selectAltimeter = async (items) => {
 		try {
-			return selectPart(
+			selectParts(
 				correlationId(), 
-				item
+				items
 			);
 		}
 		finally {
 			dialogPartsSearchAltimetersManager.value.ok();
 		}
 	};
-	const selectChuteProtector = async (item) => {
+	const selectChuteProtector = async (items) => {
 		try {
-			return selectPart(
+			selectParts(
 				correlationId(), 
-				item
+				items
 			);
 		}
 		finally {
 			dialogPartsSearchChuteProtectorsManager.value.ok();
 		}
 	};
-	const selectChuteRelease = async (item) => {
+	const selectChuteRelease = async (items) => {
 		try {
-			return selectPart(
+			selectParts(
 				correlationId(), 
-				item
+				items
 			);
 		}
 		finally {
 			dialogPartsSearchChuteReleasesManager.value.ok();
 		}
 	};
-	const selectDeploymentBag = async (item) => {
+	const selectDeploymentBag = async (items) => {
 		try {
-			return selectPart(
+			selectParts(
 				correlationId(), 
-				item
+				items
 			);
 		}
 		finally {
 			dialogPartsSearchDeploymentBagsManager.value.ok();
 		}
 	};
-	const selectParachute = async (item) => {
+	const selectMotor = async (items) => {
 		try {
-			return selectPart(
+			selectParts(
 				correlationId(), 
-				item
+				items
+			);
+		}
+		finally {
+			dialogPartsSearchMotorsManager.value.ok();
+		}
+	};
+	const selectMotorCase = async (items) => {
+		try {
+			selectParts(
+				correlationId(), 
+				items
+			);
+		}
+		finally {
+			dialogPartsSearchMotorCasesManager.value.ok();
+		}
+	};
+	const selectParachute = async (items) => {
+		try {
+			selectParts(
+				correlationId(), 
+				items
 			);
 		}
 		finally {
 			dialogPartsSearchParachutesManager.value.ok();
 		}
 	};
-	const selectStreamer = async (item) => {
+	const selectStreamer = async (items) => {
 		try {
-			return selectPart(
+			selectParts(
 				correlationId(), 
-				item
+				items
 			);
 		}
 		finally {
 			dialogPartsSearchStreamersManager.value.ok();
 		}
 	};
-	const selectTracker = async (item) => {
+	const selectTracker = async (items) => {
 		try {
-			return selectPart(
+			selectParts(
 				correlationId(), 
-				item
+				items
 			);
 		}
 		finally {
@@ -469,6 +509,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		dialogPartsSearchChuteProtectorsManager,
 		dialogPartsSearchChuteReleasesManager,
 		dialogPartsSearchDeploymentBagsManager,
+		dialogPartsSearchMotorsManager,
+		dialogPartsSearchMotorCasesManager,
 		dialogPartsSearchParachutesManager,
 		dialogPartsSearchStreamersManager,
 		dialogPartsSearchTrackersManager,
@@ -476,6 +518,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		manufacturerTypeChuteProtector,
 		manufacturerTypeChuteRelease,
 		manufacturerTypeDeploymentBag,
+		manufacturerTypeMotor,
+		manufacturerTypeMotorCase,
 		manufacturerTypeParachute,
 		manufacturerTypeStreamer,
 		manufacturerTypeTracker,
@@ -498,6 +542,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		clickChuteProtectorsSearch,
 		clickChuteReleasesSearch,
 		clickDeploymentBagsSearch,
+		clickMotorSearch,
+		clickMotorCaseSearch,
 		clickParachutesSearch,
 		clickStreamersSearch,
 		clickTrackersSearch,
@@ -510,6 +556,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		selectChuteProtector,
 		selectChuteRelease,
 		selectDeploymentBag,
+		selectMotor,
+		selectMotorCase,
 		selectParachute,
 		selectStreamer,
 		selectTracker,
