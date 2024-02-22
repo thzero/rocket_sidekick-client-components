@@ -57,15 +57,23 @@
 							:item="item2"
 						/>
 						<!-- <div 
-							class="float-right"
+							class="float-right":class="$vuetify.display.mdAndUp ? 'float-right mr-2' : ''"
 						>{{ manufacturer(item2) }}</div> -->
-						<div 
+						<!-- <div
+							v-if="$vuetify.display.smAndDown && item2.quantity"
 							class="float-right"
+						>{{ $t('forms.content.inventory.your')}} {{ $t('forms.content.inventory.quantity')}}: {{ item2.quantity }}</div> -->
+						<div 
+							:class="$vuetify.display.mdAndUp ? 'float-right' : ''"
 						>{{ item2.manufacturer }}</div>
 					</v-card-title>
 					<v-card-actions
 						v-if="deletable || selectable"
 					>
+						<div
+							v-if="item2.quantity"
+							class="mr-2"
+						>{{ $t('forms.content.inventory.your')}} {{ $t('forms.content.inventory.quantity')}}: {{ item2.quantity }}</div>
 						<v-spacer></v-spacer>
 						<v-btn
 							v-if="deletable"
