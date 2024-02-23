@@ -38,6 +38,7 @@
 						<MotorPanelTitle
 							v-if="isPartType(item2, partTypes.motor)"
 							:item="item2"
+							:displayCaseInfo="true"
 						/>
 						<MotorCasePanelTitle
 							v-if="isPartType(item2, partTypes.motorCase)"

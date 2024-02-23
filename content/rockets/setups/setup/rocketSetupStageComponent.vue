@@ -349,7 +349,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 			return { value: null };
 		const diameter = temp.diameter ? motorMountDiameter(temp.diameter) : null;
 		const count = temp.count ? temp.count : null;
-		return { value: `${diameter}${diameter ? ' x ' : ''}${count}` };
+		return { value: `${diameter}${diameter ? ' x ' : ''}${count}`};
 	};
 	const generateMotorInfo = (id, name) => {
 		if (String.isNullOrEmpty(name))
@@ -361,6 +361,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		return {
 			value: `${manufacturer ? manufacturer.abbrev : ''} ${name}`.trim(),
 			name: `${name}`.trim(),
+			sparky: manufacturer.sparky,
 			manufacturer: manufacturer.abbrev,
 			manufacturerId: manufacturer.id
 		};
@@ -495,6 +496,7 @@ export function useRocketSetupStageComponent(props, context, options) {
 		output.typeId = AppCommonConstants.Rocketry.PartTypes.motor;
 		output.motor = fromRocketStageMotor(index).value;
 		output.motorCase = motorCaseInfoByIndex(index).value;
+		output.sparky = motor.sparky;
 		return output;
 	};
 	const panelsKey = (type) => {

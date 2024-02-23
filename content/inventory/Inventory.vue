@@ -222,6 +222,110 @@
 										color="primary"
 									>
 										<span class="v-card-title pb-0 pl-0 pr-0 pt-0">{{ type.title }}</span>
+										<v-spacer></v-spacer>
+			<v-btn
+				class="mr-2"
+				color="primary"
+			>
+				{{ $t('buttons.add') }}
+				<v-menu 
+					activator="parent"
+					location="top"
+				>
+					<v-list>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="purple"
+								block
+								@click="clickAltimetersSearch()"
+							>
+								{{ $t('forms.content.parts.altimeter.name') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="orange"
+								block
+								@click="clickChuteProtectorsSearch()"
+							>
+								{{ $t('forms.content.parts.chuteProtector.name') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="orange"
+								block
+								@click="clickChuteReleasesSearch()"
+							>
+								{{ $t('forms.content.parts.chuteRelease.name') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="orange"
+								block
+								@click="clickDeploymentBagsSearch()"
+							>
+								{{ $t('forms.content.parts.deploymentBag.name') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="orange"
+								block
+								@click="clickMotorSearch()"
+							>
+								{{ $t('forms.content.parts.motor.name') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="orange"
+								block
+								@click="clickMotorCaseSearch()"
+							>
+								{{ $t('forms.content.parts.motorCase.name') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="orange"
+								block
+								@click="clickParachutesSearch()"
+							>
+								{{ $t('forms.content.parts.parachute.name') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="orange"
+								block
+								@click="clickStreamersSearch()"
+							>
+								{{ $t('forms.content.parts.streamer.name') }}
+							</v-btn>
+						</v-list-item>
+						<v-list-item>
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								color="blue"
+								block
+								@click="clickTrackersSearch()"
+							>
+								{{ $t('forms.content.parts.tracker.name') }}
+							</v-btn>
+						</v-list-item>
+					</v-list>
+				</v-menu>
+			</v-btn>
 									</v-expansion-panel-title>
 									<v-expansion-panel-text>
 										<div
@@ -254,6 +358,7 @@
 													<MotorPanelTitle
 														v-if="isPartType(item2.item, partTypes.motor)"
 														:item="item2.item"
+														:displayCaseInfo="true"
 													/>
 													<MotorCasePanelTitle
 														v-if="isPartType(item2.item, partTypes.motorCase)"
@@ -276,39 +381,65 @@
 													>
 														{{ item2.item.manufacturer }}
 													 -->
+													<v-chip
+														v-if="(item2.typeId !== 'motor' && item2.typeId !== 'motorCase') && item2.item.weight"
+														class="ml-2"
+													>
+														{{ weightDisplay(item2.item) }}
+													</v-chip>
 													<div class="float-right">
 														<div class="float-right ml-4 mb-2 mt-2">
-														<v-btn
-															v-if="$vuetify.display.smAndDown"
-															:variant="buttonsForms.variant.delete"
-															:color="buttonsForms.color.delete"
-															block
-															@click="handleDelete(item2)"
-															icon="mdi-delete"
-														>
-														</v-btn>
-														<v-btn
-															v-if="$vuetify.display.mdAndUp"
-															:variant="buttonsForms.variant.delete"
-															:color="buttonsForms.color.delete"
-															block
-															@click="handleDelete(item2)"
-														>
-															{{ $t('buttons.delete') }}
-														</v-btn>
-													</div>
-													<div class="float-right mb-2 mt-2">
-														<VtNumberField
-															ref="detailItemQuantityRef"
-															v-model="item2.quantity"
-															vid="detailItemQuantity"
-															:min="0"
-															:max="1000"
-															type="integer"
-															:validation="validation"
-															:label="$t('forms.content.inventory.quantity')"
-														/>
-													</div>
+															<v-btn
+																v-if="$vuetify.display.smAndDown"
+																:variant="buttonsForms.variant.delete"
+																:color="buttonsForms.color.delete"
+																block
+																@click="handleDelete(item2)"
+																icon="mdi-delete"
+															>
+															</v-btn>
+															<v-btn
+																v-if="$vuetify.display.mdAndUp"
+																:variant="buttonsForms.variant.delete"
+																:color="buttonsForms.color.delete"
+																block
+																@click="handleDelete(item2)"
+															>
+																{{ $t('buttons.delete') }}
+															</v-btn>
+														</div>
+														<div class="float-right mb-2 mt-2">
+															<table>
+																<tr>
+																	<td
+																		v-if="item2.item.typeId=='motor'"
+																	>
+																		<VtSelectWithValidation
+																			ref="detailItemDelayRef"
+																			vid="detailItemDelayRef"
+																			v-model="item2.delay"
+																			:items="motorDelays(item2.item)"
+																			:validation="validation"
+																			:label="$t('forms.content.parts.motor.delay')"
+																			class="mr-2"
+																			style="width: 105px;"
+																		/>
+																	</td>
+																	<td>
+																		<VtNumberField
+																			ref="detailItemQuantityRef"
+																			v-model="item2.quantity"
+																			vid="detailItemQuantity"
+																			:min="0"
+																			:max="1000"
+																			type="integer"
+																			:validation="validation"
+																			:label="$t('forms.content.inventory.quantity')"
+																		/>
+																	</td>
+																</tr>
+															</table>
+														</div>
 													</div>
 													<div
 														class="float-right mr-2"
@@ -464,6 +595,7 @@ import TrackerPanelTitle from '@/components/content/parts/trackers/TrackerPanelT
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
 import VtNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberField';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 
 export default {
 	name: 'InventoryUserControl',
@@ -483,7 +615,8 @@ export default {
 		TrackerPanelTitle,
 		VtConfirmationDialog,
 		VtFormListing,
-		VtNumberField
+		VtNumberField,
+		VtSelectWithValidation
 	},
 	props: {
 		...useInventoryBaseComponentProps
@@ -573,7 +706,8 @@ export default {
 			selectParachute,
 			selectStreamer,
 			selectTracker,
-		dirty,
+			weightDisplay,
+			motorDelays,
 			scope,
 			validation
 		} = useInventoryBaseComponent(props, context);
@@ -662,7 +796,8 @@ export default {
 			selectParachute,
 			selectStreamer,
 			selectTracker,
-		dirty,
+			weightDisplay,
+			motorDelays,
 			scope,
 			validation
 		};

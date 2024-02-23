@@ -7,6 +7,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
 import InventoryData from 'rocket_sidekick_common/data/inventory/index';
@@ -19,6 +20,7 @@ import { useContentSecurityComponent } from '@/components/content/contentSecurit
 import { useNotify } from '@thzero/library_client_vue3/components/notify';
 import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
+import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 
 export function useInventoryBaseComponent(props, context, options) {
 	const {
@@ -67,6 +69,15 @@ export function useInventoryBaseComponent(props, context, options) {
 		rocketTypes
 	} = useRocketsUtilityComponent(props, context, options);
 
+	const {
+		measurementUnitsLengthDefaultId,
+		measurementUnitsLengthType,
+		measurementUnitsWeightDefaultId,
+		measurementUnitsWeightType,
+		displayItemMeasurementLength,
+		displayItemMeasurementWeight
+	} = useToolsMeasurementUtilityComponent(props, context);
+
 	const debug = ref(false);
 	const dialogPartsSearchAltimetersManager = ref(new DialogSupport());
 	const dialogPartsSearchChuteProtectorsManager = ref(new DialogSupport());
@@ -77,6 +88,7 @@ export function useInventoryBaseComponent(props, context, options) {
 	const dialogPartsSearchParachutesManager = ref(new DialogSupport());
 	const dialogPartsSearchStreamersManager = ref(new DialogSupport());
 	const dialogPartsSearchTrackersManager = ref(new DialogSupport());
+	const dirty = ref(false);
 	// const filterItemName = ref(null);
 	// const filterItemOrganizations = ref([]);
 	// const filterItemRocketTypes = ref([]);
@@ -287,13 +299,15 @@ export function useInventoryBaseComponent(props, context, options) {
 				inventory.value.types.push(temp);
 			}
 			else {
-				find = temp.items.find(l => l.item.id === item.id);
-				if (find) {
-					if (items.length === 1) {
-						setNotify(correlationId, 'errors.content.inventory.exists');
-						return;
+				if (item.typeId !== AppCommonConstants.Rocketry.PartTypes.motor) {
+					find = temp.items.find(l => l.itemId === item.id);
+					if (find) {
+						if (items.length === 1) {
+							setNotify(correlationId, 'errors.content.inventory.exists');
+							return;
+						}
+						continue;
 					}
-					continue;
 				}
 			}
 
@@ -301,7 +315,10 @@ export function useInventoryBaseComponent(props, context, options) {
 			if (manufacturer)
 				item.manufacturer = manufacturer.name;
 
-			temp.items.push({ id: item.id, item: item, quantity: 1 });
+			let id = item.id;
+			if (item.typeId === AppCommonConstants.Rocketry.PartTypes.motor)
+				id = LibraryCommonUtility.generateId();
+			temp.items.push({ id: id, itemId: item.id, item: item, quantity: 1 });
 			temp.items = sortListingItems(correlationId, temp.items);
 
 			inventory.value.types = sortListing(correlationId, inventory.value.types);
@@ -424,6 +441,16 @@ export function useInventoryBaseComponent(props, context, options) {
 		dirty.value = false;
 		serviceStore.dispatcher.saveInventory(correlationId(), inventory.value);
 	};
+	const weightDisplay = (item) => {
+		if (!item)
+			return null;
+		return displayItemMeasurementWeight(correlationId(), item, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
+	};
+	const motorDelays = (item) => {
+		if (!item || !item.delays)
+			return null;
+		return LibraryClientVueUtility.selectBlank(LibraryClientVueUtility.selectOptions(item.delays.split(',')));
+	};
 
 	onMounted(async () => {
 		const correlationIdI = correlationId();
@@ -462,7 +489,6 @@ export function useInventoryBaseComponent(props, context, options) {
 			update();
 	});
 
-	const dirty = ref(false);
 	let debounced = null;
 	watch(() => inventory,
 		(value) => {
@@ -561,7 +587,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		selectParachute,
 		selectStreamer,
 		selectTracker,
-		dirty,
+		weightDisplay,
+		motorDelays,
 		scope: 'InventoryFilterControl',
 		validation: useVuelidate({ $scope: 'InventoryilterControl' })
 	};
