@@ -208,7 +208,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 					if (temp4)
 						count = temp4.count;
 				}
-				motorName = temp1.manufacturer + ' ' + temp1.designation;
+				motorName = temp1.manufacturer + ' ' + temp1.designation + (temp1.sparky ?  ` (${LibraryClientUtility.$trans.t('forms.external.motorSearch.sparky')})` : '');
 				if (count > 1)
 					motorName += ' x ' + count;
 				

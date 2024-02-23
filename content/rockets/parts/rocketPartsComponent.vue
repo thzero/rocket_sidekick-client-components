@@ -63,6 +63,11 @@ export function useRocketPartsComponent(props, context, options) {
 		// 	//.thenBy((v1, v2) => { return (v1.manufacturer && v2.manufacturer) && v1.manufacturer.localeCompare(v2.manufacturer); })
 		// 	.thenBy((v1, v2) => { return (v1.index && v2.index) && v1.index.compare(v2.index); })
 		// );
+		if (!temp)
+			return [];
+		if (!Array.isArray(temp))
+			return [];
+
 		temp = temp.sort(
 			firstBy((v1, v2) => { return (v1.sortName && v2.sortName) && v1.sortName.localeCompare(v2.sortName); })
 			.thenBy((v1, v2) => { return v1.name.localeCompare(v2.name); })
