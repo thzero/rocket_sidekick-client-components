@@ -382,7 +382,7 @@
 														{{ item2.item.manufacturer }}
 													 -->
 													<v-chip
-														v-if="(item2.typeId !== 'motor' && item2.typeId !== 'motorCase') && item2.item.weight"
+														v-if="(item2.typeId !== 'motor' && item2.typeId !== 'motorCase') && item2.item && item2.item.weight"
 														class="ml-2"
 													>
 														{{ weightDisplay(item2.item) }}
@@ -411,7 +411,7 @@
 														<div class="float-right mb-2 mt-2">
 															<table>
 																<tr>
-																	<td
+																	<!-- <td
 																		v-if="item2.item.typeId=='motor'"
 																	>
 																		<VtSelectWithValidation
@@ -422,8 +422,51 @@
 																			:validation="validation"
 																			:label="$t('forms.content.parts.motor.delay')"
 																			class="mr-2"
-																			style="width: 105px;"
+																			style="width: 90px;"
 																		/>
+																	</td> -->
+																	<td
+																		v-if="item2.item && item2.item.typeId=='motor'"
+																	>
+																		<VtNumberField
+																			ref="detailItemDelayOverrideRef"
+																			v-model="item2.delay"
+																			vid="detailItemDelayOverrideRef"
+																			:min="0"
+																			:max="1000"
+																			type="integer"
+																			:validation="validation"
+																			:label="$t('forms.content.parts.motor.delay')"
+																			style="width: 90px;"
+																		/>
+																	</td>
+																	<td
+																		v-if="item2.item && item2.item.typeId=='motor'"
+																	>
+																		<v-menu>
+																			<template v-slot:activator="{ props }">
+																				<v-btn
+																					icon="mdi-menu-down"
+																					density="comfortable"
+																					color="black"
+																					class="mr-2"
+																					v-bind="props"
+																					></v-btn>
+																			</template>
+																			<v-list density="compact">
+																				<v-list-item
+																					v-for="(item3, index) in motorDelays(item2.item)"
+																					:key="index"
+																					:value="index"
+																				>
+																					<v-list-item-title
+																						@click="selectMotorDelay(item2, item3.value)"
+																					>
+																						{{ item3.name }}
+																					</v-list-item-title>
+																				</v-list-item>
+																			</v-list>
+																		</v-menu>
 																	</td>
 																	<td>
 																		<VtNumberField
@@ -435,6 +478,7 @@
 																			type="integer"
 																			:validation="validation"
 																			:label="$t('forms.content.inventory.quantity')"
+																			style="width: 90px;"
 																		/>
 																	</td>
 																</tr>
@@ -445,13 +489,13 @@
 														class="float-right mr-2"
 														v-if="$vuetify.display.mdAndUp"
 													>
-														{{ item2.item.manufacturer }}
+														{{ item2.item ? item2.item.manufacturer : '' }}
 													</div>
 												</v-card-title>
 												<v-card-text
 													v-if="$vuetify.display.smAndDown"
 												>
-													{{ item2.item.manufacturer }}
+													{{ item2.item ? item2.item.manufacturer : '' }}
 												</v-card-text>
 												<!-- <v-card-text>
 													<div class="float-right ml-4 mb-2 mt-2">
@@ -703,6 +747,7 @@ export default {
 			selectDeploymentBag,
 			selectMotor,
 			selectMotorCase,
+			selectMotorDelay,
 			selectParachute,
 			selectStreamer,
 			selectTracker,
@@ -793,6 +838,7 @@ export default {
 			selectDeploymentBag,
 			selectMotor,
 			selectMotorCase,
+			selectMotorDelay,
 			selectParachute,
 			selectStreamer,
 			selectTracker,
