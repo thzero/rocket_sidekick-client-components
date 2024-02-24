@@ -81,7 +81,7 @@
 			</v-card>
 		</template>
 		<template #preActions=" { filterDrawer, isLoading }">
-			<v-btn
+			<!-- <v-btn
 				class="mr-2"
 				color="primary"
 			>
@@ -183,7 +183,7 @@
 						</v-list-item>
 					</v-list>
 				</v-menu>
-			</v-btn>
+			</v-btn> -->
 		</template>
 		<template v-slot:listing>
 			<v-row dense>
@@ -223,109 +223,109 @@
 									>
 										<span class="v-card-title pb-0 pl-0 pr-0 pt-0">{{ type.title }}</span>
 										<v-spacer></v-spacer>
-			<v-btn
-				class="mr-2"
-				color="primary"
-			>
-				{{ $t('buttons.add') }}
-				<v-menu 
-					activator="parent"
-					location="top"
-				>
-					<v-list>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="purple"
-								block
-								@click="clickAltimetersSearch()"
-							>
-								{{ $t('forms.content.parts.altimeter.name') }}
-							</v-btn>
-						</v-list-item>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="orange"
-								block
-								@click="clickChuteProtectorsSearch()"
-							>
-								{{ $t('forms.content.parts.chuteProtector.name') }}
-							</v-btn>
-						</v-list-item>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="orange"
-								block
-								@click="clickChuteReleasesSearch()"
-							>
-								{{ $t('forms.content.parts.chuteRelease.name') }}
-							</v-btn>
-						</v-list-item>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="orange"
-								block
-								@click="clickDeploymentBagsSearch()"
-							>
-								{{ $t('forms.content.parts.deploymentBag.name') }}
-							</v-btn>
-						</v-list-item>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="orange"
-								block
-								@click="clickMotorSearch()"
-							>
-								{{ $t('forms.content.parts.motor.name') }}
-							</v-btn>
-						</v-list-item>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="orange"
-								block
-								@click="clickMotorCaseSearch()"
-							>
-								{{ $t('forms.content.parts.motorCase.name') }}
-							</v-btn>
-						</v-list-item>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="orange"
-								block
-								@click="clickParachutesSearch()"
-							>
-								{{ $t('forms.content.parts.parachute.name') }}
-							</v-btn>
-						</v-list-item>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="orange"
-								block
-								@click="clickStreamersSearch()"
-							>
-								{{ $t('forms.content.parts.streamer.name') }}
-							</v-btn>
-						</v-list-item>
-						<v-list-item>
-							<v-btn
-								:variant="buttonsForms.variant.default"
-								color="blue"
-								block
-								@click="clickTrackersSearch()"
-							>
-								{{ $t('forms.content.parts.tracker.name') }}
-							</v-btn>
-						</v-list-item>
-					</v-list>
-				</v-menu>
-			</v-btn>
+										<!-- <v-btn
+											class="mr-2"
+											color="primary"
+										>
+											{{ $t('buttons.add') }}
+											<v-menu 
+												activator="parent"
+												location="top"
+											>
+												<v-list>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="purple"
+															block
+															@click="clickAltimetersSearch()"
+														>
+															{{ $t('forms.content.parts.altimeter.name') }}
+														</v-btn>
+													</v-list-item>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="orange"
+															block
+															@click="clickChuteProtectorsSearch()"
+														>
+															{{ $t('forms.content.parts.chuteProtector.name') }}
+														</v-btn>
+													</v-list-item>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="orange"
+															block
+															@click="clickChuteReleasesSearch()"
+														>
+															{{ $t('forms.content.parts.chuteRelease.name') }}
+														</v-btn>
+													</v-list-item>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="orange"
+															block
+															@click="clickDeploymentBagsSearch()"
+														>
+															{{ $t('forms.content.parts.deploymentBag.name') }}
+														</v-btn>
+													</v-list-item>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="orange"
+															block
+															@click="clickMotorSearch()"
+														>
+															{{ $t('forms.content.parts.motor.name') }}
+														</v-btn>
+													</v-list-item>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="orange"
+															block
+															@click="clickMotorCaseSearch()"
+														>
+															{{ $t('forms.content.parts.motorCase.name') }}
+														</v-btn>
+													</v-list-item>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="orange"
+															block
+															@click="clickParachutesSearch()"
+														>
+															{{ $t('forms.content.parts.parachute.name') }}
+														</v-btn>
+													</v-list-item>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="orange"
+															block
+															@click="clickStreamersSearch()"
+														>
+															{{ $t('forms.content.parts.streamer.name') }}
+														</v-btn>
+													</v-list-item>
+													<v-list-item>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															color="blue"
+															block
+															@click="clickTrackersSearch()"
+														>
+															{{ $t('forms.content.parts.tracker.name') }}
+														</v-btn>
+													</v-list-item>
+												</v-list>
+											</v-menu>
+										</v-btn> -->
 									</v-expansion-panel-title>
 									<v-expansion-panel-text>
 										<div
@@ -542,6 +542,112 @@
 			</v-row>
 		</template>
 	</VtFormListing>
+	<VLayoutItem model-value position="top" class="text-end pointer-events-none" size="0">
+		<div class="ma-4 pointer-events-initial">
+			<v-menu>
+				<template v-slot:activator="{ props }">
+					<v-btn
+						color="primary"
+						v-bind="props"
+						icon="mdi-plus"
+					>
+					</v-btn>
+				</template>
+				<v-list class="mt-2">
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="purple"
+							block
+							@click="clickAltimetersSearch()"
+						>
+							{{ $t('forms.content.parts.altimeter.name') }}
+						</v-btn>
+					</v-list-item>
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="orange"
+							block
+							@click="clickChuteProtectorsSearch()"
+						>
+							{{ $t('forms.content.parts.chuteProtector.name') }}
+						</v-btn>
+					</v-list-item>
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="orange"
+							block
+							@click="clickChuteReleasesSearch()"
+						>
+							{{ $t('forms.content.parts.chuteRelease.name') }}
+						</v-btn>
+					</v-list-item>
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="orange"
+							block
+							@click="clickDeploymentBagsSearch()"
+						>
+							{{ $t('forms.content.parts.deploymentBag.name') }}
+						</v-btn>
+					</v-list-item>
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="orange"
+							block
+							@click="clickMotorSearch()"
+						>
+							{{ $t('forms.content.parts.motor.name') }}
+						</v-btn>
+					</v-list-item>
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="orange"
+							block
+							@click="clickMotorCaseSearch()"
+						>
+							{{ $t('forms.content.parts.motorCase.name') }}
+						</v-btn>
+					</v-list-item>
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="orange"
+							block
+							@click="clickParachutesSearch()"
+						>
+							{{ $t('forms.content.parts.parachute.name') }}
+						</v-btn>
+					</v-list-item>
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="orange"
+							block
+							@click="clickStreamersSearch()"
+						>
+							{{ $t('forms.content.parts.streamer.name') }}
+						</v-btn>
+					</v-list-item>
+					<v-list-item>
+						<v-btn
+							:variant="buttonsForms.variant.default"
+							color="blue"
+							block
+							@click="clickTrackersSearch()"
+						>
+							{{ $t('forms.content.parts.tracker.name') }}
+						</v-btn>
+					</v-list-item>
+				</v-list>
+			</v-menu>
+		</div>
+	</VLayoutItem>
 	<RocketPartsLookupDialog
 		ref="dialogPartsSearchAltimetersRef"
 		:signal="dialogPartsSearchAltimetersManager.signal"
@@ -856,4 +962,11 @@ export default {
 </script>
 
 <style scoped>
+  .pointer-events-none {
+    pointer-events: none;
+  }
+  
+  .pointer-events-initial {
+    pointer-events: initial;
+  }
 </style>

@@ -135,7 +135,7 @@
 					class="mb-4"
 				>
 					<v-card-title class="d-flex">
-						<span class="text-left text-h6 text-bold">{{ item.manufacturer }} {{ item.commonName }} {{ item.sparky ? '(' + $t('motorSearch.sparky') +  ')' : '' }}</span>
+						<span class="text-left text-h6 text-bold">{{ item.manufacturer }} {{ item.commonName }} {{ item.sparky ? '(' + $t('motorSearch.motor_sparky') +  ')' : '' }}</span>
 					</v-card-title>
 					<v-card-text>
 						<table style="width: 100%;">

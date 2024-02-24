@@ -8,12 +8,20 @@
 		<span v-if="item.motorCase">{{ item.motorCase }}</span>
 	</v-chip>
 	<v-chip 
+		v-if="item.propInfo === 'black powder'"
+		class="mr-2"
+	>
+		{{ $t('forms.external.motorSearch.propInfo_bp') }}
+	</v-chip>
+	<v-chip 
 		v-if="item.sparky"
+		class="mr-2"
 	>
 		{{ $t('forms.external.motorSearch.sparky') }}
 	</v-chip>
 	<v-chip 
 		v-if="item.type"
+		class="mr-2"
 	>
 		{{ $t(`motorSearch.motor_type_${item.type}`) }}
 	</v-chip>
