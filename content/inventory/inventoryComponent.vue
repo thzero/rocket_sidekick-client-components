@@ -393,6 +393,9 @@ export function useInventoryBaseComponent(props, context, options) {
 			dialogPartsSearchMotorCasesManager.value.ok();
 		}
 	};
+	const selectMotorDelay = async (item, delay) => {
+		item.delay = delay;
+	};
 	const selectParachute = async (items) => {
 		try {
 			selectParts(
@@ -584,6 +587,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		selectDeploymentBag,
 		selectMotor,
 		selectMotorCase,
+		selectMotorDelay,
 		selectParachute,
 		selectStreamer,
 		selectTracker,

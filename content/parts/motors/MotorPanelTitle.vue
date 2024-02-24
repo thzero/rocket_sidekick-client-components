@@ -1,7 +1,7 @@
 <template>
-	{{ item.designation ?? item.name }} 
+	{{ item.designation ?? item.name }}
 	<v-chip 
-		v-if="displayCaseInfo"
+		v-if="displayCaseInfo && (item.caseInfo || item.motorCase)"
 		class="mr-2"
 	>
 		<span v-if="item.caseInfo">{{ item.manufacturer }} {{ item.caseInfo }}</span>
