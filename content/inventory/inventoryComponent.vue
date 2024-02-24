@@ -438,6 +438,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		return listing.sort(
 			firstBy((v1, v2) => { return (v1.item && v1.item.sortName && v2.item && v2.item.sortName) && v1.item.sortName.localeCompare(v2.item.sortName); })
 			.thenBy((v1, v2) => { return (v1.item && v1.item.name && v2.item && v2.item.name) && v1.item.name.localeCompare(v2.item.name); })
+			.thenBy('delay')
 		);
 	};
 	const update = async () => {
