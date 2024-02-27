@@ -116,92 +116,10 @@ export function useInventoryBaseComponent(props, context, options) {
 			debug.value = config['inventory'] ?? false;
 	}
 	
-	const altimeters = computed(() => {
+	const motorCases = computed(() => {
 		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.altimeter);
-	});
-	const chuteProtectors = computed(() => {
-		if (!inventory.value || !inventory.value.types)
-			return [];
-		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.chuteProtector);
-	});
-	const chuteReleases = computed(() => {
-		if (!inventory.value || !inventory.value.types)
-			return [];
-		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.chuteRelease);
-	});
-	const deploymentBags = computed(() => {
-		if (!inventory.value || !inventory.value.types)
-			return [];
-		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.deploymentBag);
-	});
-	const hasAltimeters = computed(() => {
-		const temp = altimeters.value;
-		return temp &&  Array.isArray(temp) && temp.length > 0;
-	});
-	const hasChuteProtectors = computed(() => {
-		const temp = chuteProtectors.value;
-		return temp &&  Array.isArray(temp) && temp.length > 0;
-	});
-	const hasChuteReleases = computed(() => {
-		const temp = chuteReleases.value;
-		return temp &&  Array.isArray(temp) && temp.length > 0;
-	});
-	const hasDeploymentBags = computed(() => {
-		const temp = deploymentBags.value;
-		return temp &&  Array.isArray(temp) && temp.length > 0;
-	});
-	const hasParachutes = computed(() => {
-		const temp = parachutes.value;
-		return temp &&  Array.isArray(temp) && temp.length > 0;
-	});
-	const hasStreamers = computed(() => {
-		const temp = streamers.value;
-		return temp &&  Array.isArray(temp) && temp.length > 0;
-	});
-	const hasTrackers = computed(() => {
-		const temp = trackers.value;
-		return temp &&  Array.isArray(temp) && temp.length > 0;
-	});
-	// const motorCases = computed(() => {
-	// 	const output = [];
-	// 	if (hasMotorInfo(0))
-	// 		output.push(motorCaseInfoByIndex(0));
-	// 	if (hasMotorInfo(1))
-	// 		output.push(motorCaseInfoByIndex(1));
-	// 	if (hasMotorInfo(2))
-	// 		output.push(motorCaseInfoByIndex(2));
-	// 	if (hasMotorInfo(3))
-	// 		output.push(motorCaseInfoByIndex(3));
-	// 	return output;
-	// });
-	// const motors = computed(() => {
-	// 	const output = [];
-	// 	if (hasMotorInfo(0))
-	// 		output.push(motorInfo(0));
-	// 	if (hasMotorInfo(1))
-	// 		output.push(motorInfo(3));
-	// 	if (hasMotorInfo(2))
-	// 		output.push(motorInfo(2));
-	// 	if (hasMotorInfo(3))
-	// 		output.push(motorInfo(3));
-	// 	return output;
-	// });
-	const parachutes = computed(() => {
-		if (!inventory.value || !inventory.value.types)
-			return [];
-		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.parachute);
-	});
-	const streamers = computed(() => {
-		if (!inventory.value || !inventory.value.types)
-			return [];
-		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.streamer);
-	});
-	const trackers = computed(() => {
-		if (!inventory.value || !inventory.value.types)
-			return [];
-		return inventory.value.types.filter(l => (l.item ? l.item.typeId : null) === AppCommonConstants.Rocketry.PartTypes.tracker);
+		return inventory.value.types.find(l => l.typeId === AppCommonConstants.Rocketry.PartTypes.motorCase);
 	});
 	
 	const clickAltimetersSearch = async () => {
@@ -250,6 +168,13 @@ export function useInventoryBaseComponent(props, context, options) {
 			LibraryCommonUtility.deleteArray(inventory.value.types, temp.typeId, 'typeId');
 
 		await update();
+	};
+	const hasMotorCase = (item) => {
+		if (!(item && item.motorCaseId) && motorCases.value)
+			return false;
+
+		const motorCase = motorCases.value.items.find(l => l.itemId === item.motorCaseId);
+		return motorCase !== null && motorCase !== undefined;
 	};
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;
@@ -554,20 +479,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		manufacturerTypeStreamer,
 		manufacturerTypeTracker,
 		manufacturers,
-		altimeters,
-		chuteProtectors,
-		chuteReleases,
-		deploymentBags,
-		hasAltimeters,
-		hasChuteProtectors,
-		hasChuteReleases,
-		hasDeploymentBags,
-		hasParachutes,
-		hasStreamers,
-		hasTrackers,
-		parachutes,
-		streamers,
-		trackers,
+		motorCases,
 		clickAltimetersSearch,
 		clickChuteProtectorsSearch,
 		clickChuteReleasesSearch,
@@ -578,6 +490,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		clickStreamersSearch,
 		clickTrackersSearch,
 		handleDelete,
+		hasMotorCase,
 		isPartType,
 		panelsUpdated,
 		resetAdditional,

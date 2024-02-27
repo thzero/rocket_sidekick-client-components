@@ -2,9 +2,12 @@
 	{{ item.designation ?? item.name }}
 	<v-chip 
 		v-if="displayCaseInfo && (item.caseInfo || item.motorCase)"
+		variant="elevated"
+		:color="hasCase ? 'green' : 'red'"
 		class="mr-2"
 	>
-		<span v-if="item.caseInfo">{{ item.manufacturer }} {{ item.caseInfo }}</span>
+		<span v-if="item.manufacturer">{{ item.manufacturer }}&nbsp;</span>
+		<span v-if="item.caseInfo">{{ item.caseInfo }}&nbsp;</span>
 		<span v-if="item.motorCase">{{ item.motorCase }}</span>
 	</v-chip>
 	<v-chip 
@@ -36,6 +39,10 @@ export default {
 	props: {
 		...usePartPanelComponentProps,
 		displayCaseInfo: {
+			type: Boolean,
+			value: false
+		},
+		hasCase: {
 			type: Boolean,
 			value: false
 		}
