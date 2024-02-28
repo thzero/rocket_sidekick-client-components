@@ -2,7 +2,7 @@
 	<ContentHeader :value="title" />
 	<VtFormListing
 		ref="inventoryListingRef"
-		:pre-complete-ok="search"
+		:pre-complete-ok="fetch"
 		:reset-additional="resetAdditional"
 		:validation="validation"
 		:debug="debug"
@@ -21,22 +21,21 @@
 								:validation="validation"
 							/>
 						</v-col>
-					</v-row>
+					</v-row>-->
 					<v-row dense>
 						<v-col cols="12" :sm="filterDrawer ? 12: 6">
 							<VtSelectWithValidation
-								ref="filterItemRocketTypesRef"
-								v-model="filterItemRocketTypes"
-								vid="filterItemRocketTypes"
+								ref="filterItemPartTypesRef"
+								v-model="filterItemPartTypes"
+								vid="filterItemPartTypes"
 								multiple
 								:max-values="2"
-								:items="rocketTypes"
+								:items="inventoryPartTypes"
 								:validation="validation"
-								:label="$t('forms.content.rockets.level')"
-								:hint="$t('forms.content.rockets.level')"
+								:label="$t('forms.content.parts.type')"
 							/>
 						</v-col>
-						<v-col cols="12" :sm="filterDrawer ? 12: 6">
+						<!-- <v-col cols="12" :sm="filterDrawer ? 12: 6">
 							<VtSelectWithValidation
 								ref="filterItemOrganizationsRef"
 								v-model="filterItemOrganizations"
@@ -47,8 +46,8 @@
 								:validation="validation"
 								:label="$t('forms.content.organizations.plural')"
 							/>
-						</v-col>
-					</v-row> -->
+						</v-col> -->
+					</v-row>
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer />
@@ -59,7 +58,7 @@
 						@click="handleAdd(item)"
 					>
 						{{ $t('buttons.add') }}
-					</v-btn>
+					</v-btn> -->
 					<v-btn
 						:variant="buttonsForms.variant.clear"
 						:color="buttonsForms.color.clear"
@@ -76,7 +75,7 @@
 						@click="clickSearch(submit)"
 					>
 						{{ $t('buttons.search') }}
-					</v-btn> -->
+					</v-btn>
 				</v-card-actions>
 			</v-card>
 		</template>
@@ -214,7 +213,7 @@
 								@update:modelValue="panelsUpdated"
 							>
 								<v-expansion-panel
-									v-for="(type, index) in inventory.types"
+									v-for="(type, index) in inventoryDisplay.types"
 									:key="index"
 									:value="type.typeId"
 								>
@@ -784,7 +783,6 @@ export default {
 			notImplementedError,
 			success,
 			serviceStore,
-			sortByOrder,
 			target,
 			buttonsDialog,
 			buttonsForms,
@@ -792,12 +790,16 @@ export default {
 			notifyMessage,
 			notifySignal,
 			notifyTimeout,
+			clickSearch,
+			clickSearchClear,
+			fetch,
 			debug,
 			inventory,
+			inventoryDisplay,
 			inventoryListingRef,
 			// filterItemName,
 			// filterItemOrganizations,
-			// filterItemRocketTypes,
+			filterItemPartTypes,
 			panels,
 			partTypes,
 			title,
@@ -820,7 +822,8 @@ export default {
 			manufacturerTypeStreamer,
 			manufacturerTypeTracker,
 			manufacturers,
-			motorCases,
+			inventoryMotorCases,
+			inventoryPartTypes,
 			clickAltimetersSearch,
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
@@ -835,7 +838,6 @@ export default {
 			isPartType,
 			panelsUpdated,
 			resetAdditional,
-			search,
 			selectAltimeter,
 			selectChuteProtector,
 			selectChuteRelease,
@@ -863,7 +865,6 @@ export default {
 			notImplementedError,
 			success,
 			serviceStore,
-			sortByOrder,
 			target,
 			buttonsDialog,
 			buttonsForms,
@@ -871,12 +872,16 @@ export default {
 			notifyMessage,
 			notifySignal,
 			notifyTimeout,
+			clickSearch,
+			clickSearchClear,
+			fetch,
 			debug,
 			inventory,
+			inventoryDisplay,
 			inventoryListingRef,
 			// filterItemName,
 			// filterItemOrganizations,
-			// filterItemRocketTypes,
+			filterItemPartTypes,
 			panels,
 			partTypes,
 			title,
@@ -899,7 +904,8 @@ export default {
 			manufacturerTypeStreamer,
 			manufacturerTypeTracker,
 			manufacturers,
-			motorCases,
+			inventoryMotorCases,
+			inventoryPartTypes,
 			clickAltimetersSearch,
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
@@ -914,7 +920,6 @@ export default {
 			isPartType,
 			panelsUpdated,
 			resetAdditional,
-			search,
 			selectAltimeter,
 			selectChuteProtector,
 			selectChuteRelease,

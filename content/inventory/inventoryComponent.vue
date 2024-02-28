@@ -15,9 +15,8 @@ import InventoryData from 'rocket_sidekick_common/data/inventory/index';
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useContentBaseComponent } from '@/components/content/contentBase';
 import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
-import { useNotify } from '@thzero/library_client_vue3/components/notify';
+import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
@@ -34,9 +33,21 @@ export function useInventoryBaseComponent(props, context, options) {
 		notImplementedError,
 		success,
 		serviceStore,
-		sortByOrder,
-		target
-	} = useContentBaseComponent(props, context, options);
+		target,
+		notifyColor,
+		notifyMessage,
+		notifySignal,
+		notifyTimeout,
+		setNotify,
+		clickSearch,
+		clickSearchClear,
+		fetch
+	} = useMasterDetailComponent(props, context, {
+			fetch: async (correlationId) => { 
+				return await fetchI(correlationId); 
+			}
+		}
+	);
 
 	const {
 		isAdmin,
@@ -50,14 +61,6 @@ export function useInventoryBaseComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms
 	} = useButtonComponent(props, context);
-
-	const {
-		notifyColor,
-		notifyMessage,
-		notifySignal,
-		notifyTimeout,
-		setNotify
-	} = useNotify(props, context, options);
 
 	const {
 		organizations,
@@ -91,7 +94,7 @@ export function useInventoryBaseComponent(props, context, options) {
 	const dirty = ref(false);
 	// const filterItemName = ref(null);
 	// const filterItemOrganizations = ref([]);
-	// const filterItemRocketTypes = ref([]);
+	const filterItemPartTypes = ref([]);
 	const inventory = ref(new InventoryData());
 	const inventoryOrig = ref(new InventoryData());
 	const inventoryListingRef = ref(null);
@@ -116,12 +119,35 @@ export function useInventoryBaseComponent(props, context, options) {
 			debug.value = config['inventory'] ?? false;
 	}
 	
-	const motorCases = computed(() => {
-		if (!inventory.value || !inventory.value.types)
+	const inventoryDisplay = computed(() => {
+		const data = inventory.value ? inventory.value : {};
+		if (data.types && data.types.length == 0)
+			return data;
+
+		const params = fetchParams(correlationId, {});
+		if (!params)
+			return data;
+
+		let output = Object.assign({}, inventory.value);
+		output.types = [];
+		if (inventory.value && Array.isArray(inventory.value.types));
+			output.types = [...inventory.value.types];
+		if (params.partTypes && params.partTypes.length > 0) {
+			output.types = output.types.filter(l => params.partTypes.find(j => j === l.typeId));
+		}
+
+		return output;
+	});
+	const inventoryMotorCases = computed(() => {
+		if (!inventory.value || !!inventory.value.types)
 			return [];
 		return inventory.value.types.find(l => l.typeId === AppCommonConstants.Rocketry.PartTypes.motorCase);
 	});
-	
+	const inventoryPartTypes = computed(() => {
+		const temp2 = LibraryClientVueUtility.selectOptions(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.PartTypes), LibraryClientUtility.$trans.t, 'forms.content.parts');
+		return temp2;
+	});
+
 	const clickAltimetersSearch = async () => {
 		dialogPartsSearchAltimetersManager.value.open();
 	};
@@ -152,7 +178,7 @@ export function useInventoryBaseComponent(props, context, options) {
 	const fetchParams = (correlationId, params) => {
 		// params.name = filterItemName.value;
 		// params.organizations = filterItemOrganizations.value;
-		// params.rocketTypes = filterItemRocketTypes.value;
+		params.partTypes = filterItemPartTypes.value;
 		return params;
 	};
 	const handleDelete = async (item) => {
@@ -170,10 +196,10 @@ export function useInventoryBaseComponent(props, context, options) {
 		await update();
 	};
 	const hasMotorCase = (item) => {
-		if (!(item && item.motorCaseId) && motorCases.value)
+		if (!(item && item.motorCaseId) || !inventoryMotorCases.value || !inventoryMotorCases.value.items)
 			return false;
 
-		const motorCase = motorCases.value.items.find(l => l.itemId === item.motorCaseId);
+		const motorCase = inventoryMotorCases.value.items.find(l => l.itemId === item.motorCaseId);
 		return motorCase !== null && motorCase !== undefined;
 	};
 	const isPartType = (item, typeId) => {
@@ -185,15 +211,33 @@ export function useInventoryBaseComponent(props, context, options) {
 	const resetAdditional = async (correlationId, data) => {
 		// filterItemName.value = data ? data.name : null;
 		// filterItemOrganizations.value = data ? data.organizations : null;
-		// filterItemRocketTypes.value = data ? data.rocketTypes : null;
+		filterItemPartTypes.value = data ? data.partTypes : null;
 	};
-	const search = async (correlationId) => {
+	const fetchI = async (correlationId) => {
 		const params = fetchParams(correlationId, {});
 		if (!params)
 			return error('useInventoryBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
-
+		
 		serviceStore.dispatcher.setInventorySearchCriteria(correlationId, params);
 
+		let inventoryI = inventory.value;
+		if (!inventoryI || !inventoryI || (inventoryI && inventoryI.types && inventoryI.types.length == 0))
+			await _search(correlationId, params);
+
+		// let inventoryI = inventory.value;
+		// if (!inventoryI || (inventoryI && inventoryI.types && inventoryI.types.length == 0)) {
+		// 	await _search(correlationId, params);
+		// 	inventoryI = inventory.value;
+		// }
+
+		// // const temp = (inventoryPartTypes.value ?? []).map(l => l.id);
+		// // if (params.partTypes && params.partTypes.length > 0) {
+		// // 	inventoryI.types = inventoryI.types.filter(l => params.partTypes.find(j => j === l.typeId));
+		// // }
+
+		return success(correlationId);
+	};
+	const _search = async (correlationId, params) => {
 		const response = await serviceStore.dispatcher.requestInventory(correlationId, params);
 		if (hasFailed(response))
 			return;
@@ -368,7 +412,7 @@ export function useInventoryBaseComponent(props, context, options) {
 	};
 	const update = async () => {
 		dirty.value = false;
-		serviceStore.dispatcher.saveInventory(correlationId(), inventory.value);
+		// serviceStore.dispatcher.saveInventory(correlationId(), inventory.value);
 	};
 	const weightDisplay = (item) => {
 		if (!item)
@@ -400,7 +444,7 @@ export function useInventoryBaseComponent(props, context, options) {
 			];
 		panels.value = temp;
 
-		await search(correlationIdI);
+		// await fetchI(correlationIdI);
 
 		if (!manufacturers.value) {
 			const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
@@ -443,7 +487,6 @@ export function useInventoryBaseComponent(props, context, options) {
 		notImplementedError,
 		success,
 		serviceStore,
-		sortByOrder,
 		target,
 		buttonsDialog,
 		buttonsForms,
@@ -451,12 +494,16 @@ export function useInventoryBaseComponent(props, context, options) {
 		notifyMessage,
 		notifySignal,
 		notifyTimeout,
+		clickSearch,
+		clickSearchClear,
+		fetch,
 		debug,
 		inventory,
+		inventoryDisplay,
 		inventoryListingRef,
 		// filterItemName,
 		// filterItemOrganizations,
-		// filterItemRocketTypes,
+		filterItemPartTypes,
 		panels,
 		partTypes,
 		title,
@@ -479,7 +526,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		manufacturerTypeStreamer,
 		manufacturerTypeTracker,
 		manufacturers,
-		motorCases,
+		inventoryMotorCases,
+		inventoryPartTypes,
 		clickAltimetersSearch,
 		clickChuteProtectorsSearch,
 		clickChuteReleasesSearch,
@@ -494,7 +542,6 @@ export function useInventoryBaseComponent(props, context, options) {
 		isPartType,
 		panelsUpdated,
 		resetAdditional,
-		search,
 		selectAltimeter,
 		selectChuteProtector,
 		selectChuteRelease,
