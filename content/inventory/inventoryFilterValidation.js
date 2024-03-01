@@ -1,12 +1,29 @@
-import { between, decimal, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required, requiredUnless } from '@vuelidate/validators';
 
 export const useInventoryFilterValidation = {
-	filterItemName: {
-		characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
-		minLength: minLength(3),
-		maxLength: maxLength(50),
-		$autoDirty: true
+	filterItemPartTypes: { $autoDirty: true },
+	filterItemDiameter: { 
+		$autoDirty: true 
 	},
-	filterItemOrganizations: { $autoDirty: true },
-	filterItemRocketTypes: { $autoDirty: true }
+	filterItemManufacturers: { 
+		$autoDirty: true 
+	},
+	// filterItemMotor: {
+	// 	requiredIfImpulseClass: requiredUnless(self.filterItemImpulseClass),
+	// 	minLength: minLength(3),
+	// 	validatorMotor,
+	// 	$autoDirty: true
+	// },
+	filterItemMotorDiameter: { 
+		$autoDirty: true 
+	},
+	filterItemMotorImpulseClass: { 
+		$autoDirty: true 
+	},
+	filterItemMotorSingleUse: { 
+		$autoDirty: true 
+	},
+	filterItemMotorSparky: { 
+		$autoDirty: true 
+	}
 };

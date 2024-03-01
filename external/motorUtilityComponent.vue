@@ -25,8 +25,14 @@ export function useMotorUtilityComponent(props, context, options) {
 	const motorImpulseClasses = computed(() => {
 		return ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'].map((item) => { return { id: item, name: item }; });
 	});
+	const motorImpulseClassesExact = computed(() => {
+		return ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'].map((item) => { return { id: item, name: item }; });
+	});
 	const motorMountDiameters = computed(() => {
 		return ['', '13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
+	});
+	const motorMountDiametersExact = computed(() => {
+		return ['13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
 	});
 
 	const motorCaseInfo = (motor) => {
@@ -60,7 +66,9 @@ export function useMotorUtilityComponent(props, context, options) {
 
 	return {
 		motorImpulseClasses,
+		motorImpulseClassesExact,
 		motorMountDiameters,
+		motorMountDiametersExact,
 		motorCaseInfo,
 		motorMountDiameter,
 		motorMountName,

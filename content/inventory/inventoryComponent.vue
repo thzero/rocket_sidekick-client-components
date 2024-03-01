@@ -15,10 +15,8 @@ import InventoryData from 'rocket_sidekick_common/data/inventory/index';
 import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
-import { useContentSecurityComponent } from '@/components/content/contentSecurityComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
-import { useOrganizationsUtilityComponent } from '@/components/content/organizationsUtilityComponent';
-import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
+import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 
 export function useInventoryBaseComponent(props, context, options) {
@@ -45,17 +43,10 @@ export function useInventoryBaseComponent(props, context, options) {
 	} = useMasterDetailComponent(props, context, {
 			fetch: async (correlationId) => { 
 				return await fetchI(correlationId); 
-			}
+			},
+			init: async (correlationId) => { return await initI(correlationId); }
 		}
 	);
-
-	const {
-		isAdmin,
-		isOwner,
-		isPublic,
-		isPublicDisplay,
-		isUser
-	} = useContentSecurityComponent(props, context);
 
 	const {
 		buttonsDialog,
@@ -63,14 +54,15 @@ export function useInventoryBaseComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
-		organizations,
-		organizationName,
-		organizationNames
-	} = useOrganizationsUtilityComponent(props, context);
-
-	const {
-		rocketTypes
-	} = useRocketsUtilityComponent(props, context, options);
+		motorImpulseClasses,
+		motorImpulseClassesExact,
+		motorMountDiameters,
+		motorMountDiametersExact,
+		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
+		motorUrl
+	} = useMotorUtilityComponent(props, context);
 
 	const {
 		measurementUnitsLengthDefaultId,
@@ -91,22 +83,27 @@ export function useInventoryBaseComponent(props, context, options) {
 	const dialogPartsSearchParachutesManager = ref(new DialogSupport());
 	const dialogPartsSearchStreamersManager = ref(new DialogSupport());
 	const dialogPartsSearchTrackersManager = ref(new DialogSupport());
+	const displayParams = ref({});
 	const dirty = ref(false);
-	// const filterItemName = ref(null);
-	// const filterItemOrganizations = ref([]);
+	const filterItemManufacturers = ref(null);
+	const filterItemMotor = ref(null);
+	const filterItemMotorDiameter = ref(null);
+	const filterItemMotorImpulseClass = ref(null);
+	const filterItemMotorSingleUse = ref(false);
+	const filterItemMotorSparky = ref(false);
 	const filterItemPartTypes = ref([]);
 	const inventory = ref(new InventoryData());
 	const inventoryOrig = ref(new InventoryData());
 	const inventoryListingRef = ref(null);
-	const manufacturerTypeAltimeter = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.altimeter ]);
-	const manufacturerTypeChuteProtector = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector ]);
-	const manufacturerTypeChuteRelease = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease ]);
-	const manufacturerTypeDeploymentBag = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag ]);
-	const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
-	const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
-	const manufacturerTypeParachute = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.parachute ]);
-	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.streamer ]);
-	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.tracker ]);
+	const manufacturerTypeAltimeter = ref([ AppCommonConstants.Rocketry.PartTypes.altimeter ]);
+	const manufacturerTypeChuteProtector = ref([ AppCommonConstants.Rocketry.PartTypes.chuteProtector ]);
+	const manufacturerTypeChuteRelease = ref([ AppCommonConstants.Rocketry.PartTypes.chuteRelease ]);
+	const manufacturerTypeDeploymentBag = ref([ AppCommonConstants.Rocketry.PartTypes.deploymentBag ]);
+	const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.PartTypes.motor ]);
+	const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.PartTypes.motorCase ]);
+	const manufacturerTypeParachute = ref([ AppCommonConstants.Rocketry.PartTypes.parachute ]);
+	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.PartTypes.streamer ]);
+	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.PartTypes.tracker ]);
 	const manufacturers = ref(props.manufacturers);
 	const panels = ref([]);
 	const partTypes = ref(AppCommonConstants.Rocketry.PartTypes);
@@ -124,16 +121,37 @@ export function useInventoryBaseComponent(props, context, options) {
 		if (data.types && data.types.length == 0)
 			return data;
 
-		const params = fetchParams(correlationId, {});
+		const params = displayParams.value;
 		if (!params)
 			return data;
 
-		let output = Object.assign({}, inventory.value);
-		output.types = [];
-		if (inventory.value && Array.isArray(inventory.value.types));
-			output.types = [...inventory.value.types];
-		if (params.partTypes && params.partTypes.length > 0) {
+		let output = LibraryCommonUtility.cloneDeep(inventory.value);
+		if (params.partTypes && params.partTypes.length > 0)
 			output.types = output.types.filter(l => params.partTypes.find(j => j === l.typeId));
+		if (params.motorDiameter || params.motorImpulseClass || params.motorSingleUse || params.motorSparky) {
+			const motors = output.types.find(l => l.typeId === AppCommonConstants.Rocketry.PartTypes.motor);
+			if (motors && motors.items && motors.items.length > 0) {
+				if (params.motorDiameter && params.motorDiameter.length > 0) {
+					motors.items = motors.items.filter(l => {
+						return params.motorDiameter.indexOf(l.item.diameter) > -1;
+					});
+				}
+				if (params.motorImpulseClass && params.motorImpulseClass.length > 0) {
+					motors.items = motors.items.filter(l => {
+						return params.motorImpulseClass.indexOf(l.item.impulseClass) > -1;
+					});
+				}
+				if (params.motorSingleUse) {
+					motors.items = motors.items.filter(l => {
+						return l.item.type !== 'reload';
+					});
+				}
+				if (params.motorSparky) {
+					motors.items = motors.items.filter(l => {
+						return l.item.sparky === params.motorSparky;
+					});
+				}
+			}
 		}
 
 		return output;
@@ -175,9 +193,28 @@ export function useInventoryBaseComponent(props, context, options) {
 	const clickTrackersSearch = async () => {
 		dialogPartsSearchTrackersManager.value.open();
 	};
+	const fetchI = async (correlationId) => {
+		const params = fetchParams(correlationId, {});
+		if (!params)
+			return error('useInventoryBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+		
+		serviceStore.dispatcher.setInventorySearchCriteria(correlationId, params);
+
+		let inventoryI = inventory.value;
+		if (!inventoryI || !inventoryI || (inventoryI && inventoryI.types && inventoryI.types.length == 0))
+			await search(correlationId, params);
+
+		displayParams.value = params;
+
+		return success(correlationId);
+	};
 	const fetchParams = (correlationId, params) => {
-		// params.name = filterItemName.value;
-		// params.organizations = filterItemOrganizations.value;
+		params.manufacturers = filterItemManufacturers.value;
+		params.motor = filterItemMotor.value;
+		params.motorDiameter = filterItemMotorDiameter.value;
+		params.motorImpulseClass = filterItemMotorImpulseClass.value;
+		params.motorSingleUse = filterItemMotorSingleUse.value;
+		params.motorSparky = filterItemMotorSparky.value;
 		params.partTypes = filterItemPartTypes.value;
 		return params;
 	};
@@ -202,6 +239,11 @@ export function useInventoryBaseComponent(props, context, options) {
 		const motorCase = inventoryMotorCases.value.items.find(l => l.itemId === item.motorCaseId);
 		return motorCase !== null && motorCase !== undefined;
 	};
+	const initI = async (correlationId) => {
+		const params = await serviceStore.getters.getInventorySearchCriteria(correlationId);
+		resetAdditional(correlationId, params);
+		return success(correlationId);
+	};
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;
 	};
@@ -209,35 +251,15 @@ export function useInventoryBaseComponent(props, context, options) {
 		await serviceStore.dispatcher.setInventoryExpanded(correlationId(), value);
 	};
 	const resetAdditional = async (correlationId, data) => {
-		// filterItemName.value = data ? data.name : null;
-		// filterItemOrganizations.value = data ? data.organizations : null;
+		filterItemManufacturers.value = data ? data.manufacturers : null;
+		filterItemMotor.value = data ? data.motor : null;
+		filterItemMotorDiameter.value = data ? data.motorDiameter : null;
+		filterItemMotorImpulseClass.value = data ? data.motorImpulseClass : null;
+		filterItemMotorSingleUse.value = data ? data.motorSingleUse : null;
+		filterItemMotorSparky.value = data ? data.motorSparky : null;
 		filterItemPartTypes.value = data ? data.partTypes : null;
 	};
-	const fetchI = async (correlationId) => {
-		const params = fetchParams(correlationId, {});
-		if (!params)
-			return error('useInventoryBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
-		
-		serviceStore.dispatcher.setInventorySearchCriteria(correlationId, params);
-
-		let inventoryI = inventory.value;
-		if (!inventoryI || !inventoryI || (inventoryI && inventoryI.types && inventoryI.types.length == 0))
-			await _search(correlationId, params);
-
-		// let inventoryI = inventory.value;
-		// if (!inventoryI || (inventoryI && inventoryI.types && inventoryI.types.length == 0)) {
-		// 	await _search(correlationId, params);
-		// 	inventoryI = inventory.value;
-		// }
-
-		// // const temp = (inventoryPartTypes.value ?? []).map(l => l.id);
-		// // if (params.partTypes && params.partTypes.length > 0) {
-		// // 	inventoryI.types = inventoryI.types.filter(l => params.partTypes.find(j => j === l.typeId));
-		// // }
-
-		return success(correlationId);
-	};
-	const _search = async (correlationId, params) => {
+	const search = async (correlationId, params) => {
 		const response = await serviceStore.dispatcher.requestInventory(correlationId, params);
 		if (hasFailed(response))
 			return;
@@ -432,15 +454,15 @@ export function useInventoryBaseComponent(props, context, options) {
 		let temp = await serviceStore.getters.getInventoryExpanded();
 		if (!temp || (temp && temp.length === 0))
 			temp = [ 
-				AppCommonConstants.Rocketry.ManufacturerTypes.altimeter,
-				AppCommonConstants.Rocketry.ManufacturerTypes.chuteProtector,
-				AppCommonConstants.Rocketry.ManufacturerTypes.chuteRelease,
-				AppCommonConstants.Rocketry.ManufacturerTypes.deploymentBag,
-				AppCommonConstants.Rocketry.ManufacturerTypes.motor,
-				AppCommonConstants.Rocketry.ManufacturerTypes.motorCase,
-				AppCommonConstants.Rocketry.ManufacturerTypes.parachute,
-				AppCommonConstants.Rocketry.ManufacturerTypes.streamer,
-				AppCommonConstants.Rocketry.ManufacturerTypes.tracker
+				AppCommonConstants.Rocketry.PartTypes.altimeter,
+				AppCommonConstants.Rocketry.PartTypes.chuteProtector,
+				AppCommonConstants.Rocketry.PartTypes.chuteRelease,
+				AppCommonConstants.Rocketry.PartTypes.deploymentBag,
+				AppCommonConstants.Rocketry.PartTypes.motor,
+				AppCommonConstants.Rocketry.PartTypes.motorCase,
+				AppCommonConstants.Rocketry.PartTypes.parachute,
+				AppCommonConstants.Rocketry.PartTypes.streamer,
+				AppCommonConstants.Rocketry.PartTypes.tracker
 			];
 		panels.value = temp;
 
@@ -488,21 +510,32 @@ export function useInventoryBaseComponent(props, context, options) {
 		success,
 		serviceStore,
 		target,
-		buttonsDialog,
-		buttonsForms,
 		notifyColor,
 		notifyMessage,
 		notifySignal,
 		notifyTimeout,
+		setNotify,
 		clickSearch,
 		clickSearchClear,
 		fetch,
+		buttonsDialog,
+		buttonsForms,
+		motorImpulseClassesExact,
+		motorMountDiametersExact,
+		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
+		motorUrl,
 		debug,
 		inventory,
 		inventoryDisplay,
 		inventoryListingRef,
-		// filterItemName,
-		// filterItemOrganizations,
+		filterItemManufacturers,
+		filterItemMotor,
+		filterItemMotorDiameter,
+		filterItemMotorImpulseClass,
+		filterItemMotorSingleUse,
+		filterItemMotorSparky,
 		filterItemPartTypes,
 		panels,
 		partTypes,
