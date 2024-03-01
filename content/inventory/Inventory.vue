@@ -29,12 +29,71 @@
 								v-model="filterItemPartTypes"
 								vid="filterItemPartTypes"
 								multiple
-								:max-values="2"
 								:items="inventoryPartTypes"
 								:validation="validation"
 								:label="$t('forms.content.parts.type')"
 							/>
 						</v-col>
+					</v-row>
+					<v-row dense>
+						<v-col cols="12" sm="6">
+							<VtSelectWithValidation
+								ref="filterItemMotorImpulseClassRef"
+								v-model="filterItemMotorImpulseClass"
+								vid="filterIteMotorImpulseClass"
+								multiple
+								:max-values="5"
+								:items="motorImpulseClassesExact"
+								:validation="validation"
+								:label="$t('forms.external.motorSearch.impulseClass')"
+							/>
+						</v-col>
+						<v-col cols="12" sm="6">
+							<VtSelectWithValidation
+								ref="filterItemMotorDiameterRef"
+								v-model="filterItemMotorDiameter"
+								vid="filterItemMotorDiameter"
+								multiple
+								:max-values="5"
+								:items="motorMountDiametersExact"
+								:validation="validation"
+								:label="$t('forms.external.motorSearch.diameter')"
+							/>
+						</v-col>
+					</v-row>
+					<v-row dense>
+						<v-col cols="12" sm="6">
+							<v-checkbox
+								ref="filterItemMotorSingleUseRef"
+								v-model="filterItemMotorSingleUse"
+								density="compact"
+								:label="$t('forms.external.motorSearch.singleUse')"
+							/>
+						</v-col>
+						<v-col cols="12" sm="6">
+							<v-checkbox
+								ref="filterItemMotorSparkyRef"
+								v-model="filterItemMotorSparky"
+								density="compact"
+								:label="$t('forms.external.motorSearch.sparky')"
+							/>
+						</v-col>
+					</v-row>
+					<v-row dense>
+						<v-col col="12">
+							<VtSelectWithValidation
+								ref="filterItemManufacturersRef"
+								v-model="filterItemManufacturers"
+								vid="filterItemManufacturers"
+								multiple
+								:max-values="2"
+								:items="manufacturers"
+								:validation="validation"
+								:label="$t('forms.external.motorSearch.manufacturer')"
+								:hint="$t('forms.external.motorSearch.manufacturer_hint')"
+							/>
+						</v-col>
+					</v-row>
 						<!-- <v-col cols="12" :sm="filterDrawer ? 12: 6">
 							<VtSelectWithValidation
 								ref="filterItemOrganizationsRef"
@@ -47,7 +106,6 @@
 								:label="$t('forms.content.organizations.plural')"
 							/>
 						</v-col> -->
-					</v-row>
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer />
@@ -79,7 +137,7 @@
 				</v-card-actions>
 			</v-card>
 		</template>
-		<template #preActions=" { filterDrawer, isLoading }">
+		<template #preActions="{ filterDrawer, isLoading }">
 			<!-- <v-btn
 				class="mr-2"
 				color="primary"
@@ -206,6 +264,7 @@
 						<v-col
 							cols="12"
 						>
+						<!-- <pre>{{ inventoryDisplay }}</pre> -->
 							<v-expansion-panels
 								v-model="panels"
 								class="mt-4"
@@ -784,21 +843,32 @@ export default {
 			success,
 			serviceStore,
 			target,
-			buttonsDialog,
-			buttonsForms,
 			notifyColor,
 			notifyMessage,
 			notifySignal,
 			notifyTimeout,
+			setNotify,
 			clickSearch,
 			clickSearchClear,
 			fetch,
+			buttonsDialog,
+			buttonsForms,
+			motorImpulseClassesExact,
+			motorMountDiametersExact,
+			motorCaseInfo,
+			motorMountDiameter,
+			motorMountName,
+			motorUrl,
 			debug,
 			inventory,
 			inventoryDisplay,
 			inventoryListingRef,
-			// filterItemName,
-			// filterItemOrganizations,
+			filterItemManufacturers,
+			filterItemMotor,
+			filterItemMotorDiameter,
+			filterItemMotorImpulseClass,
+			filterItemMotorSingleUse,
+			filterItemMotorSparky,
 			filterItemPartTypes,
 			panels,
 			partTypes,
@@ -866,21 +936,32 @@ export default {
 			success,
 			serviceStore,
 			target,
-			buttonsDialog,
-			buttonsForms,
 			notifyColor,
 			notifyMessage,
 			notifySignal,
 			notifyTimeout,
+			setNotify,
 			clickSearch,
 			clickSearchClear,
 			fetch,
+			buttonsDialog,
+			buttonsForms,
+			motorImpulseClassesExact,
+			motorMountDiametersExact,
+			motorCaseInfo,
+			motorMountDiameter,
+			motorMountName,
+			motorUrl,
 			debug,
 			inventory,
 			inventoryDisplay,
 			inventoryListingRef,
-			// filterItemName,
-			// filterItemOrganizations,
+			filterItemManufacturers,
+			filterItemMotor,
+			filterItemMotorDiameter,
+			filterItemMotorImpulseClass,
+			filterItemMotorSingleUse,
+			filterItemMotorSparky,
 			filterItemPartTypes,
 			panels,
 			partTypes,
@@ -937,8 +1018,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useInventoryFilterValidation), {
-		});
+		return Object.assign(LibraryCommonUtility.cloneDeep(useInventoryFilterValidation), {});
 	}
 };
 </script>
