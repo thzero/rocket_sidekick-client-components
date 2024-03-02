@@ -127,6 +127,17 @@
 						<v-col><h3>{{ $t('forms.content.parts.motor.plural') }}</h3></v-col>
 					</v-row>
 					<v-row dense>
+						<v-col cols="12">
+							<VtSelectWithValidation
+								ref="filterItemMotorCasesRef"
+								v-model="filterItemMotorCases"
+								vid="filterItemMotorCases"
+								multiple
+								:items="inventoryMotorCasesSelect"
+								:validation="validation"
+								:label="$t('forms.external.motorSearch.motorCases')"
+							/>
+						</v-col>
 						<v-col cols="12" sm="6">
 							<VtSelectWithValidation
 								ref="filterItemMotorDiameterRef"
@@ -1012,6 +1023,7 @@ export default {
 			filterItemManufacturers,
 			filterItemMotor,
 			filterItemMotorCaseDiameter,
+			filterItemMotorCases,
 			filterItemMotorDiameter,
 			filterItemMotorImpulseClass,
 			filterItemMotorSingleUse,
@@ -1040,6 +1052,7 @@ export default {
 			manufacturerTypeTracker,
 			manufacturers,
 			inventoryMotorCases,
+			inventoryMotorCasesSelect,
 			inventoryPartTypes,
 			clickAltimetersSearch,
 			clickChuteProtectorsSearch,
@@ -1119,6 +1132,7 @@ export default {
 			filterItemManufacturers,
 			filterItemMotor,
 			filterItemMotorCaseDiameter,
+			filterItemMotorCases,
 			filterItemMotorDiameter,
 			filterItemMotorImpulseClass,
 			filterItemMotorSingleUse,
@@ -1147,6 +1161,7 @@ export default {
 			manufacturerTypeTracker,
 			manufacturers,
 			inventoryMotorCases,
+			inventoryMotorCasesSelect,
 			inventoryPartTypes,
 			clickAltimetersSearch,
 			clickChuteProtectorsSearch,
