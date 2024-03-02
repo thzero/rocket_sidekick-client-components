@@ -3,12 +3,13 @@
 		ref="dialogRocketPartsLookup"
 		:label="$t(partTypeName)"
 		:signal="signal"
+		:button-cancel-ignore-confirm="true"
 		:button-ok-disabled-override="buttonOkDisabledOverride"
 		:pre-complete-ok="preCompleteOk"
 		:reset-additional="resetAdditional"
 		:reset-on-submit="false"
 		:validation="validation"
-		width="80vh"
+		width="70vh"
 		max-width="90vh"
 		@close="close"
 		:debug="true"
@@ -71,10 +72,60 @@
 								</v-col>
 							</v-row>
 							<v-row 
-								v-if="isChuteProtectors() || isDeploymentBags() || isParachutes()"
+								v-if="isDeploymentBags() || isParachutes()"
 								dense
 							>
-								<v-col cols="3">
+								<v-col :cols="$vuetify.display.smAndDown ? '12' : '8'">
+									<table style="width: 100%;">
+										<tr>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="filterItemDiameterMinRef"
+													v-model="filterItemDiameterMin"
+													vid="filterItemDiameterMin"
+													:validation="validation"
+													:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.min.abbr')"
+												/>
+											</td>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="filterItemDiameterMaxRef"
+													v-model="filterItemDiameterMax"
+													vid="filterItemDiameterMax"
+													:validation="validation"
+													:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.max.abbr')"
+												/>
+											</td>
+											<td
+												v-if="$vuetify.display.mdAndUp"
+												class="measurementUnitExtraLong"
+											>
+												<MeasurementUnitSelect2
+													ref="filterItemDiameterMeasurementUnitIdRef"
+													v-model="filterItemDiameterMeasurementUnitId"
+													vid="filterItemDiameterMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.diameter')"
+												/>
+											</td>
+										</tr>
+									</table>
+								</v-col>
+								<v-col
+									v-if="$vuetify.display.smAndDown"
+									cols="12"
+								>
+									<MeasurementUnitSelect2
+										ref="filterItemDiameterMeasurementUnitIdRef"
+										v-model="filterItemDiameterMeasurementUnitId"
+										vid="filterItemDiameterMeasurementUnitId"
+										:measurementUnitsType="measurementUnitsLengthType"
+										:validation="validation"
+										:label="$t('forms.settings.measurementUnits.diameter')"
+									/>
+								</v-col>
+								<!-- <v-col cols="3">
 									<VtNumberFieldWithValidation
 										ref="filterItemDiameterMinRef"
 										v-model="filterItemDiameterMin"
@@ -90,6 +141,16 @@
 										vid="filterItemDiameterMax"
 										:validation="validation"
 										:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.max.abbr')"
+									/>
+								</v-col>
+								<v-col cols="3">
+									<MeasurementUnitSelect2
+										ref="filterItemDiameterMeasurementUnitIdRef"
+										v-model="filterItemDiameterMeasurementUnitId"
+										vid="filterItemDiameterMeasurementUnitId"
+										:measurementUnitsType="measurementUnitsLengthType"
+										:validation="validation"
+										:label="$t('forms.settings.measurementUnits.diameter')"
 									/>
 								</v-col>
 								<v-col cols="6">
@@ -112,18 +173,68 @@
 													:measurementUnitsId="filterItemDiameterMeasurementUnitsId"
 													:measurementUnitsType="measurementUnitsLengthType"
 													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.length')"
+													:label="$t('forms.settings.measurementUnits.diameter')"
+												/>
+											</td>
+										</tr>
+									</table>
+								</v-col> -->
+							</v-row>
+							<v-row 
+								v-if="isChuteProtectors() || isDeploymentBags() || isStreamers()"
+								dense
+							>
+								<v-col :cols="$vuetify.display.smAndDown ? '12' : '8'">
+									<table style="width: 100%;">
+										<tr>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="filterItemLengthMinRef"
+													v-model="filterItemLengthMin"
+													vid="filterItemLengthMin"
+													:validation="validation"
+													:label="$t('forms.content.parts.length') + ' ' + $t('forms.content.parts.min.abbr')"
+												/>
+											</td>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="filterItemLengthMaxRef"
+													v-model="filterItemLengthMax"
+													vid="filterItemLengthMax"
+													:validation="validation"
+													:label="$t('forms.content.parts.length') + ' ' + $t('forms.content.parts.max.abbr')"
+												/>
+											</td>
+											<td
+												v-if="$vuetify.display.mdAndUp"
+												class="measurementUnitExtraLong"
+											>
+												<MeasurementUnitSelect2
+													ref="filterItemDiameterMeasurementUnitIdRef"
+													v-model="filterItemDiameterMeasurementUnitId"
+													vid="filterItemDiameterMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.diameter')"
 												/>
 											</td>
 										</tr>
 									</table>
 								</v-col>
-							</v-row>
-							<v-row 
-								v-if="isDeploymentBags() || isStreamers()"
-								dense
-							>
-								<v-col cols="3">
+								<v-col
+									v-if="$vuetify.display.smAndDown"
+									cols="12"
+								>
+									<MeasurementUnitSelect2
+										ref="filterItemLengthMeasurementUnitIdRef"
+										v-model="filterItemLengthMeasurementUnitId"
+										vid="filterItemLengthMeasurementUnitId"
+										:measurementUnitsType="measurementUnitsLengthType"
+										:validation="validation"
+										:label="$t('forms.settings.measurementUnits.length')"
+									/>
+								</v-col>
+								<!-- <v-col cols="3">
 									<VtNumberFieldWithValidation
 										ref="filterItemLengthMinRef"
 										v-model="filterItemLengthMin"
@@ -166,7 +277,7 @@
 											</td>
 										</tr>
 									</table>
-								</v-col>
+								</v-col> -->
 							</v-row>
 							<v-row dense>
 								<v-col cols="8">
@@ -280,8 +391,9 @@ import { useLookupDialogProps } from '@/components/content/dialogs/lookupDialogP
 
 import RocketParts from '@/components/content/rockets/parts/RocketParts';
 
-import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
-import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+// import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
+// import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListingDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListingDialog';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
@@ -291,8 +403,9 @@ import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/comp
 export default {
 	name: 'RocketPartsLookupDialog',
 	components: {
-		MeasurementUnitSelect,
-		MeasurementUnitsSelect,
+		// MeasurementUnitSelect,
+		MeasurementUnitSelect2,
+		// MeasurementUnitsSelect,
 		RocketParts,
 		VtConfirmationDialog,
 		VtFormListingDialog,

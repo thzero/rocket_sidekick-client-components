@@ -36,18 +36,97 @@
 						</v-col>
 					</v-row>
 					<v-row dense>
-						<v-col cols="12" sm="6">
+						<v-col col="12">
 							<VtSelectWithValidation
-								ref="filterItemMotorImpulseClassRef"
-								v-model="filterItemMotorImpulseClass"
-								vid="filterIteMotorImpulseClass"
+								ref="filterItemManufacturersRef"
+								v-model="filterItemManufacturers"
+								vid="filterItemManufacturers"
 								multiple
-								:max-values="5"
-								:items="motorImpulseClassesExact"
+								:max-values="2"
+								:items="manufacturers"
 								:validation="validation"
-								:label="$t('forms.external.motorSearch.impulseClass')"
+								:label="$t('forms.external.motorSearch.manufacturer')"
+								:hint="$t('forms.external.motorSearch.manufacturer_hint')"
 							/>
 						</v-col>
+					</v-row>
+					<v-row>
+						<v-col cols="6">
+							<VtNumberFieldWithValidation
+								ref="filterItemDiameterMinRef"
+								v-model="filterItemDiameterMin"
+								vid="filterItemDiameterMin"
+								:validation="validation"
+								:label="$t('forms.content.parts.diameter') + ' ' + $t('forms.content.parts.min.abbr')"
+							/>
+							<MeasurementUnitSelect2
+								ref="filterItemDiameterMeasurementUnitIdRef"
+								v-model="filterItemDiameterMeasurementUnitId"
+								vid="filterItemDiameterMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.diameter')"
+							/>
+						</v-col>
+						<v-col cols="6">
+							<VtNumberFieldWithValidation
+								ref="filterItemDiameterMaxRef"
+								v-model="filterItemDiameterMax"
+								vid="filterItemDiameterMax"
+								:validation="validation"
+								:label="$t('forms.content.parts.diameter') + ' ' + $t('forms.content.parts.max.abbr')"
+							/>
+						</v-col>
+					</v-row>
+					<v-row>
+						<v-col cols="6">
+							<VtNumberFieldWithValidation
+								ref="filterItemDimensionMinRef"
+								v-model="filterItemDimensionMin"
+								vid="filterItemDimensionMin"
+								:validation="validation"
+								:label="$t('forms.content.parts.dimension') + ' ' + $t('forms.content.parts.min.abbr')"
+							/>
+							<MeasurementUnitSelect2
+								ref="filterItemDimensionMeasurementUnitIdRef"
+								v-model="filterItemDimensionMeasurementUnitId"
+								vid="filterItemDimensionMeasurementUnitId"
+								:measurementUnitsType="measurementUnitsLengthType"
+								:validation="validation"
+								:label="$t('forms.settings.measurementUnits.length')"
+							/>
+						</v-col>
+						<v-col cols="6">
+							<VtNumberFieldWithValidation
+								ref="filterItemDimensionMaxRef"
+								v-model="filterItemDimensionMax"
+								vid="filterItemDimensionMax"
+								:validation="validation"
+								:label="$t('forms.content.parts.dimension') + ' ' + $t('forms.content.parts.max.abbr')"
+							/>
+						</v-col>
+					</v-row>
+					<v-row>
+						<v-col><h3>{{ $t('forms.content.parts.motorCase.plural') }}</h3></v-col>
+					</v-row>
+					<v-row dense>
+						<v-col cols="12" sm="6">
+							<VtSelectWithValidation
+								ref="filterItemMotorCaseDiameterRef"
+								v-model="filterItemMotorCaseDiameter"
+								vid="filterItemMotorCaseDiameter"
+								multiple
+								:max-values="5"
+								:items="motorMountDiametersExact"
+								:validation="validation"
+								:label="$t('forms.external.motorSearch.diameter')"
+							/>
+						</v-col>
+					</v-row>
+					<v-row>
+						<v-col><h3>{{ $t('forms.content.parts.motor.plural') }}</h3></v-col>
+					</v-row>
+					<v-row dense>
 						<v-col cols="12" sm="6">
 							<VtSelectWithValidation
 								ref="filterItemMotorDiameterRef"
@@ -60,9 +139,21 @@
 								:label="$t('forms.external.motorSearch.diameter')"
 							/>
 						</v-col>
+						<v-col cols="12" sm="6">
+							<VtSelectWithValidation
+								ref="filterItemMotorImpulseClassRef"
+								v-model="filterItemMotorImpulseClass"
+								vid="filterIteMotorImpulseClass"
+								multiple
+								:max-values="5"
+								:items="motorImpulseClassesExact"
+								:validation="validation"
+								:label="$t('forms.external.motorSearch.impulseClass')"
+							/>
+						</v-col>
 					</v-row>
 					<v-row dense>
-						<v-col cols="12" sm="6">
+						<v-col cols="6">
 							<v-checkbox
 								ref="filterItemMotorSingleUseRef"
 								v-model="filterItemMotorSingleUse"
@@ -70,27 +161,12 @@
 								:label="$t('forms.external.motorSearch.singleUse')"
 							/>
 						</v-col>
-						<v-col cols="12" sm="6">
+						<v-col cols="6">
 							<v-checkbox
 								ref="filterItemMotorSparkyRef"
 								v-model="filterItemMotorSparky"
 								density="compact"
 								:label="$t('forms.external.motorSearch.sparky')"
-							/>
-						</v-col>
-					</v-row>
-					<v-row dense>
-						<v-col col="12">
-							<VtSelectWithValidation
-								ref="filterItemManufacturersRef"
-								v-model="filterItemManufacturers"
-								vid="filterItemManufacturers"
-								multiple
-								:max-values="2"
-								:items="manufacturers"
-								:validation="validation"
-								:label="$t('forms.external.motorSearch.manufacturer')"
-								:hint="$t('forms.external.motorSearch.manufacturer_hint')"
 							/>
 						</v-col>
 					</v-row>
@@ -446,26 +522,37 @@
 													>
 														{{ weightDisplay(item2.item) }}
 													</v-chip>
-													<div class="float-right">
-														<div class="float-right ml-4 mb-2 mt-2">
-															<v-btn
-																v-if="$vuetify.display.smAndDown"
-																:variant="buttonsForms.variant.delete"
-																:color="buttonsForms.color.delete"
-																block
-																@click="handleDelete(item2)"
-																icon="mdi-delete"
-															>
-															</v-btn>
-															<v-btn
-																v-if="$vuetify.display.mdAndUp"
-																:variant="buttonsForms.variant.delete"
-																:color="buttonsForms.color.delete"
-																block
-																@click="handleDelete(item2)"
-															>
-																{{ $t('buttons.delete') }}
-															</v-btn>
+													<div 
+														v-if="$vuetify.display.mdAndUp"
+														class="float-right"
+													>
+														<div class="float-right ml-2 mb-2 mt-2">
+															<v-tooltip text="$t('buttons.copy')">
+																<template v-slot:activator="{ props }">
+																	<v-btn
+																		:variant="buttonsForms.variant.copy"
+																		:color="buttonsForms.color.copy"
+																		block
+																		@click="handleCopy(item2)"
+																		icon="mdi-content-copy"
+																	>
+																	</v-btn>
+																</template>
+															</v-tooltip>
+														</div>
+														<div class="float-right ml-2 mb-2 mt-2">
+															<v-tooltip text="$t('buttons.delete')">
+																<template v-slot:activator="{ props }">
+																	<v-btn
+																		:variant="buttonsForms.variant.delete"
+																		:color="buttonsForms.color.delete"
+																		block
+																		@click="handleDelete(item2)"
+																		icon="mdi-delete"
+																	>
+																	</v-btn>
+																</template>
+															</v-tooltip>
 														</div>
 														<div class="float-right mb-2 mt-2">
 															<table>
@@ -551,11 +638,11 @@
 														{{ item2.item ? item2.item.manufacturer : '' }}
 													</div>
 												</v-card-title>
-												<v-card-text
+												<!-- <v-card-text
 													v-if="$vuetify.display.smAndDown"
 												>
 													{{ item2.item ? item2.item.manufacturer : '' }}
-												</v-card-text>
+												</v-card-text> -->
 												<!-- <v-card-text>
 													<div class="float-right ml-4 mb-2 mt-2">
 														<v-btn
@@ -590,6 +677,46 @@
 														/>
 													</div>
 												</v-card-text> -->
+												<v-card-actions
+													v-if="$vuetify.display.smAndDown"
+												>
+													<div
+														v-if="$vuetify.display.smAndDown"
+													>
+														{{ item2.item ? item2.item.manufacturer : '' }}
+													</div>
+													<v-spacer />
+													<div>
+														<div class="float-right ml-2 mb-2 mt-2">
+															<v-tooltip text="$t('buttons.copy')">
+																<template v-slot:activator="{ props }">
+																	<v-btn
+																		:variant="buttonsForms.variant.copy"
+																		:color="buttonsForms.color.copy"
+																		block
+																		@click="handleCopy(item2)"
+																		icon="mdi-content-copy"
+																	>
+																	</v-btn>
+																</template>
+															</v-tooltip>
+														</div>
+														<div class="float-right ml-2 mb-2 mt-2">
+															<v-tooltip text="$t('buttons.delete')">
+																<template v-slot:activator="{ props }">
+																	<v-btn
+																		:variant="buttonsForms.variant.delete"
+																		:color="buttonsForms.color.delete"
+																		block
+																		@click="handleDelete(item2)"
+																		icon="mdi-delete"
+																	>
+																	</v-btn>
+																</template>
+															</v-tooltip>
+														</div>
+													</div>
+												</v-card-actions>
 											</v-card>
 										</div>
 									</v-expansion-panel-text>
@@ -779,6 +906,13 @@
 		@close="dialogPartsSearchTrackersManager.cancel()"
 		@select="selectTracker"
 	/>
+	<VtConfirmationDialog
+		ref="dialogDeleteRef"
+		:messageRaw=true
+		:signal="dialogDeleteManager.signal"
+		@cancel="dialogDeleteCancel"
+		@ok="dialogDeleteOk"
+	/>
 </template>
 
 <script>
@@ -793,8 +927,7 @@ import ChuteProtectorPanelTitle from '@/components/content/parts/chuteProtectors
 import ChuteReleasePanelTitle from '@/components/content/parts/chuteReleases/ChuteReleasePanelTitle';
 import ContentHeader from '@/components/content/Header';
 import DeploymentBagPanelTitle from '@/components/content/parts/deploymentBags/DeploymentBagPanelTitle';
-import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
-import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
+import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MotorPanelTitle from '@/components/content/parts/motors/MotorPanelTitle';
 import MotorCasePanelTitle from '@/components/content/parts/motorCases/MotorCasePanelTitle';
 import ParachutePanelTitle from '@/components/content/parts/parachutes/ParachutePanelTitle';
@@ -804,7 +937,9 @@ import TrackerPanelTitle from '@/components/content/parts/trackers/TrackerPanelT
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
 import VtNumberField from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberField';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
 	name: 'InventoryUserControl',
@@ -814,8 +949,7 @@ export default {
 		ChuteReleasePanelTitle,
 		ContentHeader,
 		DeploymentBagPanelTitle,
-		MeasurementUnitSelect,
-		MeasurementUnitsSelect,
+		MeasurementUnitSelect2,
 		MotorPanelTitle,
 		MotorCasePanelTitle,
 		ParachutePanelTitle,
@@ -825,6 +959,8 @@ export default {
 		VtConfirmationDialog,
 		VtFormListing,
 		VtNumberField,
+		VtNumberFieldWithValidation,
+		VtTextFieldWithValidation,
 		VtSelectWithValidation
 	},
 	props: {
@@ -850,6 +986,7 @@ export default {
 			setNotify,
 			clickSearch,
 			clickSearchClear,
+			dialogDeleteManager,
 			fetch,
 			buttonsDialog,
 			buttonsForms,
@@ -859,12 +996,22 @@ export default {
 			motorMountDiameter,
 			motorMountName,
 			motorUrl,
+			measurementUnitsLengthType,
 			debug,
 			inventory,
 			inventoryDisplay,
 			inventoryListingRef,
+			filterItemDiameterMax,
+			filterItemDiameterMin,
+			filterItemDiameterMeasurementUnitId,
+			filterItemDiameterMeasurementUnitsId,
+			filterItemDimensionMax,
+			filterItemDimensionMin,
+			filterItemDimensionMeasurementUnitId,
+			filterItemDimensionMeasurementUnitsId,
 			filterItemManufacturers,
 			filterItemMotor,
+			filterItemMotorCaseDiameter,
 			filterItemMotorDiameter,
 			filterItemMotorImpulseClass,
 			filterItemMotorSingleUse,
@@ -903,6 +1050,9 @@ export default {
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
+			dialogDeleteCancel,
+			dialogDeleteOk,
+			handleCopy,
 			handleDelete,
 			hasMotorCase,
 			isPartType,
@@ -943,6 +1093,7 @@ export default {
 			setNotify,
 			clickSearch,
 			clickSearchClear,
+			dialogDeleteManager,
 			fetch,
 			buttonsDialog,
 			buttonsForms,
@@ -952,12 +1103,22 @@ export default {
 			motorMountDiameter,
 			motorMountName,
 			motorUrl,
+			measurementUnitsLengthType,
 			debug,
 			inventory,
 			inventoryDisplay,
 			inventoryListingRef,
+			filterItemDiameterMax,
+			filterItemDiameterMin,
+			filterItemDiameterMeasurementUnitId,
+			filterItemDiameterMeasurementUnitsId,
+			filterItemDimensionMax,
+			filterItemDimensionMin,
+			filterItemDimensionMeasurementUnitId,
+			filterItemDimensionMeasurementUnitsId,
 			filterItemManufacturers,
 			filterItemMotor,
+			filterItemMotorCaseDiameter,
 			filterItemMotorDiameter,
 			filterItemMotorImpulseClass,
 			filterItemMotorSingleUse,
@@ -996,6 +1157,9 @@ export default {
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
+			dialogDeleteCancel,
+			dialogDeleteOk,
+			handleCopy,
 			handleDelete,
 			hasMotorCase,
 			isPartType,

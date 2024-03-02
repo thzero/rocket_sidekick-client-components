@@ -112,7 +112,7 @@
 								:measurementUnitsType="measurementUnitsLengthType"
 								:validation="validation"
 								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
+								:label="$t('forms.settings.measurementUnits.diameter')"
 							/>
 						</td>
 					</tr>

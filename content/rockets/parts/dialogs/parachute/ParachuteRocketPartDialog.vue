@@ -22,7 +22,7 @@
 		:validation="validation"
 		button-clear-name="buttons.reset"
 		:debug="debug"
-		width="80vh"
+		width="70vh"
 		max-width="90vh"
 		@close="dialogClose"
 		@error="dialogError"
@@ -41,7 +41,7 @@
 					:label="$t('forms.content.parts.parachute.reefed.title')"
 				/>
 			</v-col>
-			<v-col cols="12" sm="6">
+			<v-col cols="6">
 				<table style="width: 100%;">
 					<tr>
 						<td>

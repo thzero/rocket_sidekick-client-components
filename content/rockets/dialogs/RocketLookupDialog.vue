@@ -8,7 +8,7 @@
 		:reset-additional="resetAdditional"
 		:reset-on-submit="false"
 		:validation="validation"
-		width="80vh"
+		width="70vh"
 		max-width="90vh"
 		@close="close"
 	>
