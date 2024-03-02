@@ -8,7 +8,7 @@
 		:validation="validation"
 		button-clear-name="buttons.reset"
 		:debug="debug"
-		width="80vh"
+		width="70vh"
 		max-width="90vh"
 		@close="dialogClose"
 		@error="dialogError"

@@ -44,7 +44,7 @@
 								</v-col>
 							</v-row>
 							<v-row dense>
-								<v-col cols="12" sm="6">
+								<v-col cols="6">
 									<v-checkbox
 										ref="filterItemSingleUseRef"
 										v-model="filterItemSingleUse"
@@ -52,7 +52,7 @@
 										:label="$t('forms.external.motorSearch.singleUse')"
 									/>
 								</v-col>
-								<v-col cols="12" sm="6">
+								<v-col cols="6">
 									<v-checkbox
 										ref="filterItemSparkyRef"
 										v-model="filterItemSparky"

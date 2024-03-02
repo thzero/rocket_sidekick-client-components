@@ -17,6 +17,7 @@ import DialogSupport from '@thzero/library_client_vue3/components/support/dialog
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useMasterDetailComponent } from '@/components/content/masterDetailComponent';
 import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
+import { useToolsMeasurementSettingsComponent } from '@/components/content/tools/toolsMeasurementSettings';
 import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
 
 export function useInventoryBaseComponent(props, context, options) {
@@ -39,6 +40,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		setNotify,
 		clickSearch,
 		clickSearchClear,
+		dialogDeleteManager,
+		dialogDeleteParams,
 		fetch
 	} = useMasterDetailComponent(props, context, {
 			fetch: async (correlationId) => { 
@@ -70,8 +73,14 @@ export function useInventoryBaseComponent(props, context, options) {
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
 		displayItemMeasurementLength,
-		displayItemMeasurementWeight
+		displayItemMeasurementWeight,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementUtilityComponent(props, context);
+
+	const {
+		measurementUnitsIdOutput,
+		measurementUnitsIdSettings
+	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const debug = ref(false);
 	const dialogPartsSearchAltimetersManager = ref(new DialogSupport());
@@ -85,8 +94,17 @@ export function useInventoryBaseComponent(props, context, options) {
 	const dialogPartsSearchTrackersManager = ref(new DialogSupport());
 	const displayParams = ref({});
 	const dirty = ref(false);
+	const filterItemDiameterMax = ref(null);
+	const filterItemDiameterMin = ref(null);
+	const filterItemDiameterMeasurementUnitId = ref(null);
+	const filterItemDiameterMeasurementUnitsId = ref(null);
+	const filterItemDimensionMax = ref(null);
+	const filterItemDimensionMin = ref(null);
+	const filterItemDimensionMeasurementUnitId = ref(null);
+	const filterItemDimensionMeasurementUnitsId = ref(null);
 	const filterItemManufacturers = ref(null);
 	const filterItemMotor = ref(null);
+	const filterItemMotorCaseDiameter = ref(null);
 	const filterItemMotorDiameter = ref(null);
 	const filterItemMotorImpulseClass = ref(null);
 	const filterItemMotorSingleUse = ref(false);
@@ -128,6 +146,61 @@ export function useInventoryBaseComponent(props, context, options) {
 		let output = LibraryCommonUtility.cloneDeep(inventory.value);
 		if (params.partTypes && params.partTypes.length > 0)
 			output.types = output.types.filter(l => params.partTypes.find(j => j === l.typeId));
+
+		if (params.diameterMin || params.diameterMax) {
+			if (params.diameterMin) {
+				for (const type of output.types) {
+					// TODO: Need conversion for units...
+					type.items = type.items.filter(l => {
+						if (!l.item.diameter)
+							return false;
+						return LibraryClientUtility.convertNumber(l.item.diameter) >= LibraryClientUtility.convertNumber(params.diameterMin);
+					});
+				}
+			}
+			if (params.diameterMax) {
+				for (const type of output.types) {
+					// TODO: Need conversion for units...
+					type.items = type.items.filter(l => {
+						if (!l.item.diameter)
+							return false;
+						return LibraryClientUtility.convertNumber(l.item.diameter) <= LibraryClientUtility.convertNumber(params.diameterMax);
+					});
+				}
+			}
+		}
+
+		if (params.dimensionNin || params.dimensionMax) {
+			if (params.dimensionMin) {
+				for (const type of output.types) {
+					// TODO: Need conversion for units...
+					type.items = type.items.filter(l => {
+						if (!l.item.dimension)
+							return false;
+						return LibraryClientUtility.convertNumber(l.item.dimension) >= LibraryClientUtility.convertNumber(params.dimensionMin);
+					});
+				}
+			}
+			if (params.dimensionMax) {
+				for (const type of output.types) {
+					// TODO: Need conversion for units...
+					type.items = type.items.filter(l => {
+						if (!l.item.dimension)
+							return false;
+						return LibraryClientUtility.convertNumber(l.item.dimension) <= LibraryClientUtility.convertNumber(params.dimensionMax);
+					});
+				}
+			}
+		}
+
+		if (params.manufacturers && params.manufacturers.length > 0) {
+			for (const type of output.types) {
+				type.items = type.items.filter(l => {
+					return params.manufacturers.indexOf(l.item.manufacturerId) > -1;
+				});
+			}
+		}
+
 		if (params.motorDiameter || params.motorImpulseClass || params.motorSingleUse || params.motorSparky) {
 			const motors = output.types.find(l => l.typeId === AppCommonConstants.Rocketry.PartTypes.motor);
 			if (motors && motors.items && motors.items.length > 0) {
@@ -193,6 +266,41 @@ export function useInventoryBaseComponent(props, context, options) {
 	const clickTrackersSearch = async () => {
 		dialogPartsSearchTrackersManager.value.open();
 	};
+	const dialogDeleteCancel = async () => {
+		try {
+			dialogDeleteManager.value.cancel();
+		}
+		finally {
+			dialogDeleteParams.item = null;
+		}
+	};
+	const dialogDeleteOk = async () => {
+		try {
+			if (!dialogDeleteParams.item)
+				return;
+
+			const temp = inventory.value.types.find(l => l.typeId === dialogDeleteParams.item.item.typeId);
+			if (!temp)
+				return;
+
+			LibraryCommonUtility.deleteArrayById(temp.items, dialogDeleteParams.item.id);
+			if (!temp.items || temp.items.length === 0)
+				LibraryCommonUtility.deleteArray(inventory.value.types, temp.typeId, 'typeId');
+
+			await update();
+		}
+		finally {
+			dialogDeleteParams.item = null;
+			dialogDeleteManager.value.ok();
+		}
+	};
+	const dialogDeleteOpen = (item) => {
+		if (!item)
+			return;
+
+		dialogDeleteParams.item = item;
+		dialogDeleteManager.value.open();
+	};
 	const fetchI = async (correlationId) => {
 		const params = fetchParams(correlationId, {});
 		if (!params)
@@ -209,16 +317,29 @@ export function useInventoryBaseComponent(props, context, options) {
 		return success(correlationId);
 	};
 	const fetchParams = (correlationId, params) => {
+		params.diameterMax = filterItemDiameterMax.value;
+		params.diameterMin = filterItemDiameterMin.value;
+		params.diameterMeasurementUnitId = filterItemDiameterMeasurementUnitId.value;
+		params.diameterMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, filterItemDiameterMeasurementUnitId.value);
+
+		params.dimensionMax = filterItemDimensionMax.value;
+		params.dimensionMin = filterItemDimensionMin.value;
+		params.dimensionMeasurementUnitId = filterItemDimensionMeasurementUnitId.value;
+		params.dimensionMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, filterItemDimensionMeasurementUnitId.value);
+
 		params.manufacturers = filterItemManufacturers.value;
+
 		params.motor = filterItemMotor.value;
+		params.motorCaseDiameter = filterItemMotorCaseDiameter.value;
 		params.motorDiameter = filterItemMotorDiameter.value;
 		params.motorImpulseClass = filterItemMotorImpulseClass.value;
 		params.motorSingleUse = filterItemMotorSingleUse.value;
 		params.motorSparky = filterItemMotorSparky.value;
+
 		params.partTypes = filterItemPartTypes.value;
 		return params;
 	};
-	const handleDelete = async (item) => {
+	const handleCopy = async (item) => {
 		if (!item || !item.item || !inventory.value || !inventory.value.types)
 			return;
 
@@ -226,11 +347,18 @@ export function useInventoryBaseComponent(props, context, options) {
 		if (!temp)
 			return;
 
-		LibraryCommonUtility.deleteArrayById(temp.items, item.id);
-		if (!temp.items || temp.items.length === 0)
-			LibraryCommonUtility.deleteArray(inventory.value.types, temp.typeId, 'typeId');
+		const temp2 = LibraryCommonUtility.cloneDeep(item);
+		temp2.id = LibraryCommonUtility.generateId();
+
+		LibraryCommonUtility.updateArrayById(temp.items, temp2.id, temp2, false);
 
 		await update();
+	};
+	const handleDelete = async (item) => {
+		if (!item || !item.item || !inventory.value || !inventory.value.types)
+			return;
+
+		dialogDeleteOpen(item);
 	};
 	const hasMotorCase = (item) => {
 		if (!(item && item.motorCaseId) || !inventoryMotorCases.value || !inventoryMotorCases.value.items)
@@ -251,12 +379,25 @@ export function useInventoryBaseComponent(props, context, options) {
 		await serviceStore.dispatcher.setInventoryExpanded(correlationId(), value);
 	};
 	const resetAdditional = async (correlationId, data) => {
+		filterItemDiameterMax.value = data ? data.diameterMax : null;
+		filterItemDiameterMin.value = data ? data.diameterMin : null;
+		filterItemDiameterMeasurementUnitsId.value = data ? data.reefedMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		filterItemDiameterMeasurementUnitId.value = data ? data.reefedMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
+		filterItemDimensionMax.value = data ? data.dimensionMax : null;
+		filterItemDimensionMin.value = data ? data.dimensionMin : null;
+		filterItemDimensionMeasurementUnitsId.value = data ? data.reefedMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		filterItemDimensionMeasurementUnitId.value = data ? data.reefedMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+
 		filterItemManufacturers.value = data ? data.manufacturers : null;
+
 		filterItemMotor.value = data ? data.motor : null;
+		filterItemMotorCaseDiameter.value = data ? data.motorCaseDiameter : null;
 		filterItemMotorDiameter.value = data ? data.motorDiameter : null;
 		filterItemMotorImpulseClass.value = data ? data.motorImpulseClass : null;
 		filterItemMotorSingleUse.value = data ? data.motorSingleUse : null;
 		filterItemMotorSparky.value = data ? data.motorSparky : null;
+
 		filterItemPartTypes.value = data ? data.partTypes : null;
 	};
 	const search = async (correlationId, params) => {
@@ -434,7 +575,7 @@ export function useInventoryBaseComponent(props, context, options) {
 	};
 	const update = async () => {
 		dirty.value = false;
-		// serviceStore.dispatcher.saveInventory(correlationId(), inventory.value);
+		serviceStore.dispatcher.saveInventory(correlationId(), inventory.value);
 	};
 	const weightDisplay = (item) => {
 		if (!item)
@@ -517,6 +658,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		setNotify,
 		clickSearch,
 		clickSearchClear,
+		dialogDeleteManager,
 		fetch,
 		buttonsDialog,
 		buttonsForms,
@@ -526,12 +668,22 @@ export function useInventoryBaseComponent(props, context, options) {
 		motorMountDiameter,
 		motorMountName,
 		motorUrl,
+		measurementUnitsLengthType,
 		debug,
 		inventory,
 		inventoryDisplay,
 		inventoryListingRef,
+		filterItemDiameterMax,
+		filterItemDiameterMin,
+		filterItemDiameterMeasurementUnitId,
+		filterItemDiameterMeasurementUnitsId,
+		filterItemDimensionMax,
+		filterItemDimensionMin,
+		filterItemDimensionMeasurementUnitId,
+		filterItemDimensionMeasurementUnitsId,
 		filterItemManufacturers,
 		filterItemMotor,
+		filterItemMotorCaseDiameter,
 		filterItemMotorDiameter,
 		filterItemMotorImpulseClass,
 		filterItemMotorSingleUse,
@@ -570,6 +722,9 @@ export function useInventoryBaseComponent(props, context, options) {
 		clickParachutesSearch,
 		clickStreamersSearch,
 		clickTrackersSearch,
+		dialogDeleteCancel,
+		dialogDeleteOk,
+		handleCopy,
 		handleDelete,
 		hasMotorCase,
 		isPartType,

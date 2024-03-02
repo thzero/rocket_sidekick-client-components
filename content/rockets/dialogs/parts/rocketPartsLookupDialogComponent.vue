@@ -31,10 +31,11 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		notImplementedError,
 		success
 	} = useBaseComponent(props, context, options);
-	
+
 	const {
 		measurementUnitsLengthDefaultId,
-		measurementUnitsLengthType
+		measurementUnitsLengthType,
+		measurementUnitsFromUnitId
 	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
@@ -184,7 +185,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 			diameterMax: filterItemDiameterMax.value,
 			diameterMin: filterItemDiameterMin.value,
 			diameterMeasurementUnitId: filterItemDiameterMeasurementUnitId.value,
-			diameterMeasurementUnitsId: filterItemDiameterMeasurementUnitsId.value,
+			diameterMeasurementUnitsId: measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, filterItemDiameterMeasurementUnitId.value),
 			lengthMax: filterItemLengthMax.value,
 			lengthMin: filterItemLengthMin.value,
 			lengthMeasurementUnitId: filterItemLengthMeasurementUnitId.value,
@@ -227,13 +228,13 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 
 		filterItemDiameterMax.value = data ? data.diameterMax : null;
 		filterItemDiameterMin.value = data ? data.diameterMin : null;
-		filterItemDiameterMeasurementUnitId.value = data ? data.diameterMeasurementUnitId : measurementUnitsLengthDefaultId.value;
-		filterItemDiameterMeasurementUnitsId.value = data ? data.diameterMeasurementUnitsId : measurementUnitsIdSettings.value;
+		filterItemDiameterMeasurementUnitsId.value = data ? data.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		filterItemDiameterMeasurementUnitId.value = data ? data.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		filterItemLengthMax.value = data ? data.lengthMax : null;
 		filterItemLengthMin.value = data ? data.lengthMin : null;
-		filterItemLengthMeasurementUnitId.value = data ? data.lengthMeasurementUnitId : measurementUnitsLengthDefaultId.value;
-		filterItemLengthMeasurementUnitsId.value = data ? data.lengthMeasurementUnitsId : measurementUnitsIdSettings.value;
+		filterItemLengthMeasurementUnitId.value = data ? data.lengthMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		filterItemLengthMeasurementUnitsId.value = data ? data.lengthMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		filterItemManufacturers.value = data ? data.manufacturers : null;
 		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
