@@ -105,6 +105,7 @@ export function useInventoryBaseComponent(props, context, options) {
 	const filterItemManufacturers = ref(null);
 	const filterItemMotor = ref(null);
 	const filterItemMotorCaseDiameter = ref(null);
+	const filterItemMotorCases = ref(null);
 	const filterItemMotorDiameter = ref(null);
 	const filterItemMotorImpulseClass = ref(null);
 	const filterItemMotorSingleUse = ref(false);
@@ -201,9 +202,14 @@ export function useInventoryBaseComponent(props, context, options) {
 			}
 		}
 
-		if (params.motorDiameter || params.motorImpulseClass || params.motorSingleUse || params.motorSparky) {
+		if (params.motorCases || params.motorDiameter || params.motorImpulseClass || params.motorSingleUse || params.motorSparky) {
 			const motors = output.types.find(l => l.typeId === AppCommonConstants.Rocketry.PartTypes.motor);
 			if (motors && motors.items && motors.items.length > 0) {
+				if (params.motorCases && params.motorCases.length > 0) {
+					motors.items = motors.items.filter(l => {
+						return params.motorCases.indexOf(l.item.motorCaseId) > -1;
+					});
+				}
 				if (params.motorDiameter && params.motorDiameter.length > 0) {
 					motors.items = motors.items.filter(l => {
 						return params.motorDiameter.indexOf(l.item.diameter) > -1;
@@ -230,9 +236,24 @@ export function useInventoryBaseComponent(props, context, options) {
 		return output;
 	});
 	const inventoryMotorCases = computed(() => {
-		if (!inventory.value || !!inventory.value.types)
+		if (!inventory.value || !inventory.value.types)
 			return [];
-		return inventory.value.types.find(l => l.typeId === AppCommonConstants.Rocketry.PartTypes.motorCase);
+		let temp = inventory.value.types.find(l => l.typeId === AppCommonConstants.Rocketry.PartTypes.motorCase);
+		if (!temp)
+			return [];
+		const items = LibraryCommonUtility.distinctArray(temp.items, 'itemId');
+		return items;
+	});
+	const inventoryMotorCasesSelect = computed(() => {
+		if (!inventoryMotorCases.value)
+			return [];
+		return LibraryClientVueUtility.selectOptions(inventoryMotorCases.value, null, null, (l) => {
+			return l.itemId;
+		}, (l) => {
+			return l.item.name;
+		}, (l) => {
+			return l.item.name;
+		});
 	});
 	const inventoryPartTypes = computed(() => {
 		const temp2 = LibraryClientVueUtility.selectOptions(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.PartTypes), LibraryClientUtility.$trans.t, 'forms.content.parts');
@@ -331,6 +352,7 @@ export function useInventoryBaseComponent(props, context, options) {
 
 		params.motor = filterItemMotor.value;
 		params.motorCaseDiameter = filterItemMotorCaseDiameter.value;
+		params.motorCases = filterItemMotorCases.value;
 		params.motorDiameter = filterItemMotorDiameter.value;
 		params.motorImpulseClass = filterItemMotorImpulseClass.value;
 		params.motorSingleUse = filterItemMotorSingleUse.value;
@@ -361,10 +383,10 @@ export function useInventoryBaseComponent(props, context, options) {
 		dialogDeleteOpen(item);
 	};
 	const hasMotorCase = (item) => {
-		if (!(item && item.motorCaseId) || !inventoryMotorCases.value || !inventoryMotorCases.value.items)
+		if (!(item && item.motorCaseId) || !inventoryMotorCases.value)
 			return false;
 
-		const motorCase = inventoryMotorCases.value.items.find(l => l.itemId === item.motorCaseId);
+		const motorCase = inventoryMotorCases.value.find(l => l.itemId === item.motorCaseId);
 		return motorCase !== null && motorCase !== undefined;
 	};
 	const initI = async (correlationId) => {
@@ -393,6 +415,7 @@ export function useInventoryBaseComponent(props, context, options) {
 
 		filterItemMotor.value = data ? data.motor : null;
 		filterItemMotorCaseDiameter.value = data ? data.motorCaseDiameter : null;
+		filterItemMotorCases.value = data ? data.motorCases : null;
 		filterItemMotorDiameter.value = data ? data.motorDiameter : null;
 		filterItemMotorImpulseClass.value = data ? data.motorImpulseClass : null;
 		filterItemMotorSingleUse.value = data ? data.motorSingleUse : null;
@@ -684,6 +707,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		filterItemManufacturers,
 		filterItemMotor,
 		filterItemMotorCaseDiameter,
+		filterItemMotorCases,
 		filterItemMotorDiameter,
 		filterItemMotorImpulseClass,
 		filterItemMotorSingleUse,
@@ -712,6 +736,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		manufacturerTypeTracker,
 		manufacturers,
 		inventoryMotorCases,
+		inventoryMotorCasesSelect,
 		inventoryPartTypes,
 		clickAltimetersSearch,
 		clickChuteProtectorsSearch,
