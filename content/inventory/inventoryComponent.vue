@@ -58,9 +58,9 @@ export function useInventoryBaseComponent(props, context, options) {
 
 	const {
 		motorImpulseClasses,
-		motorImpulseClassesExact,
+		motorImpulseClassesNonBlank,
 		motorMountDiameters,
-		motorMountDiametersExact,
+		motorMountDiametersNonBlank,
 		motorCaseInfo,
 		motorMountDiameter,
 		motorMountName,
@@ -403,13 +403,13 @@ export function useInventoryBaseComponent(props, context, options) {
 	const resetAdditional = async (correlationId, data) => {
 		filterItemDiameterMax.value = data ? data.diameterMax : null;
 		filterItemDiameterMin.value = data ? data.diameterMin : null;
-		filterItemDiameterMeasurementUnitsId.value = data ? data.reefedMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		filterItemDiameterMeasurementUnitId.value = data ? data.reefedMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		filterItemDiameterMeasurementUnitId.value = data ? data.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		filterItemDiameterMeasurementUnitsId.value = data ? data.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		filterItemDimensionMax.value = data ? data.dimensionMax : null;
 		filterItemDimensionMin.value = data ? data.dimensionMin : null;
-		filterItemDimensionMeasurementUnitsId.value = data ? data.reefedMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		filterItemDimensionMeasurementUnitId.value = data ? data.reefedMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		filterItemDimensionMeasurementUnitId.value = data ? data.dimensionMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		filterItemDimensionMeasurementUnitsId.value = data ? data.dimensionMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		filterItemManufacturers.value = data ? data.manufacturers : null;
 
@@ -685,8 +685,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		fetch,
 		buttonsDialog,
 		buttonsForms,
-		motorImpulseClassesExact,
-		motorMountDiametersExact,
+		motorImpulseClassesNonBlank,
+		motorMountDiametersNonBlank,
 		motorCaseInfo,
 		motorMountDiameter,
 		motorMountName,

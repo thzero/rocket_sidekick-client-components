@@ -117,7 +117,7 @@
 								vid="filterItemMotorCaseDiameter"
 								multiple
 								:max-values="5"
-								:items="motorMountDiametersExact"
+								:items="motorMountDiametersNonBlank"
 								:validation="validation"
 								:label="$t('forms.external.motorSearch.diameter')"
 							/>
@@ -145,7 +145,7 @@
 								vid="filterItemMotorDiameter"
 								multiple
 								:max-values="5"
-								:items="motorMountDiametersExact"
+								:items="motorMountDiametersNonBlank"
 								:validation="validation"
 								:label="$t('forms.external.motorSearch.diameter')"
 							/>
@@ -157,7 +157,7 @@
 								vid="filterIteMotorImpulseClass"
 								multiple
 								:max-values="5"
-								:items="motorImpulseClassesExact"
+								:items="motorImpulseClassesNonBlank"
 								:validation="validation"
 								:label="$t('forms.external.motorSearch.impulseClass')"
 							/>
@@ -1001,8 +1001,8 @@ export default {
 			fetch,
 			buttonsDialog,
 			buttonsForms,
-			motorImpulseClassesExact,
-			motorMountDiametersExact,
+			motorImpulseClassesNonBlank,
+			motorMountDiametersNonBlank,
 			motorCaseInfo,
 			motorMountDiameter,
 			motorMountName,
@@ -1110,8 +1110,8 @@ export default {
 			fetch,
 			buttonsDialog,
 			buttonsForms,
-			motorImpulseClassesExact,
-			motorMountDiametersExact,
+			motorImpulseClassesNonBlank,
+			motorMountDiametersNonBlank,
 			motorCaseInfo,
 			motorMountDiameter,
 			motorMountName,
