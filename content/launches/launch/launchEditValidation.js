@@ -8,6 +8,12 @@ export function useLaunchEditValidation(self, nameRequired) {
 			minLength: minLength(6),
 			$autoDirty: true 
 		},
+		detailItemCoverUrl: { 
+			url,
+			maxLength: maxLength(255),
+			minLength: minLength(6),
+			$autoDirty: true 
+		},
 		detailItemDate: { 
 			required,
 			$autoDirty: true 

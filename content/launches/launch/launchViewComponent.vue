@@ -182,8 +182,15 @@ export function useLaunchViewComponent(props, context, options) {
 			return displayItemMeasurementAcceleration(correlationId(), displayItem.value.results, (value) => { return value.velocityRecovery; }, (value) => { return value.velocityRecoveryMeasurementUnitsId; }, (value) => { return value.velocityRecoveryMeasurementUnitId; });
 		return null;
 	});
+	const displayItemRocketAlbumUrl = computed(() => {
+		return displayItem.value && displayItem.value.albumUrl ? displayItem.value.albumUrl : null;
+	});
 	const displayItemRocketCoverUrl = computed(() => {
-		return displayItem.value && displayItem.value.rocketSetup && displayItem.value.rocketSetup.rocket ? displayItem.value.rocketSetup.rocket.coverUrl : '';
+		if (!displayItem.value)
+			return null;
+		if (displayItem.value.coverUrl)
+			return displayItem.value.coverUrl;
+		return displayItem.value.rocketSetup && displayItem.value.rocketSetup.rocket ? displayItem.value.rocketSetup.rocket.coverUrl : null;
 	});
 	const displayItemRocketMotorNames = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup)
@@ -267,6 +274,9 @@ export function useLaunchViewComponent(props, context, options) {
 			displayItem.value.results.velocityRecovery
 		);
 	});
+	const hasRocketAlbumUrl = computed(() => {
+		return displayItem.value && String.isNullOrEmpty(displayItem.value.albumUrl);
+	});
 	const hasRocketSpecs = computed(() => {
 		return displayItemRocketCg.value || displayItemRocketCp.value || displayItemRocketDiameter.value || displayItemRocketLength.value || displayItemRocketWeight.value;
 	});
@@ -330,6 +340,7 @@ export function useLaunchViewComponent(props, context, options) {
 		displayItemResultsCoordsRecovery,
 		displayItemResultsVelocityMax,
 		displayItemResultsVelocityRecovery,
+		displayItemRocketAlbumUrl,
 		displayItemRocketCg,
 		displayItemRocketCoverUrl,
 		displayItemRocketCp,
@@ -345,6 +356,7 @@ export function useLaunchViewComponent(props, context, options) {
 		hasCoordsLaunch,
 		hasCoordsRecovery,
 		hasResults,
+		hasRocketAlbumUrl,
 		hasRocketSpecs,
 		hasWeather,
 		isFailure,
