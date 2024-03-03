@@ -291,6 +291,16 @@
 		>
 			<v-col cols="12">
 				<VtTextFieldWithValidation
+					ref="detailItemCoverUrlRef"
+					v-model="detailItemCoverUrl"
+					vid="detailItemCoverUrl"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.launches.cover')"
+				/>
+			</v-col>
+			<v-col cols="12">
+				<VtTextFieldWithValidation
 					ref="detailItemAlbumUrlRef"
 					v-model="detailItemAlbumUrl"
 					vid="detailItemAlbumUrl"
@@ -774,6 +784,7 @@ export default {
 			dialogRocketLookupManager,
 			dialogRocketSetupLookupManager,
 			detailItemAlbumUrl,
+			detailItemCoverUrl,
 			detailItemDate,
 			detailItemDescription,
 			detailItemFailureReasons,
@@ -906,6 +917,7 @@ export default {
 			dialogRocketLookupManager,
 			dialogRocketSetupLookupManager,
 			detailItemAlbumUrl,
+			detailItemCoverUrl,
 			detailItemDate,
 			detailItemDescription,
 			detailItemFailureReasons,

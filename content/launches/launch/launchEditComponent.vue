@@ -126,6 +126,7 @@ export function useLaunchEditComponent(props, context, options) {
 	const dialogRocketLookupManager = ref(new DialogSupport());
 	const dialogRocketSetupLookupManager = ref(new DialogSupport());
 	const detailItemAlbumUrl = ref(null);
+	const detailItemCoverUrl = ref(null);
 	const detailItemDate = ref(null);
 	const detailItemDescription = ref(null);
 	const detailItemFailureReasons = ref(null);
@@ -286,6 +287,7 @@ export function useLaunchEditComponent(props, context, options) {
 	};
 	const resetData = (correlationId, value) => {
 		detailItemAlbumUrl.value = value ? value.albumUrl : null;
+		detailItemCoverUrl.value = value ? value.coverUrl : null;
 		detailItemDate.value = value ? value.date : null;
 		detailItemDescription.value = value ? value.description : null;
 		
@@ -421,6 +423,7 @@ export function useLaunchEditComponent(props, context, options) {
 	};
 	const setData = (correlationId) => {
 		detailItemData.value.albumUrl = detailItemAlbumUrl.value;
+		detailItemData.value.coverUrl = detailItemCoverUrl.value;
 		detailItemData.value.date = detailItemDate.value;
 		detailItemData.value.description = detailItemDescription.value;
 		
@@ -555,6 +558,7 @@ export function useLaunchEditComponent(props, context, options) {
 		dialogRocketLookupManager,
 		dialogRocketSetupLookupManager,
 		detailItemAlbumUrl,
+		detailItemCoverUrl,
 		detailItemDate,
 		detailItemDescription,
 		detailItemFailureReasons,

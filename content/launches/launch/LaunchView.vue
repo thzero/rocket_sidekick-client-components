@@ -197,7 +197,8 @@
 			</v-col>
 			<v-col cols="5" lg="2" md="3">
 				<router-link
-					:to="'/user/locations/' + (displayItem ? displayItem.rocketId: '')"
+					v-if="!hasRocketAlbumUrl"
+					:to="'/user/rocket/' + (displayItem ? displayItem.rocketId: '')"
 					class="text-contrast router-link headline"
 					style="float: right;display: block;margin-left: auto; margin-right: auto;"
 				>
@@ -206,6 +207,17 @@
 						:src="displayItemRocketCoverUrl"
 					/>
 				</router-link>
+				<a
+					:href="hasRocketAlbumUrl"
+					target="_blank"
+					class="text-contrast router-link headline"
+					style="float: right;display: block;margin-left: auto; margin-right: auto;"
+				>
+					<img
+						style="width: 150px;"
+						:src="displayItemRocketAlbumUrl"
+					/>
+				</a>
 			</v-col>
 		</v-row>
 		<v-row
@@ -732,6 +744,7 @@ export default {
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
+			displayItemRocketAlbumUrl,
 			displayItemRocketCg,
 			displayItemRocketCoverUrl,
 			displayItemRocketCp,
@@ -747,6 +760,7 @@ export default {
 			hasCoordsLaunch,
 			hasCoordsRecovery,
 			hasResults,
+			hasRocketAlbumUrl,
 			hasRocketSpecs,
 			hasWeather,
 			isFailure,
@@ -792,6 +806,7 @@ export default {
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
+			displayItemRocketAlbumUrl,
 			displayItemRocketCg,
 			displayItemRocketCoverUrl,
 			displayItemRocketCp,
@@ -807,6 +822,7 @@ export default {
 			hasCoordsLaunch,
 			hasCoordsRecovery,
 			hasResults,
+			hasRocketAlbumUrl,
 			hasRocketSpecs,
 			hasWeather,
 			isFailure,
