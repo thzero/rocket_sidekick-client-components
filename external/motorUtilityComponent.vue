@@ -20,7 +20,7 @@ export function useMotorUtilityComponent(props, context, options) {
 		success
 	} = useBaseComponent(props, context, options);
 
-	const serviceExternalMotorSearch = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_EXTERNAL_MOTOR_SEARCH);
+	const serviceMotors = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_MOTORS);
 
 	const motorImpulseClasses = computed(() => {
 		return ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'].map((item) => { return { id: item, name: item }; });
@@ -61,7 +61,7 @@ export function useMotorUtilityComponent(props, context, options) {
 		return diameter;
 	};
 	const motorUrl = (motor) => {
-		return serviceExternalMotorSearch.urlMotor(motor);
+		return serviceMotors.urlMotor(motor);
 	};
 
 	return {

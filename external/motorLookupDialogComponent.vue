@@ -38,15 +38,17 @@ export function useMotorLookupDialogComponent(props, context, options) {
 
 	const {
 		motorImpulseClasses,
+		motorImpulseClassesNonBlank,
 		motorMountDiameters,
+		motorMountDiametersNonBlank,
 		motorCaseInfo,
 		motorMountDiameter,
 		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
+	const serviceMotors = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_MOTORS);
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
-	const serviceExternalMotorSearch = LibraryClientUtility.$injector.getService(Constants.InjectorKeys.SERVICE_EXTERNAL_MOTOR_SEARCH);
 
 	const dialogMotorLookup = ref(null);
 	const dialogResetManager = ref(new DialogSupport());
@@ -67,10 +69,10 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		return (ttl.value < now);
 	});
 	const searchLocaleName = computed(() => {
-		return serviceExternalMotorSearch.nameLocale();
+		return serviceMotors.nameLocale();
 	});
 	const searchUrl = computed(() => {
-		return serviceExternalMotorSearch.urlHuman();
+		return serviceMotors.urlHuman();
 	});
 
 	const buttonOkDisabledOverride = (disabled, invalid, invalidOverride) => {
@@ -214,10 +216,10 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		buttonsDialog,
 		buttonsForms,
 		motorMountDiameters,
-		motorImpulseClasses,
+		motorImpulseClassesNonBlank,
 		motorCaseInfo,
 		motorUrl,
-		serviceExternalMotorSearch,
+		serviceMotors,
 		serviceStore,
 		dialogMotorLookup,
 		dialogResetMessage,
