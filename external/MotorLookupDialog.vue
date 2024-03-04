@@ -27,7 +27,8 @@
 										ref="filterItemImpulseClassRef"
 										v-model="filterItemImpulseClass"
 										vid="filterItemImpulseClass"
-										:items="motorImpulseClasses"
+										:items="motorImpulseClassesNonBlank"
+										multiple
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.impulseClass')"
 									/>
@@ -130,7 +131,8 @@
 				style="height: 35vh"
 			>
 				<v-card
-					v-for="item in results" :key="item.motorId"
+					v-for="(item, index) in results" 
+					:key="index"
 					color="grey-darken-3"
 					class="mb-4"
 				>
@@ -218,10 +220,10 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			motorMountDiameters,
-			motorImpulseClasses,
+			motorImpulseClassesNonBlank,
 			motorCaseInfo,
 			motorUrl,
-			serviceExternalMotorSearch,
+			serviceMotors,
 			serviceStore,
 			dialogMotorLookup,
 			dialogResetMessage,
@@ -263,10 +265,10 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			motorMountDiameters,
-			motorImpulseClasses,
+			motorImpulseClassesNonBlank,
 			motorCaseInfo,
 			motorUrl,
-			serviceExternalMotorSearch,
+			serviceMotors,
 			serviceStore,
 			dialogMotorLookup,
 			dialogResetMessage,
