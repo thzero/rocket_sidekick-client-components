@@ -500,6 +500,7 @@
 														v-if="isPartType(item2.item, partTypes.deploymentBag)"
 														:item="item2.item"
 													/>
+													<pre>{{ item2.item.motorCaseId }}</pre>
 													<MotorPanelTitle
 														v-if="isPartType(item2.item, partTypes.motor)"
 														:item="item2.item"
@@ -574,7 +575,7 @@
 																		<VtSelectWithValidation
 																			ref="detailItemDelayRef"
 																			vid="detailItemDelayRef"
-																			v-model="item2.delay"
+																			v-model="item2.itemO.delay"
 																			:items="motorDelays(item2.item)"
 																			:validation="validation"
 																			:label="$t('forms.content.parts.motor.delay')"
@@ -587,7 +588,7 @@
 																	>
 																		<VtNumberField
 																			ref="detailItemDelayOverrideRef"
-																			v-model="item2.delay"
+																			v-model="item2.itemO.delay"
 																			vid="detailItemDelayOverrideRef"
 																			:min="0"
 																			:max="1000"
@@ -617,7 +618,7 @@
 																					:value="index"
 																				>
 																					<v-list-item-title
-																						@click="selectMotorDelay(item2, item3.value)"
+																						@click="selectMotorDelay(item2.itemO, item3.value)"
 																					>
 																						{{ item3.name }}
 																					</v-list-item-title>
@@ -628,7 +629,7 @@
 																	<td>
 																		<VtNumberField
 																			ref="detailItemQuantityRef"
-																			v-model="item2.quantity"
+																			v-model="item2.itemO.quantity"
 																			vid="detailItemQuantity"
 																			:min="0"
 																			:max="1000"
@@ -705,7 +706,7 @@
 																		:variant="buttonsForms.variant.copy"
 																		:color="buttonsForms.color.copy"
 																		block
-																		@click="handleCopy(item2)"
+																		@click="handleCopy(item2.itemO)"
 																		icon="mdi-content-copy"
 																	>
 																	</v-btn>
@@ -1069,6 +1070,7 @@ export default {
 			handleDelete,
 			hasMotorCase,
 			isPartType,
+			motorDelays,
 			panelsUpdated,
 			resetAdditional,
 			selectAltimeter,
@@ -1082,7 +1084,6 @@ export default {
 			selectStreamer,
 			selectTracker,
 			weightDisplay,
-			motorDelays,
 			scope,
 			validation
 		} = useInventoryBaseComponent(props, context);
@@ -1178,6 +1179,7 @@ export default {
 			handleDelete,
 			hasMotorCase,
 			isPartType,
+			motorDelays,
 			panelsUpdated,
 			resetAdditional,
 			selectAltimeter,
@@ -1191,7 +1193,6 @@ export default {
 			selectStreamer,
 			selectTracker,
 			weightDisplay,
-			motorDelays,
 			scope,
 			validation
 		};

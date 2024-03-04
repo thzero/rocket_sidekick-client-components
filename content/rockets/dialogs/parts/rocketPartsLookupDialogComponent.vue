@@ -50,7 +50,9 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 
 	const {
 		motorImpulseClasses,
+		motorImpulseClassesNonBlank,
 		motorMountDiameters,
+		motorMountDiametersNonBlank,
 		motorCaseInfo,
 		motorMountDiameter,
 		motorMountName,
@@ -298,8 +300,8 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		buttonsForms,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
-		motorImpulseClasses,
-		motorMountDiameters,
+		motorImpulseClassesNonBlank,
+		motorMountDiametersNonBlank,
 		motorCaseInfo,
 		motorUrl,
 		serviceStore,

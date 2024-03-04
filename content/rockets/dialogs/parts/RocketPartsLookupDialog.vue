@@ -52,7 +52,8 @@
 										ref="filterItemMotorImpulseClassRef"
 										v-model="filterItemMotorImpulseClass"
 										vid="filterItemMotorImpulseClass"
-										:items="motorImpulseClasses"
+										:items="motorImpulseClassesNonBlank"
+										multiple
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.impulseClass')"
 									/>
@@ -65,7 +66,8 @@
 										ref="filterItemMotorDiameterRef"
 										v-model="filterItemMotorDiameter"
 										vid="filterItemMotorDiameter"
-										:items="motorMountDiameters"
+										:items="motorMountDiametersNonBlank"
+										multiple
 										:validation="validation"
 										:label="$t('forms.external.motorSearch.diameter')"
 									/>
@@ -435,8 +437,8 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			motorMountDiameters,
-			motorImpulseClasses,
+			motorMountDiametersNonBlank,
+			motorImpulseClassesNonBlank,
 			motorCaseInfo,
 			motorUrl,
 			serviceStore,
@@ -503,8 +505,8 @@ export default {
 			buttonsForms,
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
-			motorMountDiameters,
-			motorImpulseClasses,
+			motorMountDiametersNonBlank,
+			motorImpulseClassesNonBlank,
 			motorCaseInfo,
 			motorUrl,
 			serviceStore,

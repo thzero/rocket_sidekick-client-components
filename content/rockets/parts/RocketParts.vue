@@ -39,6 +39,7 @@
 							v-if="isPartType(item2, partTypes.motor)"
 							:item="item2"
 							:displayCaseInfo="true"
+							:hasCase="hasMotorCase(item2)"
 						/>
 						<MotorCasePanelTitle
 							v-if="isPartType(item2, partTypes.motorCase)"
@@ -297,7 +298,8 @@ export default {
 			isSelected,
 			manufacturer,
 			partTypeName,
-			panelsUpdated
+			panelsUpdated,
+		hasMotorCase
 		} = useRocketPartsComponent(props, context, options);
 
 		return {
@@ -333,7 +335,8 @@ export default {
 			isSelected,
 			manufacturer,
 			partTypeName,
-			panelsUpdated
+			panelsUpdated,
+		hasMotorCase
 		};
 	}
 };
