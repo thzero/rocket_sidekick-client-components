@@ -197,6 +197,15 @@ export function useRocketPartsComponent(props, context, options) {
 		// temp2 = temp2.sort((a, b) => a.name.localeCompare(b.name));
 		// manufacturersI.value = temp2.map((item) => { return { id: item.id, name: item.name }; });
 	});
+	const hasMotorCase = (item) => {
+		return item.quantity > 0;
+		// if (!(item && item.motorCaseId) || !inventoryMotorCases.value)
+		// 	return false;
+
+		// const motorCase = inventoryMotorCases.value.find(l => l.itemId === item.motorCaseId);
+		// return motorCase !== null && motorCase !== undefined;
+		return true;
+	};
 	
 	return {
 		correlationId,
@@ -231,7 +240,8 @@ export function useRocketPartsComponent(props, context, options) {
 		isSelected,
 		manufacturer,
 		partTypeName,
-		panelsUpdated
+		panelsUpdated,
+		hasMotorCase
 	};
 };
 </script>

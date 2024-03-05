@@ -233,6 +233,14 @@ export function useInventoryBaseComponent(props, context, options) {
 			}
 		}
 
+		let typeO;
+		for (const type of output.types) {
+			typeO = inventory.value.types.find(l => l.typeId === type.typeId);
+			for (const item of type.items) {
+				item.itemO = typeO.items.find(l => l.id === item.id);
+			}
+		}
+
 		return output;
 	});
 	const inventoryMotorCases = computed(() => {
@@ -371,6 +379,7 @@ export function useInventoryBaseComponent(props, context, options) {
 
 		const temp2 = LibraryCommonUtility.cloneDeep(item);
 		temp2.id = LibraryCommonUtility.generateId();
+		delete temp2.itemO;
 
 		LibraryCommonUtility.updateArrayById(temp.items, temp2.id, temp2, false);
 
@@ -396,6 +405,11 @@ export function useInventoryBaseComponent(props, context, options) {
 	};
 	const isPartType = (item, typeId) => {
 		return item && item.typeId === typeId;
+	};
+	const motorDelays = (item) => {
+		if (!item || !item.delays)
+			return null;
+		return LibraryClientVueUtility.selectBlank(LibraryClientVueUtility.selectOptions(item.delays.split(',')));
 	};
 	const panelsUpdated = async (value) => {
 		await serviceStore.dispatcher.setInventoryExpanded(correlationId(), value);
@@ -605,11 +619,6 @@ export function useInventoryBaseComponent(props, context, options) {
 			return null;
 		return displayItemMeasurementWeight(correlationId(), item, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
 	};
-	const motorDelays = (item) => {
-		if (!item || !item.delays)
-			return null;
-		return LibraryClientVueUtility.selectBlank(LibraryClientVueUtility.selectOptions(item.delays.split(',')));
-	};
 
 	onMounted(async () => {
 		const correlationIdI = correlationId();
@@ -753,6 +762,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		handleDelete,
 		hasMotorCase,
 		isPartType,
+		motorDelays,
 		panelsUpdated,
 		resetAdditional,
 		selectAltimeter,
@@ -766,7 +776,6 @@ export function useInventoryBaseComponent(props, context, options) {
 		selectStreamer,
 		selectTracker,
 		weightDisplay,
-		motorDelays,
 		scope: 'InventoryFilterControl',
 		validation: useVuelidate({ $scope: 'InventoryilterControl' })
 	};

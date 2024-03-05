@@ -76,11 +76,12 @@
 				cols="7" lg="10" md="9"
 				class="mt-2"
 			>
-				<v-row 
+				<v-row
 					v-if="displayItem && displayItem.rocketSetup && displayItem.rocketSetup.rocket"
 					dense
 				>
 					<v-col>
+						{{ displayItem.rocketSetup.rocket }}
 						<div 
 							class="d-flex"
 						>
@@ -171,7 +172,10 @@
 					</v-col>
 				</v-row>
 			</v-col>
-			<v-col cols="5" lg="2" md="3">
+			<v-col
+				v-if="displayItem && displayItem.rocketSetup && displayItem.rocketSetup.rocket"
+				cols="5" lg="2" md="3"
+			>
 				<router-link
 					:to="'/user/locations/' + (displayItem ? displayItem.rocketId: '')"
 					class="text-contrast router-link headline"
@@ -190,6 +194,7 @@
 		>
 			<v-col>
 				<div 
+					v-if="displayItem && displayItem.rocketSetup && displayItem.rocketSetup.rocket"
 					class="d-flex"
 				>
 					<VtTextField 
