@@ -87,8 +87,8 @@ export function useParachutePartComponent(props, context, options) {
 		partsType: AppCommonConstants.Rocketry.PartTypes.parachute, 
 		preCompleteOkPart: (correlationId, data) => {
 			data.cd = LibraryClientUtility.convertNumber(detailItemCd.value);
-			data.loadMax = LibraryClientUtility.convertNumber(detailItemLoadMax.value);
-			data.loadMin = LibraryClientUtility.convertNumber(detailItemLoadMin.value);
+			data.loadMaxWeight = LibraryClientUtility.convertNumber(detailItemLoadMaxWeight.value);
+			data.loadMinWeight = LibraryClientUtility.convertNumber(detailItemLoadMinWeight.value);
 			data.thinMill = detailItemThinMill.value ?? false;
 
 			data.diameter = LibraryClientUtility.convertNumber(detailItemDiameter.value);
@@ -117,10 +117,10 @@ export function useParachutePartComponent(props, context, options) {
 	const detailItemDiameter = ref(null);
 	const detailItemDiameterMeasurementUnitId = ref(null);
 	const detailItemDiameterMeasurementUnitsId = ref(null);
-	const detailItemLoadMax = ref(null);
+	const detailItemLoadMaxWeight = ref(null);
 	const detailItemLoadMaxWeightMeasurementUnitId = ref(null);
 	const detailItemLoadMaxWeightMeasurementUnitsId = ref(null);
-	const detailItemLoadMin = ref(null);
+	const detailItemLoadMinWeight = ref(null);
 	const detailItemLoadMinWeightMeasurementUnitId = ref(null);
 	const detailItemLoadMinWeightMeasurementUnitsId = ref(null);
 	const detailItemThinMill = ref(false);
@@ -130,8 +130,8 @@ export function useParachutePartComponent(props, context, options) {
 
 		detailItemCd.value = value ? value.cd : null;
 		detailItemDiameter.value = value ? value.diameter : null;
-		detailItemLoadMax.value = value ? value.loadMax : null;
-		detailItemLoadMin.value = value ? value.loadMin : null;
+		detailItemLoadMaxWeight.value = value ? value.loadMaxWeight : null;
+		detailItemLoadMinWeight.value = value ? value.loadMinWeight : null;
 		detailItemThinMill.value = value ? value.thinMill ?? false : false;
 		
 		detailItemDiameterMeasurementUnitId.value = value ? value.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
@@ -215,10 +215,10 @@ export function useParachutePartComponent(props, context, options) {
 		detailItemDiameter,
 		detailItemDiameterMeasurementUnitId,
 		detailItemDiameterMeasurementUnitsId,
-		detailItemLoadMax,
+		detailItemLoadMaxWeight,
 		detailItemLoadMaxWeightMeasurementUnitId,
 		detailItemLoadMaxWeightMeasurementUnitsId,
-		detailItemLoadMin,
+		detailItemLoadMinWeight,
 		detailItemLoadMinWeightMeasurementUnitId,
 		detailItemLoadMinWeightMeasurementUnitsId,
 		detailItemThinMill,

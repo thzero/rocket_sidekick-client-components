@@ -197,9 +197,9 @@
 					<tr>
 						<td>
 							<VtNumberFieldWithValidation
-								ref="detailItemLoadMaxRef"
-								v-model="detailItemLoadMax"
-								vid="detailItemLoadMax"
+								ref="detailItemLoadMaxWeightRef"
+								v-model="detailItemLoadMaxWeight"
+								vid="detailItemLoadMaxWeight"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.parts.parachute.loadMax')"
@@ -246,9 +246,9 @@
 					<tr>
 						<td>
 							<VtNumberFieldWithValidation
-								ref="detailItemLoadMinRef"
-								v-model="detailItemLoadMin"
-								vid="detailItemLoadMin"
+								ref="detailItemLoadMiWeightnRef"
+								v-model="detailItemLoadMinWeight"
+								vid="detailItemLoadMinWeight"
 								:validation="validation"
 								:readonly="!isEditable"
 								:label="$t('forms.content.parts.parachute.loadMin')"
@@ -427,10 +427,10 @@ export default {
 			detailItemDiameter,
 			detailItemDiameterMeasurementUnitId,
 			detailItemDiameterMeasurementUnitsId,
-			detailItemLoadMax,
+			detailItemLoadMaxWeight,
 			detailItemLoadMaxWeightMeasurementUnitId,
 			detailItemLoadMaxWeightMeasurementUnitsId,
-			detailItemLoadMin,
+			detailItemLoadMinWeight,
 			detailItemLoadMinWeightMeasurementUnitId,
 			detailItemLoadMinWeightMeasurementUnitsId,
 			detailItemThinMill,
@@ -510,10 +510,10 @@ export default {
 			detailItemDiameter,
 			detailItemDiameterMeasurementUnitId,
 			detailItemDiameterMeasurementUnitsId,
-			detailItemLoadMax,
+			detailItemLoadMaxWeight,
 			detailItemLoadMaxWeightMeasurementUnitId,
 			detailItemLoadMaxWeightMeasurementUnitsId,
-			detailItemLoadMin,
+			detailItemLoadMinWeight,
 			detailItemLoadMinWeightMeasurementUnitId,
 			detailItemLoadMinWeightMeasurementUnitsId,
 			detailItemThinMill,

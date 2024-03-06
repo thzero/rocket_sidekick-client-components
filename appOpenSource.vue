@@ -26,11 +26,18 @@ export function useAppOpenSourceComponent(props, context, options) {
 		},
 		{
 			category: 'client',
-			name: 'convert-units',
-			url: 'https://github.com/convert-units/convert-units',
+			name: 'convert',
+			url: 'https://github.com/jonahsnider/convert',
 			licenseName: 'MIT',
-			licenseUrl: 'https://github.com/convert-units/convert-units/blob/main/LICENSE'
+			licenseUrl: 'https://github.com/jonahsnider/convert/blob/main/LICENSE'
 		},
+		// {
+		// 	category: 'client',
+		// 	name: 'convert-units',
+		// 	url: 'https://github.com/convert-units/convert-units',
+		// 	licenseName: 'MIT',
+		// 	licenseUrl: 'https://github.com/convert-units/convert-units/blob/main/LICENSE'
+		// },
 		// {
 		//	 category: 'client',
 		//	 name: 'decimal.js',
