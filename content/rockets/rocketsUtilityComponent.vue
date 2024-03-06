@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
+import ConvertUtility from 'rocket_sidekick_common/utility/convert.js';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
@@ -45,10 +46,15 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const primary = rocketStagePrimary(stages);
 		if (!primary)
 			return null;
-		let cg = 0;
-		for (const stage of stages)
-			if (stage.cg > cg)
-				cg = stage.cg;
+		// let cg = 0;
+		// let stageCg;
+		// for (const stage of stages) {
+		// 	stageCg = ConvertUtility.convertValue(stage.cg, primary.cgMeasurementUnitId, 'cm');
+		// 	if (stageCg > cg)
+		// 		cg = stageCg;
+		// }
+		// cg = ConvertUtility.convertValue(cg, 'cm', primary.cgMeasurementUnitId);
+		const cg = _convertMeasurement(stages, 'cg', primary.cgMeasurementUnitId, primary.cgMeasurementUnitsId, 'cm');
 		return cg ? cg + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cgMeasurementUnitsId, primary.cgMeasurementUnitId) : '';
 	};
 	const rocketCp = (stages) => {
@@ -58,10 +64,15 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const primary = rocketStagePrimary(stages);
 		if (!primary)
 			return null;
-		let cp = 0;
-		for (const stage of stages)
-			if (stage.cp > cp)
-				cp = stage.cp;
+		// let cp = 0;
+		// let stageCp;
+		// for (const stage of stages) {
+		// 	stageCp = ConvertUtility.convertValue(stage.cp, primary.cpMeasurementUnitId, 'cm');
+		// 	if (stageCp > cp)
+		// 		cp = stage.cp;
+		// }
+		// cp = ConvertUtility.convertValue(cp, 'cm', primary.cpMeasurementUnitId);
+		const cp = _convertMeasurement(stages, 'cp', primary.cpMeasurementUnitId, primary.cpMeasurementUnitsId, 'cm');
 		return cp ? cp + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cpMeasurementUnitsId, primary.cpMeasurementUnitId) : '';
 	};
 	const rocketDiameter = (stages) => {
@@ -71,11 +82,16 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const primary = rocketStagePrimary(stages);
 		if (!primary)
 			return null;
-		let diameter = 0;
-		for (const stage of stages)
-			if (stage.diameterMajor > diameter)
-				diameter = stage.diameterMajor;
-		return diameter ? diameter + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.diameterMajorMeasurementUnitsId, primary.diameterMajorMeasurementUnitId) : '';
+		// let diameterMajor = 0;
+		// let stageDiameterMajor;
+		// for (const stage of stages) {
+		// 	stageDiameterMajor = ConvertUtility.convertValue(stage.diameterMajor, primary.diameterMajorMeasurementUnitId, 'cm');
+		// 	if (stageDiameterMajor > diameterMajor)
+		// 		diameterMajor = stageDiameterMajor;
+		// }
+		// diameterMajor = ConvertUtility.convertValue(diameter, 'cm', primary.diameterMajorMeasurementUnitId);
+		const diameterMajor = _convertMeasurement(stages, 'diameterMajor', primary.diameterMajorMeasurementUnitId, primary.diameterMajorMeasurementUnitsId, 'cm');
+		return diameterMajor ? diameterMajor + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.diameterMajorMeasurementUnitsId, primary.diameterMajorMeasurementUnitId) : '';
 	};
 	const rocketLength = (stages) => {
 		if (!stages)
@@ -83,10 +99,15 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const primary = rocketStagePrimary(stages);
 		if (!primary)
 			return null;
-		let length = 0;
-		for (const stage of stages)
-			if (stage.length > length)
-				length = stage.length;
+		// let length = 0;
+		// let stageLength;
+		// for (const stage of stages) {
+		// 	stageLength = ConvertUtility.convertValue(stage.length, primary.lengthMeasurementUnitId, 'cm');
+		// 	if (stageLength > length)
+		// 		length = stageLength;
+		// }
+		// diameter = ConvertUtility.convertValue(length, 'cm', primary.lengthMeasurementUnitId);
+		const length = _convertMeasurement(stages, 'length', primary.lengthMeasurementUnitId, primary.lengthMeasurementUnitsId, 'cm');
 		return length ? length + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.lengthMeasurementUnitsId, primary.lengthMeasurementUnitId) : '';
 	};
 	const rocketManufacturer = (stages) => {
@@ -292,11 +313,36 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const primary = rocketStagePrimary(stages);
 		if (!primary)
 			return null;
-		let weight = 0;
-		for (const stage of stages)
-			if (stage.weight > length)
-				weight = stage.weight;
+		// let weight = 0;
+		// let stageWeight;
+		// for (const stage of stages) {
+		// 	stageWeight = ConvertUtility.convertValue(stage.weight, primary.weightMeasurementUnitId, 'cm');
+		// 	if (stageWeight > weight)
+		// 		weight = stageWeight;
+		// }
+		// weight = ConvertUtility.convertValue(weight, 'cm', primary.weightMeasurementUnitId);
+		const weight = _convertMeasurement(stages, 'weight', primary.weightMeasurementUnitId, primary.weightMeasurementUnitsId, 'g');
 		return weight ? weight + ' ' + AppUtility.measurementUnitTranslateWeight(correlationId(), primary.weightMeasurementUnitsId, primary.weightMeasurementUnitId) : '';
+	};
+
+	const _convertMeasurement = (stages, property, unitId, unitsId, internalUnitId) => {
+		if (!stages)
+			return null;
+		if (!property)
+			return null;
+		let value = 0;
+		let temp;
+		let temp2;
+		for (const stage of stages) {
+			temp = 0;
+			temp2 = stage[property];
+			if (temp2)
+				temp = ConvertUtility.convertValue(stage[property], unitId, internalUnitId);
+			if (temp > value)
+				value = temp;
+		}
+		value = ConvertUtility.round(ConvertUtility.convertValue(value, internalUnitId, unitId), 2);
+		return value;
 	};
 
 	return {

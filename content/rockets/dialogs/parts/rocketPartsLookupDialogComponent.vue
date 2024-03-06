@@ -184,14 +184,14 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		results.value = null;
 
 		const request = {
-			diameterMax: filterItemDiameterMax.value,
-			diameterMin: filterItemDiameterMin.value,
+			diameterMax: !String.isNullOrEmpty(filterItemDiameterMax.value) ? Number(filterItemDiameterMax.value) : null,
+			diameterMin: !String.isNullOrEmpty(filterItemDiameterMin.value) ? Number(filterItemDiameterMin.value) : null,
 			diameterMeasurementUnitId: filterItemDiameterMeasurementUnitId.value,
 			diameterMeasurementUnitsId: measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, filterItemDiameterMeasurementUnitId.value),
-			lengthMax: filterItemLengthMax.value,
-			lengthMin: filterItemLengthMin.value,
+			lengthMax: !String.isNullOrEmpty(filterItemLengthMax.value) ? Number(filterItemLengthMax.value) : null,
+			lengthMin: !String.isNullOrEmpty(filterItemLengthMin.value) ? Number(filterItemLengthMin.value) : null,
 			lengthMeasurementUnitId: filterItemLengthMeasurementUnitId.value,
-			lengthMeasurementUnitsId: filterItemLengthMeasurementUnitsId.value,
+			lengthMeasurementUnitsId: measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, filterItemLengthMeasurementUnitId.value),
 			manufacturers: filterItemManufacturers.value,
 			manufacturerStockId: filterItemManufacturerStockId.value,
 			motorDiameter: filterItemMotorDiameter.value,
@@ -230,8 +230,8 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 
 		filterItemDiameterMax.value = data ? data.diameterMax : null;
 		filterItemDiameterMin.value = data ? data.diameterMin : null;
-		filterItemDiameterMeasurementUnitsId.value = data ? data.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
-		filterItemDiameterMeasurementUnitId.value = data ? data.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		filterItemDiameterMeasurementUnitId.value = data ? data.diameterMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
+		filterItemDiameterMeasurementUnitsId.value = data ? data.diameterMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
 		filterItemLengthMax.value = data ? data.lengthMax : null;
 		filterItemLengthMin.value = data ? data.lengthMin : null;

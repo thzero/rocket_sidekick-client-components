@@ -18,14 +18,101 @@
 						style="width: 150px;display: block;margin-left: auto; margin-right: auto; float: right;"
 					/>
 				</router-link>
-				<VtMarkdown 
-					v-if="displayItem.description"
-					v-model="displayItem.description" :use-github=false 
-				/>
+				<div>
+					<VtMarkdown 
+						v-if="displayItem.description"
+						v-model="displayItem.description" :use-github=false 
+					/>
+					<v-row
+						v-if="hasSpecs"
+						dense
+					>
+						<v-col 
+							cols="12"
+						>
+							<v-sheet
+								class="pt-2 pb-2"
+							>
+								<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
+								<v-divider></v-divider>
+							</v-sheet>
+						</v-col>
+						<!-- <v-col 
+							v-if="stages"
+							cols="12" sm="6"
+						>
+							<VtTextField
+								v-model="stages"
+								:label="$t('strings.rockets.stages')"
+								:readonly="true"
+							/>
+						</v-col> -->
+						<!-- <v-col 
+							v-if="diameter"
+							cols="4" sm="3"
+						>
+							<VtTextField
+								v-model="diameter"
+								:label="$t('strings.rockets.diameterMajor')"
+								:readonly="true"
+							/>
+						</v-col> -->
+						<!-- <v-col 
+							v-if="stages"
+							cols="2"
+						>
+							<VtTextField
+								v-model="stages"
+								:label="$t('strings.rockets.stages')"
+								:readonly="true"
+							/>
+						</v-col> -->
+						<v-col 
+							v-if="length"
+							cols="3" md="2"
+						>
+							<VtTextField
+								v-model="length"
+								:label="$t('strings.rockets.length')"
+								:readonly="true"
+							/>
+						</v-col>
+						<v-col 
+							v-if="weight"
+							cols="3" md="2"
+						>
+							<VtTextField
+								v-model="weight"
+								:label="$t('strings.rockets.weight')"
+								:readonly="true"
+							/>
+						</v-col>
+						<v-col 
+							v-if="cg"
+							cols="4" sm="3" md="2"
+						>
+							<VtTextField
+								v-model="cg"
+								:label="$t('strings.rockets.cg')"
+								:readonly="true"
+							/>
+						</v-col>
+						<v-col 
+							v-if="cp"
+							cols="4" sm="3" md="2"
+						>
+							<VtTextField
+								v-model="cp"
+								:label="$t('strings.rockets.cp')"
+								:readonly="true"
+							/>
+						</v-col>
+					</v-row>
+				</div>
 			</v-col>
 		</v-row>
 		<v-row
-			v-if="hasSpecs"
+			v-if="!coverUrl && hasSpecs"
 			dense
 		>
 			<v-col 
