@@ -3,6 +3,8 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
+import { utils, writeFileXLSX } from 'xlsx';
+
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
@@ -124,9 +126,13 @@ export function useInventoryBaseComponent(props, context, options) {
 	const manufacturerTypeStreamer = ref([ AppCommonConstants.Rocketry.PartTypes.streamer ]);
 	const manufacturerTypeTracker = ref([ AppCommonConstants.Rocketry.PartTypes.tracker ]);
 	const manufacturers = ref(props.manufacturers);
+	const mobileOnly = ref(LibraryClientUtility.$store.mobileOnly);
 	const panels = ref([]);
 	const partTypes = ref(AppCommonConstants.Rocketry.PartTypes);
+	const settings = ref(null);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.inventory.title`));
+	const viewType = ref('listing');
+	const viewTypeListingRef = ref(null);
 
 	if (LibraryCommonUtility.isDev) {
 		const serviceConfig = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_CONFIG);
@@ -267,6 +273,15 @@ export function useInventoryBaseComponent(props, context, options) {
 		const temp2 = LibraryClientVueUtility.selectOptions(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.PartTypes), LibraryClientUtility.$trans.t, 'forms.content.parts');
 		return temp2;
 	});
+	const viewTypeIcon = computed(() => {
+		return `mdi-${viewType.value === 'listing' ? 'view-list' : 'table'}`;
+	});
+	const viewTypeListing = computed(() => {
+		return viewType.value === 'listing';
+	});
+	const viewTypeTable = computed(() => {
+		return viewType.value === 'table' || viewType.value === null;
+	});
 
 	const clickAltimetersSearch = async () => {
 		dialogPartsSearchAltimetersManager.value.open();
@@ -331,17 +346,18 @@ export function useInventoryBaseComponent(props, context, options) {
 		dialogDeleteManager.value.open();
 	};
 	const fetchI = async (correlationId) => {
-		const params = fetchParams(correlationId, {});
-		if (!params)
+		fetchParams(correlationId, settings.value.params);
+		serviceStore.dispatcher.setInventorySettings(correlationId, settings.value.params);
+		if (!settings.value.params)
 			return error('useInventoryBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 		
-		serviceStore.dispatcher.setInventorySearchCriteria(correlationId, params);
+		serviceStore.dispatcher.setInventorySettings(correlationId, settings.value.params);
 
 		let inventoryI = inventory.value;
 		if (!inventoryI || !inventoryI || (inventoryI && inventoryI.types && inventoryI.types.length == 0))
-			await search(correlationId, params);
+			await search(correlationId, settings.value.params);
 
-		displayParams.value = params;
+		displayParams.value = settings.value.params;
 
 		return success(correlationId);
 	};
@@ -398,9 +414,115 @@ export function useInventoryBaseComponent(props, context, options) {
 		const motorCase = inventoryMotorCases.value.find(l => l.itemId === item.motorCaseId);
 		return motorCase !== null && motorCase !== undefined;
 	};
+	const handleViewType = () => {
+		viewType.value = viewType.value === 'listing' ? 'table' : 'listing';
+		settings.value.viewType = viewType.value;
+		serviceStore.dispatcher.setInventorySettings(correlationId, settings.value);
+	};
+	const handleViewTypeListingDownload = async () => {
+		if (!viewTypeListingRef.value) {
+			alert('boo');
+			return;
+		}
+		
+		await handleViewTypeListingConversion();
+	};
+	const handleViewTypeListingConversion = async () => {
+		const wb = utils.book_new();
+
+		const el = viewTypeListingRef.value;
+		let type = null;
+		for (const child of el.children) {
+			if (child.id) {
+				type = child.id;
+				continue;
+			}
+			if (type !== 'motor')
+				continue;
+
+			const el2 = child.children[0].children[0];
+			let htmlHeaders = el2.children[0].children[0];
+			const headers = [];
+			for (const header of htmlHeaders.children)
+				headers.push(header.innerHTML);
+
+			const ids = [];
+			// ids.push('type');
+			ids.push('item');
+			if (type === 'motor') {
+				ids.push('case');
+				ids.push('diameter');
+				ids.push('impulse');
+				ids.push('type');
+				ids.push('sparky');
+				ids.push('reload');
+			}
+			if (type === 'motorCase') {
+				ids.push('diameter');
+			}
+			ids.push('manufacturer');
+			ids.push('quantity');
+
+			let htmlBody = el2.children[1];
+			const rows = [];
+			let temp = {};
+			let index = 0;
+			for (const row of htmlBody.children) {
+				index = 0;
+				temp = {};
+				if (row.cells.length > 0) {
+					for (const id of ids) {
+						let temp2 = row.cells[index];
+						if (temp2.children && temp2.children.length > 0) {
+							temp2 = temp2.children[0];
+							if (temp2.children && temp2.children.length > 0)
+								temp2 = temp2.children[0];
+								if (temp2.children && temp2.children.length > 0)
+									temp2 = temp2.children[0];
+						}
+						temp[id] = temp2.innerHTML;
+						index++;
+					}
+				}
+				rows.push(temp);
+			}
+			
+			const output = rows;
+
+			/* generate worksheet from state */
+			const ws = utils.json_to_sheet(output);
+			utils.sheet_add_aoa(ws, [ headers ], { origin: 'A1' });
+
+			const cols = [];
+			index = 0;
+			for (const id of ids) {
+				const max_width_data = output.reduce((w, r) => Math.max(w, r[id].length), 12);
+				const max_width_header = headers[index].length;
+				const max_width = max_width_data > max_width_header ? max_width_data : max_width_header;
+				cols.push( { wch: max_width });
+				index++;
+			}
+			ws['!cols'] = cols;
+
+			/* create workbook and append worksheet */
+			utils.book_append_sheet(wb, ws, type);
+		}
+		/* export to XLSX */
+		const now = new Date();
+		let launchFileName = `${LibraryClientUtility.$trans.t('forms.content.launches.plural')} ${now.getDate()}${now.getMonth()}${now.getFullYear()}`;
+		launchFileName = launchFileName.toLocaleLowerCase();
+		writeFileXLSX(wb, `${launchFileName}.xlsx`);
+	};
 	const initI = async (correlationId) => {
-		const params = await serviceStore.getters.getInventorySearchCriteria(correlationId);
-		resetAdditional(correlationId, params);
+		settings.value = await serviceStore.getters.getInventorySettings(correlationId);
+		settings.value = settings.value ?? { };
+		settings.value.params = settings.value.params ?? { };
+		settings.value.viewType = settings.value.viewType ?? 'table';
+
+		resetAdditional(correlationId, settings.value.params);
+
+		viewType.value = settings.value.viewType;
+
 		return success(correlationId);
 	};
 	const isPartType = (item, typeId) => {
@@ -723,8 +845,11 @@ export function useInventoryBaseComponent(props, context, options) {
 		filterItemMotorSparky,
 		filterItemPartTypes,
 		panels,
+		mobileOnly,
 		partTypes,
 		title,
+		viewType,
+		viewTypeListingRef,
 		dialogPartsSearchAltimetersManager,
 		dialogPartsSearchChuteProtectorsManager,
 		dialogPartsSearchChuteReleasesManager,
@@ -747,6 +872,9 @@ export function useInventoryBaseComponent(props, context, options) {
 		inventoryMotorCases,
 		inventoryMotorCasesSelect,
 		inventoryPartTypes,
+		viewTypeIcon,
+		viewTypeListing,
+		viewTypeTable,
 		clickAltimetersSearch,
 		clickChuteProtectorsSearch,
 		clickChuteReleasesSearch,
@@ -761,6 +889,8 @@ export function useInventoryBaseComponent(props, context, options) {
 		handleCopy,
 		handleDelete,
 		hasMotorCase,
+		handleViewType,
+		handleViewTypeListingDownload,
 		isPartType,
 		motorDelays,
 		panelsUpdated,

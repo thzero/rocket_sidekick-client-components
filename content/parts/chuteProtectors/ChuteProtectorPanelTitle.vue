@@ -1,7 +1,7 @@
 <template>
-	{{ item.dimension }} {{ measurementUnitTranslateLength(item.dimensionMeasurementUnitsId, item.dimensionMeasurementUnitId) }} x
+	<span v-if="title">{{ item.dimension }} {{ measurementUnitTranslateLength(item.dimensionMeasurementUnitsId, item.dimensionMeasurementUnitId) }} x
 	{{ item.dimension }} {{ measurementUnitTranslateLength(item.dimensionMeasurementUnitsId, item.dimensionMeasurementUnitId) }}
-	{{ item.name }} 
+	{{ item.name }}</span>
 </template>
 
 <script>

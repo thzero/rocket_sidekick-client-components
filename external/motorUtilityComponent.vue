@@ -29,19 +29,19 @@ export function useMotorUtilityComponent(props, context, options) {
 		return ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'].map((item) => { return { id: item, name: item }; });
 	});
 	const motorMountDiameters = computed(() => {
-		return ['', '13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
+		return ['', '13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('forms.external.motorSearch.diameterMeasurement') : '') }; });
 	});
 	const motorMountDiametersNonBlank = computed(() => {
-		return ['13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement') : '') }; });
+		return ['13', '18', '24', '29', '38', '54', '75', '98'].map((item) => { return { id: item, name: (item ? item + LibraryClientUtility.$trans.t('forms.external.motorSearch.diameterMeasurement') : '') }; });
 	});
 
 	const motorCaseInfo = (motor) => {
 		if (motor.type === 'SU')
-			return LibraryClientUtility.$trans.t('motorSearch.motor_type_singleuse');
+			return LibraryClientUtility.$trans.t('forms.external.motorSearch.type_singleuse');
 
 		if (motor.type === 'hybrid' || motor.type === 'reload') {
 			if (motor.caseInfo !== null) {
-				const type = LibraryClientUtility.$trans.t('motorSearch.motor_type_' + motor.type.toLowerCase());
+				const type = LibraryClientUtility.$trans.t('forms.external.motorSearch.type_' + motor.type.toLowerCase());
 				return '(' + motor.caseInfo + '; ' + type + ')';
 			}
 		}
@@ -49,7 +49,7 @@ export function useMotorUtilityComponent(props, context, options) {
 		return '';
 	};
 	const motorMountDiameter = (diameter) => {
-		return `${diameter}${LibraryClientUtility.$trans.t('motorSearch.motor_diameter_measurement')}`;
+		return `${diameter}${LibraryClientUtility.$trans.t('forms.external.motorSearch.diameterMeasurement')}`;
 	};
 	const motorMountName = (item) => {
 		if (!item)

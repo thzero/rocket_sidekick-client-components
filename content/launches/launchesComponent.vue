@@ -268,29 +268,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 			}
 			rows.push(temp);
 		}
-		// for (const row of htmlBody.children) {
-		// 	temp = {};
-		// 	if (row.children.length > 2) {
-		// 		temp.rocket = row.children[0].innerHTML;
-		// 		temp.location = row.children[1].innerHTML;
-		// 		temp.failureReasons = row.children[2].innerHTML;
-		// 		temp.diameter = row.children[3].innerHTML;
-		// 		temp.length = row.children[4].innerHTML;
-		// 		temp.weight = row.children[5].innerHTML;
-		// 		temp.cg = row.children[6].innerHTML;
-		// 		temp.cp = row.children[7].innerHTML;
-		// 		temp.motors = row.children[8].innerHTML;
-		// 		temp.temperature = row.children[9].innerHTML;
-		// 		temp.windSpeed = row.children[10].innerHTML;
-		// 		temp.accelerationMax = row.children[11].innerHTML;
-		// 		temp.velocityMax = row.children[12].innerHTML;
-		// 		temp.altitudeMax = row.children[13].innerHTML;
-		// 		temp.altitudeMain = row.children[14].innerHTML;
-		// 		temp.aAltitudeDrogue = row.children[15].innerHTML;
-		// 	}
-		// 	rows.push(temp);
-		// }
-
+		
 		const output = rows;
 
 		/* generate worksheet from state */
@@ -322,8 +300,11 @@ export function useLaunchesBaseComponent(props, context, options) {
 		settings.value = settings.value ?? { };
 		settings.value.params = settings.value.params ?? { };
 		settings.value.viewType = settings.value.viewType ?? 'table';
-		resetAdditional(correlationId, settings.value);
+
+		resetAdditional(correlationId, settings.value.params);
+
 		viewType.value = settings.value.viewType;
+
 		return success(correlationId);
 	};
 	const initNewI = async (correlationId, data) => {

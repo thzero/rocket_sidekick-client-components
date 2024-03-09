@@ -1,7 +1,7 @@
 <template>
-	{{ item.diameter }} {{ measurementUnitTranslateLength(item.diameterMeasurementUnitsId, item.diameterMeasurementUnitId) }} 
+	<span v-if="title">{{ item.diameter }} {{ measurementUnitTranslateLength(item.diameterMeasurementUnitsId, item.diameterMeasurementUnitId) }} 
 	{{ item.name }} 
-	{{ item.thinMill ? $t('forms.content.parts.parachute.thinMill') : '' }}
+	{{ item.thinMill ? $t('forms.content.parts.parachute.thinMill') : '' }}</span>
 </template>
 
 <script>

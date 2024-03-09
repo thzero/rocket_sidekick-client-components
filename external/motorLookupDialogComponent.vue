@@ -105,20 +105,20 @@ export function useMotorLookupDialogComponent(props, context, options) {
 		const durationInDays = duration / spanInDays;
 		const durationInHours = duration / spanInHours;
 
-		let message = LibraryClientUtility.$trans.t('motorSearch.motor_reset_message') + '<br>';
+		let message = LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_message') + '<br>';
 		if (durationInWeeks <= 1) {
 			let timespan = '';
 			if (durationInDays <= 1) {
 				if (durationInHours < 1)
-					timespan = LibraryClientUtility.$trans.t('motorSearch.motor_reset_message_time_hour_less');
+					timespan = LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_message_time_hour_less');
 				else
-					timespan = LibraryClientUtility.$trans.t('motorSearch.motor_reset_message_time_duration', { duration: durationInHours, type: LibraryClientUtility.$trans.t('motorSearch.motor_reset_hours') });
+					timespan = LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_message_time_duration', { duration: durationInHours, type: LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_hours') });
 			}
 			else
-				timespan = LibraryClientUtility.$trans.t('motorSearch.motor_reset_message_time_duration', { duration: durationInDays, type: LibraryClientUtility.$trans.t('motorSearch.motor_reset_days') });
-			message += LibraryClientUtility.$trans.t('motorSearch.motor_reset_message_warning', { timespan: timespan }) + '<br>' + LibraryClientUtility.$trans.t('motorSearch.motor_reset_message_warning2') + '<br>';
+				timespan = LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_message_time_duration', { duration: durationInDays, type: LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_days') });
+			message += LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_message_warning', { timespan: timespan }) + '<br>' + LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_message_warning2') + '<br>';
 		}
-		message = message + '<br>' + LibraryClientUtility.$trans.t('motorSearch.motor_reset_message_confirm');
+		message = message + '<br>' + LibraryClientUtility.$trans.t('forms.external.motorSearch.reset_message_confirm');
 
 		dialogResetMessage.value = message;
 		dialogResetManager.value.open();
