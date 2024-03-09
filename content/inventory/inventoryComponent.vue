@@ -437,8 +437,6 @@ export function useInventoryBaseComponent(props, context, options) {
 				type = child.id;
 				continue;
 			}
-			if (type !== 'motor')
-				continue;
 
 			const el2 = child.children[0].children[0];
 			let htmlHeaders = el2.children[0].children[0];
@@ -505,11 +503,11 @@ export function useInventoryBaseComponent(props, context, options) {
 			ws['!cols'] = cols;
 
 			/* create workbook and append worksheet */
-			utils.book_append_sheet(wb, ws, type);
+			utils.book_append_sheet(wb, ws, LibraryClientUtility.$trans.t(`forms.content.parts.${type}.title`));
 		}
 		/* export to XLSX */
 		const now = new Date();
-		let launchFileName = `${LibraryClientUtility.$trans.t('forms.content.launches.plural')} ${now.getDate()}${now.getMonth()}${now.getFullYear()}`;
+		let launchFileName = `${LibraryClientUtility.$trans.t('forms.content.inventory.name')} ${now.getDate()}${now.getMonth()}${now.getFullYear()}`;
 		launchFileName = launchFileName.toLocaleLowerCase();
 		writeFileXLSX(wb, `${launchFileName}.xlsx`);
 	};
