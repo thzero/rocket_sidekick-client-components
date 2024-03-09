@@ -18,7 +18,7 @@
 						<v-card-text>
 							<v-row dense>
 								<v-col cols="12" class="text-center text-h7 pb-2">
-									{{ $t('motorSearch.guidance') }} <a target="_blank" :href="$t(searchUrl)">{{ $t(searchLocaleName) }}</a>{{ $t('motorSearch.guidance3') }}
+									{{ $t('forms.external.motorSearch.guidance') }} <a target="_blank" :href="$t(searchUrl)">{{ $t(searchLocaleName) }}</a>{{ $t('forms.external.motorSearch.guidance3') }}
 								</v-col>
 							</v-row>
 							<v-row dense>
@@ -137,24 +137,24 @@
 					class="mb-4"
 				>
 					<v-card-title class="d-flex">
-						<span class="text-left text-h6 text-bold">{{ item.manufacturer }} {{ item.commonName }} {{ item.sparky ? '(' + $t('motorSearch.motor_sparky') +  ')' : '' }}</span>
+						<span class="text-left text-h6 text-bold">{{ item.manufacturer }} {{ item.commonName }} {{ item.sparky ? '(' + $t('forms.external.motorSearch.sparky') +  ')' : '' }}</span>
 					</v-card-title>
 					<v-card-text>
 						<table style="width: 100%;">
 							<tr>
-								<td class="text-h7 text-bold" style="width: 30%">{{ $t('motorSearch.motor_designation') }}</td><td>{{ item.designation }}</td>
+								<td class="text-h7 text-bold" style="width: 30%">{{ $t('forms.external.motorSearch.designation') }}</td><td>{{ item.designation }}</td>
 							</tr>
 							<tr>
-								<td class="text-h7 text-bold">{{ $t('motorSearch.motor_diameter') }}</td><td>{{ item.diameter }}{{ $t('motorSearch.motor_diameter_measurement') }}</td>
+								<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.diameter') }}</td><td>{{ item.diameter }}{{ $t('forms.external.motorSearch.diameter_measurement') }}</td>
 							</tr>
 							<tr>
-								<td class="text-h7 text-bold">{{ $t('motorSearch.motor_caseInfo') }}</td><td>{{ motorCaseInfo(item) }}</td>
+								<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.motorCase') }}</td><td>{{ motorCaseInfo(item) }}</td>
 							</tr>
 							<tr>
-								<td class="text-h7 text-bold">{{ $t('motorSearch.motor_thrust_average') }}</td><td>{{ item.avgThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
+								<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.thrust_average') }}</td><td>{{ item.avgThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
 							</tr>
 							<tr>
-								<td class="text-h7 text-bold">{{ $t('motorSearch.motor_thrust_max') }}</td><td>{{ item.maxThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
+								<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.thrust_max') }}</td><td>{{ item.maxThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
 							</tr>
 							<tr>
 								<td colspan="2" class="text-left"><a :href="motorUrl(item)" target="_blank">{{ motorUrl(item) }}</a></td>

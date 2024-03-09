@@ -329,6 +329,28 @@
 				</v-menu>
 			</v-btn> -->
 		</template>
+		<template #postActions=" { filterDrawer, isLoading }">
+			<v-btn
+				v-if="filterDrawer && !mobileOnly"
+				:variant="buttonsForms.variant.default"
+				:color="buttonsForms.color.default"
+				:disabled="isLoading"
+				class="ml-2"
+				@click="handleViewType"
+				:icon="viewTypeIcon"
+			>
+			</v-btn>
+			<v-btn
+				v-if="filterDrawer && viewTypeListing && !mobileOnly"
+				:variant="buttonsForms.variant.default"
+				:color="buttonsForms.color.default"
+				:disabled="isLoading"
+				class="ml-2"
+				@click="handleViewTypeListingDownload"
+			>
+				{{ $t('buttons.export') }}
+			</v-btn>
+		</template>
 		<template v-slot:listing>
 			<v-row dense>
 				<v-col cols="12">
@@ -346,6 +368,7 @@
 					</div>
 				</v-col>
 				<v-col
+					v-if="viewTypeTable"
 				>
 					 <v-row dense>
 						<v-col
@@ -500,7 +523,6 @@
 														v-if="isPartType(item2.item, partTypes.deploymentBag)"
 														:item="item2.item"
 													/>
-													<pre>{{ item2.item.motorCaseId }}</pre>
 													<MotorPanelTitle
 														v-if="isPartType(item2.item, partTypes.motor)"
 														:item="item2.item"
@@ -736,6 +758,232 @@
 							</v-expansion-panels>
 						</v-col>
 					</v-row>
+				</v-col>
+				<v-col
+					v-if="viewTypeListing"
+				>
+					<div
+						ref="viewTypeListingRef"
+						density="compact"
+					>
+						<template
+							v-for="(type, index) in inventoryDisplay.types"
+							:key="index"
+						>
+							<div :id="type.typeId" class="text-left font-weight-bold mt-2 mb-2">{{ type.title }}</div>
+							<v-table
+								density="compact"
+								style="width: 100%;"
+								class="mb-4"
+							>
+								<thead>
+									<tr>
+										<th class="text-left font-weight-bold" style="white-space:nowrap;">{{ $t('forms.content.inventory.item') }}</th>
+										<AltimeterPanelTitle
+											v-if="isPartType(type, partTypes.altimeter)"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<ChuteProtectorPanelTitle
+											v-if="isPartType(type, partTypes.chuteProtector)"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<ChuteReleasePanelTitle
+											v-if="isPartType(type, partTypes.chuteRelease)"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<DeploymentBagPanelTitle
+											v-if="isPartType(type, partTypes.deploymentBag)"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<MotorPanelTitle
+											v-if="isPartType(type, partTypes.motor)"
+											:displayCaseInfo="true"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<MotorCasePanelTitle
+											v-if="isPartType(type, partTypes.motorCase)"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<ParachutePanelTitle
+											v-if="isPartType(type, partTypes.parachute)"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<StreamerPanelTitle
+											v-if="isPartType(type, partTypes.streamer)"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<TrackerPanelTitle
+											v-if="isPartType(type, partTypes.tracker)"
+											:tableHeader="true"
+											:title="false"
+										/>
+										<th class="text-left font-weight-bold" style="width: 200px;white-space:nowrap;">{{ $t('forms.content.manufacturer.name') }}</th>
+										<th class="text-left font-weight-bold" style="width: 95px;">{{ $t('forms.content.inventory.quantity') }}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<template
+										v-for="(item2, index2) in type.items"
+										:key="index2"
+									>
+									<tr>
+										<td style="white-space:nowrap;">
+											<AltimeterPanelTitle
+												v-if="isPartType(item2.item, partTypes.altimeter)"
+												:item="item2.item"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+											<ChuteProtectorPanelTitle
+												v-if="isPartType(item2.item, partTypes.chuteProtector)"
+												:item="item2.item"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+											<ChuteReleasePanelTitle
+												v-if="isPartType(item2.item, partTypes.chuteRelease)"
+												:item="item2.item"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+											<DeploymentBagPanelTitle
+												v-if="isPartType(item2.item, partTypes.deploymentBag)"
+												:item="item2.item"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+											<MotorPanelTitle
+												v-if="isPartType(item2.item, partTypes.motor)"
+												:item="item2.item"
+												:displayCaseInfo="true"
+												:hasCase="hasMotorCase(item2.item)"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+											<MotorCasePanelTitle
+												v-if="isPartType(item2.item, partTypes.motorCase)"
+												:item="item2.item"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+											<ParachutePanelTitle
+												v-if="isPartType(item2.item, partTypes.parachute)"
+												:item="item2.item"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+											<StreamerPanelTitle
+												v-if="isPartType(item2.item, partTypes.streamer)"
+												:item="item2.item"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+											<TrackerPanelTitle
+												v-if="isPartType(item2.item, partTypes.tracker)"
+												:item="item2.item"
+												:chips="false"
+												:additional="false"
+												:title="true"
+											/>
+										</td>
+										<AltimeterPanelTitle
+											v-if="isPartType(item2.item, partTypes.altimeter)"
+											:item="item2.item"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<ChuteProtectorPanelTitle
+											v-if="isPartType(item2.item, partTypes.chuteProtector)"
+											:item="item2.item"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<ChuteReleasePanelTitle
+											v-if="isPartType(item2.item, partTypes.chuteRelease)"
+											:item="item2.item"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<DeploymentBagPanelTitle
+											v-if="isPartType(item2.item, partTypes.deploymentBag)"
+											:item="item2.item"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<MotorPanelTitle
+											v-if="isPartType(item2.item, partTypes.motor)"
+											:item="item2.item"
+											:displayCaseInfo="true"
+											:hasCase="hasMotorCase(item2.item)"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<MotorCasePanelTitle
+											v-if="isPartType(item2.item, partTypes.motorCase)"
+											:item="item2.item"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<ParachutePanelTitle
+											v-if="isPartType(item2.item, partTypes.parachute)"
+											:item="item2.item"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<StreamerPanelTitle
+											v-if="isPartType(item2.item, partTypes.streamer)"
+											:item="item2.item"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<TrackerPanelTitle
+											v-if="isPartType(item2.item, partTypes.tracker)"
+											:item="item2.item"
+											:chips="false"
+											:additional="true"
+											:title="false"
+											:table="true"
+										/>
+										<td style="white-space:nowrap;">{{ item2.item ? item2.item.manufacturer : '' }}</td>
+										<td>{{ item2.item ? item2.quantity : '' }}</td>
+									</tr>
+								</template>
+								</tbody>
+							</v-table>
+						</template>
+					</div>
 				</v-col>
 			</v-row>
 		</template>
@@ -1031,8 +1279,11 @@ export default {
 			filterItemMotorSparky,
 			filterItemPartTypes,
 			panels,
+			mobileOnly,
 			partTypes,
 			title,
+			viewType,
+			viewTypeListingRef,
 			dialogPartsSearchAltimetersManager,
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
@@ -1055,6 +1306,9 @@ export default {
 			inventoryMotorCases,
 			inventoryMotorCasesSelect,
 			inventoryPartTypes,
+			viewTypeIcon,
+			viewTypeListing,
+			viewTypeTable,
 			clickAltimetersSearch,
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
@@ -1069,6 +1323,8 @@ export default {
 			handleCopy,
 			handleDelete,
 			hasMotorCase,
+			handleViewType,
+			handleViewTypeListingDownload,
 			isPartType,
 			motorDelays,
 			panelsUpdated,
@@ -1140,8 +1396,11 @@ export default {
 			filterItemMotorSparky,
 			filterItemPartTypes,
 			panels,
+			mobileOnly,
 			partTypes,
 			title,
+			viewType,
+			viewTypeListingRef,
 			dialogPartsSearchAltimetersManager,
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
@@ -1164,6 +1423,9 @@ export default {
 			inventoryMotorCases,
 			inventoryMotorCasesSelect,
 			inventoryPartTypes,
+			viewTypeIcon,
+			viewTypeListing,
+			viewTypeTable,
 			clickAltimetersSearch,
 			clickChuteProtectorsSearch,
 			clickChuteReleasesSearch,
@@ -1178,6 +1440,8 @@ export default {
 			handleCopy,
 			handleDelete,
 			hasMotorCase,
+			handleViewType,
+			handleViewTypeListingDownload,
 			isPartType,
 			motorDelays,
 			panelsUpdated,

@@ -70,7 +70,7 @@
 	<template
 		v-if="isHeaders"
 	>
-	<tr style="isSuccess ? : 'background-color: red;' : '''">
+	<tr :style="!isSuccess ? 'background-color: red;' : ''">
 		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.rockets.name') }}
 		</th>

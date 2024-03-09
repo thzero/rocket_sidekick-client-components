@@ -1,5 +1,5 @@
 <template>
-	{{ item.name }} 
+	<span v-if="title">{{ item.name }} </span>
 </template>
 
 <script>
