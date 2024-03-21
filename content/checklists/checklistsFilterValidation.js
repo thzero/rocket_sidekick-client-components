@@ -19,6 +19,12 @@ export const useChecklistsFilterValidation = {
 		}),
 		$autoDirty: true
 	},
+	filterItemIsTemplate: {
+		filterItemIsTemplateUnless: requiredUnless((value, siblings) => { 
+			return siblings.filterItemShared === true || siblings.filterItemYours === true; 
+		}),
+		$autoDirty: true
+	},
 	filterItemYours: {
 		filterItemYoursUnless: requiredUnless((value, siblings) => { 
 			return siblings.filterItemIsDefault === true || siblings.filterItemShared === true; 

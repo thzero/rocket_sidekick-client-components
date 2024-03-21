@@ -1,17 +1,62 @@
 <template>
 	<!-- [[ isEditable {{ isEditable }}]] -->
 	<div v-bind="$attrs">
-		<v-row dense>
-			<v-col>
+		<v-row 
+			dense
+		>
+			<v-col cols="12">
 				<v-sheet 
 					class="d-flex"
 					:color="rowColor"
 					rounded
+					:draggable="isDraggable"
+					@drag="dragged($event)"
+					@dragover="dragOver($event)"
+					@dragend="dragEnd($event)"
+					@dragstart="dragStart($event)"
 				>
+					<div
+						v-if="dragHasTarget"
+  						class="d-flex justify-center align-center ml-2"
+						@dragover="dragOverDrop($event, 'down')"
+						@drop="dragDrop($event, 'down')"
+					>
+						<v-icon
+							:color="dragTarget === 'down' ? 'green': null"
+							icon="mdi-arrow-down-bold-circle-outline"
+							size="48px">
+						</v-icon>
+					</div>
+					<div
+						v-if="dragHasTarget"
+  						class="d-flex justify-center align-center ml-2"
+						@dragover="dragOverDrop($event, 'up')"
+						@drop="dragDrop($event, 'up')"
+					>
+						<v-icon
+							:color="dragTarget === 'up' ? 'green': null"
+							icon="mdi-arrow-up-bold-circle-outline"
+							size="48px">
+						</v-icon>
+					</div>
+					<div
+						v-if="dragHasTarget && isSection"
+  						class="d-flex justify-center align-center ml-2"
+						@dragover="dragOverDrop($event, 'in')"
+						@drop="dragDrop($event, 'in')"
+					>
+						<v-icon
+							:color="dragTarget === 'in' ? 'green': null"
+							icon="mdi-arrow-right-bold-circle-outline"
+							size="48px"
+						>
+						</v-icon>
+					</div>
 					<div class="pl-2 pr-4 pb-2 pt-2">
 						<v-icon
 							v-if="statusCompleted"
-							style="height: 48px; float: left;" 
+							style="float: left;" 
+							size="48px"
 						>
 							{{ isLaunch ? 'mdi-rocket-launch' : 'mdi-check' }}
 						</v-icon>
@@ -53,9 +98,7 @@
 					</div>
 				</v-sheet>
 			</v-col>
-		</v-row>
-		<v-row dense>
-			<v-col>
+			<v-col cols="12">
 				<v-card>
 					<v-card-text
 						v-if="item.description"
@@ -75,7 +118,7 @@
 									v-bind="props"
 									:variant="buttonsForms.variant.add"
 									:color="buttonsForms.color.add"
-									class="ml-2 mr-2">{{ $t('buttons.add' )}}</v-btn>
+								>{{ $t('buttons.add' )}}</v-btn>
 							</template>
 						</v-tooltip>
 						<v-tooltip :text="$t('tooltips.content.checklists.steps.delete')">
@@ -85,7 +128,7 @@
 									v-bind="props"
 									:variant="buttonsForms.variant.delete"
 									:color="buttonsForms.color.delete"
-									class="ml-2 mr-2">{{ $t('buttons.delete' )}}</v-btn>
+								>{{ $t('buttons.delete' )}}</v-btn>
 							</template>
 						</v-tooltip>
 						<v-tooltip :text="$t('tooltips.content.checklists.steps.edit')">
@@ -95,7 +138,7 @@
 									v-bind="props"
 									:variant="buttonsForms.variant.edit"
 									:color="buttonsForms.color.edit"
-									class="ml-2 mr-2">{{ $t('buttons.edit' )}}</v-btn>
+								>{{ $t('buttons.edit' )}}</v-btn>
 							</template>
 						</v-tooltip>
 						<!-- <v-btn 
@@ -110,6 +153,7 @@
 									color="black"
 									style="background-color: gray;"
 									icon="mdi-menu-right"
+									@click="handleMoveIn"
 								></v-btn>
 							</template>
 						</v-tooltip>
@@ -122,6 +166,7 @@
 									density="comfortable"
 									style="background-color: gray;"
 									icon="mdi-menu-up"
+									@click="handleMoveUp"
 								></v-btn>
 							</template>
 						</v-tooltip>
@@ -134,6 +179,7 @@
 									color="black"
 									style="background-color: gray;"
 									icon="mdi-menu-down"
+									@click="handleMoveDown"
 								></v-btn>
 							</template>
 						</v-tooltip>
@@ -146,6 +192,7 @@
 									color="black"
 									style="background-color: gray;"
 									icon="mdi-menu-left"
+									@click="handleMoveOut"
 								></v-btn>
 							</template>
 						</v-tooltip>
@@ -183,9 +230,12 @@ export default {
 			serverErrors,
 			setErrors,
 			buttonsForms,
+			dragHasTarget,
+			dragTarget,
 			canAdd,
 			canDelete,
 			hasCompleted,
+			isDraggable,
 			isLaunch,
 			isSection,
 			moveDown,
@@ -194,8 +244,20 @@ export default {
 			moveUp,
 			rowColor,
 			statusCompleted,
+			dragged,
+			dragDrop,
+			dragEnd,
+			dragOver,
+			dragOverDrop,
+			dragStart,
+			handleAdd,
 			handleComplete,
-			handleLaunch
+			handleDelete,
+			handleLaunch,
+			handleMoveDown,
+			handleMoveIn,
+			handleMoveOut,
+			handleMoveUp
 		} = useChecklistStepPanelComponent(props, context);
 
 		return {
@@ -213,9 +275,12 @@ export default {
 			serverErrors,
 			setErrors,
 			buttonsForms,
+			dragHasTarget,
+			dragTarget,
 			canAdd,
 			canDelete,
 			hasCompleted,
+			isDraggable,
 			isLaunch,
 			isSection,
 			moveDown,
@@ -224,8 +289,20 @@ export default {
 			moveUp,
 			rowColor,
 			statusCompleted,
+			dragged,
+			dragDrop,
+			dragEnd,
+			dragOver,
+			dragOverDrop,
+			dragStart,
+			handleAdd,
 			handleComplete,
-			handleLaunch
+			handleDelete,
+			handleLaunch,
+			handleMoveDown,
+			handleMoveIn,
+			handleMoveOut,
+			handleMoveUp
 		};
 	}
 };

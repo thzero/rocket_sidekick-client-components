@@ -51,6 +51,10 @@ export const useChecklistStepsPanelComponentProps = {
 		type: Number,
 		default: null
 	},
+	updateMove: {
+		type: Function,
+		default: null
+	},
 	updateStatus: {
 		type: Function,
 		default: null

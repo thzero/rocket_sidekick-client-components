@@ -1,5 +1,5 @@
 <script>
-import { ref} from 'vue';
+import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { firstBy, thenBy } from 'thenby';
 
@@ -140,7 +140,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 	const filterItemName = ref(null);
 	const filterItemIsCompleted = ref(false);
 	const filterItemIsDefault = ref(true);
+	const filterItemIsDraft  = ref(true);
 	const filterItemIsInProgress = ref(true);
+	const filterItemIsTemplate = ref(true);
 	const filterItemShared = ref(false);
 	const filterItemYours  = ref(true);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t('titles.content.checklists.title'));
@@ -266,7 +268,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 		params.name = filterItemName.value;
 		params.isCompleted = filterItemIsCompleted.value;
 		params.isDefault = filterItemIsDefault.value;
+		params.isDraft = filterItemIsDraft.value;
 		params.isInProgress = filterItemIsInProgress.value;
+		params.isTemplate = filterItemIsTemplate.value;
 		params.shared = filterItemShared.value;
 		params.yours = filterItemYours.value;
 		return params;
@@ -316,17 +320,17 @@ export function useChecklistsBaseComponent(props, context, options) {
 
 		return item.id === dialogStartParams.value;
 	};
+	const isTemplate = (item) => {
+		return item ? item.isTemplate ?? false : false;
+	};
 	const resetAdditional = async (correlationId, data) => {
 		filterItemName.value = data ? data.name : null;
-		filterItemYours.value = data ? data.yours : null;
-		filterItemIsInProgress.value = data ? data.isInProgress : null;
-		filterItemIsCompleted.value = data ? data.isCompleted : false;
-		filterItemIsDefault.value = data ? data.isDefault : null;
-
-		if (!filterItemYours.value && !filterItemIsDefault.value && !filterItemShared.value) {
-			filterItemIsDefault.value = true;
-			filterItemYours.value = true;
-		}
+		filterItemIsDraft.value = data ? data.isDraft : true;
+		filterItemIsInProgress.value = data ? data.isInProgress : true;
+		filterItemIsCompleted.value = data ? data.isCompleted : true;
+		filterItemIsDefault.value = data ? data.isDefault : true;
+		filterItemIsTemplate.value = data ? data.isTemplate : true;
+		filterItemYours.value = data ? data.yours : true;
 	};
 
 	return {
@@ -409,7 +413,9 @@ export function useChecklistsBaseComponent(props, context, options) {
 		filterItemName,
 		filterItemIsCompleted,
 		filterItemIsDefault,
+		filterItemIsDraft,
 		filterItemIsInProgress,
+		filterItemIsTemplate,
 		filterItemShared,
 		filterItemYours,
 		dialogStartOk,
@@ -420,6 +426,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 		isLaunched,
 		isInProgress,
 		isStarting,
+		isTemplate,
 		resetAdditional,
 		scope: 'Checklists',
 		validation: useVuelidate({ $scope: 'Checklists' })

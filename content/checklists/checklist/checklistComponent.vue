@@ -415,40 +415,111 @@ export function useChecklistComponent(props, context, options) {
 		detailItemData.value.rocketId = detailItemRocketId.value;
 		detailItemData.value.rocketSetupId = detailItemRocketSetupId.value;
 	};
-	const updateOrder = async (payload, addedIndex, removedIndex) => {
-		console.log('updateOrder', payload);
-		console.log('updateOrder', addedIndex);
-		console.log('updateOrder', removedIndex);
+	const updateMove = async (correlationId, itemId, moveToId, direction) => {
+		console.log('updateMove', itemId);
+		console.log('updateMove', moveToId);
+		alert(itemId + ' ' + moveToId + ' ' + direction);
 
-		let item = null;
-		let steps = detailItemData.value.steps;
-		for (const id of payload.idChain) {
-			console.log('updateOrder', id);
-			item = steps.find(l => l.id == id);
-			if (item)
-				steps = item.steps;
-		}
-		if (!item)
-			throw Error('Invalid item in updateOrder...');
-
-		console.log('updateOrder', item.steps);
-		if (item.steps) {
-			let itemToAdd = payload.item;
-			if (removedIndex !== null)
-				itemToAdd = item.steps.splice(removedIndex, 1)[0];
-
-			if (addedIndex !== null)
-				item.steps.splice(addedIndex, 0, itemToAdd);
-		}
-		console.log('updateOrder', detailItemData.value);
-
-		detailItemReorder.value = !detailItemReorder.value;
+		if (direction === 'down' || direction === 'up')
+			return updateMoveDownOrUp(correlationId, itemId, moveToId, direction);
 	};
+	const updateMoveDownOrUp = async (correlationId, dragItem, moveToId, moveToParentId, direction) => {
+		console.log('updateMove', dragItem);
+		console.log('updateMove', moveToId);
+		console.log('updateMove', moveToParentId);
+		if (!dragItem)
+		 	throw Error('Invalid dragItem in updateMove...');
+		if (!dragItem.itemId)
+		 	throw Error('Invalid dragItem.itemId in updateMove...');
+		if (!dragItem.parentId)
+		 	throw Error('Invalid dragItem.parentId in updateMove...');
+		if (!moveToId)
+		 	throw Error('Invalid moveToId in updateMove...');
+		if (!moveToParentId)
+		 	throw Error('Invalid moveToParentId in updateMove...');
+
+		alert(dragItem.itemId + ' ' + dragItem.parentId + ' ' + moveToId + ' ' + moveToParentId + ' ' + direction);
+
+		// TODO: Should we clone, update, then set back?
+
+		let dragItemResults = updateFindStep(correlationId, detailItemData.value.steps, dragItem.itemId, true);
+		if (!dragItemResults)
+		 	throw Error('Invalid dragItemResults in updateMove...');
+
+		let dragParent = updateFindStep(correlationId, detailItemData.value.steps, dragItem.parentId);
+		if (!dragParent)
+		 	throw Error('Invalid dragParent in updateMove...');
+
+		let moveToResults = updateFindStep(correlationId, detailItemData.value.steps, id, true);
+		if (!moveToResults)
+		 	throw Error('Invalid moveToResults in updateMove...');
+
+		let moveToParent = updateFindStep(correlationId, detailItemData.value.steps, moveToParentId);
+		if (!moveToParent)
+		 	throw Error('Invalid moveToParent in updateMove...');
+
+		// First remove the dragItem from the dragParent
+		dragParent.item.steps.splice(dragItemResults.index, 1);
+
+		// Next determine the index in the moveToParent...
+		let start = moveToResults.index; // index of the moveTo item in the moveToParent
+		console.log('start', start);
+		if (direction === 'down') {
+			start += 1; // increment
+			console.log('start.increment1', start);
+		}
+		if (direction === 'up') {
+			start -= 1; // decrement
+			console.log('start.decrement1', start);
+			start = start < 0 ? 0 : start; // can't be less than zero, so we basically didn't mvoe it.
+			console.log('start.decrement2', start);
+		}
+
+		// Finally add the dragItem to the appropriate place in the moveToParent
+		moveToParent.steps.splice(start, 0, dragItemResults.item);
+
+		// reorder the dragParent
+		let index = 0;
+		for (const step of dragParent.steps)
+			step.order = index++;
+		// reorder the moveToParent
+		for (const step of moveToParent.steps)
+			step.order = index++;
+	};
+	// const updateOrder = async (payload, addedIndex, removedIndex) => {
+	// 	console.log('updateOrder', payload);
+	// 	console.log('updateOrder', addedIndex);
+	// 	console.log('updateOrder', removedIndex);
+
+	// 	let item = null;
+	// 	let steps = detailItemData.value.steps;
+	// 	for (const id of payload.idChain) {
+	// 		console.log('updateOrder', id);
+	// 		item = steps.find(l => l.id == id);
+	// 		if (item)
+	// 			steps = item.steps;
+	// 	}
+	// 	if (!item)
+	// 		throw Error('Invalid item in updateOrder...');
+
+	// 	console.log('updateOrder', item.steps);
+	// 	if (item.steps) {
+	// 		let itemToAdd = payload.item;
+	// 		if (removedIndex !== null)
+	// 			itemToAdd = item.steps.splice(removedIndex, 1)[0];
+
+	// 		if (addedIndex !== null)
+	// 			item.steps.splice(addedIndex, 0, itemToAdd);
+	// 	}
+	// 	console.log('updateOrder', detailItemData.value);
+
+	// 	detailItemReorder.value = !detailItemReorder.value;
+	// };
 	const updateStatus = async (correlationId, id, status, launch) => {
 		console.log('updateStatus', id);
 		console.log('updateStatus', status);
 
-		let item = updateStatusFindStep(correlationId, detailItemData.value.steps, id);
+		let item = updateFindStep(correlationId, detailItemData.value.steps, id);
 		if (!item)
 			throw Error('Invalid item in updateStatus...');
 
@@ -462,19 +533,25 @@ export function useChecklistComponent(props, context, options) {
 		await formControlRef.value.submitEx(true);
 		detailItemData.value.canLaunch = canLaunchI(detailItemData.value);
 	};
-	const updateStatusFindStep = (correlationId, steps, id) => {
+	const updateFindStep = (correlationId, steps, id, findIndex) => {
 		if (!steps)
 			return null;
 
 		let item = steps.find(l => l.id === id);
-		if (item)
+		if (item) {
+			if (findIndex) {
+				const index = steps.findIndex(l => l.id === id);
+				return { item : item , index: index };
+			}
+
 			return item;
+		}
 
 		for (const temp of steps) {
 			if (!temp.steps)
 				continue;
 
-			item = updateStatusFindStep(correlationId, temp.steps, id);
+			item = updateFindStep(correlationId, temp.steps, id);
 			if (item)
 				return item;
 		}
@@ -1103,7 +1180,7 @@ export function useChecklistComponent(props, context, options) {
 		selectLocation,
 		selectRocket,
 		selectRocketSetup,
-		updateOrder,
+		updateMove,
 		updateStatus,
 		scope: 'ChecklistControl',
 		validation: useVuelidate({ $scope: 'ChecklistControl' })
