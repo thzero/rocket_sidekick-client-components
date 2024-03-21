@@ -381,7 +381,7 @@
 						:isEditable="isEditable"
 						:isLoading="isLoading"
 						:isInProgress="isInProgress"
-						:update-order="updateOrder"
+						:update-move="updateMove"
 						:update-status="updateStatus"
 						:debug="debug"
 					>
@@ -578,7 +578,7 @@ export default {
 			selectLocation,
 			selectRocket,
 			selectRocketSetup,
-			updateOrder,
+			updateMove,
 			updateStatus,
 			scope,
 			validation
@@ -698,7 +698,7 @@ export default {
 			selectLocation,
 			selectRocket,
 			selectRocketSetup,
-			updateOrder,
+			updateMove,
 			updateStatus,
 			scope,
 			validation

@@ -13,16 +13,17 @@
 			<ChecklistStepPanel 
 				class="mt-2"
 				:depth="0"
-				:depthMax="!item.steps || item.steps.length === 0"
+				:depth-max="!item.steps || item.steps.length === 0"
 				:index="index1"
 				:item="item1"
-				:total="item.steps.length"
 				:parent="item"
 				:root="item"
-				:isEditable="isEditable"
-				:isLoading="isLoading"
-				:isInProgress="isInProgress"
-				:updateStatus="updateStatus"
+				:total="item.steps.length"
+				:is-editable="isEditable"
+				:is-loading="isLoading"
+				:is-in-progress="isInProgress"
+				:update-move="updateMove"
+				:update-status="updateStatus"
 				:debug="debug"
 			>
 				<template 
@@ -32,15 +33,17 @@
 					<ChecklistStepPanel 
 						class="ml-6 mt-2"
 						:depth="1"
-						:depthMax="!item2.steps || item2.steps.length === 0"
+						:depth-max="!item2.steps || item2.steps.length === 0"
 						:index="index2"
 						:item="item2"
 						:parent="item1"
 						:root="item"
-						:isEditable="isEditable"
-						:isInProgress="isInProgress"
-						:isLoading="isLoading"
-						:updateStatus="updateStatus"
+						:total="item1.steps.length"
+						:is-editable="isEditable"
+						:is-in-progress="isInProgress"
+						:is-loading="isLoading"
+						:update-move="updateMove"
+						:update-status="updateStatus"
 						:debug="debug"
 					>
 						<template 
@@ -50,15 +53,17 @@
 							<ChecklistStepPanel 
 								class="ml-6 mt-2"
 								:depth="2"
-								:depthMax="!item3.steps || item3.steps.length === 0"
+								:depth-max="!item3.steps || item3.steps.length === 0"
 								:index="index3"
 								:item="item3"
 								:parent="item2"
 								:root="item"
-								:isEditable="isEditable"
-								:isInProgress="isInProgress"
-								:isLoading="isLoading"
-								:updateStatus="updateStatus"
+								:total="item2.steps.length"
+								:is-editable="isEditable"
+								:is-in-progress="isInProgress"
+								:is-loading="isLoading"
+								:update-move="updateMove"
+								:update-status="updateStatus"
 								:debug="debug"
 							>
 								<template 
@@ -68,15 +73,17 @@
 									<ChecklistStepPanel 
 										class="ml-6 mt-2"
 										:depth="3"
-										:depthMax="!item4.steps || item4.steps.length === 0"
+										:depth-max="!item4.steps || item4.steps.length === 0"
 										:index="index4"
 										:item="item4"
 										:parent="item3"
 										:root="item"
-										:isEditable="isEditable"
-										:isLoading="isLoading"
-										:isInProgress="isInProgress"
-										:updateStatus="updateStatus"
+										:total="item3.steps.length"
+										:is-editable="isEditable"
+										:is-loading="isLoading"
+										:is-in-progress="isInProgress"
+										:update-move="updateMove"
+										:update-status="updateStatus"
 										:debug="debug"
 									>
 										<template 
@@ -86,14 +93,16 @@
 											<ChecklistStepPanel 
 												class="ml-6 mt-2"
 												:depth="4"
-												:depthMax="false"
+												:depth-max="!item5.steps || item5.steps.length === 0"
 												:index="index5"
 												:parent="item4"
 												:root="item"
-												:isEditable="isEditable"
-												:isLoading="isLoading"
-												:isInProgress="isInProgress"
-												:updateStatus="updateStatus"
+												:total="item4.steps.length"
+												:is-editable="isEditable"
+												:is-loading="isLoading"
+												:is-in-progress="isInProgress"
+												:update-move="updateMove"
+												:update-status="updateStatus"
 												:debug="debug"
 											>
 											</ChecklistStepPanel>
@@ -145,8 +154,7 @@ export default {
 			serverErrors,
 			setErrors,
 			hasItem,
-			getChildPayload,
-			onDrop
+			getChildPayload
 		} = useChecklistStepsComponent(props, context);
 
 		return {
@@ -164,8 +172,7 @@ export default {
 			serverErrors,
 			setErrors,
 			hasItem,
-			getChildPayload,
-			onDrop
+			getChildPayload
 		};
 	}
 };

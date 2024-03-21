@@ -56,15 +56,6 @@ export function useChecklistStepsComponent(props, context, options) {
 		console.log('getChildPayload', { chain: idChain, item: item });
 		return { idChain: idChain, item: item };
     };
-	const onDrop = (dropResult) => {
-		console.log('onDrop', dropResult);
-		if (!props.updateOrder)
-			return;
-
-		(async () => {
-			await props.updateOrder(dropResult.payload, dropResult.addedIndex, dropResult.removedIndex);
-		})();
-	};
 	
 	return {
 		correlationId,
@@ -81,8 +72,7 @@ export function useChecklistStepsComponent(props, context, options) {
 		serverErrors,
 		setErrors,
 		hasItem,
-		getChildPayload,
-		onDrop
+		getChildPayload
 	};
 };
 </script>

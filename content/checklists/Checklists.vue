@@ -26,35 +26,49 @@
 							</v-col>
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<v-row dense>
-									<v-col cols="4" md="4">
+									<v-col cols="4">
 										<v-checkbox
 											v-model="filterItemIsCompleted"
 											density="compact"
 											:label="$t('forms.content.checklists.completed')"
 										/>
 									</v-col>
-									<v-col cols="4" md="4">
+									<v-col cols="4">
 										<v-checkbox
-											v-model="filterItemIsDefault"
+											v-model="filterItemIsDraft"
 											density="compact"
-											:label="$t('forms.content.checklists.default')"
+											:label="$t('forms.content.checklists.draft')"
 										/>
 									</v-col>
-									<v-col cols="4" md="4">
+									<v-col cols="4">
 										<v-checkbox
 											v-model="filterItemIsInProgress"
 											density="compact"
 											:label="$t('forms.content.checklists.inProgress')"
 										/>
 									</v-col>
-									<v-col cols="4" md="4">
+									<!-- <v-col cols="4">
 										<v-checkbox
 											v-model="filterItemYours"
 											density="compact"
 											:label="$t('forms.content.checklists.yours')"
 										/>
+									</v-col> -->
+									<v-col cols="6">
+										<v-checkbox
+											v-model="filterItemIsTemplate"
+											density="compact"
+											:label="$t('forms.content.checklists.template')"
+										/>
 									</v-col>
-									<!-- <v-col cols="4" md="4">
+									<v-col cols="6">
+										<v-checkbox
+											v-model="filterItemIsDefault"
+											density="compact"
+											:label="$t('forms.content.checklists.default')"
+										/>
+									</v-col>
+									<!-- <v-col cols="4">
 										<v-checkbox
 											v-model="filterItemShared"
 											density="compact"
@@ -216,8 +230,14 @@
 								<v-card-actions>
 									<v-chip
 										v-if="isDefault(item)"
+										class="mr-2"
 									>
 										{{  $t('strings.content.checklists.isDefault') }}
+									</v-chip>
+									<v-chip
+										v-if="isTemplate(item)"
+									>
+										{{  $t('strings.content.checklists.isTemplate') }}
 									</v-chip>
 									<v-spacer></v-spacer>
 									<v-btn
@@ -448,7 +468,9 @@ export default {
 			filterItemName,
 			filterItemIsCompleted,
 			filterItemIsDefault,
+			filterItemIsDraft,
 			filterItemIsInProgress,
+			filterItemIsTemplate,
 			filterItemShared,
 			filterItemYours,
 			dialogStartOk,
@@ -459,6 +481,7 @@ export default {
 			isLaunched,
 			isInProgress,
 			isStarting,
+			isTemplate,
 			resetAdditional,
 			scope,
 			validation
@@ -544,7 +567,9 @@ export default {
 			filterItemName,
 			filterItemIsCompleted,
 			filterItemIsDefault,
+			filterItemIsDraft,
 			filterItemIsInProgress,
+			filterItemIsTemplate,
 			filterItemShared,
 			filterItemYours,
 			dialogStartOk,
@@ -555,6 +580,7 @@ export default {
 			isLaunched,
 			isInProgress,
 			isStarting,
+			isTemplate,
 			resetAdditional,
 			scope,
 			validation
