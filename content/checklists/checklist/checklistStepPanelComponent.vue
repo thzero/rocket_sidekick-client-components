@@ -56,7 +56,11 @@ export function useChecklistStepPanelComponent(props, context, options) {
 			(props.item.typeId !== AppCommonConstants.Checklists.ChecklistStepTypes.section);
 	});
 	const isDraggable = computed(() => {
-		return !isLaunch.value;
+		return (
+			!isLaunch.value && 
+			props.root.statusId !== AppCommonConstants.Checklists.ChecklistStatus.completed && 
+			props.root.statusId !== AppCommonConstants.Checklists.ChecklistStatus.inProgress
+		);
 	});
 	const isLaunch = computed(() => {
 		if (!props.item)
