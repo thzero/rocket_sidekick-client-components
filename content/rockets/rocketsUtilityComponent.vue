@@ -49,11 +49,11 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// let cg = 0;
 		// let stageCg;
 		// for (const stage of stages) {
-		// 	stageCg = ConvertUtility.convertValue(stage.cg, primary.cgMeasurementUnitId, 'cm');
+		// 	stageCg = ConvertUtility.convert(stage.cg, primary.cgMeasurementUnitId, 'cm');
 		// 	if (stageCg > cg)
 		// 		cg = stageCg;
 		// }
-		// cg = ConvertUtility.convertValue(cg, 'cm', primary.cgMeasurementUnitId);
+		// cg = ConvertUtility.convert(cg, 'cm', primary.cgMeasurementUnitId);
 		const cg = _convertMeasurement(stages, 'cg', primary.cgMeasurementUnitId, primary.cgMeasurementUnitsId, 'cm');
 		return cg ? cg + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cgMeasurementUnitsId, primary.cgMeasurementUnitId) : '';
 	};
@@ -67,11 +67,11 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// let cp = 0;
 		// let stageCp;
 		// for (const stage of stages) {
-		// 	stageCp = ConvertUtility.convertValue(stage.cp, primary.cpMeasurementUnitId, 'cm');
+		// 	stageCp = ConvertUtility.convert(stage.cp, primary.cpMeasurementUnitId, 'cm');
 		// 	if (stageCp > cp)
 		// 		cp = stage.cp;
 		// }
-		// cp = ConvertUtility.convertValue(cp, 'cm', primary.cpMeasurementUnitId);
+		// cp = ConvertUtility.convert(cp, 'cm', primary.cpMeasurementUnitId);
 		const cp = _convertMeasurement(stages, 'cp', primary.cpMeasurementUnitId, primary.cpMeasurementUnitsId, 'cm');
 		return cp ? cp + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cpMeasurementUnitsId, primary.cpMeasurementUnitId) : '';
 	};
@@ -85,11 +85,11 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// let diameterMajor = 0;
 		// let stageDiameterMajor;
 		// for (const stage of stages) {
-		// 	stageDiameterMajor = ConvertUtility.convertValue(stage.diameterMajor, primary.diameterMajorMeasurementUnitId, 'cm');
+		// 	stageDiameterMajor = ConvertUtility.convert(stage.diameterMajor, primary.diameterMajorMeasurementUnitId, 'cm');
 		// 	if (stageDiameterMajor > diameterMajor)
 		// 		diameterMajor = stageDiameterMajor;
 		// }
-		// diameterMajor = ConvertUtility.convertValue(diameter, 'cm', primary.diameterMajorMeasurementUnitId);
+		// diameterMajor = ConvertUtility.convert(diameter, 'cm', primary.diameterMajorMeasurementUnitId);
 		const diameterMajor = _convertMeasurement(stages, 'diameterMajor', primary.diameterMajorMeasurementUnitId, primary.diameterMajorMeasurementUnitsId, 'cm');
 		return diameterMajor ? diameterMajor + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.diameterMajorMeasurementUnitsId, primary.diameterMajorMeasurementUnitId) : '';
 	};
@@ -102,11 +102,11 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// let length = 0;
 		// let stageLength;
 		// for (const stage of stages) {
-		// 	stageLength = ConvertUtility.convertValue(stage.length, primary.lengthMeasurementUnitId, 'cm');
+		// 	stageLength = ConvertUtility.convert(stage.length, primary.lengthMeasurementUnitId, 'cm');
 		// 	if (stageLength > length)
 		// 		length = stageLength;
 		// }
-		// diameter = ConvertUtility.convertValue(length, 'cm', primary.lengthMeasurementUnitId);
+		// diameter = ConvertUtility.convert(length, 'cm', primary.lengthMeasurementUnitId);
 		const length = _convertMeasurement(stages, 'length', primary.lengthMeasurementUnitId, primary.lengthMeasurementUnitsId, 'cm');
 		return length ? length + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.lengthMeasurementUnitsId, primary.lengthMeasurementUnitId) : '';
 	};
@@ -316,11 +316,11 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// let weight = 0;
 		// let stageWeight;
 		// for (const stage of stages) {
-		// 	stageWeight = ConvertUtility.convertValue(stage.weight, primary.weightMeasurementUnitId, 'cm');
+		// 	stageWeight = ConvertUtility.convert(stage.weight, primary.weightMeasurementUnitId, 'cm');
 		// 	if (stageWeight > weight)
 		// 		weight = stageWeight;
 		// }
-		// weight = ConvertUtility.convertValue(weight, 'cm', primary.weightMeasurementUnitId);
+		// weight = ConvertUtility.convert(weight, 'cm', primary.weightMeasurementUnitId);
 		const weight = _convertMeasurement(stages, 'weight', primary.weightMeasurementUnitId, primary.weightMeasurementUnitsId, 'g');
 		return weight ? weight + ' ' + AppUtility.measurementUnitTranslateWeight(correlationId(), primary.weightMeasurementUnitsId, primary.weightMeasurementUnitId) : '';
 	};
@@ -337,11 +337,11 @@ export function useRocketsUtilityComponent(props, context, options) {
 			temp = 0;
 			temp2 = stage[property];
 			if (temp2)
-				temp = ConvertUtility.convertValue(stage[property], unitId, internalUnitId);
+				temp = ConvertUtility.convert(stage[property], unitId, internalUnitId);
 			if (temp > value)
 				value = temp;
 		}
-		value = ConvertUtility.round(ConvertUtility.convertValue(value, internalUnitId, unitId), 2);
+		value = ConvertUtility.round(ConvertUtility.convert(value, internalUnitId, unitId), 2);
 		return value;
 	};
 
