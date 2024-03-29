@@ -126,12 +126,11 @@ export function useChecklistStepPanelComponent(props, context, options) {
 	const dragDrop = async (e, direction) => {
 		dragHasTarget.value = false;
 		dragTarget.value = null;
-		alert(e);
 		if (!LibraryClientUtility.$store.checklistsDragItem) {
 			alert('error - no dragged item!');
 			return;
 		}
-		if (!direction) {
+		if (String.isNullOrEmpty(direction)) {
 			alert('error - no direction');
 			return;
 		}
@@ -140,8 +139,7 @@ export function useChecklistStepPanelComponent(props, context, options) {
 			return;
 		}
 
-		alert(`Gonna move ${direction}...` + props.item.name);
-		await updateMove(correlationId(), LibraryClientUtility.$store.checklistsDragItem, props.item.id, props.parent.id, direction);
+		await props.updateMove(correlationId(), LibraryClientUtility.$store.checklistsDragItem, props.item.id, props.parent.id, direction);
 	};
 	const dragEnd = (event) => {
 		dragScrollDelta = 0;
