@@ -144,7 +144,7 @@
 						<!-- <v-btn 
 							v-if="isEditable"
 							class="ml-2 mr-2">{{ $t('buttons.delete' )}}</v-btn> -->
-						<v-tooltip :text="$t('tooltips.content.checklists.steps.moveIn')">
+						<!-- <v-tooltip :text="$t('tooltips.content.checklists.steps.moveIn')">
 							<template v-slot:activator="{ props }">
 								<v-btn
 									v-if="isEditable && moveIn"
@@ -195,7 +195,7 @@
 									@click="handleMoveOut"
 								></v-btn>
 							</template>
-						</v-tooltip>
+						</v-tooltip> -->
 					</v-card-actions>
 				</v-card>
 			</v-col>
