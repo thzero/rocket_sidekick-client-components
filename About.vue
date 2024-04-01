@@ -25,7 +25,7 @@
     </p>
 </div>
 <div class="mt-4">
-    <p class="text-h6 text-center pb-4">{{ $t('strings.about.contributing.title') }}</p>
+    <p class="text-h5 text-center font-weight-bold pb-4">{{ $t('strings.about.contributing.title') }}</p>
     <p>
  {{ $t('titles.application') }} {{ $t('strings.about.contributing.text1') }} <a :href="`mailto:${emailsContributing}@thzero.com`" :title="emailsContributingTitle"> {{ emailsContributing }}</a>.
     </p>
@@ -38,7 +38,7 @@
             <li>{{ $t('strings.about.contributing.contributions.tool2') }}</li>
         </ul>
     </p>
-    <p class="text-h6 text-center pb-4">{{ $t('strings.about.contributing.licensing.title') }}</p>
+    <p class="text-h5 text-center font-weight-bold pb-4">{{ $t('strings.about.contributing.licensing.title') }}</p>
     <p>{{ $t('strings.about.contributing.licensing.text1') }} {{ $t('strings.about.contributing.licensing.text2') }}</p>
     <ul class="ml-12">
         <li>{{ $t('strings.about.contributing.licensing.public') }}</li>
@@ -69,7 +69,7 @@
 import { useAppAboutComponent } from '@/components/appAbout';
 
 export default {
-	name: 'About',
+	name: 'AboutComponent',
 	setup(props, context) {
 		const {
 			correlationId,

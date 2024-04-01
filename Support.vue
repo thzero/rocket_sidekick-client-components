@@ -17,7 +17,7 @@ Forthcoming
 import { useBaseSupportComponent } from '@thzero/library_client_vue3/components/baseSupport';
 
 export default {
-	name: 'Support',
+	name: 'SupportComponent',
 	setup(props, context) {
 		const {
 			correlationId,

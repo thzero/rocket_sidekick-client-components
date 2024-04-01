@@ -48,7 +48,7 @@ import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 
 export default {
-	name: 'AppNews',
+	name: 'AppNewsComponent',
 	components: {
 		VtMarkdown
 	},

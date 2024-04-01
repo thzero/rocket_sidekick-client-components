@@ -253,7 +253,7 @@ import LoadingOverlay from '@/components/LoadingOverlay';
 import VtLoadingOverlay from '@thzero/library_client_vue3_vuetify3/components/VtLoadingOverlay';
 
 export default {
-	name: 'AppHome',
+	name: 'AppHomeComponent',
 	components: {
 		LoadingOverlay,
 		News,

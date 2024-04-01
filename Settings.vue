@@ -262,7 +262,7 @@ import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/comp
 import { useAppSettingsComponent } from '@/components/appSettings';
 
 export default {
-	name: 'AppSettings',
+	name: 'AppSettingsComponent',
 	components: {
 		VtFormControl,
 		VtSelectWithValidation,
