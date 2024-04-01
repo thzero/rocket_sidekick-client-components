@@ -16,7 +16,7 @@
 
 <script>
 export default {
-	name: 'LoadingOverlay',
+	name: 'LoadingOverlayComponent',
 	props: {
 		progress: {
 			type: Boolean,

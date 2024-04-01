@@ -33,7 +33,7 @@ import { useBasePrivacyComponent } from '@thzero/library_client_vue3/components/
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 
 export default {
-	name: 'Support',
+	name: 'PrivacyComponent',
 	components: {
 		VtMarkdown
 	},

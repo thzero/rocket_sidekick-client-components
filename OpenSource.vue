@@ -5,7 +5,7 @@
 			<v-toolbar
 				density="compact"
 			>
-				<v-toolbar-title class="text-center text-h5">
+				<v-toolbar-title class="text-h5 text-center font-weight-bold">
 					<span>{{ $t('titles.openSource') }}</span>
 				</v-toolbar-title>
 			</v-toolbar>
@@ -27,7 +27,7 @@ import { useAppOpenSourceComponent } from '@/components/appOpenSource';
 import VtOpenSource from '@thzero/library_client_vue3_vuetify3/components/VtOpenSource';
 
 export default {
-	name: 'OpenSource',
+	name: 'OpenSourceComponent',
 	components: {
 		VtOpenSource
 	},
