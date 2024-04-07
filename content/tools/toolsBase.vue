@@ -1,6 +1,8 @@
 <script>
 import { onMounted, ref } from 'vue';
 
+import LibraryClientConstants from '@thzero/library_client/constants';
+
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
@@ -28,6 +30,8 @@ export function useToolsBaseComponent(props, context, options) {
 		contentLoadStart,
 		contentLoadStop
 	} = useContentLoadSignalComponent(props, context, options);
+	
+	const serviceUsageMetrics = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_USAGE_METRICS);
 
 	const contentId = options ? options.id : null;
 
@@ -117,6 +121,8 @@ export function useToolsBaseComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
+		const correlationIdI = correlationId();
+
 		settings.value = serviceStore.getters.user.getUserSettings();
 
 		if (!String.isNullOrEmpty(contentId)) {
@@ -129,7 +135,10 @@ export function useToolsBaseComponent(props, context, options) {
 
 		if (options && LibraryCommonUtility.isObject(options) && options.formRef && options.formRef.value)
 			// await options.formRef.value.resetForm(correlationId, false);
-			await options.formRef.value.reset(correlationId, false);
+			await options.formRef.value.reset(correlationIdI, false);
+			
+		if (contentId)
+			await serviceUsageMetrics.tag(correlationIdI, 'tools.' + contentId);
 	});
 
 	return {

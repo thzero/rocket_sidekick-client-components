@@ -1,12 +1,10 @@
 <script>
-import { useRoute } from 'vue-router';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 
 import { useContentLoadSignalComponent } from '@/components/content/contentLoadSignal';
 import { useInfoBaseComponent } from '@/components/content/info/infoBase';
 
 export function useInfoMarkupBaseComponent(props, context, options) {
-	const routes = useRoute();
 
 	const {
 		correlationId,
@@ -25,6 +23,7 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 		contentDesc,
 		// contentMarkup,
 		// contentTitle,
+		contentId,
 		handleAttribution
 	} = useInfoBaseComponent(props, context, options);
 	
@@ -34,9 +33,6 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 		contentLoadStop,
 	} = useContentLoadSignalComponent(props, context, options);
 
-	const contentId = computed(() => {
-		return `info.${routes.params.id}`;
-	});
 	const contentMarkup = computed(() => {
 		if (!content.value)
 			return [];
@@ -100,9 +96,9 @@ export function useInfoMarkupBaseComponent(props, context, options) {
 		target,
 		content,
 		contentDesc,
+		contentId,
 		handleAttribution,
 		contentLoadSignal,
-		contentId,
 		contentMarkup,
 		contentMarkupToc,
 		contentTitle,
