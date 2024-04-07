@@ -6,6 +6,7 @@ import useVuelidate from '@vuelidate/core';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 
@@ -253,6 +254,8 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 	onMounted(async () => {
 		const correlationIdI = correlationId();
 
+		AppUtility.usageMetricsMeasurementTag(correlationIdI, 'rockets.setups');
+		
 		if (!manufacturers.value) {
 			const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
 			if (hasFailed(response))

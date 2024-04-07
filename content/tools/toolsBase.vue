@@ -1,8 +1,7 @@
 <script>
 import { onMounted, ref } from 'vue';
 
-import LibraryClientConstants from '@thzero/library_client/constants';
-
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
@@ -31,8 +30,6 @@ export function useToolsBaseComponent(props, context, options) {
 		contentLoadStop
 	} = useContentLoadSignalComponent(props, context, options);
 	
-	const serviceUsageMetrics = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_USAGE_METRICS);
-
 	const contentId = options ? options.id : null;
 
 	const calculationOutput = ref([]);
@@ -138,7 +135,7 @@ export function useToolsBaseComponent(props, context, options) {
 			await options.formRef.value.reset(correlationIdI, false);
 			
 		if (contentId)
-			await serviceUsageMetrics.tag(correlationIdI, 'tools.' + contentId);
+			AppUtility.usageMetricsMeasurementTag(correlationIdI, 'tools.' + contentId);
 	});
 
 	return {

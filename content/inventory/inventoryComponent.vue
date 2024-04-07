@@ -8,6 +8,7 @@ import { utils, writeFileXLSX } from 'xlsx';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
@@ -743,6 +744,8 @@ export function useInventoryBaseComponent(props, context, options) {
 	onMounted(async () => {
 		const correlationIdI = correlationId();
 		dirty.value = false;
+
+		AppUtility.usageMetricsMeasurementTag(correlationIdI, 'inventory');
 
 		let temp = await serviceStore.getters.getInventoryExpanded();
 		if (!temp || (temp && temp.length === 0))

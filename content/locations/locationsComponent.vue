@@ -1,5 +1,5 @@
 <script>
-import { computed, ref} from 'vue';
+import { computed, onMounted, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
@@ -208,6 +208,10 @@ export function useLocationsBaseComponent(props, context, options) {
 		filterItemOrganizations.value = data ? data.organizations : null;
 		filterItemRocketTypes.value = data ? data.rocketTypes : null;
 	};
+
+	onMounted(async () => {
+		AppUtility.usageMetricsMeasurementTag(correlationId(), 'locations');
+	});
 
 	return {
 		correlationId,
