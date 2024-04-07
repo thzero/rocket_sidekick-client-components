@@ -2,9 +2,8 @@
 import { onMounted } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
-import LibraryClientConstants from '@thzero/library_client/constants';
 
-import LibraryClientUtility from '@thzero/library_client/utility/index';
+import AppUtility from '@/utility/app';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
@@ -37,8 +36,6 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 	
-	const serviceUsageMetrics = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_USAGE_METRICS);
-
 	const rocketUrl = (item) => {
 		if (!item)
 			return null;
@@ -50,7 +47,7 @@ export function useRocketPanelBaseComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		await serviceUsageMetrics.tag(correlationId(), 'rockets.gallery');
+		AppUtility.usageMetricsMeasurementTag(correlationId(), 'rockets.gallery');
 	});
 
 	return {

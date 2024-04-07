@@ -260,6 +260,8 @@ export function useRocketsBaseComponent(props, context, options) {
 	onMounted(async () => {
 		const correlationIdI = correlationId();
 
+		AppUtility.usageMetricsMeasurementTag(correlationIdI, 'rockets.library');
+
 		if (!manufacturers.value) {
 			const response = await serviceStore.dispatcher.requestManufacturers(correlationIdI);
 			if (hasFailed(response))

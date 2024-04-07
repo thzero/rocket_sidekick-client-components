@@ -1,5 +1,5 @@
 <script>
-import { computed, ref} from 'vue';
+import { computed, onMounted, ref} from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
@@ -8,6 +8,7 @@ import { utils, writeFileXLSX } from 'xlsx';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import LibraryMomentUtility from '@thzero/library_common/utility/moment';
@@ -406,6 +407,10 @@ export function useLaunchesBaseComponent(props, context, options) {
 			dialogRocketLookupManager.value.ok();
 		}
 	};
+
+	onMounted(async () => {
+		AppUtility.usageMetricsMeasurementTag(correlationId(), 'launches');
+	});
 
 	return {
 		correlationId,

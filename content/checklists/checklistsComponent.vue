@@ -1,11 +1,12 @@
 <script>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 import { firstBy, thenBy } from 'thenby';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';
 
+import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';
 import LibraryMomentUtility from '@thzero/library_common/utility/moment';
@@ -332,6 +333,10 @@ export function useChecklistsBaseComponent(props, context, options) {
 		filterItemIsTemplate.value = data ? data.isTemplate : true;
 		filterItemYours.value = data ? data.yours : true;
 	};
+
+	onMounted(async () => {
+		AppUtility.usageMetricsMeasurementTag(correlationId(), 'checklists');
+	});
 
 	return {
 		correlationId,
