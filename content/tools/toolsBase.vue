@@ -97,7 +97,7 @@ export function useToolsBaseComponent(props, context, options) {
 		
 		notifyColor.value = 'error';
 		notifyMessage.value = error;
-		notify.value = true;
+		notifySignal.value = true;
 	};
 	const setErrorTimer = (timer) => {
 		if (errorTimer.value) 
