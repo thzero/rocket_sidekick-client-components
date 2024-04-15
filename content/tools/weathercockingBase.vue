@@ -34,7 +34,6 @@ export function useWeathercockingBaseComponent(props, context) {
 		contentTitle,
 		errors,
 		errorMessage,
-		errorTimer,
 		hasAttribution,
 		notifyColor,
 		notifyMessage,
@@ -48,8 +47,8 @@ export function useWeathercockingBaseComponent(props, context) {
 		initCalculationResults,
 		resetAdditional,
 		setErrorMessage,
-		setErrorTimer,
-		setNotify
+		setNotify,
+		setSuccessMessage
 	} = useToolsBaseComponent(props, context, {
 		id: 'weathercocking',
 		resetAdditional: (correlationId) => {
@@ -148,7 +147,6 @@ export function useWeathercockingBaseComponent(props, context) {
 		contentTitle,
 		errors,
 		errorMessage,
-		errorTimer,
 		hasAttribution,
 		notifyColor,
 		notifyMessage,
@@ -162,8 +160,8 @@ export function useWeathercockingBaseComponent(props, context) {
 		initCalculationResults,
 		resetAdditional,
 		setErrorMessage,
-		setErrorTimer,
 		setNotify,
+		setSuccessMessage,
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		measurementUnitsVelocityType,
