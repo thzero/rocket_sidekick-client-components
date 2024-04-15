@@ -37,13 +37,14 @@ export function useToolsBaseComponent(props, context, options) {
 	const contentTitle = ref(options ? options.title : null);
 	const errors = ref(null);
 	const errorMessage = ref(null);
-	const errorTimer = ref(null);
 	const hasAttribution = ref(false);
 	const notifyColor = ref(null);
 	const notifyMessage = ref(null);
+	const notifyMessageTimer = ref(null);
 	const notifySignal = ref(false);
 	const notifyTimeout = ref(3000);
 	const settings = ref(null);
+	const successMessage = ref(null);
 
 	const calculateI = async (correlationId, calculationResults, func) => {
 		try {
@@ -89,7 +90,7 @@ export function useToolsBaseComponent(props, context, options) {
 		if (options.resetAdditional)
 			options.resetAdditional(correlationId);
 	};
-	const setErrorMessage = (error) => {
+	const setErrorMessage = (correlationId, error) => {
 		errorMessage.value = error;
 		
 		if (String.isNullOrEmpty(error))
@@ -98,11 +99,12 @@ export function useToolsBaseComponent(props, context, options) {
 		notifyColor.value = 'error';
 		notifyMessage.value = error;
 		notifySignal.value = true;
-	};
-	const setErrorTimer = (timer) => {
-		if (errorTimer.value) 
-			clearTimeout(errorTimer.value);
-		errorTimer.value = timer;
+
+		if (notifyMessageTimer.value) 
+			clearTimeout(notifyMessageTimer.value);
+		notifyMessageTimer.value = setTimeout(() => {
+			notifySignal.value = false;
+		}, notifyTimeout.value);
 	};
 	const setNotify = (correlationId, message, transformed) => {
 		if (String.isNullOrEmpty(message))
@@ -114,6 +116,16 @@ export function useToolsBaseComponent(props, context, options) {
 
 		notifyColor.value = null;
 		notifyMessage.value = (!transformed ? LibraryClientUtility.$trans.t(message) : message);
+		notifySignal.value = true;
+	};
+	const setSuccessMessage = (correlationId, success) => {
+		successMessage.value = success;
+		
+		if (String.isNullOrEmpty(success))
+			return;
+		
+		notifyColor.value = 'green';
+		notifyMessage.value = success;
 		notifySignal.value = true;
 	};
 
@@ -159,7 +171,6 @@ export function useToolsBaseComponent(props, context, options) {
 		contentTitle,
 		errors,
 		errorMessage,
-		errorTimer,
 		hasAttribution,
 		notifyColor,
 		notifyMessage,
@@ -173,8 +184,8 @@ export function useToolsBaseComponent(props, context, options) {
 		initCalculationResults,
 		resetAdditional,
 		setErrorMessage,
-		setErrorTimer,
-		setNotify
+		setNotify,
+		setSuccessMessage
 	};
 };
 </script>

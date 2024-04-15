@@ -38,7 +38,6 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		contentTitle,
 		errors,
 		errorMessage,
-		errorTimer,
 		hasAttribution,
 		notifyColor,
 		notifyMessage,
@@ -52,8 +51,8 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		initCalculationResults,
 		resetAdditional,
 		setErrorMessage,
-		setErrorTimer,
-		setNotify
+		setNotify,
+		setSuccessMessage
 	} = useToolsBaseComponent(props, context, {
 		formRef: formRef,
 		id: 'thrust2Weight',
@@ -364,7 +363,6 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		contentTitle,
 		errors,
 		errorMessage,
-		errorTimer,
 		hasAttribution,
 		notifyColor,
 		notifyMessage,
@@ -378,8 +376,8 @@ export function useThrust2WeightBaseComponent(props, context, formRef) {
 		initCalculationResults,
 		resetAdditional,
 		setErrorMessage,
-		setErrorTimer,
 		setNotify,
+		setSuccessMessage,
 		buttonsDialog,
 		buttonsForms,
 		measurementUnitsIdOutput,
