@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<ContentLayout>
 		<ContentHeader :value="contentTitle" />
 		<div
 			v-if="hasContentMarkupToc"
@@ -54,7 +54,7 @@
 				</v-col>
 			</v-row>
 		</div>
-	</div>
+	</ContentLayout>
 </template>
 
 <script>
@@ -62,6 +62,7 @@ import { useInfoMarkupBaseComponent } from '@/components/content/info/infoMarkup
 
 import Attribution from '@/components/content/Attribution';
 import ContentHeader from '@/components/content/Header';
+import ContentLayout from '@/components/content/Layout';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 
@@ -70,6 +71,7 @@ export default {
 	components: {
 		Attribution,
 		ContentHeader,
+		ContentLayout,
 		LoadingOverlay,
 		VtMarkdown
 	},

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<ToolsLayout>
 		<v-alert
 			v-if="warningOffline"
 			type="warning"
@@ -493,7 +493,7 @@
 				</v-card>
 			</v-col>
 		</v-row>
-	</div>
+	</ToolsLayout>
 	<MotorLookupDialog
 		ref="dialogMotorSearchRef"
 		:signal="dialogMotorSearchManager.signal"
@@ -520,6 +520,7 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import MotorLookupDialog from '@/components/external/MotorLookupDialog';
+import ToolsLayout from '@/components/content/tools/Layout.vue';
 import VtCheckboxWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtCheckboxWithValidation';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
@@ -537,6 +538,7 @@ export default {
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		MotorLookupDialog,
+		ToolsLayout,
 		VtCheckboxWithValidation,
 		VtFormControl,
 		VtNumberFieldWithValidation,
