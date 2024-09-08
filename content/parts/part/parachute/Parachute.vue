@@ -71,100 +71,104 @@
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<table>
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemDiameterRef"
-								v-model="detailItemDiameter"
-								vid="detailItemDiameter"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.parts.diameter')"
-							/>
-						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemDiameterMeasurementUnitsIdRef"
-								v-model="detailItemDiameterMeasurementUnitsId"
-								vid="detailItemDiameterMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemDiameterMeasurementUnitIdRef"
-								v-model="detailItemDiameterMeasurementUnitId"
-								vid="detailItemDiameterMeasurementUnitId"
-								:measurementUnitsId="detailItemDiameterMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td> -->
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemDiameterMeasurementUnitIdRef"
-								v-model="detailItemDiameterMeasurementUnitId"
-								vid="detailItemDiameterMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.diameter')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemDiameterRef"
+									v-model="detailItemDiameter"
+									vid="detailItemDiameter"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.diameter')"
+								/>
+							</td>
+							<!-- <td class="measurementUnitsMedium">
+								<MeasurementUnitsSelect
+									ref="detailItemDiameterMeasurementUnitsIdRef"
+									v-model="detailItemDiameterMeasurementUnitsId"
+									vid="detailItemDiameterMeasurementUnitsId"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.title')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemDiameterMeasurementUnitIdRef"
+									v-model="detailItemDiameterMeasurementUnitId"
+									vid="detailItemDiameterMeasurementUnitId"
+									:measurementUnitsId="detailItemDiameterMeasurementUnitsId"
+									:measurementUnitsType="measurementUnitsLengthType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.length')"
+								/>
+							</td> -->
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemDiameterMeasurementUnitIdRef"
+									v-model="detailItemDiameterMeasurementUnitId"
+									vid="detailItemDiameterMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsLengthType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.diameter')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table>
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemWeightRef"
-								v-model="detailItemWeight"
-								vid="detailItemWeight"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.parts.weight')"
-							/>
-						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemWeightMeasurementUnitsIdRef"
-								v-model="detailItemWeightMeasurementUnitsId"
-								vid="detailItemWeightMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemWeightMeasurementUnitIdRef"
-								v-model="detailItemWeightMeasurementUnitId"
-								vid="detailItemWeightMeasurementUnitId"
-								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td> -->
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemWeightMeasurementUnitIdRef"
-								v-model="detailItemWeightMeasurementUnitId"
-								vid="detailItemWeightMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemWeightRef"
+									v-model="detailItemWeight"
+									vid="detailItemWeight"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.weight')"
+								/>
+							</td>
+							<!-- <td class="measurementUnitsMedium">
+								<MeasurementUnitsSelect
+									ref="detailItemWeightMeasurementUnitsIdRef"
+									v-model="detailItemWeightMeasurementUnitsId"
+									vid="detailItemWeightMeasurementUnitsId"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.title')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemWeightMeasurementUnitIdRef"
+									v-model="detailItemWeightMeasurementUnitId"
+									vid="detailItemWeightMeasurementUnitId"
+									:measurementUnitsId="detailItemWeightMeasurementUnitsId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td> -->
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemWeightMeasurementUnitIdRef"
+									v-model="detailItemWeightMeasurementUnitId"
+									vid="detailItemWeightMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>
@@ -194,100 +198,104 @@
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<table>
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemLoadMaxWeightRef"
-								v-model="detailItemLoadMaxWeight"
-								vid="detailItemLoadMaxWeight"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.parts.parachute.loadMax')"
-							/>
-						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemLoadMaxWeightMeasurementUnitsIdRef"
-								v-model="detailItemLoadMaxWeightMeasurementUnitsId"
-								vid="detailItemLoadMaxWeightMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemLoadMaxWeightMeasurementUnitIdRef"
-								v-model="detailItemLoadMaxWeightMeasurementUnitId"
-								vid="detailItemLoadMaxWeightMeasurementUnitId"
-								:measurementUnitsId="detailItemLoadMaxWeightMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td> -->
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemLoadMaxWeightMeasurementUnitIdRef"
-								v-model="detailItemLoadMaxWeightMeasurementUnitId"
-								vid="detailItemLoadMaxWeightMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemLoadMaxWeightRef"
+									v-model="detailItemLoadMaxWeight"
+									vid="detailItemLoadMaxWeight"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.parachute.loadMax')"
+								/>
+							</td>
+							<!-- <td class="measurementUnitsMedium">
+								<MeasurementUnitsSelect
+									ref="detailItemLoadMaxWeightMeasurementUnitsIdRef"
+									v-model="detailItemLoadMaxWeightMeasurementUnitsId"
+									vid="detailItemLoadMaxWeightMeasurementUnitsId"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.title')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemLoadMaxWeightMeasurementUnitIdRef"
+									v-model="detailItemLoadMaxWeightMeasurementUnitId"
+									vid="detailItemLoadMaxWeightMeasurementUnitId"
+									:measurementUnitsId="detailItemLoadMaxWeightMeasurementUnitsId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td> -->
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemLoadMaxWeightMeasurementUnitIdRef"
+									v-model="detailItemLoadMaxWeightMeasurementUnitId"
+									vid="detailItemLoadMaxWeightMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table>
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemLoadMiWeightnRef"
-								v-model="detailItemLoadMinWeight"
-								vid="detailItemLoadMinWeight"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.parts.parachute.loadMin')"
-							/>
-						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemLoadMinWeightMeasurementUnitsIdRef"
-								v-model="detailItemLoadMinWeightMeasurementUnitsId"
-								vid="detailItemLoadMinWeightMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemLoadMinWeightMeasurementUnitIdRef"
-								v-model="detailItemLoadMinWeightMeasurementUnitId"
-								vid="detailItemLoadMinWeightMeasurementUnitId"
-								:measurementUnitsId="detailItemLoadMinWeightMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td> -->
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemLoadMinWeightMeasurementUnitIdRef"
-								v-model="detailItemLoadMinWeightMeasurementUnitId"
-								vid="detailItemLoadMinWeightMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemLoadMiWeightnRef"
+									v-model="detailItemLoadMinWeight"
+									vid="detailItemLoadMinWeight"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.parts.parachute.loadMin')"
+								/>
+							</td>
+							<!-- <td class="measurementUnitsMedium">
+								<MeasurementUnitsSelect
+									ref="detailItemLoadMinWeightMeasurementUnitsIdRef"
+									v-model="detailItemLoadMinWeightMeasurementUnitsId"
+									vid="detailItemLoadMinWeightMeasurementUnitsId"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.title')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemLoadMinWeightMeasurementUnitIdRef"
+									v-model="detailItemLoadMinWeightMeasurementUnitId"
+									vid="detailItemLoadMinWeightMeasurementUnitId"
+									:measurementUnitsId="detailItemLoadMinWeightMeasurementUnitsId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td> -->
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemLoadMinWeightMeasurementUnitIdRef"
+									v-model="detailItemLoadMinWeightMeasurementUnitId"
+									vid="detailItemLoadMinWeightMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>

@@ -61,49 +61,51 @@
 						</v-card-title>
 						<v-card-text>
 							<table>
-								<tr>
-									<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
-									<td>{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(rocket.detailItemDiameterMajorMeasurementUnitsId, rocket.detailItemDiameterMajorMeasurementUnitsId) }} </td>
-								</tr>
-								<tr>
-									<td nowrap class="specifications">{{ $t('strings.measurements.length') }}</td>
-									<td>{{ stagePrimary.length }} {{ measurementUnitTranslateLength(rocket.lengthMeasurementUnitsId, rocket.lengthMeasurementUnitId) }}</td>
-								</tr>
-								<tr>
-									<td nowrap class="specifications">{{ $t('strings.measurements.weight') }}</td>
-									<td>{{ stagePrimary.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitsId, rocket.weightMeasurementUnitId) }}</td>
-								</tr>
-								<tr
-									v-if="stagePrimary.cg"
-								>
-									<td nowrap class="specifications">{{ $t('strings.rockets.cg') }}</td>
-									<td>{{ stagePrimary.cg }} {{ measurementUnitTranslateLength(rocket.cgMeasurementUnitsId, rocket.cgMeasurementUnitId) }} </td>
-								</tr>
-								<tr
-									v-if="stagePrimary.cp"
-								>
-									<td nowrap class="specifications">{{ $t('strings.rockets.cp') }}</td>
-									<td>{{ stagePrimary.cp }} {{ measurementUnitTranslateLength(rocket.cpMeasurementUnitsId, rocket.cpMeasurementUnitId) }} </td>
-								</tr>
-								<tr
-									v-if="stagePrimary.manufacturerId"
-								>
-									<td nowrap class="specifications">{{ $t('strings.rockets.manufacturer') }}</td>
-									<td>
-										<span>
-											{{ stagePrimary.cp }}
-										</span>
-										<span
-											v-if="stagePrimary.manufacturerStockId"
-										>
-											({{ stagePrimary.manufacturerStockId }})
-										</span>
-									</td>
-								</tr>
-								<tr>
-									<td nowrap class="specifications">{{ $t('strings.rockets.buildLogUrl') }}</td>
-									<td><a :href="rocket.buildLogUrl" target="_blank">{{ rocket.buildLogUrl }}</a></td>
-								</tr>
+								<tbody>
+									<tr>
+										<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
+										<td>{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(rocket.detailItemDiameterMajorMeasurementUnitsId, rocket.detailItemDiameterMajorMeasurementUnitsId) }} </td>
+									</tr>
+									<tr>
+										<td nowrap class="specifications">{{ $t('strings.measurements.length') }}</td>
+										<td>{{ stagePrimary.length }} {{ measurementUnitTranslateLength(rocket.lengthMeasurementUnitsId, rocket.lengthMeasurementUnitId) }}</td>
+									</tr>
+									<tr>
+										<td nowrap class="specifications">{{ $t('strings.measurements.weight') }}</td>
+										<td>{{ stagePrimary.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitsId, rocket.weightMeasurementUnitId) }}</td>
+									</tr>
+									<tr
+										v-if="stagePrimary.cg"
+									>
+										<td nowrap class="specifications">{{ $t('strings.rockets.cg') }}</td>
+										<td>{{ stagePrimary.cg }} {{ measurementUnitTranslateLength(rocket.cgMeasurementUnitsId, rocket.cgMeasurementUnitId) }} </td>
+									</tr>
+									<tr
+										v-if="stagePrimary.cp"
+									>
+										<td nowrap class="specifications">{{ $t('strings.rockets.cp') }}</td>
+										<td>{{ stagePrimary.cp }} {{ measurementUnitTranslateLength(rocket.cpMeasurementUnitsId, rocket.cpMeasurementUnitId) }} </td>
+									</tr>
+									<tr
+										v-if="stagePrimary.manufacturerId"
+									>
+										<td nowrap class="specifications">{{ $t('strings.rockets.manufacturer') }}</td>
+										<td>
+											<span>
+												{{ stagePrimary.cp }}
+											</span>
+											<span
+												v-if="stagePrimary.manufacturerStockId"
+											>
+												({{ stagePrimary.manufacturerStockId }})
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td nowrap class="specifications">{{ $t('strings.rockets.buildLogUrl') }}</td>
+										<td><a :href="rocket.buildLogUrl" target="_blank">{{ rocket.buildLogUrl }}</a></td>
+									</tr>
+								</tbody>
 							</table>
 						</v-card-text>
 					</v-card>

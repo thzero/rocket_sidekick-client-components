@@ -350,56 +350,60 @@
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemTemperatureRef"
-								v-model="detailItemTemperature"
-								vid="detailItemTemperature"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.launches.weather.temperature')"
-							/>
-						</td>
-						<td class="measurementUnitExtraLong">
-							<MeasurementUnitSelect2
-								ref="detailItemTemperatureMeasurementUnitIdRef"
-								v-model="detailItemTemperatureMeasurementUnitId"
-								vid="detailItemTemperatureMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsTemperatureType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.temperature')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemTemperatureRef"
+									v-model="detailItemTemperature"
+									vid="detailItemTemperature"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.launches.weather.temperature')"
+								/>
+							</td>
+							<td class="measurementUnitExtraLong">
+								<MeasurementUnitSelect2
+									ref="detailItemTemperatureMeasurementUnitIdRef"
+									v-model="detailItemTemperatureMeasurementUnitId"
+									vid="detailItemTemperatureMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsTemperatureType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.temperature')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemWindSpeedRef"
-								v-model="detailItemWindSpeed"
-								vid="detailItemWindSpeed"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.launches.weather.windspeed')"
-							/>
-						</td>
-						<td class="measurementUnitLong">
-							<MeasurementUnitSelect2
-								ref="detailItemWindSpeedMeasurementUnitIdRef"
-								v-model="detailItemWindSpeedMeasurementUnitId"
-								vid="detailItemWindSpeedMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsVelocityType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.velocity')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemWindSpeedRef"
+									v-model="detailItemWindSpeed"
+									vid="detailItemWindSpeed"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.launches.weather.windspeed')"
+								/>
+							</td>
+							<td class="measurementUnitLong">
+								<MeasurementUnitSelect2
+									ref="detailItemWindSpeedMeasurementUnitIdRef"
+									v-model="detailItemWindSpeedMeasurementUnitId"
+									vid="detailItemWindSpeedMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsVelocityType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.velocity')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
@@ -427,164 +431,176 @@
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemResultsAccelerationMaxRef"
-								v-model="detailItemResultsAccelerationMax"
-								vid="detailItemResultsAccelerationMax"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.launches.results.acceleration.max')"
-							/>
-						</td>
-						<td class="measurementUnitExtraLong">
-							<MeasurementUnitSelect2
-								ref="detailItemResultsAccelerationMaxMeasurementUnitIdRef"
-								v-model="detailItemResultsAccelerationMaxMeasurementUnitId"
-								vid="detailItemResultsAccelerationMaxMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsAccelerationType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.acceleration')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemResultsAccelerationMaxRef"
+									v-model="detailItemResultsAccelerationMax"
+									vid="detailItemResultsAccelerationMax"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.launches.results.acceleration.max')"
+								/>
+							</td>
+							<td class="measurementUnitExtraLong">
+								<MeasurementUnitSelect2
+									ref="detailItemResultsAccelerationMaxMeasurementUnitIdRef"
+									v-model="detailItemResultsAccelerationMaxMeasurementUnitId"
+									vid="detailItemResultsAccelerationMaxMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsAccelerationType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.acceleration')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemResultsVelocityMaxRef"
-								v-model="detailItemResultsVelocityMax"
-								vid="detailItemResultsVelocityMax"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.launches.results.velocity.max')"
-							/>
-						</td>
-						<td class="measurementUnitLong">
-							<MeasurementUnitSelect2
-								ref="detailItemResultsVelocityMaxMeasurementUnitIdRef"
-								v-model="detailItemResultsVelocityMaxMeasurementUnitId"
-								vid="detailItemResultsVelocityMaxMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsVelocityType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.velocity')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemResultsVelocityMaxRef"
+									v-model="detailItemResultsVelocityMax"
+									vid="detailItemResultsVelocityMax"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.launches.results.velocity.max')"
+								/>
+							</td>
+							<td class="measurementUnitLong">
+								<MeasurementUnitSelect2
+									ref="detailItemResultsVelocityMaxMeasurementUnitIdRef"
+									v-model="detailItemResultsVelocityMaxMeasurementUnitId"
+									vid="detailItemResultsVelocityMaxMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsVelocityType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.velocity')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemResultsVelocityRecoveryRef"
-								v-model="detailItemResultsVelocityRecovery"
-								vid="detailItemResultsVelocityRecovery"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.launches.results.velocity.recovery')"
-							/>
-						</td>
-						<td class="measurementUnitLong">
-							<MeasurementUnitSelect2
-								ref="detailItemResultsVelocityRecoveryMeasurementUnitIdRef"
-								v-model="detailItemResultsVelocityRecoveryMeasurementUnitId"
-								vid="detailItemResultsVelocityRecoveryMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsVelocityType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.velocity')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemResultsVelocityRecoveryRef"
+									v-model="detailItemResultsVelocityRecovery"
+									vid="detailItemResultsVelocityRecovery"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.launches.results.velocity.recovery')"
+								/>
+							</td>
+							<td class="measurementUnitLong">
+								<MeasurementUnitSelect2
+									ref="detailItemResultsVelocityRecoveryMeasurementUnitIdRef"
+									v-model="detailItemResultsVelocityRecoveryMeasurementUnitId"
+									vid="detailItemResultsVelocityRecoveryMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsVelocityType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.velocity')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemResultsAltitudeMaxRef"
-								v-model="detailItemResultsAltitudeMax"
-								vid="detailItemResultsAltitudeMax"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.launches.results.altitude.max')"
-							/>
-						</td>
-						<td class="measurementUnitLong">
-							<MeasurementUnitSelect2
-								ref="detailItemResultsAltitudeMaxMeasurementUnitIdRef"
-								v-model="detailItemResultsAltitudeMaxMeasurementUnitId"
-								vid="detailItemResultsAltitudeMaxMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsAltitudeType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.altitude')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemResultsAltitudeMaxRef"
+									v-model="detailItemResultsAltitudeMax"
+									vid="detailItemResultsAltitudeMax"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.launches.results.altitude.max')"
+								/>
+							</td>
+							<td class="measurementUnitLong">
+								<MeasurementUnitSelect2
+									ref="detailItemResultsAltitudeMaxMeasurementUnitIdRef"
+									v-model="detailItemResultsAltitudeMaxMeasurementUnitId"
+									vid="detailItemResultsAltitudeMaxMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsAltitudeType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.altitude')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemResultsAltitudeDeployMainRef"
-								v-model="detailItemResultsAltitudeDeployMain"
-								vid="detailItemResultsAltitudeDeployMain"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.launches.results.altitude.main')"
-							/>
-						</td>
-						<td class="measurementUnitLong">
-							<MeasurementUnitSelect2
-								ref="detailItemResultsAltitudeDeployMainMeasurementUnitIdRef"
-								v-model="detailItemResultsAltitudeDeployMainMeasurementUnitId"
-								vid="detailItemResultsAltitudeDeployMainMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsAltitudeType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.altitude')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemResultsAltitudeDeployMainRef"
+									v-model="detailItemResultsAltitudeDeployMain"
+									vid="detailItemResultsAltitudeDeployMain"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.launches.results.altitude.main')"
+								/>
+							</td>
+							<td class="measurementUnitLong">
+								<MeasurementUnitSelect2
+									ref="detailItemResultsAltitudeDeployMainMeasurementUnitIdRef"
+									v-model="detailItemResultsAltitudeDeployMainMeasurementUnitId"
+									vid="detailItemResultsAltitudeDeployMainMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsAltitudeType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.altitude')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemResultsAltitudeDeployDrogueRef"
-								v-model="detailItemResultsAltitudeDeployDrogue"
-								vid="detailItemResultsAltitudeDeployDrogue"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.launches.results.altitude.drogue')"
-							/>
-						</td>
-						<td class="measurementUnitLong">
-							<MeasurementUnitSelect2
-								ref="detailItemResultsAltitudeDeployDrogueMeasurementUnitIdRef"
-								v-model="detailItemResultsAltitudeDeployDrogueMeasurementUnitId"
-								vid="detailItemResultsAltitudeDeployDrogueMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsAltitudeType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.altitude')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemResultsAltitudeDeployDrogueRef"
+									v-model="detailItemResultsAltitudeDeployDrogue"
+									vid="detailItemResultsAltitudeDeployDrogue"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.launches.results.altitude.drogue')"
+								/>
+							</td>
+							<td class="measurementUnitLong">
+								<MeasurementUnitSelect2
+									ref="detailItemResultsAltitudeDeployDrogueMeasurementUnitIdRef"
+									v-model="detailItemResultsAltitudeDeployDrogueMeasurementUnitId"
+									vid="detailItemResultsAltitudeDeployDrogueMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsAltitudeType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.altitude')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>

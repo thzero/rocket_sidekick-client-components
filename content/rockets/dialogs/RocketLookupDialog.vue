@@ -63,56 +63,58 @@
 								</v-col> -->
 								<v-col cols="12" sm="6">
 									<table style="width:100%;">
-										<tr>
-											<td>
-												<VtNumberFieldWithValidation
-													ref="filterItemDiameterMinRef"
-													v-model="filterItemDiameterMin"
-													vid="filterItemDiameterMin"
-													:validation="validation"
-													:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.min.abbr')"
-												/>
-											</td>
-											<td>
-												<VtNumberFieldWithValidation
-													ref="filterItemDiameterMaxRef"
-													v-model="filterItemDiameterMax"
-													vid="filterItemDiameterMax"
-													:validation="validation"
-													:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.max.abbr')"
-												/>
-											</td>
-											<!-- <td class="measurementUnitsMedium">
-												<MeasurementUnitsSelect
-													ref="filterItemDiameterMeasurementUnitsIdRef"
-													v-model="filterItemDiameterMeasurementUnitsId"
-													vid="filterItemDiameterMeasurementUnitsId"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.title')"
-												/>
-											</td>
-											<td class="measurementUnitMedium">
-												<MeasurementUnitSelect
-													ref="filterItemDiameterMeasurementUnitIdRef"
-													v-model="filterItemDiameterMeasurementUnitId"
-													vid="filterItemDiameterMeasurementUnitId"
-													:measurementUnitsId="filterItemDiameterMeasurementUnitsId"
-													:measurementUnitsType="measurementUnitsLengthType"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.length')"
-												/>
-											</td> -->
-											<td class="measurementUnitMedium">
-												<MeasurementUnitSelect2
-													ref="filterItemDiameterMeasurementUnitIdRef"
-													v-model="filterItemDiameterMeasurementUnitId"
-													vid="filterItemDiameterMeasurementUnitId"
-													:measurementUnitsType="measurementUnitsLengthType"
-													:validation="validation"
-													:label="$t('forms.settings.measurementUnits.length')"
-												/>
-											</td> 
-										</tr>
+										<tbody>
+											<tr>
+												<td>
+													<VtNumberFieldWithValidation
+														ref="filterItemDiameterMinRef"
+														v-model="filterItemDiameterMin"
+														vid="filterItemDiameterMin"
+														:validation="validation"
+														:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.min.abbr')"
+													/>
+												</td>
+												<td>
+													<VtNumberFieldWithValidation
+														ref="filterItemDiameterMaxRef"
+														v-model="filterItemDiameterMax"
+														vid="filterItemDiameterMax"
+														:validation="validation"
+														:label="$t('forms.content.rockets.diameter.name') + ' ' + $t('forms.content.parts.max.abbr')"
+													/>
+												</td>
+												<!-- <td class="measurementUnitsMedium">
+													<MeasurementUnitsSelect
+														ref="filterItemDiameterMeasurementUnitsIdRef"
+														v-model="filterItemDiameterMeasurementUnitsId"
+														vid="filterItemDiameterMeasurementUnitsId"
+														:validation="validation"
+														:label="$t('forms.settings.measurementUnits.title')"
+													/>
+												</td>
+												<td class="measurementUnitMedium">
+													<MeasurementUnitSelect
+														ref="filterItemDiameterMeasurementUnitIdRef"
+														v-model="filterItemDiameterMeasurementUnitId"
+														vid="filterItemDiameterMeasurementUnitId"
+														:measurementUnitsId="filterItemDiameterMeasurementUnitsId"
+														:measurementUnitsType="measurementUnitsLengthType"
+														:validation="validation"
+														:label="$t('forms.settings.measurementUnits.length')"
+													/>
+												</td> -->
+												<td class="measurementUnitMedium">
+													<MeasurementUnitSelect2
+														ref="filterItemDiameterMeasurementUnitIdRef"
+														v-model="filterItemDiameterMeasurementUnitId"
+														vid="filterItemDiameterMeasurementUnitId"
+														:measurementUnitsType="measurementUnitsLengthType"
+														:validation="validation"
+														:label="$t('forms.settings.measurementUnits.length')"
+													/>
+												</td> 
+											</tr>
+										</tbody>
 									</table>
 								</v-col>
 							</v-row>

@@ -141,24 +141,26 @@
 					</v-card-title>
 					<v-card-text>
 						<table style="width: 100%;">
-							<tr>
-								<td class="text-h7 text-bold" style="width: 30%">{{ $t('forms.external.motorSearch.designation') }}</td><td>{{ item.designation }}</td>
-							</tr>
-							<tr>
-								<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.diameter') }}</td><td>{{ item.diameter }}{{ $t('forms.external.motorSearch.diameter_measurement') }}</td>
-							</tr>
-							<tr>
-								<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.motorCase') }}</td><td>{{ motorCaseInfo(item) }}</td>
-							</tr>
-							<tr>
-								<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.thrust_average') }}</td><td>{{ item.avgThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
-							</tr>
-							<tr>
-								<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.thrust_max') }}</td><td>{{ item.maxThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
-							</tr>
-							<tr>
-								<td colspan="2" class="text-left"><a :href="motorUrl(item)" target="_blank">{{ motorUrl(item) }}</a></td>
-							</tr>
+							<tbody>
+								<tr>
+									<td class="text-h7 text-bold" style="width: 30%">{{ $t('forms.external.motorSearch.designation') }}</td><td>{{ item.designation }}</td>
+								</tr>
+								<tr>
+									<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.diameter') }}</td><td>{{ item.diameter }}{{ $t('forms.external.motorSearch.diameter_measurement') }}</td>
+								</tr>
+								<tr>
+									<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.motorCase') }}</td><td>{{ motorCaseInfo(item) }}</td>
+								</tr>
+								<tr>
+									<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.thrust_average') }}</td><td>{{ item.avgThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
+								</tr>
+								<tr>
+									<td class="text-h7 text-bold">{{ $t('forms.external.motorSearch.thrust_max') }}</td><td>{{ item.maxThrustN }} {{ item.motor_thrust_newtons_abbr }}</td>
+								</tr>
+								<tr>
+									<td colspan="2" class="text-left"><a :href="motorUrl(item)" target="_blank">{{ motorUrl(item) }}</a></td>
+								</tr>
+							</tbody>
 						</table>
 					</v-card-text>
 					<v-card-actions>
