@@ -19,88 +19,92 @@
 						<v-row dense>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%">
-									<tr>
-										<td>
-											<VtNumberFieldWithValidation
-												ref="windVelocityRef"
-												v-model="windVelocity"
-												vid="windVelocity"
-												:validation="validation"
-												:label="$t('forms.content.tools.weathercocking.windVelocity')"
-											/>
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="windVelocityMeasurementUnitsIdRef"
-												v-model="windVelocityMeasurementUnitsId"
-												vid="windVelocityMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td> -->
-										<td class="measurementUnitLong">
-											<!-- <MeasurementUnitSelect
-												ref="windVelocityMeasurementUnitIdRef"
-												v-model="windVelocityMeasurementUnitId"
-												vid="windVelocityMeasurementUnitId"
-												:measurementUnitsId="windVelocityMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsVelocityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
-											/> -->
-											<MeasurementUnitSelect2
-												ref="windVelocityMeasurementUnitIdRef"
-												v-model="windVelocityMeasurementUnitId"
-												vid="windVelocityMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsVelocityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
-											/>
-										</td>
-									</tr>
+									<tbody>
+										<tr>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="windVelocityRef"
+													v-model="windVelocity"
+													vid="windVelocity"
+													:validation="validation"
+													:label="$t('forms.content.tools.weathercocking.windVelocity')"
+												/>
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="windVelocityMeasurementUnitsIdRef"
+													v-model="windVelocityMeasurementUnitsId"
+													vid="windVelocityMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td> -->
+											<td class="measurementUnitLong">
+												<!-- <MeasurementUnitSelect
+													ref="windVelocityMeasurementUnitIdRef"
+													v-model="windVelocityMeasurementUnitId"
+													vid="windVelocityMeasurementUnitId"
+													:measurementUnitsId="windVelocityMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsVelocityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.velocity')"
+												/> -->
+												<MeasurementUnitSelect2
+													ref="windVelocityMeasurementUnitIdRef"
+													v-model="windVelocityMeasurementUnitId"
+													vid="windVelocityMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsVelocityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.velocity')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%">
-									<tr>
-										<td>
-											<VtNumberFieldWithValidation
-												ref="exitVelocityRef"
-												v-model="exitVelocity"
-												vid="exitVelocity"
-												:validation="validation"
-												:label="$t('forms.content.tools.weathercocking.exitVelocity')"
-											/>
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="exitVelocityMeasurementUnitsIdRef"
-												v-model="exitVelocityMeasurementUnitsId"
-												vid="exitVelocityMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td> -->
-										<td class="measurementUnitLong">
-											<!-- <MeasurementUnitSelect
-												ref="exitVelocityMeasurementUnitIdRef"
-												v-model="exitVelocityMeasurementUnitId"
-												vid="exitVelocityMeasurementUnitId"
-												:measurementUnitsId="exitVelocityMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsVelocityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
-											/> -->
-											<MeasurementUnitSelect2
-												ref="exitVelocityMeasurementUnitIdRef"
-												v-model="exitVelocityMeasurementUnitId"
-												vid="exitVelocityMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsVelocityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
-											/>
-										</td>
-									</tr>
+									<tbody>	
+										<tr>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="exitVelocityRef"
+													v-model="exitVelocity"
+													vid="exitVelocity"
+													:validation="validation"
+													:label="$t('forms.content.tools.weathercocking.exitVelocity')"
+												/>
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="exitVelocityMeasurementUnitsIdRef"
+													v-model="exitVelocityMeasurementUnitsId"
+													vid="exitVelocityMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td> -->
+											<td class="measurementUnitLong">
+												<!-- <MeasurementUnitSelect
+													ref="exitVelocityMeasurementUnitIdRef"
+													v-model="exitVelocityMeasurementUnitId"
+													vid="exitVelocityMeasurementUnitId"
+													:measurementUnitsId="exitVelocityMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsVelocityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.velocity')"
+												/> -->
+												<MeasurementUnitSelect2
+													ref="exitVelocityMeasurementUnitIdRef"
+													v-model="exitVelocityMeasurementUnitId"
+													vid="exitVelocityMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsVelocityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.velocity')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 						</v-row>

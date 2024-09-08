@@ -32,29 +32,31 @@
 		<v-row dense>	
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemAltitudeRef"
-								v-model="detailItemAltitude"
-								vid="detailItdetailItemAltitudeemWeight"
-								:validation="validation"
-								:readonly="!editable"
-								:label="$t('forms.content.parts.chuteRelease.altitude')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemAltitudeMeasurementUnitIdRef"
-								v-model="detailItemAltitudeMeasurementUnitId"
-								vid="detailItemWeightMeasdetailItemAltitudeMeasurementUnitIdrementUnitId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!editable"
-								:label="$t('forms.settings.measurementUnits.altitude')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemAltitudeRef"
+									v-model="detailItemAltitude"
+									vid="detailItdetailItemAltitudeemWeight"
+									:validation="validation"
+									:readonly="!editable"
+									:label="$t('forms.content.parts.chuteRelease.altitude')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemAltitudeMeasurementUnitIdRef"
+									v-model="detailItemAltitudeMeasurementUnitId"
+									vid="detailItemWeightMeasdetailItemAltitudeMeasurementUnitIdrementUnitId"
+									:measurementUnitsType="measurementUnitsLengthType"
+									:validation="validation"
+									:readonly="!editable"
+									:label="$t('forms.settings.measurementUnits.altitude')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>

@@ -203,22 +203,24 @@
 										{{ launchStatusIcon(item) }}
 									</v-icon> -->
 									<table style="float: left;">
-										<tr>
-											<td>
-												<v-icon
-													v-if="launchStatusIcon(item)"
-													class="mr-2"
-												>
-													{{ launchStatusIcon(item) }}
-												</v-icon>
-											</td>
-											<td>
-												<img
-													v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
-													:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px;" 
-												/>
-											</td>
-										</tr>
+										<tbody>
+											<tr>
+												<td>
+													<v-icon
+														v-if="launchStatusIcon(item)"
+														class="mr-2"
+													>
+														{{ launchStatusIcon(item) }}
+													</v-icon>
+												</td>
+												<td>
+													<img
+														v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
+														:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px;" 
+													/>
+												</td>
+											</tr>
+										</tbody>
 									</table>
 									&nbsp;
 									<!-- <a class="text-contrast" :href="'/user/rockets/' + rocketId(item)">{{ launchTitle(item) }}</a> -->

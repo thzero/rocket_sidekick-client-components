@@ -29,173 +29,179 @@
 							</v-col>
 							<v-col cols="12" sm="6">
 								<table style="width: 100%;">
-									<tr
-										v-if="calculationType==='diameter'"
-									>
-										<td>
-											<span class="text-h7 text-bold">{{ $t('forms.content.tools.parachuteSizing.output') + ' ' + $t('forms.content.tools.parachuteSizing.diameterMeasurementUnits') }}</span>&nbsp;&nbsp;
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="diameterLengthMeasurementUnitsIdRef"
-												v-model="diameterLengthMeasurementUnitsId"
-												vid="diameterLengthMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect
-												ref="diameterLengthMeasurementUnitIdRef"
-												v-model="diameterLengthMeasurementUnitId"
-												vid="diameterLengthMeasurementUnitId"
-												:measurementUnitsId="diameterLengthMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsLengthType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.length')"
-											/>
-										</td> -->
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect2
-												ref="diameterLengthMeasurementUnitIdRef"
-												v-model="diameterLengthMeasurementUnitId"
-												vid="diameterLengthMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsLengthType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.diameter')"
-											/>
-										</td>
-									</tr>
-									<tr
-										v-if="calculationType==='velocity'"
-									>
-										<td>
-											<span class="text-h7 text-bold">{{ $t('forms.content.tools.parachuteSizing.output') + ' ' + $t('forms.content.tools.parachuteSizing.velocityMeasurementUnits') }}</span>&nbsp;&nbsp;
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="velocityMeasurementUnitsIdRef"
-												v-model="velocityMeasurementUnitsId"
-												vid="velocityMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitLong">
-											<MeasurementUnitSelect
-												ref="velocityMeasurementUnitIdRef"
-												v-model="velocityMeasurementUnitId"
-												vid="velocityMeasurementUnitId"
-												:measurementUnitsId="velocityMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsVelocityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
-											/>
-										</td> -->
-										<td class="measurementUnitLong">
-											<MeasurementUnitSelect2
-												ref="velocityMeasurementUnitIdRef"
-												v-model="velocityMeasurementUnitId"
-												vid="velocityMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsVelocityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
-											/>
-										</td>
-									</tr>
+									<tbody>
+										<tr
+											v-if="calculationType==='diameter'"
+										>
+											<td>
+												<span class="text-h7 text-bold">{{ $t('forms.content.tools.parachuteSizing.output') + ' ' + $t('forms.content.tools.parachuteSizing.diameterMeasurementUnits') }}</span>&nbsp;&nbsp;
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="diameterLengthMeasurementUnitsIdRef"
+													v-model="diameterLengthMeasurementUnitsId"
+													vid="diameterLengthMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect
+													ref="diameterLengthMeasurementUnitIdRef"
+													v-model="diameterLengthMeasurementUnitId"
+													vid="diameterLengthMeasurementUnitId"
+													:measurementUnitsId="diameterLengthMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.length')"
+												/>
+											</td> -->
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect2
+													ref="diameterLengthMeasurementUnitIdRef"
+													v-model="diameterLengthMeasurementUnitId"
+													vid="diameterLengthMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.diameter')"
+												/>
+											</td>
+										</tr>
+										<tr
+											v-if="calculationType==='velocity'"
+										>
+											<td>
+												<span class="text-h7 text-bold">{{ $t('forms.content.tools.parachuteSizing.output') + ' ' + $t('forms.content.tools.parachuteSizing.velocityMeasurementUnits') }}</span>&nbsp;&nbsp;
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="velocityMeasurementUnitsIdRef"
+													v-model="velocityMeasurementUnitsId"
+													vid="velocityMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitLong">
+												<MeasurementUnitSelect
+													ref="velocityMeasurementUnitIdRef"
+													v-model="velocityMeasurementUnitId"
+													vid="velocityMeasurementUnitId"
+													:measurementUnitsId="velocityMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsVelocityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.velocity')"
+												/>
+											</td> -->
+											<td class="measurementUnitLong">
+												<MeasurementUnitSelect2
+													ref="velocityMeasurementUnitIdRef"
+													v-model="velocityMeasurementUnitId"
+													vid="velocityMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsVelocityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.velocity')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 						</v-row>
 						<v-row dense>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%">
-									<tr>
-										<td>
-											<VtNumberFieldWithValidation
-												ref="massRef"
-												v-model="mass"
-												vid="mass"
-												:validation="validation"
-												:label="$t('forms.content.rockets.name') + ' ' + $t('forms.content.tools.parachuteSizing.mass')"
-											/>
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="massWeightMeasurementUnitsIdRef"
-												v-model="massWeightMeasurementUnitsId"
-												vid="massWeightMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect
-												ref="massWeightMeasurementUnitIdRef"
-												v-model="massWeightMeasurementUnitId"
-												vid="massWeightMeasurementUnitId"
-												:measurementUnitsId="massWeightMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsWeightType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.weight')"
-											/>
-										</td> -->
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect2
-												ref="massWeightMeasurementUnitIdRef"
-												v-model="massWeightMeasurementUnitId"
-												vid="massWeightMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsWeightType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.weight')"
-											/>
-										</td>
-									</tr>
+									<tbody>
+										<tr>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="massRef"
+													v-model="mass"
+													vid="mass"
+													:validation="validation"
+													:label="$t('forms.content.rockets.name') + ' ' + $t('forms.content.tools.parachuteSizing.mass')"
+												/>
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="massWeightMeasurementUnitsIdRef"
+													v-model="massWeightMeasurementUnitsId"
+													vid="massWeightMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect
+													ref="massWeightMeasurementUnitIdRef"
+													v-model="massWeightMeasurementUnitId"
+													vid="massWeightMeasurementUnitId"
+													:measurementUnitsId="massWeightMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsWeightType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.weight')"
+												/>
+											</td> -->
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect2
+													ref="massWeightMeasurementUnitIdRef"
+													v-model="massWeightMeasurementUnitId"
+													vid="massWeightMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsWeightType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.weight')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%">
-									<tr>
-										<td>
-											<VtNumberFieldWithValidation
-												ref="airDensityRef"
-												v-model="airDensity"
-												vid="airDensity"
-												:validation="validation"
-												:label="$t('forms.content.tools.parachuteSizing.airDensity')"
-												:hint="$t('forms.content.tools.parachuteSizing.airDensity_hint')"
-											/>
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="airDensityMeasurementUnitsIdRef"
-												v-model="airDensityMeasurementUnitsId"
-												vid="airDensityMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitExtraLong">
-											<MeasurementUnitSelect
-												ref="airDensityMeasurementUnitIdRef"
-												v-model="airDensityMeasurementUnitId"
-												vid="airDensityMeasurementUnitId"
-												:measurementUnitsId="airDensityMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsDensityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.density')"
-											/>
-										</td> -->
-										<td class="measurementUnitExtraLong">
-											<MeasurementUnitSelect2
-												ref="airDensityMeasurementUnitIdRef"
-												v-model="airDensityMeasurementUnitId"
-												vid="airDensityMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsDensityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.density')"
-											/>
-										</td>
-									</tr>
+									<tbody>
+										<tr>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="airDensityRef"
+													v-model="airDensity"
+													vid="airDensity"
+													:validation="validation"
+													:label="$t('forms.content.tools.parachuteSizing.airDensity')"
+													:hint="$t('forms.content.tools.parachuteSizing.airDensity_hint')"
+												/>
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="airDensityMeasurementUnitsIdRef"
+													v-model="airDensityMeasurementUnitsId"
+													vid="airDensityMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitExtraLong">
+												<MeasurementUnitSelect
+													ref="airDensityMeasurementUnitIdRef"
+													v-model="airDensityMeasurementUnitId"
+													vid="airDensityMeasurementUnitId"
+													:measurementUnitsId="airDensityMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsDensityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.density')"
+												/>
+											</td> -->
+											<td class="measurementUnitExtraLong">
+												<MeasurementUnitSelect2
+													ref="airDensityMeasurementUnitIdRef"
+													v-model="airDensityMeasurementUnitId"
+													vid="airDensityMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsDensityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.density')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 						</v-row>
@@ -212,102 +218,106 @@
 							</v-col>
 							<v-col cols="12" sm="6">
 								<table style="width: 100%;">
-									<tr
-										v-if="calculationType==='diameter'"
-									>
-										<td
+									<tbody>
+										<tr
+											v-if="calculationType==='diameter'"
 										>
-											<VtNumberFieldWithValidation
-												ref="desiredVelocityRef"
-												v-model="desiredVelocity"
-												vid="desiredVelocity"
-												:validation="validation"
-												:label="$t('forms.content.tools.parachuteSizing.desiredVelocity')"
-												:hint="$t('forms.content.tools.parachuteSizing.desiredVelocity_hint')"
-											/>
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="desiredVelocityMeasurementUnitsIdRef"
-												v-model="desiredVelocityMeasurementUnitsId"
-												vid="desiredVelocityMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitLong">
-											<MeasurementUnitSelect
-												ref="desiredVelocityMeasurementUnitIdRef"
-												v-model="desiredVelocityMeasurementUnitId"
-												vid="desiredVelocityMeasurementUnitId"
-												:measurementUnitsId="desiredVelocityMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsVelocityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
-											/>
-										</td> -->
-										<td class="measurementUnitLong">
-											<MeasurementUnitSelect2
-												ref="desiredVelocityMeasurementUnitIdRef"
-												v-model="desiredVelocityMeasurementUnitId"
-												vid="desiredVelocityMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsVelocityType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.velocity')"
-											/>
-										</td>
-									</tr>
+											<td
+											>
+												<VtNumberFieldWithValidation
+													ref="desiredVelocityRef"
+													v-model="desiredVelocity"
+													vid="desiredVelocity"
+													:validation="validation"
+													:label="$t('forms.content.tools.parachuteSizing.desiredVelocity')"
+													:hint="$t('forms.content.tools.parachuteSizing.desiredVelocity_hint')"
+												/>
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="desiredVelocityMeasurementUnitsIdRef"
+													v-model="desiredVelocityMeasurementUnitsId"
+													vid="desiredVelocityMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitLong">
+												<MeasurementUnitSelect
+													ref="desiredVelocityMeasurementUnitIdRef"
+													v-model="desiredVelocityMeasurementUnitId"
+													vid="desiredVelocityMeasurementUnitId"
+													:measurementUnitsId="desiredVelocityMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsVelocityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.velocity')"
+												/>
+											</td> -->
+											<td class="measurementUnitLong">
+												<MeasurementUnitSelect2
+													ref="desiredVelocityMeasurementUnitIdRef"
+													v-model="desiredVelocityMeasurementUnitId"
+													vid="desiredVelocityMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsVelocityType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.velocity')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 						</v-row>
 						<!-- <v-row dense>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%;">
-									<tr
-										v-if="calculationType==='velocity'"
-									>
-										<td
+									<tbody>
+										<tr
+											v-if="calculationType==='velocity'"
 										>
-											<VtNumberFieldWithValidation
-												ref="parachuteDiameterRef"
-												v-model="parachuteDiameter"
-												vid="parachuteDiameter"
-												:validation="validation"
-												:label="$t('forms.content.tools.parachuteSizing.diameter')"
-												:hint="$t('forms.content.tools.parachuteSizing.diameter_hint')"
-											/>
-										</td>
-										<td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="diameterLengthMeasurementUnitsIdRef"
-												v-model="diameterLengthMeasurementUnitsId"
-												vid="diameterLengthMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect
-												ref="diameterLengthMeasurementUnitIdRef"
-												v-model="diameterLengthMeasurementUnitId"
-												vid="diameterLengthMeasurementUnitId"
-												:measurementUnitsId="diameterLengthMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsLengthType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.length')"
-											/>
-										</td>
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect2
-												ref="diameterLengthMeasurementUnitIdRef"
-												v-model="diameterLengthMeasurementUnitId"
-												vid="diameterLengthMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsLengthType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.length')"
-											/>
-										</td>
-									</tr>
+											<td
+											>
+												<VtNumberFieldWithValidation
+													ref="parachuteDiameterRef"
+													v-model="parachuteDiameter"
+													vid="parachuteDiameter"
+													:validation="validation"
+													:label="$t('forms.content.tools.parachuteSizing.diameter')"
+													:hint="$t('forms.content.tools.parachuteSizing.diameter_hint')"
+												/>
+											</td>
+											<td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="diameterLengthMeasurementUnitsIdRef"
+													v-model="diameterLengthMeasurementUnitsId"
+													vid="diameterLengthMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect
+													ref="diameterLengthMeasurementUnitIdRef"
+													v-model="diameterLengthMeasurementUnitId"
+													vid="diameterLengthMeasurementUnitId"
+													:measurementUnitsId="diameterLengthMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.length')"
+												/>
+											</td>
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect2
+													ref="diameterLengthMeasurementUnitIdRef"
+													v-model="diameterLengthMeasurementUnitId"
+													vid="diameterLengthMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.length')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 						</v-row> -->
@@ -338,51 +348,53 @@
 						<v-row dense>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%;">
-									<tr
-										v-if="calculationType==='velocity'"
-									>
-										<td
+									<tbody>
+										<tr
+											v-if="calculationType==='velocity'"
 										>
-											<VtNumberFieldWithValidation
-												ref="parachuteDiameterRef"
-												v-model="parachuteDiameter"
-												vid="parachuteDiameter"
-												:validation="validation"
-												:label="$t('forms.content.tools.parachuteSizing.diameter')"
-												:hint="$t('forms.content.tools.parachuteSizing.diameter_hint')"
-											/>
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="diameterLengthMeasurementUnitsIdRef"
-												v-model="diameterLengthMeasurementUnitsId"
-												vid="diameterLengthMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect
-												ref="diameterLengthMeasurementUnitIdRef"
-												v-model="diameterLengthMeasurementUnitId"
-												vid="diameterLengthMeasurementUnitId"
-												:measurementUnitsId="diameterLengthMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsLengthType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.length')"
-											/>
-										</td> -->
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect2
-												ref="diameterLengthMeasurementUnitIdRef"
-												v-model="diameterLengthMeasurementUnitId"
-												vid="diameterLengthMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsLengthType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.length')"
-											/>
-										</td>
-									</tr>
+											<td
+											>
+												<VtNumberFieldWithValidation
+													ref="parachuteDiameterRef"
+													v-model="parachuteDiameter"
+													vid="parachuteDiameter"
+													:validation="validation"
+													:label="$t('forms.content.tools.parachuteSizing.diameter')"
+													:hint="$t('forms.content.tools.parachuteSizing.diameter_hint')"
+												/>
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="diameterLengthMeasurementUnitsIdRef"
+													v-model="diameterLengthMeasurementUnitsId"
+													vid="diameterLengthMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect
+													ref="diameterLengthMeasurementUnitIdRef"
+													v-model="diameterLengthMeasurementUnitId"
+													vid="diameterLengthMeasurementUnitId"
+													:measurementUnitsId="diameterLengthMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.length')"
+												/>
+											</td> -->
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect2
+													ref="diameterLengthMeasurementUnitIdRef"
+													v-model="diameterLengthMeasurementUnitId"
+													vid="diameterLengthMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.length')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 							<v-col cols="12" sm="6">
@@ -395,51 +407,53 @@
 									:hint="$t('forms.content.tools.parachuteSizing.spillHole.diameter_hint')"
 								/> -->
 								<table style="width: 100%;">
-									<tr
-										v-if="calculationType==='diameter'"
-									>
-										<td
+									<tbody>
+										<tr
+											v-if="calculationType==='diameter'"
 										>
-											<VtNumberFieldWithValidation
-												ref="spillHoleDiameterRef"
-												v-model="spillHoleDiameter"
-												vid="spillHoleDiameter"
-												:validation="validation"
-												:label="$t('forms.content.tools.parachuteSizing.spillHole.diameter')"
-												:hint="$t('forms.content.tools.parachuteSizing.spillHole.diameter_hint')"
-											/>
-										</td>
-										<!-- <td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="desiredVelocityMeasurementUnitsIdRef"
-												v-model="desiredVelocityMeasurementUnitsId"
-												vid="desiredVelocityMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitLong">
-											<MeasurementUnitSelect
-												ref="spillHoleDiameterLengthMeasurementUnitIdRef"
-												v-model="spillHoleDiameterLengthMeasurementUnitId"
-												vid="spillHoleDiameterLengthMeasurementUnitId"
-												:measurementUnitsId="desiredVelocityMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsLengthType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.diameter')"
-											/>
-										</td> -->
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect2
-												ref="spillHoleDiameterLengthMeasurementUnitIdRef"
-												v-model="spillHoleDiameterLengthMeasurementUnitId"
-												vid="spillHoleDiameterLengthMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsLengthType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.diameter')"
-											/>
-										</td>
-									</tr>
+											<td
+											>
+												<VtNumberFieldWithValidation
+													ref="spillHoleDiameterRef"
+													v-model="spillHoleDiameter"
+													vid="spillHoleDiameter"
+													:validation="validation"
+													:label="$t('forms.content.tools.parachuteSizing.spillHole.diameter')"
+													:hint="$t('forms.content.tools.parachuteSizing.spillHole.diameter_hint')"
+												/>
+											</td>
+											<!-- <td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="desiredVelocityMeasurementUnitsIdRef"
+													v-model="desiredVelocityMeasurementUnitsId"
+													vid="desiredVelocityMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitLong">
+												<MeasurementUnitSelect
+													ref="spillHoleDiameterLengthMeasurementUnitIdRef"
+													v-model="spillHoleDiameterLengthMeasurementUnitId"
+													vid="spillHoleDiameterLengthMeasurementUnitId"
+													:measurementUnitsId="desiredVelocityMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.diameter')"
+												/>
+											</td> -->
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect2
+													ref="spillHoleDiameterLengthMeasurementUnitIdRef"
+													v-model="spillHoleDiameterLengthMeasurementUnitId"
+													vid="spillHoleDiameterLengthMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsLengthType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.diameter')"
+												/>
+											</td>
+										</tr>
+									</tbody>
 								</table>
 							</v-col>
 							<!-- <v-col cols="4" sn="4">
@@ -469,7 +483,8 @@
 							</v-col>
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%">
-									
+									</tbody>
+									</tbody>
 								</table>
 							</v-col>
 							<v-col

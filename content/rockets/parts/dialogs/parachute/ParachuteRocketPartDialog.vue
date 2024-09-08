@@ -43,29 +43,31 @@
 			</v-col>
 			<v-col cols="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemReefedLengthRef"
-								v-model="detailItemReefedLength"
-								vid="detailItemReefedLength"
-								:validation="validation"
-								:readonly="!editable"
-								:label="$t('forms.content.parts.parachute.reefed.length')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemReefedLengthMeasurementUnitIdRef"
-								v-model="detailItemReefedLengthMeasurementUnitId"
-								vid="detailItemReefedLengthMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!editable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemReefedLengthRef"
+									v-model="detailItemReefedLength"
+									vid="detailItemReefedLength"
+									:validation="validation"
+									:readonly="!editable"
+									:label="$t('forms.content.parts.parachute.reefed.length')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemReefedLengthMeasurementUnitIdRef"
+									v-model="detailItemReefedLengthMeasurementUnitId"
+									vid="detailItemReefedLengthMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsLengthType"
+									:validation="validation"
+									:readonly="!editable"
+									:label="$t('forms.settings.measurementUnits.length')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>

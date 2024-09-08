@@ -590,78 +590,80 @@
 														</div>
 														<div class="float-right mb-2 mt-2">
 															<table>
-																<tr>
-																	<!-- <td
-																		v-if="item2.item.typeId=='motor'"
-																	>
-																		<VtSelectWithValidation
-																			ref="detailItemDelayRef"
-																			vid="detailItemDelayRef"
-																			v-model="item2.itemO.delay"
-																			:items="motorDelays(item2.item)"
-																			:validation="validation"
-																			:label="$t('forms.content.parts.motor.delay')"
-																			class="mr-2"
-																			style="width: 90px;"
-																		/>
-																	</td> -->
-																	<td
-																		v-if="item2.item && item2.item.typeId=='motor'"
-																	>
-																		<VtNumberField
-																			ref="detailItemDelayOverrideRef"
-																			v-model="item2.itemO.delay"
-																			vid="detailItemDelayOverrideRef"
-																			:min="0"
-																			:max="1000"
-																			type="integer"
-																			:validation="validation"
-																			:label="$t('forms.content.parts.motor.delay')"
-																			style="width: 90px;"
-																		/>
-																	</td>
-																	<td
-																		v-if="item2.item && item2.item.typeId=='motor'"
-																	>
-																		<v-menu>
-																			<template v-slot:activator="{ props }">
-																				<v-btn
-																					icon="mdi-menu-down"
-																					density="comfortable"
-																					color="black"
-																					class="mr-2"
-																					v-bind="props"
-																					></v-btn>
-																			</template>
-																			<v-list density="compact">
-																				<v-list-item
-																					v-for="(item3, index) in motorDelays(item2.item)"
-																					:key="index"
-																					:value="index"
-																				>
-																					<v-list-item-title
-																						@click="selectMotorDelay(item2.itemO, item3.value)"
+																<tbody>
+																	<tr>
+																		<!-- <td
+																			v-if="item2.item.typeId=='motor'"
+																		>
+																			<VtSelectWithValidation
+																				ref="detailItemDelayRef"
+																				vid="detailItemDelayRef"
+																				v-model="item2.itemO.delay"
+																				:items="motorDelays(item2.item)"
+																				:validation="validation"
+																				:label="$t('forms.content.parts.motor.delay')"
+																				class="mr-2"
+																				style="width: 90px;"
+																			/>
+																		</td> -->
+																		<td
+																			v-if="item2.item && item2.item.typeId=='motor'"
+																		>
+																			<VtNumberField
+																				ref="detailItemDelayOverrideRef"
+																				v-model="item2.itemO.delay"
+																				vid="detailItemDelayOverrideRef"
+																				:min="0"
+																				:max="1000"
+																				type="integer"
+																				:validation="validation"
+																				:label="$t('forms.content.parts.motor.delay')"
+																				style="width: 90px;"
+																			/>
+																		</td>
+																		<td
+																			v-if="item2.item && item2.item.typeId=='motor'"
+																		>
+																			<v-menu>
+																				<template v-slot:activator="{ props }">
+																					<v-btn
+																						icon="mdi-menu-down"
+																						density="comfortable"
+																						color="black"
+																						class="mr-2"
+																						v-bind="props"
+																						></v-btn>
+																				</template>
+																				<v-list density="compact">
+																					<v-list-item
+																						v-for="(item3, index) in motorDelays(item2.item)"
+																						:key="index"
+																						:value="index"
 																					>
-																						{{ item3.name }}
-																					</v-list-item-title>
-																				</v-list-item>
-																			</v-list>
-																		</v-menu>
-																	</td>
-																	<td>
-																		<VtNumberField
-																			ref="detailItemQuantityRef"
-																			v-model="item2.itemO.quantity"
-																			vid="detailItemQuantity"
-																			:min="0"
-																			:max="1000"
-																			type="integer"
-																			:validation="validation"
-																			:label="$t('forms.content.inventory.quantity')"
-																			style="width: 90px;"
-																		/>
-																	</td>
-																</tr>
+																						<v-list-item-title
+																							@click="selectMotorDelay(item2.itemO, item3.value)"
+																						>
+																							{{ item3.name }}
+																						</v-list-item-title>
+																					</v-list-item>
+																				</v-list>
+																			</v-menu>
+																		</td>
+																		<td>
+																			<VtNumberField
+																				ref="detailItemQuantityRef"
+																				v-model="item2.itemO.quantity"
+																				vid="detailItemQuantity"
+																				:min="0"
+																				:max="1000"
+																				type="integer"
+																				:validation="validation"
+																				:label="$t('forms.content.inventory.quantity')"
+																				style="width: 90px;"
+																			/>
+																		</td>
+																	</tr>
+																</tbody>
 															</table>
 														</div>
 													</div>

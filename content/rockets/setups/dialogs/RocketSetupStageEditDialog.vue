@@ -44,51 +44,53 @@
 			<v-col cols="7" md="4"> -->
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemWeightRef"
-								v-model="detailItemWeight"
-								vid="detailItemWeight"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.rockets.weight.name')"
-							/>
-						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemWeightMeasurementUnitsIdRef"
-								v-model="detailItemWeightMeasurementUnitsId"
-								vid="detailItemWeightMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemWeightMeasurementUnitIdRef"
-								v-model="detailItemWeightMeasurementUnitId"
-								vid="detailItemWeightMeasurementUnitId"
-								:measurementUnitsId="detailItemWeightMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td> -->
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemWeightMeasurementUnitIdRef"
-								v-model="detailItemWeightMeasurementUnitId"
-								vid="detailItemWeightMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemWeightRef"
+									v-model="detailItemWeight"
+									vid="detailItemWeight"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.weight.name')"
+								/>
+							</td>
+							<!-- <td class="measurementUnitsMedium">
+								<MeasurementUnitsSelect
+									ref="detailItemWeightMeasurementUnitsIdRef"
+									v-model="detailItemWeightMeasurementUnitsId"
+									vid="detailItemWeightMeasurementUnitsId"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.title')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemWeightMeasurementUnitIdRef"
+									v-model="detailItemWeightMeasurementUnitId"
+									vid="detailItemWeightMeasurementUnitId"
+									:measurementUnitsId="detailItemWeightMeasurementUnitsId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td> -->
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemWeightMeasurementUnitIdRef"
+									v-model="detailItemWeightMeasurementUnitId"
+									vid="detailItemWeightMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<!-- <v-col cols="5" md="2">
@@ -104,102 +106,106 @@
 			<v-col cols="7" md="4"> -->
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemCgRef"
-								v-model="detailItemCg"
-								vid="detailItemCg"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.rockets.cg')"
-							/>
-						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemCgMeasurementUnitsIdRef"
-								v-model="detailItemCgMeasurementUnitsId"
-								vid="detailItemCgMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemCgMeasurementUnitIdRef"
-								v-model="detailItemCgMeasurementUnitId"
-								vid="detailItemCgMeasurementUnitId"
-								:measurementUnitsId="detailItemCgMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td> -->
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemCgMeasurementUnitIdRef"
-								v-model="detailItemCgMeasurementUnitId"
-								vid="detailItemCgMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.length')"
-							/>
-						</td>
-					</tr>
+					<tbody>	
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemCgRef"
+									v-model="detailItemCg"
+									vid="detailItemCg"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.cg')"
+								/>
+							</td>
+							<!-- <td class="measurementUnitsMedium">
+								<MeasurementUnitsSelect
+									ref="detailItemCgMeasurementUnitsIdRef"
+									v-model="detailItemCgMeasurementUnitsId"
+									vid="detailItemCgMeasurementUnitsId"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.title')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemCgMeasurementUnitIdRef"
+									v-model="detailItemCgMeasurementUnitId"
+									vid="detailItemCgMeasurementUnitId"
+									:measurementUnitsId="detailItemCgMeasurementUnitsId"
+									:measurementUnitsType="measurementUnitsLengthType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.length')"
+								/>
+							</td> -->
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemCgMeasurementUnitIdRef"
+									v-model="detailItemCgMeasurementUnitId"
+									vid="detailItemCgMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsLengthType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.length')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemWeightNoseRef"
-								v-model="detailItemWeightNose"
-								vid="detailItemWeightNose"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.content.rockets.weight.nose') + ' ' + $t('forms.content.rockets.weight.name')"
-							/>
-						</td>
-						<!-- <td class="measurementUnitsMedium">
-							<MeasurementUnitsSelect
-								ref="detailItemWeightNoseMeasurementUnitsIdRef"
-								v-model="detailItemWeightNoseMeasurementUnitsId"
-								vid="detailItemWeightNoseMeasurementUnitsId"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.title')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect
-								ref="detailItemWeightNoseMeasurementUnitIdRef"
-								v-model="detailItemWeightNoseMeasurementUnitId"
-								vid="detailItemWeightNoseMeasurementUnitId"
-								:measurementUnitsId="detailItemWeightNoseMeasurementUnitsId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td> -->
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemWeightNoseMeasurementUnitIdRef"
-								v-model="detailItemWeightNoseMeasurementUnitId"
-								vid="detailItemWeightNoseMeasurementUnitId"
-								:measurementUnitsType="measurementUnitsWeightType"
-								:validation="validation"
-								:readonly="!isEditable"
-								:label="$t('forms.settings.measurementUnits.weight')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemWeightNoseRef"
+									v-model="detailItemWeightNose"
+									vid="detailItemWeightNose"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.weight.nose') + ' ' + $t('forms.content.rockets.weight.name')"
+								/>
+							</td>
+							<!-- <td class="measurementUnitsMedium">
+								<MeasurementUnitsSelect
+									ref="detailItemWeightNoseMeasurementUnitsIdRef"
+									v-model="detailItemWeightNoseMeasurementUnitsId"
+									vid="detailItemWeightNoseMeasurementUnitsId"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.title')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect
+									ref="detailItemWeightNoseMeasurementUnitIdRef"
+									v-model="detailItemWeightNoseMeasurementUnitId"
+									vid="detailItemWeightNoseMeasurementUnitId"
+									:measurementUnitsId="detailItemWeightNoseMeasurementUnitsId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td> -->
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemWeightNoseMeasurementUnitIdRef"
+									v-model="detailItemWeightNoseMeasurementUnitId"
+									vid="detailItemWeightNoseMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>
@@ -238,47 +244,49 @@
 						cols="12" md="6"
 					>
 						<table style="width: 100%;">
-							<tr>
-								<td style="width: 100%;">
-									<VtTextFieldWithValidation
-										ref="detailItemMotor0Ref"
-										v-model="detailItemMotor0"
-										vid="detailItemMotor0"
-										:validation="validation"
-										:readonly="!isEditable"
-										:label="$t('forms.content.parts.motor.name')"
-									/>
-								</td>
-								<td class="pr-2">
-									<v-btn style="width: 100%;"
-										color="green ml-2"
-										@click="clickMotorsSearch(0, detailItemMotorDiameter0)"
-									>
-										{{ $t('forms.content.parts.motor.name') }}
-									</v-btn>
-								</td>
-							</tr>
-							<tr>
-								<td style="width: 100%;">
-									<VtTextFieldWithValidation
-										ref="detailItemMotorCase0Ref"
-										v-model="detailItemMotorCase0"
-										vid="detailItemMotorCase0"
-										:validation="validation"
-										:readonly="!isEditable"
-										:label="$t('forms.content.parts.motorCase.name2')"
-									/>
-								</td>
-								<td class="pr-2">
-									<v-btn style="width: 100%;"
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorCasesSearch(0, detailItemMotorDiameter0)"
-									>
-										{{ $t('forms.content.parts.motorCase.name2') }}
-									</v-btn>
-								</td>
-							</tr>
+							<tbody>
+								<tr>
+									<td style="width: 100%;">
+										<VtTextFieldWithValidation
+											ref="detailItemMotor0Ref"
+											v-model="detailItemMotor0"
+											vid="detailItemMotor0"
+											:validation="validation"
+											:readonly="!isEditable"
+											:label="$t('forms.content.parts.motor.name')"
+										/>
+									</td>
+									<td class="pr-2">
+										<v-btn style="width: 100%;"
+											color="green ml-2"
+											@click="clickMotorsSearch(0, detailItemMotorDiameter0)"
+										>
+											{{ $t('forms.content.parts.motor.name') }}
+										</v-btn>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 100%;">
+										<VtTextFieldWithValidation
+											ref="detailItemMotorCase0Ref"
+											v-model="detailItemMotorCase0"
+											vid="detailItemMotorCase0"
+											:validation="validation"
+											:readonly="!isEditable"
+											:label="$t('forms.content.parts.motorCase.name2')"
+										/>
+									</td>
+									<td class="pr-2">
+										<v-btn style="width: 100%;"
+											variant="flat"
+											color="green ml-2"
+											@click="clickMotorCasesSearch(0, detailItemMotorDiameter0)"
+										>
+											{{ $t('forms.content.parts.motorCase.name2') }}
+										</v-btn>
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</v-col>
 					<v-col 
@@ -332,47 +340,49 @@
 						cols="12" md="6"
 					>
 						<table style="width: 100%;">
-							<tr>
-								<td style="width: 100%;">
-									<VtTextFieldWithValidation
-										ref="detailItemMotor1Ref"
-										v-model="detailItemMotor1"
-										vid="detailItemMotor1"
-										:validation="validation"
-										:readonly="!isEditable"
-										:label="$t('forms.content.parts.motor.name')"
-									/>
-								</td>
-								<td class="pr-2">
-									<v-btn style="width: 100%;"
-										color="green ml-2"
-										@click="clickMotorsSearch(1, detailItemMotorDiameter1)"
-									>
-										{{ $t('forms.content.parts.motor.name') }}
-									</v-btn>
-								</td>
-							</tr>
-							<tr>
-								<td style="width: 100%;">
-									<VtTextFieldWithValidation
-										ref="detailItemMotorCase1Ref"
-										v-model="detailItemMotorCase1"
-										vid="detailItemMotorCase1"
-										:validation="validation"
-										:readonly="!isEditable"
-										:label="$t('forms.content.parts.motorCase.name2')"
-									/>
-								</td>
-								<td class="pr-2">
-									<v-btn style="width: 100%;"
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorCasesSearch(1, detailItemMotorDiameter1)"
-									>
-										{{ $t('forms.content.parts.motorCase.name2') }}
-									</v-btn>
-								</td>
-							</tr>
+							<tbody>
+								<tr>
+									<td style="width: 100%;">
+										<VtTextFieldWithValidation
+											ref="detailItemMotor1Ref"
+											v-model="detailItemMotor1"
+											vid="detailItemMotor1"
+											:validation="validation"
+											:readonly="!isEditable"
+											:label="$t('forms.content.parts.motor.name')"
+										/>
+									</td>
+									<td class="pr-2">
+										<v-btn style="width: 100%;"
+											color="green ml-2"
+											@click="clickMotorsSearch(1, detailItemMotorDiameter1)"
+										>
+											{{ $t('forms.content.parts.motor.name') }}
+										</v-btn>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 100%;">
+										<VtTextFieldWithValidation
+											ref="detailItemMotorCase1Ref"
+											v-model="detailItemMotorCase1"
+											vid="detailItemMotorCase1"
+											:validation="validation"
+											:readonly="!isEditable"
+											:label="$t('forms.content.parts.motorCase.name2')"
+										/>
+									</td>
+									<td class="pr-2">
+										<v-btn style="width: 100%;"
+											variant="flat"
+											color="green ml-2"
+											@click="clickMotorCasesSearch(1, detailItemMotorDiameter1)"
+										>
+											{{ $t('forms.content.parts.motorCase.name2') }}
+										</v-btn>
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</v-col>
 					<v-col 
@@ -426,47 +436,49 @@
 						cols="12" md="6"
 					>
 						<table style="width: 100%;">
-							<tr>
-								<td style="width: 100%;">
-									<VtTextFieldWithValidation
-										ref="detailItemMotor2Ref"
-										v-model="detailItemMotor2"
-										vid="detailItemMotor2"
-										:validation="validation"
-										:readonly="!isEditable"
-										:label="$t('forms.content.parts.motor.name')"
-									/>
-								</td>
-								<td class="pr-2">
-									<v-btn style="width: 100%;"
-										color="green ml-2"
-										@click="clickMotorsSearch(2, detailItemMotorDiameter2)"
-									>
-										{{ $t('forms.content.parts.motor.name') }}
-									</v-btn>
-								</td>
-							</tr>
-							<tr>
-								<td style="width: 100%;">
-									<VtTextFieldWithValidation
-										ref="detailItemMotorCase2Ref"
-										v-model="detailItemMotorCase2"
-										vid="detailItemMotorCase2"
-										:validation="validation"
-										:readonly="!isEditable"
-										:label="$t('forms.content.parts.motorCase.name2')"
-									/>
-								</td>
-								<td class="pr-2">
-									<v-btn style="width: 100%;"
-										variant="flat"
-										color="green ml-2"
-										@click="clickMotorCasesSearch(2, detailItemMotorDiameter2)"
-									>
-										{{ $t('forms.content.parts.motorCase.name2') }}
-									</v-btn>
-								</td>
-							</tr>
+							<tbody>
+								<tr>
+									<td style="width: 100%;">
+										<VtTextFieldWithValidation
+											ref="detailItemMotor2Ref"
+											v-model="detailItemMotor2"
+											vid="detailItemMotor2"
+											:validation="validation"
+											:readonly="!isEditable"
+											:label="$t('forms.content.parts.motor.name')"
+										/>
+									</td>
+									<td class="pr-2">
+										<v-btn style="width: 100%;"
+											color="green ml-2"
+											@click="clickMotorsSearch(2, detailItemMotorDiameter2)"
+										>
+											{{ $t('forms.content.parts.motor.name') }}
+										</v-btn>
+									</td>
+								</tr>
+								<tr>
+									<td style="width: 100%;">
+										<VtTextFieldWithValidation
+											ref="detailItemMotorCase2Ref"
+											v-model="detailItemMotorCase2"
+											vid="detailItemMotorCase2"
+											:validation="validation"
+											:readonly="!isEditable"
+											:label="$t('forms.content.parts.motorCase.name2')"
+										/>
+									</td>
+									<td class="pr-2">
+										<v-btn style="width: 100%;"
+											variant="flat"
+											color="green ml-2"
+											@click="clickMotorCasesSearch(2, detailItemMotorDiameter2)"
+										>
+											{{ $t('forms.content.parts.motorCase.name2') }}
+										</v-btn>
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</v-col>
 					<v-col 

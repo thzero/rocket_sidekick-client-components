@@ -179,23 +179,25 @@
 										:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px; float: left;" 
 									/> -->
 									<table style="float: left;">
-										<tr>
-											<td>
-												<v-icon
-													v-if="isCompleted(item) || isLaunched(item)"
-													class="mr-2"
-												>
-													{{  isCompleted(item) ? 'mdi-check' : '' }}
-													{{  isLaunched(item) ? 'mdi-rocket' : '' }}
-												</v-icon>
-											</td>
-											<td>
-												<img
-													v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
-													:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px;" 
-												/>
-											</td>
-										</tr>
+										<tbody>
+											<tr>
+												<td>
+													<v-icon
+														v-if="isCompleted(item) || isLaunched(item)"
+														class="mr-2"
+													>
+														{{  isCompleted(item) ? 'mdi-check' : '' }}
+														{{  isLaunched(item) ? 'mdi-rocket' : '' }}
+													</v-icon>
+												</td>
+												<td>
+													<img
+														v-if="item.rocketSetup && item.rocketSetup && item.rocketSetup.rocket" 
+														:src="rocketTypeIcon(item.rocketSetup.rocket)" style="height: 48px;" 
+													/>
+												</td>
+											</tr>
+										</tbody>
 									</table>
 									<div class="float-right">{{ checklistDate(item) }}</div>
 								</v-card-title>

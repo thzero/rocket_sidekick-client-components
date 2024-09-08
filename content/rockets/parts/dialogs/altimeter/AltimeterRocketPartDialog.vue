@@ -32,69 +32,75 @@
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemApogeeDelayRef"
-								v-model="detailItemApogeeDelay"
-								vid="detailItemApogeeDelay"
-								:validation="validation"
-								:readonly="!editable"
-								:label="$t('forms.content.parts.altimeter.delay.apogee')"
-							/>
-						</td>
-						<td>
-							{{ $t('measurements.time.secondsAbbrev')}}
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemApogeeDelayRef"
+									v-model="detailItemApogeeDelay"
+									vid="detailItemApogeeDelay"
+									:validation="validation"
+									:readonly="!editable"
+									:label="$t('forms.content.parts.altimeter.delay.apogee')"
+								/>
+							</td>
+							<td>
+								{{ $t('measurements.time.secondsAbbrev')}}
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemMotorDelayRef"
-								v-model="detailItemMotorDelay"
-								vid="detailItemMotorDelay"
-								:validation="validation"
-								:readonly="!editable"
-								:label="$t('forms.content.parts.altimeter.delay.motor')"
-							/>
-						</td>
-						<td>
-							{{ $t('measurements.time.secondsAbbrev')}}
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemMotorDelayRef"
+									v-model="detailItemMotorDelay"
+									vid="detailItemMotorDelay"
+									:validation="validation"
+									:readonly="!editable"
+									:label="$t('forms.content.parts.altimeter.delay.motor')"
+								/>
+							</td>
+							<td>
+								{{ $t('measurements.time.secondsAbbrev')}}
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>
 		<v-row dense>
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
-					<tr>
-						<td>
-							<VtNumberFieldWithValidation
-								ref="detailItemMainAltitudeRef"
-								v-model="detailItemMainAltitude"
-								vid="detailItdetailItemMainAltitudeemWeight"
-								:validation="validation"
-								:readonly="!editable"
-								:label="$t('forms.content.parts.altimeter.altitude.main')"
-							/>
-						</td>
-						<td class="measurementUnitMedium">
-							<MeasurementUnitSelect2
-								ref="detailItemMainAltitudeMeasurementUnitIdRef"
-								v-model="detailItemMainAltitudeMeasurementUnitId"
-								vid="detailItemWeightMeasdetailItemMainAltitudeMeasurementUnitIdrementUnitId"
-								:measurementUnitsType="measurementUnitsLengthType"
-								:validation="validation"
-								:readonly="!editable"
-								:label="$t('forms.settings.measurementUnits.altitude')"
-							/>
-						</td>
-					</tr>
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemMainAltitudeRef"
+									v-model="detailItemMainAltitude"
+									vid="detailItdetailItemMainAltitudeemWeight"
+									:validation="validation"
+									:readonly="!editable"
+									:label="$t('forms.content.parts.altimeter.altitude.main')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemMainAltitudeMeasurementUnitIdRef"
+									v-model="detailItemMainAltitudeMeasurementUnitId"
+									vid="detailItemWeightMeasdetailItemMainAltitudeMeasurementUnitIdrementUnitId"
+									:measurementUnitsType="measurementUnitsLengthType"
+									:validation="validation"
+									:readonly="!editable"
+									:label="$t('forms.settings.measurementUnits.altitude')"
+								/>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</v-col>
 		</v-row>

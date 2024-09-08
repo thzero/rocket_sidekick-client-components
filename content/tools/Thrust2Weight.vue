@@ -24,79 +24,81 @@
 						<v-row dense>
 							<v-col cols="12" md="6">
 								<table style="width: 100%">
-									<tr>
-										<td>
-											<VtNumberFieldWithValidation
-												ref="massRef"
-												v-model="mass"
-												vid="mass"
-												:validation="validation"
-												:label="$t('forms.content.tools.thrust2Weight.mass')"
-											/>
-										</td>
-										<!-- <td
-											v-if="$vuetify.display.mdAndUp"
-											class="measurementUnitsMedium"
+									<tbody>
+										<tr>
+											<td>
+												<VtNumberFieldWithValidation
+													ref="massRef"
+													v-model="mass"
+													vid="mass"
+													:validation="validation"
+													:label="$t('forms.content.tools.thrust2Weight.mass')"
+												/>
+											</td>
+											<!-- <td
+												v-if="$vuetify.display.mdAndUp"
+												class="measurementUnitsMedium"
+											>
+												<MeasurementUnitsSelect
+													ref="massMeasurementUnitsIdRef"
+													v-model="massMeasurementUnitsId"
+													vid="massMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td
+												v-if="$vuetify.display.mdAndUp"
+												class="measurementUnitMedium"
+											>
+												<MeasurementUnitSelect
+													ref="massMeasurementUnitRef"
+													v-model="massMeasurementUnitId"
+													vid="massMeasurementUnitId"
+													:measurementUnitsId="massMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsWeightType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.weight')"
+												/>
+											</td> -->
+											<td
+												class="measurementUnits3"
+											>
+												<MeasurementUnitSelect2
+													ref="massMeasurementUnitRef"
+													v-model="massMeasurementUnitId"
+													vid="massMeasurementUnitId"
+													:measurementUnitsType="measurementUnitsWeightType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.weight')"
+												/>
+											</td>
+										</tr>
+										<!-- <tr
+											v-if="$vuetify.display.smAndDown"
 										>
-											<MeasurementUnitsSelect
-												ref="massMeasurementUnitsIdRef"
-												v-model="massMeasurementUnitsId"
-												vid="massMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td
-											v-if="$vuetify.display.mdAndUp"
-											class="measurementUnitMedium"
-										>
-											<MeasurementUnitSelect
-												ref="massMeasurementUnitRef"
-												v-model="massMeasurementUnitId"
-												vid="massMeasurementUnitId"
-												:measurementUnitsId="massMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsWeightType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.weight')"
-											/>
-										</td> -->
-										<td
-											class="measurementUnits3"
-										>
-											<MeasurementUnitSelect2
-												ref="massMeasurementUnitRef"
-												v-model="massMeasurementUnitId"
-												vid="massMeasurementUnitId"
-												:measurementUnitsType="measurementUnitsWeightType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.weight')"
-											/>
-										</td>
-									</tr>
-									<!-- <tr
-										v-if="$vuetify.display.smAndDown"
-									>
-										<td class="measurementUnitsMedium">
-											<MeasurementUnitsSelect
-												ref="massMeasurementUnitsIdRef"
-												v-model="massMeasurementUnitsId"
-												vid="massMeasurementUnitsId"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.title')"
-											/>
-										</td>
-										<td class="measurementUnitMedium">
-											<MeasurementUnitSelect
-												ref="massMeasurementUnitRef"
-												v-model="massMeasurementUnitId"
-												vid="massMeasurementUnitId"
-												:measurementUnitsId="massMeasurementUnitsId"
-												:measurementUnitsType="measurementUnitsWeightType"
-												:validation="validation"
-												:label="$t('forms.settings.measurementUnits.weight')"
-											/>
-										</td>
-									</tr> -->
+											<td class="measurementUnitsMedium">
+												<MeasurementUnitsSelect
+													ref="massMeasurementUnitsIdRef"
+													v-model="massMeasurementUnitsId"
+													vid="massMeasurementUnitsId"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.title')"
+												/>
+											</td>
+											<td class="measurementUnitMedium">
+												<MeasurementUnitSelect
+													ref="massMeasurementUnitRef"
+													v-model="massMeasurementUnitId"
+													vid="massMeasurementUnitId"
+													:measurementUnitsId="massMeasurementUnitsId"
+													:measurementUnitsType="measurementUnitsWeightType"
+													:validation="validation"
+													:label="$t('forms.settings.measurementUnits.weight')"
+												/>
+											</td>
+										</tr> -->
+									</tbody>
 								</table>
 							</v-col>
 							<v-col cols="12" md="6">
@@ -155,28 +157,30 @@
 									</v-col>
 									<v-col cols="12" lg="6">
 										<table>
-											<tr>
-												<td style="width: 100%;">
-													<VtTextField
-														ref="motorLookup1Ref"
-														v-model="motorLookup1"
-														vid="motorLookup1"
-														:readonly="true"
-														:label="$t('forms.content.tools.thrust2Weight.motor')"
-														:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
-													/>
-												</td>
-												<td>
-													<v-btn
-														:variant="buttonsForms.variant.default"
-														:color="buttonsForms.color.default"
-														class="ml-2"
-														@click="clickMotorSearch(1)"
-													>
-														{{ $t('buttons.search') }}
-													</v-btn>
-												</td>
-											</tr>
+											<tbody>
+												<tr>
+													<td style="width: 100%;">
+														<VtTextField
+															ref="motorLookup1Ref"
+															v-model="motorLookup1"
+															vid="motorLookup1"
+															:readonly="true"
+															:label="$t('forms.content.tools.thrust2Weight.motor')"
+															:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
+														/>
+													</td>
+													<td>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															:color="buttonsForms.color.default"
+															class="ml-2"
+															@click="clickMotorSearch(1)"
+														>
+															{{ $t('buttons.search') }}
+														</v-btn>
+													</td>
+												</tr>
+											</tbody>
 										</table>
 									</v-col>
 								</v-row>
@@ -229,29 +233,31 @@
 									</v-col>
 									<v-col cols="12" lg="6">
 										<table>
-											<tr>
-												<td style="width: 100%;">
-													<VtTextField
-														ref="motorLookup2Ref"
-														v-model="motorLookup2"
-														vid="motorLookup2"
-														:readonly="true"
-														:label="$t('forms.content.tools.thrust2Weight.motor')"
-														:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
-													/>
-												</td>
-												<td>
-													<v-btn
-														:variant="buttonsForms.variant.default"
-														:color="buttonsForms.color.default"
-														class="ml-2"
-														:disabled="!motorSelected2"
-														@click="clickMotorSearch(2)"
-													>
-														{{ $t('buttons.search') }}
-													</v-btn>
-												</td>
-											</tr>
+											<tbody>
+												<tr>
+													<td style="width: 100%;">
+														<VtTextField
+															ref="motorLookup2Ref"
+															v-model="motorLookup2"
+															vid="motorLookup2"
+															:readonly="true"
+															:label="$t('forms.content.tools.thrust2Weight.motor')"
+															:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
+														/>
+													</td>
+													<td>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															:color="buttonsForms.color.default"
+															class="ml-2"
+															:disabled="!motorSelected2"
+															@click="clickMotorSearch(2)"
+														>
+															{{ $t('buttons.search') }}
+														</v-btn>
+													</td>
+												</tr>
+											</tbody>
 										</table>
 									</v-col>
 								</v-row>
@@ -304,29 +310,31 @@
 									</v-col>
 									<v-col cols="12" lg="6">
 										<table>
-											<tr>
-												<td style="width: 100%;">
-													<VtTextField
-														ref="motorLookup3Ref"
-														v-model="motorLookup3"
-														vid="motorLookup3"
-														:readonly="true"
-														:label="$t('forms.content.tools.thrust2Weight.motor')"
-														:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
-													/>
-												</td>
-												<td>
-													<v-btn
-														:variant="buttonsForms.variant.default"
-														:color="buttonsForms.color.default"
-														class="ml-2"
-														:disabled="!motorSelected3"
-														@click="clickMotorSearch(3)"
-													>
-														{{ $t('buttons.search') }}
-													</v-btn>
-												</td>
-											</tr>
+											<tbody>
+												<tr>
+													<td style="width: 100%;">
+														<VtTextField
+															ref="motorLookup3Ref"
+															v-model="motorLookup3"
+															vid="motorLookup3"
+															:readonly="true"
+															:label="$t('forms.content.tools.thrust2Weight.motor')"
+															:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
+														/>
+													</td>
+													<td>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															:color="buttonsForms.color.default"
+															class="ml-2"
+															:disabled="!motorSelected3"
+															@click="clickMotorSearch(3)"
+														>
+															{{ $t('buttons.search') }}
+														</v-btn>
+													</td>
+												</tr>
+											</tbody>
 										</table>
 									</v-col>
 								</v-row>
@@ -379,29 +387,31 @@
 									</v-col>
 									<v-col cols="12" lg="6">
 										<table>
-											<tr>
-												<td style="width: 100%;">
-													<VtTextField
-														ref="motorLookup4Ref"
-														v-model="motorLookup4"
-														vid="motorLookup4"
-														:readonly="true"
-														:label="$t('forms.content.tools.thrust2Weight.motor')"
-														:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
-													/>
-												</td>
-												<td>
-													<v-btn
-														:variant="buttonsForms.variant.default"
-														:color="buttonsForms.color.default"
-														class="ml-2"
-														:disabled="!motorSelected4"
-														@click="clickMotorSearch(4)"
-													>
-														{{ $t('buttons.search') }}
-													</v-btn>
-												</td>
-											</tr>
+											<tbody>
+												<tr>
+													<td style="width: 100%;">
+														<VtTextField
+															ref="motorLookup4Ref"
+															v-model="motorLookup4"
+															vid="motorLookup4"
+															:readonly="true"
+															:label="$t('forms.content.tools.thrust2Weight.motor')"
+															:placeholder="$t('forms.content.tools.thrust2Weight.motor_hint')"
+														/>
+													</td>
+													<td>
+														<v-btn
+															:variant="buttonsForms.variant.default"
+															:color="buttonsForms.color.default"
+															class="ml-2"
+															:disabled="!motorSelected4"
+															@click="clickMotorSearch(4)"
+														>
+															{{ $t('buttons.search') }}
+														</v-btn>
+													</td>
+												</tr>
+											</tbody>
 										</table>
 									</v-col>
 								</v-row>
