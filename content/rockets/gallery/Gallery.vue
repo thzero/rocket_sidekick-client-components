@@ -1,5 +1,6 @@
 <template>
 	<ContentHeader :value="title" />
+	<!-- <pre>{{ JSON.stringify(rockets, null, '  ') }}</pre> -->
 	<v-row dense>
 		<v-col cols="12">
 			<v-row dense>
@@ -7,19 +8,14 @@
 					v-for="item in rockets"
 					:key="item.name"
 				>
-					<div
-						v-for="item in rockets"
-						:key="item.id"
-					>
-						<RocketPanel
-							:item="item"
-							:type="type"
-						/>
-					</div>
+					<RocketPanel
+						:item="item"
+						:type="type"
+					/>
 				</v-col>
 			</v-row>
 		</v-col>
-	</v-row>
+	</v-row> 
 </template>
 
 <script>
