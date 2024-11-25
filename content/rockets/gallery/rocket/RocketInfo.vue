@@ -15,22 +15,25 @@
 			<v-card
 				v-if="rocket"
 			>
-				<v-img
-					v-if="hasCoverUrl(rocket)"
-					:src="rocket.coverUrl"
-					cover
+				<div
+					style="background-color: #b6b6b6;"
 				>
-					<div class="text-right pt-4">
-						<v-btn
-							:variant="buttonsForms.variant.default"
-							:color="buttonsForms.color.default"
-							class="mr-2"
-							:to="rocketsUrl"
-						>
-							{{ $t('buttons.back') }}
-						</v-btn>
-					</div>
-				</v-img>
+					<v-img
+						:src="hasCoverUrl(rocket) ? rocket.coverUrl : '/images/blank.png'"
+						cover
+					>
+						<div class="text-right pt-4">
+							<v-btn
+								:variant="buttonsForms.variant.default"
+								:color="buttonsForms.color.default"
+								class="mr-2"
+								:to="rocketsUrl"
+							>
+								{{ $t('buttons.back') }}
+							</v-btn>
+						</div>
+					</v-img>
+				</div>
 
 				<v-card-title
 					class="bg-secondary"
@@ -60,7 +63,7 @@
 							<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
 						</v-card-title>
 						<v-card-text>
-							<table>
+							<table style="padding-bottom: 12px;">
 								<tbody>
 									<tr>
 										<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
@@ -111,7 +114,7 @@
 					</v-card>
 				</v-col>
 			</v-row>
-			// TODO: stages for displayTypeUser
+			<!-- // TODO: stages for displayTypeUser -->
 		</v-col>
 		<v-col cols="12" md="6">
 			<v-row dense>
@@ -174,6 +177,22 @@
 				<v-card-text>
 				</v-card-text>
 			</v-card>
+		</v-col>
+	</v-row>
+	<v-row dense>
+		<v-col
+			cols="12"
+		>
+			<div class="text-right pt-4">
+					<v-btn
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						class="mr-2"
+						:to="rocketsUrl"
+					>
+						{{ $t('buttons.back') }}
+					</v-btn>
+			</div>
 		</v-col>
 	</v-row>
 </template>

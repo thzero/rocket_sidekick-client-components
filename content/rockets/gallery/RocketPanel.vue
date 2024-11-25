@@ -5,11 +5,14 @@
 		max-width="400"
 		color="secondary"
 	>
-		<v-img
-			v-if="hasCoverUrl(item)"
-			:src="item.coverUrl"
+		<div
+			style="background-color: #b6b6b6;"
+		>
+			<v-img
+			:src="hasCoverUrl(item) ? item.coverUrl : '/images/blank.png'"
 			cover
 		></v-img>
+		</div>
 
 		<v-card-title>
 			<v-row dense>
