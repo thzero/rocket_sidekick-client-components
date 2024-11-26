@@ -2,20 +2,18 @@
 	<ContentHeader :value="title" />
 	<!-- <pre>{{ JSON.stringify(rockets, null, '  ') }}</pre> -->
 	<v-row dense>
-		<v-col cols="12">
-			<v-row dense>
-				<v-col cols="6"
-					v-for="item in rockets"
-					:key="item.name"
-				>
-					<RocketPanel
-						:item="item"
-						:type="type"
-					/>
-				</v-col>
-			</v-row>
+		<v-col 
+			cols="12" md="6"
+			v-for="item in rockets"
+			:key="item.name"
+			style="padding-bottom: 18px;"
+		>
+			<RocketPanel
+				:item="item"
+				:type="type"
+			/>
 		</v-col>
-	</v-row> 
+	</v-row>
 </template>
 
 <script>
