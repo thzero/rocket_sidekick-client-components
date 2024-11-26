@@ -8,10 +8,12 @@
 		<div
 			style="background-color: #b6b6b6;"
 		>
-			<v-img
-			:src="hasCoverUrl(item) ? item.coverUrl : '/images/blank.png'"
-			cover
-		></v-img>
+			<a :href="rocketUrl(item)">
+				<v-img
+					:src="hasCoverUrl(item) ? item.coverUrl : '/images/blank.png'"
+					cover
+				></v-img>
+			</a>
 		</div>
 
 		<v-card-title>
