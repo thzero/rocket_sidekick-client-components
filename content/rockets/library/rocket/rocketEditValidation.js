@@ -12,6 +12,8 @@ export function useRocketEditValidation(nameRequired) {
 		detailItemCpMeasurementUnitsId: { $autoDirty: true },
 		detailItemDescription: { 
 			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
+			maxLength: maxLength(300),
+			maxLength: maxLength(1000),
 			$autoDirty: true 
 		},
 		detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },

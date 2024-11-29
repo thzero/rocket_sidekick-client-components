@@ -52,7 +52,6 @@ export default {
 			convertValue,
 			errorI,
 			errorsI,
-			hideDetails,
 			innerValue,
 			initValue,
 			innerValueUpdate
@@ -75,7 +74,6 @@ export default {
 			convertValue,
 			errorI,
 			errorsI,
-			hideDetails,
 			innerValue,
 			initValue,
 			innerValueUpdate

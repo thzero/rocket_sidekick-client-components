@@ -4,6 +4,7 @@ export function useRocketSetupEditValidation(nameRequired) {
 	const validation = {
 		detailItemDescription: { 
 			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
+			maxLength: maxLength(300),
 			$autoDirty: true 
 		},
 		detailItemNotes: {

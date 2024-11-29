@@ -67,8 +67,8 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.description')"
-					:counter="300"
 					:clearable="isEditable"
+					:maxcount="1000"
 					:rows="detailItemTextRows"
 				/>
 			</v-col>

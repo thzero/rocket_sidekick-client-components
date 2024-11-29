@@ -105,10 +105,10 @@
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
 					:label="$t('forms.description')"
-					:counter="300"
 					:validation="validation"
 					:readonly="!isEditable"
 					:clearable="isEditable"
+					:maxcount="300"
 					:rows="detailItemTextRows"
 				/>
 			</v-col>
@@ -259,7 +259,7 @@
 						:label="$t('forms.content.launches.rocketSetup.title')"
 						:readonly="true"
 					/> -->
-					<VtTextAreaWithValidation
+					<VtTextFieldWithValidation
 						v-if="viewRocketSetup"
 						ref="detailItemRocketSetupNameRef"
 						v-model="detailItemRocketSetupName"
@@ -269,7 +269,6 @@
 						:readonly="true"
 						:label="$t('forms.content.launches.rocketSetup.title')"
 						:clearable="false"
-						:rows="1"
 					/>
 					<v-btn
 						v-if="isEditable && detailItemRocketSetupId"

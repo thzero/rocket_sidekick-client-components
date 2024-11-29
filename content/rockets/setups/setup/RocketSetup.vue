@@ -53,8 +53,8 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.description')"
-					:counter="300"
 					:clearable="isEditable"
+					:maxcount="300"
 					:rows="detailItemTextRows"
 				/>
 			</v-col>
@@ -144,8 +144,8 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.launches.notes')"
-					:counter="1000"
 					:clearable="isEditable"
+					:maxcount="1000"
 					:rows="detailItemTextRows"
 				/>
 <div v-html="markupHint"></div>
