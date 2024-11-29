@@ -40,7 +40,7 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.name')"
-					:counter="30"
+					:maxcount="50"
 				/>
 			</v-col>
 			<v-col cols="12" md="4">
@@ -68,8 +68,8 @@
 							:validation="validation"
 							:readonly="!isEditable"
 							:label="$t('forms.description')"
-							:counter="500"
 							:clearable="isEditable"
+							:maxcount="1000"
 							:rows="detailItemTextRows"
 						/>
 <div

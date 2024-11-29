@@ -59,10 +59,10 @@
 					v-model="detailItemDescription"
 					vid="detailItemDescription"
 					:label="$t('forms.description')"
-					:counter="300"
 					:validation="validation"
 					:readonly="!isEditable"
 					:clearable="isEditable"
+					:maxcount="300"
 					:rows="detailItemTextRows"
 				/>
 			</v-col>

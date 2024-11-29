@@ -32,7 +32,6 @@ export function useMeasurementUnitsSelectBaseComponent(props, context, options) 
 		convertValue,
 		errorI,
 		errorsI,
-		hideDetails,
 		innerValue,
 		initValue,
 		innerValueUpdate
@@ -64,7 +63,6 @@ export function useMeasurementUnitsSelectBaseComponent(props, context, options) 
 		convertValue,
 		errorI,
 		errorsI,
-		hideDetails,
 		innerValue,
 		innerValueUpdate,
 		initValue,
