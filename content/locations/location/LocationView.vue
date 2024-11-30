@@ -62,7 +62,7 @@
 						:href="displayItem.link"
 						target="_blank"
 					>
-					{{ displayItem.link }}
+						{{ displayItem.link }}
 					</a></span>
 					<!-- <v-text-field
 						v-model="displayItem.link"

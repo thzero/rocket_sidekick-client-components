@@ -93,12 +93,14 @@ export function useLaunchEditValidation(self, nameRequired) {
 	validation['detailItemName'] =  (nameRequired === true ?
 		{
 			required,
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 			minLength: minLength(3),
 			maxLength: maxLength(50),
 			$autoDirty: true
 		}
 	:
 		validation['detailItemName'] = {
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 			minLength: minLength(3),
 			maxLength: maxLength(50),
 			$autoDirty: true
