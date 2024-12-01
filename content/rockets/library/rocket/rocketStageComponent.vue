@@ -33,7 +33,6 @@ export function useRocketStageComponent(props, context, options) {
 		buttonsForms
 	} = useButtonComponent(props, context);
 
-
 	const {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings

@@ -3,8 +3,8 @@
 		class="mt-2"
 	>
 		<!-- <pre>{{ detailItem }}</pre>
-		<pre>{{ displayItem }}</pre> -->
-		<!-- {{ stagePrimary }}
+		<pre>{{ displayItem }}</pre>
+		{{ stagePrimary }}
 		length {{ length }} -->
 		<v-row dense
 		>
@@ -113,6 +113,50 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col 
+				v-if="albums"
+				cols="12"
+			>
+				<h4>{{ $t('titles.content.rockets.albums.title') }}</h4>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col 
+				v-if="albums"
+				cols="4" md="12"
+				v-for="album in albums"
+			>
+				<span><a
+					:href="album.link"
+					target="_blank"
+				>
+					{{ album.name }}
+				</a></span>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col 
+				v-if="videos"
+				cols="12"
+			>
+				<h4>{{ $t('titles.content.rockets.videos.plural') }}</h4>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col 
+				v-if="videos"
+				cols="4" md="12"
+				v-for="video in videos"
+			>
+				<span><a
+					:href="video.link"
+					target="_blank"
+				>
+					{{ video.name }}
+				</a></span>
+			</v-col>
+		</v-row>
 	</div>
 </template>
 
@@ -150,6 +194,7 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			albums,
 			coverUrl,
 			cp,
 			diameter,
@@ -158,6 +203,7 @@ export default {
 			manufacturer,
 			stagePrimary,
 			stages,
+			videos,
 			weight
 		} = useRocketViewComponent(props, context);
 
@@ -174,6 +220,7 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			albums,
 			coverUrl,
 			cp,
 			diameter,
@@ -182,6 +229,7 @@ export default {
 			manufacturer,
 			stagePrimary,
 			stages,
+			videos,
 			weight
 		};
 	}

@@ -147,7 +147,7 @@
 				>
 					<v-card>
 						<v-card-title>
-		<p class="text-h6 text-center">{{ $t('titles.content.rockets.videos') }}</p>
+		<p class="text-h6 text-center">{{ $t('titles.content.rockets.videos.plural') }}</p>
 						</v-card-title>
 						<v-card-text>
 			<v-list density="compact">

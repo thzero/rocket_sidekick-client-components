@@ -3,9 +3,12 @@ import { computed, ref } from 'vue';
 
 import useVuelidate from '@vuelidate/core';
 
+import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility';
 
 import RocketStage from 'rocket_sidekick_common/data/rockets/stage';
+
+import DialogSupport from '@thzero/library_client_vue3/components/support/dialog';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useContentMarkupComponent } from '@/components/content/contentMarkup';
@@ -110,12 +113,12 @@ export function useRocketComponent(props, context, options) {
 			manufacturerDefault.value = temp ? temp.id : null;
 
 			const temp2 = await serviceStore.getters.getRocketsExpanded();
-			const temp3 = temp2[panelsKey(value)];
-			panels.value = temp3 ?? [];
+			const temp3 = temp2[stagesPanelsKey(value)];
+			stagesPanels.value = temp3 ?? [];
 
 			const temp4 = await serviceStore.getters.getRocketsExpanded();
-			const temp5 = temp4[stagesPanelsKey(value)];
-			stagesPanels.value = temp5 ?? [];
+			const temp5 = temp4[videosPanelsKey(value)];
+			videosPanels.value = temp5 ?? [];
 			
 			resetData(correlationId, value);
 		},
@@ -164,29 +167,33 @@ export function useRocketComponent(props, context, options) {
 		markupHint
 	} = useContentMarkupComponent(props, context);
 	
-	const detailItemDescription = ref(null);
+	const detailItemAlbumLink = ref(null);
+	const detailItemAlbumName = ref(null);
+	const detailItemAlbumType = ref(null);
+	const detailItemDescription = ref(null);3
 	const detailItemManufacturer = ref(null);
+	const detailItemCoverUrl = ref(null);
 	const detailItemManufacturerStockId = ref(null);
 	const detailItemName = ref(null);
 	const detailItemRocketType = ref(null);
 	const manufacturerDefault = ref(null);
-	const panels = ref([]);
-	const panelsId = ref([ 
-		{ id: 'altimeters', text: 'forms.content.parts.altimeter.plural' },
-		{ id: 'recovery', text: 'forms.content.parts.recovery' },
-		{ id: 'trackers', text: 'forms.content.parts.tracker.plural' },
-		{ id: 'stages', text: 'forms.content.rockets.stage.plural' },
-	]);
 	const stagesPanels = ref([]);
+	const videosPanels = ref([]);
 	
+	const dialogDeleteVideoManager = ref(new DialogSupport());
+	const dialogDeleteVideoMessage = ref(LibraryClientUtility.$trans.t(`messages.videos.delete_confirm`));
+	const dialogDeleteVideoParams = ref(null);
+	const dialogEditVideoManager = ref(new DialogSupport());
+	const dialogEditVideoParams = ref(null);
+
 	const coverUrl = computed(() => {
 		return detailItemData.value ? detailItemData.value.coverUrl : '';
 	});
-	const manufacturers = computed(() => {
-		return props.manufacturers ? props.manufacturers : [];
-	});
 	const hasAdmin = computed(() => {
 		return false;
+	});
+	const manufacturers = computed(() => {
+		return props.manufacturers ? props.manufacturers : [];
 	});
 	const rocketId = computed(() => {
 		return detailItemData.value ? detailItemData.value.id : [];
@@ -194,12 +201,15 @@ export function useRocketComponent(props, context, options) {
 	const stages = computed(() => {
 		return detailItemData.value ? detailItemData.value.stages : [];
 	});
+	const videos = computed(() => {
+		return detailItemData.value ? detailItemData.value.videos : [];
+	});
 	
-	const dialogEditPreCompleteOkRocketParts = async (correlationId, item) => {
+	const dialogEditPreCompleteOkRocketPart = async (correlationId, item) => {
 		// const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
 		// const stage = temp.stages.find(l => l.id === item.stageId);
 		// if (!stage)
-		// 	return error('useRocketComponent', 'dialogEditPreCompleteOkRocketParts', `Invalid stage for '${item.stageId}'.`, null, null, null, correlationId);
+		// 	return error('useRocketComponent', 'dialogEditPreCompleteOkRocket', `Invalid stage for '${item.stageId}'.`, null, null, null, correlationId);
 
 		// if (item.typeId === AppCommonConstants.Rocketry.PartTypes.altimeter)
 		// 	stage.altimeters = LibraryCommonUtility.updateArrayByObject(stage.altimeters, item.item);
@@ -216,21 +226,157 @@ export function useRocketComponent(props, context, options) {
 		// else if (item.typeId === AppCommonConstants.Rocketry.PartTypes.tracker)
 		// 	stage.trackers = LibraryCommonUtility.updateArrayByObject(stage.trackers, item.item);
 
-		const response = await serviceStore.dispatcher.saveRocketStagePart(correlationId, detailItemData.value, item);
-		logger.debug('useRocketComponent', 'dialogEditPreCompleteOkRocketParts', 'response', response, correlationId);
 		detailItem.value.data = response.results;
 		return response;
 	};
-	const panelsKey = (value) => {
-		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;
+	const dialogDeleteVideoCancel = async (item) => {
+		try {
+			dialogDeleteVideoManager.value.cancel();
+		}
+		finally {
+			dialogDeleteVideoParams.value = null;
+		}
 	};
-	const panelsUpdated = async (value) => {
-		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: panelsKey(), expanded: value });
+	const dialogDeleteVideoError = async (err) => {
+		try {
+			dialogDeleteVideoManager.value.cancel();
+		}
+		finally {
+			dialogDeleteVideoParams.value = null;
+		}
+	};
+	const dialogDeleteVideoOk = async () => {
+		try {
+			if (!dialogDeleteVideoParams.value)
+				return;
+			
+			const correlationIdI = correlationId();
+			const response = await serviceStore.dispatcher.saveRocketVideoDelete(correlationIdI, detailItemData.value, dialogDeleteVideoParams.value);
+			logger.debug('useRocketComponent', 'dialogDeleteVideoOk', 'response', response, correlationIdI);
+			if (hasFailed(response))
+				setNotify(correlationIdI, 'errors.error');
+
+			detailItem.value.data = response.results;
+			return response;
+		}
+		finally {
+			dialogDeleteVideoParams.value = null;
+			dialogDeleteVideoManager.value.ok();
+		}
+	};
+	const dialogDeleteVideoOpen = (item) => {
+		if (!item)
+			return;
+		if (!canDeleteSecondary.value)
+			return;
+
+		dialogDeleteVideoParams.value = item.id;
+		dialogDeleteVideoManager.value.open();
+	};
+	const dialogEditVideoCancel = async (item) => {
+		try {
+			dialogEditVideoManager.value.cancel();
+		}
+		finally {
+			dialogEditVideoParams.value = null;
+		}
+	};
+	const dialogEditVideoError = async (err) => {
+		try {
+			dialogEditVideoManager.value.cancel();
+		}
+		finally {
+			dialogEditVideoParams.value = null;
+		}
+	};
+	const dialogEditVideoOk = async () => {
+		try {
+			if (!dialogEditVideoParams.value)
+				return;
+			
+			const correlationIdI = correlationId();
+			const response = await serviceStore.dispatcher.saveRocketVideoEdit(correlationIdI, detailItemData.value, dialogEditVideoParams.value);
+			logger.debug('useRocketComponent', 'dialogEditVideoOk', 'response', response, correlationIdI);
+			if (hasFailed(response))
+				setNotify(correlationIdI, 'errors.error');
+
+			detailItem.value.data = response.results;
+			return response;
+		}
+		finally {
+			dialogEditVideoParams.value = null;
+			dialogEditVideoManager.value.ok();
+		}
+	};
+	const dialogEditVideoOpen = async (item) => {
+		if (!item)
+			return;
+		if (!canEditSecondary.value)
+			return;
+
+		dialogEditVideoParams.value = item;
+		dialogEditVideoManager.value.open();
+	};
+	const dialogEditVideoPreCompleteOk = async (correlationId, item) => {
+		const response = await serviceStore.dispatcher.saveRocketVideo(correlationId, detailItemData.value, item);
+		logger.debug('useRocketComponent', 'dialogEditVideoPreCompleteOk', 'response', response, correlationId);
+		
+		detailItem.value.data = response.results;
+		return response;
+	};
+	const handleAddVideo = async () => {
+		// detailItemData.value.videos = detailItemData.value.videos ?? [];
+
+		// detailItemData.value.videos.push({
+		// 	id: LibraryCommonUtility.generateShortId(),
+		// 	link: null,
+		// 	name: null,
+		// 	type: null
+		// });
+		
+		if (!canEditSecondary.value)
+			return;
+
+		const item = {
+			id: LibraryCommonUtility.generateShortId(),
+			link: null,
+			name: null,
+			type: null
+		};
+		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+		temp.videos = detailItemData.value.videos ?? [];
+		temp.videos.push(item);
+
+		dialogEditVideoParams.value = item;
+		dialogEditVideoManager.value.open();
+	};
+	const isDeletingVideo = (item) => {
+		if (!dialogDeleteVideoParams.value || !item)
+			return false;
+
+		return item.id === dialogDeleteVideoParams.value;
+	};
+	const isEditingVideo = (item) => {
+		if (!dialogEditVideoParams.value || !item)
+			return false;
+
+		return item.id === dialogEditVideoParams.value;
 	};
 	const resetData = (correlationId, value) => {
-		detailItemRocketType.value = value ? value.rocketTypes : null;	
+		detailItemRocketType.value = value && value.rocketTypes ? value.rocketTypes : null;	
 
-		detailItemDescription.value = value ? value.description : null;
+		detailItemAlbumLink.value = null;
+		detailItemAlbumName.value = null;
+		detailItemAlbumType.value = null;
+		if (value && value.albums && value.albums.length > 0) {
+			detailItemAlbumLink.value = value.albums[0].link;
+			detailItemAlbumName.value = value.albums[0].name;
+			detailItemAlbumType.value = value.albums[0].type;
+		}
+
+		detailItemCoverUrl.value = value && value.coverUrl ? value.coverUrl : '';
+
+		detailItemDescription.value = value && value.description ? value.description : null;
 		
 		detailItemManufacturer.value = value && value.manufacturerId ? value.manufacturerId : manufacturerDefault.value; // 'd37HEk5Wjm3mmV4InK90U';
 		detailItemManufacturerStockId.value = value ? value.manufacturerStockId : null;
@@ -239,6 +385,17 @@ export function useRocketComponent(props, context, options) {
 	};
 	const setData = (correlationId) => {
 		detailItemData.value.rocketTypes = detailItemRocketType.value;
+
+		detailItemData.value.albums = [];
+		if (detailItemAlbumLink.value) {
+			detailItemData.value.albums.push({
+				name: detailItemAlbumName.value,
+				link: detailItemAlbumLink.value,
+				type: detailItemAlbumType.value
+			});
+		}
+
+		detailItemData.value.coverUrl = detailItemCoverUrl.value;
 
 		detailItemData.value.description = detailItemDescription.value;
 		
@@ -288,6 +445,49 @@ export function useRocketComponent(props, context, options) {
 
 		detailItemData.value.stages = response.results.stages;
 		return response;
+	};
+	const updateVideo = async(correlationId, stage) => {
+		const temp = LibraryCommonUtility.cloneDeep(detailItemData.value);
+
+		// temp.stages = LibraryCommonUtility.updateArrayByObject(temp.stages, stage);
+
+		// temp.stages.forEach(element => {
+		// 	if (element.primary) {
+		// 		element.index = 0;
+		// 		return;
+		// 	}
+
+		// 	element.index = LibraryCommonUtility.isNotNull(element.index) ? element.index : Number.MAX_SAFE_INTEGER;
+		// });
+
+		// temp.stages = temp.stages.sort((a, b) => a.index >= b.index);
+		// let index = 0;
+		// for (const item of temp.stages)
+		// 	item.index = index++;
+		// detailItem.value.stages = stages;
+
+		// index = 0;
+		// temp.stages.forEach(element => {
+		// 	element.index = index++;
+		// });
+
+		// const response = await serviceStore.dispatcher.saveRocketStage(correlationId, temp);
+		// logger.debug('useRocketComponent', 'updateVideo', 'response', response, correlationId);
+		// if (hasFailed(response))
+		// 	return response;
+
+		// detailItemData.value.stages = response.results.stages;
+		// return response;
+		return null;
+	};
+	const videosPanelsKey = (value) => {
+		const temp = value ? value.id : detailItemData.value ? detailItemData.value.id : null;
+		if (temp)
+			return temp + '-videos';
+		return null;
+	};
+	const videosPanelsUpdated = async (value) => {
+		await serviceStore.dispatcher.setRocketsExpanded(correlationId(), { id: videosPanelsKey(), expanded: value });
 	};
 	
 	return {
@@ -360,23 +560,44 @@ export function useRocketComponent(props, context, options) {
 		measurementUnitsIdOutput,
 		measurementUnitsIdSettings,
 		markupHint,
+		detailItemAlbumLink,
+		detailItemAlbumName,
+		detailItemAlbumType,
+		detailItemCoverUrl,
 		detailItemDescription,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
 		detailItemName,
 		detailItemRocketType,
-		coverUrl,
-		manufacturers,
-		panels,
-		panelsId,
 		stagesPanels,
+		videosPanels,
+		dialogDeleteVideoManager,
+		dialogDeleteVideoMessage,
+		dialogEditVideoManager,
+		dialogEditVideoParams,
+		coverUrl,
 		hasAdmin,
+		manufacturers,
 		rocketId,
 		stages,
-		dialogEditPreCompleteOkRocketParts,
-		panelsUpdated,
+		videos,
+		dialogEditPreCompleteOkRocketPart,
+		dialogDeleteVideoCancel,
+		dialogDeleteVideoError,
+		dialogDeleteVideoOk,
+		dialogDeleteVideoOpen,
+		dialogEditVideoCancel,
+		dialogEditVideoError,
+		dialogEditVideoOk,
+		dialogEditVideoOpen,
+		dialogEditVideoPreCompleteOk,
+		handleAddVideo,
+		isDeletingVideo,
+		isEditingVideo,
 		stagesPanelsUpdated,
+		videosPanelsUpdated,
 		updateStage,
+		updateVideo,
 		scope: 'RocketControl',
 		validation: useVuelidate({ $scope: 'RocketControl' })
 	};

@@ -30,6 +30,9 @@ export function useRocketViewComponent(props, context, options) {
 		rocketWeight
 	} = useRocketsUtilityComponent(props, context, { manufacturers: props.manufacturers });
 
+	const albums = computed(() => {
+		return displayItem.value && displayItem.value.albums && displayItem.value.albums.length > 0 ? displayItem.value.albums : null;
+	});
 	const coverUrl = computed(() => {
 		return displayItem.value ? displayItem.value.coverUrl : '';
 	});
@@ -66,6 +69,9 @@ export function useRocketViewComponent(props, context, options) {
 			return 0;
 		return rocketStages(props.detailItem.stages);
 	});
+	const videos = computed(() => {
+		return displayItem.value && displayItem.value.videos && displayItem.value.videos.length > 0 ? displayItem.value.videos : null;
+	});
 	const weight = computed(() => {
 		if (!props.detailItem)
 			return null;
@@ -85,6 +91,7 @@ export function useRocketViewComponent(props, context, options) {
 		serviceStore,
 		sortByOrder,
 		target,
+		albums,
 		coverUrl,
 		cp,
 		diameter,
@@ -93,6 +100,7 @@ export function useRocketViewComponent(props, context, options) {
 		manufacturer,
 		stagePrimary,
 		stages,
+		videos,
 		weight
 	};
 };

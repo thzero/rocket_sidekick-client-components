@@ -113,9 +113,94 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="6">
+				<VtSelectWithValidation
+					ref="manufacturerRef"
+					v-model="detailItemManufacturer"
+					vid="detailItemManufacturer"
+					:items="manufacturers"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.manufacturer.name')"
+				/>
+			</v-col>
+			<v-col cols="6">
+				<VtTextFieldWithValidation
+					ref="detailItemManufacturerStockIdRef"
+					v-model="detailItemManufacturerStockId"
+					vid="detailItemManufacturerStockId"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.parts.manufacturerId')"
+					:counter="30"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12">
+				<VtTextFieldWithValidation
+					ref="detailItemCoverUrlRef"
+					v-model="detailItemCoverUrl"
+					vid="detailItemCoverUrl"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.cover') + ' ' + $t('forms.content.rockets.url')"
+					:counter="255"
+				/>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12">
+				<h4>{{ $t('titles.content.rockets.albums.title') }}</h4>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="4" md="3">
+				<VtTextFieldWithValidation
+					ref="detailItemAlbumNameRef"
+					v-model="detailItemAlbumName"
+					vid="detailItemAlbumName"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.albums.name')"
+					:counter="50"
+				/>
+			</v-col>
+			<!-- <v-col cols="12" sm="6">
+				<VtTextFieldWithValidation
+					ref="detailItemAlbumTypeRef"
+					v-model="detailItemAlbumType"
+					vid="detailItemAlbumName"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.albums.type')"
+					:counter="20"
+				/>
+			</v-col> -->
+			<v-col cols="12" sm="8" md="9">
+				<VtTextFieldWithValidation
+					ref="detailItemAlbumLinkRef"
+					v-model="detailItemAlbumLink"
+					vid="detailItemAlbumLink"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.albums.url')"
+					:counter="255"
+				/>
+			</v-col>
+		</v-row>
 		<template v-slot:buttons_pre
-			v-if="$vuetify.display.smAndUp"
+			v-if="$vuetify.display.mdAndUp"
 		>
+			<v-btn
+				v-if="canAddSecondary"
+				class="mr-2"
+				color="primary"
+				@click="handleAddVideo"
+			>
+				{{ $t('buttons.add') }} {{ $t('titles.content.rockets.videos.title') }}
+			</v-btn>
 			<v-btn
 				v-if="canAddSecondary"
 				class="mr-2"
@@ -130,9 +215,17 @@
 			>|</span>
 		</template>
 		<template v-slot:buttons_post
-			v-if="$vuetify.display.xs"
+			v-if="$vuetify.display.smAndDown"
 		>
 			<br>
+			<v-btn
+				v-if="canAddSecondary"
+				class="mr-2 mt-2"
+				color="primary"
+				@click="handleAddVideo"
+			>
+				{{ $t('buttons.add') }} {{ $t('titles.content.rockets.videos.title') }}
+			</v-btn>
 			<v-btn
 				v-if="canAddSecondary"
 				class="mt-2"
@@ -143,14 +236,65 @@
 			</v-btn>
 		</template>
 		<template v-slot:after>	
-		[[ {{ panels }} ]] 
-		[[ {{ isNew }} ]] 
+			<!-- [[ {{ videosPanels  }} ]] 
+			[[ {{ isNew }} ]]  -->
 			<v-expansion-panels
 				v-if="!isNew"
-				v-model="panels"
+				v-model="videosPanels"
 				class="mt-4"
 				multiple
-				@update:modelValue="panelsUpdated"
+				@update:modelValue="videosPanelsUpdated"
+			>
+				<v-expansion-panel
+					v-for="item in videos" 
+					:key="item.id"
+					:value="item.id"
+				>
+					<v-expansion-panel-title
+						color="primary"
+					>
+						{{ item.name }}
+					</v-expansion-panel-title>
+					<v-expansion-panel-text>
+						<RocketVideo
+							:detail-item="item"
+							:is-editable="isEditable"
+							:update-video="updateVideo"
+							:debug="debug"
+						>
+							<template
+								v-slot:actionsEdit
+							>	
+								<v-btn
+									:variant="buttonsForms.variant.delete"
+									:color="buttonsForms.color.delete"
+									class="mr-2"
+									:disabled="isDeletingVideo(item)"
+									@click="dialogDeleteVideoOpen(item)"
+								>
+									{{ $t('buttons.delete') }}
+								</v-btn>
+								<v-btn
+									:variant="buttonsForms.variant.edit"
+									:color="buttonsForms.color.edit"
+									:disabled="isEditingVideo(item)"
+									@click="dialogEditVideoOpen(item)"
+								>
+									{{ $t('buttons.edit') }}
+								</v-btn>
+							</template>
+						</RocketVideo>
+					</v-expansion-panel-text>
+				</v-expansion-panel>
+			</v-expansion-panels>
+			<!-- [[ {{ stagesPanels }} ]] 
+			[[ {{ isNew }} ]]  -->
+			<v-expansion-panels
+				v-if="!isNew"
+				v-model="stagesPanels"
+				class="mt-4"
+				multiple
+				@update:modelValue="stagesPanelsUpdated"
 			>
 				<v-expansion-panel
 					v-for="item in stages" 
@@ -167,7 +311,7 @@
 							:detail-item="item"
 							:is-editable="isEditable"
 							:manufacturers="manufacturers"
-							:pre-complete-ok-rocket-part="dialogEditPreCompleteOkRocketParts"
+							:pre-complete-ok-rocket-part="dialogEditPreCompleteOkRocketPart"
 							:update-stage="updateStage"
 							:debug="debug"
 						>
@@ -210,6 +354,15 @@
 		@error="dialogDeleteSecondaryError"
 		@ok="dialogDeleteSecondaryOk"
 	/>
+	<VtConfirmationDialog
+		ref="dialogDeleteVideoRef"
+		:message="dialogDeleteVideoMessage"
+		:messageRaw=true
+		:signal="dialogDeleteVideoManager.signal"
+		@cancel="dialogDeleteVideoCancel"
+		@error="dialogDeleteVideoError"
+		@ok="dialogDeleteVideoOk"
+	/>
 	<RocketStageEditDialog
 		v-if="!readonly"
 		ref="dialogEditSecondaryRef"
@@ -220,6 +373,17 @@
 		:signal="dialogEditSecondaryManager.signal"
 		@close="dialogEditSecondaryCancel"
 		@ok="dialogEditSecondaryOk"
+		width="90%"
+	/>
+	<RocketVideoEditDialog
+		v-if="!readonly"
+		ref="dialogEditVideoRef"
+		:debug="debug"
+		:pre-complete-ok="dialogEditVideoPreCompleteOk"
+		:value="dialogEditVideoParams"
+		:signal="dialogEditVideoManager.signal"
+		@close="dialogEditVideoCancel"
+		@ok="dialogEditVideoOk"
 		width="90%"
 	/>
 </template>
@@ -237,6 +401,8 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketStage from '@/components/content/rockets/library/rocket/RocketStage';
 import RocketStageEditDialog from '@/components/content/rockets/library/dialogs/RocketStageEditDialog';
+import RocketVideo from '@/components/content/rockets/library/rocket/RocketVideo';
+import RocketVideoEditDialog from '@/components/content/rockets/library/dialogs/RocketVideoEditDialog';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
@@ -252,6 +418,8 @@ export default {
 		MeasurementUnitsSelect,
 		RocketStage,
 		RocketStageEditDialog,
+		RocketVideo,
+		RocketVideoEditDialog,
 		VtConfirmationDialog,
 		VtFormControl,
 		VtNumberFieldWithValidation,
@@ -335,23 +503,44 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			markupHint,
+			detailItemAlbumLink,
+			detailItemAlbumName,
+			detailItemAlbumType,
+			detailItemCoverUrl,
 			detailItemDescription,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemRocketType,
-			coverUrl,
-			manufacturers,
-			panels,
-			panelsId,
 			stagesPanels,
+			videosPanels,
+			dialogDeleteVideoManager,
+			dialogDeleteVideoMessage,
+			dialogEditVideoManager,
+			dialogEditVideoParams,
+			coverUrl,
 			hasAdmin,
+			manufacturers,
 			rocketId,
 			stages,
-			dialogEditPreCompleteOkRocketParts,
-			panelsUpdated,
+			videos,
+			dialogEditPreCompleteOkRocketPart,
+			dialogDeleteVideoCancel,
+			dialogDeleteVideoError,
+			dialogDeleteVideoOk,
+			dialogDeleteVideoOpen,
+			dialogEditVideoCancel,
+			dialogEditVideoError,
+			dialogEditVideoOk,
+			dialogEditVideoOpen,
+			dialogEditVideoPreCompleteOk,
+			handleAddVideo,
+			isDeletingVideo,
+			isEditingVideo,
 			stagesPanelsUpdated,
+			videosPanelsUpdated,
 			updateStage,
+			updateVideo,
 			scope,
 			validation
 		} = useRocketComponent(props, context, options);
@@ -426,23 +615,44 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			markupHint,
+			detailItemAlbumLink,
+			detailItemAlbumName,
+			detailItemAlbumType,
+			detailItemCoverUrl,
 			detailItemDescription,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemRocketType,
-			coverUrl,
-			manufacturers,
-			panels,
-			panelsId,
 			stagesPanels,
+			videosPanels,
+			dialogDeleteVideoManager,
+			dialogDeleteVideoMessage,
+			dialogEditVideoManager,
+			dialogEditVideoParams,
+			coverUrl,
 			hasAdmin,
+			manufacturers,
 			rocketId,
 			stages,
-			dialogEditPreCompleteOkRocketParts,
-			panelsUpdated,
+			videos,
+			dialogEditPreCompleteOkRocketPart,
+			dialogDeleteVideoCancel,
+			dialogDeleteVideoError,
+			dialogDeleteVideoOk,
+			dialogDeleteVideoOpen,
+			dialogEditVideoCancel,
+			dialogEditVideoError,
+			dialogEditVideoOk,
+			dialogEditVideoOpen,
+			dialogEditVideoPreCompleteOk,
+			handleAddVideo,
+			isDeletingVideo,
+			isEditingVideo,
 			stagesPanelsUpdated,
+			videosPanelsUpdated,
 			updateStage,
+			updateVideo,
 			scope,
 			validation
 		};
