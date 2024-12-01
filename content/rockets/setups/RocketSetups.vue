@@ -319,7 +319,7 @@ import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/Vt
 import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
-	name: 'RocketsUserControl',
+	name: 'RocketsSetupsUserControl',
 	components: {
 		ContentHeader,
 		MeasurementUnitSelect,

@@ -1,11 +1,30 @@
-import { between, decimal, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required, url } from '@vuelidate/validators';
 
 export function useRocketEditValidation(nameRequired) { 
 	const validation = {
+		detailItemAlbumName: { 
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
+			maxLength: maxLength(3),
+			maxLength: maxLength(50),
+			$autoDirty: true 
+		},
+		detailItemAlbumType: { 
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[!@#$%^&*()_\-\+=\[\]{}|\\:;"'<>,.?\/a-zA-Z0-9 (\r|\n)*$/)]*$/)),
+			maxLength: maxLength(20),
+			maxLength: maxLength(255),
+			url,
+			$autoDirty: true 
+		},
 		detailItemCg: {  decimal, between: between(0, 2004), $autoDirty: true }, // TODO: max of length
 		detailItemCgFrom: { minLength: minLength(3), maxLength: maxLength(50), $autoDirty: true },
 		detailItemCgMeasurementUnitId: { $autoDirty: true },
 		detailItemCgMeasurementUnitsId: { $autoDirty: true },
+		// detailItemCoverUrl: {
+		// 	minLength: minLength(16),
+		// 	maxLength: maxLength(255),
+		// 	url,
+		// 	$autoDirty: true 
+		// },
 		detailItemCp: {  decimal, between: between(0, 2004), $autoDirty: true }, // TODO: max of length
 		detailItemCpFrom: { minLength: minLength(3), maxLength: maxLength(50), $autoDirty: true },
 		detailItemCpMeasurementUnitId: { $autoDirty: true },
@@ -29,12 +48,14 @@ export function useRocketEditValidation(nameRequired) {
 	validation['detailItemName'] =  (nameRequired === true ?
 		{
 			required,
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 			minLength: minLength(3),
 			maxLength: maxLength(50),
 			$autoDirty: true
 		}
 	:
 		validation['detailItemName'] = {
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 			minLength: minLength(3),
 			maxLength: maxLength(50),
 			$autoDirty: true
