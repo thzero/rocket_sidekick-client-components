@@ -37,7 +37,7 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.name')"
-					:counter="30"
+					:maxcount="30"
 				/>
 			</v-col>
 			<v-col cols="12" sm="4">
