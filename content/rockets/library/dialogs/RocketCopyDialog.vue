@@ -16,7 +16,7 @@
 			v-model="name"
 			vid="name"
 			:label="$t('forms.name')"
-			:counter="30"
+			:maxcount="30"
 			:validation="validation"
 		/>
 	</VtFormDialog>

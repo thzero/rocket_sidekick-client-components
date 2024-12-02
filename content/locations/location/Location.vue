@@ -44,7 +44,7 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.name')"
-					:counter="30"
+					:maxcount="30"
 				/>
 			</v-col>
 			<v-col cols="12" sm="4">
@@ -82,7 +82,7 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.locations.link')"
-					:counter="100"
+					:maxcount="100"
 				/>
 			</v-col>
 		</v-row>

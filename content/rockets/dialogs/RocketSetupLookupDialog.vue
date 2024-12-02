@@ -25,7 +25,7 @@
 										vid="filterItemName"
 										:validation="validation"
 										:label="$t('forms.name')"
-										:counter="30"
+										:maxcount="30"
 									/>
 								</v-col>
 							</v-row>

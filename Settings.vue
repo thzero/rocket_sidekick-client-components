@@ -80,7 +80,7 @@
 													ref="gamerTagRef"
 													vid="gamerTag"
 													v-model="gamerTag"
-													:counter="30"
+													:maxcount="30"
 													:validation="validation"
 													:label="$t('forms.gamerTag')"
 												/>

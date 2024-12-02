@@ -62,7 +62,7 @@
 					:validation="validation"
 					:readonly="!isEditable"
 					:label="$t('forms.content.parts.manufacturerId')"
-					:counter="30"
+					:maxcount="30"
 				/>
 			</v-col>
 		</v-row>

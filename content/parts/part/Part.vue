@@ -36,7 +36,7 @@
 					v-model="detailItemName"
 					vid="detailItemName"
 					:label="$t('forms.name')"
-					:counter="30"
+					:maxcount="30"
 					:validation="validation"
 					:readonly="!isEditable"
 				/>
