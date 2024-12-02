@@ -9,6 +9,7 @@
 		[[ canAddSecondary {{ canAddSecondary }} ]]
 		[[ canDeleteSecondary {{ canDeleteSecondary }} ]]
 		[[ canEditSecondary {{ canEditSecondary }} ]]
+		[[ validation <pre>{{ JSON.stringify(validation?.$silentErrors, null, '  ') }}</pre> ]]
 		<!-- [[ modelValue {{ JSON.stringify(modelValue) }}]] -->
 		<!-- [[ detailItem {{ JSON.stringify(detailItem) }}]]  -->
 		<!-- <div>[[ detailItemData {{ JSON.stringify(detailItemData) }} ]] </div> -->
