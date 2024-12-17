@@ -191,6 +191,46 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="12">
+				<h4>{{ $t('titles.content.rockets.documents.title') }}</h4>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="4" md="3">
+				<VtTextFieldWithValidation
+					ref="detailItemDocumentNameRef"
+					v-model="detailItemDocumentName"
+					vid="detailItemDocumentName"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.documents.name')"
+					:counter="50"
+				/>
+			</v-col>
+			<!-- <v-col cols="12" sm="6">
+				<VtTextFieldWithValidation
+					ref="detailItemDocumentTypeRef"
+					v-model="detailItemDocumentType"
+					vid="detailItemDocumentName"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.documents.type')"
+					:counter="20"
+				/>
+			</v-col> -->
+			<v-col cols="12" sm="8" md="9">
+				<VtTextFieldWithValidation
+					ref="detailItemDocumentLinkRef"
+					v-model="detailItemDocumentLink"
+					vid="detailItemDocumentLink"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.rockets.documents.url')"
+					:counter="255"
+				/>
+			</v-col>
+		</v-row>
 		<template v-slot:buttons_pre
 			v-if="$vuetify.display.mdAndUp"
 		>
@@ -509,6 +549,9 @@ export default {
 			detailItemAlbumType,
 			detailItemCoverUrl,
 			detailItemDescription,
+			detailItemDocumentLink,
+			detailItemDocumentName,
+			detailItemDocumentType,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
@@ -621,6 +664,9 @@ export default {
 			detailItemAlbumType,
 			detailItemCoverUrl,
 			detailItemDescription,
+			detailItemDocumentLink,
+			detailItemDocumentName,
+			detailItemDocumentType,
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,

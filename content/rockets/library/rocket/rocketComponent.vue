@@ -171,6 +171,9 @@ export function useRocketComponent(props, context, options) {
 	const detailItemAlbumName = ref(null);
 	const detailItemAlbumType = ref(null);
 	const detailItemDescription = ref(null);3
+	const detailItemDocumentLink = ref(null);
+	const detailItemDocumentName = ref(null);
+	const detailItemDocumentType = ref(null);
 	const detailItemManufacturer = ref(null);
 	const detailItemCoverUrl = ref(null);
 	const detailItemManufacturerStockId = ref(null);
@@ -378,6 +381,15 @@ export function useRocketComponent(props, context, options) {
 
 		detailItemDescription.value = value && value.description ? value.description : null;
 		
+		detailItemDocumentLink.value = null;
+		detailItemDocumentName.value = null;
+		detailItemDocumentType.value = null;
+		if (value && value.documents && value.documents.length > 0) {
+			detailItemDocumentLink.value = value.documents[0].link;
+			detailItemDocumentName.value = value.documents[0].name;
+			detailItemDocumentType.value = value.documents[0].type;
+		}
+		
 		detailItemManufacturer.value = value && value.manufacturerId ? value.manufacturerId : manufacturerDefault.value; // 'd37HEk5Wjm3mmV4InK90U';
 		detailItemManufacturerStockId.value = value ? value.manufacturerStockId : null;
 
@@ -398,6 +410,17 @@ export function useRocketComponent(props, context, options) {
 		detailItemData.value.coverUrl = detailItemCoverUrl.value;
 
 		detailItemData.value.description = detailItemDescription.value;
+
+		detailItemData.value.documents = [];
+
+		detailItemData.value.documents = [];
+		if (detailItemDocumentLink.value) {
+			detailItemData.value.documents.push({
+				name: detailItemDocumentName.value,
+				link: detailItemDocumentLink.value,
+				type: detailItemDocumentType.value
+			});
+		}
 		
 		detailItemData.value.manufacturerId = detailItemManufacturer.value;
 		detailItemData.value.manufacturerStockId = detailItemManufacturerStockId.value;
@@ -565,6 +588,9 @@ export function useRocketComponent(props, context, options) {
 		detailItemAlbumType,
 		detailItemCoverUrl,
 		detailItemDescription,
+		detailItemDocumentLink,
+		detailItemDocumentName,
+		detailItemDocumentType,
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
 		detailItemName,

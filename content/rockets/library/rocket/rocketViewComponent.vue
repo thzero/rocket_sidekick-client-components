@@ -49,6 +49,9 @@ export function useRocketViewComponent(props, context, options) {
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
 	});
+	const documents = computed(() => {
+		return displayItem.value && displayItem.value.documents && displayItem.value.documents.length > 0 ? displayItem.value.documents : null;
+	});
 	const length = computed(() => {
 		if (!props.detailItem)
 			return null;
@@ -96,6 +99,7 @@ export function useRocketViewComponent(props, context, options) {
 		cp,
 		diameter,
 		displayItem,
+		documents,
 		length,
 		manufacturer,
 		stagePrimary,
