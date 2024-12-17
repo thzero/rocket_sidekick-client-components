@@ -57,18 +57,25 @@ export function useRocketInfoBaseComponent(props, context, options) {
 	const displayTypeUser = computed(() => {
 		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.User);
 	});
+	const documents = computed(() => {
+		if (!rocket.value || !rocket.value.documents)
+			return [];
+		return rocket.value.documents;
+	});
 	const hasAlbums = computed(() => {
 		if (!rocket.value || !rocket.value.albums)
 			return false;
 		return rocket.value.albums.length > 0;
 	});
+	const hasDocuments = computed(() => {
+		if (!rocket.value || !rocket.value.documents)
+			return false;
+		return rocket.value.documents.length > 0;
+	});
 	const hasLaunches = computed(() => {
 		if (!rocket.value || !rocket.value.logs)
 			return false;
 		return rocket.value.logs.length > 0;
-	});
-	const hasAlbumsOrVideos = computed(() => {
-		return hasAlbums.value || hasVideos.value;
 	});
 	const hasVideos = computed(() => {
 		if (!rocket.value || !rocket.value.videos)
@@ -138,9 +145,10 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		albums,
 		displayTypeSite,
 		displayTypeUser,
+		documents,
 		hasAlbums,
+		hasDocuments,
 		hasLaunches,
-		hasAlbumsOrVideos,
 		hasVideos,
 		rocketsUrl,
 		stagePrimary,

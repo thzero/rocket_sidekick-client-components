@@ -137,6 +137,28 @@
 		</v-row>
 		<v-row dense>
 			<v-col 
+				v-if="documents"
+				cols="12"
+			>
+				<h4>{{ $t('titles.content.rockets.documents.title') }}</h4>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col 
+				v-if="documents"
+				cols="4" md="12"
+				v-for="document in documents"
+			>
+				<span><a
+					:href="document.link"
+					target="_blank"
+				>
+					{{ document.name }}
+				</a></span>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col 
 				v-if="videos"
 				cols="12"
 			>
@@ -199,6 +221,7 @@ export default {
 			cp,
 			diameter,
 			displayItem,
+			documents,
 			length,
 			manufacturer,
 			stagePrimary,
@@ -225,6 +248,7 @@ export default {
 			cp,
 			diameter,
 			displayItem,
+			documents,
 			length,
 			manufacturer,
 			stagePrimary,

@@ -166,6 +166,56 @@
 				</v-col>
 			</v-row>
 		</v-col>
+		<v-col cols="12" md="6">
+			<v-row dense>
+				<v-col
+					v-if="hasDocuments"
+					cols="12" md="6"
+				>
+					<v-card>
+						<v-card-title>
+			<p class="text-h6 text-center">{{ $t('titles.content.rockets.documents') }}</p>
+						</v-card-title>
+						<v-card-text>
+			<v-list density="compact">
+				<v-list-item
+					v-for="item in documents"
+					:key="item.name"
+					:href="item.link"
+					:target="target(item)"
+					class="link"
+				>
+					<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
+				</v-list-item>
+			</v-list>
+						</v-card-text>
+					</v-card>
+				</v-col>
+				<v-col
+					v-if="hasVideos"
+					cols="12" md="6"
+				>
+					<v-card>
+						<v-card-title>
+		<p class="text-h6 text-center">{{ $t('titles.content.rockets.videos.plural') }}</p>
+						</v-card-title>
+						<v-card-text>
+			<v-list density="compact">
+				<v-list-item
+					v-for="item in videos"
+					:key="item.name"
+					:href="item.link"
+					:target="target(item)"
+					class="link"
+				>
+					<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
+				</v-list-item>
+			</v-list>
+						</v-card-text>
+					</v-card>
+				</v-col>
+			</v-row>
+		</v-col>
 		<v-col
 			v-if="hasLaunches"
 			cols="12"
@@ -238,9 +288,10 @@ export default {
 			albums,
 			displayTypeSite,
 			displayTypeUser,
+			documents,
 			hasAlbums,
+			hasDocuments,
 			hasLaunches,
-			hasAlbumsOrVideos,
 			hasVideos,
 			rocketsUrl,
 			stagePrimary,
@@ -274,9 +325,10 @@ export default {
 			albums,
 			displayTypeSite,
 			displayTypeUser,
+			documents,
 			hasAlbums,
+			hasDocuments,
 			hasLaunches,
-			hasAlbumsOrVideos,
 			hasVideos,
 			rocketsUrl,
 			stagePrimary,
