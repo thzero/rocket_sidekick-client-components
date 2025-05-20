@@ -116,10 +116,10 @@ export function usePartsBaseComponent(props, context, options) {
 	});
 
 	const canCopyI = (correlationId, item) => {
-		return isOwner(correlationId, item) || isPublic(correlationId, item); // TODO: SECURITY: Admin can copy a public
+		return isOwner(correlationId, item); // TODO: SECURITY: Admin can copy a public
 	};
 	const canDeleteI = (correlationId, item) => {
-		return isOwner(correlationId, item) || !isPublic(correlationId, item); // TODO: SECURITY: Admin can delete a public
+		return isOwner(correlationId, item); // TODO: SECURITY: Admin can delete a public
 	};
 	const canEditI = (correlationId, item) => {
 		return isOwner(correlationId, item); // TODO: SECURITY: Admin can edit a public
