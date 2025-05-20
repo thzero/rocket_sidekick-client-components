@@ -97,13 +97,17 @@
 								>
 									<slot name="panelTitle" :item="item">
 										{{ item.name }}
+									</slot>&nbsp;-&nbsp;
+									<slot name="panelManufacturer" :item="item">
+										{{ manufacturer(item) }}
 									</slot>
-									<span
+									<!-- <span
 										v-if="item.weight"
 									>
 										({{item.weight}} {{ measurementUnitTranslateWeight(item.weightMeasurementUnitsId, item.weightMeasurementUnitId) }})
-									</span>
-									<div class="float-right">{{ manufacturer(item) }} {{ isPublicDisplay(item) }}</div>
+									</span> -->
+									<!-- <div class="float-right">{{ manufacturer(item) }} {{ isPublicDisplay(item) }}</div> -->
+									<div class="float-right">{{ isPublicDisplay(item) }}</div>
 								</v-card-title>
 								<v-card-text
 									>
