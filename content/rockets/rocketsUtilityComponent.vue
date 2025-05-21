@@ -62,7 +62,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const cg = _highestMeasurement(stages, 'cg', primary.cgMeasurementUnitId, primary.cgMeasurementUnitsId, 'cm');
 		return cg ? cg + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cgMeasurementUnitsId, primary.cgMeasurementUnitId) : '';
 	};
-	const rocketCp = (stages) => {
+	const rocketCp = (stage) => {
 		if (!stage)
 			return null;
 		return stage.cp ? stage.cp + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), stage.cpMeasurementUnitsId, stage.cpMeasurementUnitId) : '';
@@ -87,7 +87,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const cp = _highestMeasurement(stages, 'cp', primary.cpMeasurementUnitId, primary.cpMeasurementUnitsId, 'cm');
 		return cp ? cp + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cpMeasurementUnitsId, primary.cpMeasurementUnitId) : '';
 	};
-	const rocketDiameter = (stages) => {
+	const rocketDiameter = (stage) => {
 		if (!stage)
 			return null;
 		return stage.diameterMajor ? stage.diameterMajor + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), stage.diameterMajorMeasurementUnitsId, stage.diameterMajorMeasurementUnitId) : '';
@@ -351,12 +351,12 @@ export function useRocketsUtilityComponent(props, context, options) {
 		temp = temp.map(l => l.name);
 		return temp.join(', ');
 	};
-	const rocketWeight = (stages) => {
+	const rocketWeight = (stage) => {
 		if (!stage)
 			return null;
 		return stage.weight ? stage.weight + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), stage.weightMeasurementUnitsId, stage.weightMeasurementUnitId) : '';
 	};
-	const rocketWeightHeight = (stages) => {
+	const rocketWeightHighest = (stages) => {
 		if (!stages)
 			return null;
 		// TODO: assuming all the same units...?
