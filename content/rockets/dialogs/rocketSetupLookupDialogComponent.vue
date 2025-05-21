@@ -43,22 +43,28 @@ export function useRocketSetupLookupDialogComponent(props, context, options) {
 		rocketTypes,
 		hasCoverUrl,
 		rocketCg,
+		rocketCgHighest,
 		rocketCp,
+		rocketCpHighest,
 		rocketDiameter,
+		rocketDiameterHighest,
 		rocketLength,
+		rocketLengthHighest,
+		rocketLengthOverall,
 		rocketManufacturer,
 		rocketMotorMountName,
 		rocketMotorMountNames,
-		rocketMotors,
 		rocketMotorNames,
 		rocketMotorNamesByStage,
+		rocketMotors,
 		rocketStagePrimary,
 		rocketStages,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
 		rocketTypeName,
 		rocketTypeNames,
-		rocketWeight
+		rocketWeight,
+		rocketWeightHighest
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);

@@ -39,7 +39,12 @@ export function useRocketsUtilityComponent(props, context, options) {
 			return null;
 		return !String.isNullOrEmpty(item.coverUrl);
 	};
-	const rocketCg = (stages) => {
+	const rocketCg = (stage) => {
+		if (!stage)
+			return null;
+		return stage.cg ? stage.cg + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), stage.cgMeasurementUnitsId, stage.cgMeasurementUnitId) : '';
+	};
+	const rocketCgHighest = (stages) => {
 		if (!stages)
 			return null;
 		// TODO: assuming all the same units...?
@@ -54,10 +59,15 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// 		cg = stageCg;
 		// }
 		// cg = ConvertUtility.convert(cg, 'cm', primary.cgMeasurementUnitId);
-		const cg = _convertMeasurement(stages, 'cg', primary.cgMeasurementUnitId, primary.cgMeasurementUnitsId, 'cm');
+		const cg = _highestMeasurement(stages, 'cg', primary.cgMeasurementUnitId, primary.cgMeasurementUnitsId, 'cm');
 		return cg ? cg + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cgMeasurementUnitsId, primary.cgMeasurementUnitId) : '';
 	};
 	const rocketCp = (stages) => {
+		if (!stage)
+			return null;
+		return stage.cp ? stage.cp + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), stage.cpMeasurementUnitsId, stage.cpMeasurementUnitId) : '';
+	};
+	const rocketCpHighest = (stages) => {
 		if (!stages)
 			return null;
 		// TODO: assuming all the same units...?
@@ -72,10 +82,17 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// 		cp = stage.cp;
 		// }
 		// cp = ConvertUtility.convert(cp, 'cm', primary.cpMeasurementUnitId);
-		const cp = _convertMeasurement(stages, 'cp', primary.cpMeasurementUnitId, primary.cpMeasurementUnitsId, 'cm');
+		if (!primary.cpMeasurementUnitId || !primary.cpMeasurementUnitsId)
+			return null;
+		const cp = _highestMeasurement(stages, 'cp', primary.cpMeasurementUnitId, primary.cpMeasurementUnitsId, 'cm');
 		return cp ? cp + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.cpMeasurementUnitsId, primary.cpMeasurementUnitId) : '';
 	};
 	const rocketDiameter = (stages) => {
+		if (!stage)
+			return null;
+		return stage.diameterMajor ? stage.diameterMajor + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), stage.diameterMajorMeasurementUnitsId, stage.diameterMajorMeasurementUnitId) : '';
+	};
+	const rocketDiameterHighest = (stages) => {
 		if (!stages)
 			return null;
 		// TODO: assuming all the same units...?
@@ -90,10 +107,17 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// 		diameterMajor = stageDiameterMajor;
 		// }
 		// diameterMajor = ConvertUtility.convert(diameter, 'cm', primary.diameterMajorMeasurementUnitId);
-		const diameterMajor = _convertMeasurement(stages, 'diameterMajor', primary.diameterMajorMeasurementUnitId, primary.diameterMajorMeasurementUnitsId, 'cm');
+		if (!primary.diameterMajorMeasurementUnitId || !primary.diameterMajorMeasurementUnitsId)
+			return null;
+		const diameterMajor = _highestMeasurement(stages, 'diameterMajor', primary.diameterMajorMeasurementUnitId, primary.diameterMajorMeasurementUnitId, 'cm');
 		return diameterMajor ? diameterMajor + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.diameterMajorMeasurementUnitsId, primary.diameterMajorMeasurementUnitId) : '';
 	};
 	const rocketLength = (stages) => {
+		if (!stage)
+			return null;
+		return stage.length ? stage.length + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), stage.lengthMeasurementUnitsId, stage.lengthMeasurementUnitId) : '';
+	};
+	const rocketLengthHighest = (stages) => {
 		if (!stages)
 			return null;
 		const primary = rocketStagePrimary(stages);
@@ -107,7 +131,28 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// 		length = stageLength;
 		// }
 		// diameter = ConvertUtility.convert(length, 'cm', primary.lengthMeasurementUnitId);
-		const length = _convertMeasurement(stages, 'length', primary.lengthMeasurementUnitId, primary.lengthMeasurementUnitsId, 'cm');
+		if (!primary.lengthMeasurementUnitId || !primary.lengthMeasurementUnitsId)
+			return null;
+		const length = _highestMeasurement(stages, 'length', primary.lengthMeasurementUnitId, primary.lengthMeasurementUnitsId, 'cm');
+		return length ? length + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.lengthMeasurementUnitsId, primary.lengthMeasurementUnitId) : '';
+	};
+	const rocketLengthOverall = (stages) => {
+		if (!stages)
+			return null;
+		const primary = rocketStagePrimary(stages);
+		if (!primary)
+			return null;
+		// let length = 0;
+		// let stageLength;
+		// for (const stage of stages) {
+		// 	stageLength = ConvertUtility.convert(stage.length, primary.lengthMeasurementUnitId, 'cm');
+		// 	if (stageLength > length)
+		// 		length = stageLength;
+		// }
+		// diameter = ConvertUtility.convert(length, 'cm', primary.lengthMeasurementUnitId);
+		if (!primary.lengthMeasurementUnitId || !primary.lengthMeasurementUnitsId)
+			return null;
+		const length = _overallMeasurement(stages, 'length', primary.lengthMeasurementUnitId, primary.lengthMeasurementUnitsId, 'cm');
 		return length ? length + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.lengthMeasurementUnitsId, primary.lengthMeasurementUnitId) : '';
 	};
 	const rocketManufacturer = (stages) => {
@@ -307,6 +352,11 @@ export function useRocketsUtilityComponent(props, context, options) {
 		return temp.join(', ');
 	};
 	const rocketWeight = (stages) => {
+		if (!stage)
+			return null;
+		return stage.weight ? stage.weight + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), stage.weightMeasurementUnitsId, stage.weightMeasurementUnitId) : '';
+	};
+	const rocketWeightHeight = (stages) => {
 		if (!stages)
 			return null;
 		// TODO: assuming all the same units...?
@@ -321,11 +371,13 @@ export function useRocketsUtilityComponent(props, context, options) {
 		// 		weight = stageWeight;
 		// }
 		// weight = ConvertUtility.convert(weight, 'cm', primary.weightMeasurementUnitId);
-		const weight = _convertMeasurement(stages, 'weight', primary.weightMeasurementUnitId, primary.weightMeasurementUnitsId, 'g');
+		if (!primary.weightMeasurementUnitId || !primary.weightMeasurementUnitsId)
+			return null;
+		const weight = _highestMeasurement(stages, 'weight', primary.weightMeasurementUnitId, primary.weightMeasurementUnitsId, 'g');
 		return weight ? weight + ' ' + AppUtility.measurementUnitTranslateWeight(correlationId(), primary.weightMeasurementUnitsId, primary.weightMeasurementUnitId) : '';
 	};
 
-	const _convertMeasurement = (stages, property, unitId, unitsId, internalUnitId) => {
+	const _highestMeasurement = (stages, property, unitId, unitsId, internalUnitId) => {
 		if (!stages)
 			return null;
 		if (!property)
@@ -345,13 +397,37 @@ export function useRocketsUtilityComponent(props, context, options) {
 		return value;
 	};
 
+	const _overallMeasurement = (stages, property, unitId, unitsId, internalUnitId) => {
+		if (!stages)
+			return null;
+		if (!property)
+			return null;
+		let value = 0;
+		let temp;
+		let temp2;
+		for (const stage of stages) {
+			temp = 0;
+			temp2 = stage[property];
+			if (temp2)
+				temp = ConvertUtility.convert(stage[property], unitId, internalUnitId);
+			value += temp;
+		}
+		value = ConvertUtility.round(ConvertUtility.convert(value, internalUnitId, unitId), 2);
+		return value;
+	};
+
 	return {
 		rocketTypes,
 		hasCoverUrl,
 		rocketCg,
+		rocketCgHighest,
 		rocketCp,
+		rocketCpHighest,
 		rocketDiameter,
+		rocketDiameterHighest,
 		rocketLength,
+		rocketLengthHighest,
+		rocketLengthOverall,
 		rocketManufacturer,
 		rocketMotorMountName,
 		rocketMotorMountNames,
@@ -364,7 +440,8 @@ export function useRocketsUtilityComponent(props, context, options) {
 		rocketTypeIconDetermine,
 		rocketTypeName,
 		rocketTypeNames,
-		rocketWeight
+		rocketWeight,
+		rocketWeightHighest
 	};
 };
 </script>

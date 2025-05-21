@@ -183,7 +183,7 @@
 									</slot>
 									<!-- <div class="float-right">{{ manufacturer(item) }}</div> -->
 									<div class="float-right">
-										{{ rocketDiameter(item.rocket.stages) }}
+										{{ rocketDiameterHighest(item.rocket.stages) }}
 										<!-- {{ rocketMotors(item.rocket) }} -->
 									</div>
 									<img :src="rocketTypeIcon(item.rocket)" style="height: 48px; float: left;" />
@@ -407,8 +407,7 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
-			rocketDiameter,
-			rocketLength,
+			rocketDiameterHighest,
 			rocketMotors,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
@@ -501,8 +500,7 @@ export default {
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
-			rocketDiameter,
-			rocketLength,
+			rocketDiameterHighest,
 			rocketMotors,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,

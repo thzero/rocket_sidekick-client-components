@@ -34,9 +34,14 @@ export function useRocketSetupViewComponent(props, context, options) {
 		rocketTypes,
 		hasCoverUrl,
 		rocketCg,
+		rocketCgHighest,
 		rocketCp,
+		rocketCpHighest,
 		rocketDiameter,
+		rocketDiameterHighest,
 		rocketLength,
+		rocketLengthHighest,
+		rocketLengthOverall,
 		rocketManufacturer,
 		rocketMotorMountName,
 		rocketMotorMountNames,
@@ -49,7 +54,8 @@ export function useRocketSetupViewComponent(props, context, options) {
 		rocketTypeIconDetermine,
 		rocketTypeName,
 		rocketTypeNames,
-		rocketWeight
+		rocketWeight,
+		rocketWeightHighest
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const cg = computed(() => {
@@ -63,12 +69,12 @@ export function useRocketSetupViewComponent(props, context, options) {
 	const cp = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
-		return rocketCp(props.detailItem.rocket.stages);
+		return rocketCpHighest(props.detailItem.rocket.stages);
 	});
 	const diameter = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
-		return rocketDiameter(props.detailItem.rocket.stages);
+		return rocketDiameterHighest(props.detailItem.rocket.stages);
 	});
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
@@ -79,7 +85,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 	const length = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
-		return rocketLength(props.detailItem.rocket.stages);
+		return rocketLengthOverall(props.detailItem.rocket.stages);
 	});
 	const manufacturer = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
@@ -107,7 +113,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 	const weight = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
-		return rocketWeight(props.detailItem.stages);
+		return rocketWeightHighest(props.detailItem.stages);
 	});
 
 	return {
