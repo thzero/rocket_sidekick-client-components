@@ -115,30 +115,6 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="6">
-				<VtSelectWithValidation
-					ref="manufacturerRef"
-					v-model="detailItemManufacturer"
-					vid="detailItemManufacturer"
-					:items="manufacturers"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.manufacturer.name')"
-				/>
-			</v-col>
-			<v-col cols="6">
-				<VtTextFieldWithValidation
-					ref="detailItemManufacturerStockIdRef"
-					v-model="detailItemManufacturerStockId"
-					vid="detailItemManufacturerStockId"
-					:validation="validation"
-					:readonly="!isEditable"
-					:label="$t('forms.content.parts.manufacturerId')"
-					:counter="30"
-				/>
-			</v-col>
-		</v-row>
-		<v-row dense>
 			<v-col cols="12">
 				<VtTextFieldWithValidation
 					ref="detailItemCoverUrlRef"
