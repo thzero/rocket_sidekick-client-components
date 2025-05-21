@@ -44,13 +44,31 @@ export function useChecklistViewComponent(props, context, options) {
 	} = useMotorUtilityComponent(props, context);
 
 	const {
+		rocketTypes,
+		hasCoverUrl,
 		rocketCg,
+		rocketCgHighest,
 		rocketCp,
+		rocketCpHighest,
 		rocketDiameter,
+		rocketDiameterHighest,
 		rocketLength,
+		rocketLengthHighest,
+		rocketLengthOverall,
+		rocketManufacturer,
+		rocketMotorMountName,
+		rocketMotorMountNames,
 		rocketMotorNames,
+		rocketMotorNamesByStage,
 		rocketMotors,
-		rocketWeight
+		rocketStagePrimary,
+		rocketStages,
+		rocketTypeIcon,
+		rocketTypeIconDetermine,
+		rocketTypeName,
+		rocketTypeNames,
+		rocketWeight,
+		rocketWeightHighest
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const displayItemDate = computed(() => {
@@ -80,27 +98,27 @@ export function useChecklistViewComponent(props, context, options) {
 	const displayItemRocketCg = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup)
 			return null;
-		return rocketCg(displayItem.value.rocketSetup.stages);
+		return rocketCgHighest(displayItem.value.rocketSetup.stages);
 	});
 	const displayItemRocketCp = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup || !displayItem.value.rocketSetup.rocket)
 			return null;
-		return rocketCp(displayItem.value.rocketSetup.rocket.stages);
+		return rocketCpHighest(displayItem.value.rocketSetup.rocket.stages);
 	});
 	const displayItemRocketDiameter = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup || !displayItem.value.rocketSetup.rocket)
 			return null;
-		return rocketDiameter(displayItem.value.rocketSetup.rocket.stages);
+		return rocketDiameterHighest(displayItem.value.rocketSetup.rocket.stages);
 	});
 	const displayItemRocketLength = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup || !displayItem.value.rocketSetup.rocket)
 			return null;
-		return rocketLength(displayItem.value.rocketSetup.rocket.stages);
+		return rocketLengthOverall(displayItem.value.rocketSetup.rocket.stages);
 	});
 	const displayItemRocketWeight = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup)
 			return null;
-		return rocketWeight(displayItem.value.rocketSetup.stages);
+		return rocketWeightHighest(displayItem.value.rocketSetup.stages);
 	});
 	const hasRocketSpecs = computed(() => {
 		return displayItemRocketCg.value || displayItemRocketCp.value || displayItemRocketDiameter.value || displayItemRocketLength.value || displayItemRocketWeight.value;

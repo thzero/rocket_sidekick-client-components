@@ -52,11 +52,21 @@
 			</v-col> -->
 			<v-col 
 				v-if="stages"
-				cols="2"
+				cols="3"
 			>
 				<VtTextField
 					v-model="stages"
 					:label="$t('strings.rockets.stages')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="diameter"
+				cols="3"
+			>
+				<VtTextField
+					v-model="diameter"
+					:label="$t('strings.rockets.diameter')"
 					:readonly="true"
 				/>
 			</v-col>
@@ -70,7 +80,7 @@
 					:readonly="true"
 				/>
 			</v-col>
-			<v-col 
+			<!-- <v-col 
 				v-if="weight"
 				cols="3"
 			>
@@ -79,17 +89,17 @@
 					:label="$t('strings.rockets.weight')"
 					:readonly="true"
 				/>
-			</v-col>
-			<v-col 
+			</v-col> -->
+			<!-- <v-col 
 				v-if="cp"
-				cols="4" sm="3"
+				cols="3"
 			>
 				<VtTextField
 					v-model="cp"
 					:label="$t('strings.rockets.cp')"
 					:readonly="true"
 				/>
-			</v-col>
+			</v-col> -->
 		</v-row>
 		<v-row dense>
 			<v-col 
