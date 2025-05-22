@@ -1,4 +1,9 @@
 export const useLaunchMapComponentProps = {
+	coords: {
+		type: Array,
+		required: true,
+		value: null
+	},
 	coordsLaunch: {
 		type: Array,
 		required: true,

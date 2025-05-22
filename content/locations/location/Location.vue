@@ -186,7 +186,7 @@
 					vid="detailItemCoordsLat"
 					:validation="validation"
 					:readonly="!isEditable"
-					:label="$t('forms.content.launches.results.coords.lat') + ' ' + $t('forms.content.launches.results.coords.launch')"
+					:label="$t('forms.content.locations.name') + ' ' + $t('forms.content.launches.results.coords.lat')"
 				/>
 			</v-col>
 			<v-col cols="6" sm="3">
@@ -196,7 +196,7 @@
 					vid="detailItemCoordsLong"
 					:validation="validation"
 					:readonly="!isEditable"
-					:label="$t('forms.content.launches.results.coords.long') + ' ' + $t('forms.content.launches.results.coords.launch')"
+					:label="$t('forms.content.locations.name') + ' ' + $t('forms.content.launches.results.coords.long')"
 				/>
 			</v-col>
 		</v-row>
@@ -230,8 +230,8 @@
 			</v-btn>
 		</template>
 		<template v-slot:after>	
-		[[ {{ panels }} ]] 
-		[[ {{ isNew }} ]] 
+		<!-- [[ {{ panels }} ]] 
+		[[ {{ isNew }} ]]  -->
 			<v-expansion-panels
 				v-if="!isNew"
 				v-model="panels"
@@ -360,6 +360,27 @@
 								/>
 							</v-col>
 						</v-row>
+						<v-row
+							v-if="item.coordsLat || item.coordsLong"
+							dense
+						>
+							<v-col cols="6" sm="4">
+								<VtTextField
+									v-if="item.coordsLat"
+									v-model="item.coordsLat"
+									:readonly="true"
+									:label="$t('forms.content.locations.name') + ' ' + $t('forms.content.launches.results.coords.lat')"
+								/>
+							</v-col>
+							<v-col cols="6" sm="4">
+								<VtTextField
+									v-if="item.coordsLong"
+									v-model="item.coordsLong"
+									:readonly="true"
+									:label="$t('forms.content.locations.name') + ' ' + $t('forms.content.launches.results.coords.long')"
+								/>
+							</v-col>
+						</v-row>
 						<v-row dense>
 							<v-col>
 								<div
@@ -392,6 +413,18 @@
 										</v-btn>
 									</div>
 								</div>
+							</v-col>
+						</v-row>
+						<v-row
+							v-if="item.coordsLat !== null && item.coordsLat !== undefined && item.coordsLong !== null && item.coordsLong !== undefined"
+							dense
+						>
+							<v-col>
+								<LocationMap
+									:id="item.id"
+									type="recovery"
+									:coords="[ Number(item.coordsLat),  Number(item.coordsLong) ]"
+								></LocationMap>
 							</v-col>
 						</v-row>
 					</v-expansion-panel-text>
@@ -432,6 +465,7 @@ import { useLocationComponent } from '@/components/content/locations/location/lo
 import { useLocationComponentProps } from '@/components/content/locations/location/locationComponentProps';
 
 import LocationEditDialog from '@/components/content/locations/dialogs/LocationEditDialog';
+import LocationMap from '@/components/content/locations/location/LocationMap';
 import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
@@ -448,6 +482,7 @@ export default {
 	name: 'LocationControl',
 	components: {
 		LocationEditDialog,
+		LocationMap,
 		MeasurementUnitSelect,
 		MeasurementUnitsSelect,
 		VtConfirmationDialog,
@@ -558,7 +593,7 @@ export default {
 			panels,
 			datesToString,
 			numberAndYear,
-			numberOrYear,
+			numberOrYearOrName,
 			panelsUpdated,
 			stateProvincesByCountry,
 			updateIteration,
@@ -659,7 +694,7 @@ export default {
 			panels,
 			datesToString,
 			numberAndYear,
-			numberOrYear,
+			numberOrYearOrName,
 			panelsUpdated,
 			stateProvincesByCountry,
 			updateIteration,

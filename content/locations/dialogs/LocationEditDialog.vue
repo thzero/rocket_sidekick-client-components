@@ -14,17 +14,15 @@
 		@error="dialogError"
 		@ok="dialogOk"
 	>
-		<div
+		<!-- <div
 			v-if="debug"
 			class="text-center"
 		>
 			isEditable: {{ isEditable }} readonly: {{ readonly }}
-			<!-- {{  countries }}
-			{{  states }} -->
 			detailItemAddressStateProvince {{  detailItemAddressStateProvince }}
-		</div>
+		</div> -->
 		<v-row dense>
-			<v-col cols="3" md="4">
+			<v-col cols="3" sm="6">
 				<VtNumberFieldWithValidation
 					ref="detailItemNumberRef"
 					v-model="detailItemNumber"
@@ -34,7 +32,17 @@
 					:label="$t('forms.content.locations.number')"
 				/>
 			</v-col>
-			<v-col cols="3" md="4">
+			<v-col cols="3" sm="6">
+				<VtTextFieldWithValidation
+					ref="detailItemNameRef"
+					v-model="detailItemName"
+					vid="detailItemName"
+					:readonly="!isEditable"
+					:validation="validation"
+					:label="$t('forms.content.locations.nameOf')"
+				/>
+			</v-col>
+			<v-col cols="3" sm="6">
 				<VtNumberFieldWithValidation
 					ref="detailItemYearRef"
 					v-model="detailItemYear"
@@ -44,7 +52,7 @@
 					:label="$t('forms.content.locations.year')"
 				/>
 			</v-col>
-			<v-col cols="6" md="4">
+			<v-col cols="3" sm="6">
 				<VtDateTimePickerFieldWithValidation
 					ref="detailItemDatesRef"
 					v-model="detailItemDates"
@@ -123,6 +131,28 @@
 				/>
 			</v-col>
 		</v-row>
+		<v-row dense>
+			<v-col cols="6" sm="3">
+				<VtNumberFieldWithValidation
+					ref="detailItemCoordsLatRef"
+					v-model="detailItemCoordsLat"
+					vid="detailItemCoordsLat"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.locations.name') + ' ' + $t('forms.content.launches.results.coords.lat')"
+				/>
+			</v-col>
+			<v-col cols="6" sm="3">
+				<VtNumberFieldWithValidation
+					ref="detailItemCoordsLongRef"
+					v-model="detailItemCoordsLong"
+					vid="detailItemCoordsLong"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.locations.name') + ' ' + $t('forms.content.launches.results.coords.long')"
+				/>
+			</v-col>
+		</v-row>
 	</VtFormDialog>
 </template>
 
@@ -147,7 +177,7 @@ import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/compo
 import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 export default {
-	name: 'LocationDialog',
+	name: 'LocationEditDialog',
 	components: {
 		MeasurementUnitSelect,
 		MeasurementUnitSelect2,
@@ -181,8 +211,11 @@ export default {
 			detailItemAddressCountry,
 			detailItemAddressPostalCode,
 			detailItemAddressStateProvince,
+			detailItemCoordsLat,
+			detailItemCoordsLong,
 			detailItemDates,
 			detailItemExperimental,
+			detailItemName,
 			detailItemNumber,
 			detailItemOrganizations,
 			detailItemRocketTypes,
@@ -191,7 +224,7 @@ export default {
 			setEditData,
 			countries,
 			displayName,
-			numberOrYear,
+			numberOrYearOrName,
 			stateProvinces,
 			preCompleteOk,
 			resetAdditional,
@@ -215,8 +248,11 @@ export default {
 			detailItemAddressCountry,
 			detailItemAddressPostalCode,
 			detailItemAddressStateProvince,
+			detailItemCoordsLat,
+			detailItemCoordsLong,
 			detailItemDates,
 			detailItemExperimental,
+			detailItemName,
 			detailItemNumber,
 			detailItemOrganizations,
 			detailItemRocketTypes,
@@ -225,7 +261,7 @@ export default {
 			setEditData,
 			countries,
 			displayName,
-			numberOrYear,
+			numberOrYearOrName,
 			stateProvinces,
 			preCompleteOk,
 			resetAdditional,

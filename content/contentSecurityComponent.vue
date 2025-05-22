@@ -36,7 +36,7 @@ export function useContentSecurityComponent(props, context, options) {
 		return item ? item.public ?? false : false;
 	};
 	const isPublicDisplay = (item) => {
-		return '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')';
+		return isPublic(null, item) ? '(' + (item ? LibraryClientUtility.$trans.t('strings.content.public') : '') + ')' : '';
 	};
 	const isUser = (correlationId, item) => {
 		return LibraryCommonUtility.isNotNull(user.value);

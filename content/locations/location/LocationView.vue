@@ -81,11 +81,11 @@
 			dense
 		>
 			<v-col>
-				<LocationMapping
+				<LocationMap
 					:id="displayItem.id"
 					type="recovery"
 					:coords="[ Number(displayItem.coordsLat),  Number(displayItem.coordsLong) ]"
-				></LocationMapping>
+				></LocationMap>
 			</v-col>
 		</v-row>
 	</div>
@@ -95,7 +95,7 @@
 import { useLocationViewComponent } from '@/components/content/locations/location/locationViewComponent';
 import { useLocationViewComponentProps } from '@/components/content/locations/location/locationViewComponentProps';
 
-import LocationMapping from '@/components/content/locations/location/LocationMap';
+import LocationMap from '@/components/content/locations/location/LocationMap';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
@@ -105,7 +105,7 @@ import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/Vt
 export default {
 	name: 'LocationViewControl',
 	components: {
-		LocationMapping,
+		LocationMap,
 		MeasurementUnitSelect2,
 		VtMarkdown,
 		VtSelect,

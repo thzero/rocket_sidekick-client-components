@@ -28,7 +28,7 @@ export function useLaunchMapComponent(props, context, options) {
 		setMarker,
 		setTooltip,
 		setView
-	} = useOpenStreetMapComponent(props, context, { coords: props.coordsLaunch, zoom: 17 });
+	} = useOpenStreetMapComponent(props, context, { coords: props.coords, zoom: 17 });
 	
 	onMounted(async () => {
 		// setCircle(correlationId(), 'launch', props.coordsLaunch, {
@@ -43,23 +43,38 @@ export function useLaunchMapComponent(props, context, options) {
 		// 	fillOpacity: 0.5,
 		// 	radius: 5
 		// });
-		setMarker(correlationId(), 'launch', props.coordsLaunch, {
-			// hueRotate: '150', // red
-			hueRotate: '175', // orange
-			title: LibraryClientUtility.$trans.t('strings.content.launches.launch'),
-			tooltip: {
-				content: LibraryClientUtility.$trans.t('strings.content.launches.launch'),
-				permanent: true
-			}
-		});
-		setMarker(correlationId(), 'recovery', props.coordsRecovery, {
-			hueRotate: '250', // green
-			title: LibraryClientUtility.$trans.t('strings.content.launches.recovery'),
-			tooltip: {
-				content: LibraryClientUtility.$trans.t('strings.content.launches.recovery'),
-				permanent: true
-			}
-		});	
+		if (props.coords) {
+			setMarker(correlationId(), 'location', props.coords, {
+				// hueRotate: '150', // red
+				hueRotate: '175', // orange
+				title: LibraryClientUtility.$trans.t('strings.content.launches.location'),
+				tooltip: {
+					content: LibraryClientUtility.$trans.t('strings.content.launches.location'),
+					permanent: true
+				}
+			});
+		}
+		if (props.coordsLaunch) {
+			setMarker(correlationId(), 'launch', props.coordsLaunch, {
+				// hueRotate: '150', // red
+				hueRotate: '175', // orange
+				title: LibraryClientUtility.$trans.t('strings.content.launches.launch'),
+				tooltip: {
+					content: LibraryClientUtility.$trans.t('strings.content.launches.launch'),
+					permanent: true
+				}
+			});
+		}
+		if (props.coordsRecovery) {
+			setMarker(correlationId(), 'recovery', props.coordsRecovery, {
+				hueRotate: '250', // green
+				title: LibraryClientUtility.$trans.t('strings.content.launches.recovery'),
+				tooltip: {
+					content: LibraryClientUtility.$trans.t('strings.content.launches.recovery'),
+					permanent: true
+				}
+			});	
+		}
 		// setTooltip(correlationId(), 'recovery', props.coordsRecovery, 'recovery', { offset: [5,5]});
 	});
 

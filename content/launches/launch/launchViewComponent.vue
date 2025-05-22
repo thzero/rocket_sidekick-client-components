@@ -5,6 +5,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
+import LibraryMomentUtility from '@thzero/library_common/utility/moment';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
@@ -95,6 +96,12 @@ export function useLaunchViewComponent(props, context, options) {
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
 	});
+	const displayItemDate = computed(() => {
+		if (!displayItem.value)
+			return null;
+		// return (displayItem.value.date ? new Date(displayItem.value.date).toLocaleDateString() : '');
+		return (displayItem.value.date ? LibraryMomentUtility.getDateHuman(displayItem.value.date) : '');
+	});
 	const displayItemLocationLink = computed(() => {
 		if (!displayItem.value || !displayItem.value.location)
 			return null;
@@ -104,8 +111,8 @@ export function useLaunchViewComponent(props, context, options) {
 		if (!displayItem.value || !displayItem.value.location || !displayItem.value.location.iteration)
 			return '';
 		let temp = [];
-		if (displayItem.value.location.iteration.name)
-			temp.push(displayItem.value.location.iteration.name);
+		// if (displayItem.value.location.iteration.name)
+		// 	temp.push(displayItem.value.location.iteration.name);
 		if (displayItem.value.location.iteration.number)
 			temp.push('#'+displayItem.value.location.iteration.number);
 		if (displayItem.value.location.iteration.year)
@@ -122,10 +129,21 @@ export function useLaunchViewComponent(props, context, options) {
 		if (displayItem.value.location.iteration && displayItem.value.location.iteration.address)
 			// temp = displayItem.value.location.iteration.address.city + ', ' + displayItem.value.location.iteration.address.stateProvince + ' ' + displayItem.value.location.iteration.address.country;
 			temp = AppUtility.address(displayItem.value.location.iteration.address);
-		if (displayItem.value.location.address)
+
+		if (displayItem.value.location.address && (displayItem.value.location.address.city || displayItem.value.location.address.stateProvince || displayItem.value.location.address.country || displayItem.value.location.address.postalCode))
 			// temp = displayItem.value.location.address.city + ', ' + displayItem.value.location.address.stateProvince + ' ' + displayItem.value.location.address.country;
 			temp = AppUtility.address(displayItem.value.location.address);
+
 		return temp;
+	});
+	const displayItemLocationIterationCoords = computed(() => {
+		if (!displayItem.value || !displayItem.value.location || !displayItem.value.location.iteration)
+			return null;
+
+		if (displayItem.value.location.iteration.coordsLat || displayItem.value.location.iteration.coordsLong)
+			return [ displayItem.value.location.iteration.coordsLat, displayItem.value.location.iteration.coordsLong ];
+
+		return null;
 	});
 	const displayItemLocationName = computed(() => {
 		return displayItem.value && displayItem.value.location ? displayItem.value.location.name + displayItemLocationIteration.value : '';
@@ -160,6 +178,18 @@ export function useLaunchViewComponent(props, context, options) {
 			return displayItemMeasurementAltitude(correlationId(), displayItem.value.results, (value) => { return value.altitudeMax; }, (value) => { return value.altitudeMaxMeasurementUnitsId; }, (value) => { return value.altitudeMaxMeasurementUnitId; });
 		return null;
 	});
+	const displayItemResultsCoords = computed(() => {
+		let temp = displayItemResultsCoordsLaunch.value;
+		if (temp && temp.length > 1)
+			return temp;
+		temp = displayItemResultsCoordsLocation.value;
+		if (temp && temp.length > 1)
+			return temp;
+		temp = displayItemLocationIterationCoords.value;
+		if (temp && temp.length > 1)
+			return temp;
+		return null;
+	});
 	const displayItemResultsCoordsLatLaunch = computed(() => {
 		return displayItem.value ? displayItem.value.coordsLatLaunch : '';
 	});
@@ -173,10 +203,13 @@ export function useLaunchViewComponent(props, context, options) {
 		return displayItem.value ? displayItem.value.coordsLatLaunch : '';
 	});
 	const displayItemResultsCoordsLaunch = computed(() => {
-		return displayItem.value && displayItem.value.results ? [ displayItem.value.results.coordsLatLaunch, displayItem.value.results.coordsLongLaunch ] : '';
+		return displayItem.value && displayItem.value.results && (displayItem.value.results.coordsLatLaunch || displayItem.value.results.coordsLongLaunch) ? [ displayItem.value.results.coordsLatLaunch, displayItem.value.results.coordsLongLaunch ] : null;
+	});
+	const displayItemResultsCoordsLocation = computed(() => {
+		return displayItem.value && (displayItem.value.coordsLat || displayItem.value.coordsLong) ? [ displayItem.value.coordsLat, displayItem.value.coordsLong ] : null;
 	});
 	const displayItemResultsCoordsRecovery = computed(() => {
-		return displayItem.value && displayItem.value.results ? [ displayItem.value.results.coordsLatRecovery, displayItem.value.results.coordsLongRecovery ] : '';
+		return displayItem.value && displayItem.value.results && (displayItem.value.results.coordsLatRecovery || displayItem.value.results.coordsLongRecovery) ? [ displayItem.value.results.coordsLatRecovery, displayItem.value.results.coordsLongRecovery ] : null;
 	});
 	const displayItemResultsVelocityMax = computed(() => {
 		if (displayItem.value && displayItem.value.results && displayItem.value.results.velocityMax)
@@ -247,7 +280,7 @@ export function useLaunchViewComponent(props, context, options) {
 		return rocketWeightHighest(displayItem.value.rocketSetup.stages);
 	});
 	const hasCoords = computed(() => {
-		return hasCoordsLaunch.value && hasCoordsRecovery.value;
+		return hasCoordsLocation.value || hasCoordsLocationIteration.value || hasCoordsLaunch.value || hasCoordsRecovery.value;
 	});
 	const hasCoordsLaunch = computed(() => {
 		if (!displayItem.value || !displayItem.value.results)
@@ -256,6 +289,21 @@ export function useLaunchViewComponent(props, context, options) {
 		return (
 			displayItem.value.results.coordsLatLaunch || 
 			displayItem.value.results.coordsLongLaunch
+		);
+	});
+	const hasCoordsLocation = computed(() => {
+		return (
+			displayItem.value.coordsLat || 
+			displayItem.value.coordsLong
+		);
+	});
+	const hasCoordsLocationIteration = computed(() => {
+		if (!displayItem.value || !displayItem.value.location || !displayItem.value.location.iteration)
+			return false;
+
+		return (
+			displayItem.value.location.iteration.coordsLat || 
+			displayItem.value.location.iteration.coordsLong
 		);
 	});
 	const hasCoordsRecovery = computed(() => {
@@ -328,6 +376,7 @@ export function useLaunchViewComponent(props, context, options) {
 		successReasons,
 		weatherOptions,
 		displayItem,
+		displayItemDate,
 		displayItemLocationLink,
 		displayItemLocationIteration,
 		displayItemLocationIterationAddress,
@@ -342,7 +391,9 @@ export function useLaunchViewComponent(props, context, options) {
 		displayItemResultsCoordsLongLaunch,
 		displayItemResultsCoordsLatRecovery,
 		displayItemResultsCoordsLongRecovery,
+		displayItemResultsCoords,
 		displayItemResultsCoordsLaunch,
+		displayItemResultsCoordsLocation,
 		displayItemResultsCoordsRecovery,
 		displayItemResultsVelocityMax,
 		displayItemResultsVelocityRecovery,
@@ -360,6 +411,7 @@ export function useLaunchViewComponent(props, context, options) {
 		displayItemWindSpeed,
 		hasCoords,
 		hasCoordsLaunch,
+		hasCoordsLocation,
 		hasCoordsRecovery,
 		hasResults,
 		hasRocketAlbumUrl,

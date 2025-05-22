@@ -215,8 +215,8 @@ export function useLocationComponent(props, context, options) {
 			output += item.year;
 		return output.trim();
 	};
-	const numberOrYear = (item) => {
-		return item.number ? item.number : item.year;
+	const numberOrYearOrName = (item) => {
+		return item.number ? item.number : item.year ? item.year : item.name;
 	};
 	const panelsKey = (value) => {
 		return value ? value.id : detailItemData.value ? detailItemData.value.id : null;
@@ -413,7 +413,7 @@ export function useLocationComponent(props, context, options) {
 		panels,
 		datesToString,
 		numberAndYear,
-		numberOrYear,
+		numberOrYearOrName,
 		panelsUpdated,
 		stateProvincesByCountry,
 		updateIteration,
