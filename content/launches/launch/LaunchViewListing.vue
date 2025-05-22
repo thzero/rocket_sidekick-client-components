@@ -8,6 +8,7 @@
 		v-if="!isHeaders"
 	>
 	<tr>
+		<td style="white-space:nowrap;">{{ displayItemDate }}</td>
 		<td style="white-space:nowrap;">{{ displayItemRocketMame }}</td>
 		<td style="min-width: 250px;">{{ displayItemLocationName }}</td>
 		<!-- <td>{{ displayItemLocationIterationAddress }}</td> -->
@@ -71,6 +72,9 @@
 		v-if="isHeaders"
 	>
 	<tr :style="!isSuccess ? 'background-color: red;' : ''">
+		<th class="text-left font-weight-bold">
+			{{ $t('forms.content.launches.dates') }}
+		</th>
 		<th class="text-left font-weight-bold">
 			{{ $t('forms.content.rockets.name') }}
 		</th>
@@ -138,7 +142,7 @@ import VtTextArea from '@thzero/library_client_vue3_vuetify3/components/form/VtT
 import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/VtTextField';
 
 export default {
-	name: 'LaunchViewControl',
+	name: 'LaunchViewListingControl',
 	components: {
 		MeasurementUnitSelect2,
 		VtMarkdown,
@@ -172,6 +176,7 @@ export default {
 			successReasons,
 			weatherOptions,
 			displayItem,
+			displayItemDate,
 			displayItemLocationLink,
 			displayItemLocationIteration,
 			displayItemLocationIterationAddress,
@@ -232,6 +237,7 @@ export default {
 			successReasons,
 			weatherOptions,
 			displayItem,
+			displayItemDate,
 			displayItemLocationLink,
 			displayItemLocationIteration,
 			displayItemLocationIterationAddress,

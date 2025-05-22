@@ -554,12 +554,13 @@
 				cols="6"
 				lg="5"
 			>
-				<LaunchMapping
+				<LaunchMap
 					:id="displayItem.id"
 					type="recovery"
+					:coords="displayItemResultsCoords"
 					:coordsLaunch="displayItemResultsCoordsLaunch"
 					:coordsRecovery="displayItemResultsCoordsRecovery"
-				></LaunchMapping>
+				></LaunchMap>
 			</v-col>
 			<v-col 
 				:cols="hasCoords ? 6 : 12"
@@ -669,12 +670,13 @@
 			dense
 		>
 			<v-col>
-				<LaunchMapping
+				<LaunchMap
 					:id="displayItem.id"
 					type="recovery"
+					:coords="displayItemResultsCoords"
 					:coordsLaunch="displayItemResultsCoordsLaunch"
 					:coordsRecovery="displayItemResultsCoordsRecovery"
-				></LaunchMapping>
+				></LaunchMap>
 			</v-col>
 		</v-row>
 	</div>
@@ -684,7 +686,7 @@
 import { useLaunchViewComponent } from '@/components/content/launches/launch/launchViewComponent';
 import { useLaunchViewComponentProps } from '@/components/content/launches/launch/launchViewComponentProps';
 
-import LaunchMapping from '@/components/content/launches/launch/LaunchMap';
+import LaunchMap from '@/components/content/launches/launch/LaunchMap';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
@@ -694,12 +696,12 @@ import VtTextField from '@thzero/library_client_vue3_vuetify3/components/form/Vt
 export default {
 	name: 'LaunchViewControl',
 	components: {
+		LaunchMap,
 		MeasurementUnitSelect2,
 		VtMarkdown,
 		VtSelect,
 		VtTextArea,
-		VtTextField,
-		LaunchMapping
+		VtTextField
 	},
 	props: {
 		...useLaunchViewComponentProps
@@ -726,6 +728,7 @@ export default {
 			successReasons,
 			weatherOptions,
 			displayItem,
+			displayItemDate,
 			displayItemLocationLink,
 			displayItemLocationIteration,
 			displayItemLocationIterationAddress,
@@ -740,7 +743,9 @@ export default {
 			displayItemResultsCoordsLongLaunch,
 			displayItemResultsCoordsLatRecovery,
 			displayItemResultsCoordsLongRecovery,
+			displayItemResultsCoords,
 			displayItemResultsCoordsLaunch,
+			displayItemResultsCoordsLocation,
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
@@ -757,6 +762,7 @@ export default {
 			displayItemTemperature,
 			displayItemWindSpeed,
 			hasCoords,
+			hasCoordsLocation,
 			hasCoordsLaunch,
 			hasCoordsRecovery,
 			hasResults,
@@ -788,6 +794,7 @@ export default {
 			successReasons,
 			weatherOptions,
 			displayItem,
+			displayItemDate,
 			displayItemLocationLink,
 			displayItemLocationIteration,
 			displayItemLocationIterationAddress,
@@ -802,7 +809,9 @@ export default {
 			displayItemResultsCoordsLongLaunch,
 			displayItemResultsCoordsLatRecovery,
 			displayItemResultsCoordsLongRecovery,
+			displayItemResultsCoords,
 			displayItemResultsCoordsLaunch,
+			displayItemResultsCoordsLocation,
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
@@ -819,6 +828,7 @@ export default {
 			displayItemTemperature,
 			displayItemWindSpeed,
 			hasCoords,
+			hasCoordsLocation,
 			hasCoordsLaunch,
 			hasCoordsRecovery,
 			hasResults,

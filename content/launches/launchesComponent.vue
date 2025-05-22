@@ -196,7 +196,9 @@ export function useLaunchesBaseComponent(props, context, options) {
 			return;
 
 		response.results = response.results.sort(
-			firstBy('name', { ignoreCase: true })
+			// firstBy('sortName', { ignoreCase: true })
+			firstBy((v1, v2) => { return (v1 && v1.date && v2 && v2.date) && new Date(v1.date) - new Date(v2.date); })
+			.thenBy((v1, v2) => { return (v1 && v1.name && v2 && v2.name) && v1.name.localeCompare(v2.name); })
 			.thenBy((v1, v2) => { return (v1 && v1.rocketSetup && v1.rocketSetup.name && v2 && v2.rocketSetup) && v1.rocketSetup.name.localeCompare(v2.rocketSetup.name); }, { ignoreCase: true })
 			.thenBy((v1, v2) => { return (v1 && v1.rocketSetup && v1.rocketSetup.rocket && v1.rocketSetup.rocket.name && v2 && v2.rocketSetup && v2.rocketSetup.rocket) && v1.rocketSetup.rocket.name.localeCompare(v2.rocketSetup.rocket.name); }, { ignoreCase: true })
 			.thenBy((v1, v2) => { return (v1 && v1.location && v1.location.name && v2 && v2.location) && v1.location.name.localeCompare(v2.location.name); }, { ignoreCase: true })
