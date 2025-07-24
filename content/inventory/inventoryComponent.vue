@@ -86,6 +86,9 @@ export function useInventoryBaseComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const debug = ref(false);
+	const dialogCopyManager = ref(new DialogSupport());
+	const dialogCopyMessage = ref(LibraryClientUtility.$trans.t(`messages.items.copy_confirm`));
+	const dialogCopyParams = ref(null);
 	const dialogPartsSearchAltimetersManager = ref(new DialogSupport());
 	const dialogPartsSearchChuteProtectorsManager = ref(new DialogSupport());
 	const dialogPartsSearchChuteReleasesManager = ref(new DialogSupport());
@@ -311,6 +314,43 @@ export function useInventoryBaseComponent(props, context, options) {
 	const clickTrackersSearch = async () => {
 		dialogPartsSearchTrackersManager.value.open();
 	};
+	const dialogCopyCancel = async () => {
+		try {
+			dialogCopyManager.value.cancel();
+		}
+		finally {
+			dialogCopyParams.item = null;
+		}
+	};
+	const dialogCopyOk = async () => {
+		try {
+			if (!dialogCopyParams.item || !dialogCopyParams.item.item)
+				return;
+
+			const temp = inventory.value.types.find(l => l.typeId === dialogCopyParams.item.item.typeId);
+			if (!temp)
+				return;
+
+			const temp2 = LibraryCommonUtility.cloneDeep(dialogCopyParams.item);
+			temp2.id = LibraryCommonUtility.generateId();
+			delete temp2.itemO;
+
+			LibraryCommonUtility.updateArrayById(temp.items, temp2.id, temp2, false);
+
+			await update();
+		}
+		finally {
+			dialogCopyParams.item = null;
+			dialogCopyManager.value.ok();
+		}
+	};
+	const dialogCopyOpen = (item) => {
+		if (!item)
+			return;
+
+		dialogCopyParams.item = item;
+		dialogCopyManager.value.open();
+	};
 	const dialogDeleteCancel = async () => {
 		try {
 			dialogDeleteManager.value.cancel();
@@ -390,17 +430,7 @@ export function useInventoryBaseComponent(props, context, options) {
 		if (!item || !item.item || !inventory.value || !inventory.value.types)
 			return;
 
-		const temp = inventory.value.types.find(l => l.typeId === item.item.typeId);
-		if (!temp)
-			return;
-
-		const temp2 = LibraryCommonUtility.cloneDeep(item);
-		temp2.id = LibraryCommonUtility.generateId();
-		delete temp2.itemO;
-
-		LibraryCommonUtility.updateArrayById(temp.items, temp2.id, temp2, false);
-
-		await update();
+		dialogCopyOpen(item);
 	};
 	const handleDelete = async (item) => {
 		if (!item || !item.item || !inventory.value || !inventory.value.types)
@@ -851,6 +881,9 @@ export function useInventoryBaseComponent(props, context, options) {
 		title,
 		viewType,
 		viewTypeListingRef,
+		dialogCopyManager,
+		dialogCopyMessage,
+		dialogCopyParams,
 		dialogPartsSearchAltimetersManager,
 		dialogPartsSearchChuteProtectorsManager,
 		dialogPartsSearchChuteReleasesManager,
@@ -885,6 +918,9 @@ export function useInventoryBaseComponent(props, context, options) {
 		clickParachutesSearch,
 		clickStreamersSearch,
 		clickTrackersSearch,
+		dialogCopyCancel,
+		dialogCopyOk,
+		dialogCopyOpen,
 		dialogDeleteCancel,
 		dialogDeleteOk,
 		handleCopy,

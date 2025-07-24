@@ -1169,6 +1169,13 @@
 		@select="selectTracker"
 	/>
 	<VtConfirmationDialog
+		ref="dialogCopyRef"
+		:messageRaw=true
+		:signal="dialogCopyManager.signal"
+		@cancel="dialogCopyCancel"
+		@ok="dialogCopyOk"
+	/>
+	<VtConfirmationDialog
 		ref="dialogDeleteRef"
 		:messageRaw=true
 		:signal="dialogDeleteManager.signal"
@@ -1286,6 +1293,9 @@ export default {
 			title,
 			viewType,
 			viewTypeListingRef,
+			dialogCopyManager,
+			dialogCopyMessage,
+			dialogCopyParams,
 			dialogPartsSearchAltimetersManager,
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
@@ -1320,6 +1330,9 @@ export default {
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
+			dialogCopyCancel,
+			dialogCopyOk,
+			dialogCopyOpen,
 			dialogDeleteCancel,
 			dialogDeleteOk,
 			handleCopy,
@@ -1403,6 +1416,9 @@ export default {
 			title,
 			viewType,
 			viewTypeListingRef,
+			dialogCopyManager,
+			dialogCopyMessage,
+			dialogCopyParams,
 			dialogPartsSearchAltimetersManager,
 			dialogPartsSearchChuteProtectorsManager,
 			dialogPartsSearchChuteReleasesManager,
@@ -1437,6 +1453,9 @@ export default {
 			clickParachutesSearch,
 			clickStreamersSearch,
 			clickTrackersSearch,
+			dialogCopyCancel,
+			dialogCopyOk,
+			dialogCopyOpen,
 			dialogDeleteCancel,
 			dialogDeleteOk,
 			handleCopy,
