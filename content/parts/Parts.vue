@@ -23,6 +23,7 @@
 								v-if="!showDetailItem && !filterDrawer"
 								:variant="buttonsForms.variant.add"
 								:color="buttonsForms.color.add"
+								:disabled="isDetailOpen || isLoading"
 								@click="handleAdd(item)"
 							>
 								{{ $t('buttons.add') }}
@@ -54,7 +55,7 @@
 				v-if="!showDetailItem && filterDrawer"
 				:variant="buttonsForms.variant.add"
 				:color="buttonsForms.color.add"
-				:disabled="isLoading"
+				:disabled="isDetailOpen || isLoading"
 				@click="handleAdd(item)"
 			>
 				{{ $t('buttons.add') }}
@@ -135,7 +136,7 @@
 										v-if="canCopy(item)"
 										:variant="buttonsForms.variant.copy"
 										:color="buttonsForms.color.copy"
-										:disabled="isCopying(item)"
+										:disabled="isDetailOpen || isCopying(item)"
 										@click="dialogCopyOpen(item)"
 									>
 										{{ $t('buttons.copy') }}
@@ -144,7 +145,7 @@
 										v-if="canDelete(item)"
 										:variant="buttonsForms.variant.delete"
 										:color="buttonsForms.color.delete"
-										:disabled="isDeleting(item)"
+										:disabled="isDetailOpen || isDeleting(item)"
 										@click="dialogDeleteOpen(item)"
 									>
 										{{ $t('buttons.delete') }}
@@ -153,6 +154,7 @@
 										v-if="canEdit(item)"
 										:variant="buttonsForms.variant.edit"
 										:color="buttonsForms.color.edit"
+										:disabled="isDetailOpen"
 										@click="handleEdit(item)"
 									>
 										{{ $t('buttons.edit') }}
@@ -161,6 +163,7 @@
 										v-if="canView(item)"
 										:variant="buttonsForms.variant.ok"
 										:color="buttonsForms.color.ok"
+										:disabled="isDetailOpen"
 										@click="handleView(item)"
 									>
 										{{ $t('buttons.view') }}
@@ -253,6 +256,7 @@ export default {
 			colsSearchResults,
 			displayEditPanel,
 			displaySearchResults,
+			isDetailOpen,
 			showDetailItem,
 			showList,
 			canCopy,
@@ -336,6 +340,7 @@ export default {
 			colsSearchResults,
 			displayEditPanel,
 			displaySearchResults,
+			isDetailOpen,
 			showDetailItem,
 			showList,
 			canCopy,

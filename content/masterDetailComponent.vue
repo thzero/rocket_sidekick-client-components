@@ -82,6 +82,9 @@ export function useMasterDetailComponent(props, context, options) {
 
 		return true;
 	});
+	const isDetailOpen = computed(() => {
+		return LibraryCommonUtility.isNotNull(detailItem.value);
+	});
 	const showDetailItem = computed(() => {
 		return LibraryCommonUtility.isNotNull(detailItem.value);
 	});
@@ -358,6 +361,7 @@ export function useMasterDetailComponent(props, context, options) {
 		colsSearchResults,
 		displayEditPanel,
 		displaySearchResults,
+		isDetailOpen,
 		showDetailItem,
 		showList,
 		canAdd,
