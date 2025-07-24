@@ -123,6 +123,7 @@ export function useLocationEditDialogComponent(props, context, options) {
 			detailItemOrganizations.value = value ? value.organizations : null;
 			detailItemRocketTypes.value = value ? value.rocketTypes : null;
 			detailItemYear.value = value ? value.year : null;
+
 		}
 		finally {
 			countryWatcher = watch(() => detailItemAddressCountry.value,
