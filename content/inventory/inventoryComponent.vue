@@ -427,20 +427,6 @@ export function useInventoryBaseComponent(props, context, options) {
 		return params;
 	};
 	const handleCopy = async (item) => {
-		// if (!item || !item.item || !inventory.value || !inventory.value.types)
-		// 	return;
-
-		// const temp = inventory.value.types.find(l => l.typeId === item.item.typeId);
-		// if (!temp)
-		// 	return;
-
-		// const temp2 = LibraryCommonUtility.cloneDeep(item);
-		// temp2.id = LibraryCommonUtility.generateId();
-		// delete temp2.itemO;
-
-		// LibraryCommonUtility.updateArrayById(temp.items, temp2.id, temp2, false);
-
-		// await update();
 		if (!item || !item.item || !inventory.value || !inventory.value.types)
 			return;
 
