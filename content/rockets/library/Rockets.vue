@@ -165,6 +165,13 @@
 									<div class="float-right">
 										{{ rocketDiameterHighest(item.stages) }},
 										{{ rocketMotorMountNames(item) }}
+										<v-chip
+											v-if="item.public"
+											variant="elevated" 
+											style="float: right; margin-left: 8px;"
+										>
+											{{ $t('forms.content.public') }}
+										</v-chip>
 									</div>
 									<img :src="rocketTypeIcon(item)" style="height: 48px; float: left;" />
 								</v-card-title>

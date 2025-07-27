@@ -43,6 +43,8 @@
 									</div>
 								</div>
 							</v-col>
+						</v-row>
+						<v-row dense>
 							<v-col cols="12">
 								<div 
 									class="d-flex"
@@ -197,7 +199,7 @@
 			</v-col>
 			<v-col cols="5" lg="2" md="3">
 				<router-link
-					v-if="!hasRocketAlbumUrl"
+					v-if="!displayItemRocketCoverUrl"
 					:to="'/user/rocket/' + (displayItem ? displayItem.rocketId: '')"
 					class="text-contrast router-link headline"
 					style="float: right;display: block;margin-left: auto; margin-right: auto;"
@@ -208,14 +210,14 @@
 					/>
 				</router-link>
 				<a
-					:href="hasRocketAlbumUrl"
+					:href="displayItemRocketCoverUrl"
 					target="_blank"
 					class="text-contrast router-link headline"
 					style="float: right;display: block;margin-left: auto; margin-right: auto;"
 				>
 					<img
 						style="width: 150px;"
-						:src="displayItemRocketAlbumUrl"
+						:src="displayItemRocketCoverUrl"
 					/>
 				</a>
 			</v-col>

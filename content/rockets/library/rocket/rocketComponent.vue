@@ -178,6 +178,7 @@ export function useRocketComponent(props, context, options) {
 	const detailItemCoverUrl = ref(null);
 	const detailItemManufacturerStockId = ref(null);
 	const detailItemName = ref(null);
+	const detailItemPublic = ref(false);
 	const detailItemRocketType = ref(null);
 	const manufacturerDefault = ref(null);
 	const stagesPanels = ref([]);
@@ -394,6 +395,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemManufacturerStockId.value = value ? value.manufacturerStockId : null;
 
 		detailItemName.value = value ? value.name : null;
+		detailItemPublic.value = value ? value.public : false;
 	};
 	const setData = (correlationId) => {
 		detailItemData.value.rocketTypes = detailItemRocketType.value;
@@ -426,6 +428,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemData.value.manufacturerStockId = detailItemManufacturerStockId.value;
 
 		detailItemData.value.name = detailItemName.value;
+		detailItemData.value.public = detailItemPublic.value;
 	};
 	const stagesPanelsKey = (value) => {
 		const temp = value ? value.id : detailItemData.value ? detailItemData.value.id : null;
@@ -594,6 +597,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemManufacturer,
 		detailItemManufacturerStockId,
 		detailItemName,
+		detailItemPublic,
 		detailItemRocketType,
 		stagesPanels,
 		videosPanels,

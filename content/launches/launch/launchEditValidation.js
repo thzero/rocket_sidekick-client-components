@@ -40,6 +40,7 @@ export function useLaunchEditValidation(self, nameRequired) {
 			maxLength: maxLength(1000),
 			$autoDirty: true
 		},
+		detailItemPublic: { $autoDirty: true },
 		detailItemResultsAccelerationMax: { $autoDirty: true },
 		detailItemResultsAccelerationMaxMeasurementUnitId: { $autoDirty: true },
 		detailItemResultsAccelerationMaxMeasurementUnitsId: { $autoDirty: true },

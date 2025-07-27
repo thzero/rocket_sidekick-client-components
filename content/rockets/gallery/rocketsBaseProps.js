@@ -4,5 +4,8 @@ export const useRocketsBaseProps = {
 	type: {
 		type: String,
 		default: AppCommonConstants.Rocketry.DisplayTypes.Site
+	},
+	userTag: {
+		type: String
 	}
 };

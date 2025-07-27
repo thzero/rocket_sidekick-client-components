@@ -49,6 +49,7 @@ export function useRocketEditValidation(nameRequired) {
 		detailItemLength: { decimal, between: between(0, 120), $autoDirty: true },
 		detailItemLengthMeasurementUnitId: { $autoDirty: true },
 		detailItemLengthMeasurementUnitsId: { $autoDirty: true },
+		detailItemPublic: { $autoDirty: true },
 		detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 		detailItemWeightMeasurementUnitId: { $autoDirty: true },
 		detailItemWeightMeasurementUnitsId: { $autoDirty: true }

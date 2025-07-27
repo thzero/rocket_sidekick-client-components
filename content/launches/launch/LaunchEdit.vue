@@ -68,7 +68,7 @@
 			</v-col>
 		</v-row> -->
 		<v-row dense>
-			<v-col cols="12" sm="6">
+			<v-col cols="12" sm="4">
 				<VtSelectWithValidation
 					ref="detailItemSuccessRef"
 					v-model="detailItemSuccess"
@@ -79,7 +79,7 @@
 					:label="$t('forms.content.launches.success')"
 				/>
 			</v-col>
-			<v-col cols="12" sm="6">
+			<v-col cols="12" sm="4">
 				<VtSelectWithValidation
 					v-if="!isSuccess"
 					ref="detailItemFailureReasonsRef"
@@ -91,6 +91,15 @@
 					:validation="validation"
 					:readonly="(!isEditable || isSuccess)"
 					:label="$t('forms.content.launches.failureReasons')"
+				/>
+			</v-col>
+			<v-col cols="12" sm="4">
+				<VtSwitchWithValidation
+					ref="detailItemPublicRef"
+					v-model="detailItemPublic"
+					vid="detailItemPublic"
+					:label="$t('forms.content.public')"
+					:validation="validation"
 				/>
 			</v-col>
 		</v-row>
@@ -805,6 +814,7 @@ export default {
 			detailItemFailureReasons,
 			detailItemName,
 			detailItemNotes,
+			detailItemPublic,
 			detailItemLocationId,
 			detailItemLocationIterationId,
 			detailItemLocationName,
@@ -938,6 +948,7 @@ export default {
 			detailItemFailureReasons,
 			detailItemName,
 			detailItemNotes,
+			detailItemPublic,
 			detailItemLocationId,
 			detailItemLocationIterationId,
 			detailItemLocationName,
