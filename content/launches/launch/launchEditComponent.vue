@@ -135,6 +135,7 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemLocationIterationId = ref(null);
 	const detailItemLocationName = ref(null);
 	const detailItemNotes = ref(null);
+	const detailItemPublic = ref(false);
 	const detailItemResultsAccelerationMax = ref(null);
 	const detailItemResultsAccelerationMaxMeasurementUnitId = ref(null);
 	const detailItemResultsAccelerationMaxMeasurementUnitsId = ref(null);
@@ -292,7 +293,8 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemDescription.value = value ? value.description : null;
 		
 		detailItemName.value = value ? value.name : null;
-		detailItemNotes.value = value ? value.notes : false;
+		detailItemNotes.value = value ? value.notes : null;
+		detailItemPublic.value = value ? value.public : false;
 
 		if (value && value.location) {
 			detailItemLocationId.value = value.location.id;
@@ -429,6 +431,7 @@ export function useLaunchEditComponent(props, context, options) {
 		
 		detailItemData.value.name = detailItemName.value;
 		detailItemData.value.notes = detailItemNotes.value;
+		detailItemData.value.public = detailItemPublic.value;
 
 		detailItemData.value.locationId = detailItemLocationId.value;
 		detailItemData.value.locationIterationId = detailItemLocationIterationId.value;
@@ -564,6 +567,7 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemFailureReasons,
 		detailItemName,
 		detailItemNotes,
+		detailItemPublic,
 		detailItemLocationId,
 		detailItemLocationIterationId,
 		detailItemLocationName,

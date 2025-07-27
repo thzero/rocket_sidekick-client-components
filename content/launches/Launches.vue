@@ -241,6 +241,13 @@
 											{{ launchTitleLocation(item) }}
 										</router-link>
 									</span>
+									<v-chip
+										v-if="item.public"
+										variant="elevated" 
+										style="float: right; margin-left: 8px;"
+									>
+										{{ $t('forms.content.public') }}
+									</v-chip>
 									<div class="float-right">{{ launchDate(item) }}</div>
 								</v-card-title>
 								<v-card-text>

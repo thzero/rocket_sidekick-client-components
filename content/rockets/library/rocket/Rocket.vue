@@ -44,7 +44,7 @@
 					:maxcount="50"
 				/>
 			</v-col>
-			<v-col cols="12" md="4">
+			<v-col cols="6" md="2">
 				<VtSelectWithValidation
 					ref="detailItemRocketTypeRef"
 					v-model="detailItemRocketType"
@@ -55,6 +55,15 @@
 					multiple
 					:max-values="2"
 					:label="$t('forms.content.rockets.type')"
+				/>
+			</v-col>
+			<v-col cols="6" md="2">
+				<VtSwitchWithValidation
+					ref="detailItemPublicRef"
+					v-model="detailItemPublic"
+					vid="detailItemPublic"
+					:validation="validation"
+					:label="$t('forms.content.public')"
 				/>
 			</v-col>
 		</v-row>
@@ -531,6 +540,7 @@ export default {
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemPublic,
 			detailItemRocketType,
 			stagesPanels,
 			videosPanels,
@@ -646,6 +656,7 @@ export default {
 			detailItemManufacturer,
 			detailItemManufacturerStockId,
 			detailItemName,
+			detailItemPublic,
 			detailItemRocketType,
 			stagesPanels,
 			videosPanels,

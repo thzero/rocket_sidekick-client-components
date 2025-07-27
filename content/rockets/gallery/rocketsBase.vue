@@ -34,15 +34,23 @@ export function useRocketsBaseComponent(props, context, options) {
 	const params = ref({});
 	const rockets = ref([]);
 	const title = ref(
-		(type.value === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.rockets.title')
+		(type.value === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.rockets.title') + ' ' + LibraryClientUtility.$trans.t('titles.content.gallery')
 	);
 
 	const fetch = async () => {
 		let response;
 		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			response = await serviceStore.dispatcher.requestRocketsGallery(correlationId(), params.value);
-		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User)
-			response = await serviceStore.dispatcher.requestRockets(correlationId(), params.value);
+		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User) {
+			params.value.userId = serviceStore.user ? serviceStore.user.id : null;
+			response = await serviceStore.dispatcher.requestRocketsGalleryUser(correlationId(), params.value);
+		}
+		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.GamerTag) {
+			params.value.gamerTag = options ? options.gamerTag.value : null;
+			if (!params.value.gamerTag)
+				return [];
+			response = await serviceStore.dispatcher.requestRocketsGalleryGamerTag(correlationId(), params.value);
+		}
 
 		if (hasFailed(response))
 			return [];
