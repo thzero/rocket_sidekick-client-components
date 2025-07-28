@@ -19,15 +19,18 @@ export function useAppSettingsComponent(props, context, formRef) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		successResponse,
 		isSaving,
 		serverErrors,
 		setErrors,
 		beforeUnload,
 		dirty,
-		dirtyCallback,
+		dirtyCheck,
 		leaveCheck,
 		cancel,
 		close,
+		gamerTag,
+		gamerTagDisplay,
 		fab,
 		hasPicture,
 		name,
@@ -36,6 +39,8 @@ export function useAppSettingsComponent(props, context, formRef) {
 		picture,
 		preComplete,
 		preCompleteI,
+		preCompleteOkI,
+		resetAdditionalI,
 		requestReset,
 		serviceStore,
 		serviceUsers,
@@ -44,7 +49,6 @@ export function useAppSettingsComponent(props, context, formRef) {
 		formRef: formRef
 	});
 
-	const gamerTag = ref('');
 	const measurementUnitsId = ref(null);
 	const measurementUnitAccelerationId = ref(null);
 	const measurementUnitAreaId = ref(null);
@@ -112,11 +116,11 @@ export function useAppSettingsComponent(props, context, formRef) {
 	};
 	const preCompleteOk = async (correlationId) => {
 		try {
-			const settings = serviceStore.getters.user.getUserSettings();
+			// const settings = serviceStore.getters.user.getUserSettings();
+			const settings = await preCompleteOkI(correlationId);
 			if (!settings.measurementUnits)
 				settings.measurementUnits = {};
 
-			settings.gamerTag = gamerTag.value;
 			settings.measurementUnits.id = measurementUnitsId.value;
 			settings.measurementUnits.acceleration = measurementUnitAccelerationId.value;
 			settings.measurementUnits.area = measurementUnitAreaId.value;
@@ -137,11 +141,16 @@ export function useAppSettingsComponent(props, context, formRef) {
 	};
 	// eslint-disable-next-line
 	const resetAdditional = (correlationId, previous) => {
-		const settings = serviceStore.getters.user.getUserSettings();
+		// const settings = serviceStore.getters.user.getUserSettings();
+		const settings = resetAdditionalI(correlationId);
 		if (!settings.measurementUnits)
 			settings.measurementUnits = {};
 
-		gamerTag.value = !String.isNullOrEmpty(settings.gamerTag) ? settings.gamerTag : '';
+		// gamerTag.value = !String.isNullOrEmpty(settings.gamerTag) ? settings.gamerTag : '';
+		// gamerTagDisplay.value = !String.isNullOrEmpty(settings.gamerTagDisplay) ? settings.gamerTagDisplay : '';
+		// if (String.isNullOrEmpty(settings.gamerTag))
+		// 	gamerTagDisplay.value = '';
+
 		measurementUnitsId.value = settings.measurementUnits.id;
 		measurementUnitAccelerationId.value = settings.measurementUnits.acceleration;
 		measurementUnitAreaId.value = settings.measurementUnits.area;
@@ -175,7 +184,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 
 		measurementUnitAccelerationId.value = settings.measurementUnits.acceleration ? settings.measurementUnits.acceleration : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].acceleration[keyword];
 		measurementUnitAreaId.value = settings.measurementUnits.area ? settings.measurementUnits.area : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].area[keyword];
-		measurementUnitAltitudeId.value = settings.measurementUnits.altitude ? settings.measurementUnits.araltitudeea : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].altitude[keyword];
+		measurementUnitAltitudeId.value = settings.measurementUnits.altitude ? settings.measurementUnits.altitude : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].altitude[keyword];
 		measurementUnitDistanceId.value = settings.measurementUnits.distance ? settings.measurementUnits.distance : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].distance[keyword];
 		measurementUnitLengthId.value = settings.measurementUnits.length ? settings.measurementUnits.length : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].length[keyword];
 		measurementUnitTemperatureId.value = settings.measurementUnits.temperature ? settings.measurementUnits.temperature : AppCommonConstants.MeasurementUnits[measurementUnitsId.value].temperature[keyword];
@@ -192,7 +201,7 @@ export function useAppSettingsComponent(props, context, formRef) {
 		(value) => {
 			let units = AppCommonConstants.MeasurementUnits.english;
 			if (measurementUnitsId.value ===  AppCommonConstants.MeasurementUnits.metrics.id)
-			AppCommonConstants.MeasurementUnits.metrics;
+				AppCommonConstants.MeasurementUnits.metrics;
 
 			measurementUnitAccelerationId.value = AppCommonConstants.MeasurementUnits[units].acceleration[keyword];
 			measurementUnitAreaId.value = AppCommonConstants.MeasurementUnits[units].area[keyword];
@@ -205,12 +214,6 @@ export function useAppSettingsComponent(props, context, formRef) {
 			measurementUnitWeightId.value = AppCommonConstants.MeasurementUnits[units].weight[keyword];
 		}
 	);
-	// watch(() => user.value,
-	// 	(value, newValue) => {
-	// 		if (value !== newValue)
-	// 			resetAdditional(correlationId);
-	// 	}
-	// );
 
 	return {
 		correlationId,
@@ -222,15 +225,18 @@ export function useAppSettingsComponent(props, context, formRef) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		successResponse,
 		isSaving,
 		serverErrors,
 		setErrors,
 		beforeUnload,
 		dirty,
-		dirtyCallback,
+		dirtyCheck,
 		leaveCheck,
 		cancel,
 		close,
+		gamerTag,
+		gamerTagDisplay,
 		fab,
 		hasPicture,
 		name,
@@ -239,11 +245,12 @@ export function useAppSettingsComponent(props, context, formRef) {
 		picture,
 		preComplete,
 		preCompleteI,
+		preCompleteOkI,
+		resetAdditionalI,
 		requestReset,
 		serviceStore,
 		serviceUsers,
 		user,
-		gamerTag,
 		measurementUnitTrans,
 		measurementUnitsId,
 		measurementUnitAccelerationId,

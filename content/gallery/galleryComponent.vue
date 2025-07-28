@@ -34,7 +34,8 @@ export function useUserGalleryComponent(props, context, options) {
 	const title = computed(() => {
 		// let name = user.value ? user.value.settings ? user.value.settings.gamerTag : (user.value.external ? user.value.external.name : '') : '';
 		if (user.value) {
-			let name = user.value && user.value.external ? user.value.external.name : '';
+			// let name = user.value && user.value.external ? user.value.external.name : '';
+			let name = LibraryClientUtility.userDisplayName(correlationId(), user.value);
 			if (options && options.type === AppCommonConstants.Rocketry.DisplayTypes.User)
 				name = LibraryClientUtility.$trans.t('titles.content.yours');
 			else

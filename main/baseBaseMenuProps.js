@@ -38,5 +38,13 @@ export const baseBaseMenuProps = {
 	tools: {
 		type: Array,
 		default: []
+	},
+	user: {
+		type: Object,
+		default: null
+	},
+	userGamerTag: {
+		type: String,
+		default: null
 	}
 };

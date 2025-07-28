@@ -1,22 +1,57 @@
 <template>
-	<ContentHeader :value="title" />
-	<!-- <pre>{{ JSON.stringify(rockets, null, '  ') }}</pre> -->
-	<v-row dense>
-		<v-col 
-			cols="12"
-			style="padding-bottom: 18px;"
+	<v-alert
+		v-if="showInvalid"
+		type="error"
+		:text="$t('errors.content.gallery.invalid')"
+	></v-alert>
+	<div
+		v-if="!showInvalid"
+	>
+		<div
+			class="d-flex"
 		>
-			<v-alert 
-				v-if="showInvalid"
-				:text="$t('errors.gallery.invalid')"
-				type="error"
+			<ContentHeader :value="title" />
+			<!-- <v-btn
+				:variant="buttonsForms.variant.default"
+				:color="buttonsForms.color.default"
+				icon="mdi-share-variant"
 			>
-			</v-alert>
-			<Rockets 
-				:type="type" 
-			/>
-		</v-col>
-	</v-row>
+			</v-btn> -->
+		</div>
+		<!-- <pre>{{ JSON.stringify(rockets, null, '  ') }}</pre> -->
+		<v-row dense>
+			<v-col 
+				cols="12"
+				style="padding-bottom: 18px;"
+			>
+				<v-tabs
+					v-model="tabs"
+					bg-color="primary"
+					grow
+				>
+					<v-tab :text="$t('titles.content.rockets.plural')" value="1"></v-tab>
+					<v-tab :text="$t('titles.content.launches.title')" value="2"></v-tab>
+				</v-tabs>
+				<v-tabs-window 
+					v-model="tabs"
+				>
+					<v-tabs-window-item
+						value="1"
+					>
+				<Rockets 
+					:type="type" 
+					:requestedTag="requestedTag"
+				/>
+					</v-tabs-window-item>
+					<v-tabs-window-item
+						value="2"
+					>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+					</v-tabs-window-item>
+				</v-tabs-window>
+			</v-col>
+		</v-row>
+	</div>
 </template>
 
 <script>
@@ -24,7 +59,7 @@ import { ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-// import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useUserGalleryComponent } from '@/components/content/gallery/galleryComponent';
 
 import ContentHeader from '@/components/content/Header';
@@ -39,6 +74,7 @@ export default {
 	props: {
 	},
 	setup(props, context, options) {
+		const tabs = ref(null);
 		const type = ref(AppCommonConstants.Rocketry.DisplayTypes.GamerTag);
 
 		const {
@@ -60,6 +96,11 @@ export default {
 			user: true 
 		});
 
+		const {
+			buttonsDialog,
+			buttonsForms
+		} = useButtonComponent(props, context);
+
 		return {
 			correlationId,
 			error,
@@ -74,7 +115,10 @@ export default {
 			showInvalid,
 			title,
 			user,
-			type
+			tabs,
+			type,
+			buttonsDialog,
+			buttonsForms
 		};
 	}
 };

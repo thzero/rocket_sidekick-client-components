@@ -1,10 +1,11 @@
 <script>
 import { useRoute } from 'vue-router';
-import { computed, onMounted, ref} from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
+import LibraryCommonUtility from '@thzero/library_common/utility/index.js';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
@@ -42,14 +43,13 @@ export function useRocketInfoBaseComponent(props, context, options) {
 
 	const rocket = ref([]);
 
-	const rocketId = computed(() => {
-		return routes.params.id;
-	});
-
 	const albums = computed(() => {
 		if (!rocket.value || !rocket.value.albums)
 			return [];
 		return rocket.value.albums;
+	});
+	const displayTypeGamerTag = computed(() => {
+		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag);
 	});
 	const displayTypeSite = computed(() => {
 		return (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site);
@@ -82,7 +82,24 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return false;
 		return rocket.value.videos.length > 0;
 	});
-	const rocketsUrl = computed((item) => {
+	const requestedTag = computed(() => {
+		return routes.params.user ?? props.requestedTag;
+	});
+	const rocketId = computed(() => {
+		return routes.params.id ?? (props.id ?? null);
+	});
+	const rocketUrl = () => {
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
+			return '/rocket/' + props.id;
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
+			return '/user/rockets/' + props.id;
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
+			return '/gallery/' + requestedTag.value + '/rocket/' + props.id;
+		return null;
+	};
+	const rocketsUrl = computed(() => {
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
+			return '/gallery/' + requestedTag.value;
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			return '/rockets';
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
@@ -94,10 +111,22 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return {};
 		return rocket.value.stages[0];
 	});
+	const title = computed(() => {
+		if (!rocket.value)
+			return '';
+		let title = props.showUserName ? rocket.value.owner ? rocket.value.owner.name : '' : '';
+		title += (title ? "'s " : '') + rocket.value.name;
+		return title;
+	});
 
+	const clickClose = async () => {
+		context.emit('close');
+	}
 	const fetch = async () => {
 		let response;
-		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
+			response = await serviceStore.dispatcher.requestRocketByIdGalleryGamerTag(correlationId(), routes.params.user, rocketId.value);
+		else if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			response = await serviceStore.dispatcher.requestRocketByIdGallery(correlationId(), rocketId.value);
 		else if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
 			response = await serviceStore.dispatcher.requestRocketById(correlationId(), rocketId.value);
@@ -135,7 +164,6 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		sortByOrder,
 		target,
 		rocket,
-		rocketId,
 		buttonsDialog,
 		buttonsForms,
 		rocketTypes,
@@ -143,6 +171,7 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
 		albums,
+		displayTypeGamerTag,
 		displayTypeSite,
 		displayTypeUser,
 		documents,
@@ -150,8 +179,13 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		hasDocuments,
 		hasLaunches,
 		hasVideos,
+		requestedTag,
+		rocketId,
+		rocketUrl,
 		rocketsUrl,
 		stagePrimary,
+		title,
+		clickClose,
 		fetch,
 		measurementUnitTranslateLength,
 		measurementUnitTranslateWeight,

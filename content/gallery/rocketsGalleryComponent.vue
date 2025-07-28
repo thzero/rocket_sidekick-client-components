@@ -1,20 +1,10 @@
 <script>
-// import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { ref } from 'vue';
+
 import { useUserGalleryComponent } from '@/components/content/gallery/galleryComponent';
 import { useRocketsBaseComponent } from '@/components/content/rockets/gallery/rocketsBase';
 
 export function useRocketsUserGalleryComponent(props, context, options) {
-	// const {
-	// 	correlationId,
-	// 	error,
-	// 	hasFailed,
-	// 	hasSucceeded,
-	// 	initialize,
-	// 	logger,
-	// 	noBreakingSpaces,
-	// 	notImplementedError,
-	// 	success
-	// } = useBaseComponent(props, context, options);
 	const {
 		correlationId,
 		error,
@@ -27,8 +17,6 @@ export function useRocketsUserGalleryComponent(props, context, options) {
 		success,
 		requestedTag,
 		// title,
-		typeGamerTag,
-		typeUser,
 		user
 	} = useUserGalleryComponent(props, context, { 
 		user: false 
@@ -48,6 +36,17 @@ export function useRocketsUserGalleryComponent(props, context, options) {
 		type: props.type ? props.type : null,
 		gamerTag: requestedTag
 	});
+
+	const rocketId = ref(null);
+	const rocketInfo = ref(null);
+
+	const handleRocket = (id) => {
+		rocketId.value = id;
+	};
+
+	const handleRocketClose = () => {
+		rocketId.value = null;
+	};
 
 	return {
 		correlationId,
@@ -70,7 +69,11 @@ export function useRocketsUserGalleryComponent(props, context, options) {
 		rockets,
 		title,
 		type,
-		rocketUrl
+		rocketUrl,
+		rocketId,
+		rocketInfo,
+		handleRocket,
+		handleRocketClose
 	};
 }
 </script>

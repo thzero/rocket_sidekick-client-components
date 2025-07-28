@@ -44,18 +44,20 @@
 													dense
 												>
 													<v-col
-														cols="9"
+														cols="7"
+														md="9"
 														class="text-h4 mb-1 pt-1"
 													>
 														{{ name }}
 													</v-col>
 													<v-col
-														cols="3"
+														cols="5"
+														md="3"
 														style="text-align: right;"
 													>
 														<v-avatar
 															tile
-															size="80"
+															size="124"
 															color="grey"
 														>
 															<img
@@ -77,12 +79,22 @@
 										<v-card>
 											<v-card-text>
 												<VtTextFieldWithValidation
+													ref="gamerTagDisplayRef"
+													vid="gamerTagDisplay"
+													v-model="gamerTagDisplay"
+													:maxcount="30"
+													:validation="validation"
+													:label="$t('forms.gamerTagDisplay')"
+													:hint="$t('forms.gamerTagDisplay_hint')"
+												/>
+												<VtTextFieldWithValidation
 													ref="gamerTagRef"
 													vid="gamerTag"
 													v-model="gamerTag"
 													:maxcount="30"
 													:validation="validation"
 													:label="$t('forms.gamerTag')"
+													:hint="$t('forms.gamerTag_hint')"
 												/>
 											</v-card-text>
 										</v-card>
@@ -253,7 +265,10 @@
 
 <script>
 import { ref } from 'vue';
-import { maxLength, minLength, required } from '@vuelidate/validators';
+import { between, decimal, helpers, maxLength, minLength, required } from '@vuelidate/validators';
+
+const validatorGamerTag = helpers.regex(/^[a-zA-Z0-9][_\-\.a-zA-Z0-9]{0,29}$/);
+const validatorGamerTagDisplay = helpers.regex(/^[a-zA-Z0-9]['"_\-=\.,a-zA-Z0-9 ]{0,29}$/);
 
 import VtFormControl from '@thzero/library_client_vue3_vuetify3/components/form/VtFormControl';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
@@ -291,6 +306,8 @@ export default {
 			cancel,
 			close,
 			fab,
+			gamerTag,
+			gamerTagDisplay,
 			hasPicture,
 			name,
 			ok,
@@ -302,7 +319,6 @@ export default {
 			serviceStore,
 			serviceUsers,
 			user,
-			gamerTag,
 			measurementUnitTrans,
 			measurementUnitsId,
 			measurementUnitAccelerationId,
@@ -351,6 +367,8 @@ export default {
 			cancel,
 			close,
 			fab,
+			gamerTag,
+			gamerTagDisplay,
 			hasPicture,
 			name,
 			ok,
@@ -362,7 +380,6 @@ export default {
 			serviceStore,
 			serviceUsers,
 			user,
-			gamerTag,
 			measurementUnitTrans,
 			measurementUnitsId,
 			measurementUnitAccelerationId,
@@ -395,9 +412,15 @@ export default {
 	validations () {
 		return {
 			gamerTag: {
-				// validatorGamerTag,
+				validatorGamerTag,
 				minLength: minLength(3),
-				maxLength: maxLength(20),
+				maxLength: maxLength(30),
+				$autoDirty: true
+			},
+			gamerTagDisplay: {
+				validatorGamerTagDisplay,
+				minLength: minLength(3),
+				maxLength: maxLength(30),
 				$autoDirty: true
 			},
 			measurementUnitsId: { required, $autoDirty: true },
