@@ -1,5 +1,32 @@
 <template>
-	<ContentHeader :value="rocket.name">
+	<div
+		v-if="showUserName"
+		class="d-flex"
+	>
+		<ContentHeader :value="title">
+			<!-- <template v-slot:after>
+				<v-btn
+					:variant="buttonsForms.variant.default"
+					:color="buttonsForms.color.default"
+					class="mr-2"
+				>
+					{{ $t('buttons.back') }}
+				</v-btn>
+			</template> -->
+		</ContentHeader>
+		<v-btn
+			:variant="buttonsForms.variant.default"
+			:color="buttonsForms.color.default"
+			:to="rocketsUrl"
+			class="text-right"
+		>
+			{{ $t('buttons.gallery') }}
+		</v-btn>
+	</div>
+	<ContentHeader 
+		v-if="!showUserName"
+		:value="title"
+	>
 		<!-- <template v-slot:after>
 			<v-btn
 				:variant="buttonsForms.variant.default"
@@ -24,12 +51,33 @@
 					>
 						<div class="text-right pt-4">
 							<v-btn
+								v-if="backType==='back'"
 								:variant="buttonsForms.variant.default"
 								:color="buttonsForms.color.default"
 								class="mr-2"
 								:to="rocketsUrl"
 							>
 								{{ $t('buttons.back') }}
+							</v-btn>
+							<v-btn
+								v-if="backType==='close'"
+								:variant="buttonsForms.variant.default"
+								:color="buttonsForms.color.default"
+								class="mr-2"
+								@click="clickClose"
+							>
+								{{ $t('buttons.close') }}
+							</v-btn>
+							<v-btn
+								v-if="backType==='close'"
+								:variant="buttonsForms.variant.default"
+								:color="buttonsForms.color.default"
+								class="mr-2"
+								:to="rocketUrl()"
+								target="_blank"
+								icon="mdi-open-in-new"
+								@click.native.stop=""
+							>
 							</v-btn>
 						</div>
 					</v-img>
@@ -235,12 +283,22 @@
 		>
 			<div class="text-right pt-4">
 					<v-btn
+						v-if="backType==='back'"
 						:variant="buttonsForms.variant.default"
 						:color="buttonsForms.color.default"
 						class="mr-2"
 						:to="rocketsUrl"
 					>
 						{{ $t('buttons.back') }}
+					</v-btn>
+					<v-btn
+						v-if="backType==='close'"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						class="mr-2"
+						@click="clickClose"
+					>
+						{{ $t('buttons.close') }}
 					</v-btn>
 			</div>
 		</v-col>
@@ -263,6 +321,7 @@ export default {
 	props: {
 		...useRocketInfoBaseProps
 	},
+	emits: ['close'],
 	setup(props, context) {
 		const {
 			correlationId,
@@ -278,7 +337,6 @@ export default {
 			sortByOrder,
 			target,
 			rocket,
-			rocketId,
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
@@ -286,6 +344,7 @@ export default {
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			albums,
+			displayTypeGamerTag,
 			displayTypeSite,
 			displayTypeUser,
 			documents,
@@ -293,8 +352,13 @@ export default {
 			hasDocuments,
 			hasLaunches,
 			hasVideos,
+			requestedTag,
+			rocketId,
+			rocketUrl,
 			rocketsUrl,
 			stagePrimary,
+			title,
+			clickClose,
 			fetch,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
@@ -315,7 +379,6 @@ export default {
 			sortByOrder,
 			target,
 			rocket,
-			rocketId,
 			buttonsDialog,
 			buttonsForms,
 			rocketTypes,
@@ -323,6 +386,7 @@ export default {
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			albums,
+			displayTypeGamerTag,
 			displayTypeSite,
 			displayTypeUser,
 			documents,
@@ -330,8 +394,13 @@ export default {
 			hasDocuments,
 			hasLaunches,
 			hasVideos,
+			requestedTag,
+			rocketId,
+			rocketUrl,
 			rocketsUrl,
 			stagePrimary,
+			title,
+			clickClose,
 			fetch,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,

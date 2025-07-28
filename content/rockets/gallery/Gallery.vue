@@ -1,7 +1,10 @@
 <template>
 	<ContentHeader :value="title" />
 	<!-- <pre>{{ JSON.stringify(rockets, null, '  ') }}</pre> -->
-	<v-row dense>
+	<v-row 
+		v-if="!rocketId"
+		dense
+	>
 		<v-col 
 			cols="12" md="6"
 			v-for="item in rockets"
@@ -11,16 +14,32 @@
 			<RocketPanel
 				:item="item"
 				:type="type"
+				clickType="click"
+				@display="handleRocket"
 			/>
 		</v-col>
 	</v-row>
+	<div
+		v-if="rocketId"
+	>
+		<RocketInfo
+			ref="rocketInfo"
+			backType="close"
+			:type="type"
+			:id="rocketId"
+			@close="handleRocketClose"
+		/>
+	</div>
 </template>
 
 <script>
+import { ref } from 'vue';
+
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import { useRocketsBaseComponent } from '@/components/content/rockets/gallery/rocketsBase';
 import { useRocketsBaseProps } from '@/components/content/rockets/gallery/rocketsBaseProps';
+import RocketInfo from '@/components/content/rockets/gallery/rocket/RocketInfo';
 import RocketPanel from '@/components/content/rockets/gallery/RocketPanel';
 
 import ContentHeader from '@/components/content/Header';
@@ -29,6 +48,7 @@ export default {
 	name: 'RocketsGallery',
 	components: {
 		ContentHeader,
+		RocketInfo,
 		RocketPanel
 	},
 	props: {
@@ -54,10 +74,19 @@ export default {
 			rockets,
 			title,
 			type,
-			rocketUrl
+			rocketUrl,
 		} = useRocketsBaseComponent(props, context, {
 			type: AppCommonConstants.Rocketry.DisplayTypes.Site
 		});
+
+		const rocketId = ref(null);
+		
+		const handleRocket = (id) => {
+			rocketId.value = id;
+		};
+		const handleRocketClose = () => {
+			rocketId.value = null;
+		};
 
 		return {
 			correlationId,
@@ -78,7 +107,10 @@ export default {
 			rockets,
 			title,
 			type,
-			rocketUrl
+			rocketUrl,
+			rocketId,
+			handleRocket,
+			handleRocketClose
 		};
 	}
 };

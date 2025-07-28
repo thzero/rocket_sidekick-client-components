@@ -1,5 +1,6 @@
 <template>
-	<v-row 
+	<v-row
+		v-if="!rocketId"
 		dense
 		style="margin-top: 24px;"
 	>
@@ -11,25 +12,47 @@
 		>
 			<RocketPanel
 				:item="item"
+				clickType="click"
 				:type="type"
+				:gamerTag="requestedTag"
+				@display="handleRocket"
 			/>
+				<!-- clickType="click" -->
 		</v-col>
 	</v-row>
+	<div
+		v-if="rocketId"
+	>
+		<RocketInfo
+			ref="rocketInfo"
+			backType="close"
+			:type="type"
+			:id="rocketId"
+			:requestedTag="requestedTag"
+			:showUserName="false"
+			@close="handleRocketClose"
+		/>
+	</div>
 </template>
 
 <script>
 import { useRocketPanelBaseProps } from '@/components/content/rockets/gallery/rocketPanelBaseProps';
 import { useRocketsUserGalleryComponent } from '@/components/content/gallery/rocketsGalleryComponent';
 
+import RocketInfo from '@/components/content/rockets/gallery/rocket/RocketInfo';
 import RocketPanel from '@/components/content/rockets/gallery/RocketPanel';
 
 export default {
 	name: 'UserGalleryRockets',
 	components: {
+		RocketInfo,
 		RocketPanel
 	},
 	props: {
-		...useRocketPanelBaseProps
+		...useRocketPanelBaseProps,
+		requestedTag: {
+			type: String
+		}
 	},
 	setup(props, context, options) {
 		const {
@@ -42,8 +65,7 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			requestedUser,
-			rocketsType,
+			requestedTag,
 			user,
 			serviceStore,
 			sortByOrder,
@@ -54,7 +76,12 @@ export default {
 			rockets,
 			title,
 			type,
-			rocketUrl
+			rocketUrl,
+			rocketId,
+			rocketInfo,
+			userTag,
+			handleRocket,
+			handleRocketClose
 		} = useRocketsUserGalleryComponent(props, context, options);
 
 		return {
@@ -67,8 +94,7 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
-			requestedUser,
-			rocketsType,
+			requestedTag,
 			user,
 			serviceStore,
 			sortByOrder,
@@ -79,7 +105,12 @@ export default {
 			rockets,
 			title,
 			type,
-			rocketUrl
+			rocketUrl,
+			rocketId,
+			rocketInfo,
+			userTag,
+			handleRocket,
+			handleRocketClose
 		};
 	}
 };

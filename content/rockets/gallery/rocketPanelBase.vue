@@ -4,6 +4,7 @@ import { onMounted } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
+import LibraryCommonUtility from '@thzero/library_common/utility/index.js';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
@@ -35,14 +36,31 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		rocketTypeIcon,
 		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
-	
+
+	const clickRocket = (item) => {
+		context.emit('display', item.id);
+	}
 	const rocketUrl = (item) => {
 		if (!item)
 			return null;
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			return '/rocket/' + item.id;
-		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Personal)
-			return '/user/rocket/' + item.id;
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
+			return '/user/rockets/' + item.id;
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
+			return '/gallery/' + props.gamerTag + '/rocket/' + item.id;
+		return null;
+	};
+	
+	const rocketUrlBack = (item) => {
+		if (!item)
+			return null;
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
+			return '/rockets';
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
+			return '/user/rockets';
+		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
+			return '/gallery/' + props.gamerTag;
 		return null;
 	};
 
@@ -68,7 +86,9 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
-		rocketUrl
+		clickRocket,
+		rocketUrl,
+		rocketUrlBack
 	};
 };
 </script>

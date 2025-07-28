@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
@@ -17,6 +18,8 @@ export default {
 	name: 'RocketInfoGallery',
 	components: {
 		RocketInfo
+	},
+	props: {
 	},
 	setup(props, context) {
 		const {
@@ -31,7 +34,7 @@ export default {
 			success
 		} = useBaseComponent(props, context);
 
-		const type = AppCommonConstants.Rocketry.DisplayTypes.Site;
+		const type = ref(AppCommonConstants.Rocketry.DisplayTypes.GamerTag);
 
 		return {
 			correlationId,
