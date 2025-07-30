@@ -34,7 +34,7 @@ export function useRocketsUserGalleryComponent(props, context, options) {
 		rocketUrl
 	} = useRocketsBaseComponent(props, context, {
 		type: props.type ? props.type : null,
-		gamerTag: requestedTag
+		requestedTag: requestedTag
 	});
 
 	const rocketId = ref(null);

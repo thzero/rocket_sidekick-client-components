@@ -38,15 +38,18 @@
 					<v-tabs-window-item
 						value="1"
 					>
-				<Rockets 
-					:type="type" 
-					:requestedTag="requestedTag"
-				/>
+						<Rockets 
+							:type="type" 
+							:requestedTag="requestedTag"
+						/>
 					</v-tabs-window-item>
 					<v-tabs-window-item
 						value="2"
 					>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+						<Launches 
+							:type="type" 
+							:requestedTag="requestedTag"
+						/>
 					</v-tabs-window-item>
 				</v-tabs-window>
 			</v-col>
@@ -63,12 +66,14 @@ import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/compone
 import { useUserGalleryComponent } from '@/components/content/gallery/galleryComponent';
 
 import ContentHeader from '@/components/content/Header';
-import Rockets from '@/components/content/gallery/Rockets';
+import Launches from '@/components/content/gallery/launches/Launches';
+import Rockets from '@/components/content/gallery/rockets/Rockets';
 
 export default {
 	name: 'UserGalleryGamerTag',
 	components: {
 		ContentHeader,
+		Launches,
 		Rockets
 	},
 	props: {

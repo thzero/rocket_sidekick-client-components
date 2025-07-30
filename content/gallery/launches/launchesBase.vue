@@ -8,7 +8,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
-export function useRocketsBaseComponent(props, context, options) {
+export function useLaunchesBaseComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -40,24 +40,23 @@ export function useRocketsBaseComponent(props, context, options) {
 	const fetch = async () => {
 		let response;
 		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
-			response = await serviceStore.dispatcher.requestRocketsGallery(correlationId(), params.value);
+			response = await serviceStore.dispatcher.requestLaunchesGallery(correlationId(), params.value);
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User) {
 			params.value.userId = serviceStore.user ? serviceStore.user.id : null;
-			response = await serviceStore.dispatcher.requestRocketsGalleryUser(correlationId(), params.value);
+			response = await serviceStore.dispatcher.requestLaunchesGalleryUser(correlationId(), params.value);
 		}
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.GamerTag) {
 			params.value.gamerTag = options ? options.requestedTag.value : null;
 			if (!params.value.gamerTag)
 				return [];
-			response = await serviceStore.dispatcher.requestRocketsGalleryGamerTag(correlationId(), params.value);
+			response = await serviceStore.dispatcher.requestLaunchesGalleryGamerTag(correlationId(), params.value);
 		}
 
 		if (hasFailed(response))
 			return [];
 		return response.results;
 	}
-
-	const rocketUrl = (item) => {
+	const launchUrl = (item) => {
 		if (!item)
 			return null;
 		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
@@ -81,16 +80,20 @@ export function useRocketsBaseComponent(props, context, options) {
 		noBreakingSpaces,
 		notImplementedError,
 		success,
+		requestedTag,
+		// title,
+		user,
 		serviceStore,
 		sortByOrder,
 		target,
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
-		rockets,
+		launches,
 		title,
-		type,
-		rocketUrl
+		launchId,
+		handleLaunch,
+		handleLaunchClose
 	};
 };
 </script>

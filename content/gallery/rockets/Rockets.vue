@@ -14,7 +14,7 @@
 				:item="item"
 				clickType="click"
 				:type="type"
-				:gamerTag="requestedTag"
+				:requestedTag="requestedTag"
 				@display="handleRocket"
 			/>
 				<!-- clickType="click" -->
@@ -37,7 +37,7 @@
 
 <script>
 import { useRocketPanelBaseProps } from '@/components/content/rockets/gallery/rocketPanelBaseProps';
-import { useRocketsUserGalleryComponent } from '@/components/content/gallery/rocketsGalleryComponent';
+import { useRocketsUserGalleryComponent } from '@/components/content/gallery/rockets/rocketsGalleryComponent';
 
 import RocketInfo from '@/components/content/rockets/gallery/rocket/RocketInfo';
 import RocketPanel from '@/components/content/rockets/gallery/RocketPanel';
@@ -49,10 +49,7 @@ export default {
 		RocketPanel
 	},
 	props: {
-		...useRocketPanelBaseProps,
-		requestedTag: {
-			type: String
-		}
+		...useRocketPanelBaseProps
 	},
 	setup(props, context, options) {
 		const {

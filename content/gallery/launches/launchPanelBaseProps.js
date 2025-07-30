@@ -1,6 +1,6 @@
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-export const useRocketPanelBaseProps = {
+export const useLaunchPanelBaseProps = {
 	clickType: {
 		type: String,
 		default: 'hyperlink'
