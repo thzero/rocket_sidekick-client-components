@@ -4,7 +4,6 @@ import { onMounted } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
-import LibraryCommonUtility from '@thzero/library_common/utility/index.js';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
@@ -48,7 +47,7 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
 			return '/user/rockets/' + item.id;
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
-			return '/gallery/' + props.gamerTag + '/rocket/' + item.id;
+			return '/gallery/' + props.requestedTag + '/rocket/' + item.id;
 		return null;
 	};
 	
@@ -60,7 +59,7 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
 			return '/user/rockets';
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
-			return '/gallery/' + props.gamerTag;
+			return '/gallery/' + props.requestedTag;
 		return null;
 	};
 
