@@ -143,12 +143,12 @@
 							class="pb-2"
 						>
 							<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
-							<v-divider></v-divider>
+							<v-divider class="border-opacity-100"></v-divider>
 						</v-sheet>
 					</v-col>
-					<v-col diameterMajor
+					<v-col
 						v-if="displayItemRocketDiameter"
-						cols="4" sm="3" md="2"
+						cols="6" sm="3" md="2"
 					>
 						<VtTextField
 							v-model="displayItemRocketDiameter"
@@ -177,6 +177,7 @@
 						/>
 					</v-col>
 					<v-col 
+						v-if="displayItemRocketCg"
 						cols="6" sm="4" md="2"
 					>
 						<VtTextField
@@ -357,7 +358,7 @@
 					class="pb-2"
 				>
 					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
-					<v-divider></v-divider>
+					<v-divider class="border-opacity-100"></v-divider>
 				</v-sheet>
 			</v-col>
 			<v-col diameterMajor
@@ -440,7 +441,7 @@
 					class="pt-2 pb-2 mt-2"
 				>
 					<h3>{{ $t('strings.content.rockets.motors') }}</h3>
-					<v-divider></v-divider>
+					<v-divider class="border-opacity-100"></v-divider>
 				</v-sheet>
 				<v-row 
 					v-for="item in displayItemRocketMotors"
@@ -495,7 +496,7 @@
 					class="pt-2 pb-2"
 				>
 					<h3>{{ $t('forms.content.launches.weather.title') }}</h3>
-					<v-divider></v-divider>
+					<v-divider class="border-opacity-100"></v-divider>
 				</v-sheet>
 			</v-col>
 		</v-row>
@@ -543,7 +544,7 @@
 					class="pt-2 pb-2"
 				>
 					<h3>{{ $t('forms.content.launches.results.title') }}</h3>
-					<v-divider></v-divider>
+					<v-divider class="border-opacity-100"></v-divider>
 				</v-sheet>
 			</v-col>
 		</v-row>

@@ -347,7 +347,7 @@ export function useLaunchesBaseComponent(props, context, options) {
 		
 		// return `${output} @ ${location.trim()}`;
 
-		return `${output}`
+		return output;
 	};
 	const launchTitleLocation = (item) => {
 		// let date = LibraryMomentUtility.getDateHuman(item.date);
