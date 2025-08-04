@@ -276,7 +276,7 @@ export function useLaunchViewComponent(props, context, options) {
 	const hasCoordsRecovery = computed(() => {
 		return hasLaunchResultsCoordsRecovery(displayItem.value);
 	});
-	const hasResults = computed(() => {elocityRecovery
+	const hasResults = computed(() => {
 		return hasLaunchResults(displayItem.value);
 	});
 	const hasRocketSpecs = computed(() => {
