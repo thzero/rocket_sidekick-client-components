@@ -43,15 +43,18 @@ export function useAppComponent(props, context, options) {
 		return !String.isNullOrEmpty(serviceStore.userTheme) ? serviceStore.userTheme : 'defaultTheme';
 	};
 
-	theme.global.name.value = userTheme;
+	// theme.global.name.value = userTheme; // deprecation
+	theme.change(userTheme());
 	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-		theme.global.name.value = userTheme() + 'Dark';
+		// theme.global.name.value = userTheme() + 'Dark';
+		theme.change(userTheme() + 'Dark');
 	}
-	// theme.global.current.dark = darkMode;
+	// theme.global.current.dark = darkMode; // deprecation
 
 	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
 		const themeRequested = userTheme() + (event.matches ? 'Dark' : '');
-		theme.global.name.value = themeRequested;
+		// theme.global.name.value = themeRequested; // deprecation
+		theme.change(themeRequested);
 	});
 
 	return {
