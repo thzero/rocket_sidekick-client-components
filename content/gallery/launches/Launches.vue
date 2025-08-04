@@ -50,7 +50,7 @@ export default {
 	props: {
 		...useLaunchPanelBaseProps
 	},
-	setup(props, context, options) {
+	setup(props, context) {
 		const {
 			correlationId,
 			error,
@@ -75,7 +75,7 @@ export default {
 			handleLaunch,
 			handleLaunchClose,
 			launchUrl
-		} = useLaunchesUserGalleryComponent(props, context, options);
+		} = useLaunchesUserGalleryComponent(props, context);
 
 		return {
 			correlationId,

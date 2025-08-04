@@ -2,7 +2,7 @@
 	<v-card
 		:key="item.name"
 		class="mx-auto"
-		max-width="400"
+		max-width="500"
 		color="secondary"
 	>
 		<div

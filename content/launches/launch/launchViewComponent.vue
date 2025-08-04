@@ -244,16 +244,6 @@ export function useLaunchViewComponent(props, context, options) {
 	const displayItemRocketMame = computed(() => {
 		return displayItem.value && displayItem.value.rocketSetup && displayItem.value.rocketSetup.rocket ? displayItem.value.rocketSetup.rocket.name : '';
 	});
-	const displayItemTemperature = computed(() => {
-		if (displayItem.value && displayItem.value.temperature)
-			return displayItemMeasurementTemperature(correlationId(), displayItem.value, (value) => { return value.temperature; }, (value) => { return value.temperatureMeasurementUnitsId; }, (value) => { return value.temperatureMeasurementUnitId; });
-		return null;
-	});
-	const displayItemWindSpeed = computed(() => {
-		if (displayItem.value && displayItem.value.windSpeed)
-			return displayItemMeasurementVelocity(correlationId(), displayItem.value, (value) => { return value.windSpeed; }, (value) => { return value.windSpeedMeasurementUnitsId; }, (value) => { return value.windSpeedMeasurementUnitId; });
-		return null;
-	});
 	const displayItemRocketCg = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup)
 			return null;
@@ -278,6 +268,16 @@ export function useLaunchViewComponent(props, context, options) {
 		if (!displayItem.value || !displayItem.value.rocketSetup)
 			return null;
 		return rocketWeightHighest(displayItem.value.rocketSetup.stages);
+	});
+	const displayItemTemperature = computed(() => {
+		if (displayItem.value && displayItem.value.temperature)
+			return displayItemMeasurementTemperature(correlationId(), displayItem.value, (value) => { return value.temperature; }, (value) => { return value.temperatureMeasurementUnitsId; }, (value) => { return value.temperatureMeasurementUnitId; });
+		return null;
+	});
+	const displayItemWindSpeed = computed(() => {
+		if (displayItem.value && displayItem.value.windSpeed)
+			return displayItemMeasurementVelocity(correlationId(), displayItem.value, (value) => { return value.windSpeed; }, (value) => { return value.windSpeedMeasurementUnitsId; }, (value) => { return value.windSpeedMeasurementUnitId; });
+		return null;
 	});
 	const hasCoords = computed(() => {
 		return hasCoordsLocation.value || hasCoordsLocationIteration.value || hasCoordsLaunch.value || hasCoordsRecovery.value;
@@ -340,7 +340,8 @@ export function useLaunchViewComponent(props, context, options) {
 
 		return (
 			displayItem.value.temperature || 
-			displayItem.value.windSpeed
+			displayItem.value.windSpeed || 
+			(displayItem.value.weather && displayItem.value.weather.length > 0)
 		);
 	});
 	const isFailure = computed(() => {

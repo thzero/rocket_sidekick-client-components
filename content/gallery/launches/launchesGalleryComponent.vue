@@ -9,7 +9,7 @@ import { useContentBaseComponent } from '@/components/content/contentBase';
 import { useUserGalleryComponent } from '@/components/content/gallery/galleryComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
-export function useLaunchesUserGalleryComponent(props, context, options) {
+export function useLaunchesUserGalleryComponent(props, context) {
 	const {
 		correlationId,
 		error,
@@ -30,14 +30,14 @@ export function useLaunchesUserGalleryComponent(props, context, options) {
 		serviceStore,
 		sortByOrder,
 		target
-	} = useContentBaseComponent(props, context, options);
+	} = useContentBaseComponent(props, context);
 	const {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine
-	} = useRocketsUtilityComponent(props, context, options);
+	} = useRocketsUtilityComponent(props, context);
 
-	const type = ref(options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);
+	const type = ref(props.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site);
 	const params = ref({});
 	const launches = ref([]);
 	const title = ref(
@@ -56,7 +56,7 @@ export function useLaunchesUserGalleryComponent(props, context, options) {
 			response = await serviceStore.dispatcher.requestLaunchesGalleryUser(correlationId(), params.value);
 		}
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.GamerTag) {
-			params.value.gamerTag = options ? options.requestedTag.value : null;
+			params.value.gamerTag = props.requestedTag;
 			if (!params.value.gamerTag)
 				return [];
 			response = await serviceStore.dispatcher.requestLaunchesGalleryGamerTag(correlationId(), params.value);

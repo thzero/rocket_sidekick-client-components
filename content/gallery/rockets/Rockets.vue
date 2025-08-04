@@ -51,7 +51,7 @@ export default {
 	props: {
 		...useRocketPanelBaseProps
 	},
-	setup(props, context, options) {
+	setup(props, context) {
 		const {
 			correlationId,
 			error,
@@ -79,7 +79,7 @@ export default {
 			userTag,
 			handleRocket,
 			handleRocketClose
-		} = useRocketsUserGalleryComponent(props, context, options);
+		} = useRocketsUserGalleryComponent(props, context);
 
 		return {
 			correlationId,
