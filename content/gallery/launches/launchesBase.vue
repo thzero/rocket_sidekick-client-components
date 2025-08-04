@@ -56,15 +56,6 @@ export function useLaunchesBaseComponent(props, context, options) {
 			return [];
 		return response.results;
 	}
-	const launchUrl = (item) => {
-		if (!item)
-			return null;
-		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
-			return '/rocket/' + item.id;
-		// if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User)
-		// 	return '/user/rocket/' + item.id;
-		return null;
-	};
 
 	onMounted(async () => {
 		rockets.value = await fetch();
