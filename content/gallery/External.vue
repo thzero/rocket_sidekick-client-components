@@ -38,7 +38,7 @@
 					<v-tabs-window-item
 						value="1"
 					>
-						<Rockets 
+						<Rockets
 							:type="type" 
 							:requestedTag="requestedTag"
 						/>
