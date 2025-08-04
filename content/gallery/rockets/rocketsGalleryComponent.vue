@@ -1,10 +1,12 @@
 <script>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
+import AppUtility from '@/utility/app';
 
 import { useUserGalleryComponent } from '@/components/content/gallery/galleryComponent';
 import { useRocketsBaseComponent } from '@/components/content/rockets/gallery/rocketsBase';
 
-export function useRocketsUserGalleryComponent(props, context, options) {
+export function useRocketsUserGalleryComponent(props, context) {
 	const {
 		correlationId,
 		error,
@@ -47,6 +49,10 @@ export function useRocketsUserGalleryComponent(props, context, options) {
 	const handleRocketClose = () => {
 		rocketId.value = null;
 	};
+
+	onMounted(async () => {
+		AppUtility.usageMetricsMeasurementTag(correlationId(), 'gallery.launches');
+	});
 
 	return {
 		correlationId,
