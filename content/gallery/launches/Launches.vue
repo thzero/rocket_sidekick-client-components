@@ -13,6 +13,7 @@
 			<LaunchPanel
 				:item="item"
 				clickType="click"
+				:displayExtras="true"
 				:type="type"
 				:requestedTag="requestedTag"
 				@display="handleLaunch"

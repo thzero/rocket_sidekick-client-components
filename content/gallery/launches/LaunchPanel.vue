@@ -80,7 +80,9 @@
 				</v-col>
 			</v-row>
 		</v-card-title>
-		<v-card-text>
+		<v-card-text
+			v-if="displayExtras"
+		>
 			<v-row 
 				dense
 				class="mt-2"
@@ -303,13 +305,15 @@ export default {
 			hasLaunchResultsCoordsLaunch,
 			hasLaunchResultsCoordsLocation,
 			hasLaunchResultsCoordsRecovery,
+			hasCoordsLocationIteration,
 			hasLaunchRocketSpecs,
 			hasLaunchWeather,
-			isFailure,
-			isSuccess,
+			isLaunchFailure,
+			isLaunchSuccess,
+			launchLocationIterationAddress,
 			launchCoverUrl,
 			launchDate,
-			launchLocationIterationAddress,
+			launchLocationName,
 			launchLocationIterationCoords,
 			launchResultsAccelerationDrogue,
 			launchResultsAccelerationMain,
@@ -367,13 +371,15 @@ export default {
 			hasLaunchResultsCoordsLaunch,
 			hasLaunchResultsCoordsLocation,
 			hasLaunchResultsCoordsRecovery,
+			hasCoordsLocationIteration,
 			hasLaunchRocketSpecs,
 			hasLaunchWeather,
-			isFailure,
-			isSuccess,
+			isLaunchFailure,
+			isLaunchSuccess,
+			launchLocationIterationAddress,
 			launchCoverUrl,
 			launchDate,
-			launchLocationIterationAddress,
+			launchLocationName,
 			launchLocationIterationCoords,
 			launchResultsAccelerationDrogue,
 			launchResultsAccelerationMain,

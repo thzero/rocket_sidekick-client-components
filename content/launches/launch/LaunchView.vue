@@ -8,7 +8,7 @@
 		class="mt-4"
 	>
 		<v-row
-			v-if="displayItemRocketCoverUrl"
+			v-if="displayItemCoverUrl"
 			dense
 		>
 			<v-col
@@ -200,31 +200,31 @@
 			</v-col>
 			<v-col cols="5" lg="2" md="3">
 				<router-link
-					v-if="!displayItemRocketCoverUrl"
+					v-if="!displayItemCoverUrl"
 					:to="'/user/rocket/' + (displayItem ? displayItem.rocketId: '')"
 					class="text-contrast router-link headline"
 					style="float: right;display: block;margin-left: auto; margin-right: auto;"
 				>
 					<img
 						style="width: 150px;"
-						:src="displayItemRocketCoverUrl"
+						:src="displayItemCoverUrl"
 					/>
 				</router-link>
 				<a
-					:href="displayItemRocketCoverUrl"
+					:href="displayItemCoverUrl"
 					target="_blank"
 					class="text-contrast router-link headline"
 					style="float: right;display: block;margin-left: auto; margin-right: auto;"
 				>
 					<img
 						style="width: 150px;"
-						:src="displayItemRocketCoverUrl"
+						:src="displayItemCoverUrl"
 					/>
 				</a>
 			</v-col>
 		</v-row>
 		<v-row
-			v-if="!displayItemRocketCoverUrl"
+			v-if="!displayItemCoverUrl"
 			dense
 		>
 			<v-col cols="12">
@@ -348,7 +348,7 @@
 			</v-col>
 		</v-row>
 		<v-row 
-			v-if="(!displayItemRocketCoverUrl || $vuetify.display.xs) && hasRocketSpecs"
+			v-if="(!displayItemCoverUrl || $vuetify.display.xs) && hasRocketSpecs"
 			dense
 		>
 			<v-col 
@@ -731,10 +731,13 @@ export default {
 			successReasons,
 			weatherOptions,
 			displayItem,
+			displayItemAlbumUrl,
+			displayItemCoverUrl,
 			displayItemDate,
 			displayItemLocationLink,
 			displayItemLocationIteration,
 			displayItemLocationIterationAddress,
+			displayItemLocationIterationCoords,
 			displayItemLocationName,
 			displayItemResultsAccelerationDrogue,
 			displayItemResultsAccelerationMain,
@@ -752,9 +755,7 @@ export default {
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
-			displayItemRocketAlbumUrl,
 			displayItemRocketCg,
-			displayItemRocketCoverUrl,
 			displayItemRocketCp,
 			displayItemRocketDiameter,
 			displayItemRocketLength,
@@ -769,7 +770,6 @@ export default {
 			hasCoordsLaunch,
 			hasCoordsRecovery,
 			hasResults,
-			hasRocketAlbumUrl,
 			hasRocketSpecs,
 			hasWeather,
 			isFailure,
@@ -797,10 +797,13 @@ export default {
 			successReasons,
 			weatherOptions,
 			displayItem,
+			displayItemAlbumUrl,
+			displayItemCoverUrl,
 			displayItemDate,
 			displayItemLocationLink,
 			displayItemLocationIteration,
 			displayItemLocationIterationAddress,
+			displayItemLocationIterationCoords,
 			displayItemLocationName,
 			displayItemResultsAccelerationDrogue,
 			displayItemResultsAccelerationMain,
@@ -818,9 +821,7 @@ export default {
 			displayItemResultsCoordsRecovery,
 			displayItemResultsVelocityMax,
 			displayItemResultsVelocityRecovery,
-			displayItemRocketAlbumUrl,
 			displayItemRocketCg,
-			displayItemRocketCoverUrl,
 			displayItemRocketCp,
 			displayItemRocketDiameter,
 			displayItemRocketLength,
@@ -835,7 +836,6 @@ export default {
 			hasCoordsLaunch,
 			hasCoordsRecovery,
 			hasResults,
-			hasRocketAlbumUrl,
 			hasRocketSpecs,
 			hasWeather,
 			isFailure,
