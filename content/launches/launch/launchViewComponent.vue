@@ -188,6 +188,7 @@ export function useLaunchViewComponent(props, context, options) {
 	const displayItemResultsAccelerationMax = computed(() => {
 		return launchResultsAccelerationMax(displayItem.value);
 	});
+	const displayItemResultsAltitudeDrogue = computed(() => {
 		return launchResultsAltitudeDrogue(displayItem.value);
 	});
 	const displayItemResultsAltitudeMain = computed(() => {
