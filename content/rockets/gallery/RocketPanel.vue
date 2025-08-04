@@ -72,6 +72,10 @@
 				</v-col>
 			</v-row>
 		</v-card-title>
+		<v-card-text
+			v-if="displayExtras"
+		>
+		</v-card-text>
 	</v-card>
 </template>
 

@@ -5,6 +5,10 @@ export const useRocketPanelBaseProps = {
 		type: String,
 		default: 'hyperlink'
 	},
+	displayExtras: {
+		type: Boolean,
+		default: false
+	},
 	requestedTag: {
 		type: String
 	},
