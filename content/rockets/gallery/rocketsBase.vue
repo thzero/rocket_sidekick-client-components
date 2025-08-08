@@ -31,6 +31,7 @@ export function useRocketsBaseComponent(props, context, options) {
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const type = ref(options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);
+	const manufacturers = ref(null);
 	const params = ref({});
 	const rockets = ref([]);
 	const title = ref(
@@ -55,8 +56,17 @@ export function useRocketsBaseComponent(props, context, options) {
 		if (hasFailed(response))
 			return [];
 		return response.results;
-	}
+	};
+	const fetchManufacturers = async (correlationId) => {
+		if (manufacturers.value)
+			return;
 
+		const response = await serviceStore.dispatcher.requestManufacturers(correlationId);
+		if (hasFailed(response))
+			return;
+
+		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
+	};
 	const rocketUrl = (item) => {
 		if (!item)
 			return null;
@@ -68,6 +78,7 @@ export function useRocketsBaseComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
+		await fetchManufacturers();
 		rockets.value = await fetch();
 	});
 
@@ -90,6 +101,7 @@ export function useRocketsBaseComponent(props, context, options) {
 		rockets,
 		title,
 		type,
+		manufacturers,
 		rocketUrl
 	};
 };

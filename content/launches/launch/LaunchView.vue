@@ -168,7 +168,7 @@
 					</v-col>
 					<v-col 
 						v-if="displayItemRocketWeight"
-						cols="6" sm="23" md="2"
+						cols="6" sm="3" md="2"
 					>
 						<VtTextField
 							v-model="displayItemRocketWeight"

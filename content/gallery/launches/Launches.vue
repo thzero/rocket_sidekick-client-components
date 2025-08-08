@@ -23,15 +23,15 @@
 	<div
 		v-if="launchId"
 	>
-		<!-- <LaunchInfo
+		<LaunchInfo
 			ref="launchInfo"
 			backType="close"
+			clickType="click"
 			:type="type"
 			:id="launchId"
-			:requestedTag="requestedTag"
 			:showUserName="false"
 			@close="handleLaunchClose"
-		/> -->
+		/>
 	</div>
 </template>
 
@@ -39,13 +39,13 @@
 import { useLaunchPanelBaseProps } from '@/components/content/gallery/launches/launchPanelBaseProps';
 import { useLaunchesUserGalleryComponent } from '@/components/content/gallery/launches/launchesGalleryComponent';
 
-// import LaunchInfo from '@/components/content/gallery/launches/LaunchInfo';
+import LaunchInfo from '@/components/content/gallery/launches/LaunchInfo';
 import LaunchPanel from '@/components/content/gallery/launches/LaunchPanel';
 
 export default {
 	name: 'UserGalleryLaunches',
 	components: {
-		// LaunchInfo,
+		LaunchInfo,
 		LaunchPanel
 	},
 	props: {

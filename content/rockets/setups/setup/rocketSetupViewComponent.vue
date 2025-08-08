@@ -90,7 +90,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 	const manufacturer = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return null;
-		return rocketManufacturer(props.detailItem.rocket.stages);
+		return rocketManufacturer(props.detailItem.rocket);
 	});
 	const motors = computed(() => {
 		return rocketMotors(props.detailItem);

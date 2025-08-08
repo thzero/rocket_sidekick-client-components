@@ -1,7 +1,10 @@
-import ManufacturersService from '@/service/manufacturers';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-export const useRocketPanelBaseProps = {
+export const useLaunchInfoBaseProps = {
+	backType: {
+		type: String,
+		default: 'none'
+	},
 	clickType: {
 		type: String,
 		default: 'hyperlink'
@@ -10,15 +13,12 @@ export const useRocketPanelBaseProps = {
 		type: Boolean,
 		default: false
 	},
-	manufacturers: {
-		type: Array
-	},
-	requestedTag: {
+	id: {
 		type: String
 	},
-	item: {
-		type: Object,
-		default: {}
+	showUserName: {
+		type: Boolean,
+		default: false
 	},
 	type: {
 		type: String,

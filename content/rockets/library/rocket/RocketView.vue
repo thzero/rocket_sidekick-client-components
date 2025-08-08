@@ -21,6 +21,36 @@
 		</v-row>
 		<v-row dense>
 			<v-col 
+				v-if="manufacturer"
+				cols="3"
+			>
+				<VtTextField
+					v-model="manufacturer"
+					:label="$t('forms.content.manufacturer.name')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="manufacturerStockId"
+				cols="3"
+			>
+				<VtTextField
+					v-model="manufacturerStockId"
+					:label="$t('forms.content.manufacturer.stockId')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
+				v-if="manufacturerRocketName"
+				cols="3"
+			>
+				<VtTextField
+					v-model="manufacturerRocketName"
+					:label="$t('forms.content.manufacturer.rocketName')"
+					:readonly="true"
+				/>
+			</v-col>
+			<v-col 
 				cols="12"
 			>
 				<v-sheet
@@ -29,6 +59,16 @@
 					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
 					<v-divider></v-divider>
 				</v-sheet>
+			</v-col>
+			<v-col 
+				v-if="manufacturer"
+				cols="3"
+			>
+				<VtTextField
+					v-model="manufacturer"
+					:label="$t('strings.rockets.diameter')"
+					:readonly="true"
+				/>
 			</v-col>
 			<!-- <v-col 
 				v-if="stages"
@@ -234,6 +274,8 @@ export default {
 			documents,
 			length,
 			manufacturer,
+			manufacturerRocketName,
+			manufacturerStockId,
 			stagePrimary,
 			stages,
 			videos,
@@ -261,6 +303,8 @@ export default {
 			documents,
 			length,
 			manufacturer,
+			manufacturerRocketName,
+			manufacturerStockId,
 			stagePrimary,
 			stages,
 			videos,

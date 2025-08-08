@@ -100,7 +100,7 @@
 			</v-col>
 		</v-row>
 		<v-row dense>
-			<v-col cols="6">
+			<v-col cols="6" md="4">
 				<VtSelectWithValidation
 					ref="manufacturerRef"
 					v-model="detailItemManufacturer"
@@ -111,14 +111,25 @@
 					:label="$t('forms.content.manufacturer.name')"
 				/>
 			</v-col>
-			<v-col cols="6">
+			<v-col cols="6" md="4">
 				<VtTextFieldWithValidation
 					ref="detailItemManufacturerStockIdRef"
 					v-model="detailItemManufacturerStockId"
 					vid="detailItemManufacturerStockId"
 					:validation="validation"
 					:readonly="!isEditable"
-					:label="$t('forms.content.parts.manufacturerId')"
+					:label="$t('forms.content.parts.manufacturerStockId')"
+					:counter="30"
+				/>
+			</v-col>
+			<v-col cols="6" md="4">
+				<VtTextFieldWithValidation
+					ref="detailItemManufacturerRocketNameRef"
+					v-model="detailItemManufacturerRocketName"
+					vid="detailItemManufacturerRocketName"
+					:validation="validation"
+					:readonly="!isEditable"
+					:label="$t('forms.content.parts.manufacturerRocketName')"
 					:counter="30"
 				/>
 			</v-col>
@@ -538,6 +549,7 @@ export default {
 			detailItemDocumentName,
 			detailItemDocumentType,
 			detailItemManufacturer,
+			detailItemManufacturerRocketName,
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemPublic,
@@ -654,6 +666,7 @@ export default {
 			detailItemDocumentName,
 			detailItemDocumentType,
 			detailItemManufacturer,
+			detailItemManufacturerRocketName,
 			detailItemManufacturerStockId,
 			detailItemName,
 			detailItemPublic,

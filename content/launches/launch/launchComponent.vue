@@ -84,6 +84,13 @@ export function useLaunchComponent(props, context, options) {
 	
 	const weatherOptions = LibraryClientVueUtility.selectOptions(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.Launches.Weather), LibraryClientUtility.$trans.t, 'strings.content.launches.weather');
 	
+	const hasLaunchCoverUrl = (item) => {
+		if (!item)
+			return false;
+		if (!String.isNullOrEmpty(item.coverUrl))
+			return true;
+		return hasCoverUrlRocket(item.rocketSetup ? item.rocketSetup.rocket : null);
+	};
 	const hasLaunchResults = (item) => {
 		if (!item || !item.results)
 			return false;
@@ -181,10 +188,26 @@ export function useLaunchComponent(props, context, options) {
 		return item.rocketSetup && item.rocketSetup.rocket ? item.rocketSetup.rocket.coverUrl : null;
 	};
 	const launchDate = (item) => {
+		if (!item)
+			return null;
 		return LibraryMomentUtility.getDateHuman(item.date);
 	};
-	const launchLocationName = (item, locationIterations) => {
-		return item && item.location ? item.location.name + locationIterations.value : '';
+	const launchLocationIteration = (item) => {
+		if (!item || !item.location || !item.location.iteration)
+			return '';
+		let temp = [];
+		// if (item.location.iteration.name)
+		// 	temp.push(item.location.iteration.name);
+		if (item.location.iteration.number)
+			temp.push('#'+item.location.iteration.number);
+		if (item.location.iteration.year)
+			temp.push(item.location.iteration.year);
+		if (!temp)
+			return '';
+		return ` (${temp.join(', ')})`;
+	};
+	const launchLocationName = (item) => {
+		return item && item.location ? item.location.name + launchLocationIteration(item) : '';
 	};
 	const launchLocationIterationCoords = (item) => {
 		if (!item || !item.location || !item.location.iteration)
@@ -319,6 +342,8 @@ export function useLaunchComponent(props, context, options) {
 	};
 	const launchTitle = (item) => {
 		let output = '';
+		if (!item)
+			return output;
 		if (!String.isNullOrEmpty(item.name))
 			output += item.name;
 		else if (item.rocketSetup && item.rocketSetup.rocket && !String.isNullOrEmpty(item.rocketSetup.rocket.name))
@@ -327,7 +352,7 @@ export function useLaunchComponent(props, context, options) {
 	};
 	const launchTitleLocation = (item) => {
 		let location = '';
-		if (item.location) {
+		if (item && item.location) {
 			location = item.location.name;
 			if (item.location.iteration) {
 				let iteration = '';
@@ -365,6 +390,7 @@ export function useLaunchComponent(props, context, options) {
 		failureReasons,
 		successReasons,
 		weatherOptions,
+		hasLaunchCoverUrl,
 		hasLaunchResults,
 		hasLaunchResultsCoords,
 		hasLaunchResultsCoordsLaunch,
@@ -378,6 +404,7 @@ export function useLaunchComponent(props, context, options) {
 		launchLocationIterationAddress,
 		launchCoverUrl,
 		launchDate,
+		launchLocationIteration,
 		launchLocationName,
 		launchLocationIterationCoords,
 		launchResultsAccelerationDrogue,

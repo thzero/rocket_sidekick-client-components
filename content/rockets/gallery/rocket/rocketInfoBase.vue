@@ -5,7 +5,6 @@ import { computed, onMounted, ref } from 'vue';
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import AppUtility from '@/utility/app';
-import LibraryCommonUtility from '@thzero/library_common/utility/index.js';
 
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
@@ -37,8 +36,31 @@ export function useRocketInfoBaseComponent(props, context, options) {
 	const {
 		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
+		rocketCgHighest,
+		rocketCp,
+		rocketCpHighest,
+		rocketDiameter,
+		rocketDiameterHighest,
+		rocketLength,
+		rocketLengthHighest,
+		rocketLengthOverall,
+		rocketManufacturer,
+		rocketManufacturerRocketName,
+		rocketManufacturerStockId,
+		rocketMotorMountName,
+		rocketMotorMountNames,
+		rocketMotorNames,
+		rocketMotorNamesByStage,
+		rocketMotors,
+		rocketStagePrimary,
+		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine
+		rocketTypeIconDetermine,
+		rocketTypeName,
+		rocketTypeNames,
+		rocketWeight,
+		rocketWeightHighest
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const rocket = ref([]);
@@ -82,13 +104,28 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return false;
 		return rocket.value.videos.length > 0;
 	});
+	const manufacturer = computed(() => {
+		if (!rocket.value)
+			return null;
+		return rocketManufacturer(rocket.value, props.manufacturers);
+	});
+	const manufacturerRocketName = computed(() => {
+		if (!rocket.value)
+			return null;
+		return rocketManufacturerRocketName(rocket.value);
+	});
+	const manufacturerStockId = computed(() => {
+		if (!rocket.value)
+			return null;
+		return rocketManufacturerStockId(rocket.value);
+	});
 	const requestedTag = computed(() => {
 		return routes.params.user ?? props.requestedTag;
 	});
 	const rocketId = computed(() => {
 		return routes.params.id ?? (props.id ?? null);
 	});
-	const rocketUrl = () => {
+	const rocketUrl = computed(() => {
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			return '/rocket/' + props.id;
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.User)
@@ -96,7 +133,7 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
 			return '/gallery/' + requestedTag.value + '/rocket/' + props.id;
 		return null;
-	};
+	});
 	const rocketsUrl = computed(() => {
 		if (props.type === AppCommonConstants.Rocketry.DisplayTypes.GamerTag)
 			return '/gallery/' + requestedTag.value;
@@ -179,6 +216,9 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		hasDocuments,
 		hasLaunches,
 		hasVideos,
+		manufacturer,
+		manufacturerRocketName,
+		manufacturerStockId,
 		requestedTag,
 		rocketId,
 		rocketUrl,

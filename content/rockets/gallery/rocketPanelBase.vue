@@ -1,5 +1,5 @@
 <script>
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
@@ -31,14 +31,65 @@ export function useRocketPanelBaseComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 	
 	const {
+		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
+		rocketCgHighest,
+		rocketCp,
+		rocketCpHighest,
+		rocketDiameter,
+		rocketDiameterHighest,
+		rocketLength,
+		rocketLengthHighest,
+		rocketLengthOverall,
+		rocketManufacturer,
+		rocketManufacturerRocketName,
+		rocketManufacturerStockId,
+		rocketMotorMountName,
+		rocketMotorMountNames,
+		rocketMotorNames,
+		rocketMotorNamesByStage,
+		rocketMotors,
+		rocketStagePrimary,
+		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine
+		rocketTypeIconDetermine,
+		rocketTypeName,
+		rocketTypeNames,
+		rocketWeight,
+		rocketWeightHighest
 	} = useRocketsUtilityComponent(props, context, options);
+
+	const stagePrimary = computed(() => {
+		if (!props.item || !props.item.stages || props.item.stages.length === 0)
+			return {};
+		return props.item.stages[0];
+	});
 
 	const clickRocket = (item) => {
 		context.emit('display', item.id);
-	}
+	};
+	const manufacturer = (item) => {
+		if (!item)
+			return null;
+		return rocketManufacturer(item, props.manufacturers);
+	};
+	const manufacturerRocketName = (item) => {
+		if (!item)
+			return null;
+		return rocketManufacturerRocketName(item);
+	};
+	const manufacturerStockId = (item) => {
+		if (!item)
+			return null;
+		return rocketManufacturerStockId(item);
+	};
+	const measurementUnitTranslateLength = (measurementUnitId, measurementUnit) => {
+		return AppUtility.measurementUnitTranslateLength(correlationId(), measurementUnitId, measurementUnit);
+	};
+	const measurementUnitTranslateWeight = (measurementUnitId, measurementUnit) => {
+		return AppUtility.measurementUnitTranslateWeight(correlationId(), measurementUnitId, measurementUnit);
+	};
 	const rocketUrl = (item) => {
 		if (!item)
 			return null;
@@ -50,7 +101,6 @@ export function useRocketPanelBaseComponent(props, context, options) {
 			return '/gallery/' + props.requestedTag + '/rocket/' + item.id;
 		return null;
 	};
-	
 	const rocketUrlBack = (item) => {
 		if (!item)
 			return null;
@@ -85,7 +135,13 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
+		stagePrimary,
 		clickRocket,
+		manufacturer,
+		manufacturerRocketName,
+		manufacturerStockId,
+		measurementUnitTranslateLength,
+		measurementUnitTranslateWeight,
 		rocketUrl,
 		rocketUrlBack
 	};

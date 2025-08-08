@@ -1,11 +1,7 @@
 <script>
 import { computed } from 'vue';
 
-import AppCommonConstants from 'rocket_sidekick_common/constants';
-
-import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
-import LibraryMomentUtility from '@thzero/library_common/utility/moment';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
@@ -54,6 +50,7 @@ export function useLaunchViewComponent(props, context, options) {
 		failureReasons,
 		successReasons,
 		weatherOptions,
+		hasLaunchCoverUrl,
 		hasLaunchResults,
 		hasLaunchResultsCoords,
 		hasLaunchResultsCoordsLaunch,
@@ -66,6 +63,7 @@ export function useLaunchViewComponent(props, context, options) {
 		launchLocationIterationAddress,
 		launchCoverUrl,
 		launchDate,
+		launchLocationIteration,
 		launchLocationName,
 		launchLocationIterationCoords,
 		launchResultsAccelerationDrogue,
@@ -157,18 +155,19 @@ export function useLaunchViewComponent(props, context, options) {
 		return '/user/locations/' + displayItem.value.location.id + (displayItem.value.location.iteration ? ('/' + displayItem.value.location.iteration.id) : '');
 	});
 	const displayItemLocationIteration = computed(() => {
-		if (!displayItem.value || !displayItem.value.location || !displayItem.value.location.iteration)
-			return '';
-		let temp = [];
-		// if (displayItem.value.location.iteration.name)
-		// 	temp.push(displayItem.value.location.iteration.name);
-		if (displayItem.value.location.iteration.number)
-			temp.push('#'+displayItem.value.location.iteration.number);
-		if (displayItem.value.location.iteration.year)
-			temp.push(displayItem.value.location.iteration.year);
-		if (!temp)
-			return '';
-		return ` (${temp.join(', ')})`;
+		// if (!displayItem.value || !displayItem.value.location || !displayItem.value.location.iteration)
+		// 	return '';
+		// let temp = [];
+		// // if (displayItem.value.location.iteration.name)
+		// // 	temp.push(displayItem.value.location.iteration.name);
+		// if (displayItem.value.location.iteration.number)
+		// 	temp.push('#'+displayItem.value.location.iteration.number);
+		// if (displayItem.value.location.iteration.year)
+		// 	temp.push(displayItem.value.location.iteration.year);
+		// if (!temp)
+		// 	return '';
+		// return ` (${temp.join(', ')})`;
+		return launchLocationIteration(displayItem.value);
 	});
 	const displayItemLocationIterationAddress = computed(() => {
 		return launchLocationIterationAddress(displayItem.value);
@@ -177,7 +176,7 @@ export function useLaunchViewComponent(props, context, options) {
 		return launchLocationIterationCoords(displayItem.value);
 	});
 	const displayItemLocationName = computed(() => {
-		return launchLocationName(displayItem.value, displayItemLocationIteration.value);
+		return launchLocationName(displayItem.value);
 	});
 	const displayItemResultsAccelerationDrogue = computed(() => {
 		return launchResultsAccelerationDrogue(displayItem.value);

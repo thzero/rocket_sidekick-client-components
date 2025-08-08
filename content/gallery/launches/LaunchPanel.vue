@@ -44,7 +44,6 @@
 				</v-img>
 			</a>
 		</div>
-
 		<v-card-title
 			:class="launchStatusColor(item)"
 		>
@@ -63,7 +62,7 @@
 						:to="launchUrl(item)"
 						size="large"
 					>
-						{{ launchTitleLocation(item) }}
+						{{ launchTitle(item) }} @ <br> {{ launchTitleLocation(item) }}
 					</v-btn>
 					<v-btn
 						v-if="clickType==='click'"
@@ -72,7 +71,7 @@
 						size="large"
 						@click="clickLaunch(item)"
 					>
-						{{ launchTitleLocation(item) }}
+						{{ launchTitle(item) }} @ <br> {{ launchTitleLocation(item) }}
 					</v-btn>
 				</v-col>
 				<v-col>
@@ -83,6 +82,33 @@
 		<v-card-text
 			v-if="displayExtras"
 		>
+			<v-row 
+				dense
+			>
+				<v-col
+					cols="12"
+					style="text-align: center;"
+				>
+					<!-- <v-btn
+						v-if="!clickType || clickType==='hyperlink'"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						:to="launchUrl(item)"
+						size="large"
+					>
+						{{ launchTitle(item) }} @ {{ launchTitleLocation(item) }}
+					</v-btn>
+					<v-btn
+						v-if="clickType==='click'"
+						:variant="buttonsForms.variant.default"
+						:color="buttonsForms.color.default"
+						size="large"
+						@click="clickLaunch(item)"
+					>
+						{{ launchTitle(item) }} @ {{ launchTitleLocation(item) }}
+					</v-btn> -->
+				</v-col>
+			</v-row>
 			<v-row 
 				dense
 				class="mt-2"
@@ -133,7 +159,7 @@
 				</v-col>
 				<v-col 
 					v-if="launchRocketWeight(item)"
-					cols="6" sm="23" md="2"
+					cols="6" sm="3" md="2"
 				>
 					<br 
 						v-if="$vuetify.display.lgAndUp"
@@ -343,8 +369,7 @@ export default {
 			launchWindSpeed,
 			launchTitle,
 			launchTitleLocation,
-			launchUrl,
-			launchUrlBack
+			launchUrl
 		} = useLaunchPanelBaseComponent(props, context, options);
 
 		return {
@@ -409,8 +434,7 @@ export default {
 			launchWindSpeed,
 			launchTitle,
 			launchTitleLocation,
-			launchUrl,
-			launchUrlBack
+			launchUrl
 		};
 	}
 };

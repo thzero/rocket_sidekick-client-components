@@ -155,20 +155,64 @@ export function useRocketsUtilityComponent(props, context, options) {
 		const length = _overallMeasurement(stages, 'length', primary.lengthMeasurementUnitId, primary.lengthMeasurementUnitsId, 'cm');
 		return length ? length + ' ' + AppUtility.measurementUnitTranslateLength(correlationId(), primary.lengthMeasurementUnitsId, primary.lengthMeasurementUnitId) : '';
 	};
-	const rocketManufacturer = (stages) => {
-		if (!stages)
+	const rocketManufacturer = (rocket, manufacturers) => {
+		if (!rocket)
 			return null;
-		const primary = rocketStagePrimary(stages);
+		if (!manufacturers)
+			return null;
+
+		if (rocket.manufacturerId) {
+			// const temp = options.manufacturers.find(l => l.id === rocket.manufacturerId);
+			const temp = manufacturers.find(l => l.id === rocket.manufacturerId);
+			return temp ? temp.name : null;
+		}
+
+		if (!rocket.stages)
+			return null;
+
+		const primary = rocketStagePrimary(rocket.stages);
 		if (!primary)
 			return null;
 		if (!primary.manufacturerId)
 			return null;
 
-		if (!options.manufacturers)
+		// if (!options.manufacturers)
+		if (!manufacturers)
 			return null;
 
-		const temp = options.manufacturers.find(l => l.id === primary.manufacturerId);
+		// const temp = options.manufacturers.find(l => l.id === primary.manufacturerId);
+		const temp = manufacturers.find(l => l.id === primary.manufacturerId);
 		return temp ? temp.name : null;
+	};
+	const rocketManufacturerRocketName = (rocket) => {
+		if (!rocket)
+			return null;
+
+		if (rocket.manufacturerRocketName)
+			return rocket.manufacturerRocketName;
+
+		if (!rocket.stages)
+			return null;
+
+		const primary = rocketStagePrimary(rocket.stages);
+		if (!primary)
+			return null;
+		return primary.manufacturerRocketName;
+	};
+	const rocketManufacturerStockId = (rocket) => {
+		if (!rocket)
+			return null;
+
+		if (rocket.manufacturerRocketName)
+			return rocket.manufacturerStockId;
+
+		if (!rocket.stages)
+			return null;
+
+		const primary = rocketStagePrimary(rocket.stages);
+		if (!primary)
+			return null;
+		return primary.manufacturerStockId;
 	};
 	const rocketMotorMountName = (item) => {
 		if (!item)
@@ -429,6 +473,8 @@ export function useRocketsUtilityComponent(props, context, options) {
 		rocketLengthHighest,
 		rocketLengthOverall,
 		rocketManufacturer,
+		rocketManufacturerRocketName,
+		rocketManufacturerStockId,
 		rocketMotorMountName,
 		rocketMotorMountNames,
 		rocketMotorNames,
