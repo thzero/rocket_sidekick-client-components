@@ -13,11 +13,12 @@
 			<RocketPanel
 				:item="item"
 				clickType="click"
+				:displayExtras="true"
 				:type="type"
 				:requestedTag="requestedTag"
+				:manufacturers="manufacturers"
 				@display="handleRocket"
 			/>
-				<!-- clickType="click" -->
 		</v-col>
 	</v-row>
 	<div
@@ -30,6 +31,7 @@
 			:id="rocketId"
 			:requestedTag="requestedTag"
 			:showUserName="false"
+			:manufacturers="manufacturers"
 			@close="handleRocketClose"
 		/>
 	</div>
@@ -73,10 +75,10 @@ export default {
 			rockets,
 			title,
 			type,
+			manufacturers,
 			rocketUrl,
 			rocketId,
 			rocketInfo,
-			userTag,
 			handleRocket,
 			handleRocketClose
 		} = useRocketsUserGalleryComponent(props, context);
@@ -102,10 +104,11 @@ export default {
 			rockets,
 			title,
 			type,
+			manufacturers,
 			rocketUrl,
+			manufacturers,
 			rocketId,
 			rocketInfo,
-			userTag,
 			handleRocket,
 			handleRocketClose
 		};

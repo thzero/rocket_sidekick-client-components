@@ -170,12 +170,13 @@ export function useRocketComponent(props, context, options) {
 	const detailItemAlbumLink = ref(null);
 	const detailItemAlbumName = ref(null);
 	const detailItemAlbumType = ref(null);
-	const detailItemDescription = ref(null);3
+	const detailItemCoverUrl = ref(null);
+	const detailItemDescription = ref(null);
 	const detailItemDocumentLink = ref(null);
 	const detailItemDocumentName = ref(null);
 	const detailItemDocumentType = ref(null);
 	const detailItemManufacturer = ref(null);
-	const detailItemCoverUrl = ref(null);
+	const detailItemManufacturerRocketName = ref(null);
 	const detailItemManufacturerStockId = ref(null);
 	const detailItemName = ref(null);
 	const detailItemPublic = ref(false);
@@ -392,6 +393,7 @@ export function useRocketComponent(props, context, options) {
 		}
 		
 		detailItemManufacturer.value = value && value.manufacturerId ? value.manufacturerId : manufacturerDefault.value; // 'd37HEk5Wjm3mmV4InK90U';
+		detailItemManufacturerRocketName.value = value ? value.manufacturerRocketName : null;
 		detailItemManufacturerStockId.value = value ? value.manufacturerStockId : null;
 
 		detailItemName.value = value ? value.name : null;
@@ -425,6 +427,7 @@ export function useRocketComponent(props, context, options) {
 		}
 		
 		detailItemData.value.manufacturerId = detailItemManufacturer.value;
+		detailItemData.value.manufacturerRocketName = detailItemManufacturerRocketName.value;
 		detailItemData.value.manufacturerStockId = detailItemManufacturerStockId.value;
 
 		detailItemData.value.name = detailItemName.value;
@@ -595,6 +598,7 @@ export function useRocketComponent(props, context, options) {
 		detailItemDocumentName,
 		detailItemDocumentType,
 		detailItemManufacturer,
+		detailItemManufacturerRocketName,
 		detailItemManufacturerStockId,
 		detailItemName,
 		detailItemPublic,

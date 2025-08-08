@@ -33,6 +33,7 @@ export function useRocketsUserGalleryComponent(props, context) {
 		rockets,
 		title,
 		type,
+		manufacturers,
 		rocketUrl
 	} = useRocketsBaseComponent(props, context, {
 		type: props.type ? props.type : null,
@@ -75,6 +76,7 @@ export function useRocketsUserGalleryComponent(props, context) {
 		rockets,
 		title,
 		type,
+		manufacturers,
 		rocketUrl,
 		rocketId,
 		rocketInfo,

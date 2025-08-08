@@ -33,6 +33,8 @@ export function useRocketViewComponent(props, context, options) {
 		rocketLengthHighest,
 		rocketLengthOverall,
 		rocketManufacturer,
+		rocketManufacturerRocketName,
+		rocketManufacturerStockId,
 		rocketMotorMountName,
 		rocketMotorMountNames,
 		rocketMotorNames,
@@ -78,7 +80,17 @@ export function useRocketViewComponent(props, context, options) {
 	const manufacturer = computed(() => {
 		if (!props.detailItem)
 			return null;
-		return rocketManufacturer(props.detailItem.stages);
+		return rocketManufacturer(props.detailItem);
+	});
+	const manufacturerRocketName = computed(() => {
+		if (!props.detailItem)
+			return null;
+		return rocketManufacturerRocketName(props.detailItem);
+	});
+	const manufacturerStockId = computed(() => {
+		if (!props.detailItem)
+			return null;
+		return rocketManufacturerStockId(props.detailItem);
 	});
 	const stagePrimary = computed(() => {
 		if (!props.detailItem)
@@ -120,6 +132,8 @@ export function useRocketViewComponent(props, context, options) {
 		documents,
 		length,
 		manufacturer,
+		manufacturerRocketName,
+		manufacturerStockId,
 		stagePrimary,
 		stages,
 		videos,

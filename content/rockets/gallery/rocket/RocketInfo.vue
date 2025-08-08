@@ -3,7 +3,9 @@
 		v-if="showUserName"
 		class="d-flex"
 	>
-		<ContentHeader :value="title">
+		<ContentHeader 
+			:value="title"
+		>
 			<!-- <template v-slot:after>
 				<v-btn
 					:variant="buttonsForms.variant.default"
@@ -73,7 +75,7 @@
 								:variant="buttonsForms.variant.default"
 								:color="buttonsForms.color.default"
 								class="mr-2"
-								:to="rocketUrl()"
+								:to="rocketUrl"
 								target="_blank"
 								icon="mdi-open-in-new"
 								@click.native.stop=""
@@ -104,13 +106,39 @@
 	</v-row>
 	<v-row dense>
 		<v-col cols="12" md="6">
-			<v-row dense>
-				<v-col cols="12">
-					<v-card>
-						<v-card-title>
-							<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
-						</v-card-title>
-						<v-card-text>
+			<v-card>
+				<v-card-title>
+					<p class="text-h6 text-center">{{ $t('forms.content.manufacturer.name') }}</p>
+				</v-card-title>
+				<v-card-text>
+					<table style="padding-bottom: 12px;">
+						<tbody>
+							<tr>
+								<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
+								<td>{{ manufacturer }} </td>
+							</tr>
+							<tr>
+								<td nowrap class="specifications">{{ $t('forms.content.parts.manufacturerStockId2') }}</td>
+								<td>{{ manufacturerStockId }}</td>
+							</tr>
+							<tr>
+								<td nowrap class="specifications">{{ $t('forms.content.parts.manufacturerRocketName2') }}</td>
+								<td>{{ manufacturerRocketName }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</v-card-text>
+			</v-card>
+			<!-- // TODO: stages for displayTypeUser -->
+		</v-col>
+		<v-col cols="12" md="6">
+			<v-card>
+				<v-card-title>
+					<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
+				</v-card-title>
+				<v-card-text>
+					<v-row dense>
+						<v-col cols="6">
 							<table style="padding-bottom: 12px;">
 								<tbody>
 									<tr>
@@ -125,6 +153,12 @@
 										<td nowrap class="specifications">{{ $t('strings.measurements.weight') }}</td>
 										<td>{{ stagePrimary.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitsId, rocket.weightMeasurementUnitId) }}</td>
 									</tr>
+								</tbody>
+							</table>
+						</v-col>
+						<v-col cols="6">
+							<table style="padding-bottom: 12px;">
+								<tbody>
 									<tr
 										v-if="stagePrimary.cg"
 									>
@@ -152,117 +186,92 @@
 											</span>
 										</td>
 									</tr>
+								</tbody>
+							</table>
+						</v-col>
+						<v-col cols="12">
+							<table style="padding-bottom: 12px;">
+								<tbody>
 									<tr>
 										<td nowrap class="specifications">{{ $t('strings.rockets.buildLogUrl') }}</td>
 										<td><a :href="rocket.buildLogUrl" target="_blank">{{ rocket.buildLogUrl }}</a></td>
 									</tr>
 								</tbody>
 							</table>
-						</v-card-text>
-					</v-card>
-				</v-col>
-			</v-row>
+						</v-col>
+					</v-row>
+				</v-card-text>
+			</v-card>
 			<!-- // TODO: stages for displayTypeUser -->
 		</v-col>
-		<v-col cols="12" md="6">
-			<v-row dense>
-				<v-col
-					v-if="hasAlbums"
-					cols="12" md="6"
-				>
-					<v-card>
-						<v-card-title>
-			<p class="text-h6 text-center">{{ $t('titles.content.rockets.albums') }}</p>
-						</v-card-title>
-						<v-card-text>
-			<v-list density="compact">
-				<v-list-item
-					v-for="item in albums"
-					:key="item.name"
-					:href="item.link"
-					:target="target(item)"
-					class="link"
-				>
-					<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
-				</v-list-item>
-			</v-list>
-						</v-card-text>
-					</v-card>
-				</v-col>
-				<v-col
-					v-if="hasVideos"
-					cols="12" md="6"
-				>
-					<v-card>
-						<v-card-title>
-		<p class="text-h6 text-center">{{ $t('titles.content.rockets.videos.plural') }}</p>
-						</v-card-title>
-						<v-card-text>
-			<v-list density="compact">
-				<v-list-item
-					v-for="item in videos"
-					:key="item.name"
-					:href="item.link"
-					:target="target(item)"
-					class="link"
-				>
-					<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
-				</v-list-item>
-			</v-list>
-						</v-card-text>
-					</v-card>
-				</v-col>
-			</v-row>
+		<v-col 
+			v-if="hasAlbums"
+			cols="12" md="4"
+		>
+			<v-card>
+				<v-card-title>
+	<p class="text-h6 text-center">{{ $t('titles.content.rockets.albums.plural') }}</p>
+				</v-card-title>
+				<v-card-text>
+	<v-list density="compact">
+		<v-list-item
+			v-for="item in albums"
+			:key="item.name"
+			:href="item.link"
+			:target="target(item)"
+			class="link"
+		>
+			<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
+		</v-list-item>
+	</v-list>
+				</v-card-text>
+			</v-card>
 		</v-col>
-		<v-col cols="12" md="6">
-			<v-row dense>
-				<v-col
-					v-if="hasDocuments"
-					cols="12" md="6"
-				>
-					<v-card>
-						<v-card-title>
-			<p class="text-h6 text-center">{{ $t('titles.content.rockets.documents') }}</p>
-						</v-card-title>
-						<v-card-text>
-			<v-list density="compact">
-				<v-list-item
-					v-for="item in documents"
-					:key="item.name"
-					:href="item.link"
-					:target="target(item)"
-					class="link"
-				>
-					<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
-				</v-list-item>
-			</v-list>
-						</v-card-text>
-					</v-card>
-				</v-col>
-				<v-col
-					v-if="hasVideos"
-					cols="12" md="6"
-				>
-					<v-card>
-						<v-card-title>
-		<p class="text-h6 text-center">{{ $t('titles.content.rockets.videos.plural') }}</p>
-						</v-card-title>
-						<v-card-text>
-			<v-list density="compact">
-				<v-list-item
-					v-for="item in videos"
-					:key="item.name"
-					:href="item.link"
-					:target="target(item)"
-					class="link"
-				>
-					<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
-				</v-list-item>
-			</v-list>
-						</v-card-text>
-					</v-card>
-				</v-col>
-			</v-row>
+		<v-col
+			v-if="hasVideos"
+			cols="12" md="4"
+		>
+			<v-card>
+				<v-card-title>
+<p class="text-h6 text-center">{{ $t('titles.content.rockets.videos.plural') }}</p>
+				</v-card-title>
+				<v-card-text>
+	<v-list density="compact">
+		<v-list-item
+			v-for="item in videos"
+			:key="item.name"
+			:href="item.link"
+			:target="target(item)"
+			class="link"
+		>
+			<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
+		</v-list-item>
+	</v-list>
+				</v-card-text>
+			</v-card>
+		</v-col>
+		<v-col
+			v-if="hasDocuments"
+			cols="12" md="4"
+		>
+			<v-card>
+				<v-card-title>
+	<p class="text-h6 text-center">{{ $t('titles.content.rockets.documents.plural') }}</p>
+				</v-card-title>
+				<v-card-text>
+	<v-list density="compact">
+		<v-list-item
+			v-for="item in documents"
+			:key="item.name"
+			:href="item.link"
+			:target="target(item)"
+			class="link"
+		>
+			<v-list-item-title>{{ $t(item.name) }}</v-list-item-title>
+		</v-list-item>
+	</v-list>
+				</v-card-text>
+			</v-card>
 		</v-col>
 		<v-col
 			v-if="hasLaunches"
@@ -352,6 +361,9 @@ export default {
 			hasDocuments,
 			hasLaunches,
 			hasVideos,
+			manufacturer,
+			manufacturerRocketName,
+			manufacturerStockId,
 			requestedTag,
 			rocketId,
 			rocketUrl,
@@ -394,6 +406,9 @@ export default {
 			hasDocuments,
 			hasLaunches,
 			hasVideos,
+			manufacturer,
+			manufacturerRocketName,
+			manufacturerStockId,
 			requestedTag,
 			rocketId,
 			rocketUrl,

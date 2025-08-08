@@ -44,7 +44,6 @@
 				</v-img>
 			</a>
 		</div>
-
 		<v-card-title>
 			<v-row dense>
 				<v-col>
@@ -72,6 +71,96 @@
 				</v-col>
 			</v-row>
 		</v-card-title>
+		<v-card-text
+			v-if="displayExtras"
+		>
+			<v-row 
+				dense
+				class="mt-2"
+			>
+				<v-col 
+					cols="12"
+				>
+					<h3>{{ $t('forms.content.manufacturer.name') }}</h3>
+					<v-divider class="border-opacity-100"></v-divider>
+				</v-col>
+				<v-col 
+					cols="6"
+				>
+					<!-- <b>{{ $t('forms.content.manufacturer.name') }}</b><br> -->
+					{{ item.manufacturer.name }}
+				</v-col>
+				<v-col 
+					v-if="manufacturer(item)"
+					cols="3"
+				>
+					<b>{{ $t('forms.content.manufacturer.name') }}</b><br>
+					{{ manufacturer(item) }}
+				</v-col>
+				<v-col 
+					v-if="manufacturerStockId(item)"
+					cols="3"
+				>
+					<b>{{ $t('forms.content.parts.manufacturerStockId2') }}</b><br>
+					{{ manufacturerStockId(item) }}
+				</v-col>
+				<v-col 
+					v-if="manufacturerRocketName(item)"
+					cols="3"
+				>
+					<b>{{ $t('forms.content.parts.manufacturerRocketName2') }}</b><br>
+					{{ manufacturerRocketName(item) }}
+				</v-col>
+			</v-row>
+			<v-row 
+				dense
+				class="mb-2"
+			>
+				<v-col 
+					cols="12"
+				>
+					<h3>{{ $t('titles.content.rockets.specifications') }}</h3>
+					<v-divider class="border-opacity-100"></v-divider>
+				</v-col>
+				<v-col
+					cols="4"
+				>
+					<br 
+						v-if="$vuetify.display.lgAndUp"
+					>
+					<b>{{ $t('strings.rockets.diameterMajor') }}</b><br>
+					{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(stagePrimary.diameterMajorMeasurementUnitsId, stagePrimary.diameterMajorMeasurementUnitId) }}
+				</v-col>
+				<v-col 
+					cols="4"
+				>
+					<br 
+						v-if="$vuetify.display.lgAndUp"
+					>
+					<b>{{ $t('strings.rockets.length') }}</b><br>
+				</v-col>
+				<v-col 
+					cols="4"
+				>
+					<br 
+						v-if="$vuetify.display.lgAndUp"
+					>
+					<b>{{ $t('strings.rockets.weight') }}</b><br>
+				</v-col>
+				<!-- <v-col 
+					v-if="launchRocketCg(item)"
+					cols="6" sm="4" md="2"
+				>
+					<b>{{ $t('strings.rockets.cg') }}</b><br>
+				</v-col>
+				<v-col 
+					v-if="launchRocketCp(item)"
+					cols="6" sm="4" md="2"
+				>
+					<b>{{ $t('strings.rockets.cp') }}</b><br>
+				</v-col> -->
+			</v-row>
+		</v-card-text>
 	</v-card>
 </template>
 
@@ -104,7 +193,13 @@ export default {
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
+			stagePrimary,
 			clickRocket,
+			manufacturer,
+			manufacturerRocketName,
+			manufacturerStockId,
+			measurementUnitTranslateLength,
+			measurementUnitTranslateWeight,
 			rocketUrl,
 			rocketUrlBack
 		} = useRocketPanelBaseComponent(props, context, options);
@@ -127,7 +222,13 @@ export default {
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
+			stagePrimary,
 			clickRocket,
+			manufacturer,
+			manufacturerRocketName,
+			manufacturerStockId,
+			measurementUnitTranslateLength,
+			measurementUnitTranslateWeight,
 			rocketUrl,
 			rocketUrlBack
 		};

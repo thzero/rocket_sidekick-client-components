@@ -8,6 +8,9 @@ export const useRocketInfoBaseProps = {
 		id: {
 			type: String
 		},
+		manufacturers: {
+			type: Array
+		},
 		requestedTag: {
 			type: String
 		},

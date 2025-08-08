@@ -49,6 +49,18 @@ export function useRocketEditValidation(nameRequired) {
 		detailItemLength: { decimal, between: between(0, 120), $autoDirty: true },
 		detailItemLengthMeasurementUnitId: { $autoDirty: true },
 		detailItemLengthMeasurementUnitsId: { $autoDirty: true },
+		detailItemManufacturerRocketName: { 
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
+			maxLength: maxLength(3),
+			maxLength: maxLength(50),
+			$autoDirty: true 
+		},
+		detailItemManufacturerStockId: { 
+			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
+			maxLength: maxLength(3),
+			maxLength: maxLength(50),
+			$autoDirty: true 
+		},
 		detailItemPublic: { $autoDirty: true },
 		detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 		detailItemWeightMeasurementUnitId: { $autoDirty: true },

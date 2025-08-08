@@ -1,6 +1,10 @@
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-export const useLaunchPanelBaseProps = {
+export const useLaunchInfoBaseProps = {
+	backType: {
+		type: String,
+		default: 'none'
+	},
 	clickType: {
 		type: String,
 		default: 'hyperlink'
@@ -9,12 +13,12 @@ export const useLaunchPanelBaseProps = {
 		type: Boolean,
 		default: false
 	},
-	requestedTag: {
+	id: {
 		type: String
 	},
-	item: {
-		type: Object,
-		default: {}
+	showUserName: {
+		type: Boolean,
+		default: false
 	},
 	type: {
 		type: String,
