@@ -12,7 +12,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 
-import LaunchInfo from '@/components/content/gallery/Launches/LaunchInfo';
+import LaunchInfo from '@/components/content/gallery/launches/LaunchInfo';
 
 export default {
 	name: 'LaunchInfoGallery',
