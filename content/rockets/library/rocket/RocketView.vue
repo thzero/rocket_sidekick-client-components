@@ -36,7 +36,7 @@
 			>
 				<VtTextField
 					v-model="manufacturerStockId"
-					:label="$t('forms.content.manufacturer.stockId')"
+					:label="$t('forms.content.parts.manufacturerStockId')"
 					:readonly="true"
 				/>
 			</v-col>
@@ -46,7 +46,7 @@
 			>
 				<VtTextField
 					v-model="manufacturerRocketName"
-					:label="$t('forms.content.manufacturer.rocketName')"
+					:label="$t('forms.content.parts.manufacturerRocketName')"
 					:readonly="true"
 				/>
 			</v-col>
