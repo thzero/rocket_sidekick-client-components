@@ -1,16 +1,14 @@
 <template>
 	<RocketInfo
 		backType="none"
+		:manufacturers="manufacturers"
 		:showUserName="true"
 		:type="type"
 	/>
 </template>
 
 <script>
-import { ref } from 'vue';
-import AppCommonConstants from 'rocket_sidekick_common/constants';
-
-import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { useRocketUserGalleryComponent } from '@/components/content/gallery/rockets/rocketGalleryComponent.vue';
 
 import RocketInfo from '@/components/content/rockets/gallery/rocket/RocketInfo';
 
@@ -21,7 +19,7 @@ export default {
 	},
 	props: {
 	},
-	setup(props, context) {
+	setup(props, context, options) {
 		const {
 			correlationId,
 			error,
@@ -31,10 +29,10 @@ export default {
 			logger,
 			noBreakingSpaces,
 			notImplementedError,
-			success
-		} = useBaseComponent(props, context);
-
-		const type = ref(AppCommonConstants.Rocketry.DisplayTypes.GamerTag);
+			success,
+			manufacturers,
+			type
+		} = useRocketUserGalleryComponent(props, context, options);
 
 		return {
 			correlationId,
@@ -46,6 +44,7 @@ export default {
 			noBreakingSpaces,
 			notImplementedError,
 			success,
+			manufacturers,
 			type
 		};
 	}

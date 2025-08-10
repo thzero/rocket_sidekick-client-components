@@ -106,7 +106,6 @@ export default {
 			type,
 			manufacturers,
 			rocketUrl,
-			manufacturers,
 			rocketId,
 			rocketInfo,
 			handleRocket,

@@ -98,10 +98,11 @@ export function useRocketsBaseComponent(props, context, options) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
+		manufacturers,
+		params,
 		rockets,
 		title,
 		type,
-		manufacturers,
 		rocketUrl
 	};
 };

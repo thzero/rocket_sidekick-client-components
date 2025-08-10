@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
+import LibraryClientConstants from '@thzero/library_client/constants';
 
 import AppUtility from '@/utility/app';
 import ConvertUtility from 'rocket_sidekick_common/utility/convert.js';
@@ -11,6 +12,8 @@ import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
 import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 
 export function useRocketsUtilityComponent(props, context, options) {
+	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
+
 	const {
 		correlationId,
 		error,
@@ -163,8 +166,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 
 		if (rocket.manufacturerId) {
 			// const temp = options.manufacturers.find(l => l.id === rocket.manufacturerId);
-			const temp = manufacturers.find(l => l.id === rocket.manufacturerId);
-			return temp ? temp.name : null;
+			return manufacturers.find(l => l.id === rocket.manufacturerId);
 		}
 
 		if (!rocket.stages)
@@ -181,7 +183,10 @@ export function useRocketsUtilityComponent(props, context, options) {
 			return null;
 
 		// const temp = options.manufacturers.find(l => l.id === primary.manufacturerId);
-		const temp = manufacturers.find(l => l.id === primary.manufacturerId);
+		return temp;
+	};
+	const rocketManufacturerName = (rocket, manufacturers) => {
+		const temp = rocketManufacturer(rocket, manufacturers);
 		return temp ? temp.name : null;
 	};
 	const rocketManufacturerRocketName = (rocket) => {
@@ -213,6 +218,21 @@ export function useRocketsUtilityComponent(props, context, options) {
 		if (!primary)
 			return null;
 		return primary.manufacturerStockId;
+	};
+	const rocketManufacturerUrl = (rocket, manufacturers) => {
+		const temp = rocketManufacturer(rocket, manufacturers);
+		if (!temp)
+			return null;
+
+		let links = serviceStore.getters.getContent();
+		if (!links)
+			return null;
+		if (!links.links)
+			return null;
+		links = links.links.filter(l => l.enabled);
+
+		const temp2 = links.find(l => l.id === temp.id);
+		return temp2 ? temp2.link : null;
 	};
 	const rocketMotorMountName = (item) => {
 		if (!item)
@@ -335,8 +355,10 @@ export function useRocketsUtilityComponent(props, context, options) {
 	const rocketStagePrimary = (stages) => {
 		return stages ? stages.find(l => l.index === 0) : null;
 	};
-	const rocketStages = (stages) => {
-		return stages ? stages.length : 0;
+	const rocketStages = (rocket) => {
+		if (!rocket || !rocket.stages)
+			return 0;
+		return rocket.stages ? rocket.stages.length : 0;
 	};
 	const rocketTypeIcon = (item) => {
 		const icon = rocketTypeIconDetermine(item);
@@ -473,8 +495,10 @@ export function useRocketsUtilityComponent(props, context, options) {
 		rocketLengthHighest,
 		rocketLengthOverall,
 		rocketManufacturer,
+		rocketManufacturerName,
 		rocketManufacturerRocketName,
 		rocketManufacturerStockId,
+		rocketManufacturerUrl,
 		rocketMotorMountName,
 		rocketMotorMountNames,
 		rocketMotorNames,

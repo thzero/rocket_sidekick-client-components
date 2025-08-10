@@ -21,11 +21,11 @@
 		</v-row>
 		<v-row dense>
 			<v-col 
-				v-if="manufacturer"
+				v-if="manufacturerName"
 				cols="3"
 			>
 				<VtTextField
-					v-model="manufacturer"
+					v-model="manufacturerName"
 					:label="$t('forms.content.manufacturer.name')"
 					:readonly="true"
 				/>
@@ -274,6 +274,7 @@ export default {
 			documents,
 			length,
 			manufacturer,
+			manufacturerName,
 			manufacturerRocketName,
 			manufacturerStockId,
 			stagePrimary,
@@ -303,6 +304,7 @@ export default {
 			documents,
 			length,
 			manufacturer,
+			manufacturerName,
 			manufacturerRocketName,
 			manufacturerStockId,
 			stagePrimary,
