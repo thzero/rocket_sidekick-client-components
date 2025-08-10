@@ -85,7 +85,6 @@
 					<v-divider class="border-opacity-100"></v-divider>
 				</v-col>
 				<v-col 
-					v-if="manufacturerUrl"
 					cols="5"
 				>
 					<b>{{ $t('forms.name') }}</b><br>
@@ -120,35 +119,23 @@
 				<v-col
 					cols="3"
 				>
-					<br 
-						v-if="$vuetify.display.lgAndUp"
-					>
 					<b>{{ $t('strings.rockets.stages') }}</b><br>
 					{{ stages }}
 				</v-col>
 				<v-col
 					cols="3"
 				>
-					<br 
-						v-if="$vuetify.display.lgAndUp"
-					>
 					<b>{{ $t('strings.rockets.diameterMajor') }}</b><br>
 					{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(stagePrimary.diameterMajorMeasurementUnitsId, stagePrimary.diameterMajorMeasurementUnitId) }}
 				</v-col>
 				<v-col 
 					cols="3"
 				>
-					<br 
-						v-if="$vuetify.display.lgAndUp"
-					>
 					<b>{{ $t('strings.rockets.length') }}</b><br>
 				</v-col>
 				<v-col 
 					cols="3"
 				>
-					<br 
-						v-if="$vuetify.display.lgAndUp"
-					>
 					<b>{{ $t('strings.rockets.weight') }}</b><br>
 				</v-col>
 				<!-- <v-col 
