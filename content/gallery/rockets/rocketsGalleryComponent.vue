@@ -30,10 +30,11 @@ export function useRocketsUserGalleryComponent(props, context) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
+		manufacturers,
+		params,
 		rockets,
 		title,
 		type,
-		manufacturers,
 		rocketUrl
 	} = useRocketsBaseComponent(props, context, {
 		type: props.type ? props.type : null,

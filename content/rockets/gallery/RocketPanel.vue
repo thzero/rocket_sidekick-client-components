@@ -85,31 +85,26 @@
 					<v-divider class="border-opacity-100"></v-divider>
 				</v-col>
 				<v-col 
-					cols="6"
+					v-if="manufacturerUrl"
+					cols="5"
 				>
-					<!-- <b>{{ $t('forms.content.manufacturer.name') }}</b><br> -->
-					{{ item.manufacturer.name }}
+					<b>{{ $t('forms.name') }}</b><br>
+					<a v-if="manufacturerUrl" :href="manufacturerUrl" style="color: white" target="_blank">{{ manufacturerName }}</a>
+					<span v-if="!manufacturerUrl">{{ manufacturerName }}</span>
 				</v-col>
 				<v-col 
-					v-if="manufacturer(item)"
-					cols="3"
-				>
-					<b>{{ $t('forms.content.manufacturer.name') }}</b><br>
-					{{ manufacturer(item) }}
-				</v-col>
-				<v-col 
-					v-if="manufacturerStockId(item)"
+					v-if="manufacturerStockId"
 					cols="3"
 				>
 					<b>{{ $t('forms.content.parts.manufacturerStockId2') }}</b><br>
-					{{ manufacturerStockId(item) }}
+					{{ manufacturerStockId }}
 				</v-col>
 				<v-col 
-					v-if="manufacturerRocketName(item)"
-					cols="3"
+					v-if="manufacturerRocketName"
+					cols="4"
 				>
 					<b>{{ $t('forms.content.parts.manufacturerRocketName2') }}</b><br>
-					{{ manufacturerRocketName(item) }}
+					{{ manufacturerRocketName }}
 				</v-col>
 			</v-row>
 			<v-row 
@@ -123,7 +118,16 @@
 					<v-divider class="border-opacity-100"></v-divider>
 				</v-col>
 				<v-col
-					cols="4"
+					cols="3"
+				>
+					<br 
+						v-if="$vuetify.display.lgAndUp"
+					>
+					<b>{{ $t('strings.rockets.stages') }}</b><br>
+					{{ stages }}
+				</v-col>
+				<v-col
+					cols="3"
 				>
 					<br 
 						v-if="$vuetify.display.lgAndUp"
@@ -132,7 +136,7 @@
 					{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(stagePrimary.diameterMajorMeasurementUnitsId, stagePrimary.diameterMajorMeasurementUnitId) }}
 				</v-col>
 				<v-col 
-					cols="4"
+					cols="3"
 				>
 					<br 
 						v-if="$vuetify.display.lgAndUp"
@@ -140,7 +144,7 @@
 					<b>{{ $t('strings.rockets.length') }}</b><br>
 				</v-col>
 				<v-col 
-					cols="4"
+					cols="3"
 				>
 					<br 
 						v-if="$vuetify.display.lgAndUp"
@@ -194,10 +198,13 @@ export default {
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			stagePrimary,
+			stages,
 			clickRocket,
 			manufacturer,
+			manufacturerName,
 			manufacturerRocketName,
 			manufacturerStockId,
+			manufacturerUrl,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
 			rocketUrl,
@@ -223,10 +230,13 @@ export default {
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			stagePrimary,
+			stages,
 			clickRocket,
 			manufacturer,
+			manufacturerName,
 			manufacturerRocketName,
 			manufacturerStockId,
+			manufacturerUrl,
 			measurementUnitTranslateLength,
 			measurementUnitTranslateWeight,
 			rocketUrl,

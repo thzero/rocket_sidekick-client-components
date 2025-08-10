@@ -10,15 +10,15 @@ export const useRocketPanelBaseProps = {
 		type: Boolean,
 		default: false
 	},
+	item: {
+		type: Object,
+		default: {}
+	},
 	manufacturers: {
 		type: Array
 	},
 	requestedTag: {
 		type: String
-	},
-	item: {
-		type: Object,
-		default: {}
 	},
 	type: {
 		type: String,

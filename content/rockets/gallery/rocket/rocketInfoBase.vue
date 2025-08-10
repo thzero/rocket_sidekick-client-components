@@ -46,8 +46,10 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		rocketLengthHighest,
 		rocketLengthOverall,
 		rocketManufacturer,
+		rocketManufacturerName,
 		rocketManufacturerRocketName,
 		rocketManufacturerStockId,
+		rocketManufacturerUrl,
 		rocketMotorMountName,
 		rocketMotorMountNames,
 		rocketMotorNames,
@@ -109,6 +111,11 @@ export function useRocketInfoBaseComponent(props, context, options) {
 			return null;
 		return rocketManufacturer(rocket.value, props.manufacturers);
 	});
+	const manufacturerName = computed(() => {
+		if (!rocket.value)
+			return null;
+		return rocketManufacturerName(rocket.value, props.manufacturers);
+	});
 	const manufacturerRocketName = computed(() => {
 		if (!rocket.value)
 			return null;
@@ -118,6 +125,11 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		if (!rocket.value)
 			return null;
 		return rocketManufacturerStockId(rocket.value);
+	});
+	const manufacturerUrl = computed(() => {
+		if (!rocket.value)
+			return null;
+		return rocketManufacturerUrl(rocket.value, props.manufacturers);
 	});
 	const requestedTag = computed(() => {
 		return routes.params.user ?? props.requestedTag;
@@ -147,6 +159,11 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		if (!rocket.value || !rocket.value.stages || rocket.value.stages.length === 0)
 			return {};
 		return rocket.value.stages[0];
+	});
+	const stages = computed(() => {
+		if (!rocket.value)
+			return null;
+		return rocketStages(rocket.value);
 	});
 	const title = computed(() => {
 		if (!rocket.value)
@@ -217,13 +234,16 @@ export function useRocketInfoBaseComponent(props, context, options) {
 		hasLaunches,
 		hasVideos,
 		manufacturer,
+		manufacturerName,
 		manufacturerRocketName,
 		manufacturerStockId,
+		manufacturerUrl,
 		requestedTag,
 		rocketId,
 		rocketUrl,
 		rocketsUrl,
 		stagePrimary,
+		stages,
 		title,
 		clickClose,
 		fetch,

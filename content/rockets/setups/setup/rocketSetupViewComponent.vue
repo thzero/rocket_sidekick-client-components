@@ -108,7 +108,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 	const stages = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)
 			return 0;
-		return rocketStages(props.detailItem.rocket.stages);
+		return rocketStages(props.detailItem.rocket);
 	});
 	const weight = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)

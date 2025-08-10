@@ -114,8 +114,11 @@
 					<table style="padding-bottom: 12px;">
 						<tbody>
 							<tr>
-								<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
-								<td>{{ manufacturer }} </td>
+								<td nowrap class="specifications">{{ $t('forms.name') }}</td>
+								<td>
+									<a v-if="manufacturerUrl" :href="manufacturerUrl" style="color: white" target="_blank">{{ manufacturerName }}</a>
+									<span v-if="!manufacturerUrl">{{ manufacturerName }}</span>
+								</td>
 							</tr>
 							<tr>
 								<td nowrap class="specifications">{{ $t('forms.content.parts.manufacturerStockId2') }}</td>
@@ -142,16 +145,18 @@
 							<table style="padding-bottom: 12px;">
 								<tbody>
 									<tr>
-										<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
-										<td>{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(rocket.detailItemDiameterMajorMeasurementUnitsId, rocket.detailItemDiameterMajorMeasurementUnitsId) }} </td>
+										<td nowrap class="specifications">{{ $t('strings.rockets.stages') }}</td>
+										<td>{{ stages }} </td>
 									</tr>
 									<tr>
 										<td nowrap class="specifications">{{ $t('strings.measurements.length') }}</td>
-										<td>{{ stagePrimary.length }} {{ measurementUnitTranslateLength(rocket.lengthMeasurementUnitsId, rocket.lengthMeasurementUnitId) }}</td>
+										<td>{{ stagePrimary.length }} {{ measurementUnitTranslateLength(stagePrimary.lengthMeasurementUnitsId, stagePrimary.lengthMeasurementUnitId) }}</td>
 									</tr>
-									<tr>
-										<td nowrap class="specifications">{{ $t('strings.measurements.weight') }}</td>
-										<td>{{ stagePrimary.weight }} {{ measurementUnitTranslateWeight(rocket.weightMeasurementUnitsId, rocket.weightMeasurementUnitId) }}</td>
+									<tr
+										v-if="stagePrimary.cg"
+									>
+										<td nowrap class="specifications">{{ $t('strings.rockets.cg') }}</td>
+										<td>{{ stagePrimary.cg }} {{ measurementUnitTranslateLength(stagePrimary.cgMeasurementUnitsId, stagePrimary.cgMeasurementUnitId) }} </td>
 									</tr>
 								</tbody>
 							</table>
@@ -159,32 +164,19 @@
 						<v-col cols="6">
 							<table style="padding-bottom: 12px;">
 								<tbody>
-									<tr
-										v-if="stagePrimary.cg"
-									>
-										<td nowrap class="specifications">{{ $t('strings.rockets.cg') }}</td>
-										<td>{{ stagePrimary.cg }} {{ measurementUnitTranslateLength(rocket.cgMeasurementUnitsId, rocket.cgMeasurementUnitId) }} </td>
+									<tr>
+										<td nowrap class="specifications">{{ $t('strings.rockets.diameterMajor') }}</td>
+										<td>{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(stagePrimary.diameterMajorMeasurementUnitsId, stagePrimary.diameterMajorMeasurementUnitId) }} </td>
+									</tr>
+									<tr>
+										<td nowrap class="specifications">{{ $t('strings.measurements.weight') }}</td>
+										<td>{{ stagePrimary.weight }} {{ measurementUnitTranslateWeight(stagePrimary.weightMeasurementUnitsId, stagePrimary.weightMeasurementUnitId) }}</td>
 									</tr>
 									<tr
 										v-if="stagePrimary.cp"
 									>
 										<td nowrap class="specifications">{{ $t('strings.rockets.cp') }}</td>
-										<td>{{ stagePrimary.cp }} {{ measurementUnitTranslateLength(rocket.cpMeasurementUnitsId, rocket.cpMeasurementUnitId) }} </td>
-									</tr>
-									<tr
-										v-if="stagePrimary.manufacturerId"
-									>
-										<td nowrap class="specifications">{{ $t('strings.rockets.manufacturer') }}</td>
-										<td>
-											<span>
-												{{ stagePrimary.cp }}
-											</span>
-											<span
-												v-if="stagePrimary.manufacturerStockId"
-											>
-												({{ stagePrimary.manufacturerStockId }})
-											</span>
-										</td>
+										<td>{{ stagePrimary.cp }} {{ measurementUnitTranslateLength(stagePrimary.cpMeasurementUnitsId, stagePrimary.cpMeasurementUnitId) }} </td>
 									</tr>
 								</tbody>
 							</table>
@@ -362,13 +354,16 @@ export default {
 			hasLaunches,
 			hasVideos,
 			manufacturer,
+			manufacturerName,
 			manufacturerRocketName,
 			manufacturerStockId,
+			manufacturerUrl,
 			requestedTag,
 			rocketId,
 			rocketUrl,
 			rocketsUrl,
 			stagePrimary,
+			stages,
 			title,
 			clickClose,
 			fetch,
@@ -407,13 +402,16 @@ export default {
 			hasLaunches,
 			hasVideos,
 			manufacturer,
+			manufacturerName,
 			manufacturerRocketName,
 			manufacturerStockId,
+			manufacturerUrl,
 			requestedTag,
 			rocketId,
 			rocketUrl,
 			rocketsUrl,
 			stagePrimary,
+			stages,
 			title,
 			clickClose,
 			fetch,

@@ -43,8 +43,10 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		rocketLengthHighest,
 		rocketLengthOverall,
 		rocketManufacturer,
+		rocketManufacturerName,
 		rocketManufacturerRocketName,
 		rocketManufacturerStockId,
+		rocketManufacturerUrl,
 		rocketMotorMountName,
 		rocketMotorMountNames,
 		rocketMotorNames,
@@ -65,24 +67,39 @@ export function useRocketPanelBaseComponent(props, context, options) {
 			return {};
 		return props.item.stages[0];
 	});
+	const stages = computed(() => {
+		if (!props.item)
+			return 0;
+		return rocketStages(props.item);
+	});
+	const manufacturer = computed(() => {
+		if (!props.item)
+			return null;
+		return rocketManufacturer(props.item, props.manufacturers);
+	});
+	const manufacturerName = computed(() => {
+		if (!props.item)
+			return null;
+		return rocketManufacturerName(props.item, props.manufacturers);
+	});
+	const manufacturerRocketName = computed(() => {
+		if (!props.item)
+			return null;
+		return rocketManufacturerRocketName(props.item);
+	});
+	const manufacturerStockId = computed(() => {
+		if (!props.item)
+			return null;
+		return rocketManufacturerStockId(props.item);
+	});
+	const manufacturerUrl = computed(() => {
+		if (!props.item)
+			return null;
+		return rocketManufacturerUrl(props.item, props.manufacturers);
+	});
 
 	const clickRocket = (item) => {
 		context.emit('display', item.id);
-	};
-	const manufacturer = (item) => {
-		if (!item)
-			return null;
-		return rocketManufacturer(item, props.manufacturers);
-	};
-	const manufacturerRocketName = (item) => {
-		if (!item)
-			return null;
-		return rocketManufacturerRocketName(item);
-	};
-	const manufacturerStockId = (item) => {
-		if (!item)
-			return null;
-		return rocketManufacturerStockId(item);
 	};
 	const measurementUnitTranslateLength = (measurementUnitId, measurementUnit) => {
 		return AppUtility.measurementUnitTranslateLength(correlationId(), measurementUnitId, measurementUnit);
@@ -136,10 +153,13 @@ export function useRocketPanelBaseComponent(props, context, options) {
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
 		stagePrimary,
+		stages,
 		clickRocket,
 		manufacturer,
+		manufacturerName,
 		manufacturerRocketName,
 		manufacturerStockId,
+		manufacturerUrl,
 		measurementUnitTranslateLength,
 		measurementUnitTranslateWeight,
 		rocketUrl,

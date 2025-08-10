@@ -13,7 +13,9 @@
 		>
 			<RocketPanel
 				:item="item"
+				:manufacturers="manufacturers"
 				:type="type"
+				displayExtras="true"
 				clickType="click"
 				@display="handleRocket"
 			/>
@@ -25,6 +27,7 @@
 		<RocketInfo
 			ref="rocketInfo"
 			backType="close"
+			:manufacturers="manufacturers"
 			:type="type"
 			:id="rocketId"
 			@close="handleRocketClose"
@@ -71,10 +74,12 @@ export default {
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
+			manufacturers,
+			params,
 			rockets,
 			title,
 			type,
-			rocketUrl,
+			rocketUrl
 		} = useRocketsBaseComponent(props, context, {
 			type: AppCommonConstants.Rocketry.DisplayTypes.Site
 		});
@@ -104,6 +109,8 @@ export default {
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
+			manufacturers,
+			params,
 			rockets,
 			title,
 			type,
