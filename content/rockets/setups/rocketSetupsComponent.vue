@@ -187,7 +187,7 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 
 		const params = fetchParams(correlationId, {});
 		if (!params)
-			return error('useRocketsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+			return error('useRocketSetupsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
 
 		serviceStore.dispatcher.setRocketSetupsSearchCriteria(correlationId, params);
 

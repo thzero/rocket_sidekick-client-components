@@ -8,7 +8,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
 
-export function useRocketsBaseComponent(props, context, options) {
+export function useRocketsGalleryBaseComponent(props, context, options) {
 	const {
 		correlationId,
 		error,
@@ -31,6 +31,9 @@ export function useRocketsBaseComponent(props, context, options) {
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const type = ref(options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);
+	console.log(options, 'useRocketSetupsBaseComponent.options');
+	console.log(options.type, 'useRocketSetupsBaseComponent.options.type');
+	console.log(type.value, 'useRocketSetupsBaseComponent.type.value');
 	const manufacturers = ref(null);
 	const params = ref({});
 	const rockets = ref([]);
@@ -40,6 +43,7 @@ export function useRocketsBaseComponent(props, context, options) {
 
 	const fetch = async () => {
 		let response;
+		console.log(type.value, 'useRocketSetupsBaseComponent.fetch.type.value');
 		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			response = await serviceStore.dispatcher.requestRocketsGallery(correlationId(), params.value);
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User) {

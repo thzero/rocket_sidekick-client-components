@@ -24,6 +24,7 @@
 				cols="12"
 				style="padding-bottom: 18px;"
 			>
+			[[ external.type: {{ type }}]]
 				<v-tabs
 					v-model="tabs"
 					bg-color="primary"
