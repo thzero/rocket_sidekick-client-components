@@ -24,7 +24,7 @@
 				cols="12"
 				style="padding-bottom: 18px;"
 			>
-			[[ external.type: {{ type }}]]
+				[[ external.type: {{ type }}]]<br>
 				<v-tabs
 					v-model="tabs"
 					bg-color="primary"
@@ -39,6 +39,7 @@
 					<v-tabs-window-item
 						value="1"
 					>
+						[[ external.Rockets.type: {{ type }}]]<br>
 						<Rockets
 							:type="type" 
 							:requestedTag="requestedTag"
@@ -47,6 +48,7 @@
 					<v-tabs-window-item
 						value="2"
 					>
+						[[ external.Launches.type: {{ type }}]]<br>
 						<Launches 
 							:type="type" 
 							:requestedTag="requestedTag"
