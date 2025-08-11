@@ -30,27 +30,27 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 
-	console.log(options, 'useRocketSetupsBaseComponent.options');
-	console.log(options ? options.parent : 'unknown', 'useRocketSetupsBaseComponent.options.parent');
-	console.log(props, 'useRocketSetupsBaseComponent.props');
-	console.log(props.type, 'useRocketSetupsBaseComponent.props.type');
+	// console.log(options, 'useRocketSetupsBaseComponent.options');
+	// console.log(options ? options.parent : 'unknown', 'useRocketSetupsBaseComponent.options.parent');
+	// console.log(props, 'useRocketSetupsBaseComponent.props');
+	// console.log(props.type, 'useRocketSetupsBaseComponent.props.type');
 	const type = ref(props ? props.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);
-	console.log(type.value, 'useRocketSetupsBaseComponent.type.value');
+	// console.log(type.value, 'useRocketSetupsBaseComponent.type.value');
 	if (!type.value) {
-		console.log(options ? options.type : 'unknown', 'useRocketSetupsBaseComponent.options.type');
+		// console.log(options ? options.type : 'unknown', 'useRocketSetupsBaseComponent.options.type');
 		type.value = options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site;
 	}
-	console.log(type.value, 'useRocketSetupsBaseComponent.type.value');
+	// console.log(type.value, 'useRocketSetupsBaseComponent.type.value');
 	const manufacturers = ref(null);
 	const params = ref({});
-	console.log(props.requestedTag, 'useRocketSetupsBaseComponent.props.requestedTag');
+	// console.log(props.requestedTag, 'useRocketSetupsBaseComponent.props.requestedTag');
 	const requestedTag = ref(props.requestedTag);
-	console.log(requestedTag.value, 'useRocketSetupsBaseComponent.requestedTag.value');
+	// console.log(requestedTag.value, 'useRocketSetupsBaseComponent.requestedTag.value');
 	if (!requestedTag.value) {
 		console.log(options ? options.requestedTag : 'unknown', 'useRocketSetupsBaseComponent.options.requestedTag');
 		requestedTag.value = options ? options.requestedTag : null;
 	}
-	console.log(requestedTag.value, 'useRocketSetupsBaseComponent.requestedTag.value');
+	// console.log(requestedTag.value, 'useRocketSetupsBaseComponent.requestedTag.value');
 	const rockets = ref([]);
 	const title = ref(
 		(type.value === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.rockets.title') + ' ' + LibraryClientUtility.$trans.t('titles.content.gallery')
@@ -58,7 +58,7 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 
 	const fetch = async () => {
 		let response;
-		console.log(type.value, 'useRocketSetupsBaseComponent.fetch.type.value');
+		// console.log(type.value, 'useRocketSetupsBaseComponent.fetch.type.value');
 		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			response = await serviceStore.dispatcher.requestRocketsGallery(correlationId(), params.value);
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User) {
