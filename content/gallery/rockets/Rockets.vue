@@ -52,7 +52,13 @@ export default {
 		RocketPanel
 	},
 	props: {
-		...useRocketPanelBaseProps
+		// ...useRocketPanelBaseProps
+		type: {
+			type: String
+		},
+		userTag: {
+			type: String
+		}
 	},
 	setup(props, context) {
 		const {
