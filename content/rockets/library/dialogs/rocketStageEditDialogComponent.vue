@@ -184,7 +184,7 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		value.weight = LibraryClientUtility.convertNumber(detailItemWeight.value);
 		value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
 		// value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
-		value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitsId.value);
+		value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);
 	};
 	const resetAdditional = async (correlationId, previous) => {
 		resetEditData(correlationId, detailItem.value);
