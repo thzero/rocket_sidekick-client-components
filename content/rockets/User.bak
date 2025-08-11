@@ -49,8 +49,8 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import RocketPanel from '@/components/content/rockets/RocketPanel';
 import ContentHeader from '@/components/content/Header';
 
-import { useRocketsBaseComponent } from '@/components/content/rockets/rocketsBase';
-import { useRocketsBaseProps } from '@/components/content/rockets/rocketsBaseProps';
+import { useRocketsGalleryBaseComponent } from '@/components/content/rockets/rocketsGalleryBase';
+import { useRocketsGalleryBaseProps } from '@/components/content/rockets/rocketsGalleryBaseProps';
 
 export default {
 	name: 'RocketsGallery',
@@ -59,7 +59,7 @@ export default {
 		RocketPanel
 	},
 	props: {
-		...useRocketsBaseProps
+		...useRocketsGalleryBaseProps
 	},
 	setup(props, context) {
 		const {
@@ -97,7 +97,7 @@ export default {
 			handleClose,
 			handleOk,
 			resetForm
-		} = useRocketsBaseComponent(props, context, {
+		} = useRocketsGalleryBaseComponent(props, context, {
 			type: AppCommonConstants.Rocketry.DisplayTypes.User
 		});
 

@@ -1,5 +1,6 @@
 <template>
-	[[ rockets.type: {{ type }}]]
+	[[ rockets.type: {{ type }}]]<br>
+	[[ rockets.requestedTag: {{ requestedTag }}]]<br>
 	<v-row
 		v-if="!rocketId"
 		dense
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-import { useRocketPanelBaseProps } from '@/components/content/rockets/gallery/rocketPanelBaseProps';
+import { useExternalRocketsGalleryBaseProps } from '@/components/content/gallery/rockets/rocketsGalleryComponentProps';
 import { useRocketsUserGalleryComponent } from '@/components/content/gallery/rockets/rocketsGalleryComponent';
 
 import RocketInfo from '@/components/content/rockets/gallery/rocket/RocketInfo';
@@ -52,13 +53,7 @@ export default {
 		RocketPanel
 	},
 	props: {
-		// ...useRocketPanelBaseProps
-		type: {
-			type: String
-		},
-		userTag: {
-			type: String
-		}
+		 ...useExternalRocketsGalleryBaseProps
 	},
 	setup(props, context) {
 		const {

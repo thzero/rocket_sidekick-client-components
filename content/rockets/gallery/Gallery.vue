@@ -41,8 +41,8 @@ import { ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import { useRocketsGalleryBaseComponent } from '@/components/content/rockets/gallery/rocketsBase';
-import { useRocketsBaseProps } from '@/components/content/rockets/gallery/rocketsBaseProps';
+import { useRocketsGalleryBaseComponent } from '@/components/content/rockets/gallery/rocketsGalleryBase';
+import { useRocketsGalleryBaseProps } from '@/components/content/rockets/gallery/rocketsGalleryBaseProps';
 import RocketInfo from '@/components/content/rockets/gallery/rocket/RocketInfo';
 import RocketPanel from '@/components/content/rockets/gallery/RocketPanel';
 
@@ -56,7 +56,7 @@ export default {
 		RocketPanel
 	},
 	props: {
-		...useRocketsBaseProps
+		...useRocketsGalleryBaseProps
 	},
 	setup(props, context) {
 		const {
@@ -82,7 +82,8 @@ export default {
 			type,
 			rocketUrl
 		} = useRocketsGalleryBaseComponent(props, context, {
-			type: AppCommonConstants.Rocketry.DisplayTypes.Site
+			type: AppCommonConstants.Rocketry.DisplayTypes.Site,
+			parent: 'gallery'
 		});
 
 		const rocketId = ref(null);

@@ -30,12 +30,27 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 
-	const type = ref(options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);
 	console.log(options, 'useRocketSetupsBaseComponent.options');
-	console.log(options.type, 'useRocketSetupsBaseComponent.options.type');
+	console.log(options ? options.parent : 'unknown', 'useRocketSetupsBaseComponent.options.parent');
+	console.log(props, 'useRocketSetupsBaseComponent.props');
+	console.log(props.type, 'useRocketSetupsBaseComponent.props.type');
+	const type = ref(props ? props.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site);
+	console.log(type.value, 'useRocketSetupsBaseComponent.type.value');
+	if (!type.value) {
+		console.log(options ? options.type : 'unknown', 'useRocketSetupsBaseComponent.options.type');
+		type.value = options ? options.type ?? AppCommonConstants.Rocketry.DisplayTypes.Site : AppCommonConstants.Rocketry.DisplayTypes.Site;
+	}
 	console.log(type.value, 'useRocketSetupsBaseComponent.type.value');
 	const manufacturers = ref(null);
 	const params = ref({});
+	console.log(props.requestedTag, 'useRocketSetupsBaseComponent.props.requestedTag');
+	const requestedTag = ref(props.requestedTag);
+	console.log(requestedTag.value, 'useRocketSetupsBaseComponent.requestedTag.value');
+	if (!requestedTag.value) {
+		console.log(options ? options.requestedTag : 'unknown', 'useRocketSetupsBaseComponent.options.requestedTag');
+		requestedTag.value = options ? options.requestedTag : null;
+	}
+	console.log(requestedTag.value, 'useRocketSetupsBaseComponent.requestedTag.value');
 	const rockets = ref([]);
 	const title = ref(
 		(type.value === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.rockets.title') + ' ' + LibraryClientUtility.$trans.t('titles.content.gallery')
@@ -51,7 +66,7 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 			response = await serviceStore.dispatcher.requestRocketsGalleryUser(correlationId(), params.value);
 		}
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.GamerTag) {
-			params.value.gamerTag = options ? options.requestedTag.value : null;
+			params.value.gamerTag = requestedTag.value;
 			if (!params.value.gamerTag)
 				return [];
 			response = await serviceStore.dispatcher.requestRocketsGalleryGamerTag(correlationId(), params.value);
