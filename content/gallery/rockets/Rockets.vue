@@ -1,6 +1,4 @@
 <template>
-	[[ rockets.type: {{ type }}]]<br>
-	[[ rockets.requestedTag: {{ requestedTag }}]]<br>
 	<v-row
 		v-if="!rocketId"
 		dense
