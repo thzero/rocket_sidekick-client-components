@@ -96,14 +96,16 @@
 					cols="3"
 				>
 					<b>{{ $t('forms.content.parts.manufacturerStockId2') }}</b><br>
-					{{ manufacturerStockId }}
+					<a v-if="manufacturerUrl" :href="manufacturerUrl" style="color: white" target="_blank">{{ manufacturerStockId }}</a>
+					<span v-if="!manufacturerUrl">{{ manufacturerStockId }}</span>
 				</v-col>
 				<v-col 
 					v-if="manufacturerRocketName"
 					cols="4"
 				>
 					<b>{{ $t('forms.content.parts.manufacturerRocketName2') }}</b><br>
-					{{ manufacturerRocketName }}
+					<a v-if="manufacturerUrl" :href="manufacturerUrl" style="color: white" target="_blank">{{ manufacturerRocketName }}</a>
+					<span v-if="!manufacturerUrl">{{ manufacturerRocketName }}</span>
 				</v-col>
 			</v-row>
 			<v-row 

@@ -122,11 +122,17 @@
 							</tr>
 							<tr>
 								<td nowrap class="specifications">{{ $t('forms.content.parts.manufacturerStockId2') }}</td>
-								<td>{{ manufacturerStockId }}</td>
+								<td>
+									<a v-if="manufacturerUrl" :href="manufacturerUrl" style="color: white" target="_blank">{{ manufacturerStockId }}</a>
+									<span v-if="!manufacturerUrl">{{ manufacturerStockId }}</span>
+								</td>
 							</tr>
 							<tr>
 								<td nowrap class="specifications">{{ $t('forms.content.parts.manufacturerRocketName2') }}</td>
-								<td>{{ manufacturerRocketName }}</td>
+								<td>
+									<a v-if="manufacturerUrl" :href="manufacturerUrl" style="color: white" target="_blank">{{ manufacturerRocketName }}</a>
+									<span v-if="!manufacturerUrl">{{ manufacturerRocketName }}</span>
+								</td>
 							</tr>
 						</tbody>
 					</table>
