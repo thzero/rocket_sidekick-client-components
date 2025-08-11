@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue';
 import AppUtility from '@/utility/app';
 
 import { useUserGalleryComponent } from '@/components/content/gallery/galleryComponent';
-import { useRocketsBaseComponent } from '@/components/content/rockets/gallery/rocketsBase';
+import { useRocketsGalleryBaseComponent } from '@/components/content/rockets/gallery/rocketsBase';
 
 export function useRocketsUserGalleryComponent(props, context) {
 	const {
@@ -36,7 +36,7 @@ export function useRocketsUserGalleryComponent(props, context) {
 		title,
 		type,
 		rocketUrl
-	} = useRocketsBaseComponent(props, context, {
+	} = useRocketsGalleryBaseComponent(props, context, {
 		type: props.type ? props.type : null,
 		requestedTag: requestedTag
 	});

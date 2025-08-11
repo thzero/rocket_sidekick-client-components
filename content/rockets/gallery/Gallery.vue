@@ -1,6 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<!-- <pre>{{ JSON.stringify(rockets, null, '  ') }}</pre> -->
+			[[ gallery.type: {{ type }}]]
 	<v-row 
 		v-if="!rocketId"
 		dense
@@ -40,7 +41,7 @@ import { ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
-import { useRocketsBaseComponent } from '@/components/content/rockets/gallery/rocketsBase';
+import { useRocketsGalleryBaseComponent } from '@/components/content/rockets/gallery/rocketsBase';
 import { useRocketsBaseProps } from '@/components/content/rockets/gallery/rocketsBaseProps';
 import RocketInfo from '@/components/content/rockets/gallery/rocket/RocketInfo';
 import RocketPanel from '@/components/content/rockets/gallery/RocketPanel';
@@ -80,7 +81,7 @@ export default {
 			title,
 			type,
 			rocketUrl
-		} = useRocketsBaseComponent(props, context, {
+		} = useRocketsGalleryBaseComponent(props, context, {
 			type: AppCommonConstants.Rocketry.DisplayTypes.Site
 		});
 

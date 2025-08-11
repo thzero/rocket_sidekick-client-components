@@ -1,4 +1,5 @@
 <template>
+	[[ rockets.type: {{ type }}]]
 	<v-row
 		v-if="!rocketId"
 		dense
