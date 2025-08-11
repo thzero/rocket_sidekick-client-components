@@ -123,32 +123,35 @@
 					{{ stages }}
 				</v-col>
 				<v-col
-					cols="3"
+					cols="2"
 				>
 					<b>{{ $t('strings.rockets.diameterMajor') }}</b><br>
 					{{ stagePrimary.diameterMajor }} {{ measurementUnitTranslateLength(stagePrimary.diameterMajorMeasurementUnitsId, stagePrimary.diameterMajorMeasurementUnitId) }}
 				</v-col>
 				<v-col 
-					cols="3"
+					cols="2"
 				>
 					<b>{{ $t('strings.rockets.length') }}</b><br>
+					{{ stagePrimary.length }} {{ measurementUnitTranslateLength(stagePrimary.lengthMeasurementUnitsId, stagePrimary.lengthMeasurementUnitId) }}
+				</v-col>
+				<v-col 
+					cols="2"
+				>
+					<b>{{ $t('strings.rockets.weight') }}</b><br>
+					{{ stagePrimary.weight }} {{ measurementUnitTranslateWeight(stagePrimary.weightMeasurementUnitsId, stagePrimary.weightMeasurementUnitId) }}
 				</v-col>
 				<v-col 
 					cols="3"
 				>
-					<b>{{ $t('strings.rockets.weight') }}</b><br>
+					<b>{{ $t('strings.rockets.cp') }}</b><br>
+					{{ stagePrimary.cp }} {{ measurementUnitTranslateLength(stagePrimary.cpMeasurementUnitsId, stagePrimary.cpMeasurementUnitId) }}
 				</v-col>
 				<!-- <v-col 
 					v-if="launchRocketCg(item)"
 					cols="6" sm="4" md="2"
 				>
 					<b>{{ $t('strings.rockets.cg') }}</b><br>
-				</v-col>
-				<v-col 
-					v-if="launchRocketCp(item)"
-					cols="6" sm="4" md="2"
-				>
-					<b>{{ $t('strings.rockets.cp') }}</b><br>
+					{{ stagePrimary.cg }} {{ measurementUnitTranslateLength(stagePrimary.cgMeasurementUnitsId, stagePrimary.cgMeasurementUnitId) }}
 				</v-col> -->
 			</v-row>
 		</v-card-text>
