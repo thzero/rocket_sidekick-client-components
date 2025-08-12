@@ -64,8 +64,8 @@ export function useRocketsUserGalleryComponent(props, context) {
 		invalid,
 		isSearching,
 		manufacturers,
-		params,
 		rockets,
+		searchCriteria,
 		title,
 		type,
 		validation,
@@ -80,7 +80,7 @@ export function useRocketsUserGalleryComponent(props, context) {
 	} = useRocketsGalleryBaseComponent(props, context, {
 		parent: 'useRocketsUserGalleryComponent',
 		filter: async (params) => { await filterI(params); },
-		reset: async (params) => { await resetI(params); }
+		reset: (params) => { resetI(params); }
 	});
 
 	const rocketId = ref(null);
@@ -127,7 +127,9 @@ export function useRocketsUserGalleryComponent(props, context) {
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
+		rocketTypeName,
 		rockets,
+		searchCriteria,
 		title,
 		type,
 		manufacturers,

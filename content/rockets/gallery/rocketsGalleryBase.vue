@@ -9,6 +9,7 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
+import { corr } from 'mathjs';
 
 export function useRocketsGalleryBaseComponent(props, context, options) {
 	const {
@@ -80,7 +81,6 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 	const invalid = ref(false);
 	const isSearching = ref(false);
 	const manufacturers = ref(null);
-	const params = ref({});
 	// console.log(props.requestedTag, 'useRocketSetupsBaseComponent.props.requestedTag');
 	const requestedTag = ref(props.requestedTag);
 	// console.log(requestedTag.value, 'useRocketSetupsBaseComponent.requestedTag.value');
@@ -90,6 +90,7 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 	}
 	// console.log(requestedTag.value, 'useRocketSetupsBaseComponent.requestedTag.value');
 	const rockets = ref([]);
+	const searchCriteria = ref({});
 	const title = ref(
 		(type.value === AppCommonConstants.Rocketry.DisplayTypes.User ? LibraryClientUtility.$trans.t('titles.content.yours') + ' ' : '') + LibraryClientUtility.$trans.t('titles.content.rockets.title') + ' ' + LibraryClientUtility.$trans.t('titles.content.gallery')
 	);
@@ -103,19 +104,23 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 		const correlationIdI = correlationId();
 		isSearching.value = false;
 		reset(correlationIdI, true);
+		saveSettings(correlationIdI);
 		await submit(correlationIdI);
 	};
 	const clickSearch = async () => {
 		await submit(correlationId());
 	};
 	const filter = async () => {
-		params.value.name = filterItemRocketName.value;
-		params.value.rocketTypes = filterItemRocketTypes.value;
+		searchCriteria.value.name = filterItemRocketName.value;
+		searchCriteria.value.rocketTypes = filterItemRocketTypes.value;
 		if (options && options.filter)
-			await options.filter(params.value);
+			await options.filter(searchCriteria.value);
 	};
-	const fetch = async () => {
-		rockets.value = await fetchRocketsFilter(await fetchRockets());
+	const fetch = async (correlationId) => {
+		const settings = serviceStore.getters.getRocketsGallerySettings(correlationId, requestedTag.value);
+		searchCriteria.value = settings && settings.filters ? settings.filters : {};
+		rockets.value = await fetchRocketsFilter(correlationId, await fetchRockets(correlationId));
+		saveSettings(correlationId);
 	};
 	const fetchManufacturers = async (correlationId) => {
 		if (manufacturers.value)
@@ -127,23 +132,23 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 
 		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
 	};
-	const fetchRockets = async () => {
+	const fetchRockets = async (correlationIdI) => {
 		let response;
 
-		filter(params);
+		filter(searchCriteria);
 
 		// console.log(type.value, 'useRocketSetupsBaseComponent.fetch.type.value');
 		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
-			response = await serviceStore.dispatcher.requestRocketsGallery(correlationId(), params.value);
+			response = await serviceStore.dispatcher.requestRocketsGallery(correlationId(), searchCriteria.value);
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User) {
-			params.value.userId = serviceStore.user ? serviceStore.user.id : null;
-			response = await serviceStore.dispatcher.requestRocketsGalleryUser(correlationId(), params.value);
+			searchCriteria.value.userId = serviceStore.user ? serviceStore.user.id : null;
+			response = await serviceStore.dispatcher.requestRocketsGalleryUser(correlationId(), searchCriteria.value);
 		}
 		else if (type.value === AppCommonConstants.Rocketry.DisplayTypes.GamerTag) {
-			params.value.gamerTag = requestedTag.value;
-			if (!params.value.gamerTag)
+			searchCriteria.value.gamerTag = requestedTag.value;
+			if (!searchCriteria.value.gamerTag)
 				return [];
-			response = await serviceStore.dispatcher.requestRocketsGalleryGamerTag(correlationId(), params.value);
+			response = await serviceStore.dispatcher.requestRocketsGalleryGamerTag(correlationId(), searchCriteria.value);
 		}
 
 		if (hasFailed(response))
@@ -151,17 +156,17 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 
 		return response.results;
 	};
-	const fetchRocketsFilter = async (results) => {
-		if (!params.value)
+	const fetchRocketsFilter = async (correlationIdI, results) => {
+		if (!searchCriteria.value)
 			return results;
 
 		let output = [];
 		let valid = false;
 		for(let result of results) {
 			valid = true;
-			if (params.value.rocketTypes) {
+			if (searchCriteria.value.rocketTypes) {
 				let validType = false;
-				for(let rocketType of params.value.rocketTypes) {
+				for(let rocketType of searchCriteria.value.rocketTypes) {
 					if (result.rocketTypes.includes(rocketType)) {
 						validType = true;
 						continue;
@@ -169,11 +174,11 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 				}
 				valid &= validType;
 			}
-			if (params.value.name) {
+			if (searchCriteria.value.name) {
 				let validName = false;
-				if (result.name.toLowerCase() === params.value.name.toLowerCase())
+				if (result.name.toLowerCase() === searchCriteria.value.name.toLowerCase())
 					validName = true;
-				if (result.name.toLowerCase().includes(params.value.name.toLowerCase()))
+				if (result.name.toLowerCase().includes(searchCriteria.value.name.toLowerCase()))
 					validName = true;
 				valid &= validName;
 			}
@@ -184,11 +189,11 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 
 		return output;
 	};
-	const reset = () => {
-		filterItemRocketName.value = null;
-		filterItemRocketTypes.value = null;
+	const reset = (settings) => {
+		filterItemRocketName.value = settings && settings.filters ? settings.filters.name : null;
+		filterItemRocketTypes.value = settings && settings.filters ? settings.filters.rocketTypes : null;
 		if (options && options.reset)
-			options.reset();
+			options.reset(settings);
 		invalid.value = validation.value.$invalid;
 	};
 	const rocketUrl = (item) => {
@@ -199,6 +204,9 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 		// if (type.value === AppCommonConstants.Rocketry.DisplayTypes.User)
 		// 	return '/user/rocket/' + item.id;
 		return null;
+	};
+	const saveSettings = (correlationId) => {
+		serviceStore.dispatcher.saveRocketsGallerySettings(correlationId, { filters: searchCriteria.value }, requestedTag.value);
 	};
 	const submit = async () => {
 		const correlationIdI = correlationId();
@@ -211,7 +219,7 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 			if (!result)
 				return;
 
-			await fetch();
+			await fetch(correlationIdI);
 
 			logger.debug('useRocketsUserGalleryComponent', 'submit', 'ok', null, correlationId);
 		}
@@ -228,8 +236,11 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 	};
 
 	onMounted(async () => {
-		await fetchManufacturers();
-		await fetch();
+		const correlationIdI = correlationId();
+		const settings = serviceStore.getters.getRocketsGallerySettings(correlationIdI, requestedTag.value);
+		reset(settings);
+		await fetchManufacturers(correlationIdI);
+		await fetch(correlationIdI);
 	});
 
 	return {
@@ -282,8 +293,8 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 		invalid,
 		isSearching,
 		manufacturers,
-		params,
 		rockets,
+		searchCriteria,
 		title,
 		type,
 		validation,
