@@ -1,5 +1,5 @@
 <script>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 import AppUtility from '@/utility/app';
 
@@ -27,33 +27,86 @@ export function useRocketsUserGalleryComponent(props, context) {
 		serviceStore,
 		sortByOrder,
 		target,
+		rocketTypes,
 		hasCoverUrl,
+		rocketCg,
+		rocketCgHighest,
+		rocketCp,
+		rocketCpHighest,
+		rocketDiameter,
+		rocketDiameterHighest,
+		rocketLength,
+		rocketLengthHighest,
+		rocketLengthOverall,
+		rocketManufacturer,
+		rocketManufacturerName,
+		rocketManufacturerRocketName,
+		rocketManufacturerStockId,
+		rocketManufacturerUrl,
+		rocketMotorMountName,
+		rocketMotorMountNames,
+		rocketMotorNames,
+		rocketMotorNamesByStage,
+		rocketMotors,
+		rocketStagePrimary,
+		rocketStages,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
+		rocketTypeName,
+		rocketTypeNames,
+		rocketWeight,
+		rocketWeightHighest,
+		buttonsDialog,
+		buttonsForms,
+		displayDrawer,
+		filterItemRocketName,
+		filterItemRocketTypes,
+		invalid,
+		isSearching,
 		manufacturers,
 		params,
 		rockets,
 		title,
 		type,
-		rocketUrl
+		validation,
+		buttonOkDisabled,
+		clickSearchClear,
+		clickSearch,
+		fetch,
+		reset,
+		rocketUrl,
+		submit,
+		toggleDrawer
 	} = useRocketsGalleryBaseComponent(props, context, {
-		parent: 'useRocketsUserGalleryComponent'
+		parent: 'useRocketsUserGalleryComponent',
+		filter: async (params) => { await filterI(params); },
+		reset: async (params) => { await resetI(params); }
 	});
 
 	const rocketId = ref(null);
 	const rocketInfo = ref(null);
 
+	const filterI = async (params) => {
+		return params;
+	};
 	const handleRocket = (id) => {
 		rocketId.value = id;
 	};
-
 	const handleRocketClose = () => {
 		rocketId.value = null;
+	};
+	const resetI = () => {
 	};
 
 	onMounted(async () => {
 		AppUtility.usageMetricsMeasurementTag(correlationId(), 'gallery.launches');
 	});
+
+	watch(() => validation.value,
+		async (value) => {
+			invalid.value = value.$invalid;
+		}
+	);
 
 	return {
 		correlationId,
@@ -70,6 +123,7 @@ export function useRocketsUserGalleryComponent(props, context) {
 		serviceStore,
 		sortByOrder,
 		target,
+		rocketTypes,
 		hasCoverUrl,
 		rocketTypeIcon,
 		rocketTypeIconDetermine,
@@ -78,10 +132,22 @@ export function useRocketsUserGalleryComponent(props, context) {
 		type,
 		manufacturers,
 		rocketUrl,
+		buttonsDialog,
+		buttonsForms,
+		displayDrawer,
+		filterItemRocketName,
+		filterItemRocketTypes,
 		rocketId,
 		rocketInfo,
+		invalid,
+		buttonOkDisabled,
+		clickSearchClear,
+		clickSearch,
 		handleRocket,
-		handleRocketClose
+		handleRocketClose,
+		toggleDrawer,
+		scope: 'RocketsUserGalleryComponent',
+		validation: validation
 	};
 }
 </script>

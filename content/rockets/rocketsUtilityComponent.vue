@@ -409,7 +409,6 @@ export function useRocketsUtilityComponent(props, context, options) {
 	const rocketTypeName = (id) => {
 		return (rocketTypes.value.find(l => l.id === id) ?? {}).name;
 	};
-
 	const rocketTypeNames = (ids) => {
 		if (!Array.isArray(ids)) 
 			ids = [ ids ];

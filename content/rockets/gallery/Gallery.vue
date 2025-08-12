@@ -1,7 +1,91 @@
 <template>
+	<v-navigation-drawer
+		v-model="displayDrawer"
+		temporary
+		:style="displayDrawer ? ($vuetify.display.xs ? 'width: 100%;' : 'min-width: 450px;') : ''"
+	>
+		<v-card>
+			<v-card-text>
+				<v-row dense>
+					<v-col cols="12">
+						<VtTextFieldWithValidation
+							ref="filterItemRocketNameRef"
+							v-model="filterItemRocketName"
+							vid="filterItemRocketName"
+							:validation="validation"
+							:label="$t('forms.name')"
+							:maxcount="30"
+						/>
+					</v-col>
+					<v-col cols="12">
+						<VtSelectWithValidation
+							ref="filterItemRocketTypesRef"
+							v-model="filterItemRocketTypes"
+							vid="filterItemRocketTypes"
+							multiple
+							:max-values="2"
+							:items="rocketTypes"
+							:validation="validation"
+							:label="$t('forms.content.rockets.level')"
+							:hint="$t('forms.content.rockets.level')"
+						/>
+					</v-col>
+				</v-row>
+			</v-card-text>
+			<v-card-actions>
+				<v-spacer />
+				<v-btn
+					:variant="buttonsForms.variant.clear"
+					:color="buttonsForms.color.clear"
+					@click="clickSearchClear()"
+				>{{ $t('buttons.clear') }}</v-btn>
+				<v-btn
+					:variant="buttonsForms.variant.ok"
+					:color="buttonsForms.color.ok"
+					:disabled="buttonOkDisabled"
+					@click="clickSearch()"
+				>{{ $t('buttons.search') }}</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-navigation-drawer>
 	<ContentHeader :value="title" />
 	<!-- <pre>{{ JSON.stringify(rockets, null, '  ') }}</pre> -->
-			[[ gallery.type: {{ type }}]]
+	<v-row
+		v-if="!rocketId"
+		dense
+		class="mt-2"
+	>
+		<v-col 
+			cols="2"
+		>
+			<v-btn
+				v-if="$vuetify.display.lgAndUp"
+				:variant="buttonsForms.variant.default"
+				:color="buttonsForms.color.default"
+				@click="toggleDrawer"
+				:disabled="displayDrawer"
+			>
+				{{ $t('buttons.search') }}
+			</v-btn>
+		</v-col>
+		<v-col 
+			cols="8"
+		>
+		</v-col>
+		<v-col 
+			cols="2"
+			class="text-right"
+		>
+			<v-btn
+				:variant="buttonsForms.variant.default"
+				:color="buttonsForms.color.default"
+				@click="toggleDrawer"
+				:disabled="displayDrawer"
+			>
+				{{ $t('buttons.search') }}
+			</v-btn>
+		</v-col>
+	</v-row>
 	<v-row 
 		v-if="!rocketId"
 		dense
@@ -16,7 +100,7 @@
 				:item="item"
 				:manufacturers="manufacturers"
 				:type="type"
-				displayExtras="true"
+				:displayExtras="true"
 				clickType="click"
 				@display="handleRocket"
 			/>
@@ -41,10 +125,18 @@ import { ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
+import LibraryCommonUtility from '@thzero/library_common/utility/index';
+
 import { useRocketsGalleryBaseComponent } from '@/components/content/rockets/gallery/rocketsGalleryBase';
 import { useRocketsGalleryBaseProps } from '@/components/content/rockets/gallery/rocketsGalleryBaseProps';
+import { useRocketsGalleryFilterValidation } from '@/components/content/rockets/gallery/rocketsGalleryFilterValidation';
+
 import RocketInfo from '@/components/content/rockets/gallery/rocket/RocketInfo';
 import RocketPanel from '@/components/content/rockets/gallery/RocketPanel';
+import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
+import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
+import VtTextFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextFieldWithValidation';
 
 import ContentHeader from '@/components/content/Header';
 
@@ -53,7 +145,11 @@ export default {
 	components: {
 		ContentHeader,
 		RocketInfo,
-		RocketPanel
+		RocketPanel,
+		VtNumberFieldWithValidation,
+		VtSelectWithValidation,
+		VtSwitchWithValidation,
+		VtTextFieldWithValidation
 	},
 	props: {
 		...useRocketsGalleryBaseProps
@@ -72,15 +168,56 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			rocketTypes,
 			hasCoverUrl,
+			rocketCg,
+			rocketCgHighest,
+			rocketCp,
+			rocketCpHighest,
+			rocketDiameter,
+			rocketDiameterHighest,
+			rocketLength,
+			rocketLengthHighest,
+			rocketLengthOverall,
+			rocketManufacturer,
+			rocketManufacturerName,
+			rocketManufacturerRocketName,
+			rocketManufacturerStockId,
+			rocketManufacturerUrl,
+			rocketMotorMountName,
+			rocketMotorMountNames,
+			rocketMotorNames,
+			rocketMotorNamesByStage,
+			rocketMotors,
+			rocketStagePrimary,
+			rocketStages,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
+			rocketTypeName,
+			rocketTypeNames,
+			rocketWeight,
+			rocketWeightHighest,
+			buttonsDialog,
+			buttonsForms,
+			displayDrawer,
+			filterItemRocketName,
+			filterItemRocketTypes,
+			invalid,
+			isSearching,
 			manufacturers,
 			params,
 			rockets,
 			title,
 			type,
-			rocketUrl
+			validation,
+			buttonOkDisabled,
+			clickSearchClear,
+			clickSearch,
+			fetch,
+			reset,
+			rocketUrl,
+			submit,
+			toggleDrawer
 		} = useRocketsGalleryBaseComponent(props, context, {
 			type: AppCommonConstants.Rocketry.DisplayTypes.Site,
 			parent: 'gallery'
@@ -108,19 +245,64 @@ export default {
 			serviceStore,
 			sortByOrder,
 			target,
+			rocketTypes,
 			hasCoverUrl,
+			rocketCg,
+			rocketCgHighest,
+			rocketCp,
+			rocketCpHighest,
+			rocketDiameter,
+			rocketDiameterHighest,
+			rocketLength,
+			rocketLengthHighest,
+			rocketLengthOverall,
+			rocketManufacturer,
+			rocketManufacturerName,
+			rocketManufacturerRocketName,
+			rocketManufacturerStockId,
+			rocketManufacturerUrl,
+			rocketMotorMountName,
+			rocketMotorMountNames,
+			rocketMotorNames,
+			rocketMotorNamesByStage,
+			rocketMotors,
+			rocketStagePrimary,
+			rocketStages,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
+			rocketTypeName,
+			rocketTypeNames,
+			rocketWeight,
+			rocketWeightHighest,
+			buttonsDialog,
+			buttonsForms,
+			displayDrawer,
+			filterItemRocketName,
+			filterItemRocketTypes,
+			invalid,
+			isSearching,
 			manufacturers,
 			params,
 			rockets,
 			title,
 			type,
+			validation,
+			buttonOkDisabled,
+			clickSearchClear,
+			clickSearch,
+			fetch,
+			reset,
 			rocketUrl,
+			submit,
+			toggleDrawer,
 			rocketId,
 			handleRocket,
 			handleRocketClose
 		};
+	},
+	validations () {
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketsGalleryFilterValidation), {
+		});
 	}
 };
 </script>
