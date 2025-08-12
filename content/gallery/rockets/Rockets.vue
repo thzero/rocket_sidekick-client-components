@@ -69,6 +69,19 @@
 		<v-col 
 			cols="8"
 		>
+			<v-row dense>
+				<v-col cols="6" v-if="searchCriteria.name">
+					<b>{{ $t('forms.name')}}:</b>
+					{{ searchCriteria.name }}
+				</v-col>
+				<v-col cols="6" v-if="searchCriteria.rocketTypes">
+					<b>{{ $t('forms.content.rockets.level')}}:</b>
+					<v-chip
+						v-for="item in searchCriteria.rocketTypes"
+						:key="item"
+					>{{ rocketTypeName(item) }}</v-chip>
+				</v-col>
+			</v-row>
 		</v-col>
 		<v-col 
 			cols="2"
@@ -169,7 +182,9 @@ export default {
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
+			rocketTypeName,
 			rockets,
+			searchCriteria,
 			title,
 			type,
 			manufacturers,
@@ -211,7 +226,9 @@ export default {
 			hasCoverUrl,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
+			rocketTypeName,
 			rockets,
+			searchCriteria,
 			title,
 			type,
 			manufacturers,
