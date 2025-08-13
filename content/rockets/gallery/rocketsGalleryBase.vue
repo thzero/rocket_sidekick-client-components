@@ -9,7 +9,6 @@ import LibraryClientUtility from '@thzero/library_client/utility/index';
 import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 import { useContentBaseComponent } from '@/components/content/contentBase';
-import { corr } from 'mathjs';
 
 export function useRocketsGalleryBaseComponent(props, context, options) {
 	const {
@@ -99,11 +98,10 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 	const buttonOkDisabled = computed(() => {
 		return (invalid.value);
 	});
-
 	const clickSearchClear = async () => {
 		const correlationIdI = correlationId();
 		isSearching.value = false;
-		reset(correlationIdI, true);
+		reset(correlationIdI);
 		saveSettings(correlationIdI);
 		await submit(correlationIdI);
 	};
@@ -117,8 +115,6 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 			await options.filter(searchCriteria.value);
 	};
 	const fetch = async (correlationId) => {
-		const settings = serviceStore.getters.getRocketsGallerySettings(correlationId, requestedTag.value);
-		searchCriteria.value = settings && settings.filters ? settings.filters : {};
 		rockets.value = await fetchRocketsFilter(correlationId, await fetchRockets(correlationId));
 		saveSettings(correlationId);
 	};
@@ -133,10 +129,9 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 		manufacturers.value = response.results.sort((a, b) => a.name.localeCompare(b.name));
 	};
 	const fetchRockets = async (correlationIdI) => {
-		let response;
-
 		filter(searchCriteria);
 
+		let response;
 		// console.log(type.value, 'useRocketSetupsBaseComponent.fetch.type.value');
 		if (type.value === AppCommonConstants.Rocketry.DisplayTypes.Site)
 			response = await serviceStore.dispatcher.requestRocketsGallery(correlationId(), searchCriteria.value);
@@ -189,11 +184,11 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 
 		return output;
 	};
-	const reset = (settings) => {
+	const reset = (correlationId, settings) => {
 		filterItemRocketName.value = settings && settings.filters ? settings.filters.name : null;
 		filterItemRocketTypes.value = settings && settings.filters ? settings.filters.rocketTypes : null;
 		if (options && options.reset)
-			options.reset(settings);
+			options.reset(correlationId, settings);
 		invalid.value = validation.value.$invalid;
 	};
 	const rocketUrl = (item) => {
@@ -238,7 +233,7 @@ export function useRocketsGalleryBaseComponent(props, context, options) {
 	onMounted(async () => {
 		const correlationIdI = correlationId();
 		const settings = serviceStore.getters.getRocketsGallerySettings(correlationIdI, requestedTag.value);
-		reset(settings);
+		reset(correlationIdI, settings);
 		await fetchManufacturers(correlationIdI);
 		await fetch(correlationIdI);
 	});
