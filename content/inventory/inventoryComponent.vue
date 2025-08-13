@@ -265,13 +265,6 @@ export function useInventoryBaseComponent(props, context, options) {
 	const inventoryMotorCasesSelect = computed(() => {
 		if (!inventoryMotorCases.value)
 			return [];
-		return LibraryClientVueUtility.selectOptions(inventoryMotorCases.value, null, null, (l) => {
-			return l.itemId;
-		}, (l) => {
-			return l.item.name;
-		}, (l) => {
-			return l.item.name;
-		});
 	});
 	const inventoryPartTypes = computed(() => {
 		const temp2 = LibraryClientVueUtility.selectOptions(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.PartTypes), LibraryClientUtility.$trans.t, 'forms.content.parts');
