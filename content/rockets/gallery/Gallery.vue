@@ -13,7 +13,7 @@
 							v-model="filterItemRocketName"
 							vid="filterItemRocketName"
 							:validation="validation"
-							:label="$t('forms.name')"
+							:label="$t('forms.content.rockets.name') + ' ' + $t('forms.name')"
 							:maxcount="30"
 						/>
 					</v-col>
@@ -26,7 +26,7 @@
 							:max-values="2"
 							:items="rocketTypes"
 							:validation="validation"
-							:label="$t('forms.content.rockets.level')"
+							:label="$t('forms.content.rockets.name') + ' ' + $t('forms.content.rockets.level')"
 							:hint="$t('forms.content.rockets.level')"
 						/>
 					</v-col>
@@ -56,7 +56,7 @@
 		class="mt-2"
 	>
 		<v-col 
-			cols="2"
+			cols="2" md="1"
 		>
 			<v-btn
 				v-if="$vuetify.display.lgAndUp"
@@ -69,24 +69,28 @@
 			</v-btn>
 		</v-col>
 		<v-col 
-			cols="8"
+			cols="8" md="10"
 		>
-			<v-row dense>
-				<v-col cols="6" v-if="searchCriteria.name">
-					<b>{{ $t('forms.name')}}:</b>
-					{{ searchCriteria.name }}
-				</v-col>
-				<v-col cols="6" v-if="searchCriteria.rocketTypes">
-					<b>{{ $t('forms.content.rockets.level')}}:</b>
-					<v-chip
-						v-for="item in searchCriteria.rocketTypes"
-						:key="item"
-					>{{ rocketTypeName(item) }}</v-chip>
-				</v-col>
-			</v-row>
+			<v-card>
+				<v-card-text>
+					<v-row dense>
+						<v-col cols="6" v-if="searchCriteria.name">
+							<b>{{ $t('forms.name')}}:</b>
+							{{ searchCriteria.name }}
+						</v-col>
+						<v-col cols="6" v-if="searchCriteria.rocketTypes">
+							<b>{{ $t('forms.content.rockets.level')}}:</b>
+							<v-chip
+								v-for="item in searchCriteria.rocketTypes"
+								:key="item"
+							>{{ rocketTypeName(item) }}</v-chip>
+						</v-col>
+					</v-row>
+				</v-card-text>
+			</v-card>
 		</v-col>
 		<v-col 
-			cols="2"
+			cols="2" md="1"
 			class="text-right"
 		>
 			<v-btn
