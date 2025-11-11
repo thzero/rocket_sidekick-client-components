@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted, ref} from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { firstBy, thenBy } from 'thenby';
 
 import AppUtility from '@/utility/app';

@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted, ref} from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
