@@ -116,7 +116,7 @@
 				<v-col 
 					cols="6"
 				>
-					<b>{{ $t('forms.content.launches.date') }}</b><br>
+					<b>{{ $t('forms.content.launches.date.title') }}</b><br>
 					{{ launchDate(item) }}
 				</v-col>
 				<v-col 

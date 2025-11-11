@@ -1,5 +1,5 @@
 <script>
-import { onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 
