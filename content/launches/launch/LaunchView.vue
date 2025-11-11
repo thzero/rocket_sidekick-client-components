@@ -80,26 +80,43 @@
 								</div>
 							</v-col>
 							<v-col cols="12">
-								<VtTextField
-									v-model="displayItemLocationIterationAddress"
-									:label="$t('forms.content.locations.address')"
-									:readonly="true"
-								/>
+								<div 
+									class="d-flex"
+								>
+									<VtTextField
+										v-model="displayItemLocationIterationAddress"
+										:label="$t('forms.content.locations.address')"
+										:readonly="true"
+									/>
+									<!-- <v-btn
+										:variant="buttonsForms.variant.default"
+										:color="buttonsForms.color.default"
+										@click="clickViewLocation(displayItem)"
+									>
+										{{ $t('buttons.link') }}
+									</v-btn> -->
+									<!-- <div
+										v-if="displayItem && displayItem.locationId"
+										style="display: flex; justify-content: center; align-items: center;"
+									>
+										<router-link
+											:to="'/user/locations/' + (displayItem ? displayItem.locationId: '')"
+											class="text-contrast router-link headline"
+										>
+											<v-icon color="green darken-2">
+												mdi-link
+											</v-icon>
+										</router-link>
+									</div> -->
+								</div>
 							</v-col>
 						</v-row>
 					</v-col>
-					<v-col 
+					<!-- <v-col 
 						v-if="$vuetify.display.xs"
 						cols="12"
 						class="text-right"
 					>
-						<!-- <v-btn
-							:variant="buttonsForms.variant.default"
-							:color="buttonsForms.color.default"
-							@click="clickViewLocation(displayItem)"
-						>
-							{{ $t('buttons.link') }}
-						</v-btn> -->
 						<div
 							v-if="displayItem && displayItem.locationId"
 							style="display: flex; justify-content: center; align-items: center;"
@@ -108,13 +125,12 @@
 								:to="'/user/locations/' + (displayItem ? displayItem.locationId: '')"
 								class="text-contrast router-link headline"
 							>
-								<!-- <h2>{{ $t('buttons.link') }}</h2> -->
 							<v-icon color="green darken-2">
 								mdi-link
 							</v-icon>
 							</router-link>
 						</div>
-					</v-col>
+					</v-col> -->
 					<v-col cols="12">
 						<VtSelect
 							v-if="isFailure"

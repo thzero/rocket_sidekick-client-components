@@ -21,6 +21,7 @@
 								vid="filterItemName"
 								:label="$t('forms.name')"
 								:validation="validation"
+								:clear="true"
 							/>
 						</v-col>
 					</v-row>
@@ -48,6 +49,15 @@
 								:items="organizations"
 								:validation="validation"
 								:label="$t('forms.content.organizations.plural')"
+							/>
+						</v-col>
+						<v-col cols="12" :sm="filterDrawer ? 12: 6">
+							<VtSwitchWithValidation
+								ref="filterItemSharedRef"
+								v-model="filterItemShared"
+								vid="filterItemShared"
+								:label="$t('forms.content.public')"
+								:validation="validation"
 							/>
 						</v-col>
 					</v-row>
@@ -95,6 +105,108 @@
 			</v-btn>
 		</template>
 		<template v-slot:listing>
+			<v-card>
+				<v-card-text>
+					<v-row dense>
+						<v-col cols="12" md="4">
+							<table
+								border="0"
+								cellspacing="0"
+								cellpadding="0"
+								style="width: 100%;"
+							>
+								<tbody>
+									<tr>
+										<td
+											style="padding-right: 4px"
+										>
+											<VtSelect
+												ref="sortColumn1Ref"
+												v-model="sortColumn1"
+												vid="sortColumn1"
+												:items="sortColumnsNull"
+												:flat="true"
+												:hide-details="true"
+												:solo-inverted="true"
+												:label="$t('forms.sorting.nameShort')"
+											/>
+										</td>
+										<td>
+											<VtDirectionButton
+												v-model="sortColumnDirection1"
+											/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</v-col>
+						<v-col cols="12" md="4">
+							<table
+								border="0"
+								cellspacing="0"
+								cellpadding="0"
+								style="width: 100%;"
+							>
+								<tbody>
+									<tr>
+										<td
+											style="padding-right: 4px"
+										>
+											<VtSelect
+												ref="sortColumn2Ref"
+												v-model="sortColumn2"
+												vid="sortColumn2"
+												:items="sortColumns"
+												:flat="true"
+												:hide-details="true"
+												:solo-inverted="true"
+												:label="$t('forms.sorting.nameShort')"
+											/>
+										</td>
+										<td>
+											<VtDirectionButton
+												v-model="sortColumnDirection2"
+											/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</v-col>
+						<v-col cols="12" md="4">
+							<table
+								border="0"
+								cellspacing="0"
+								cellpadding="0"
+								style="width: 100%;"
+							>
+								<tbody>
+									<tr>
+										<td
+											style="padding-right: 4px"
+										>
+											<VtSelect
+												ref="sortColumn3Ref"
+												v-model="sortColumn3"
+												vid="sortColumn3"
+												:items="sortColumns"
+												:flat="true"
+												:hide-details="true"
+												:solo-inverted="true"
+												:label="$t('forms.sorting.nameShort')"
+											/>
+										</td>
+										<td>
+											<VtDirectionButton
+												v-model="sortColumnDirection3"
+											/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</v-col>
+					</v-row>
+				</v-card-text>
+			</v-card>
 			<v-row dense>
 				<v-col cols="12">
 					<v-snackbar
@@ -220,8 +332,10 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import Location from '@/components/content/locations/location/Location';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtDirectionButton from '@thzero/library_client_vue3_vuetify3/components/VtDirectionButton';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
@@ -236,8 +350,10 @@ export default {
 		MeasurementUnitsSelect,
 		Location,
 		VtConfirmationDialog,
+		VtDirectionButton,
 		VtFormListing,
 		VtNumberFieldWithValidation,
+		VtSelect,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
 		VtTextAreaWithValidation,
@@ -321,8 +437,17 @@ export default {
 			filterItemName,
 			filterItemOrganizations,
 			filterItemRocketTypes,
+			filterItemShared,
+			sortColumn1,
+			sortColumn2,
+			sortColumn3,
+			sortColumnDirection1,
+			sortColumnDirection2,
+			sortColumnDirection3,
 			title,
 			buttonSearchResetDisabled,
+			sortColumns,
+			sortColumnsNull,
 			addressDisplay,
 			resetAdditional,
 			scope,
@@ -410,8 +535,17 @@ export default {
 			filterItemName,
 			filterItemOrganizations,
 			filterItemRocketTypes,
+			filterItemShared,
+			sortColumn1,
+			sortColumn2,
+			sortColumn3,
+			sortColumnDirection1,
+			sortColumnDirection2,
+			sortColumnDirection3,
 			title,
 			buttonSearchResetDisabled,
+			sortColumns,
+			sortColumnsNull,
 			addressDisplay,
 			resetAdditional,
 			scope,

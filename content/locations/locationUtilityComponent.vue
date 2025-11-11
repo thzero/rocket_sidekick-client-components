@@ -1,5 +1,5 @@
 <script>
-import { computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 
 import LibraryClientVueUtility from '@thzero/library_client_vue3/utility/index';
 

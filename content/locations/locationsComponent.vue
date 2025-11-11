@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted, ref} from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { firstBy, thenBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
@@ -119,11 +119,27 @@ export function useLocationsBaseComponent(props, context, options) {
 		organizationNames
 	} = useOrganizationsUtilityComponent(props, context);
 
+	const types = {
+		location: 'location',
+		name: 'name',
+		shared: 'shared',
+	};
+	
+	let sortColumnWatcher = null;
+	let sortColumDirectionWatcher = null;
+
 	const debug = ref(false);
 	const locationsListing = ref(null);
 	const filterItemName = ref(null);
 	const filterItemOrganizations = ref([]);
 	const filterItemRocketTypes = ref([]);
+	const filterItemShared = ref(true);
+	const sortColumn1 = ref(types.name);
+	const sortColumn2 = ref(null);
+	const sortColumn3 = ref(null);
+	const sortColumnDirection1 = ref(true);
+	const sortColumnDirection2 = ref(true);
+	const sortColumnDirection3 = ref(true);
 	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.locations.title`));
 
 	if (LibraryCommonUtility.isDev) {
@@ -135,6 +151,21 @@ export function useLocationsBaseComponent(props, context, options) {
 
 	const buttonSearchResetDisabled = computed(() => {
 		return false;
+	});
+	const sortColumns = computed(() => {
+		return  [
+			{ id: null, name: '' },
+			{ id: types.location, name: LibraryClientUtility.$trans.t('forms.content.locations.address') },
+			{ id: types.name, name: LibraryClientUtility.$trans.t('forms.content.locations.name') },
+			{ id: types.shared, name: LibraryClientUtility.$trans.t('forms.content.public') }
+		];
+	});
+	const sortColumnsNull = computed(() => {
+		return  [
+			{ id: types.location, name: LibraryClientUtility.$trans.t('forms.content.locations.address') },
+			{ id: types.name, name: LibraryClientUtility.$trans.t('forms.content.locations.name') },
+			{ id: types.shared, name: LibraryClientUtility.$trans.t('forms.content.public') }
+		];
 	});
 	
 	const addressDisplay = (item) => {
@@ -169,25 +200,94 @@ export function useLocationsBaseComponent(props, context, options) {
 	const deleteItemI = async (correlationId, id) => {
 		return await serviceStore.dispatcher.deleteLocationById(correlationId, id);
 	};
-	const fetchI = async (correlationId) => {
-		const params = fetchParams(correlationId, {});
+	const fetchI = async (correlationIdI) => {
+		const params = fetchParams(correlationIdI, {});
 		if (!params)
-			return error('useLocationsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationId);
+			return error('useLocationsBaseComponent', 'fetchI', 'Invalid params', null, null, null, correlationIdI);
 
-		serviceStore.dispatcher.setLocationsSearchCriteria(correlationId, params);
+		serviceStore.dispatcher.setLocationsSearchCriteria(correlationIdI, params);
 
 		if (requestedItemId.value)
 			params.locationId = requestedItemId.value;
 			
-		const response = await serviceStore.dispatcher.requestLocations(correlationId, params);
+		const response = await serviceStore.dispatcher.requestLocations(correlationIdI, params);
 		if (hasFailed(response))
 			return;
+
+		if (!params.shared)
+			response.results = response.results.filter(l => l.public !== true);
+
+		if (!String.isNullOrEmpty(params.name))
+			response.results = response.results.filter(l => (
+				l.name && l.name.toLowerCase().indexOf(params.name.toLowerCase()) > -1 ||
+				l.searchName && l.searchName.toLowerCase().indexOf(params.name.toLowerCase()) > -1
+			));
+
+		if (params.organizations && params.organizations.length > 0)
+			response.results = response.results.filter(l => (
+				l.organizations && l.organizations.some(r => params.organizations.includes(r))
+			));
+
+		if (params.rocketTypes && params.rocketTypes.length > 0)
+			response.results = response.results.filter(l => (
+				l.rocketTypes && l.rocketTypes.some(r => params.rocketTypes.includes(r))
+			));
+
+		const columns = [ sortColumn1, sortColumn2, sortColumn3 ];
+		const columnDirections = [ sortColumnDirection1, sortColumnDirection2, sortColumnDirection3 ];
+		let sort = [];
 
 		response.results = response.results.sort(
 			firstBy((v1, v2) => { 
 				return (v1 && v1.name && v2 && v2.name) && v1.name.localeCompare(v2.name); 
 			})
 		);
+
+		for (let i = 0; i < columns.length; i++) {
+			let column = columns[i];
+			let directions = columnDirections[i];
+			if (column.value === types.name) {
+				if (directions.value)
+					sort[i] = (v1, v2) => { return (v1 && v1.sortName && v2 && v2.sortName) && v1.name.localeCompare(v2.sortName); };
+				else
+					sort[i] = (v1, v2) => { return (v1 && v1.sortName && v2 && v2.sortName) && v2.name.localeCompare(v1.sortName); };
+			}
+			
+			if (column.value === types.location) {
+				if (directions.value)
+					sort[i] = (v1, v2) => { return (v1 && v2) && addressDisplay(v1).localeCompare(addressDisplay(v2)); };
+				else
+					sort[i] = (v1, v2) => { return (v1 && v2) && addressDisplay(v2).localeCompare(addressDisplay(v1)); };
+			}
+			
+			if (column.value === types.shared) {
+				if (directions.value)
+					sort[i] = (v1, v2) => { return (v1 && v1.public && v2 && v2.public) && Number(v1.public) - Number(v2.public); };
+				else
+					sort[i] = (v1, v2) => { return (v1 && v1.public && v2 && v2.public) && Number(v2.public) - Number(v1.public); };
+			}
+		}
+
+		let sorting = firstBy(sort[0]);
+		sorting.thenBy(sort[1]);
+		sorting.thenBy(sort[2]);
+		sorting.thenBy(sort[3]);
+		response.results = response.results.sort(
+			sorting
+		);
+	
+		if (!sortColumnWatcher)
+			sortColumnWatcher = watch(() => [ sortColumn1.value, sortColumn2.value, sortColumn3.value ],
+				async () => {
+					await fetch(correlationId(), false);
+				}
+			);
+		if (!sortColumDirectionWatcher)
+			sortColumDirectionWatcher = watch(() => [ sortColumnDirection1.value, sortColumnDirection2.value, sortColumnDirection3.value ],
+				async () => {
+					await fetch(correlationId(), false);
+				}
+			);
 		
 		return success(correlationId, { data: response.results, sorted: true });
 	};
@@ -198,6 +298,15 @@ export function useLocationsBaseComponent(props, context, options) {
 		params.name = filterItemName.value;
 		params.organizations = filterItemOrganizations.value;
 		params.rocketTypes = filterItemRocketTypes.value;
+		params.shared = filterItemShared.value;
+		
+		params.sortColumn1 = sortColumn1.value ?? types.name;
+		params.sortColumn2 = sortColumn2.value ?? null;
+		params.sortColumn3 = sortColumn3.value ?? null;
+		params.sortColumnDirection1 = sortColumnDirection1.value ?? true;
+		params.sortColumnDirection2 = sortColumnDirection2.value ?? true;
+		params.sortColumnDirection3 = sortColumnDirection3.value ?? true;
+
 		return params;
 	};
 	const initI = async (correlationId) => {
@@ -214,6 +323,14 @@ export function useLocationsBaseComponent(props, context, options) {
 		filterItemName.value = data ? data.name : null;
 		filterItemOrganizations.value = data ? data.organizations : null;
 		filterItemRocketTypes.value = data ? data.rocketTypes : null;
+		filterItemShared.value = data ? data.shared : true;
+
+		sortColumn1.value = data ? data.sortColumn1 ?? types.name : types.name;
+		sortColumn2.value = data ? data.sortColumn2 : null;
+		sortColumn3.value = data ? data.sortColumn3 : null;
+		sortColumnDirection1.value = data ? data.sortColumnDirection1 : true;
+		sortColumnDirection2.value = data ? data.sortColumnDirection2 : true;
+		sortColumnDirection3.value = data ? data.sortColumnDirection3 : true;
 	};
 
 	onMounted(async () => {
@@ -293,8 +410,17 @@ export function useLocationsBaseComponent(props, context, options) {
 		filterItemName,
 		filterItemOrganizations,
 		filterItemRocketTypes,
+		filterItemShared,
+		sortColumn1,
+		sortColumn2,
+		sortColumn3,
+		sortColumnDirection1,
+		sortColumnDirection2,
+		sortColumnDirection3,
 		title,
 		buttonSearchResetDisabled,
+		sortColumns,
+		sortColumnsNull,
 		addressDisplay,
 		resetAdditional,
 		scope: 'LocationsFilterControl',

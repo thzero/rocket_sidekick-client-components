@@ -66,7 +66,7 @@
 										class="ml-4 text-right"
 										:variant="buttonsForms.variant.add"
 										:color="buttonsForms.color.add"
-										@click="clickSearchRockets(item)"
+										@click="clickSearchRockets()"
 									>
 										{{ $t('buttons.select') }}
 									</v-btn>
@@ -91,6 +91,29 @@
 									>
 										{{ $t('buttons.select') }}
 									</v-btn>
+								</div>
+							</v-col>
+						</v-row>
+						<v-row dense>
+							<v-col cols="12">
+								<div class="d-flex">
+									<VtDateTimePickerFieldWithValidation
+										ref="filterItemDateFromRef"
+										v-model="filterItemDateFrom"
+										vid="filterItemDateFrom"
+										:default-date="false"
+										:validation="validation"
+										:label="$t('forms.content.launches.date.from')"
+										class="mr-4"
+									/>
+									<VtDateTimePickerFieldWithValidation
+										ref="filterItemDateToRef"
+										v-model="filterItemDateTo"
+										vid="filterItemDateTo"
+										:default-date="false"
+										:validation="validation"
+										:label="$t('forms.content.launches.date.to')"
+									/>
 								</div>
 							</v-col>
 						</v-row>
@@ -161,6 +184,108 @@
 			</v-btn>
 		</template>
 		<template v-slot:listing>
+			<v-card>
+				<v-card-text>
+					<v-row dense>
+						<v-col cols="12" md="4">
+							<table
+								border="0"
+								cellspacing="0"
+								cellpadding="0"
+								style="width: 100%;"
+							>
+								<tbody>
+									<tr>
+										<td
+											style="padding-right: 4px"
+										>
+											<VtSelect
+												ref="sortColumn1Ref"
+												v-model="sortColumn1"
+												vid="sortColumn1"
+												:items="sortColumnsNull"
+												:flat="true"
+												:hide-details="true"
+												:solo-inverted="true"
+												:label="$t('forms.sorting.nameShort')"
+											/>
+										</td>
+										<td>
+											<VtDirectionButton
+												v-model="sortColumnDirection1"
+											/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</v-col>
+						<v-col cols="12" md="4">
+							<table
+								border="0"
+								cellspacing="0"
+								cellpadding="0"
+								style="width: 100%;"
+							>
+								<tbody>
+									<tr>
+										<td
+											style="padding-right: 4px"
+										>
+											<VtSelect
+												ref="sortColumn2Ref"
+												v-model="sortColumn2"
+												vid="sortColumn2"
+												:items="sortColumns"
+												:flat="true"
+												:hide-details="true"
+												:solo-inverted="true"
+												:label="$t('forms.sorting.nameShort')"
+											/>
+										</td>
+										<td>
+											<VtDirectionButton
+												v-model="sortColumnDirection2"
+											/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</v-col>
+						<v-col cols="12" md="4">
+							<table
+								border="0"
+								cellspacing="0"
+								cellpadding="0"
+								style="width: 100%;"
+							>
+								<tbody>
+									<tr>
+										<td
+											style="padding-right: 4px"
+										>
+											<VtSelect
+												ref="sortColumn3Ref"
+												v-model="sortColumn3"
+												vid="sortColumn3"
+												:items="sortColumns"
+												:flat="true"
+												:hide-details="true"
+												:solo-inverted="true"
+												:label="$t('forms.sorting.nameShort')"
+											/>
+										</td>
+										<td>
+											<VtDirectionButton
+												v-model="sortColumnDirection3"
+											/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</v-col>
+					</v-row>
+				</v-card-text>
+			</v-card>
 			<v-row dense>
 				<v-col cols="12">
 					<v-snackbar
@@ -391,9 +516,12 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketLookupDialog from '@/components/content/rockets/dialogs/RocketLookupDialog';
 import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
+import VtDateTimePickerFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtDateTimePickerFieldWithValidationTemp';
+import VtDirectionButton from '@thzero/library_client_vue3_vuetify3/components/VtDirectionButton';
 import VtFormListing from '@thzero/library_client_vue3_vuetify3/components/form/VtFormListing';
 import VtMarkdown from '@thzero/library_client_vue3_vuetify3/components/markup/VtMarkdown';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
+import VtSelect from '@thzero/library_client_vue3_vuetify3/components/form/VtSelect';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
 import VtSwitchWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSwitchWithValidation';
 import VtTextAreaWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtTextAreaWithValidation';
@@ -412,8 +540,11 @@ export default {
 		MeasurementUnitsSelect,
 		RocketLookupDialog,
 		VtConfirmationDialog,
+		VtDateTimePickerFieldWithValidation,
+		VtDirectionButton,
 		VtFormListing,
 		VtMarkdown,
+		VtSelect,
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
 		VtSwitchWithValidation,
@@ -501,6 +632,8 @@ export default {
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
 			LaunchesRef,
+			filterItemDateFrom,
+			filterItemDateTo,
 			filterItemDiameter,
 			filterItemLocationId,
 			filterItemLocationName,
@@ -510,6 +643,12 @@ export default {
 			filterItemRocketName,
 			filterItemRocketTypes,
 			mobileOnly,
+			sortColumn1,
+			sortColumn2,
+			sortColumn3,
+			sortColumnDirection1,
+			sortColumnDirection2,
+			sortColumnDirection3,
 			title,
 			viewType,
 			viewTypeListingRef,
@@ -517,6 +656,8 @@ export default {
 			viewTypeIcon,
 			viewTypeListing,
 			viewTypeTable,
+			sortColumns,
+			sortColumnsNull,
 			clickSearchLocations,
 			clickSearchRockets,
 			handleViewType,
@@ -610,6 +751,8 @@ export default {
 			dialogLocationLookupManager,
 			dialogRocketLookupManager,
 			LaunchesRef,
+			filterItemDateFrom,
+			filterItemDateTo,
 			filterItemDiameter,
 			filterItemLocationId,
 			filterItemLocationName,
@@ -619,6 +762,12 @@ export default {
 			filterItemRocketName,
 			filterItemRocketTypes,
 			mobileOnly,
+			sortColumn1,
+			sortColumn2,
+			sortColumn3,
+			sortColumnDirection1,
+			sortColumnDirection2,
+			sortColumnDirection3,
 			title,
 			viewType,
 			viewTypeListingRef,
@@ -626,6 +775,8 @@ export default {
 			viewTypeIcon,
 			viewTypeListing,
 			viewTypeTable,
+			sortColumns,
+			sortColumnsNull,
 			clickSearchLocations,
 			clickSearchRockets,
 			handleViewType,
