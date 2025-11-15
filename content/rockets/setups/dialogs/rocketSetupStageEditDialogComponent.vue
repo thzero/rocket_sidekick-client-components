@@ -59,10 +59,25 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
+	const detailItemBallast = ref(null);
+	const detailItemBallastMeasurementUnitId = ref(null);
+	const detailItemBallastMeasurementUnitsId = ref(null);
 	const detailItemCg = ref(null);
 	const detailItemCgFrom = ref(null);
 	const detailItemCgMeasurementUnitId = ref(null);
 	const detailItemCgMeasurementUnitsId = ref(null);
+	const detailItemEjectionDrogue = ref(null);
+	const detailItemEjectionDrogueMeasurementUnitId = ref(null);
+	const detailItemEjectionDrogueMeasurementUnitsId = ref(null);
+	const detailItemEjectionDrogueBackup = ref(null);
+	const detailItemEjectionDrogueBackupMeasurementUnitId = ref(null);
+	const detailItemEjectionDrogueBackupMeasurementUnitsId = ref(null);
+	const detailItemEjectionMain = ref(null);
+	const detailItemEjectionMainMeasurementUnitId = ref(null);
+	const detailItemEjectionMainMeasurementUnitsId = ref(null);
+	const detailItemEjectionMainBackup = ref(null);
+	const detailItemEjectionMainBackupMeasurementUnitId = ref(null);
+	const detailItemEjectionMainBackupMeasurementUnitsId = ref(null);
 	const detailItemMotor0 = ref(null);
 	const detailItemMotor1 = ref(null);
 	const detailItemMotor2 = ref(null);
@@ -91,9 +106,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
-	const detailItemWeightNose = ref(null);
-	const detailItemWeightNoseMeasurementUnitId = ref(null);
-	const detailItemWeightNoseMeasurementUnitsId = ref(null);
 	const dialogPartsSearchMotorCasesDetail = ref(null);
 	const dialogPartsSearchMotorCasesDiameter = ref(null);
 	const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
@@ -151,10 +163,30 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const resetAdditional = async (correlationId, previous) => {
 		detailItemNotes.value = detailItem.value ? detailItem.value.name : null;
 		
+		detailItemBallast.value = detailItem.value ? detailItem.value.ballast : null;
+		detailItemBallastMeasurementUnitId.value = detailItem.value ? detailItem.value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
+		detailItemBallastMeasurementUnitsId.value = detailItem.value ? detailItem.value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+	
 		detailItemCg.value = detailItem.value ? detailItem.value.cg : null;
 		detailItemCgFrom.value = detailItem.value ? detailItem.value.cgFrom : AppCommonConstants.Rocketry.Direction.Tip;
 		detailItemCgMeasurementUnitId.value = detailItem.value ? detailItem.value.cgMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 		detailItemCgMeasurementUnitsId.value = detailItem.value ? detailItem.value.cgMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
+		
+		detailItemEjectionDrogue.value = (detailItem.value && detailItem.value.ejection) ? detailItem.value.ejection.drogue : null;
+		detailItemEjectionDrogueMeasurementUnitId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.drogueMeasurementUnitId ?? 'g' : 'g';
+		detailItemEjectionDrogueMeasurementUnitsId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.drogueMeasurementUnitsId ?? 'metrics' : 'metrics';
+		
+		detailItemEjectionDrogueBackup.value = (detailItem.value && detailItem.value.ejection) ? detailItem.value.ejection.drogueBackup : null;
+		detailItemEjectionDrogueBackupMeasurementUnitId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.drogueBackupMeasurementUnitId ?? 'g' : 'g';
+		detailItemEjectionDrogueBackupMeasurementUnitsId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.drogueBackupMeasurementUnitId ?? 'metrics' : 'metrics';
+		
+		detailItemEjectionMain.value = (detailItem.value && detailItem.value.ejection) ? detailItem.value.ejection.main : null;
+		detailItemEjectionMainMeasurementUnitId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.mainMeasurementUnitId ?? 'g' : 'g';
+		detailItemEjectionMainMeasurementUnitsId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.mainMeasurementUnitId ?? 'metrics' : 'metrics';
+		
+		detailItemEjectionMainBackup.value = (detailItem.value && detailItem.value.ejection) ? detailItem.value.ejection.mainBackup : null;
+		detailItemEjectionMainBackupMeasurementUnitId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.mainBackupMeasurementUnitId ?? 'g' : 'g';
+		detailItemEjectionMainBackupMeasurementUnitsId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.mainBackupMeasurementUnitId ?? 'metrics' : 'metrics';
 		
 		detailItemMotor0.value = null;
 		detailItemMotor1.value = null;
@@ -223,10 +255,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemWeight.value = detailItem.value ? detailItem.value.weight : null;
 		detailItemWeightMeasurementUnitId.value = detailItem.value ? detailItem.value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
 		detailItemWeightMeasurementUnitsId.value = detailItem.value ? detailItem.value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-		
-		detailItemWeightNose.value = detailItem.value ? detailItem.value.weightNose : null;
-		detailItemWeightNoseMeasurementUnitId.value = detailItem.value ? detailItem.value.weightMeasurementUnitId ?? measurementUnitsWeightDefaultId.value : measurementUnitsWeightDefaultId.value;
-		detailItemWeightNoseMeasurementUnitsId.value = detailItem.value ? detailItem.value.weightMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 	};
 	const selectMotor = async (item) => {
 		try {
@@ -308,12 +336,34 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	};
 	const setAdditional = async (correlationId) => {
 		detailItem.value.notes = String.trim(detailItemNotes.value);
-
+		
+		detailItem.value.ballast = LibraryClientUtility.convertNumber(detailItemBallast.value);
+		detailItem.value.ballastMeasurementUnitId = detailItemBallastMeasurementUnitId.value;
+		// detailItem.value.ballastMeasurementUnitsId = detailItemBallastMeasurementUnitsId.value;
+		detailItem.value.ballastMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemBallastMeasurementUnitId.value);
+	
 		detailItem.value.cg = LibraryClientUtility.convertNumber(detailItemCg.value);
 		detailItem.value.cgFrom = detailItemCgFrom.value;
 		detailItem.value.cgMeasurementUnitId = detailItemCgMeasurementUnitId.value;
 		// detailItem.value.cgMeasurementUnitsId = detailItemCgMeasurementUnitsId.value;
 		detailItem.value.cgMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemCgMeasurementUnitId.value);
+		
+		detailItem.value.ejection = detailItem.value.ejection ? detailItem.value.ejection : {};
+		detailItem.value.ejection.drogue = LibraryClientUtility.convertNumber(detailItemEjectionDrogue.value);
+		detailItem.value.ejection.drogueMeasurementUnitId = detailItemEjectionDrogueMeasurementUnitId.value;
+		detailItem.value.ejection.drogueMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemEjectionDrogueMeasurementUnitId.value);
+	
+		detailItem.value.ejection.drogueBackup = LibraryClientUtility.convertNumber(detailItemEjectionDrogueBackup.value);
+		detailItem.value.ejection.drogueBackupMeasurementUnitId = detailItemEjectionDrogueBackupMeasurementUnitId.value;
+		detailItem.value.ejection.drogueBackupMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemEjectionDrogueBackupMeasurementUnitId.value);
+
+		detailItem.value.ejection.main = LibraryClientUtility.convertNumber(detailItemEjectionMain.value);
+		detailItem.value.ejection.mainMeasurementUnitId = detailItemEjectionMainMeasurementUnitId.value;
+		detailItem.value.ejection.mainMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemEjectionMainMeasurementUnitId.value);
+
+		detailItem.value.ejection.mainBackup = LibraryClientUtility.convertNumber(detailItemEjectionMainBackup.value);
+		detailItem.value.ejection.mainBackupMeasurementUnitId = detailItemEjectionMainBackupMeasurementUnitId.value;
+		detailItem.value.ejection.mainBackupMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemEjectionMainBackupMeasurementUnitId.value);
 
 		detailItem.value.motors = detailItem.value.motors ?? [];
 
@@ -336,11 +386,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItem.value.weightMeasurementUnitId = detailItemWeightMeasurementUnitId.value;
 		// detailItem.value.weightMeasurementUnitsId = detailItemWeightMeasurementUnitsId.value;
 		detailItem.value.weightMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightMeasurementUnitId.value);
-	
-		detailItem.value.weightNose = LibraryClientUtility.convertNumber(detailItemWeightNose.value);
-		detailItem.value.weightNoseMeasurementUnitId = detailItemWeightNoseMeasurementUnitId.value;
-		// detailItem.value.weightNoseMeasurementUnitsId = detailItemWeightNoseMeasurementUnitsId.value;
-		detailItem.value.weightNoseMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemWeightNoseMeasurementUnitId.value);
 	};
 
 	return {
@@ -355,10 +400,25 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		measurementUnitsLengthType,
 		measurementUnitsWeightDefaultId,
 		measurementUnitsWeightType,
+		detailItemBallast,
+		detailItemBallastMeasurementUnitId,
+		detailItemBallastMeasurementUnitsId,
 		detailItemCg,
 		detailItemCgFrom,
 		detailItemCgMeasurementUnitId,
 		detailItemCgMeasurementUnitsId,
+		detailItemEjectionDrogue,
+		detailItemEjectionDrogueMeasurementUnitId,
+		detailItemEjectionDrogueMeasurementUnitsId,
+		detailItemEjectionDrogueBackup,
+		detailItemEjectionDrogueBackupMeasurementUnitId,
+		detailItemEjectionDrogueBackupMeasurementUnitsId,
+		detailItemEjectionMain,
+		detailItemEjectionMainMeasurementUnitId,
+		detailItemEjectionMainMeasurementUnitsId,
+		detailItemEjectionMainBackup,
+		detailItemEjectionMainBackupMeasurementUnitId,
+		detailItemEjectionMainBackupMeasurementUnitsId,
 		detailItemMotor0,
 		detailItemMotor1,
 		detailItemMotor2,
@@ -387,9 +447,6 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
-		detailItemWeightNose,
-		detailItemWeightNoseMeasurementUnitId,
-		detailItemWeightNoseMeasurementUnitsId,
 		dialogPartsSearchMotorCasesDetail,
 		dialogPartsSearchMotorCasesDiameter,
 		dialogPartsSearchMotorCasesManager,

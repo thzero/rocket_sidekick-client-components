@@ -125,18 +125,38 @@ export function useRocketSetupStageComponent(props, context, options) {
 	const displayItem = computed(() => {
 		return props.detailItem ? props.detailItem : {};
 	});
+	const displayItemBallast = computed(() => {
+		if (displayItem.value && displayItem.value.ballast)
+			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ballast; }, (value) => { return value.ballastMeasurementUnitsId; }, (value) => { return value.ballastMeasurementUnitId; });
+		return null;
+	});
 	const displayItemCg = computed(() => {
 		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.cg; }, (value) => { return value.cgMeasurementUnitsId; }, (value) => { return value.cgMeasurementUnitId; });
+	});
+	const displayItemEjectionDrogue = computed(() => {
+		if (displayItem.value && displayItem.value.ejection && displayItem.value.ejection.drogue)
+			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ejection ? value.ejection.drogue : ''; }, (value) => { return value.ejection ? value.ejection.drogueMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.drogueMeasurementUnitId : ''; });
+		return fromRocketStageEjectionDrogue.value;
+	});
+	const displayItemEjectionDrogueBackup = computed(() => {
+		if (displayItem.value && displayItem.value.ejection && displayItem.value.ejection.drogueBackup)
+			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ejection ? value.ejection.drogueBackup : ''; }, (value) => { return value.ejection ? value.ejection.drogueBackupMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.drogueBackupMeasurementUnitId : ''; });
+		return fromRocketStageEjectionDrogueBackup.value;
+	});
+	const displayItemEjectionMain = computed(() => {
+		if (displayItem.value && displayItem.value.ejection && displayItem.value.ejection.main)
+			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ejection ? value.ejection.main : ''; }, (value) => { return value.ejection ? value.ejection.mainMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.mainMeasurementUnitId : ''; });
+		return fromRocketStageEjectionMain.value;
+	});
+	const displayItemEjectionMainBackup = computed(() => {
+		if (displayItem.value && displayItem.value.ejection && displayItem.value.ejection.mainBackup)
+			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ejection ? value.ejection.mainBackup : ''; }, (value) => { return value.ejection ? value.ejection.mainBackupMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.mainBackupMeasurementUnitId : ''; });
+		return fromRocketStageEjectionMainBackup.value;
 	});
 	const displayItemWeight = computed(() => {
 		if (displayItem.value && displayItem.value.weight)
 			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weight; }, (value) => { return value.weightMeasurementUnitsId; }, (value) => { return value.weightMeasurementUnitId; });
 		return fromRocketStageWeight.value;
-	});
-	const displayItemWeightNose = computed(() => {
-		if (displayItem.value && displayItem.value.weightNose)
-			return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.weightNose; }, (value) => { return value.weightNoseMeasurementUnitsId; }, (value) => { return value.weightNoseMeasurementUnitId; });
-		return null;
 	});
 	const hasAltimeters = computed(() => {
 		const temp = altimeters.value;
@@ -203,6 +223,30 @@ export function useRocketSetupStageComponent(props, context, options) {
 		if (!temp)
 			return null;
 		return displayItemMeasurementLength(correlationId(), temp, (value) => { return value.length; },  (value) => { return value.lengthMeasurementUnitsId; }, (value) => { return value.lengthMeasurementUnitId; });
+	});
+	const fromRocketStageEjectionDrogue = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
+			return null;
+		return displayItemMeasurementWeight(correlationId(), temp, (value) => { return value.ejection ? value.ejection.drogue : ''; }, (value) => { return value.ejection ? value.ejection.drogueMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.drogueMeasurementUnitId : ''; });
+	});
+	const fromRocketStageEjectionDrogueBackup = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
+			return null;
+		return displayItemMeasurementWeight(correlationId(), temp, (value) => { return value.ejection ? value.ejection.drogue : ''; }, (value) => { return value.ejection ? value.ejection.drogueBackupMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.drogueBackupMeasurementUnitId : ''; });
+	});
+	const fromRocketStageEjectionMain = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
+			return null;
+		return displayItemMeasurementWeight(correlationId(), temp, (value) => { return value.ejection ? value.ejection.drogue : ''; }, (value) => { return value.ejection ? value.ejection.mainMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.mainMeasurementUnitId : ''; });
+	});
+	const fromRocketStageEjectionMainBackup = computed(() => {
+		const temp = fromRocketStage.value;
+		if (!temp)
+			return null;
+		return displayItemMeasurementWeight(correlationId(), temp, (value) => { return value.ejection ? value.ejection.drogue : ''; }, (value) => { return value.ejection ? value.ejection.mainBackupMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.mainBackupMeasurementUnitId : ''; });
 	});
 	const fromRocketStageWeight = computed(() => {
 		const temp = fromRocketStage.value;
@@ -680,15 +724,23 @@ export function useRocketSetupStageComponent(props, context, options) {
 		fromRocketStageDescription,
 		fromRocketStageDiameterMajor,
 		fromRocketStageDiameterMinor,
+		fromRocketStageEjectionDrogue,
+		fromRocketStageEjectionDrogueBackup,
+		fromRocketStageEjectionMain,
+		fromRocketStageEjectionMainBackup,
 		fromRocketStageLength,
 		fromRocketStageHasMotor,
 		fromRocketStageMotor,
 		fromRocketStageWeight,
 		deploymentBags,
 		displayItem,
+		displayItemBallast,
 		displayItemCg,
+		displayItemEjectionDrogue,
+		displayItemEjectionDrogueBackup,
+		displayItemEjectionMain,
+		displayItemEjectionMainBackup,
 		displayItemWeight,
-		displayItemWeightNose,
 		hasAltimeters,
 		hasChuteProtectors,
 		hasChuteReleases,

@@ -103,6 +103,68 @@
 			/>
 		</v-col>
 	</v-row>
+	<v-row dense class="mt-4"
+		v-if="displayItemEjectionDrogue || displayItemEjectionDrogueBackup || displayItemEjectionMain || displayItemEjectionMainBackup"
+	>
+		<v-col cols="12">
+			<h3>{{ $t('strings.content.rockets.ejection')}}</h3>
+			<v-divider class="border-opacity-100"></v-divider>
+		</v-col>
+	</v-row>
+	<v-row
+		dense
+	>
+		<v-col 
+			v-if="displayItemEjectionDrogue"
+			cols="6" xs="3"
+		>
+			<VtTextField
+				v-model="displayItemEjectionDrogue"
+				:hide-details="true"
+				:readonly="true"
+				:label="$t('forms.content.rockets.ejection.drogue')"
+			/>
+		</v-col>
+		<v-col 
+			v-if="displayItemEjectionDrogueBackup"
+			cols="6" xs="3"
+		>
+			<VtTextField
+				v-model="displayItemEjectionDrogueBackup"
+				:hide-details="true"
+				:readonly="true"
+				:label="$t('forms.content.rockets.ejection.drogue') + ' ' + $t('forms.content.rockets.ejection.backup')"
+			/>
+		</v-col>
+		<v-col 
+			v-if="displayItemEjectionMain"
+			cols="6" xs="3"
+		>
+			<VtTextField
+				v-model="displayItemEjectionMain"
+				:hide-details="true"
+				:readonly="true"
+				:label="$t('forms.content.rockets.ejection.main')"
+			/>
+		</v-col>
+		<v-col 
+			v-if="displayItemEjectionMainBackup"
+			cols="6" xs="3"
+		>
+			<VtTextField
+				v-model="displayItemEjectionMainBackup"
+				:hide-details="true"
+				:readonly="true"
+				:label="$t('forms.content.rockets.ejection.main') + ' ' + $t('forms.content.rockets.ejection.backup')"
+			/>
+		</v-col>
+	</v-row>
+	<v-row dense class="mt-4">
+		<v-col cols="12">
+			<h3>{{ $t('strings.content.rockets.motors')}}</h3>
+			<v-divider class="border-opacity-100"></v-divider>
+		</v-col>
+	</v-row>
 	<v-row
 	 	dense
 	>
@@ -439,6 +501,10 @@ export default {
 			displayItemCp,
 			displayItemDiameterMajor,
 			displayItemDiameterMinor,
+			displayItemEjectionDrogue,
+			displayItemEjectionDrogueBackup,
+			displayItemEjectionMain,
+			displayItemEjectionMainBackup,
 			displayItemLength,
 			displayItemWeight,
 			hasAltimeters,
@@ -526,6 +592,10 @@ export default {
 			displayItemCp,
 			displayItemDiameterMajor,
 			displayItemDiameterMinor,
+			displayItemEjectionDrogue,
+			displayItemEjectionDrogueBackup,
+			displayItemEjectionMain,
+			displayItemEjectionMainBackup,
 			displayItemLength,
 			displayItemWeight,
 			hasAltimeters,

@@ -104,6 +104,18 @@ export function useRocketStageComponent(props, context, options) {
 	const displayItemDiameterMinor = computed(() => {
 		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.diameterMinor; }, (value) => { return value.diameterMinorMeasurementUnitsId; }, (value) => { return value.diameterMinorMeasurementUnitId; });
 	});
+	const displayItemEjectionDrogue = computed(() => {
+		return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ejection ? value.ejection.drogue : ''; }, (value) => { return value.ejection ? value.ejection.drogueMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.drogueMeasurementUnitId : ''; });
+	});
+	const displayItemEjectionDrogueBackup = computed(() => {
+		return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ejection ? value.ejection.drogueBackup : ''; }, (value) => { return value.ejection ? value.ejection.drogueBackupMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.drogueBackupMeasurementUnitId : ''; });
+	});
+	const displayItemEjectionMain = computed(() => {
+		return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ejection ? value.ejection.main : ''; }, (value) => { return value.ejection ? value.ejection.mainMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.mainMeasurementUnitId : ''; });
+	});
+	const displayItemEjectionMainBackup = computed(() => {
+		return displayItemMeasurementWeight(correlationId(), displayItem.value, (value) => { return value.ejection ? value.ejection.mainBackup : ''; }, (value) => { return value.ejection ? value.ejection.mainBackupMeasurementUnitsId : ''; }, (value) => { return value.ejection ? value.ejection.mainBackupMeasurementUnitId : ''; });
+	});
 	const displayItemLength = computed(() => {
 		return displayItemMeasurementLength(correlationId(), displayItem.value, (value) => { return value.length; },  (value) => { return value.lengthMeasurementUnitsId; }, (value) => { return value.lengthMeasurementUnitId; });
 	});
@@ -500,6 +512,10 @@ export function useRocketStageComponent(props, context, options) {
 		displayItemCp,
 		displayItemDiameterMajor,
 		displayItemDiameterMinor,
+		displayItemEjectionDrogue,
+		displayItemEjectionDrogueBackup,
+		displayItemEjectionMain,
+		displayItemEjectionMainBackup,
 		displayItemLength,
 		displayItemWeight,
 		hasAltimeters,

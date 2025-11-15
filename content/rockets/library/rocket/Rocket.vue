@@ -64,6 +64,7 @@
 					vid="detailItemPublic"
 					:validation="validation"
 					:label="$t('forms.content.public')"
+					:readonly="!isEditable"
 				/>
 			</v-col>
 		</v-row>

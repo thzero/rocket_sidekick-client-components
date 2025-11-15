@@ -106,7 +106,7 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="detailItemRocketId"
+						v-if="detailItemRocketId && !isEditable"
 						style="display: flex; justify-content: center; align-items: center;"
 					>
 						<router-link
