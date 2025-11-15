@@ -68,6 +68,18 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 	const detailItemDiameterMinor = ref(null);
 	const detailItemDiameterMinorMeasurementUnitId = ref(null);
 	const detailItemDiameterMinorMeasurementUnitsId = ref(null);
+	const detailItemEjectionDrogue = ref(null);
+	const detailItemEjectionDrogueMeasurementUnitId = ref(null);
+	const detailItemEjectionDrogueMeasurementUnitsId = ref(null);
+	const detailItemEjectionDrogueBackup = ref(null);
+	const detailItemEjectionDrogueBackupMeasurementUnitId = ref(null);
+	const detailItemEjectionDrogueBackupMeasurementUnitsId = ref(null);
+	const detailItemEjectionMain = ref(null);
+	const detailItemEjectionMainMeasurementUnitId = ref(null);
+	const detailItemEjectionMainMeasurementUnitsId = ref(null);
+	const detailItemEjectionMainBackup = ref(null);
+	const detailItemEjectionMainBackupMeasurementUnitId = ref(null);
+	const detailItemEjectionMainBackupMeasurementUnitsId = ref(null);
 	const detailItemLength = ref(null);
 	const detailItemLengthMeasurementUnitId = ref(null);
 	const detailItemLengthMeasurementUnitsId = ref(null);
@@ -123,7 +135,23 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemDiameterMinor.value = detailItem.value ? detailItem.value.diameterMinor : null;
 		detailItemDiameterMinorMeasurementUnitId.value = detailItem.value ? detailItem.value.diameterMinorMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 		detailItemDiameterMinorMeasurementUnitsId.value = detailItem.value ? detailItem.value.diameterMinorMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
-
+		
+		detailItemEjectionDrogue.value = (detailItem.value && detailItem.value.ejection) ? detailItem.value.ejection.drogue : null;
+		detailItemEjectionDrogueMeasurementUnitId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.drogueMeasurementUnitId ?? 'g' : 'g';
+		detailItemEjectionDrogueMeasurementUnitsId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.drogueMeasurementUnitsId ?? 'metrics' : 'metrics';
+		
+		detailItemEjectionDrogueBackup.value = (detailItem.value && detailItem.value.ejection) ? detailItem.value.ejection.drogueBackup : null;
+		detailItemEjectionDrogueBackupMeasurementUnitId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.drogueBackupMeasurementUnitId ?? 'g' : 'g';
+		detailItemEjectionDrogueBackupMeasurementUnitsId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.drogueBackupMeasurementUnitId ?? 'metrics' : 'metrics';
+		
+		detailItemEjectionMain.value = (detailItem.value && detailItem.value.ejection) ? detailItem.value.ejection.main : null;
+		detailItemEjectionMainMeasurementUnitId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.mainMeasurementUnitId ?? 'g' : 'g';
+		detailItemEjectionMainMeasurementUnitsId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.mainMeasurementUnitId ?? 'metrics' : 'metrics';
+		
+		detailItemEjectionMainBackup.value = (detailItem.value && detailItem.value.ejection) ? detailItem.value.ejection.mainBackup : null;
+		detailItemEjectionMainBackupMeasurementUnitId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.mainBackupMeasurementUnitId ?? 'g' : 'g';
+		detailItemEjectionMainBackupMeasurementUnitsId.value = detailItem.value && detailItem.value.ejection ? detailItem.value.ejection.mainBackupMeasurementUnitId ?? 'metrics' : 'metrics';
+		
 		detailItemLength.value = value ? value.length : null;
 		detailItemLengthMeasurementUnitId.value = value ? value.lengthMeasurementUnitId ?? measurementUnitsLengthDefaultId.value : measurementUnitsLengthDefaultId.value;
 		detailItemLengthMeasurementUnitsId.value = value ? value.lengthMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
@@ -164,6 +192,23 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		value.diameterMinorMeasurementUnitId = detailItemDiameterMinorMeasurementUnitId.value;
 		// value.diameterMinorMeasurementUnitsId = detailItemDiameterMinorMeasurementUnitsId.value;
 		value.diameterMinorMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, detailItemDiameterMinorMeasurementUnitId.value);
+		
+		value.ejection = detailItem.value.ejection ? detailItem.value.ejection : {};
+		value.ejection.drogue = LibraryClientUtility.convertNumber(detailItemEjectionDrogue.value);
+		value.ejection.drogueMeasurementUnitId = detailItemEjectionDrogueMeasurementUnitId.value;
+		value.ejection.drogueMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemEjectionDrogueMeasurementUnitId.value);
+	
+		value.ejection.drogueBackup = LibraryClientUtility.convertNumber(detailItemEjectionDrogueBackup.value);
+		value.ejection.drogueBackupMeasurementUnitId = detailItemEjectionDrogueBackupMeasurementUnitId.value;
+		value.ejection.drogueBackupMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemEjectionDrogueBackupMeasurementUnitId.value);
+
+		value.ejection.main = LibraryClientUtility.convertNumber(detailItemEjectionMain.value);
+		value.ejection.mainMeasurementUnitId = detailItemEjectionMainMeasurementUnitId.value;
+		value.ejection.mainMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemEjectionMainMeasurementUnitId.value);
+
+		value.ejection.mainBackup = LibraryClientUtility.convertNumber(detailItemEjectionMainBackup.value);
+		value.ejection.mainBackupMeasurementUnitId = detailItemEjectionMainBackupMeasurementUnitId.value;
+		value.ejection.mainBackupMeasurementUnitsId = measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.weight.id, detailItemEjectionMainBackupMeasurementUnitId.value);
 
 		value.length = LibraryClientUtility.convertNumber(detailItemLength.value);
 		value.lengthMeasurementUnitId = detailItemLengthMeasurementUnitId.value;
@@ -237,6 +282,18 @@ export function useRocketStageEditDialogComponent(props, context, options) {
 		detailItemDiameterMinor,
 		detailItemDiameterMinorMeasurementUnitId,
 		detailItemDiameterMinorMeasurementUnitsId,
+		detailItemEjectionDrogue,
+		detailItemEjectionDrogueMeasurementUnitId,
+		detailItemEjectionDrogueMeasurementUnitsId,
+		detailItemEjectionDrogueBackup,
+		detailItemEjectionDrogueBackupMeasurementUnitId,
+		detailItemEjectionDrogueBackupMeasurementUnitsId,
+		detailItemEjectionMain,
+		detailItemEjectionMainMeasurementUnitId,
+		detailItemEjectionMainMeasurementUnitsId,
+		detailItemEjectionMainBackup,
+		detailItemEjectionMainBackupMeasurementUnitId,
+		detailItemEjectionMainBackupMeasurementUnitsId,
 		detailItemLength,
 		detailItemLengthMeasurementUnitId,
 		detailItemLengthMeasurementUnitsId,

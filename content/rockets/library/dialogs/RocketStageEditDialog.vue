@@ -215,6 +215,138 @@
 				</table>
 			</v-col>
 		</v-row>
+		<v-row dense class="mt-4">
+			<v-col cols="12">
+				<h3>{{ $t('strings.content.rockets.ejection')}}</h3>
+				<v-divider class="border-opacity-100"></v-divider>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemEjectionDrogueRef"
+									v-model="detailItemEjectionDrogue"
+									vid="detailItemEjectionDrogue"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.ejection.drogue')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemEjectionDrogueMeasurementUnitIdRef"
+									v-model="detailItemEjectionDrogueMeasurementUnitId"
+									vid="detailItemEjectionDrogueMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemEjectionDrogueBackupRef"
+									v-model="detailItemEjectionDrogueBackup"
+									vid="detailItemEjectionDrogueBackup"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.ejection.drogue') + ' ' + $t('forms.content.rockets.ejection.backup')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemEjectionnDrogueBackupMeasurementUnitIdRef"
+									v-model="detailItemEjectionDrogueBackupMeasurementUnitId"
+									vid="detailItemEjectionDrogueBackupMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemEjectionMainRef"
+									v-model="detailItemEjectionMain"
+									vid="detailItemEjectionMain"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.ejection.main')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemEjectionMainMeasurementUnitIdRef"
+									v-model="detailItemEjectionMainMeasurementUnitId"
+									vid="detailItemEjectionMainMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemEjectionMainBackupRef"
+									v-model="detailItemEjectionMainBackup"
+									vid="detailItemEjectionMainBackup"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.ejection.main') + ' ' + $t('forms.content.rockets.ejection.backup')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemEjectionnMainBackupMeasurementUnitIdRef"
+									v-model="detailItemEjectionMainBackupMeasurementUnitId"
+									vid="detailItemEjectionMainBackupMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row dense class="mt-4">
+			<v-col cols="12">
+				<h3>{{ $t('strings.content.rockets.motors')}}</h3>
+				<v-divider class="border-opacity-100"></v-divider>
+			</v-col>
+		</v-row>
 		<v-row dense>
 			<v-col cols="6" sm="3">
 				<VtSelectWithValidation
@@ -336,6 +468,18 @@ export default {
 			detailItemDiameterMinor,
 			detailItemDiameterMinorMeasurementUnitId,
 			detailItemDiameterMinorMeasurementUnitsId,
+			detailItemEjectionDrogue,
+			detailItemEjectionDrogueMeasurementUnitId,
+			detailItemEjectionDrogueMeasurementUnitsId,
+			detailItemEjectionDrogueBackup,
+			detailItemEjectionDrogueBackupMeasurementUnitId,
+			detailItemEjectionDrogueBackupMeasurementUnitsId,
+			detailItemEjectionMain,
+			detailItemEjectionMainMeasurementUnitId,
+			detailItemEjectionMainMeasurementUnitsId,
+			detailItemEjectionMainBackup,
+			detailItemEjectionMainBackupMeasurementUnitId,
+			detailItemEjectionMainBackupMeasurementUnitsId,
 			detailItemLength,
 			detailItemLengthMeasurementUnitId,
 			detailItemLengthMeasurementUnitsId,
@@ -387,6 +531,18 @@ export default {
 			detailItemDiameterMinor,
 			detailItemDiameterMinorMeasurementUnitId,
 			detailItemDiameterMinorMeasurementUnitsId,
+			detailItemEjectionDrogue,
+			detailItemEjectionDrogueMeasurementUnitId,
+			detailItemEjectionDrogueMeasurementUnitsId,
+			detailItemEjectionDrogueBackup,
+			detailItemEjectionDrogueBackupMeasurementUnitId,
+			detailItemEjectionDrogueBackupMeasurementUnitsId,
+			detailItemEjectionMain,
+			detailItemEjectionMainMeasurementUnitId,
+			detailItemEjectionMainMeasurementUnitsId,
+			detailItemEjectionMainBackup,
+			detailItemEjectionMainBackupMeasurementUnitId,
+			detailItemEjectionMainBackupMeasurementUnitsId,
 			detailItemLength,
 			detailItemLengthMeasurementUnitId,
 			detailItemLengthMeasurementUnitsId,

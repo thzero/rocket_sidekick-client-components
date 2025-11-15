@@ -163,19 +163,19 @@
 						<tr>
 							<td>
 								<VtNumberFieldWithValidation
-									ref="detailItemWeightNoseRef"
-									v-model="detailItemWeightNose"
-									vid="detailItemWeightNose"
+									ref="detailItemBallastRef"
+									v-model="detailItemBallast"
+									vid="detailItemBallast"
 									:validation="validation"
 									:readonly="!isEditable"
-									:label="$t('forms.content.rockets.weight.nose') + ' ' + $t('forms.content.rockets.weight.name')"
+									:label="$t('forms.content.rockets.ballast')"
 								/>
 							</td>
 							<!-- <td class="measurementUnitsMedium">
 								<MeasurementUnitsSelect
-									ref="detailItemWeightNoseMeasurementUnitsIdRef"
-									v-model="detailItemWeightNoseMeasurementUnitsId"
-									vid="detailItemWeightNoseMeasurementUnitsId"
+									ref="detailItemBallastMeasurementUnitsIdRef"
+									v-model="detailItemBallastMeasurementUnitsId"
+									vid="detailItemBallastMeasurementUnitsId"
 									:validation="validation"
 									:readonly="!isEditable"
 									:label="$t('forms.settings.measurementUnits.title')"
@@ -183,10 +183,10 @@
 							</td>
 							<td class="measurementUnitMedium">
 								<MeasurementUnitSelect
-									ref="detailItemWeightNoseMeasurementUnitIdRef"
-									v-model="detailItemWeightNoseMeasurementUnitId"
-									vid="detailItemWeightNoseMeasurementUnitId"
-									:measurementUnitsId="detailItemWeightNoseMeasurementUnitsId"
+									ref="detailItemBallastMeasurementUnitIdRef"
+									v-model="detailItemBallastMeasurementUnitId"
+									vid="detailItemBallastMeasurementUnitId"
+									:measurementUnitsId="detailItemBallastMeasurementUnitsId"
 									:measurementUnitsType="measurementUnitsWeightType"
 									:validation="validation"
 									:readonly="!isEditable"
@@ -195,9 +195,9 @@
 							</td> -->
 							<td class="measurementUnitMedium">
 								<MeasurementUnitSelect2
-									ref="detailItemWeightNoseMeasurementUnitIdRef"
-									v-model="detailItemWeightNoseMeasurementUnitId"
-									vid="detailItemWeightNoseMeasurementUnitId"
+									ref="detailItemBallastMeasurementUnitIdRef"
+									v-model="detailItemBallastMeasurementUnitId"
+									vid="detailItemBallastMeasurementUnitId"
 									:measurementUnitsType="measurementUnitsWeightType"
 									:validation="validation"
 									:readonly="!isEditable"
@@ -207,6 +207,138 @@
 						</tr>
 					</tbody>
 				</table>
+			</v-col>
+		</v-row>
+		<v-row dense class="mt-4">
+			<v-col cols="12">
+				<h3>{{ $t('strings.content.rockets.ejection')}}</h3>
+				<v-divider class="border-opacity-100"></v-divider>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemEjectionDrogueRef"
+									v-model="detailItemEjectionDrogue"
+									vid="detailItemEjectionDrogue"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.ejection.drogue')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemEjectionDrogueMeasurementUnitIdRef"
+									v-model="detailItemEjectionDrogueMeasurementUnitId"
+									vid="detailItemEjectionDrogueMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemEjectionDrogueBackupRef"
+									v-model="detailItemEjectionDrogueBackup"
+									vid="detailItemEjectionDrogueBackup"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.ejection.drogue') + ' ' + $t('forms.content.rockets.ejection.backup')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemEjectionnDrogueBackupMeasurementUnitIdRef"
+									v-model="detailItemEjectionDrogueBackupMeasurementUnitId"
+									vid="detailItemEjectionDrogueBackupMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row dense>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemEjectionMainRef"
+									v-model="detailItemEjectionMain"
+									vid="detailItemEjectionMain"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.ejection.main')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemEjectionMainMeasurementUnitIdRef"
+									v-model="detailItemEjectionMainMeasurementUnitId"
+									vid="detailItemEjectionMainMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+								<VtNumberFieldWithValidation
+									ref="detailItemEjectionMainBackupRef"
+									v-model="detailItemEjectionMainBackup"
+									vid="detailItemEjectionMainBackup"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.content.rockets.ejection.main') + ' ' + $t('forms.content.rockets.ejection.backup')"
+								/>
+							</td>
+							<td class="measurementUnitMedium">
+								<MeasurementUnitSelect2
+									ref="detailItemEjectionnMainBackupMeasurementUnitIdRef"
+									v-model="detailItemEjectionMainBackupMeasurementUnitId"
+									vid="detailItemEjectionMainBackupMeasurementUnitId"
+									:measurementUnitsType="measurementUnitsWeightType"
+									:validation="validation"
+									:readonly="!isEditable"
+									:label="$t('forms.settings.measurementUnits.weight')"
+								/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</v-col>
+		</v-row>
+		<v-row dense class="mt-4">
+			<v-col cols="12">
+				<h3>{{ $t('strings.content.rockets.motors')}}</h3>
+				<v-divider class="border-opacity-100"></v-divider>
 			</v-col>
 		</v-row>
 		<v-row 
@@ -254,6 +386,7 @@
 											:validation="validation"
 											:readonly="!isEditable"
 											:label="$t('forms.content.parts.motor.name')"
+											:clearable="false"
 										/>
 									</td>
 									<td class="pr-2">
@@ -274,6 +407,7 @@
 											:validation="validation"
 											:readonly="!isEditable"
 											:label="$t('forms.content.parts.motorCase.name2')"
+											:clearable="false"
 										/>
 									</td>
 									<td class="pr-2">
@@ -568,10 +702,25 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			detailItemBallast,
+			detailItemBallastMeasurementUnitId,
+			detailItemBallastMeasurementUnitsId,
 			detailItemCg,
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
+			detailItemEjectionDrogue,
+			detailItemEjectionDrogueMeasurementUnitId,
+			detailItemEjectionDrogueMeasurementUnitsId,
+			detailItemEjectionDrogueBackup,
+			detailItemEjectionDrogueBackupMeasurementUnitId,
+			detailItemEjectionDrogueBackupMeasurementUnitsId,
+			detailItemEjectionMain,
+			detailItemEjectionMainMeasurementUnitId,
+			detailItemEjectionMainMeasurementUnitsId,
+			detailItemEjectionMainBackup,
+			detailItemEjectionMainBackupMeasurementUnitId,
+			detailItemEjectionMainBackupMeasurementUnitsId,
 			detailItemMotor0,
 			detailItemMotor1,
 			detailItemMotor2,
@@ -597,9 +746,6 @@ export default {
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
-			detailItemWeightNose,
-			detailItemWeightNoseMeasurementUnitId,
-			detailItemWeightNoseMeasurementUnitsId,
 			dialogPartsSearchMotorCasesDetail,
 			dialogPartsSearchMotorCasesDiameter,
 			dialogPartsSearchMotorCasesManager,
@@ -633,10 +779,25 @@ export default {
 			measurementUnitsLengthType,
 			measurementUnitsWeightDefaultId,
 			measurementUnitsWeightType,
+			detailItemBallast,
+			detailItemBallastMeasurementUnitId,
+			detailItemBallastMeasurementUnitsId,
 			detailItemCg,
 			detailItemCgFrom,
 			detailItemCgMeasurementUnitId,
 			detailItemCgMeasurementUnitsId,
+			detailItemEjectionDrogue,
+			detailItemEjectionDrogueMeasurementUnitId,
+			detailItemEjectionDrogueMeasurementUnitsId,
+			detailItemEjectionDrogueBackup,
+			detailItemEjectionDrogueBackupMeasurementUnitId,
+			detailItemEjectionDrogueBackupMeasurementUnitsId,
+			detailItemEjectionMain,
+			detailItemEjectionMainMeasurementUnitId,
+			detailItemEjectionMainMeasurementUnitsId,
+			detailItemEjectionMainBackup,
+			detailItemEjectionMainBackupMeasurementUnitId,
+			detailItemEjectionMainBackupMeasurementUnitsId,
 			detailItemMotor0,
 			detailItemMotor1,
 			detailItemMotor2,
@@ -662,9 +823,6 @@ export default {
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
-			detailItemWeightNose,
-			detailItemWeightNoseMeasurementUnitId,
-			detailItemWeightNoseMeasurementUnitsId,
 			dialogPartsSearchMotorCasesDetail,
 			dialogPartsSearchMotorCasesDiameter,
 			dialogPartsSearchMotorCasesManager,

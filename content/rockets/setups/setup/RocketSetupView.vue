@@ -69,7 +69,7 @@
 						</v-col> -->
 						<v-col 
 							v-if="length"
-							cols="3" md="2"
+							cols="6" md="3"
 						>
 							<VtTextField
 								v-model="length"
@@ -79,7 +79,7 @@
 						</v-col>
 						<v-col 
 							v-if="weight"
-							cols="3" md="2"
+							cols="6" md="3"
 						>
 							<VtTextField
 								v-model="weight"
@@ -89,7 +89,7 @@
 						</v-col>
 						<v-col 
 							v-if="cg"
-							cols="4" sm="3" md="2"
+							cols="6" md="3"
 						>
 							<VtTextField
 								v-model="cg"
@@ -99,7 +99,7 @@
 						</v-col>
 						<v-col 
 							v-if="cp"
-							cols="4" sm="3" md="2"
+							cols="6" md="3"
 						>
 							<VtTextField
 								v-model="cp"

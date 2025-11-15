@@ -1,8 +1,23 @@
 import { between, decimal, maxLength, minLength, required } from '@vuelidate/validators';
 
 export const useRocketSetupStageEditDialogValidation = {
+	detailItemBallast: { decimal, between: between(0, 2004), $autoDirty: true },
+	detailItemBallastMeasurementUnitId: { $autoDirty: true },
+	detailItemBallastMeasurementUnitsId: { $autoDirty: true },
 	detailItemCg: { decimal, between: between(0, 2004), $autoDirty: true }, // TODO: max of length
 	detailItemCgFrom: { minLength: minLength(3), maxLength: maxLength(50), $autoDirty: true },
+	detailItemEjectionDrogue: { decimal, between: between(0, 50), $autoDirty: true },
+	detailItemEjectionDrogueMeasurementUnitId: { $autoDirty: true },
+	detailItemEjectionDrogueMeasurementUnitsId: { $autoDirty: true },
+	detailItemEjectionDrogueBackup: { decimal, between: between(0, 50), $autoDirty: true },
+	detailItemEjectionDrogueBackupMeasurementUnitId: { $autoDirty: true },
+	detailItemEjectionDrogueBackupMeasurementUnitsId: { $autoDirty: true },
+	detailItemEjectionMain: { decimal, between: between(0, 50), $autoDirty: true },
+	detailItemEjectionMainMeasurementUnitId: { $autoDirty: true },
+	detailItemEjectionMainMeasurementUnitsId: { $autoDirty: true },
+	detailItemEjectionMainBackup: { decimal, between: between(0, 50), $autoDirty: true },
+	detailItemEjectionMainBackupMeasurementUnitId: { $autoDirty: true },
+	detailItemEjectionMainBackupMeasurementUnitsId: { $autoDirty: true },
 	detailItemCgMeasurementUnitId: { $autoDirty: true },
 	detailItemCgMeasurementUnitsId: { $autoDirty: true },
 	detailItemMotorCaseId0: { $autoDirty: true },
@@ -19,8 +34,5 @@ export const useRocketSetupStageEditDialogValidation = {
 	detailItemMotorId2: { $autoDirty: true },
 	detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
 	detailItemWeightMeasurementUnitId: { $autoDirty: true },
-	detailItemWeightMeasurementUnitsId: { $autoDirty: true },
-	detailItemWeightNose: { decimal, between: between(0, 2004), $autoDirty: true },
-	detailItemWeightNoseMeasurementUnitId: { $autoDirty: true },
-	detailItemWeightNoseMeasurementUnitsId: { $autoDirty: true }
+	detailItemWeightMeasurementUnitsId: { $autoDirty: true }
 };

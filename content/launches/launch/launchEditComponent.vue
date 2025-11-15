@@ -541,6 +541,16 @@ export function useLaunchEditComponent(props, context, options) {
 				detailItemFailureReasons.value = null;
 		}
 	);
+
+	watch(() => detailItemLocationId.value,
+		(value, prev) => {
+			if (prev === value)
+				return;
+
+			detailItemLocationIterationId.value = null;
+			detailItemLocationName.value = null;
+		}
+	);
 	
 	return {
 		correlationId,

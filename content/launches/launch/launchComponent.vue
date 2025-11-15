@@ -202,7 +202,7 @@ export function useLaunchComponent(props, context, options) {
 			temp.push('#'+item.location.iteration.number);
 		if (item.location.iteration.year)
 			temp.push(item.location.iteration.year);
-		if (!temp)
+		if (temp.length <= 0)
 			return '';
 		return ` (${temp.join(', ')})`;
 	};
