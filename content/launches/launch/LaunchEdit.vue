@@ -100,6 +100,7 @@
 					vid="detailItemPublic"
 					:label="$t('forms.content.public')"
 					:validation="validation"
+					:readonly="!isEditable"
 				/>
 			</v-col>
 		</v-row>
@@ -146,7 +147,7 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="detailItemRocketId"
+						v-if="detailItemRocketId && !isEditable"
 						style="display: flex; justify-content: center; align-items: center;"
 						:class="detailItemRocketId ? 'ml-2' : ''"
 					>
@@ -216,7 +217,7 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="detailItemRocketSetupId"
+						v-if="detailItemRocketId && !isEditable"
 						style="display: flex; justify-content: center; align-items: center;"
 						:class="detailItemRocketSetupId ? 'ml-2' : ''"
 					>
@@ -264,7 +265,7 @@
 						{{ $t('buttons.link') }}
 					</v-btn> -->
 					<div
-						v-if="detailItemLocationId"
+						v-if="detailItemRocketId && !isEditable"
 						style="display: flex; justify-content: center; align-items: center;"
 						:class="detailItemLocationId ? 'ml-2' : ''"
 					>
