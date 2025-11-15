@@ -148,7 +148,7 @@ export function useRocketsBaseComponent(props, context, options) {
 	const filterItemRocketTypes = ref(null);
 	const filterItemWeight = ref(null);
 	const manufacturers = ref(null);
-	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.rockets.title`));
+	const title = ref(LibraryClientUtility.$trans.t('titles.content.yours') + ' ' + LibraryClientUtility.$trans.t(`titles.content.rockets.plural`));
 	const weightMeasurementUnitId = ref(null);
 	const weightMeasurementUnitsId = ref(null);
 
