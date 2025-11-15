@@ -167,6 +167,7 @@
 							cols="12"
 							v-for="item in items"
 							:key="item.id"
+							:id="item.id"
 						>
 							<v-card>
 								<v-card-title

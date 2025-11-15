@@ -12,6 +12,7 @@
 			<div
 				v-for="item2 in item.results" 
 				:key="item2.id"
+				:id="item.id"
 				style="width: 100%;"
 			>
 				<v-card

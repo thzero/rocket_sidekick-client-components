@@ -120,6 +120,7 @@ export function useMasterDetailComponent(props, context, options) {
 		await submit(correlationIdI);
 	};
 	const detailClose = async () => {
+		scrollToDetailItem();
 		detailItem.value = null;
 		// await fetch(correlationId());
 	};
@@ -127,6 +128,7 @@ export function useMasterDetailComponent(props, context, options) {
 		detailDirty.value = value;
 	};
 	const detailError = async () => {
+		scrollToDetailItem();
 		detailItem.value = null;
 	};
 	const detailOk = async () => {
@@ -255,6 +257,7 @@ export function useMasterDetailComponent(props, context, options) {
 		}
 
 		detailItem.value = await initNew();
+		scrollTop();
 	};
 	const handleEdit = async (item) => {
 		const correlationIdI = correlationId();
@@ -271,6 +274,7 @@ export function useMasterDetailComponent(props, context, options) {
 		}
 		
 		detailItem.value = initEdit(response.results);
+		scrollTop();
 	};
 	const handleView = async (item) => {
 		const correlationIdI = correlationId();
@@ -287,6 +291,7 @@ export function useMasterDetailComponent(props, context, options) {
 		}
 		
 		detailItem.value = initView(correlationIdI, response.results);
+		scrollTop();
 	};
 	const initEdit = (data) => {
 		return { data: LibraryCommonUtility.cloneDeep(data), isNew: false, isEditable: true }
@@ -316,6 +321,25 @@ export function useMasterDetailComponent(props, context, options) {
 			return false;
 
 		return item.id === dialogDeleteParams.id;
+	};
+	const scrollTo = (id) => {
+		const el = document.getElementById(id)
+		if (!el)
+			return;
+		el.scrollIntoView({
+			behavior: 'smooth', // Smooth scrolling animation
+			block: 'start', // Align the element to the center of the viewport
+		});
+	};
+	const scrollToDetailItem = (id) => {
+		if (detailItem.value && detailItem.value.data && detailItem.value.data.id)
+			scrollTo(detailItem.value.data.id);
+	};
+	const scrollTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
 	};
 	const search = async () => {
 		// TODO: Should probably check and see if things are dirty, and raise a confirmation dialog
