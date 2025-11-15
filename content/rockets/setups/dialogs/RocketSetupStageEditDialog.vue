@@ -357,6 +357,7 @@
 							:readonly="true"
 							:hide-details="true"
 							:label="$t('forms.content.parts.motor.name')"
+							:clearable="false"
 						/>
 					</v-col>
 					<v-col
