@@ -456,6 +456,7 @@
 							:readonly="true"
 							:hide-details="true"
 							:label="$t('forms.content.parts.motor.name')"
+							:clearable="false"
 						/>
 					</v-col>
 					<v-col
@@ -485,6 +486,7 @@
 											:validation="validation"
 											:readonly="!isEditable"
 											:label="$t('forms.content.parts.motor.name')"
+											:clearable="false"
 										/>
 									</td>
 									<td class="pr-2">
@@ -505,6 +507,7 @@
 											:validation="validation"
 											:readonly="!isEditable"
 											:label="$t('forms.content.parts.motorCase.name2')"
+											:clearable="false"
 										/>
 									</td>
 									<td class="pr-2">
@@ -552,6 +555,7 @@
 							:readonly="true"
 							:hide-details="true"
 							:label="$t('forms.content.parts.motor.name')"
+							:clearable="false"
 						/>
 					</v-col>
 					<v-col
@@ -581,6 +585,7 @@
 											:validation="validation"
 											:readonly="!isEditable"
 											:label="$t('forms.content.parts.motor.name')"
+											:clearable="false"
 										/>
 									</td>
 									<td class="pr-2">
@@ -601,6 +606,7 @@
 											:validation="validation"
 											:readonly="!isEditable"
 											:label="$t('forms.content.parts.motorCase.name2')"
+											:clearable="false"
 										/>
 									</td>
 									<td class="pr-2">
