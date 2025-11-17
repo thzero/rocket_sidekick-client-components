@@ -58,9 +58,9 @@ export function useChecklistViewComponent(props, context, options) {
 		rocketManufacturer,
 		rocketMotorMountName,
 		rocketMotorMountNames,
-		rocketMotorNames,
-		rocketMotorNamesByStage,
-		rocketMotors,
+		rocketSetupMotorNames,
+		rocketSetupMotorNamesByStage,
+		rocketSetupMotors,
 		rocketStagePrimary,
 		rocketStages,
 		rocketTypeIcon,
@@ -85,12 +85,12 @@ export function useChecklistViewComponent(props, context, options) {
 	const displayItemRocketMotorNames = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup)
 			return null;
-		return rocketMotorNames(displayItem.value.rocketSetup, '\n');
+		return rocketSetupMotorNames(displayItem.value.rocketSetup, '\n');
 	});
 	const displayItemRocketMotors = computed(() => {
 		if (!displayItem.value || !displayItem.value.rocketSetup)
 			return [];
-		return rocketMotors(displayItem.value.rocketSetup) ?? [];
+		return rocketSetupMotors(displayItem.value.rocketSetup) ?? [];
 	});
 	const displayItemRocketMame = computed(() => {
 		return displayItem.value && displayItem.value.rocketSetup && displayItem.value.rocketSetup.rocket ? displayItem.value.rocketSetup.rocket.name : '';

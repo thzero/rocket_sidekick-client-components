@@ -186,7 +186,7 @@
 									<!-- <div class="float-right">{{ manufacturer(item) }}</div> -->
 									<div class="float-right">
 										{{ rocketDiameterHighest(item.rocket.stages) }}
-										<!-- {{ rocketMotors(item.rocket) }} -->
+										<!-- {{ rocketSetupMotors(item.rocket) }} -->
 									</div>
 									<img :src="rocketTypeIcon(item.rocket)" style="height: 48px; float: left;" />
 								</v-card-title>
@@ -413,7 +413,7 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			rocketDiameterHighest,
-			rocketMotors,
+			rocketSetupMotors,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			debug,
@@ -507,7 +507,7 @@ export default {
 			buttonsForms,
 			rocketTypes,
 			rocketDiameterHighest,
-			rocketMotors,
+			rocketSetupMotors,
 			rocketTypeIcon,
 			rocketTypeIconDetermine,
 			debug,
