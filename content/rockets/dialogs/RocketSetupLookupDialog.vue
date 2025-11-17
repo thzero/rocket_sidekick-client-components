@@ -78,7 +78,7 @@
 							<span
 								v-if="!item.name"
 							>
-								{{ rocketMotorNamesByStage(item, 0) }}
+								{{ rocketSetupMotorNamesByStage(item, 0) }}
 							</span>
 						</v-card-title>
 						<v-card-text>
@@ -89,7 +89,7 @@
 								<h3>{{ $t('strings.content.rockets.motors') }}</h3>
 								<v-divider></v-divider>
 							</v-sheet>
-							{{ rocketMotorNames(item) }}
+							{{ rocketSetupMotorNames(item) }}
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer></v-spacer>
@@ -176,8 +176,8 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			rocketTypes,
-			rocketMotorNames,
-			rocketMotorNamesByStage,
+			rocketSetupMotorNames,
+			rocketSetupMotorNamesByStage,
 			dialogSelectManager,
 			dialogSelectMessage,
 			dialogSelectParams,
@@ -216,8 +216,8 @@ export default {
 			measurementUnitsIdOutput,
 			measurementUnitsIdSettings,
 			rocketTypes,
-			rocketMotorNames,
-			rocketMotorNamesByStage,
+			rocketSetupMotorNames,
+			rocketSetupMotorNamesByStage,
 			dialogSelectManager,
 			dialogSelectMessage,
 			dialogSelectParams,

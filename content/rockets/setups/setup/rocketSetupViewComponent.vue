@@ -45,9 +45,9 @@ export function useRocketSetupViewComponent(props, context, options) {
 		rocketManufacturer,
 		rocketMotorMountName,
 		rocketMotorMountNames,
-		rocketMotorNames,
-		rocketMotorNamesByStage,
-		rocketMotors,
+		rocketSetupMotorNames,
+		rocketSetupMotorNamesByStage,
+		rocketSetupMotors,
 		rocketStagePrimary,
 		rocketStages,
 		rocketTypeIcon,
@@ -93,7 +93,7 @@ export function useRocketSetupViewComponent(props, context, options) {
 		return rocketManufacturer(props.detailItem.rocket);
 	});
 	const motors = computed(() => {
-		return rocketMotors(props.detailItem);
+		return rocketSetupMotors(props.detailItem);
 	});
 	const stagePrimary = computed(() => {
 		if (!props.detailItem || !props.detailItem.rocket)

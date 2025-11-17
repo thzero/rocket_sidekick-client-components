@@ -252,10 +252,10 @@ export function useRocketsUtilityComponent(props, context, options) {
 		}
 		return output.join(separator);
 	};
-	const rocketMotorNames = (item, separator) => {
+	const rocketSetupMotorNames = (item, separator) => {
 		separator = separator ?? ', ';
 		const output = [];
-		const results = rocketMotors(item);
+		const results = rocketSetupMotors(item);
 		if (!results)
 			return output;
 		for (const temp of results) {
@@ -264,7 +264,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 		}
 		return output.join(separator);
 	};
-	// const rocketMotors = (item) => {
+	// const rocketSetupMotors = (item) => {
 	// 	if (!item || !item.stages || !item.rocket || !item.rocket.stages)
 	// 		return null;
 	// 	let output = [];
@@ -283,9 +283,9 @@ export function useRocketsUtilityComponent(props, context, options) {
 	// 	}
 	// 	return output.join(', ');
 	// };
-	const rocketMotorNamesByStage = (item, stage) => {
+	const rocketSetupMotorNamesByStage = (item, stage) => {
 		const output = [];
-		const results = rocketMotors(item);
+		const results = rocketSetupMotors(item);
 		if (!results)
 			return output;
 		const index = 0;
@@ -300,7 +300,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 		}
 		return output.join(', ');
 	};
-	const rocketMotors = (item) => {
+	const rocketSetupMotors = (item) => {
 		if (!item || !item.stages || !item.motors)
 			return null;
 		let output = [];
@@ -500,9 +500,9 @@ export function useRocketsUtilityComponent(props, context, options) {
 		rocketManufacturerUrl,
 		rocketMotorMountName,
 		rocketMotorMountNames,
-		rocketMotorNames,
-		rocketMotorNamesByStage,
-		rocketMotors,
+		rocketSetupMotorNames,
+		rocketSetupMotorNamesByStage,
+		rocketSetupMotors,
 		rocketStagePrimary,
 		rocketStages,
 		rocketTypeIcon,

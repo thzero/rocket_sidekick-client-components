@@ -13,6 +13,7 @@ import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/compone
 import { useContentMarkupComponent } from '@/components/content/contentMarkup';
 import { useDetailComponent } from '@/components/content/detailComponent';
 import { useLaunchComponent } from '@/components/content/launches/launch/launchComponent';
+import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 import { useLocationsUtilityComponent } from '@/components/content/locations/locationUtilityComponent';
 import { useRocketsUtilityComponent } from '@/components/content/rockets/rocketsUtilityComponent';
 
@@ -158,7 +159,16 @@ export function useLaunchEditComponent(props, context, options) {
 	} = useLocationsUtilityComponent(props, context);
 
 	const {
-		rocketMotorNames
+		motorImpulseClasses,
+		motorMountDiameters,
+		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
+		motorUrl
+	} = useMotorUtilityComponent(props, context);
+
+	const {
+		rocketSetupMotorNames
 	} = useRocketsUtilityComponent(props, context, options);
 	
 	const {
@@ -181,6 +191,30 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemLocationIterationId = ref(null);
 	const detailItemLocationName = ref(null);
 	const detailItemNotes = ref(null);
+	const detailItemMotor0 = ref(null);
+	const detailItemMotor1 = ref(null);
+	const detailItemMotor2 = ref(null);
+	const detailItemMotorCase0 = ref(null);
+	const detailItemMotorCase1 = ref(null);
+	const detailItemMotorCase2 = ref(null);
+	const detailItemMotorCaseId0 = ref(null);
+	const detailItemMotorCaseId1 = ref(null);
+	const detailItemMotorCaseId2 = ref(null);
+	const detailItemMotorCaseInfo0 = ref(null);
+	const detailItemMotorCaseInfo1 = ref(null);
+	const detailItemMotorCaseInfo2 = ref(null);
+	const detailItemMotorDelay0 = ref(null);
+	const detailItemMotorDelay1 = ref(null);
+	const detailItemMotorDelay2 = ref(null);
+	const detailItemMotorDiameter0 = ref(null);
+	const detailItemMotorDiameter1 = ref(null);
+	const detailItemMotorDiameter2 = ref(null);
+	const detailItemMotorId0 = ref(null);
+	const detailItemMotorId1 = ref(null);
+	const detailItemMotorId2 = ref(null);
+	const detailItemMotorInfo0 = ref(null);
+	const detailItemMotorInfo1 = ref(null);
+	const detailItemMotorInfo2 = ref(null);
 	const detailItemPublic = ref(false);
 	const detailItemResultsAccelerationMax = ref(null);
 	const detailItemResultsAccelerationMaxMeasurementUnitId = ref(null);
@@ -217,6 +251,11 @@ export function useLaunchEditComponent(props, context, options) {
 	const detailItemWindSpeed = ref(null);
 	const detailItemWindSpeedMeasurementUnitId = ref(null);
 	const detailItemWindSpeedMeasurementUnitsId = ref(null);
+	const dialogPartsSearchMotorsDiameter = ref(null);
+	const dialogPartsSearchMotorsManager = ref(new DialogSupport());
+	const hasMotorsI = ref([]);
+	const manufacturerTypeMotor = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motor ]);
+	const manufacturerTypeMotorCase = ref([ AppCommonConstants.Rocketry.ManufacturerTypes.motorCase ]);
 	
 	// const weatherOptionsBlank = ref(LibraryClientVueUtility.selectBlank(weatherOptions));
 	
@@ -313,6 +352,75 @@ export function useLaunchEditComponent(props, context, options) {
 		dialogDeleteConfirmationParams.id = item.id;
 		dialogDeleteConfirmationManager.value.open();
 	};
+	const getMotors = () => {
+		detailItemMotor0.value = null;
+		detailItemMotor1.value = null;
+		detailItemMotor2.value = null;
+		detailItemMotorCase0.value = null;
+		detailItemMotorCase1.value = null;
+		detailItemMotorCase2.value = null;
+		detailItemMotorCaseId0.value = null;
+		detailItemMotorCaseId1.value = null;
+		detailItemMotorCaseId2.value = null;
+		detailItemMotorCaseInfo0.value = null;
+		detailItemMotorCaseInfo1.value = null;
+		detailItemMotorCaseInfo2.value = null;
+		detailItemMotorDelay0.value = null;
+		detailItemMotorDelay1.value = null;
+		detailItemMotorDelay2.value = null;
+		detailItemMotorDiameter0.value = null;
+		detailItemMotorDiameter1.value = null;
+		detailItemMotorDiameter2.value = null;
+		detailItemMotorId0.value = null;
+		detailItemMotorId1.value = null;
+		detailItemMotorId2.value = null;
+		detailItemMotorInfo0.value = null;
+		detailItemMotorInfo1.value = null;
+		detailItemMotorInfo2.value = null;
+		
+		hasMotorsI.value = [];
+		const fromRocket = detailItem.value && detailItem.value.rocket ? detailItem.value.rocket : null;
+		if (fromRocket) {
+			let temp;
+			let temp2;
+			let index = -1;
+			let diameter;
+			let count;
+			for (const item of fromRocket.motors) {
+				index++;
+				if (!item.diameter || !item.count)
+					continue;
+
+				if (index > 2)
+					break;
+				
+				hasMotorsI.value.push(index);
+
+				temp = selectMotorByIndex(index);
+				if (!temp)
+					continue;
+
+				diameter = item.diameter ? motorMountDiameter(item.diameter) : null;
+				count = item.count ? item.count : null;
+				temp.motorInfo.value = `${diameter}${diameter ? ' x ' : ''}${count}`;
+
+				temp2 = (detailItem.value.motors ?? []).find(l => l.index === item.index);
+				if (!temp2)
+					continue;
+
+				temp.motorCase.value = generateTitle(temp2.motorCaseManufacturerId, temp2.motorCaseName);
+				temp.motorCaseId.value = temp2.motorCaseId;
+				temp.motorCaseInfo.value = temp2.motorCaseInfo;
+				temp.motorDelay.value = temp2.motorDelay;
+				temp.motorDiameter.value = item.diameter;
+				temp.motor.value = generateTitle(temp2.motorManufacturerId, temp2.motorName);
+				temp.motorId.value = temp2.motorId;
+			}
+		}
+	};
+	const hasMotor = (index) => {
+		return hasMotorsI.value ? hasMotorsI.value.includes(index) : false;
+	};
 	const removeLocation = async () => {
 		detailItemLocationId.value = null;
 		detailItemLocationName.value = null;
@@ -323,6 +431,7 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemRocketName.value = null;
 		detailItemRocketSetupId.value = null;
 		detailItemRocketSetupName.value = null;
+		detailItem.value.rocket = null;
 	};
 	const removeRocketSetup = async () => {
 		detailItemRocketSetupId.value = null;
@@ -357,23 +466,23 @@ export function useLaunchEditComponent(props, context, options) {
 			detailItemLocationName.value = null;
 			location.value = null;
 		}
-		
-		if (value && value.rocketSetup) {
-			if (value && value.rocketSetup.rocket) {
-				detailItemRocketId.value = value.rocketSetup.rocket.id;
-				detailItemRocketName.value = value.rocketSetup.rocket.name;
-			}
-			else {
-				detailItemRocketId.value = null;
-				detailItemRocketName.value = null;
-			}
-			
-			detailItemRocketSetupId.value = value.rocketSetup.id;
-			detailItemRocketSetupName.value = rocketName(value.rocketSetup);
+	
+		if (value && value.rocket) {
+			detailItemRocketId.value = value.rocket.id;
+			detailItemRocketName.value = value.rocket.name;
 		}
 		else {
 			detailItemRocketId.value = null;
 			detailItemRocketName.value = null;
+			detailItemRocketSetupId.value = null;
+			detailItemRocketSetupName.value = null;
+		}
+
+		if (value && value.rocketSetup) {
+			detailItemRocketSetupId.value = value.rocketSetup.id;
+			detailItemRocketSetupName.value = rocketSetupName(value.rocketSetup);
+		}
+		else {
 			detailItemRocketSetupId.value = null;
 			detailItemRocketSetupName.value = null;
 		}
@@ -424,13 +533,15 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemResultsVelocityRecoveryMeasurementUnitId.value = temp ? temp.velocityRecoveryMeasurementUnitId ?? measurementUnitsVelocityDefaultId.value : measurementUnitsVelocityDefaultId.value;
 		detailItemResultsVelocityRecoveryMeasurementUnitsId.value = temp ? temp.velocityRecoveryMeasurementUnitsId ?? measurementUnitsIdSettings.value : measurementUnitsIdSettings.value;
 
+		getMotors();
+
 		if (value)
 			value.results = temp.results;
 	};
-	const rocketName = (item) => {
+	const rocketSetupName = (item) => {
 		if (!item)
 			return null;
-		return item.name ? item.name : rocketMotorNames(item)
+		return item.name ? item.name : rocketSetupMotorNames(item)
 	};
 	const selectLocation = async (item) => {
 		try {
@@ -445,6 +556,84 @@ export function useLaunchEditComponent(props, context, options) {
 			dialogLocationLookupManager.value.ok();
 		}
 	};
+	const selectMotor = async (item) => {
+		try {
+			if (!item)
+				return;
+			const temp = selectMotorByIndex(dialogPartsSearchMotorIndex.value);
+			if (!temp)
+				return;
+
+			temp.motor.value = generateTitle(item.manufacturerId, item.name);
+			temp.motorId.value = item.id;
+		}
+		finally {
+			dialogPartsSearchMotorsManager.value.ok();
+		}
+	};
+	const selectMotorByIndex = (index) => {
+		const temp = {
+			motor: null,
+			motorCase: null,
+			motorCaseId: null,
+			motorCaseInfo: null,
+			motorDiameter: null,
+			motorDelay: null,
+			motorId: null,
+			motorInfo: null
+		}
+
+		if (index === 0) {
+			temp.motor = detailItemMotor0;
+			temp.motorCase = detailItemMotorCase0;
+			temp.motorCaseId = detailItemMotorCaseId0;
+			temp.motorCaseInfo = detailItemMotorCaseInfo0;
+			temp.motorDelay = detailItemMotorDelay0;
+			temp.motorDiameter = detailItemMotorDiameter0;
+			temp.motorId = detailItemMotorId0;
+			temp.motorInfo = detailItemMotorInfo0;
+			return temp;
+		}
+		if (index === 1) {
+			temp.motor = detailItemMotor1;
+			temp.motorCase = detailItemMotorCase1;
+			temp.motorCaseId = detailItemMotorCaseId1;
+			temp.motorCaseInfo = detailItemMotorCaseInfo1;
+			temp.motorDelay = detailItemMotorDelay1;
+			temp.motorDiameter = detailItemMotorDiameter1;
+			temp.motorId = detailItemMotorId1;
+			temp.motorInfo = detailItemMotorInfo1;
+			return temp;
+		}
+		if (index === 2) {
+			temp.motor = detailItemMotor2;
+			temp.motorCase = detailItemMotorCase2;
+			temp.motorCaseId = detailItemMotorCaseId2;
+			temp.motorCaseInfo = detailItemMotorCaseInfo2;
+			temp.motorDelay = detailItemMotorDelay2;
+			temp.motorDiameter = detailItemMotorDiameter2;
+			temp.motorId = detailItemMotorId2;
+			temp.motorInfo = detailItemMotorInfo2;
+			return temp;
+		}
+
+		return null;
+	};
+	const selectMotorCase = async (item) => {
+		try {
+			if (!item)
+				return;
+			const temp = selectMotorByIndex(dialogPartsSearchMotorIndex.value);
+			if (!temp)
+				return;
+
+			temp.motorCase.value = generateTitle(item.manufacturerId, item.name);
+			temp.motorCaseId.value = item.id;
+		}
+		finally {
+			dialogPartsSearchMotorCasesManager.value.ok();
+		}
+	};
 	const selectRocket = async (item) => {
 		try {
 			if (!item)
@@ -452,6 +641,10 @@ export function useLaunchEditComponent(props, context, options) {
 			
 			detailItemRocketId.value = item.id;
 			detailItemRocketName.value = item.name;
+
+			detailItemData.value.rocket = item;
+			detailItemData.value.rocketSetup = {};
+			detailItemData.value.rocketSetup.rocket = item;
 		}
 		finally {
 			dialogRocketLookupManager.value.ok();
@@ -461,9 +654,11 @@ export function useLaunchEditComponent(props, context, options) {
 		try {
 			if (!item)
 				return error('useLaunchEditComponent', 'selectRocketSetup', 'Invalid item.', null, null, null, correlationId);
+
+			detailItemData.value.rocketSetup = item;
 			
 			detailItemRocketSetupId.value = item.id;
-			detailItemRocketSetupName.value = rocketName(item);
+			detailItemRocketSetupName.value = rocketSetupName(item);
 		}
 		finally {
 			dialogRocketSetupLookupManager.value.ok();
@@ -609,6 +804,12 @@ export function useLaunchEditComponent(props, context, options) {
 		measurementUnitsFromUnitId,
 		failureReasons,
 		successReasons,
+		motorImpulseClasses,
+		motorMountDiameters,
+		motorCaseInfo,
+		motorMountDiameter,
+		motorMountName,
+		motorUrl,
 		markupHint,
 		dialogDeleteConfirmationManager,
 		dialogDeleteConfirmationMessage,
@@ -621,6 +822,30 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemDate,
 		detailItemDescription,
 		detailItemFailureReasons,
+		detailItemMotor0,
+		detailItemMotor1,
+		detailItemMotor2,
+		detailItemMotorCase0,
+		detailItemMotorCase1,
+		detailItemMotorCase2,
+		detailItemMotorCaseId0,
+		detailItemMotorCaseId1,
+		detailItemMotorCaseId2,
+		detailItemMotorCaseInfo0,
+		detailItemMotorCaseInfo1,
+		detailItemMotorCaseInfo2,
+		detailItemMotorDelay0,
+		detailItemMotorDelay1,
+		detailItemMotorDelay2,
+		detailItemMotorDiameter0,
+		detailItemMotorDiameter1,
+		detailItemMotorDiameter2,
+		detailItemMotorId0,
+		detailItemMotorId1,
+		detailItemMotorId2,
+		detailItemMotorInfo0,
+		detailItemMotorInfo1,
+		detailItemMotorInfo2,
 		detailItemName,
 		detailItemNotes,
 		detailItemPublic,
@@ -662,6 +887,11 @@ export function useLaunchEditComponent(props, context, options) {
 		detailItemWindSpeed,
 		detailItemWindSpeedMeasurementUnitId,
 		detailItemWindSpeedMeasurementUnitsId,
+		dialogPartsSearchMotorsDiameter,
+		dialogPartsSearchMotorsManager,
+		hasMotorsI,
+		manufacturerTypeMotor,
+		manufacturerTypeMotorCase,
 		weatherOptions,
 		hasAdmin,
 		isSuccess,
@@ -679,7 +909,11 @@ export function useLaunchEditComponent(props, context, options) {
 		dialogDeleteConfirmationError,
 		dialogDeleteConfirmationOk,
 		dialogDeleteConfirmationOpen,
+		hasMotor,
 		selectLocation,
+		selectMotor,
+		selectMotorByIndex,
+		selectMotorCase,
 		selectRocket,
 		selectRocketSetup,
 		scope: 'LaunchControl',

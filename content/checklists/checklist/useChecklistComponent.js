@@ -135,7 +135,9 @@ export function useChecklistComponent(props, context, options) {
 		locationIterationName 
 	} = useLocationsUtilityComponent(props, context);
 
-	const { rocketMotorNames } = useRocketsUtilityComponent(
+	const {
+		rocketSetupMotorNames 
+	} = useRocketsUtilityComponent(
 		props,
 		context,
 		options
@@ -368,7 +370,7 @@ export function useChecklistComponent(props, context, options) {
 	const rocketName = (item) => {
 		if (!item) 
 			return null;
-		return item.name ? item.name : rocketMotorNames(item);
+		return item.name ? item.name : rocketSetupMotorNames(item);
 	};
 	const removeLocation = async () => {
 		detailItemLocationId.value = null;
