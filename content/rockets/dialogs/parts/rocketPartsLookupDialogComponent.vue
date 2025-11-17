@@ -49,13 +49,9 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 	} = useToolsMeasurementSettingsComponent(props, context);
 
 	const {
-		motorImpulseClasses,
 		motorImpulseClassesNonBlank,
-		motorMountDiameters,
 		motorMountDiametersNonBlank,
 		motorCaseInfo,
-		motorMountDiameter,
-		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 

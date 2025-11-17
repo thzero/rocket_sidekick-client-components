@@ -27,12 +27,7 @@ export function useRocketsUtilityComponent(props, context, options) {
 	} = useBaseComponent(props, context, options);
 	
 	const {
-		motorImpulseClasses,
-		motorMountDiameters,
-		motorCaseInfo,
-		motorMountDiameter,
-		motorMountName,
-		motorUrl
+		motorMountName
 	} = useMotorUtilityComponent(props, context);
 
 	const rocketTypes = ref(Object.getOwnPropertyNames(AppCommonConstants.Rocketry.RocketTypes).filter(l => l !== 'high').map((item) => { return { id: item.toLowerCase(), name: LibraryClientUtility.$trans.t('strings.content.rockets.levels.' + item.toLowerCase()) }; }));

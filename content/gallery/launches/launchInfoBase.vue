@@ -103,31 +103,8 @@ export function useLaunchInfoBaseComponent(props, context, options) {
 	} = useLaunchComponent(props, context);
 	
 	const {
-		rocketTypes,
-		hasCoverUrl: hasCoverUrlRocket,
-		rocketCg,
-		rocketCgHighest,
-		rocketCp,
-		rocketCpHighest,
-		rocketDiameter,
-		rocketDiameterHighest,
-		rocketLength,
-		rocketLengthHighest,
-		rocketLengthOverall,
-		rocketManufacturer,
-		rocketMotorMountName,
-		rocketMotorMountNames,
-		rocketSetupMotorNames,
-		rocketSetupMotorNamesByStage,
-		rocketSetupMotors,
-		rocketStagePrimary,
-		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketTypeName,
-		rocketTypeNames,
-		rocketWeight,
-		rocketWeightHighest
+		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const item = ref(null);

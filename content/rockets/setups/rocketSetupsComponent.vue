@@ -113,30 +113,10 @@ export function useRocketSetupsBaseComponent(props, context, options) {
 
 	const {
 		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCgHighest,
-		rocketCp,
-		rocketCpHighest,
-		rocketDiameter,
 		rocketDiameterHighest,
-		rocketLength,
-		rocketLengthHighest,
-		rocketLengthOverall,
-		rocketManufacturer,
-		rocketMotorMountName,
-		rocketMotorMountNames,
-		rocketSetupMotorNames,
-		rocketSetupMotorNamesByStage,
 		rocketSetupMotors,
-		rocketStagePrimary,
-		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketTypeName,
-		rocketTypeNames,
-		rocketWeight,
-		rocketWeightHighest
+		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);

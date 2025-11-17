@@ -31,35 +31,15 @@ export function useRocketPanelBaseComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 	
 	const {
-		rocketTypes,
 		hasCoverUrl,
-		rocketCg,
-		rocketCgHighest,
-		rocketCp,
-		rocketCpHighest,
-		rocketDiameter,
-		rocketDiameterHighest,
-		rocketLength,
-		rocketLengthHighest,
-		rocketLengthOverall,
 		rocketManufacturer,
 		rocketManufacturerName,
 		rocketManufacturerRocketName,
 		rocketManufacturerStockId,
 		rocketManufacturerUrl,
-		rocketMotorMountName,
-		rocketMotorMountNames,
-		rocketSetupMotorNames,
-		rocketSetupMotorNamesByStage,
-		rocketSetupMotors,
-		rocketStagePrimary,
 		rocketStages,
 		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketTypeName,
-		rocketTypeNames,
-		rocketWeight,
-		rocketWeightHighest
+		rocketTypeIconDetermine
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const stagePrimary = computed(() => {

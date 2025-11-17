@@ -51,12 +51,8 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	} = useDetailFormDialogComponent(props, context, options);
 
 	const {
-		motorImpulseClasses,
 		motorMountDiameters,
-		motorCaseInfo,
-		motorMountDiameter,
-		motorMountName,
-		motorUrl
+		motorMountDiameter
 	} = useMotorUtilityComponent(props, context);
 
 	const detailItemBallast = ref(null);
