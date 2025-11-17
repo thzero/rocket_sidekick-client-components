@@ -113,31 +113,7 @@ export function useChecklistsBaseComponent(props, context, options) {
 	} = useButtonComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCgHighest,
-		rocketCp,
-		rocketCpHighest,
-		rocketDiameter,
-		rocketDiameterHighest,
-		rocketLength,
-		rocketLengthHighest,
-		rocketLengthOverall,
-		rocketManufacturer,
-		rocketMotorMountName,
-		rocketMotorMountNames,
-		rocketSetupMotorNames,
-		rocketSetupMotorNamesByStage,
-		rocketSetupMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketTypeName,
-		rocketTypeNames,
-		rocketWeight,
-		rocketWeightHighest
+		rocketTypeIcon
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const debug = ref(false);

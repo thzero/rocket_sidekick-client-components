@@ -97,40 +97,12 @@ export function useLaunchViewComponent(props, context, options) {
 	} = useLaunchComponent(props, context);
 	
 	const {
-		motorImpulseClasses,
-		motorMountDiameters,
-		motorCaseInfo,
-		motorMountDiameter,
-		motorMountName,
 		motorUrl
 	} = useMotorUtilityComponent(props, context);
 
 	const {
-		rocketTypes,
-		hasCoverUrl,
-		rocketCg,
-		rocketCgHighest,
-		rocketCp,
-		rocketCpHighest,
-		rocketDiameter,
-		rocketDiameterHighest,
-		rocketLength,
-		rocketLengthHighest,
-		rocketLengthOverall,
-		rocketManufacturer,
-		rocketMotorMountName,
-		rocketMotorMountNames,
 		rocketSetupMotorNames,
-		rocketSetupMotorNamesByStage,
-		rocketSetupMotors,
-		rocketStagePrimary,
-		rocketStages,
-		rocketTypeIcon,
-		rocketTypeIconDetermine,
-		rocketTypeName,
-		rocketTypeNames,
-		rocketWeight,
-		rocketWeightHighest
+		rocketSetupMotors
 	} = useRocketsUtilityComponent(props, context, options);
 
 	const displayItem = computed(() => {

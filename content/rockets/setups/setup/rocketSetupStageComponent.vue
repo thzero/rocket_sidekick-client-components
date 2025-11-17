@@ -48,12 +48,8 @@ export function useRocketSetupStageComponent(props, context, options) {
 	} = useToolsMeasurementUtilityComponent(props, context);
 
 	const {
-		motorImpulseClasses,
 		motorMountDiameters,
-		motorCaseInfo,
-		motorMountDiameter,
-		motorMountName,
-		motorUrl
+		motorMountDiameter
 	} = useMotorUtilityComponent(props, context);
 
 	const serviceStore = LibraryClientUtility.$injector.getService(LibraryClientConstants.InjectorKeys.SERVICE_STORE);
