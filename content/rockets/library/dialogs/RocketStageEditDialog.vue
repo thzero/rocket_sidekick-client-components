@@ -579,7 +579,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketStageEditDialogValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation(false)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketStageEditDialogValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation()));
 	}
 };
 </script>
