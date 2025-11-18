@@ -444,7 +444,7 @@
 	<LocationEditDialog
 		v-if="!readonly"
 		ref="dialogEditSecondaryRef"
-		:debug="true"
+		:debug="debug"
 		:pre-complete-ok="dialogEditSecondaryPreCompleteOk"
 		:value="dialogEditSecondaryParams"
 		:signal="dialogEditSecondaryManager.signal"
