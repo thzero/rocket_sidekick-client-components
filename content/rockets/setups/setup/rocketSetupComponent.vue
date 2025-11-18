@@ -234,7 +234,7 @@ export function useRocketSetupComponent(props, context, options) {
 	};
 	const dialogDeleteConfirmationOk = async (correlationId) => {
 		try {
-			if (!dialogDeleteConfirmationParams.value.type)
+			if (!dialogDeleteConfirmationParams.value || !dialogDeleteConfirmationParams.value.type)
 				return;
 
 			if (dialogDeleteConfirmationParams.value.type === 'location') {
