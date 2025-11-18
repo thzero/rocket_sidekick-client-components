@@ -8,6 +8,7 @@ import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 
 import { useBaseComponent } from '@thzero/library_client_vue3/components/base';
+import { useButtonComponent } from '@thzero/library_client_vue3_vuetify3/components/buttonComponent';
 import { useDetailFormDialogComponent } from '@/components/content/detailFormDialogComponent';
 import { useMotorUtilityComponent } from '@/components/external/motorUtilityComponent';
 import { useToolsMeasurementUtilityComponent } from '@/components/content/tools/toolsMeasurementUtilityComponent';
@@ -27,6 +28,11 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		notImplementedError,
 		success
 	} = useBaseComponent(props, context, options);
+
+	const {
+		buttonsDialog,
+		buttonsForms
+	} = useButtonComponent(props, context);
 
 	const {
 		measurementUnitsIdOutput,
@@ -102,6 +108,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 	const detailItemWeight = ref(null);
 	const detailItemWeightMeasurementUnitId = ref(null);
 	const detailItemWeightMeasurementUnitsId = ref(null);
+	const dialogDeleteConfirmationManager = ref(new DialogSupport());
+	const dialogDeleteConfirmationMessage = ref(null);
+	const dialogDeleteConfirmationParams = ref(null);
 	const dialogPartsSearchMotorCasesDetail = ref(null);
 	const dialogPartsSearchMotorCasesDiameter = ref(null);
 	const dialogPartsSearchMotorCasesManager = ref(new DialogSupport());
@@ -135,6 +144,62 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		dialogPartsSearchMotorIndex.value = index;
 		dialogPartsSearchMotorCasesManager.value.open();
 	};
+	const clickMotorRemove = async (index) => {
+		dialogDeleteConfirmationParams.value = { index: index, type: 'motor' };
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const clickMotorCaseRemove = async (index) => {
+		dialogDeleteConfirmationParams.value = { index: index, type: 'motorCase' };
+		dialogDeleteConfirmationManager.value.open();
+	};
+	const dialogDeleteConfirmationCancel = async (item) => {
+		try {
+			dialogDeleteConfirmationManager.value.cancel();
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+		}
+	};
+	const dialogDeleteConfirmationError = async (err) => {
+		try {
+			dialogDeleteConfirmationManager.value.cancel();
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+		}
+	};
+	const dialogDeleteConfirmationOk = async (correlationId) => {
+		try {
+			if (!dialogDeleteConfirmationParams.value)
+				return;
+			if (!dialogDeleteConfirmationParams.value.type)
+				return;
+
+			if (dialogDeleteConfirmationParams.value.type === 'motor') {
+				await removeMotor(correlationId, dialogDeleteConfirmationParams.value.index);
+				return;
+			}
+			else if (dialogDeleteConfirmationParams.value.type === 'motorCase') {
+				await removeMotorCase(correlationId, dialogDeleteConfirmationParams.value.index);
+				return;
+			}
+		}
+		finally {
+			dialogDeleteConfirmationParams.id = null;
+			dialogDeleteConfirmationManager.value.ok();
+		}
+	};
+	const dialogDeleteConfirmationOpen = (item) => {
+		if (!item)
+			return;
+		if (!canDelete(item)) {
+			setNotify(correlationId(), 'errors.security');
+			return;
+		}
+
+		dialogDeleteConfirmationParams.id = item.id;
+		dialogDeleteConfirmationManager.value.open();
+	};
 	const generateTitle = (id, name) => {
 		if (String.isNullOrEmpty(name))
 			return '';
@@ -155,6 +220,24 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 
 		// call the parent to tell them to save off the detail item
 		return await props.preCompleteOk(correlationId, detailItem.value);
+	};
+	const removeMotor = async (correlationId, index) => {
+		const temp = selectMotorByIndex(index);
+		if (!temp)
+			return;
+		
+		temp.motor.value = null;
+		temp.motorId.value = null;
+		temp.motorCase.value = null;
+		temp.motorCaseId.value = null;
+	};
+	const removeMotorCase = async (correlationId, index) => {
+		const temp = selectMotorByIndex(index);
+		if (!temp)
+			return;
+		
+		temp.motorCase.value = null;
+		temp.motorCaseId.value = null;
 	};
 	const resetAdditional = async (correlationId, previous) => {
 		detailItemNotes.value = detailItem.value ? detailItem.value.name : null;
@@ -262,6 +345,15 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 
 			temp.motor.value = generateTitle(item.manufacturerId, item.name);
 			temp.motorId.value = item.id;
+
+			if (!item.motorCaseId || !item.motorCase) {
+				item.motorCase.value = null;
+				item.motorCaseId.value = null;
+				return;
+			}
+
+			temp.motorCase.value = generateTitle(item.motorCase.manufacturerId, item.motorCase.name);
+			temp.motorCaseId.value = item.motorCaseId;
 		}
 		finally {
 			dialogPartsSearchMotorsManager.value.ok();
@@ -390,6 +482,7 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		dialogError,
 		dialogClose,
 		dialogOk,
+		buttonsForms,
 		motorMountDiameters,
 		isEditable,
 		measurementUnitsLengthDefaultId,
@@ -443,6 +536,9 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		detailItemWeight,
 		detailItemWeightMeasurementUnitId,
 		detailItemWeightMeasurementUnitsId,
+		dialogDeleteConfirmationManager,
+		dialogDeleteConfirmationMessage,
+		dialogDeleteConfirmationParams,
 		dialogPartsSearchMotorCasesDetail,
 		dialogPartsSearchMotorCasesDiameter,
 		dialogPartsSearchMotorCasesManager,
@@ -454,6 +550,12 @@ export function useRocketSetupStageEditDialogComponent(props, context, options) 
 		stageNumber,
 		clickMotorsSearch,
 		clickMotorCasesSearch,
+		clickMotorRemove,
+		clickMotorCaseRemove,
+		dialogDeleteConfirmationCancel,
+		dialogDeleteConfirmationError,
+		dialogDeleteConfirmationOk,
+		dialogDeleteConfirmationOpen,
 		hasMotor,
 		preCompleteOk,
 		resetAdditional,

@@ -6,7 +6,10 @@
 		<!-- {{ stagePrimary }} -->
 		<!-- {{ stagePrimaryRocket }} -->
 		<!-- length {{ length }} -->
-		<v-row dense>
+		<v-row
+			v-if="coverUrl"
+			dense
+		>
 			<v-col>
 				<router-link
 					v-if="coverUrl && displayItem.rocket && displayItem.rocket.id"
@@ -198,7 +201,7 @@
 		</v-row>
 		<v-row dense>
 			<v-col 
-				v-if="stagePrimaryRocket.manufacturerId"
+				v-if="stagePrimaryRocket && stagePrimaryRocket.manufacturerId"
 				cols="12" sm="6"
 			>
 				<VtTextField
@@ -208,7 +211,7 @@
 				/>
 			</v-col>
 			<v-col 
-				v-if="stagePrimaryRocket.manufacturerStockId"
+				v-if="stagePrimaryRocket && stagePrimaryRocket.manufacturerStockId"
 				cols="12" sm="6"
 			>
 				<VtTextField

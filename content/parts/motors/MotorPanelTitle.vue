@@ -7,9 +7,9 @@
 			:color="hasCase ? 'green' : 'red'"
 			class="mr-2"
 		>
-			<span v-if="item.manufacturer">{{ item.manufacturer }}&nbsp;</span>
-			<span v-if="item.caseInfo">{{ item.caseInfo }}&nbsp;</span>
-			<span v-if="item.motorCase">{{ item.motorCase }}</span>
+			<span v-if="item.motorCase && item.motorCase.manufacturer">{{ item.motorCase.manufacturer }}&nbsp;</span>
+			<!-- <span v-if="item.caseInfo">{{ item.caseInfo }}&nbsp;</span> -->
+			<span v-if="item.motorCase && item.motorCase.name">{{ item.motorCase.name }}</span>
 		</v-chip>
 		<v-chip 
 			v-if="chips && item.diameter"

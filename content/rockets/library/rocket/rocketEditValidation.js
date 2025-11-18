@@ -1,6 +1,6 @@
 import { between, decimal, helpers, maxLength, minLength, required, url } from '@vuelidate/validators';
 
-export function useRocketEditValidation(nameRequired) { 
+export function useRocketEditValidation(nameRequired, diameterRequired, lengthRequired, weightRequired) { 
 	const validation = {
 		detailItemAlbumLink: { 
 			characters: helpers.withMessage('Invalid characters', helpers.regex(/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/)),
@@ -43,12 +43,6 @@ export function useRocketEditValidation(nameRequired) {
 			maxLength: maxLength(1000),
 			$autoDirty: true 
 		},
-		detailItemDiameter: { decimal, between: between(0, 2004), $autoDirty: true },
-		detailItemDiameterMeasurementUnitId: { $autoDirty: true },
-		detailItemDiameterMeasurementUnitsId: { $autoDirty: true },
-		detailItemLength: { decimal, between: between(0, 120), $autoDirty: true },
-		detailItemLengthMeasurementUnitId: { $autoDirty: true },
-		detailItemLengthMeasurementUnitsId: { $autoDirty: true },
 		detailItemManufacturerRocketName: { 
 			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 			maxLength: maxLength(3),
@@ -61,12 +55,9 @@ export function useRocketEditValidation(nameRequired) {
 			maxLength: maxLength(50),
 			$autoDirty: true 
 		},
-		detailItemPublic: { $autoDirty: true },
-		detailItemWeight: { decimal, between: between(0, 2004), $autoDirty: true },
-		detailItemWeightMeasurementUnitId: { $autoDirty: true },
-		detailItemWeightMeasurementUnitsId: { $autoDirty: true }
+		detailItemPublic: { $autoDirty: true }
 	};
-	validation['detailItemName'] =  (nameRequired === true ?
+	validation['detailItemName'] = (nameRequired === true ?
 		{
 			required,
 			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
@@ -75,12 +66,57 @@ export function useRocketEditValidation(nameRequired) {
 			$autoDirty: true
 		}
 	:
-		validation['detailItemName'] = {
+		{
 			characters: helpers.withMessage('Invalid characters', helpers.regex(/^[a-zA-Z0-9]+(['"._\-a-zA-Z0-9 :;,\(\\+)@]*)*$/)),
 			minLength: minLength(3),
 			maxLength: maxLength(50),
 			$autoDirty: true
 		}
+	);
+	validation['detailItemDiameter'] =  (diameterRequired === true ?
+		{ required, decimal, between: between(0, 2004), $autoDirty: true }
+	:
+		{ decimal, between: between(0, 2004), $autoDirty: true }
+	);
+	validation['detailItemDiameterMeasurementUnitId'] =  (diameterRequired === true ?
+		{ required, $autoDirty: true }
+	:
+		{ $autoDirty: true }
+	);
+	validation['detailItemDiameterMeasurementUnitsId'] =  (diameterRequired === true ?
+		{ required, $autoDirty: true }
+	:
+		{ $autoDirty: true }
+	);
+	validation['detailItemLength'] =  (lengthRequired === true ?
+		{ required, decimal, between: between(0, 120), $autoDirty: true }
+	:
+		{ decimal, between: between(0, 120), $autoDirty: true }
+	);
+	validation['detailItemLengthMeasurementUnitId'] =  (lengthRequired === true ?
+		{ required, $autoDirty: true }
+	:
+		{ $autoDirty: true }
+	);
+	validation['detailItemLengthMeasurementUnitsId'] =  (lengthRequired === true ?
+		{ required, $autoDirty: true }
+	:
+		{ $autoDirty: true }
+	);
+	validation['detailItemWeight'] =  (weightRequired === true ?
+		{ required, decimal, between: between(0, 2004), $autoDirty: true }
+	:
+		{ decimal, between: between(0, 2004), $autoDirty: true }
+	);
+	validation['detailItemWeightMeasurementUnitId'] =  (weightRequired === true ?
+		{ required, $autoDirty: true }
+	:
+		{ $autoDirty: true }
+	);
+	validation['detailItemWeightMeasurementUnitsId'] =  (weightRequired === true ?
+		{ required, $autoDirty: true }
+	:
+		{ $autoDirty: true }
 	);
 	return validation;
 }

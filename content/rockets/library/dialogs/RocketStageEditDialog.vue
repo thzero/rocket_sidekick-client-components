@@ -364,6 +364,7 @@
 					v-model="detailItemMotorCount0"
 					vid="detailItemMotorCount0"
 					:readonly="!isEditable"
+					:validation="validation"
 					:label="$t('forms.content.rockets.motor.count') + ' #1'"
 				/>
 			</v-col>
@@ -383,6 +384,7 @@
 					v-model="detailItemMotorCount1"
 					vid="detailItemMotorCount1"
 					:readonly="!isEditable"
+					:validation="validation"
 					:label="$t('forms.content.rockets.motor.count') + ' #2'"
 				/>
 			</v-col>
@@ -402,6 +404,7 @@
 					v-model="detailItemMotorCount2"
 					vid="detailItemMotorCount2"
 					:readonly="!isEditable"
+					:validation="validation"
 					:label="$t('forms.content.rockets.motor.count') + ' #3'"
 				/>
 			</v-col>
@@ -576,7 +579,7 @@ export default {
 		};
 	},
 	validations () {
-		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketStageEditDialogValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation(false)));
+		return Object.assign(LibraryCommonUtility.cloneDeep(useRocketStageEditDialogValidation), LibraryCommonUtility.cloneDeep(useRocketEditValidation()));
 	}
 };
 </script>

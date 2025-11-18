@@ -390,12 +390,25 @@
 											:clearable="false"
 										/>
 									</td>
-									<td class="pr-2">
+									<td class="pr-2"
+										v-if="isEditable && detailItemMotor0"
+									>
+										<v-btn style="width: 100%;"
+											class="ml-2"
+											:color="buttonsForms.color.delete"
+											@click="clickMotorRemove(0)"
+										>
+											{{ $t('buttons.remove') }}
+										</v-btn>
+									</td>
+									<td class="pr-2"
+										v-if="isEditable && !detailItemMotor0"
+									>
 										<v-btn style="width: 100%;"
 											color="green ml-2"
 											@click="clickMotorsSearch(0, detailItemMotorDiameter0)"
 										>
-											{{ $t('forms.content.parts.motor.name') }}
+										{{ $t('buttons.select') }}
 										</v-btn>
 									</td>
 								</tr>
@@ -407,17 +420,30 @@
 											vid="detailItemMotorCase0"
 											:validation="validation"
 											:readonly="!isEditable"
-											:label="$t('forms.content.parts.motorCase.name2')"
+											:label="$t('forms.content.parts.motor.name') + ' '+ $t('forms.content.parts.motorCase.name2')"
 											:clearable="false"
 										/>
 									</td>
-									<td class="pr-2">
+									<td class="pr-2"
+										v-if="isEditable && detailItemMotorCase0"
+									>
+										<v-btn style="width: 100%;"
+											class="ml-2"
+											:color="buttonsForms.color.delete"
+											@click="clickMotorCaseRemove(0)"
+										>
+											{{ $t('buttons.remove') }}
+										</v-btn>
+									</td>
+									<td class="pr-2"
+										v-if="isEditable && !detailItemMotorCase0"
+									>
 										<v-btn style="width: 100%;"
 											variant="flat"
 											color="green ml-2"
 											@click="clickMotorCasesSearch(0, detailItemMotorDiameter0)"
 										>
-											{{ $t('forms.content.parts.motorCase.name2') }}
+											{{ $t('buttons.select') }}
 										</v-btn>
 									</td>
 								</tr>
@@ -489,12 +515,25 @@
 											:clearable="false"
 										/>
 									</td>
-									<td class="pr-2">
+									<td class="pr-2"
+										v-if="isEditable && detailItemMotor1"
+									>
+										<v-btn style="width: 100%;"
+											class="ml-2"
+											:color="buttonsForms.color.delete"
+											@click="clickMotorRemove(1)"
+										>
+											{{ $t('buttons.remove') }}
+										</v-btn>
+									</td>
+									<td class="pr-2"
+										v-if="isEditable && !detailItemMotor1"
+									>
 										<v-btn style="width: 100%;"
 											color="green ml-2"
 											@click="clickMotorsSearch(1, detailItemMotorDiameter1)"
 										>
-											{{ $t('forms.content.parts.motor.name') }}
+											{{ $t('buttons.select') }}
 										</v-btn>
 									</td>
 								</tr>
@@ -506,17 +545,30 @@
 											vid="detailItemMotorCase1"
 											:validation="validation"
 											:readonly="!isEditable"
-											:label="$t('forms.content.parts.motorCase.name2')"
+											:label="$t('forms.content.parts.motor.name') + ' '+ $t('forms.content.parts.motorCase.name2')"
 											:clearable="false"
 										/>
 									</td>
-									<td class="pr-2">
+									<td class="pr-2"
+										v-if="isEditable && detailItemMotorCase1"
+									>
+										<v-btn style="width: 100%;"
+											class="ml-2"
+											:color="buttonsForms.color.delete"
+											@click="clickMotorCaseRemove(1)"
+										>
+											{{ $t('buttons.remove') }}
+										</v-btn>
+									</td>
+									<td class="pr-2"
+										v-if="isEditable && !detailItemMotorCase1"
+									>
 										<v-btn style="width: 100%;"
 											variant="flat"
 											color="green ml-2"
 											@click="clickMotorCasesSearch(1, detailItemMotorDiameter1)"
 										>
-											{{ $t('forms.content.parts.motorCase.name2') }}
+											{{ $t('buttons.select') }}
 										</v-btn>
 									</td>
 								</tr>
@@ -588,7 +640,20 @@
 											:clearable="false"
 										/>
 									</td>
-									<td class="pr-2">
+									<td class="pr-2"
+										v-if="isEditable && detailItemMotor2"
+									>
+										<v-btn style="width: 100%;"
+											class="ml-2"
+											:color="buttonsForms.color.delete"
+											@click="clickMotorRemove(2)"
+										>
+											{{ $t('buttons.remove') }}
+										</v-btn>
+									</td>
+									<td class="pr-2"
+										v-if="isEditable && !detailItemMotor2"
+									>
 										<v-btn style="width: 100%;"
 											color="green ml-2"
 											@click="clickMotorsSearch(2, detailItemMotorDiameter2)"
@@ -605,11 +670,24 @@
 											vid="detailItemMotorCase2"
 											:validation="validation"
 											:readonly="!isEditable"
-											:label="$t('forms.content.parts.motorCase.name2')"
+											:label="$t('forms.content.parts.motor.name') + ' '+ $t('forms.content.parts.motorCase.name2')"
 											:clearable="false"
 										/>
 									</td>
-									<td class="pr-2">
+									<td class="pr-2"
+										v-if="isEditable && detailItemMotorCase2"
+									>
+										<v-btn style="width: 100%;"
+											class="ml-2"
+											:color="buttonsForms.color.delete"
+											@click="clickMotorCaseRemove(2)"
+										>
+											{{ $t('buttons.remove') }}
+										</v-btn>
+									</td>
+									<td class="pr-2"
+										v-if="isEditable && !detailItemMotorCase2"
+									>
 										<v-btn style="width: 100%;"
 											variant="flat"
 											color="green ml-2"
@@ -655,6 +733,14 @@
 			@close="dialogPartsSearchMotorCasesManager.cancel()"
 			@select="selectMotorCase"
 		/>
+		<VtConfirmationDialog
+			ref="dialogDeleteConfirmationRef"
+			:message="dialogDeleteConfirmationMessage"
+			:messageRaw=true
+			:signal="dialogDeleteConfirmationManager.signal"
+			@cancel="dialogDeleteConfirmationCancel"
+			@ok="dialogDeleteConfirmationOk"
+		/>
 	</VtFormDialog>
 </template>
 
@@ -670,6 +756,7 @@ import MeasurementUnitSelect from '@/components/content/MeasurementUnitSelect';
 import MeasurementUnitSelect2 from '@/components/content/MeasurementUnitSelect2';
 import MeasurementUnitsSelect from '@/components/content/MeasurementUnitsSelect';
 import RocketPartsLookupDialog from '@/components/content/rockets/dialogs/parts/RocketPartsLookupDialog';
+import VtConfirmationDialog from '@thzero/library_client_vue3_vuetify3/components/VtConfirmationDialog';
 import VtFormDialog from '@thzero/library_client_vue3_vuetify3/components/form/VtFormDialog';
 import VtNumberFieldWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtNumberFieldWithValidation';
 import VtSelectWithValidation from '@thzero/library_client_vue3_vuetify3/components/form/VtSelectWithValidation';
@@ -684,6 +771,7 @@ export default {
 		MeasurementUnitSelect2,
 		MeasurementUnitsSelect,
 		RocketPartsLookupDialog,
+		VtConfirmationDialog,
 		VtFormDialog,
 		VtNumberFieldWithValidation,
 		VtSelectWithValidation,
@@ -703,6 +791,7 @@ export default {
 			dialogError,
 			dialogClose,
 			dialogOk,
+			buttonsForms,
 			motorMountDiameters,
 			isEditable,
 			measurementUnitsLengthDefaultId,
@@ -753,6 +842,9 @@ export default {
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
+			dialogDeleteConfirmationManager,
+			dialogDeleteConfirmationMessage,
+			dialogDeleteConfirmationParams,
 			dialogPartsSearchMotorCasesDetail,
 			dialogPartsSearchMotorCasesDiameter,
 			dialogPartsSearchMotorCasesManager,
@@ -764,6 +856,12 @@ export default {
 			stageNumber,
 			clickMotorsSearch,
 			clickMotorCasesSearch,
+			clickMotorRemove,
+			clickMotorCaseRemove,
+			dialogDeleteConfirmationCancel,
+			dialogDeleteConfirmationError,
+			dialogDeleteConfirmationOk,
+			dialogDeleteConfirmationOpen,
 			hasMotor,
 			preCompleteOk,
 			resetAdditional,
@@ -780,6 +878,7 @@ export default {
 			dialogError,
 			dialogClose,
 			dialogOk,
+			buttonsForms,
 			motorMountDiameters,
 			isEditable,
 			measurementUnitsLengthDefaultId,
@@ -830,6 +929,9 @@ export default {
 			detailItemWeight,
 			detailItemWeightMeasurementUnitId,
 			detailItemWeightMeasurementUnitsId,
+			dialogDeleteConfirmationManager,
+			dialogDeleteConfirmationMessage,
+			dialogDeleteConfirmationParams,
 			dialogPartsSearchMotorCasesDetail,
 			dialogPartsSearchMotorCasesDiameter,
 			dialogPartsSearchMotorCasesManager,
@@ -841,6 +943,12 @@ export default {
 			stageNumber,
 			clickMotorsSearch,
 			clickMotorCasesSearch,
+			clickMotorRemove,
+			clickMotorCaseRemove,
+			dialogDeleteConfirmationCancel,
+			dialogDeleteConfirmationError,
+			dialogDeleteConfirmationOk,
+			dialogDeleteConfirmationOpen,
 			hasMotor,
 			preCompleteOk,
 			resetAdditional,

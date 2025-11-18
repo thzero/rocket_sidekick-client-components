@@ -12,7 +12,7 @@
 		width="70vh"
 		max-width="90vh"
 		@close="close"
-		:debug="true"
+		:debug="debug"
 	>
 		<template #default="{ buttonOkDisabled, isLoading }">
 			<v-row dense>

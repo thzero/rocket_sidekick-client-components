@@ -190,7 +190,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 			lengthMeasurementUnitsId: measurementUnitsFromUnitId(correlationId, AppCommonConstants.MeasurementUnits.length.id, filterItemLengthMeasurementUnitId.value),
 			manufacturers: filterItemManufacturers.value,
 			manufacturerStockId: filterItemManufacturerStockId.value,
-			motorDiameter: filterItemMotorDiameter.value,
+			motorDiameter: !String.isNullOrEmpty(filterItemMotorDiameter.value) ? Number(filterItemMotorDiameter.value) : null,
 			motorImpulseClass: filterItemMotorImpulseClass.value,
 			name: filterItemName.value,
 			partTypes: props.partTypes, 
@@ -204,9 +204,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 			data = data ?? {};
 			data.diameter = filterItemMotorDiameter.value;
 			data.impulseClass = filterItemMotorImpulseClass.value;
-			data.manufacturers = filterItemManufacturers.value,
-			data.manufacturerStockId = filterItemManufacturerStockId.value,
-			serviceStore.dispatcher.setMotorSearchCriteria(correlationId, request);
+			serviceStore.dispatcher.setMotorSearchCriteria(correlationId, data);
 		}
 
 		// const temp = await serviceStore.dispatcher.requestPartsRocketSearch(correlationId, request);
@@ -222,7 +220,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		return success(correlationId);
 	};
 	const resetAdditional = async (correlationId, previous, loaded) => {
-		const data = await serviceStore.dispatcher.setPartsRocketSearchCriteria();
+		const data = await serviceStore.dispatcher.getPartsRocketSearchCriteria();
 
 		filterItemDiameterMax.value = data ? data.diameterMax : null;
 		filterItemDiameterMin.value = data ? data.diameterMin : null;
@@ -237,8 +235,8 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		filterItemManufacturers.value = data ? data.manufacturers : null;
 		filterItemManufacturerStockId.value = data ? data.manufacturerStockId : null;
 
-		filterItemMotorDiameter.value = props.diameter ? props.diameter : data ? data.motorDiameter : null;
-		filterItemMotorImpulseClass.value = data ? data.motorImpulseClass : null;
+		filterItemMotorDiameter.value = props.diameter ? props.diameter : null;
+		filterItemMotorImpulseClass.value = null;
 
 		filterItemName.value = data ? data.name : props.detail;
 
@@ -246,6 +244,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 
 		if (isMotors()) {
 			const data = await serviceStore.getters.getMotorSearchCriteria();
+			filterItemMotorDiameter.value = data ? data.diameter : filterItemMotorDiameter.value;
 			filterItemMotorImpulseClass.value = data ? data.impulseClass : filterItemMotorImpulseClass.value;
 		}
 
