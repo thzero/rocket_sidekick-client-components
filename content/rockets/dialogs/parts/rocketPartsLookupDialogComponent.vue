@@ -220,7 +220,7 @@ export function useRocketPartsLookupDialogComponent(props, context, options) {
 		return success(correlationId);
 	};
 	const resetAdditional = async (correlationId, previous, loaded) => {
-		const data = await serviceStore.dispatcher.getPartsRocketSearchCriteria();
+		const data = await serviceStore.getters.getPartsRocketSearchCriteria();
 
 		filterItemDiameterMax.value = data ? data.diameterMax : null;
 		filterItemDiameterMin.value = data ? data.diameterMin : null;

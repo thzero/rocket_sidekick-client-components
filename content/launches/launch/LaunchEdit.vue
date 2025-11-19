@@ -997,7 +997,7 @@
 		@select="selectRocket"
 	/>
 	<RocketPartsLookupDialog
-		ref="dialoSearchgMotorsRef"
+		ref="dialogSearchMotorsRef"
 		:signal="dialogPartsSearchMotorsManager.signal"
 		:diameter="dialogPartsSearchMotorsDiameter"
 		:part-types="manufacturerTypeMotor"

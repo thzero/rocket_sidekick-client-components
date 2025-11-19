@@ -717,7 +717,7 @@
 			</v-col>
 		</v-row>
 		<RocketPartsLookupDialog
-			ref="dialoSearchgMotorsRef"
+			ref="dialogSearchMotorsRef"
 			:signal="dialogPartsSearchMotorsManager.signal"
 			:diameter="dialogPartsSearchMotorsDiameter"
 			:part-types="manufacturerTypeMotor"
