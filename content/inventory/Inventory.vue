@@ -11,7 +11,7 @@
 		<template #default="{ buttonOkDisabled, filterDrawer, isLoading, reset, submit }">
 			<v-card>
 				<v-card-text>
-					<!-- <v-row dense>
+					<!-- <v-row density="compact">
 						<v-col cols="12" :sm="filterDrawer ? 12: 6">
 							<VtTextFieldWithValidation
 								ref="filterItemNameRef"
@@ -22,7 +22,7 @@
 							/>
 						</v-col>
 					</v-row>-->
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="12" :sm="filterDrawer ? 12: 6">
 							<VtSelectWithValidation
 								ref="filterItemPartTypesRef"
@@ -35,7 +35,7 @@
 							/>
 						</v-col>
 					</v-row>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col col="12">
 							<VtSelectWithValidation
 								ref="filterItemManufacturersRef"
@@ -109,7 +109,7 @@
 					<v-row>
 						<v-col><h3>{{ $t('forms.content.parts.motorCase.plural') }}</h3></v-col>
 					</v-row>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="12" sm="6">
 							<VtSelectWithValidation
 								ref="filterItemMotorCaseDiameterRef"
@@ -126,7 +126,7 @@
 					<v-row>
 						<v-col><h3>{{ $t('forms.content.parts.motor.plural') }}</h3></v-col>
 					</v-row>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="12">
 							<VtSelectWithValidation
 								ref="filterItemMotorCasesRef"
@@ -163,7 +163,7 @@
 							/>
 						</v-col>
 					</v-row>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="6">
 							<v-checkbox
 								ref="filterItemMotorSingleUseRef"
@@ -352,7 +352,7 @@
 			</v-btn>
 		</template>
 		<template v-slot:listing>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12">
 					<v-snackbar
 						ref="notifyRef"
@@ -370,7 +370,7 @@
 				<v-col
 					v-if="viewTypeTable"
 				>
-					 <v-row dense>
+					 <v-row density="compact">
 						<v-col
 							cols="12"
 						>

@@ -103,7 +103,7 @@
 		<v-card-title
 			:class="launchStatusColor(item)"
 		>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col>
 					<v-icon
 						v-if="launchStatusIcon(item)"
@@ -154,7 +154,7 @@
 		</v-card-title>
 	</v-card>
 	<v-row 
-		dense
+		density="compact"
 		class="mt-2"
 	>
 		<V-col
@@ -166,7 +166,7 @@
 				</v-card-title>
 				<v-card-text>
 					<v-row 
-						dense
+						density="compact"
 					>
 						<v-col 
 							cols="6"
@@ -189,14 +189,14 @@
 		>
 			<v-card
 				v-if="hasLaunchRocketSpecs(item)"
-				dense
+				density="compact"
 			>
 				<v-card-title>
 <p class="text-h6 text-center">{{ $t('titles.content.rockets.plural') }}&nbsp;{{ $t('titles.content.rockets.specifications') }}</p>
 				</v-card-title>
 				<v-card-text>
 					<v-row 
-						dense
+						density="compact"
 					>
 						<v-col
 							v-if="launchRocketDiameter(item)"
@@ -249,21 +249,21 @@
 	</v-row>
 	<v-row 
 		v-if="hasLaunchWeather(item)"
-		dense
+		density="compact"
 		class="mb-2"
 	>
 		<v-col 
 			cols="12"
 		>
 			<v-card
-				dense
+				density="compact"
 			>
 				<v-card-title>
 <p class="text-h6 text-center">{{ $t('forms.content.launches.weather.title') }}</p>
 				</v-card-title>
 				<v-card-text>
 					<v-row 
-						dense
+						density="compact"
 					>
 						<v-col
 							v-if="launchTemperature(item)"
@@ -293,27 +293,27 @@
 	</v-row>
 	<v-row 
 		v-if="hasLaunchResults(item)"
-		dense
+		density="compact"
 		class="mb-2"
 	>
 		<v-col 
 			cols="12"
 		>
 			<v-card
-				dense
+				density="compact"
 			>
 				<v-card-title>
 <p class="text-h6 text-center">{{ $t('forms.content.launches.results.title') }}</p>
 				</v-card-title>
 				<v-card-text>
-					<v-row dense
+					<v-row density="compact"
 						class="mb-2"
 					>
 						<v-col 
 							cols="12"
 						>
 							<v-row
-								dense
+								density="compact"
 							>
 								<v-col
 									v-if="launchResultsAccelerationMax(item)"
@@ -359,14 +359,14 @@
 	</v-row>
 	<v-row 
 		v-if="hasLaunchResultsCoords(item)"
-		dense
+		density="compact"
 		class="mb-2"
 	>
 		<v-col 
 			cols="12"
 		>
 			<v-card
-				dense
+				density="compact"
 			>
 				<v-card-title>
 <p class="text-h6 text-center">{{ $t('forms.content.launches.map') }}</p>
@@ -385,14 +385,14 @@
 	</v-row>
 	<v-row 
 		v-if="item && item.notes"
-		dense
+		density="compact"
 		class="mb-2"
 	>
 		<v-col 
 			cols="12"
 		>
 			<v-card
-				dense
+				density="compact"
 			>
 				<v-card-title>
 <p class="text-h6 text-center">{{ $t('forms.content.launches.notes') }}</p>
@@ -405,24 +405,24 @@
 	</v-row>
 	<v-row 
 		v-if="item && item.notes"
-		dense
+		density="compact"
 		class="mb-2"
 	>
 		<v-col 
 			cols="12"
 		>
 			<v-card
-				dense
+				density="compact"
 			>
 				<v-card-title>
 <p class="text-h6 text-center">{{ $t('forms.content.launches.urls') }}</p>
 				</v-card-title>
 				<v-card-text>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col
 							cols="12"
 						>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col
 									v-if="item && item.albumUrl"
 									cols="12" md="6"

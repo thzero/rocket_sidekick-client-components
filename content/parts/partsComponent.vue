@@ -1,6 +1,6 @@
 <script>
 import { computed, onMounted, ref } from 'vue';
-import { firstBy, thenBy } from 'thenby';
+import { firstBy } from 'thenby';
 
 import AppUtility from '@/utility/app';
 import LibraryClientUtility from '@thzero/library_client/utility/index';

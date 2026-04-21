@@ -45,7 +45,7 @@
 			</a>
 		</div>
 		<v-card-title>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col>
 					<v-btn
 						v-if="!clickType || clickType==='hyperlink'"
@@ -75,7 +75,7 @@
 			v-if="displayExtras"
 		>
 			<v-row 
-				dense
+				density="compact"
 				class="mt-2"
 			>
 				<v-col 
@@ -109,7 +109,7 @@
 				</v-col>
 			</v-row>
 			<v-row 
-				dense
+				density="compact"
 				class="mb-2"
 			>
 				<v-col 

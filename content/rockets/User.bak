@@ -1,6 +1,6 @@
 <template>
 	<ContentHeader :value="title" />
-	<v-row dense>
+	<v-row density="compact">
 		<v-col cols="12">
 			<v-card
 				v-if="!hasDetailItem || hasList"
@@ -24,7 +24,7 @@
 			</v-card>
 		</v-col>
 		<v-col cols="12">
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="6"
 					v-for="item in rockets"
 					:key="item.name"

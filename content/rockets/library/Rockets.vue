@@ -14,7 +14,7 @@
 			<v-card>
 				<v-card-text>
 					<slot name="filters">
-						<v-row dense>
+						<v-row density="compact">
 							<!-- <v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<VtTextFieldWithValidation
 									ref="requestedItemIdRef"
@@ -47,7 +47,7 @@
 								/>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<VtSelectWithValidation
 									ref="filterItemManufacturersRef"
@@ -126,7 +126,7 @@
 			</v-btn>
 		</template>
 		<template v-slot:listing>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12">
 					<v-snackbar
 						ref="notifyRef"
@@ -150,7 +150,7 @@
 					v-show="colsSearchResults"
 					:cols="colsSearchResults"
 				>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col
 							cols="12"
 							v-for="item in items"

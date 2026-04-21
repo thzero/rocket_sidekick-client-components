@@ -20,7 +20,7 @@
 		>
 			isEditable: {{ isEditable }} readonly: {{ readonly }}
 		</div>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="9">
 				<VtTextAreaWithValidation
 					ref="detailItemDescriptionRef"
@@ -42,7 +42,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="6">
 				<VtSelectWithValidation
 					ref="detailItemManufacturerRef"
@@ -66,7 +66,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>
@@ -155,7 +155,7 @@
 				</table>
 			</v-col> -->
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>
@@ -215,13 +215,13 @@
 				</table>
 			</v-col>
 		</v-row>
-		<v-row dense class="mt-4">
+		<v-row density="compact" class="mt-4">
 			<v-col cols="12">
 				<h3>{{ $t('strings.content.rockets.ejection')}}</h3>
 				<v-divider class="border-opacity-100"></v-divider>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>
@@ -281,7 +281,7 @@
 				</table>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>
@@ -341,13 +341,13 @@
 				</table>
 			</v-col>
 		</v-row>
-		<v-row dense class="mt-4">
+		<v-row density="compact" class="mt-4">
 			<v-col cols="12">
 				<h3>{{ $t('strings.content.rockets.motors')}}</h3>
 				<v-divider class="border-opacity-100"></v-divider>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="6" sm="3">
 				<VtSelectWithValidation
 					ref="detailItemMotorDiameter0Ref"

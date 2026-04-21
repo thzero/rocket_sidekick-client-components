@@ -1,7 +1,7 @@
 <template>
 	<ContentHeader :value="title" />
 	<!-- <pre>{{ JSON.stringify(rockets, null, '  ') }}</pre> -->
-	<v-row dense>
+	<v-row density="compact">
 		<v-col 
 			cols="12"
 			style="padding-bottom: 18px;"

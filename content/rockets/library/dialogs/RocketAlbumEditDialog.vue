@@ -20,7 +20,7 @@
 		>
 			isEditable: {{ isEditable }} readonly: {{ readonly }}
 		</div>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="6">
 				<VtTextFieldWithValidation
 					ref="detailItemNameRef"
@@ -44,7 +44,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="23">
 				<VtTextFieldWithValidation
 					ref="detailItemLinkRef"

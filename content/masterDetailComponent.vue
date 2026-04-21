@@ -1,7 +1,7 @@
 <script>
 import { computed, ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { firstBy, thenBy } from 'thenby';
+import { firstBy } from 'thenby';
 
 import LibraryClientUtility from '@thzero/library_client/utility/index';
 import LibraryCommonUtility from '@thzero/library_common/utility/index';

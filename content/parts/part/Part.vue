@@ -29,7 +29,7 @@
 		@ok="handleOk"
 	>
 		<!-- :readonly="!isEditable" -->
-		<v-row dense>
+		<v-row density="compact">
 			<v-col>
 				<VtTextFieldWithValidation
 					ref="nameRef"
@@ -52,7 +52,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col>
 				<VtTextAreaWithValidation
 					ref="descriptionRef"

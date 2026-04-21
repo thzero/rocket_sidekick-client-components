@@ -6,7 +6,7 @@
 	>
 		<v-card>
 			<v-card-text>
-				<v-row dense>
+				<v-row density="compact">
 					<v-col cols="12">
 						<VtTextFieldWithValidation
 							ref="filterItemLaunchNameRef"
@@ -82,7 +82,7 @@
 	</v-navigation-drawer>
 	<v-row
 		v-if="!launchId"
-		dense
+		density="compact"
 		class="mt-2"
 	>
 		<v-col 
@@ -103,7 +103,7 @@
 		>
 			<v-card>
 				<v-card-text>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="6" md="3" v-if="searchCriteria.launchName">
 							<b>{{ $t('forms.content.launches.name') + ' ' + $t('forms.name')}}:</b>
 							{{ searchCriteria.launchName }}
@@ -120,7 +120,7 @@
 							>{{ locationName(item) }}</v-chip>
 						</v-col>
 					</v-row>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="6" md="4" v-if="searchCriteria.rocketName">
 							<b>{{ $t('forms.content.rockets.name') + ' ' + $t('forms.name')}}:</b>
 							{{ searchCriteria.rocketName }}
@@ -152,7 +152,7 @@
 	</v-row>
 	<v-row
 		v-if="!launchId"
-		dense
+		density="compact"
 		style="margin-top: 24px;"
 	>
 		<v-col 

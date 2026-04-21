@@ -35,7 +35,7 @@
 		@ok="handleOk"
 		:debug="debug"
 	>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="8">
 				<VtTextFieldWithValidation
 					ref="nameRef"
@@ -58,7 +58,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtTextAreaWithValidation
 					ref="descriptionRef"
@@ -73,7 +73,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtTextFieldWithValidation
 					ref="detailItemLinkRef"
@@ -86,7 +86,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtSelectWithValidation
 					ref="detailItemOrganizationsRef"
@@ -102,7 +102,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="8">
 				<VtSelectWithValidation
 					class="mr-2"
@@ -128,7 +128,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<VtTextFieldWithValidation
 					v-if="isEditable || (!isEditable && detailItemAddressCity)"
@@ -152,7 +152,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<VtSelectWithValidation
 					v-if="isEditable || (!isEditable && detailItemAddressCountry)"
@@ -178,7 +178,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="6" sm="3">
 				<VtNumberFieldWithValidation
 					ref="detailItemCoordsLatRef"
@@ -253,7 +253,7 @@
 						</div>
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
-						<v-row dense>
+						<v-row density="compact">
 							<!-- <v-col
 								v-if="item.number"
 								cols="3" md="4"
@@ -295,7 +295,7 @@
 								/>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col
 								v-if="item.rocketTypes"
 								cols="6"
@@ -308,7 +308,7 @@
 								/>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col
 								v-if="item.organizations"
 								cols="6"
@@ -323,7 +323,7 @@
 						</v-row>
 						<v-row
 							v-if="item.address"
-							dense
+							density="compact"
 						>
 							<v-col cols="6" sm="4">
 								<VtTextField
@@ -362,7 +362,7 @@
 						</v-row>
 						<v-row
 							v-if="item.coordsLat || item.coordsLong"
-							dense
+							density="compact"
 						>
 							<v-col cols="6" sm="4">
 								<VtTextField
@@ -381,7 +381,7 @@
 								/>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col>
 								<div
 									v-if="isEditable"
@@ -417,7 +417,7 @@
 						</v-row>
 						<v-row
 							v-if="item.coordsLat !== null && item.coordsLat !== undefined && item.coordsLong !== null && item.coordsLong !== undefined"
-							dense
+							density="compact"
 						>
 							<v-col>
 								<LocationMap

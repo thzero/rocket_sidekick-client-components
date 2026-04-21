@@ -13,7 +13,7 @@
 		<template #default="{ buttonOkDisabled, filterDrawer, isLoading, reset, submit }">
 			<v-card>
 				<v-card-text>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="12" :sm="filterDrawer ? 12: 6">
 							<VtTextFieldWithValidation
 								ref="filterItemNameRef"
@@ -25,7 +25,7 @@
 							/>
 						</v-col>
 					</v-row>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="12" :sm="filterDrawer ? 12: 6">
 							<VtSelectWithValidation
 								ref="filterItemRocketTypesRef"
@@ -107,7 +107,7 @@
 		<template v-slot:listing>
 			<v-card>
 				<v-card-text>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="12" md="4">
 							<table
 								border="0"
@@ -207,7 +207,7 @@
 					</v-row>
 				</v-card-text>
 			</v-card>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12">
 					<v-snackbar
 						ref="notifyRef"
@@ -231,7 +231,7 @@
 					v-show="colsSearchResults"
 					:cols="colsSearchResults"
 				>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col
 							cols="12"
 							v-for="item in items"

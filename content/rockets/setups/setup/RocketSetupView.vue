@@ -8,7 +8,7 @@
 		<!-- length {{ length }} -->
 		<v-row
 			v-if="coverUrl"
-			dense
+			density="compact"
 		>
 			<v-col>
 				<router-link
@@ -28,7 +28,7 @@
 					/>
 					<v-row
 						v-if="hasSpecs"
-						dense
+						density="compact"
 					>
 						<v-col 
 							cols="12"
@@ -116,7 +116,7 @@
 		</v-row>
 		<v-row
 			v-if="!coverUrl && hasSpecs"
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
@@ -199,7 +199,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="stagePrimaryRocket && stagePrimaryRocket.manufacturerId"
 				cols="12" sm="6"
@@ -231,7 +231,7 @@
 		<v-row 
 			v-for="item in motors"
 			:key="item"
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
@@ -254,7 +254,7 @@
 					rounded
 				>
 					<!-- <v-row
-						dense
+						density="compact"
 						class="pl-8"
 					>
 						<v-col>

@@ -14,7 +14,7 @@
 			<v-card>
 				<v-card-text>
 					<slot name="filters">
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<VtTextFieldWithValidation
 									ref="filterItemNameRef"
@@ -25,7 +25,7 @@
 								/>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" :sm="filterDrawer ? 12: 6">
 								<VtSelectWithValidation
 									ref="filterItemRocketTypesRef"
@@ -52,7 +52,7 @@
 								/>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12">
 								<div class="d-flex">
 									<VtTextField
@@ -73,7 +73,7 @@
 								</div>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12">
 								<div class="d-flex">
 									<VtTextField
@@ -94,7 +94,7 @@
 								</div>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12">
 								<div class="d-flex">
 									<VtDateTimePickerFieldWithValidation
@@ -186,7 +186,7 @@
 		<template v-slot:listing>
 			<v-card>
 				<v-card-text>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="12" md="4">
 							<table
 								border="0"
@@ -286,7 +286,7 @@
 					</v-row>
 				</v-card-text>
 			</v-card>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12">
 					<v-snackbar
 						ref="notifyRef"
@@ -312,7 +312,7 @@
 				>
 					<v-row 
 						v-if="viewTypeTable"
-						dense
+						density="compact"
 					>
 						<v-col
 							cols="12"

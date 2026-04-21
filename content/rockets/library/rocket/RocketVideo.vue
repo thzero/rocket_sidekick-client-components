@@ -13,7 +13,7 @@
 		[[ trackers {{ trackers }} ]] -->
 	</div>
 	<v-row
-		dense
+		density="compact"
 		class="mt-2"
 	>
 		<v-col 
@@ -27,7 +27,7 @@
 		</v-col>
 	</v-row>
 	
-	<v-row dense>
+	<v-row density="compact">
 		<v-col>
 			<div
 				v-if="isEditable"

@@ -9,14 +9,14 @@
 	>
 		<v-row
 			v-if="displayItemCoverUrl"
-			dense
+			density="compact"
 		>
 			<v-col
 				cols="7" lg="10" md="9"
 			>
-				<v-row dense>
+				<v-row density="compact">
 					<v-col cols="12">
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12">
 								<div 
 									class="d-flex"
@@ -44,7 +44,7 @@
 								</div>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12">
 								<div 
 									class="d-flex"
@@ -150,7 +150,7 @@
 				</v-row>
 				<v-row 
 					v-if="hasRocketSpecs && $vuetify.display.smAndUp"
-					dense
+					density="compact"
 				>
 					<v-col 
 						cols="12"
@@ -241,7 +241,7 @@
 		</v-row>
 		<v-row
 			v-if="!displayItemCoverUrl"
-			dense
+			density="compact"
 		>
 			<v-col cols="12">
 				<div
@@ -327,7 +327,7 @@
 				/>
 			</v-col> -->
 		<!-- </v-row>
-		<v-row dense> -->
+		<v-row density="compact"> -->
 			<!-- <v-col cols="12" sm="6">
 				<VtSelect
 					v-model="displayItem.success"
@@ -348,7 +348,7 @@
 			</v-col>
 		</v-row>
 		<v-row
-			dense
+			density="compact"
 		>
 			<v-col 
 				v-if="displayItem.albumUrl"
@@ -365,7 +365,7 @@
 		</v-row>
 		<v-row 
 			v-if="(!displayItemCoverUrl || $vuetify.display.xs) && hasRocketSpecs"
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
@@ -429,14 +429,14 @@
 			</v-col>
 		</v-row>
 		<v-row
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
 			>
 				<v-row
 					v-if="String.isNullOrEmpty(displayItemRocketMotorNames)"
-					dense
+					density="compact"
 				>
 					<v-col>
 						<VtTextArea
@@ -462,7 +462,7 @@
 				<v-row 
 					v-for="item in displayItemRocketMotors"
 					:key="item"
-					dense
+					density="compact"
 				>
 					<v-col 
 						cols="12"
@@ -485,7 +485,7 @@
 							rounded
 						>
 							<!-- <v-row
-								dense
+								density="compact"
 								class="pl-8"
 							>
 								<v-col>
@@ -503,7 +503,7 @@
 		</v-row>
 		<v-row
 			v-if="hasWeather"
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
@@ -516,7 +516,7 @@
 				</v-sheet>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col
 				v-if="hasWeather && displayItem.temperature"
 				cols="4" sm="4"
@@ -550,7 +550,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense
+		<v-row density="compact"
 			v-if="hasResults"
 		>
 			<v-col 
@@ -566,7 +566,7 @@
 		</v-row>
 		<v-row
 			v-if="$vuetify.display.mdAndUp"
-			dense
+			density="compact"
 		>
 			<v-col
 				v-if="hasCoords"
@@ -585,7 +585,7 @@
 				:cols="hasCoords ? 6 : 12"
 				:lg="hasCoords ? 7 : 12"
 			>
-				<v-row dense>
+				<v-row density="compact">
 					<v-col
 						v-if="displayItemResultsAccelerationMax"
 						:cols="hasCoords ? 4 : 2" :lg="hasCoords ? 3 : 2" :xl="hasCoords ? 2 : 2"
@@ -636,7 +636,7 @@
 		</v-row>
 		<v-row
 			v-if="displayItem.results && $vuetify.display.smAndDown"
-			dense
+			density="compact"
 		>
 			<v-col
 				v-if="displayItemResultsAccelerationMax"
@@ -686,7 +686,7 @@
 		</v-row>
 		<v-row
 			v-if="hasCoords && $vuetify.display.smAndDown"
-			dense
+			density="compact"
 		>
 			<v-col>
 				<LaunchMap

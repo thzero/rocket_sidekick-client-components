@@ -29,7 +29,7 @@
 		:debug="debug"
 	>
 		<!-- :readonly="!isEditable" -->
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="9" sm="10">
 				<VtTextFieldWithValidation
 					ref="nameRef"
@@ -53,7 +53,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtTextAreaWithValidation
 					ref="descriptionRef"
@@ -68,7 +68,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>
@@ -172,7 +172,7 @@
 				</table>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>
@@ -225,7 +225,7 @@
 				</table>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="8">
 				<VtSelectWithValidation
 					ref="manufacturerRef"

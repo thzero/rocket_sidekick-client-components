@@ -32,7 +32,7 @@
 		@ok="handleOk"
 		:debug="debug"
 	>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" md="8">
 				<VtTextFieldWithValidation
 					ref="nameRef"
@@ -68,9 +68,9 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
-				<v-row dense>
+				<v-row density="compact">
 					<v-col :cols="isEditable ? 12 : $vuetify.display.smAndDown ? 12 : 6">
 						<VtTextAreaWithValidation
 							ref="descriptionRef"
@@ -100,7 +100,7 @@
 				</v-row>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="6" md="4">
 				<VtSelectWithValidation
 					ref="manufacturerRef"
@@ -135,7 +135,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtTextFieldWithValidation
 					ref="detailItemCoverUrlRef"
@@ -148,12 +148,12 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<h4>{{ $t('titles.content.rockets.albums.title') }}</h4>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="4" md="3">
 				<VtTextFieldWithValidation
 					ref="detailItemAlbumNameRef"
@@ -188,12 +188,12 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<h4>{{ $t('titles.content.rockets.documents.title') }}</h4>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="4" md="3">
 				<VtTextFieldWithValidation
 					ref="detailItemDocumentNameRef"

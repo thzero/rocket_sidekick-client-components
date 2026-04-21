@@ -12,16 +12,16 @@
 		@close="close"
 	>
 		<template #default="{ buttonOkDisabled, isLoading }">
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12">
 					<v-card>
 						<v-card-text>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col cols="12" class="text-center text-h7 pb-2">
 									{{ $t('forms.external.motorSearch.guidance') }} <a target="_blank" :href="$t(searchUrl)">{{ $t(searchLocaleName) }}</a>{{ $t('forms.external.motorSearch.guidance3') }}
 								</v-col>
 							</v-row>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col cols="12" sm="6">
 									<VtSelectWithValidation
 										ref="filterItemImpulseClassRef"
@@ -44,7 +44,7 @@
 									/>
 								</v-col>
 							</v-row>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col cols="6">
 									<v-checkbox
 										ref="filterItemSingleUseRef"
@@ -62,7 +62,7 @@
 									/>
 								</v-col>
 							</v-row>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col col="12">
 									<VtSelectWithValidation
 										ref="filterItemManufacturersRef"
@@ -77,7 +77,7 @@
 									/>
 								</v-col>
 							</v-row>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col col="12">
 									<VtTextFieldWithValidation
 										ref="filterItemMotorRef"

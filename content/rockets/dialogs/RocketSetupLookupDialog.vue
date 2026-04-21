@@ -13,11 +13,11 @@
 		@close="close"
 	>
 		<template #default="{ buttonOkDisabled, isLoading }">
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12">
 					<v-card>
 						<v-card-text>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col cols="12" sm="6">
 									<VtTextFieldWithValidation
 										ref="filterItemNameRef"

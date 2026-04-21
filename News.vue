@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col
 				v-for="item in news"
 				:key="item.id"
@@ -16,7 +16,7 @@
 						</v-card-title>
 						<v-card-subtitle>
 							<v-row
-								dense
+								density="compact"
 								align="center"
 								justify="end"
 								class="mr-1"

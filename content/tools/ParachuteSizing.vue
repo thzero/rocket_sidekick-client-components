@@ -4,7 +4,7 @@
 			:value="contentTitle"
 		/>
 		<ContentDescription id="strings.content.tools.parachuteSizing" />
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtFormControl
 					ref="parachuteSizingFormRef"
@@ -16,7 +16,7 @@
 					@ok="calculationOk"
 				>
 					<template v-slot:default>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" sm="6">
 								<VtSelectWithValidation
 									ref="calculationTypeRef"
@@ -108,7 +108,7 @@
 								</table>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%">
 									<tbody>
@@ -205,7 +205,7 @@
 								</table>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" sm="6" >
 								<VtNumberFieldWithValidation
 									ref="coeffDragRef"
@@ -268,7 +268,7 @@
 								</table>
 							</v-col>
 						</v-row>
-						<!-- <v-row dense>
+						<!-- <v-row density="compact">
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%;">
 									<tbody>
@@ -321,7 +321,7 @@
 								</table>
 							</v-col>
 						</v-row> -->
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" sm="6">
 								<VtSelectWithValidation
 									ref="parachuteShapeRef"
@@ -345,7 +345,7 @@
 								/>
 							</v-col>
 						</v-row>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" sm="6" >
 								<table style="width: 100%;">
 									<tbody>
@@ -478,7 +478,7 @@
 								/>
 							</v-col> -->
 						</v-row>
-						<!-- <v-row dense>
+						<!-- <v-row density="compact">
 							<v-col cols="12" sm="6">
 							</v-col>
 							<v-col cols="12" sm="6" >
@@ -506,25 +506,25 @@
 				</VtFormControl>
 			</v-col>
 		</v-row>
-		<v-row class="pt-4" dense>
+		<v-row class="pt-4" density="compact">
 			<v-col cols="12">
 				<v-card>
 					<v-card-text>
-						<v-row dense class="pb-2">
+						<v-row density="compact" class="pb-2">
 							<v-col class="text-center text-h5">
 								{{ $t('strings.content.tools.parachuteSizing.calculated') }}
 							</v-col>
 						</v-row>
-						<v-row dense class="pb-2">
+						<v-row density="compact" class="pb-2">
 							<v-col cols="12">
 								<VtMarkdown v-model="contentMarkup" :use-github=false />
 							</v-col>
 						</v-row>
-						<v-row dense v-if="calculationResults.calculated">
+						<v-row density="compact" v-if="calculationResults.calculated">
 							<v-col
 								v-if="calculationType==='diameter'"
 							>
-								<v-row class="pb-2" dense>
+								<v-row class="pb-2" density="compact">
 									<v-col cols="6">
 										<span class="text-h6 text-bold">{{ resultsTitleParachute }}</span>&nbsp;&nbsp;
 										<span class="text-h6 text-bold" v-if="calculationResults.diameter">{{ calculationResults.diameter }}</span>
@@ -541,7 +541,7 @@
 							<v-col
 								v-if="calculationType==='velocity'"
 							>
-								<v-row class="pb-2" dense>
+								<v-row class="pb-2" density="compact">
 									<v-col cols="6">
 										<span class="text-h6 text-bold">{{ resultsTitleVelocity }}</span>&nbsp;&nbsp;
 										<span class="text-h6 text-bold" v-if="calculationResults.velocity">{{ calculationResults.velocity }}</span>
@@ -556,7 +556,7 @@
 				</v-card>
 			</v-col>
 		</v-row>
-		<v-row dense
+		<v-row density="compact"
 			v-show="hasAttribution"
 		>
 			<v-col cols="12" class="text-center text-h5 pb-2; float: right">

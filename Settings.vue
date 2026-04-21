@@ -1,8 +1,8 @@
 <template>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col cols="12" lg="2" />
 		<v-col cols="12" lg="8">
-			<v-row dense>
+			<v-row density="compact">
 				<v-col
 					cols="12"
 				>
@@ -31,7 +31,7 @@
 							:dirty-callback="dirtyCallback"
 						>
 							<div :class="$vuetify.display.xs ? 'flex-form' : ''">
-								<v-row dense>
+								<v-row density="compact">
 									<v-col
 										cols="12"
 										sm="6"
@@ -41,7 +41,7 @@
 											<v-card-text>
 												<v-row
 													align="center"
-													dense
+													density="compact"
 												>
 													<v-col
 														cols="7"
@@ -108,7 +108,7 @@
 												<v-card-title class="text-center text-h6">{{ $t('titles.measurementUnits') }}</v-card-title>
 											</v-card-item>
 											<v-card-text>
-												<v-row dense>
+												<v-row density="compact">
 													<v-col
 														cols="12"
 														sm="6"

@@ -1,5 +1,5 @@
 <template>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col cols="12" md="2" />
 		<v-col cols="12" md="8">
 			<v-toolbar
@@ -11,7 +11,7 @@
 			</v-toolbar>
 		</v-col>
 	</v-row>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col cols="12" md="2" />
 		<v-col cols="12" md="8">
 			<v-card>

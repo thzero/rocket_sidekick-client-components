@@ -5,11 +5,11 @@
 			v-if="hasContentMarkupToc"
 			class="pt-2"
 		>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12" class="pb-2">
 					<v-card>
 						<v-card-text>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col
 					v-for="(item, index) in contentMarkupToc"
 					:key="index"
@@ -27,7 +27,7 @@
 			:key="index"
 			:class="(!hasContentMarkupToc ? 'pt-2' : '')"
 		>
-			<v-row dense>
+			<v-row density="compact">
 				<a :name="(item.tag)"></a>
 				<v-col cols="12" class="pb-2">
 					<v-card>
@@ -40,7 +40,7 @@
 					</v-card>
 				</v-col>
 			</v-row>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12" class="pb-2">
 					<v-card>
 						<v-card-text>

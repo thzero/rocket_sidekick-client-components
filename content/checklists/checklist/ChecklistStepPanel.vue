@@ -2,7 +2,7 @@
 	<!-- [[ isEditable {{ isEditable }}]] -->
 	<div v-bind="$attrs">
 		<v-row 
-			dense
+			density="compact"
 		>
 			<v-col cols="12">
 				<v-sheet 

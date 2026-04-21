@@ -26,7 +26,7 @@
 			</ParachutePanelTitle>
 		</template> 
 		<template #filters="{ filterDrawer }">
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
 					<VtTextFieldWithValidation
 						ref="filterItemNameRef"
@@ -43,7 +43,7 @@
 					</PartsPublicComponent>
 				</v-col>
 			</v-row>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
 					 <v-checkbox
 						v-model="filterItemThinMill"
@@ -74,7 +74,7 @@
 					/>
 				</v-col>
 			</v-row>
-			<v-row dense>
+			<v-row density="compact">
 				<!--
 				<v-col cols="12" :sm="filterDrawer ? 12 : 6">
 					<VtTextFieldWithValidation

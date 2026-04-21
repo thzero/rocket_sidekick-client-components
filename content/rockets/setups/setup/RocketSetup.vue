@@ -31,7 +31,7 @@
 		@ok="handleOk"
 		:debug="debug"
 	>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" md="8">
 				<VtTextFieldWithValidation
 					ref="nameRef"
@@ -44,7 +44,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col>
 				<VtTextAreaWithValidation
 					ref="descriptionRef"
@@ -59,7 +59,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<div class="d-flex">
 					<!-- <VtTextField
@@ -135,7 +135,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtTextAreaWithValidation
 					ref="detailItemNotesRef"
