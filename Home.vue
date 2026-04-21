@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-row
-			dense
+			density="compact"
 			:pt-4="$vuetify.display.smAndDown && newsCount > 0"
 			:pt-2="$vuetify.display.mdAndUp || newsCount === 0"
 		>
@@ -49,7 +49,7 @@
 					class="mb-2"
 				>
 					<v-card-item>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col
 								cols="12"
 							>
@@ -184,7 +184,7 @@
 					class="mb-2"
 				>
 					<v-card-item>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col
 								v-if="features.Home.slideshow"
 								cols="12"

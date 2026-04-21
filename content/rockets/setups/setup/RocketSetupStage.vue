@@ -15,7 +15,7 @@
 	<div
 		v-if="displayItem.enabled"
 	>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtTextArea
 					v-model="fromRocketStageDescription"
@@ -26,7 +26,7 @@
 			</v-col>
 		</v-row>
 		<v-row
-			dense
+			density="compact"
 		>
 			<v-col 
 				v-if="fromRocketStageDiameterMajor"
@@ -51,7 +51,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="fromRocketStageCp"
 				cols="6" sm="4"
@@ -97,7 +97,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense class="mt-4"
+		<v-row density="compact" class="mt-4"
 			v-if="displayItemEjectionDrogue || displayItemEjectionDrogueBackup || displayItemEjectionMain || displayItemEjectionMainBackup"
 		>
 			<v-col cols="12">
@@ -105,7 +105,7 @@
 				<v-divider class="border-opacity-100"></v-divider>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="displayItemEjectionDrogue"
 				cols="6" sm="4"
@@ -152,7 +152,7 @@
 			</v-col>
 		</v-row>
 	</div>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col>
 			<div
 				v-if="isEditable"
@@ -264,7 +264,7 @@
 	</v-row>
 	<v-row 
 		v-if="displayItem.enabled"
-		dense
+		density="compact"
 	>
 		<v-col>
 			<v-expansion-panels
@@ -322,7 +322,7 @@
 				>
 					<template #partText	="{ item }">
 						<v-row 
-							dense
+							density="compact"
 							class="mt-4"
 						>
 							<v-col 

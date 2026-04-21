@@ -28,7 +28,7 @@
 		@ok="handleOk"
 		:debug="debug"
 	>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="8">
 				<VtTextFieldWithValidation
 					ref="detailItemNameRef"
@@ -52,7 +52,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<!-- <v-row dense>
+		<!-- <v-row density="compact">
 			<v-col>
 				<VtTextAreaWithValidation
 					ref="descriptionRef"
@@ -67,7 +67,7 @@
 				/>
 			</v-col>
 		</v-row> -->
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="4">
 				<VtSelectWithValidation
 					ref="detailItemSuccessRef"
@@ -105,7 +105,7 @@
 			</v-col>
 		</v-row>
 		<v-row 
-			dense
+			density="compact"
 			class="mt-4"
 		>
 			<v-col cols="12">
@@ -234,7 +234,7 @@
 				</div>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
 					<VtTextFieldWithValidation
@@ -295,7 +295,7 @@
 			</v-col>
 		</v-row>
 		<v-row 
-			dense
+			density="compact"
 			class="mt-4"
 		>
 			<v-col cols="12">
@@ -329,7 +329,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtTextAreaWithValidation
 					ref="detailItemNotesRef"
@@ -348,14 +348,14 @@
 ></div>
 			</v-col>
 		</v-row>
-		<v-row dense
+		<v-row density="compact"
 			v-if="!detailItemRocketSetupId"
 		>
 			<v-col 
 				cols="12"
 				class="mt-4"
 			>
-		<v-row dense class="mt-4">
+		<v-row density="compact" class="mt-4">
 			<v-col cols="12">
 				<h3>{{ $t('strings.content.rockets.motors')}}</h3>
 				<v-divider class="border-opacity-100"></v-divider>
@@ -363,12 +363,12 @@
 		</v-row>
 		<v-row 
 			v-if="hasMotor(0)"
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
 			>
-				<v-row dense>
+				<v-row density="compact">
 					<v-col 
 						cols="6" md="2"
 					>
@@ -462,12 +462,12 @@
 		</v-row>
 		<v-row 
 			v-if="hasMotor(1)"
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
 			>
-				<v-row dense>
+				<v-row density="compact">
 					<v-col 
 						cols="6" md="2"
 					>
@@ -561,12 +561,12 @@
 		</v-row>
 		<v-row 
 			v-if="hasMotor(2)"
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
 			>
-				<v-row dense>
+				<v-row density="compact">
 					<v-col 
 						cols="6" md="2"
 					>
@@ -660,7 +660,7 @@
 		</v-row>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				cols="12"
 				class="mt-4"
@@ -668,7 +668,7 @@
 				<h3>{{ $t('forms.content.launches.weather.title') }}</h3>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>
@@ -741,7 +741,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				cols="12"
 				class="mt-4"
@@ -749,7 +749,7 @@
 				<h3>{{ $t('forms.content.launches.results.title') }}</h3>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>
@@ -925,7 +925,7 @@
 				</table>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="6" sm="3">
 				<VtNumberFieldWithValidation
 					ref="detailItemResultsCoordsLatLaunchRef"

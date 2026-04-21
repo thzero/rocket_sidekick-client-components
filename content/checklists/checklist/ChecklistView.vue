@@ -2,7 +2,7 @@
 	<div
 		class="mt-4"
 	>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtMarkdown 
 					v-if="displayItem.description"
@@ -44,7 +44,7 @@
 		</v-row>
 		<v-row
 			v-if="displayItemRocketCoverUrl"
-			dense
+			density="compact"
 		>
 			<!-- <v-col
 				v-if="displayItem && displayItem.rocketSetup && displayItem.rocketSetup.rocket"
@@ -78,7 +78,7 @@
 			>
 				<v-row
 					v-if="displayItem && displayItem.rocketSetup && displayItem.rocketSetup.rocket"
-					dense
+					density="compact"
 				>
 					<v-col>
 						{{ displayItem.rocketSetup.rocket }}
@@ -108,7 +108,7 @@
 				</v-row>
 				<v-row 
 					v-if="hasRocketSpecs && $vuetify.display.smAndUp"
-					dense
+					density="compact"
 				>
 					<v-col 
 						cols="12"
@@ -190,7 +190,7 @@
 		</v-row>
 		<v-row 
 			v-if="(!displayItemRocketCoverUrl || $vuetify.display.xs)"
-			dense
+			density="compact"
 		>
 			<v-col>
 				<div 
@@ -220,7 +220,7 @@
 		</v-row>
 		<v-row 
 			v-if="(!displayItemRocketCoverUrl || $vuetify.display.xs) && hasRocketSpecs"
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
@@ -284,14 +284,14 @@
 			</v-col>
 		</v-row>
 		<v-row
-			dense
+			density="compact"
 		>
 			<v-col 
 				cols="12"
 			>
 				<v-row
 					v-if="String.isNullOrEmpty(displayItemRocketMotorNames)"
-					dense
+					density="compact"
 				>
 					<v-col>
 						<VtTextArea
@@ -316,7 +316,7 @@
 				<v-row 
 					v-for="item in displayItemRocketMotors"
 					:key="item"
-					dense
+					density="compact"
 				>
 					<v-col 
 						cols="12"
@@ -339,7 +339,7 @@
 							rounded
 						>
 							<!-- <v-row
-								dense
+								density="compact"
 								class="pl-8"
 							>
 								<v-col>

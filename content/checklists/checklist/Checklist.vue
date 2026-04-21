@@ -35,7 +35,7 @@
 		@ok="handleOk"
 	>
 		<!-- :readonly="!isEditable" -->
-		<v-row dense>
+		<v-row density="compact">
 			<v-col
 				v-if="!isDefaultView"
 				cols="12" md="8" lg="8"
@@ -98,7 +98,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col>
 				<VtTextAreaWithValidation
 					ref="descriptionRef"
@@ -113,7 +113,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="8">
 				<div class="d-flex">
 					<VtTextFieldWithValidation
@@ -184,7 +184,7 @@
 			</v-col>
 		</v-row>
 		<v-row 
-			dense
+			density="compact"
 			class="mt-4"
 		>
 			<v-col cols="12">
@@ -371,7 +371,7 @@
 		</template>
 		<template v-slot:after="{ isLoading }">
 			<v-row
-				dense 
+				density="compact" 
 				class="mt-4"
 			>
 				<v-col>

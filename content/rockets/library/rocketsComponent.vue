@@ -1,6 +1,6 @@
 <script>
 import { computed, onMounted, ref } from 'vue';
-import { firstBy, thenBy } from 'thenby';
+import { firstBy } from 'thenby';
 import useVuelidate from '@vuelidate/core';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';

@@ -1,6 +1,6 @@
 <script>
 import { ref } from 'vue';
-import { firstBy, thenBy } from 'thenby';
+import { firstBy } from 'thenby';
 
 import useVuelidate from '@vuelidate/core';
 

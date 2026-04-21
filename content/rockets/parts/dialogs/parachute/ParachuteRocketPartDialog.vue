@@ -29,7 +29,7 @@
 		@ok="dialogOk"
 	>
 		<!-- :readonly="!editable" -->
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="6">
 				<VtSwitchWithValidation
 					class="ml-2"

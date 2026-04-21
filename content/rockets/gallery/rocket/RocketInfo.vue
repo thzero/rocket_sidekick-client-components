@@ -39,7 +39,7 @@
 			</v-btn>
 		</template> -->
 	</ContentHeader>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col cols="12">
 			<v-card
 				v-if="rocket"
@@ -89,7 +89,7 @@
 					class="bg-secondary"
 					color="secondary"
 				>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col>
 <p class="text-h6 text-center" style="float: left;">{{ rocket.name }}</p>
 						</v-col>
@@ -104,7 +104,7 @@
 			</v-card>
 		</v-col>
 	</v-row>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col cols="12" md="6">
 			<v-card>
 				<v-card-title>
@@ -146,7 +146,7 @@
 					<p class="text-h6 text-center">{{ $t('titles.content.rockets.specifications') }}</p>
 				</v-card-title>
 				<v-card-text>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="6">
 							<table style="padding-bottom: 12px;">
 								<tbody>
@@ -284,7 +284,7 @@
 			</v-card>
 		</v-col>
 	</v-row>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col
 			cols="12"
 		>

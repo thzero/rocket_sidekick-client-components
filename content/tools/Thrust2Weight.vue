@@ -9,7 +9,7 @@
 			:value="contentTitle"
 		/>
 		<ContentDescription id="strings.content.tools.thrust2Weight" />
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12">
 				<VtFormControl
 					ref="formThrust2WeightRef"
@@ -21,7 +21,7 @@
 					@ok="calculationOk"
 				>
 					<template v-slot:default>
-						<v-row dense>
+						<v-row density="compact">
 							<v-col cols="12" md="6">
 								<table style="width: 100%">
 									<tbody>
@@ -112,7 +112,7 @@
 								/>
 							</v-col>
 							<v-col cols="12" md="6">
-								<v-row dense>
+								<v-row density="compact">
 									<v-col cols="12">
 										<VtCheckboxWithValidation
 											ref="motorSelected1Ref"
@@ -124,7 +124,7 @@
 										/>
 									</v-col>
 								</v-row>
-								<v-row dense>
+								<v-row density="compact">
 									<v-col cols="12" md="6">
 										<VtNumberFieldWithValidation
 											ref="thrustInitial1Ref"
@@ -186,7 +186,7 @@
 								</v-row>
 							</v-col>
 							<v-col cols="12" md="6">
-								<v-row dense>
+								<v-row density="compact">
 									<v-col cols="12">
 										<VtCheckboxWithValidation
 											ref="motorSelected2Ref"
@@ -197,7 +197,7 @@
 										/>
 									</v-col>
 								</v-row>
-								<v-row dense>
+								<v-row density="compact">
 									<v-col cols="12" md="6">
 										<VtNumberFieldWithValidation
 											ref="thrustInitial2Ref"
@@ -263,7 +263,7 @@
 								</v-row>
 							</v-col>
 							<v-col cols="12" md="6">
-								<v-row dense>
+								<v-row density="compact">
 									<v-col cols="12">
 										<VtCheckboxWithValidation
 											ref="motorSelected3Ref"
@@ -274,7 +274,7 @@
 										/>
 									</v-col>
 								</v-row>
-								<v-row dense>
+								<v-row density="compact">
 									<v-col cols="12" md="6">
 										<VtNumberFieldWithValidation
 											ref="thrustInitial3Ref"
@@ -340,7 +340,7 @@
 								</v-row>
 							</v-col>
 							<v-col cols="12" md="6">
-								<v-row dense>
+								<v-row density="compact">
 									<v-col cols="12">
 										<VtCheckboxWithValidation
 											ref="motorSelected4Ref"
@@ -351,7 +351,7 @@
 										/>
 									</v-col>
 								</v-row>
-								<v-row dense>
+								<v-row density="compact">
 									<v-col cols="12" md="6">
 										<VtNumberFieldWithValidation
 											ref="thrustInitial4Ref"
@@ -431,18 +431,18 @@
 				</VtFormControl>
 			</v-col>
 		</v-row>
-		<v-row class="pt-4" dense>
+		<v-row class="pt-4" density="compact">
 			<v-col cols="12">
 				<v-card>
 					<v-card-text>
-						<v-row dense class="pb-2">
+						<v-row density="compact" class="pb-2">
 							<v-col class="text-center text-h5">
 								{{ $t('strings.content.tools.thrust2Weight.calculated') }}
 							</v-col>
 						</v-row>
-						<v-row dense class="pb-2" v-if="calculationResults.calculated">
+						<v-row density="compact" class="pb-2" v-if="calculationResults.calculated">
 							<v-col>
-								<v-row class="pb-2" dense>
+								<v-row class="pb-2" density="compact">
 									<v-col cols="3">
 										<span class="text-h6 text-bold">{{ $t('forms.content.tools.thrust2Weight.specifications') }}</span>
 									</v-col>
@@ -457,7 +457,7 @@
 									</v-col>
 								</v-row>
 								<v-row
-									class="pb-2" dense
+									class="pb-2" density="compact"
 									v-for="(item, index) in calculationResults.data"
 									:key="index"
 								>
@@ -476,7 +476,7 @@
 								</v-row>
 							</v-col>
 						</v-row>
-						<v-row dense class="pb-4">
+						<v-row density="compact" class="pb-4">
 							<v-col>
 								<div v-html="$t('strings.content.tools.thrust2Weight.guidance', { thrustCurve: linkThrustCurve})"></div>
 								<div v-if="hasResults">
@@ -492,7 +492,7 @@
 				</v-card>
 			</v-col>
 		</v-row>
-		<v-row dense
+		<v-row density="compact"
 			v-show="hasAttribution"
 		>
 			<v-col cols="12" class="text-center text-h5 pb-2; float: right">

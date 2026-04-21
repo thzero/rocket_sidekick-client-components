@@ -1,5 +1,5 @@
 <template>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col cols="12" class="pb-2">
 			<v-card>
 				<v-card-text>

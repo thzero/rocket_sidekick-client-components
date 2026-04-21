@@ -14,11 +14,11 @@
 		@close="close"
 	>
 		<template #default="{ buttonOkDisabled, isLoading }">
-			<v-row dense>
+			<v-row density="compact">
 				<v-col cols="12">
 					<v-card>
 						<v-card-text>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col cols="8">
 									<VtTextFieldWithValidation
 										ref="filterItemNameRef"
@@ -41,7 +41,7 @@
 								</v-col>
 							</v-row>
 							<v-row 
-								dense
+								density="compact"
 							>
 								<v-col
 									v-if="isMotors()"
@@ -74,7 +74,7 @@
 							</v-row>
 							<v-row 
 								v-if="isDeploymentBags() || isParachutes()"
-								dense
+								density="compact"
 							>
 								<v-col :cols="$vuetify.display.smAndDown ? '12' : '8'">
 									<table style="width: 100%;">
@@ -187,7 +187,7 @@
 							</v-row>
 							<v-row 
 								v-if="isChuteProtectors() || isDeploymentBags() || isStreamers()"
-								dense
+								density="compact"
 							>
 								<v-col :cols="$vuetify.display.smAndDown ? '12' : '8'">
 									<table style="width: 100%;">
@@ -288,7 +288,7 @@
 									</table>
 								</v-col> -->
 							</v-row>
-							<v-row dense>
+							<v-row density="compact">
 								<v-col cols="8">
 									<VtSelectWithValidation
 										ref="filterItemManufacturersRef"

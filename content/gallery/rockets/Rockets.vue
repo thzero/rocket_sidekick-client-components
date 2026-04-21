@@ -6,7 +6,7 @@
 	>
 		<v-card>
 			<v-card-text>
-				<v-row dense>
+				<v-row density="compact">
 					<v-col cols="12">
 						<VtTextFieldWithValidation
 							ref="filterItemRocketNameRef"
@@ -50,7 +50,7 @@
 	</v-navigation-drawer>
 	<v-row
 		v-if="!rocketId"
-		dense
+		density="compact"
 		class="mt-2"
 	>
 		<v-col 
@@ -71,7 +71,7 @@
 		>
 			<v-card>
 				<v-card-text>
-					<v-row dense>
+					<v-row density="compact">
 						<v-col cols="6" v-if="searchCriteria.name">
 							<b>{{ $t('forms.name')}}:</b>
 							{{ searchCriteria.name }}
@@ -103,7 +103,7 @@
 	</v-row>
 	<v-row
 		v-if="!rocketId"
-		dense
+		density="compact"
 		class="mt-2"
 	>
 		<v-col 

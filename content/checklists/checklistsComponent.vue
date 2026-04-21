@@ -1,7 +1,7 @@
 <script>
 import { onMounted, ref } from 'vue';
 import useVuelidate from '@vuelidate/core';
-import { firstBy, thenBy } from 'thenby';
+import { firstBy } from 'thenby';
 
 import AppCommonConstants from 'rocket_sidekick_common/constants';
 import LibraryClientConstants from '@thzero/library_client/constants.js';

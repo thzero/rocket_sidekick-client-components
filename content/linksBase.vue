@@ -1,6 +1,6 @@
 <script>
 import { computed } from 'vue';
-import { firstBy, thenBy } from 'thenby';
+import { firstBy } from 'thenby';
 
 import { useContentBaseComponent } from '@/components/content/contentBase';
 

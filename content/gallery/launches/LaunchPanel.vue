@@ -47,7 +47,7 @@
 		<v-card-title
 			:class="launchStatusColor(item)"
 		>
-			<v-row dense>
+			<v-row density="compact">
 				<v-col>
 					<v-icon
 						v-if="launchStatusIcon(item)"
@@ -83,7 +83,7 @@
 			v-if="displayExtras"
 		>
 			<v-row 
-				dense
+				density="compact"
 			>
 				<v-col
 					cols="12"
@@ -110,7 +110,7 @@
 				</v-col>
 			</v-row>
 			<v-row 
-				dense
+				density="compact"
 				class="mt-2"
 			>
 				<v-col 
@@ -128,7 +128,7 @@
 			</v-row>
 			<v-row 
 				v-if="hasLaunchRocketSpecs(item)"
-				dense
+				density="compact"
 				class="mb-2"
 			>
 				<v-col 
@@ -184,7 +184,7 @@
 			</v-row>
 			<v-row 
 				v-if="hasLaunchWeather(item)"
-				dense
+				density="compact"
 				class="mb-2"
 			>
 				<v-col 
@@ -215,7 +215,7 @@
 					{{ launchWeather(item) }}
 				</v-col>
 			</v-row>
-			<v-row dense
+			<v-row density="compact"
 				v-if="hasLaunchResults(item)"
 				class="mb-2"
 			>
@@ -229,7 +229,7 @@
 					cols="12"
 				>
 					<v-row
-						dense
+						density="compact"
 					>
 						<v-col
 							v-if="launchResultsAccelerationMax(item)"
@@ -247,7 +247,7 @@
 						</v-col>
 					</v-row>	
 					<v-row
-						dense
+						density="compact"
 					>
 						<v-col
 							v-if="launchResultsAltitudeMax(item)"
@@ -273,7 +273,7 @@
 					</v-row>
 					<v-row
 						v-if="hasLaunchResultsCoords(item)"
-						dense
+						density="compact"
 					>
 						<v-col>
 							<LaunchMap

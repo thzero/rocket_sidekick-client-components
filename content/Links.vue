@@ -9,7 +9,7 @@
 				</v-card>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" md="6">
 				<v-card>
 					<v-card-title>

@@ -5,14 +5,14 @@
 		[[ displayItem {{ displayItem }} ]]
 	</div>
 	<div>
-		<v-row dense
+		<v-row density="compact"
 			v-if="displayItem.description"
 		>
 			<v-col>
 				<VtMarkdown v-model="displayItem.description" :use-github=false />
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col
 				v-if="displayItem.organizations"
 				class="mt-2"
@@ -36,7 +36,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="displayItemAddress"
 				cols="12" sm="6"
@@ -78,7 +78,7 @@
 		</v-row>
 		<v-row
 			v-if="hasCoords"
-			dense
+			density="compact"
 		>
 			<v-col>
 				<LocationMap

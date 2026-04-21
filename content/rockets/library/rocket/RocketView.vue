@@ -6,7 +6,7 @@
 		<pre>{{ displayItem }}</pre>
 		{{ stagePrimary }}
 		length {{ length }} -->
-		<v-row dense
+		<v-row density="compact"
 		>
 			<v-col>
 				<img
@@ -19,7 +19,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="manufacturerName"
 				cols="3"
@@ -141,7 +141,7 @@
 				/>
 			</v-col> -->
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="stagePrimary.manufacturerId"
 				cols="12" sm="6"
@@ -163,7 +163,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="albums"
 				cols="12"
@@ -171,7 +171,7 @@
 				<h4>{{ $t('titles.content.rockets.albums.title') }}</h4>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="albums"
 				cols="4" md="12"
@@ -185,7 +185,7 @@
 				</a></span>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="documents"
 				cols="12"
@@ -193,7 +193,7 @@
 				<h4>{{ $t('titles.content.rockets.documents.title') }}</h4>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="documents"
 				cols="4" md="12"
@@ -207,7 +207,7 @@
 				</a></span>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="videos"
 				cols="12"
@@ -215,7 +215,7 @@
 				<h4>{{ $t('titles.content.rockets.videos.plural') }}</h4>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col 
 				v-if="videos"
 				cols="4" md="12"

@@ -21,7 +21,7 @@
 			isEditable: {{ isEditable }} readonly: {{ readonly }}
 			detailItemAddressStateProvince {{  detailItemAddressStateProvince }}
 		</div> -->
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="3" sm="6">
 				<VtNumberFieldWithValidation
 					ref="detailItemNumberRef"
@@ -65,7 +65,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="8">
 				<VtSelectWithValidation
 					class="mr-2"
@@ -89,7 +89,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<VtTextFieldWithValidation
 					ref="detailItemAddressCityRef"
@@ -109,7 +109,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="12" sm="6">
 				<VtSelectWithValidation
 					ref="detailItemAddressCountryRef"
@@ -131,7 +131,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-row dense>
+		<v-row density="compact">
 			<v-col cols="6" sm="3">
 				<VtNumberFieldWithValidation
 					ref="detailItemCoordsLatRef"

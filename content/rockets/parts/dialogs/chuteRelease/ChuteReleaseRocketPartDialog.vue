@@ -29,7 +29,7 @@
 		@ok="dialogOk"
 	>
 		<!-- :readonly="!editable" -->
-		<v-row dense>	
+		<v-row density="compact">	
 			<v-col cols="12" sm="6">
 				<table style="width: 100%;">
 					<tbody>

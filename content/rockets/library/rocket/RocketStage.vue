@@ -12,7 +12,7 @@
 		[[ streamers {{ streamers }} ]]
 		[[ trackers {{ trackers }} ]] -->
 	</div>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col
 			cols="10" md="11"
 		>
@@ -31,7 +31,7 @@
 		</v-col>
 	</v-row>
 	<v-row
-		dense
+		density="compact"
 	>
 		<v-col 
 			v-if="displayItem.manufacturerId"
@@ -56,7 +56,7 @@
 		</v-col>
 	</v-row>
 	<v-row
-		dense
+		density="compact"
 	>
 		<v-col 
 			v-if="displayItemDiameterMajor"
@@ -103,7 +103,7 @@
 			/>
 		</v-col>
 	</v-row>
-	<v-row dense class="mt-4"
+	<v-row density="compact" class="mt-4"
 		v-if="displayItemEjectionDrogue || displayItemEjectionDrogueBackup || displayItemEjectionMain || displayItemEjectionMainBackup"
 	>
 		<v-col cols="12">
@@ -112,7 +112,7 @@
 		</v-col>
 	</v-row>
 	<v-row
-		dense
+		density="compact"
 	>
 		<v-col 
 			v-if="displayItemEjectionDrogue"
@@ -159,14 +159,14 @@
 			/>
 		</v-col>
 	</v-row>
-	<v-row dense class="mt-4">
+	<v-row density="compact" class="mt-4">
 		<v-col cols="12">
 			<h3>{{ $t('strings.content.rockets.motors')}}</h3>
 			<v-divider class="border-opacity-100"></v-divider>
 		</v-col>
 	</v-row>
 	<v-row
-	 	dense
+	 	density="compact"
 	>
 		<v-col 
 			v-if="hasMotor(0)"
@@ -199,7 +199,7 @@
 			/>
 		</v-col>
 	</v-row>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col>
 			<div
 				v-if="isEditable"
@@ -308,7 +308,7 @@
 			</div>
 		</v-col>
 	</v-row>
-	<v-row dense>
+	<v-row density="compact">
 		<v-col>
 			<v-expansion-panels
 				v-model="panels"
