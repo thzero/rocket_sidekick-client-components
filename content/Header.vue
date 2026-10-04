@@ -28,6 +28,7 @@
 	</v-row>
 	<VtDisplayDialog
 		:signal="dialogHelpSignal.signal"
+		@cancel="dialogHelpSignal.cancel()"
 	>
 		<!--eslint-disable vue/no-v-html -->
 		<div
