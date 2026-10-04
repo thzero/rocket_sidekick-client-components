@@ -3,7 +3,7 @@
 		opacity="1.0"
 		z-index="5"
 		contained
-		:value="signal"
+		:model-value="signal"
 	>
 		<v-progress-circular
 			:size="70"

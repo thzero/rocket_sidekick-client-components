@@ -93,10 +93,6 @@ export function useHomeBaseComponent(props, context, options) {
 		return value ? value.replace('[url]', websiteUrl) : '';
 	};
 
-	LibraryClientUtility.$EventBus.on('initialize-completed', (value) => {
-		initializeCompleted.value = value;
-	});
-
 	let timeout = null;
 
 	onMounted(async () => {
